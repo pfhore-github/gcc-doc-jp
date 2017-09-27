@@ -1,0 +1,221 @@
+@c Copyright (C) 2000-2017 Free Software Foundation, Inc.
+@c This is part of the GCC manual.
+@c For copying conditions, see the file gcc.texi.
+
+@node Standards
+@chapter GCCによってサポートされている言語標準
+
+標準があるGCCによってコンパイルされる各々の言語については、GCCはその標準の、おそらくある例外つきで、そして、おそらくある拡張つきで一つ以上のバージョンに追従しようとする。
+
+@section C言語
+@cindex C standard
+@cindex C standards
+@cindex ANSI C standard
+@cindex ANSI C
+@cindex ANSI C89
+@cindex C89
+@cindex ANSI X3.159-1989
+@cindex X3.159-1989
+@cindex ISO C standard
+@cindex ISO C
+@cindex ISO C90
+@cindex ISO/IEC 9899
+@cindex ISO 9899
+@cindex C90
+@cindex ISO C94
+@cindex C94
+@cindex ISO C95
+@cindex C95
+@cindex ISO C99
+@cindex C99
+@cindex ISO C9X
+@cindex C9X
+@cindex ISO C11
+@cindex C11
+@cindex ISO C1X
+@cindex C1X
+@cindex Technical Corrigenda
+@cindex TC1
+@cindex Technical Corrigendum 1
+@cindex TC2
+@cindex Technical Corrigendum 2
+@cindex TC3
+@cindex Technical Corrigendum 3
+@cindex AMD1
+@cindex freestanding implementation
+@cindex freestanding environment
+@cindex hosted implementation
+@cindex hosted environment
+@findex __STDC_HOSTED__
+
+@opindex std
+@opindex ansi
+@opindex pedantic
+@opindex pedantic-errors
+元々のANSI C標準（X3.159-1989）は、1989年に承認されて、1990年に発表された。
+この標準は、1990年後半にISO標準（ISO/IEC 9899:1990）として承認された。
+これらの出版物の技術的な違いがなかったが、ANSI標準の部分は番号を振り直されて、
+ISO標準の条項になった。ISO標準にはないが、ANSI標準は、正当性文書も出た。
+批准の日付から、この標準は、両方のその形で、@dfn{C89}として、または、時折@dfn{C90}として一般に知られている。
+GCCでこの標準を選ぶために、オプション@option{-ansi}、@option{-std=c90}または@option{-std=iso9899:1990}
+の1つを使う。標準によって必須のすべての診断法を得るために、@option{-pedantic}（または、それらが警告よりもむしろエラーであることを望むならば@option{-pedantic-errors}）も指定するべきである。
+@xref{C Dialect Options,,C変種を制御するオプション}。
+
+1994と1996年に発表される2つの技術的な正誤表において、1990年のISO C標準の誤りは、訂正された。
+GCCは、訂正されてないバージョンをサポートしない。
+
+この改正は二重字と@code{__STDC_VERSION__}を言語に加えたが、それ以外はライブラリに関してである。
+この改正は、@dfn{AMD1}として一般に知られている。改められた標準は、
+@dfn{C94}または@dfn{C95}として時々知られている。
+GCCでこの標準を選ぶために、オプション@option{-std=iso9899:199409}
+（他の標準的なバージョンと同様に、すべての必須の診断を受けるには@option{-pedantic}を使う。）
+
+ISO C標準の新版は、9899:1999でISO/IECとして1999年に出版されて、@dfn{C99}として一般に知られている。
+GCCは、この標準的なバージョンのかなり完全なサポートをする
+（開発においてある間、この標準的な版の草案は@dfn{C9X}と呼ばれた。）
+詳細は@uref{http://gcc.gnu.org/c99status.html}を見よ。この標準を選ぶために、
+@option{-std=c99}または@option{-std=iso9899:1999}を使う。
+
+1999年のISO C標準の誤りは、2001、2004と2007年に出版される3つの技術的な正誤表で訂正された。
+GCCは、訂正されてないバージョンをサポートしない。
+
+@dfn{C11}として知られているC標準の第4のバージョンは、9899:2011でISO/IECとして2011年に発表された。
+（開発においてある間、この標準的な版の草案は@dfn{C1X}と呼ばれた。）
+GCCはこの標準に対するかなり完全な支持をする。そして、
+@option{-std=c11}または@option{-std=iso9899:2011}で使用可能にされる。
+
+GCCはデフォルトで、まれにC標準と衝突するC言語への拡張を提供する。
+@xref{C Extensions,,C言語族への拡張}。あるC99標準の一部の機能はC90モードの拡張と認められ、
+あるC11標準の一部の機能はC90とC99モードの拡張と認められる。上記の@option{-std}オプションの使用は、
+それらが選んだC標準版と衝突するこれらの拡張を抑制する。@option{-std=gnu90}（GNU拡張のC90）、
+@option{-std=gnu99}（GNU拡張のC99）、@option{-std=gnu11}（GNU拡張のC11）で、
+明示的にC言語の拡張バージョンを選ぶことができる。
+
+C言語変種オプションが与えられていないならば、デフォルトは@option{-std=gnu11}である。
+
+ISO C標準は、（節4で）適応実施の2つの種類を定める。
+@dfn{規格合致ホスト処理系}は、すべてのライブラリ機能を含む全部の標準をサポートする。
+@dfn{規格合致自立処理系}は、特定のライブラリ機能を提供することを要求されるだけである：
+@code{<float.h>}、 @code{<limits.h>}、@code{<stdarg.h>}、@code{<stddef.h>}。
+AMD1からは、@code{<iso646.h>}。C99からは、@code{<stdbool.h>}と@code{<stdint.h>}。
+C11からは、@code{<stdalign.h>}と@code{<stdnoreturn.h>}。
+それに加え、C99で加えられた複素数型は、独立実装では必須ではない。
+
+標準は、2つのプログラム環境を定義する。@dfn{独立環境}はすべての実装が要求され、
+独立実装で要求された以上のライブラリがないかもしれず、プログラムの開始と終了は実装定義である。
+@dfn{ホスト環境}は、すべての実装は要求されず、ライブラリ機能はすべて提供され、開始は@code{int main (void)}
+または@code{int main (int, char *[])}で始まる。OSカーネルは独立環境で走るプログラムの例である。
+OSの機能を使うプログラムはホスト環境で実行するプログラムの例である。
+
+@opindex ffreestanding
+規格合致自立処理系として、または、規格合致ホスト処理系のためのコンパイラとして使える方へ、GCCは狙いをつける。
+デフォルトでは、それはホスト処理系コンパイラとして動き、@code{__STDC_HOSTED__}を@code{1}と定義して、
+ISO C機能の名前が使われるとき、それらが標準で定められる意味論を持つと仮定する。
+それを自立環境の規格合致自立処理系の働きをさせるためには、オプション@option{-ffreestanding}を使う。
+それはそれから@code{0}に@code{__STDC_HOSTED__}と定義し、下で書かれた例外を除いて、
+標準的なライブラリから機能名の意味について仮定をしない。OSカーネルを構築するためには、
+あなたはまだリンクとスタートアップの準備をかなりする必要があるかもしれない。
+@xref{C Dialect Options,,C変種を制御するオプション}。
+GCCはホスト処理系でのみ要求されるライブラリ機能を提供しないし、すべてのプラットフォームで自立処理系の
+C99で要求される機能をすべて提供しているわけでもない。ホスト環境の機能を使うためには、
+他の場所を（例えば、GNU Cライブラリ)探す必要がある。@xref{Standard Libraries,,標準ライブラリ}.
+
+GCCによって使われるコンパイラサポートルーチンのほとんどは@file{libgcc}にあるが例外もある。
+GCCは自立環境が@code{memcpy}, @code{memmove}, @code{memset}, @code{memcmp}を提供することを要求する。
+最後に、もし@code{__builtin_trap}が使われて、ターゲットが@code{trap}パターンを実装していない場合は、
+GCCは@code{abort}の呼び出しを生成する。
+
+オンラインで利用できるCの歴史に関する技術的な正誤表、正当性文書と情報への参照は、@uref{http://gcc.gnu.org/readings.html}を見よ。
+
+@section C++言語
+
+GCCは、1998年に発表される最初のISO C++標準と2011年と2014年の改訂をサポートする。
+
+最初のISO C++標準は、ISO標準（ISO/IEC 14882:1998）として発表されて、2003（ISO/IEC 14882:2003）年に
+出版される技術的な正誤表によって改められた。これらの標準は、それぞれC++98とC++03と呼ばれる。
+GCCは、大多数のC++98（@code{export}は顕著な例外である）とC++03の大部分の変化を実装する。
+GCCでこの標準を選ぶために、オプション@option{-ansi}、@option{-std=c++98}または
+@option{-std=c++03}の1つを使う。標準によって必須のすべての診断法を得るためには、@option{-pedantic}
+（または、あなたがそれらが警告ではなくエラーを望むならば@option{-pedantic-errors}）も指定するべきである。
+
+改正されたISO C++標準は、14882:2011でISO/IECとして2011年に発表されて、C++11と呼ばれる。
+その出版の前に、それは一般にC++0xと呼ばれた。C++11はC++言語のいくつかの変更を含む。そして、
+その全てはGCCで実装された。詳細のために、@uref{https://gcc.gnu.org/projects/cxx-status.html#cxx11}を見よ。
+GCCでこの標準を選ぶために、オプション@option{-std=c++11}を使う。
+
+もう一つの改正されたISO C++標準は、14882:2014でISO/IECとして2014年に発表されて、C++14と呼ばれる。
+出版の前には、それは時々C++1yと呼ばれた。C++14はC++言語のいくつかの更なる変更を含む。そして、
+その全てはGCCで実装された。詳細は、@uref{https://gcc.gnu.org/projects/cxx-status.html#cxx14}を見よ。
+GCCでこの標準を選ぶために、オプション@option{-std=c++14}を使う。
+
+
+GCCはC++ Concepts技術仕様（ISO/IEC TS 19217:2015）もサポートする。そして、それはテンプレートの制約を定義し、
+テンプレートの引数をチェックして制約に基づいてオーバーロードや特殊化をすることを可能にする。
+ISO C++標準の次の改訂に対応する実験的なC++1zモードに、C++Conceptに対するサポートは含まれる。
+そして、2017年に発表されることになっている。GCCでC++1zサポートを使用可能にするために、
+オプション@option{-std=c++17}または@option{-std=c++1z}を使う。
+
+C++標準に関する詳細な情報は、@uref{http://www.open-std.org/jtc1/sc22/wg21/}でISO C++委員会
+のウェブサイトで利用可能である。
+
+上述の標準的なバージョンのどれによってでも必須のすべての診断法を得るために、あなたは@option{-pedantic}
+または@option{-pedantic-errors}を指定するべきである、さもなければGCCは、拡張としてのある非ISO C++機能を許す。
+@xref{Warning Options}
+ 
+デフォルトで、GCCはC++標準とまれに衝突する追加の拡張をC++言語に提供する。
+@xref{C++ Dialect Options,C++変種を制御するオプション}。上記の@option{-std}オプションの使用は、
+それらがC++標準版を選んで衝突するこれらの拡張を抑制する。あなたは、@option{-std=gnu++98} (GNU拡張つきC++98)、
+@option{-std=gnu++11} (GNU拡張付きC++11)、@option{-std=gnu++14} (GNU拡張付きC++14)、
+@option{-std=gnu++1z} (GNU拡張付きC++1z)で明示的にC++言語の延長したバージョンも選ぶかもしれない。
+
+C++言語変種オプションが与えられていないならば、デフォルトは@option{-std=gnu++14}である。
+
+@section Objective-CとObjective-C++言語
+@cindex Objective-C
+@cindex Objective-C++
+
+GCCは「伝統的な」Objective-C（別名「Objective-C 1.0」）をサポートして、Objective-C例外と同期構文のサポートを含む。それは、特性、速い列挙（Objective-Cについてはだけ）、メソッド属性とプロトコルでの@@optionalと@@requiredキーワードを含むいくつかの「Objective-C 2.0」言語拡張もサポートする。GCCはObjective-C++をサポートし、Objective-Cで利用できる機能はObjective-C++でも利用できる。
+
+GCCはGNU Objective-Cランタイムライブラリをデフォルトで使用する。そして、それはGCCの一部で、アップル・システム上で使われるApple/NeXT Objective-Cランタイムライブラリと同じでない。このマニュアルで文書化されるいくつかの違いがある。オプション@option{-fgnu-runtime}と@option{-fnext-runtime}でGNU Objective-Cランタイムライブラリで働く生成の出力とApple/NeXT Objective-Cランタイムライブラリで働く出力の間で切り替えることができる。
+
+Objective-Cまたは客観的なC++のための形式的書面にした基準はない。伝統的なObjective-C (1.0)に関する信頼すべきマニュアルは、「オブジェクト指向プログラミングとObjective-C言語」である：
+@uref{http://www.gnustep.org/@/resources/@/documentation/@/ObjectivCBook.pdf}はオリジナルのNeXTstepの文書である。
+
+Objective-Cの例外と同期化の構文（すなわち、キーワード@code{@@try}, @code{@@throw}, @code{@@catch}, @code{@@finally}, 
+@code{@@synchronized})はGCCによってサポートされ、@option{-fobjc-exceptions}で有効化される。構文はこのマニュアルと
+AppleからのObjective-C 2.0マニュアルで簡潔に文書化されている。
+
+Objective-C 2.0言語拡張と機能は、自動的に使用可能にされる。それらはプロパティ(@code{@@property}, 
+@code{@@synthesize}, @code{@@dynamic keywords}によって）、高速列挙(Objective-C++では利用不可)、メソッドの属性
+(@code{deprecated}, @code{noreturn}, @code{sentinel}, @code{format}, メソッド引数の@code{unused}属性、
+インスタンス変数の@code{@@package}キーワード、プロトコルの@code{@@optional}, @code{@@require}キーワードを含む。
+これらのObjective-C 2.0言語拡張は@option{-fobjc-std=objc1}オプションで無効化でき、それによってGCC4.0が認識する
+Objective-C言語構文と同じものをコンパイラが認識するようにさせ、新しい機能の一つが使われたらエラーを発するようにする。
+
+GCCは現在非破壊性インスタンス変数をサポートしていない。
+
+Objective-C 2.0の権威のあるマニュアルはAppleから入手可能である。
+@itemize
+@item
+@uref{https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html}
+@end itemize
+
+オンラインで利用可能なObjective-Cの歴史に関する情報は@uref{http://gcc.gnu.org/readings.html}を見よ。
+
+@section Go言語
+
+GCC 4.7.1リリースから、GCCは@uref{http://golang.org/doc/go1}で記述されているGo 1言語標準をサポートする
+
+@section HSA中間言語(HSAIL)
+
+GCCは、HSA Programmer's Reference Manualバージョン1.0.1で説明されているようなHSAILテキスト形式の
+バイナリ表現（BRIG）をコンパイルできます。
+この機能は、gccがサポートするプロセッサ用のHSAランタイムAPIのHSAILファイナライズ拡張機能を実装するために使用されます。
+HSA標準は@uref {http://www.hsafoundation.com/standards/}で自由に入手可能です。
+
+@section 他の言語への参照
+
+Adaコンパイラの標準適合性と互換性の情報は@xref{Top, GNAT Reference Manual, About This Guide, gnat_rm,
+GNAT Reference Manual}
+
+GNU Fortranでサポートされている標準の詳細は@xref{Standards,,Standards, gfortran, The GNU Fortran Compiler}

@@ -1,0 +1,40 @@
+@c Copyright (C) 1988-2017 Free Software Foundation, Inc.
+@c This is part of the GCC manual.
+@c For copying conditions, see the file gcc.texi.
+
+@node G++ and GCC
+@chapter GCCがサポートしているプログラミング言語
+
+@cindex GCC
+@cindex GNU Compiler Collection
+@cindex GNU C Compiler
+@cindex Ada
+@cindex Fortran
+@cindex Go
+@cindex Objective-C
+@cindex Objective-C++
+GCCは、「GNUコンパイラ・コレクション」を表す。GCCは、いくつかの主要なプログラミング言語の
+コンパイラの統合した配布である。これらの言語は、C、C++、Objective-C、Objective-C++、
+Fortran、Ada、GoとBRIG(HSAIL)を現在含む。
+
+省略形@dfn{GCC}は、一般的に複数の意味を持つ。現在の公式意味は「GNUコンパイラ・コレクション」である。そして、それは一般的にツールの完全なセットに言及する。
+名前は歴史的には「GNU Cコンパイラ」を表し、強調がCプログラムをコンパイルすることにあるとき、この使用はまだ一般的である。最後に、その名前はGCCの@dfn{言語から独立した}構成要素について話すときにも使われる。すべてのサポートされた言語のためもののコンパイラで分配されるコード。
+
+GCCの言語から独立した構成要素は、いろいろなプロセッサのためものの機械語を生み出す「バックエンド」だけでなく、大部分のオプティマイザも含む。
+
+@cindex COBOL
+@cindex Mercury
+@cindex Pascal
+特定の言語に特有であるコンパイラの部分は、「フロントエンド」と呼ばれる。GCCの統合化コンポーネントであるフロントエンドに加えて、別に維持されるいくつかの他のフロントエンドがある。
+これらは、例えばPascal、Mercury、COBOLのような言語をサポートする。これらを使うために、それらは本来のGCCと共に構築されなければならない。
+
+@cindex C++
+@cindex G++
+@cindex Ada
+@cindex GNAT
+C以外の言語のためものの大部分のコンパイラには、それら自身の名前がある。C++コンパイラはG++、AdaコンパイラはGNAT、など。それらの言語の1つをコンパイルすることについて話すとき、我々はそれ自身の名前によって、または、GCCとしてそのコンパイラに言及するかもしれない。どちらでも正しい。
+
+@cindex compiler compared to C++ preprocessor
+@cindex intermediate C version, nonexistent
+@cindex C intermediate output, nonexistent
+歴史的に、C++とFortranを含む多くの言語のコンパイラは、Cのようなもう一つのより高いレベル言語を発するプリプロセッサのものとして実装された。GCCに含まれるコンパイラのどれも、このように実装されない;それらのすべては、直接機械語を生み出す。この種類のプリプロセッサは@dfn{Cプリプロセッサ}と混同されるべきでない。そして、それはC、C++、Objective-CとObjective-C++言語に統合された機能である。
