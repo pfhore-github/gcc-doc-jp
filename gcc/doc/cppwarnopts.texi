@@ -26,32 +26,20 @@
 @item -Wundef
 @opindex Wundef
 @opindex Wno-undef
-@code{#if}ディレクティブ
-Warn if an undefined identifier is evaluated in an @code{#if} directive.
-Such identifiers are replaced with zero.
+@code{#if}ディレクティブないで未定義の識別子が評価されたときに警告する。
+そのような識別子は0で置換される。
 
 @item -Wexpansion-to-defined
 @opindex Wexpansion-to-defined
-Warn whenever @samp{defined} is encountered in the expansion of a macro
-(including the case where the macro is expanded by an @samp{#if} directive).
-Such usage is not portable.
-This warning is also enabled by @option{-Wpedantic} and @option{-Wextra}.
+マクロ展開内で@samp{defined}に出会ったときはいつも（マクロが@samp{#if}ディレクティブによって展開される場合も含めて）警告する。そのような使用法は移植性がない。この警告は@option{-Wpedantic}と@option{-Wextra}によっても警告される。
 
 @item -Wunused-macros
 @opindex Wunused-macros
-Warn about macros defined in the main file that are unused.  A macro
-is @dfn{used} if it is expanded or tested for existence at least once.
-The preprocessor also warns if the macro has not been used at the
-time it is redefined or undefined.
+メインファイルで定義された未使用のマクロについて警告するする。マクロは少なくとも一度展開されるか試験されるときに@dfn{使われる}。プリプロセッサは使用されずに再定義・未定義化されたマクロにも警告する。
 
-Built-in macros, macros defined on the command line, and macros
-defined in include files are not warned about.
+組み込みマクロ、コマンドラインで定義されたマクロ、インクルードファイルで定義されたマクロには警告しない。
 
-@emph{Note:} If a macro is actually used, but only used in skipped
-conditional blocks, then the preprocessor reports it as unused.  To avoid the
-warning in such a case, you might improve the scope of the macro's
-definition by, for example, moving it into the first skipped block.
-Alternatively, you could provide a dummy use with something like:
+@emph{注意：}もしマクロが実際には使われているが、条件ブロックで飛ばされているところでのみ使われるならば、プリプロセッサは未使用と報告する。そのような場合の警告を避けるためには、マクロの定義のスコープを、例えば、最初にスキップされるブロック内に移動することによって向上させることができる。代わりに、以下のようなダミーの使用を提供することもできる。
 
 @smallexample
 #if defined the_macro_causing_the_warning
@@ -61,8 +49,7 @@ Alternatively, you could provide a dummy use with something like:
 @item -Wno-endif-labels
 @opindex Wno-endif-labels
 @opindex Wendif-labels
-Do not warn whenever an @code{#else} or an @code{#endif} are followed by text.
-This sometimes happens in older programs with code of the form
+@code{#else}か@code{#endif}の後ろにテキストがあるときに警告しない。これは時々以下の形式の古いプログラムで起こる。
 
 @smallexample
 #if FOO
@@ -73,5 +60,5 @@ This sometimes happens in older programs with code of the form
 @end smallexample
 
 @noindent
-The second and third @code{FOO} should be in comments.
-This warning is on by default.
+二番目と三番目の@code{FOO}はコメント内にあるべきである。この警告はデフォルトでオンである。
+
