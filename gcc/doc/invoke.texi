@@ -4755,20 +4755,20 @@ if (p == '\0')
 
 @include cppwarnopts.texi
 
-@item -Wbad-function-cast @r{(CとObjective-Cのみ)}
+@item -Wbad-function-cast @r{(CとObjective-C専用)}
 @opindex Wbad-function-cast
 @opindex Wno-bad-function-cast
 関数呼び出しが一致しない型へキャストされていたら警告する。例えば、整数型を返す関数呼び出しが
 ポインタ型へキャストされていたら警告する。
 
-@item -Wc90-c99-compat @r{(CとObjective-Cのみ)}
+@item -Wc90-c99-compat @r{(CとObjective-C専用)}
 @opindex Wc90-c99-compat
 @opindex Wno-c90-c99-compat
 ISO C90にはないが、ISO C99にはある機能について警告する。たお手羽、可変長配列の使用、
 @code{long long}型、@code{bool}型、複合定数、指示付きの初期化子など。このオプションは標準モードと
 独立である。傾向は@code{__extension__}に続く式では無効化される。
 
-@item -Wc99-c11-compat @r{(CとObjective-Cのみ)}
+@item -Wc99-c11-compat @r{(CとObjective-C専用)}
 @opindex Wc99-c11-compat
 @opindex Wno-c99-c11-compat
 ISO C99にはないが、ISO C11にはある機能について警告する。例えば、匿名構造体と共用体の使用、
@@ -4776,23 +4776,23 @@ ISO C99にはないが、ISO C11にはある機能について警告する。例
 @code{_Alignas}指定子、@code{Alignof}演算子、@code{_Generic}キーワードなど。
 このオプションは標準モードと独立である。傾向は@code{__extension__}に続く式では無効化される。
 
-@item -Wc++-compat @r{(CとObjective-Cのみ)}
+@item -Wc++-compat @r{(CとObjective-C専用)}
 @opindex Wc++-compat
 ISO CとISO C++の共通部分集合の外側のISO C構造について警告する。例えば、@code{void *}から
 非@code{void}型へのポインタへの暗黙の変換の要求。
 
-@item -Wc++11-compat @r{(C++とObjective-C++のみ)}
+@item -Wc++11-compat @r{(C++とObjective-C++専用)}
 @opindex Wc++11-compat
 ISO C++1998とISO C++2011で意味が異なるC++構造について警告する。例えば、ISO C++ 2011で
 キーワードであるISO C++1998での識別子。この警告は@option{-Wnarrowing}を有効にし、
 @option{-Wall}で有効になる。
 
-@item -Wc++14-compat @r{(C++とObjective-C++のみ)}
+@item -Wc++14-compat @r{(C++とObjective-C++専用)}
 @opindex Wc++14-compat
 ISO C++2011とISO C++2014で意味が異なるC++構造について警告する。
 この警告は@option{-Wall}で有効になる。
 
-@item -Wc++1z-compat @r{(C++とObjective-C++のみ)}
+@item -Wc++1z-compat @r{(C++とObjective-C++専用)}
 @opindex Wc++1z-compat
 ISO C++ 2014と来るISO C++ 2017(?)の間で意味が異なるC++構造について警告する。これは@option{-Wall}で有効になる。
 
@@ -4834,7 +4834,7 @@ C++をコンパイルするとき、文字列定数から@code{char *}への廃�
 @opindex Wno-clobbered
 変数が@code{longjmp}や@code{vfork}で変わるかもしれないときに警告する。これは@option{-Wextra}で有効である。
 
-@item -Wconditionally-supported @r{(C++とObjective-C++のみ)}
+@item -Wconditionally-supported @r{(C++とObjective-C++専用)}
 @opindex Wconditionally-supported
 @opindex Wno-conditionally-supported
 条件付きでサポートされる(C++11 [intro.defs])構造について警告する。
@@ -4872,9 +4872,7 @@ C++では、ユーザ定義の混乱したオーバーロード解決、@code{vo
 @item -Wdangling-else
 @opindex Wdangling-else
 @opindex Wno-dangling-else
-Warn about constructions where there may be confusion to which
-@code{if} statement an @code{else} branch belongs.  Here is an example of
-such a case:
+どの@code{if}に@code{else}分岐が属しているか混乱するかもしれない構造に警告する。ここの例の場合、
 
 @smallexample
 @group
@@ -4888,15 +4886,7 @@ such a case:
 @end group
 @end smallexample
 
-In C/C++, every @code{else} branch belongs to the innermost possible
-@code{if} statement, which in this example is @code{if (b)}.  This is
-often not what the programmer expected, as illustrated in the above
-example by indentation the programmer chose.  When there is the
-potential for this confusion, GCC issues a warning when this flag
-is specified.  To eliminate the warning, add explicit braces around
-the innermost @code{if} statement so there is no way the @code{else}
-can belong to the enclosing @code{if}.  The resulting code
-looks like this:
+C・C++では、それぞれの@code{else}分岐は可能な最も内側の@code{if}文に属し、この例では@code{if (b)}である。これはしばしば、上の例でプログラマの選択したインデントで示されるように、プログラマの期待した通りでない。この混乱の潜在性があるときには、GCCはこのフラグが指定されたときには警告を発する。警告を除去するためには、@code{else}が囲っている@code{if}に属すことができないように最も内側の@code{if}の周りに明示的なカッコを加える。結果のコードはこのようになる。
 
 @smallexample
 @group
@@ -4912,7 +4902,7 @@ looks like this:
 @end group
 @end smallexample
 
-This warning is enabled by @option{-Wparentheses}.
+この警告は@option{-Wparentheses}で有効になる。
 
 @item -Wdate-time
 @opindex Wdate-time
@@ -4932,7 +4922,7 @@ This warning is enabled by @option{-Wparentheses}.
 @item -Wempty-body
 @opindex Wempty-body
 @opindex Wno-empty-body
-@code{if}, @code{else}, @code{do while}文に空の本体が現れると警告する。これは@option{0Wextra}でも有効になる。
+@code{if}, @code{else}, @code{do while}文に空の本体が現れると警告する。これは@option{-Wextra}でも有効になる。
 
 @item -Wenum-compare
 @opindex Wenum-compare
@@ -4940,7 +4930,7 @@ This warning is enabled by @option{-Wparentheses}.
 異なる列挙型の値間の比較について警告する。C++では条件式での列挙の不一致も診断して警告はデフォルトで有効になる。
 Cではこの警告は@option{-Wall}で有効になる。
 
-@item -Wjump-misses-init @r{(C, Objective-C only)}
+@item -Wjump-misses-init @r{(C, Objective-C専用)}
 @opindex Wjump-misses-init
 @opindex Wno-jump-misses-init
 @code{goto}文か@code{switch}文が変数の初期化をまたいで飛ぶか、初期化された後にラベルへと戻って飛ぶときに警告する。
@@ -5007,11 +4997,8 @@ void operator delete[] (void *, std::size_t) noexcept;
 @item -Wmemset-elt-size
 @opindex Wmemset-elt-size
 @opindex Wno-memset-elt-size
-Warn for suspicious calls to the @code{memset} built-in function, if the
-first argument references an array, and the third argument is a number
-equal to the number of elements, but not equal to the size of the array
-in memory.  This indicates that the user has omitted a multiplication by
-the element size.  This warning is enabled by @option{-Wall}.
+疑わしい@code{memset}組み込み関数への呼び出しを警告する。もし最初の引数が配列への参照で、
+三番目の引数が要素数と等しいが、メモリ内での配列サイズと等しくない場合。これはユーザが要素サイズで掛け忘れたことを示している。この警告は@option{-Wall}で有効になる。
 
 @item -Wmemset-transposed-args
 @opindex Wmemset-transposed-args
@@ -5078,8 +5065,7 @@ if ((!a) > 1) @{ @dots{} @}
 @item -Wno-builtin-declaration-mismatch
 @opindex Wno-builtin-declaration-mismatch
 @opindex Wbuiltin-declaration-mismatch
-Warn if a built-in function is declared with the wrong signature.
-This warning is enabled by default.
+組み込み関数が間違ったシグネチャで宣言されたら警告する。この警告はデフォルトで有効である。
 
 @item -Wno-builtin-macro-redefined
 @opindex Wno-builtin-macro-redefined
@@ -5087,23 +5073,23 @@ This warning is enabled by default.
 いくつかの組み込みマクロが再定義された時に警告しない。これは@code{__TIMESTAMP__}, @code{__TIME__},
 @code{__DATE__}, @code{__FILE__}, @code{__BASE_FILE__}の再定義の警告を抑制する。
 
-@item -Wstrict-prototypes @r{(CとObjective-Cのみ)}
+@item -Wstrict-prototypes @r{(CとObjective-C専用)}
 @opindex Wstrict-prototypes
 @opindex Wno-strict-prototypes
 関数が引数型を指定しないで宣言・定義されたら警告する。（旧式の関数定義は続く宣言は引数型を指定していれば警告なしで受け入れる）
 
-@item -Wold-style-declaration @r{(CとObjective-Cのみ)}
+@item -Wold-style-declaration @r{(CとObjective-C専用)}
 @opindex Wold-style-declaration
 @opindex Wno-old-style-declaration
 C標準によれば、宣言での時代遅れの使用を警告する。例えば、@code{static}のような格納クラス指定子が宣言の先頭でないならば警告する。
 この警告は@option{-Wextra}でも有効になる。
 
-@item -Wold-style-definition @r{(CとObjective-Cのみ)}
+@item -Wold-style-definition @r{(CとObjective-C専用)}
 @opindex Wold-style-definition
 @opindex Wno-old-style-definition
 旧式の関数定義が使われたら警告する。警告は前のプロトタイプがあっても与えられる。
 
-@item -Wmissing-parameter-type @r{(CとObjective-Cのみ)}
+@item -Wmissing-parameter-type @r{(CとObjective-C専用)}
 @opindex Wmissing-parameter-type
 @opindex Wno-missing-parameter-type
 関数パラメータがK&R式関数での方指定しなしで宣言されている。
@@ -5114,7 +5100,7 @@ void foo(bar) @{ @}
 
 この警告は@option{-Wextra}でも有効になる。
 
-@item -Wmissing-prototypes @r{(CとObjective-Cのみ)}
+@item -Wmissing-prototypes @r{(CとObjective-C専用)}
 @opindex Wmissing-prototypes
 @opindex Wno-missing-prototypes
 グローバル関数が前のプロトタイプ宣言なしで定義されていると警告する。
@@ -5225,7 +5211,7 @@ ISO 10646はそれらすべても同様に標準系に変換する@dfn{NFKC}正�
 ベクトル化コストモデルがユーザによって設定されたOpenMPおよびCilk Plus simdディレクティブを上書きしたら警告する。
 @option{-fsimd-cost-model=unlimited}はコストモデルを和らげるために使うことができる。
 
-@item -Woverride-init @r{(CとObjective-Cのみ)}
+@item -Woverride-init @r{(CとObjective-C専用)}
 @opindex Woverride-init
 @opindex Wno-override-init
 @opindex W
@@ -5237,7 +5223,7 @@ ISO 10646はそれらすべても同様に標準系に変換する@dfn{NFKC}正�
 この警告は@option{-Wextra}に含まれる。これなしで他の@option{-Wextra}警告を得るには、@option{-Wextra
 -Wno-override-init}を使う。
 
-@item -Woverride-init-side-effects @r{(CとObjective-Cのみ)}
+@item -Woverride-init-side-effects @r{(CとObjective-C専用)}
 @opindex Woverride-init-side-effects
 @opindex Wno-override-init-side-effects
 指示付きの初期化子(@pxref{Designated Inits, , 指示付きの初期化子})を使った時に副作用付きの初期化フィールドを
@@ -5295,10 +5281,9 @@ struct foo
 @item -Wrestrict
 @opindex Wrestrict
 @opindex Wno-restrict
-Warn when an argument passed to a restrict-qualified parameter
-aliases with another argument.
+引数に他の引数の別名になっているrestrictが指定されたパラメータを渡しているときに警告する。
 
-@item -Wnested-externs @r{(CとObjective-Cのみ)}
+@item -Wnested-externs @r{(CとObjective-C専用)}
 @opindex Wnested-externs
 @opindex Wno-nested-externs
 @code{extern}宣言が関数内に現れたら警告する。
@@ -5319,7 +5304,7 @@ aliases with another argument.
 コンパイラははインライン化される関数のサイズと現在の関数ですでにされたインラインの量を考慮する。
 したがって、ソースプログラムでのの一見ささいな変化が@option{-Winline}で生成される警告を現れたり、消したりする、
 
-@item -Wno-invalid-offsetof @r{(C++とObjective-C++のみ)}
+@item -Wno-invalid-offsetof @r{(C++とObjective-C++専用)}
 @opindex Wno-invalid-offsetof
 @opindex Winvalid-offsetof
 非POD型の@code{offsetof}マクロの適用の警告を抑制する。2014 C++標準によれば、非標準レイアウト型への@code{offset}の適用は未定義である。
@@ -5331,12 +5316,7 @@ aliases with another argument.
 @item -Wint-in-bool-context
 @opindex Wint-in-bool-context
 @opindex Wno-int-in-bool-context
-Warn for suspicious use of integer values where boolean values are expected,
-such as conditional expressions (?:) using non-boolean integer constants in
-boolean context, like @code{if (a <= b ? 2 : 3)}.  Or left shifting of signed
-integers in boolean context, like @code{for (a = 0; 1 << a; a++);}.  Likewise
-for all kinds of multiplications regardless of the data type.
-This warning is enabled by @option{-Wall}.
+@code{if（a <= b ? 2 : 3）}のような、ブール値のコンテキストでの非ブール値整数定数を使った条件式（？:)のような、ブール値が予想される場所での整数値の疑わしい使用を警告する。または、@code{for（a = 0; 1 << a; a ++）;}のような、ブール値のコンテキスト内の符号付きの左シフト整数。同様にデータの種類に関係なく、あらゆる種類の乗算。この警告は@option {-Wall}によって有効になる。
 
 @item -Wno-int-to-pointer-cast
 @opindex Wno-int-to-pointer-cast
@@ -5345,7 +5325,7 @@ This warning is enabled by @option{-Wall}.
 @option{Wint-to-pointer-cast}はデフォルトで有効である。
 
 
-@item -Wno-pointer-to-int-cast @r{(CとObjective-Cのみ)}
+@item -Wno-pointer-to-int-cast @r{(CとObjective-C専用)}
 @opindex Wno-pointer-to-int-cast
 @opindex Wpointer-to-int-cast
 ポインタから異なるサイズの整数型へのキャストの警告を抑制する。
@@ -5394,20 +5374,13 @@ This warning is enabled by @option{-Wall}.
 コードで可変長配列が使われたら警告する。@option{-Wno-vla}は@option{-Wpedantic}から可変長配列の警告を止める。
 
 @item -Wvla-larger-than=@var{n}
-If this option is used, the compiler will warn on uses of
-variable-length arrays where the size is either unbounded, or bounded
-by an argument that can be larger than @var{n} bytes.  This is similar
-to how @option{-Walloca-larger-than=@var{n}} works, but with
-variable-length arrays.
+このオプションが使われると、コンパイラはサイズが制限されていないか、@var{n}バイト以上になりうる引数によって制限されている使用について警告する。これは@option{-Walloca-larger-than=@var{n}}の動きと同様だが、可変長配列に対して働く。
 
-Note that GCC may optimize small variable-length arrays of a known
-value into plain arrays, so this warning may not get triggered for
-such arrays.
+GCCは既知の値の小さい可変長配列をただの配列に最適化するかもしれず、したがって、そのような配列では警告が発せられないかもしれないことに注意する。
 
-This warning is not enabled by @option{-Wall}, and is only active when
-@option{-ftree-vrp} is active (default for @option{-O2} and above).
+この警告は@option{-Wall}によっては有効化されず、@option{-ftree-vrp}が活性（@option{-O2}以上のデフォルト）のときだけ活性になる。
 
-See also @option{-Walloca-larger-than=@var{n}}.
+@option{-Walloca-larger-than=@var{n}}も見よ。
 
 @item -Wvolatile-register-var
 @opindex Wvolatile-register-var
@@ -5422,7 +5395,7 @@ See also @option{-Walloca-larger-than=@var{n}}.
 単にGCCでの最適化器がコードを効果的に扱うことができないこと意味する。しばしば、問題はコードが大きすぎるか複雑すぎることにある。
 GCCは最適化自身が大量の過度の時間を取りそうな場合はプログラムの最適化を拒否する。
 
-@item -Wpointer-sign @r{(CとObjective-Cのみ)}
+@item -Wpointer-sign @r{(CとObjective-C専用)}
 @opindex Wpointer-sign
 @opindex Wno-pointer-sign
 異なる符号性のポインタ引数渡しか代入について警告する。このオプションはCとObjective-Cでのみサポートされている。
@@ -5444,14 +5417,14 @@ C99では4095に引き上げられた。C++98では規範的な最小最大値�
 
 このオプションは@option{-pedantic}に含まれていて、@option{-Wno-overlength-strings}で無効化できる。
 
-@item -Wunsuffixed-float-constants @r{(CとObjective-Cのみ)}
+@item -Wunsuffixed-float-constants @r{(CとObjective-C専用)}
 @opindex Wunsuffixed-float-constants
 
 接尾辞がないどんな浮動小数点定数にも警告を発する。@option{-Wsystem-headers}と一緒に使った時は
 システムヘッダ内のそのような定数に警告する。これはC99への10進浮動小数点拡張からのプラグマ
 @code{FLOAT_CONST_DECIMAL64}と一緒に使うコードを準備するときに役立つ。
 
-@item -Wno-designated-init @r{(CとObjective-Cのみ)}
+@item -Wno-designated-init @r{(CとObjective-C専用)}
 位置の初期化子が@code{designated_init}属性をマークされた構造体を初期化するために使われたら警告する。
 
 @item -Whsa
@@ -5635,9 +5608,7 @@ DW_AT_producer属性に追加する。オプションはコンパイラのバー
 @item -gno-column-info
 @opindex gcolumn-info
 @opindex gno-column-info
-Emit location column information into DWARF debugging information, rather
-than just file and line.
-This option is disabled by default.
+ファイルと行だけでなく、DWARFデバッグ情報に位置情報の列情報を出力する。このオプションはデフォルトで無効になっている。
 
 @item -gz@r{[}=@var{type}@r{]}
 @opindex gz
@@ -6505,10 +6476,7 @@ ELFのようなあるオブジェクトフォーマットで、動的リンカ�
 
 @item -fshrink-wrap-separate
 @opindex fshrink-wrap-separate
-Shrink-wrap separate parts of the prologue and epilogue separately, so that
-those parts are only executed when needed.
-This option is on by default, but has no effect unless @option{-fshrink-wrap}
-is also turned on and the target supports this.
+プロローグとエピローグの別々の部分を個別に縮小してラップし、必要なときにのみ実行するようにする。このオプションはデフォルトではオンになっているが、@option{-fshrink-wrap}もオンになっていてターゲットがこれをサポートしていないと効果はない。
 
 @item -fcaller-saves
 @opindex fcaller-saves
@@ -6545,11 +6513,7 @@ is also turned on and the target supports this.
 
 @item -fcode-hoisting
 @opindex fcode-hoisting
-Perform code hoisting.  Code hoisting tries to move the
-evaluation of expressions executed on all paths to the function exit
-as early as possible.  This is especially useful as a code size
-optimization, but it often helps for code speed as well.
-This flag is enabled by default at @option{-O2} and higher.
+コード巻上げを実行する。 コード巻上げは、すべてのパスで実行された式の評価を可能な限り早く関数出口に移動しようとする。これはコードサイズの最適化として特に有用だが、コードスピードにも役立つ。このフラグは、デフォルトでは@option{-O2}以上で有効になっている。
 
 @item -ftree-pre
 @opindex ftree-pre
@@ -6847,10 +6811,7 @@ ENDDO
 
 @item -fstore-merging
 @opindex fstore-merging
-Perform merging of narrow stores to consecutive memory addresses.  This pass
-merges contiguous stores of immediate values narrower than a word into fewer
-wider stores to reduce the number of instructions.  This is enabled by default
-at @option{-O2} and higher as well as @option{-Os}.
+狭い記憶域を連続したメモリアドレスにマージする。このパスは、命令の数を減らすために、ワード長よりも狭い直接値の隣接するストアをより少ないより広いストアにマージする。 これはデフォルトでは@option{-O2}以上、@option{-Os}で有効になっている。
 
 @item -ftree-ter
 @opindex ftree-ter
@@ -6944,17 +6905,8 @@ OpenMPかCilk PLus simdディレクティブマークされたループのベク
 
 @item -fno-printf-return-value
 @opindex fno-printf-return-value
-Do not substitute constants for known return value of formatted output
-functions such as @code{sprintf}, @code{snprintf}, @code{vsprintf}, and
-@code{vsnprintf} (but not @code{printf} of @code{fprintf}).  This
-transformation allows GCC to optimize or even eliminate branches based
-on the known return value of these functions called with arguments that
-are either constant, or whose values are known to be in a range that
-makes determining the exact return value possible.  For example, when
-@option{-fprintf-return-value} is in effect, both the branch and the
-body of the @code{if} statement (but not the call to @code{snprint})
-can be optimized away when @code{i} is a 32-bit or smaller integer
-because the return value is guaranteed to be at most 8.
+@code{sprintf}、@code{vprintf}、@code{vsprintf}、@code{vsnprintf}のようなフォーマットされた出力関数の既知の戻り値に定数を代入しない。 （しかし@code{sprintf}と@code{fprintf}はしない）。
+この変換により、GCCは、定数であるか、または正確な戻り値を可能にする範囲内の値であることが知られている引数で呼び出される、これらの関数の既知の戻り値に基づいて分岐を最適化または排除することさえできる。 たとえば、@option{-fprintf-return-value}が有効な場合、@code{if}文の分岐と本体（@code{snprintf}の呼び出しではない） は、@code{i}が32ビット以下の整数のときは、戻り値が多くても8であると保証されているので最適化で消すことができる。
 
 @smallexample
 char buf[9];
@@ -6962,10 +6914,8 @@ if (snprintf (buf, "%08x", i) >= sizeof buf)
   @dots{}
 @end smallexample
 
-The @option{-fprintf-return-value} option relies on other optimizations
-and yields best results with @option{-O2}.  It works in tandem with the
-@option{-Wformat-overflow} and @option{-Wformat-truncation} options.
-The @option{-fprintf-return-value} option is enabled by default.
+@option{-f printf-return-value}オプションは、他の最適化に依存し、@option{-O2}で最良の結果をもたらす。 @option{-Wformat-overflow}オプションと@option{-Wformat-truncation}オプションと連携して動作する。
+@option {-fprintf-return-value}オプションは、デフォルトで有効になっている。
 
 @item -fno-peephole
 @itemx -fno-peephole2
@@ -7115,10 +7065,7 @@ C（とC++）では、これは符号付き数での算術での桁あふれは�
 レベル@option{-O2}, @option{-O3}で有効である。
 
 @item -flimit-function-alignment
-If this option is enabled, the compiler tries to avoid unnecessarily
-overaligning functions. It attempts to instruct the assembler to align
-by the amount specified by @option{-falign-functions}, but not to
-skip more bytes than the size of the function.
+このオプションを有効にすると、コンパイラは不要なオーバーアライン機能を回避しようとする。 @option{-falign-functions}で指定された量だけ整列するが、関数のサイズよりも多くのバイトをスキップしないようにアセンブラに指示するが。
 
 @item -falign-labels
 @itemx -falign-labels=@var{n}
@@ -7599,21 +7546,11 @@ IEEEシグナルNaNがユーザ可視のトラップを浮動小数点操作の�
 
 @item -fno-fp-int-builtin-inexact
 @opindex fno-fp-int-builtin-inexact
-Do not allow the built-in functions @code{ceil}, @code{floor},
-@code{round} and @code{trunc}, and their @code{float} and @code{long
-double} variants, to generate code that raises the ``inexact''
-floating-point exception for noninteger arguments.  ISO C99 and C11
-allow these functions to raise the ``inexact'' exception, but ISO/IEC
-TS 18661-1:2014, the C bindings to IEEE 754-2008, does not allow these
-functions to do so.
+組み込み関数@code{ceil}、@code{floor}、@code{round}と@code{trunc}、およびそれらの@code{float}および@code{long double}変種に非整数引数で「不正確」浮動小数点例外を発生させることを許可しない。ISO C99とC11は、これらの関数が「不正確」例外を発生させることを許しているが、IEEE 754-2008へのCバインディングであるISO / IEC TS 18661-1：2014では、そうすることは許可していない。
 
-The default is @option{-ffp-int-builtin-inexact}, allowing the
-exception to be raised.  This option does nothing unless
-@option{-ftrapping-math} is in effect.
+デフォルトは@option{-ffp-int-builtin-inexact}で、例外を発生させる。 このオプションは、@option{-ftrapping-math}が有効でない限りは何も行わない。
 
-Even if @option{-fno-fp-int-builtin-inexact} is used, if the functions
-generate a call to a library function then the ``inexact'' exception
-may be raised if the library implementation does not follow TS 18661.
+@option {-fno-fp-int-builtin-inexact}が使用されていても、関数がライブラリ関数の呼び出しを生成した場合、ライブラリ実装がTS 18661に従わない場合、「不正確」例外が発生する可能性がある。
 
 @item -fsingle-precision-constant
 @opindex fsingle-precision-constant
@@ -7724,8 +7661,7 @@ RTLループ最適化器でループ不変移動パスを有効にする。レ�
 
 @item -fsplit-loops
 @opindex fsplit-loops
-Split a loop into two if it contains a condition that's always true
-for one side of the iteration space and false for the other.
+反復空間の一方の側で常に真であり、他方で偽である条件を含む場合、ループを2つに分割する。
 
 @item -funswitch-loops
 @opindex funswitch-loops
@@ -7813,14 +7749,7 @@ RTLのif変換がブロック周りの条件付き分岐を削除して条件付
 
 @item max-rtl-if-conversion-predictable-cost
 @item max-rtl-if-conversion-unpredictable-cost
-RTL if-conversion will try to remove conditional branches around a block
-and replace them with conditionally executed instructions.  These parameters
-give the maximum permissible cost for the sequence that would be generated
-by if-conversion depending on whether the branch is statically determined
-to be predictable or not.  The units for this parameter are the same as
-those for the GCC internal seq_cost metric.  The compiler will try to
-provide a reasonable default for this parameter using the BRANCH_COST
-target macro.
+RTL if-conversionは、ブロックの周りの条件分岐を削除し、それらを条件付きで実行された命令に置き換えようとする。 これらのパラメータは、ブランチが予測可能であると静的に決定されているかどうかに応じて、if変換によって生成されるシーケンスの許容最大コストを示す。 このパラメータの単位は、GCCの内部seq_costメトリックの単位と同じである。 コンパイラは、BRANCH_COSTターゲットマクロを使用して、このパラメータに合理的なデフォルトを提供しようとする。
 
 @item max-crossjump-edges
 クロス・ジャンプのために考慮する入って来るエッジの最大数。@option{-fcrossjumping}により用いられるアルゴリズムは、
@@ -7993,12 +7922,10 @@ bbと比較する類似のbbの最大量。これは木末端マージの二次�
 デフォルト値は2である。
 
 @item store-merging-allow-unaligned
-Allow the store merging pass to introduce unaligned stores if it is legal to
-do so.  The default value is 1.
+ストアのマージパスで、アライメントの合わないストアを導入することが合法的である場合は、許可する。 デフォルト値は1である。
 
 @item max-stores-to-merge
-The maximum number of stores to attempt to merge into wider stores in the store
-merging pass.  The minimum value is 2 and the default is 64.
+ストアのマージパスでより広いストアにマージしようとするストアの最大数。 最小値は2、デフォルトは64である。
 
 @item max-unrolled-insns
 ループは展開されなければならないかもしれない命令の最大値。もしループが展開されたなら、このパラメータは
@@ -8037,8 +7964,7 @@ merging pass.  The minimum value is 2 and the default is 64.
 単一ループでの非分岐された分岐の最大値。
 
 @item max-loop-headers-insns
-The maximum number of insns in loop header duplicated by the copy loop headers
-pass.
+コピーループヘッダによって複製されるループヘッダでのinsnの最大数。
 
 @item lim-expensive
 ループ不変移動での高価な式の最小コスト。
