@@ -7984,8 +7984,8 @@ bbと比較する類似のbbの最大量。これは木末端マージの二次�
 Average number of iterations of a loop.
 
 @item dse-max-object-size
-Maximum size (in bytes) of objects tracked bytewise by dead store elimination.
-Larger values may result in larger compilation times.
+デッド・ストア除去によって追従されるオブジェクトの最大サイズ（バイト単位）。
+値を大きくするとコンパイル時間が長くなる可能性がある。
 
 @item scev-max-expr-size
 スカラー変化解析で使われる式のサイズの境界。大きな式は解析器を遅くする。
@@ -7994,8 +7994,7 @@ Larger values may result in larger compilation times.
 スカラー変化解析器での式の複雑性の境界。複雑な式は解析器を遅くする。
 
 @item max-tree-if-conversion-phi-args
-Maximum number of arguments in a PHI supported by TREE if conversion
-unless the loop is marked with simd pragma.
+ループがsimdプラグマでマークされていない場合、TREEによってサポートされているPHIの引数の最大数。
 
 @item vect-max-version-for-alignment-checks
 ベクトル化でのアラインメントのループバージョン化をしている時に行われる実行時チェックの最大数。
@@ -8342,9 +8341,8 @@ WHOPR（推定された命令で）のための最小の分割のサイズ。
 これは、非常に小さいプログラムをあまりに多くの分割に分けることの費用を防ぐ。
 
 @item lto-max-partition
-Size of max partition for WHOPR (in estimated instructions).
-to provide an upper bound for individual size of partition.
-Meant to be used only with balanced partitioning.
+パーティションの個々のサイズの上限を提供するWHOPRの最大パーティションサイズ（推定命令内）。
+平衡パーティショニングでのみ使用することを意味する。
 
 @item cxx-max-namespaces-for-diagnostic-help
 C++名検索が識別子のために失敗するとき、提案について相談する名前空間の最大数。
@@ -8577,19 +8575,12 @@ arcが唯一の出口であるかブロックへの唯一の入り口である�
 @item -fprofile-update=@var{method}
 @opindex fprofile-update
 
-Alter the update method for an application instrumented for profile
-feedback based optimization.  The @var{method} argument should be one of
-@samp{single}, @samp{atomic} or @samp{prefer-atomic}.
-The first one is useful for single-threaded applications,
-while the second one prevents profile corruption by emitting thread-safe code.
+プロファイルフィードバックベースの最適化のために計測されたアプリケーションの更新メソッドを変更する。 @var{method}引数は@samp{single}、@samp{atomic}または@samp{prefer-atomic}のいずれかでなければならない。
+最初のものはシングルスレッドのアプリケーションには便利だが、2番目のものはスレッドセーフなコードを出力することでプロファイルの破損を防ぎます。
 
-@strong{Warning:} When an application does not properly join all threads
-(or creates an detached thread), a profile file can be still corrupted.
+@strong{警告:} アプリケーションがすべてのスレッドを正しくジョインしない場合（または分離されたスレッドを作成する）は、プロファイルファイルはまだ破損する可能性がある。
 
-Using @samp{prefer-atomic} would be transformed either to @samp{atomic},
-when supported by a target, or to @samp{single} otherwise.  The GCC driver
-automatically selects @samp{prefer-atomic} when @option{-pthread}
-is present in the command line.
+@samp{prefer-atomic}を使うと、ターゲットでサポートされている場合は@samp{atomic}に、それ以外の場合は@samp {single}に変換される。 コマンドラインに@option{-pthread}がある場合、GCCドライバは自動的に@samp{prefer-atomic}を選択する。
 
 @item -fsanitize=address
 @opindex fsanitize=address
@@ -8614,10 +8605,6 @@ Linuxカーネル用のAddressSanitizerを有効にする。詳しい詳細は@u
 サポートされているオプションのリストは@url{https://github.com/google/sanitizers/wiki/ThreadSanitizerFlags}を見よ。
 このオプションは@option{-fsanitize=address}, @option{-fsanitize=leak},
 かつ/及び@option{-fcheck-pointer-bounds}と組み合わせることはできない。
-
-Note that sanitized atomic builtins cannot throw exceptions when
-operating on invalid memory addresses with non-call exceptions
-(@option{-fnon-call-exceptions}).
 
 @item -fsanitize=leak
 @opindex fsanitize=leak
@@ -8645,16 +8632,11 @@ This option has two suboptions, @option{-fsanitize=shift-base} and
 
 @item -fsanitize=shift-exponent
 @opindex fsanitize=shift-exponent
-This option enables checking that the second argument of a shift operation
-is not negative and is smaller than the precision of the promoted first
-argument.
+このオプションは、シフト操作の第2引数が負ではなく、昇格した第1引数の精度よりも小さいことをチェックする。
 
 @item -fsanitize=shift-base
 @opindex fsanitize=shift-base
-If the second argument of a shift operation is within range, check that the
-result of a shift operation is not undefined.  Note that what exactly is
-considered undefined differs slightly between C and C++, as well as between
-ISO C90 and C99, etc.
+シフト演算の2番目の引数が範囲内にある場合は、シフト演算の結果が未定義でないことを確認する。 正確には未定義とみなされるものは、CとC ++の間、およびISO C90とC99の間など、わずかに異る。
 
 @item -fsanitize=integer-divide-by-zero
 @opindex fsanitize=integer-divide-by-zero
@@ -8793,12 +8775,8 @@ null値の返却を検知する。
 @option{-fsanitize-recover=all}と@option{-fno-sanitize-recover=all}も受理され、前者はそれをサポートするすべてのサニタイザ
 の回復を有効にし、後者はそれをサポートするすべてのサニタイザで回復を無効化する。
 
-Even if a recovery mode is turned on the compiler side, it needs to be also
-enabled on the runtime library side, otherwise the failures are still fatal.
-The runtime library defaults to @code{halt_on_error=0} for
-ThreadSanitizer and UndefinedBehaviorSanitizer, while default value for
-AddressSanitizer is @code{halt_on_error=1}. This can be overridden through
-setting the @code{halt_on_error} flag in the corresponding environment variable.
+コンパイラー側でリカバリー・モードをオンにしても、ランタイム・ライブラリー側でもリカバリー・モードを使用可能にする必要がある。そうしないと、障害は依然として致命的である。
+実行時ライブラリのデフォルトはThreadSanitizerとUndefinedBehaviorSanitizerでは@code{halt_on_error = 0}であるが、AddressSanitizerのデフォルト値は@code{halt_on_error = 1}である。 これは、対応する環境変数の@code{halt_on_error}フラグをセットすることでオーバーライドできる。
 
 明示的な@var{opts}パラメータなしの構文は廃止予定である。それは以下のOPTSを指定したのと
 等価である。
@@ -8809,8 +8787,7 @@ undefined,float-cast-overflow,float-divide-by-zero,bounds-strict
 
 @item -fsanitize-address-use-after-scope
 @opindex fsanitize-address-use-after-scope
-Enable sanitization of local variables to detect use-after-scope bugs.
-The option sets @option{-fstack-reuse} to @samp{none}.
+スコープ使用後のバグを検出するためのローカル変数サニタイズを有効にする。このオプションは@option{-fstack-reuse}を@samp{none}に設定します。
 
 @item -fsanitize-undefined-trap-on-error
 @opindex fsanitize-undefined-trap-on-error
@@ -8876,9 +8853,7 @@ Bounds Checker builtins}を見よ。
 @item -fchkp-flexible-struct-trailing-arrays
 @opindex fchkp-flexible-struct-trailing-arrays
 @opindex fno-chkp-flexible-struct-trailing-arrays
-Forces Pointer Bounds Checker to treat all trailing arrays in structures as
-possibly flexible.  By default only array fields with zero length or that are
-marked with attribute bnd_variable_size are treated as flexible.
+ポインタ境界チェッカーに、構造内のすべての末尾の配列を可変長として扱うように強制する。 デフォルトでは、長さがゼロの配列フィールドまたは属性bnd_variable_sizeでマークされた配列フィールドのみが可変長として扱われる。
 
 @item -fchkp-narrow-to-innermost-array
 @opindex fchkp-narrow-to-innermost-array
@@ -9146,11 +9121,7 @@ C99とC++拡張された識別子では、関数名はUTF-8で与えられてい
 あなたが@option{-E}オプションを使用するならば、何もプリプロセス以外はされない。
 プリプロセッサ出力を実際のコンパイルに不適当であるようにするので、これらのオプションのいくらかは@option{-E}と共にだけ意味をなす。
 
-In addition to the options listed here, there are a number of options 
-to control search paths for include files documented in 
-@ref{Directory Options}.  
-Options to control preprocessor diagnostics are listed in 
-@ref{Warning Options}.
+ここに挙げたオプションに加えて、@ref{Directory Options}に記述されているインクルードファイルの検索パスを制御するオプションがいくつかあります。プリプロセッサ診断を制御するオプションは、@ref{Warning Options}にリストされている。.
 
 @table @gcctabopt
 @include cppopts.texi
@@ -9309,11 +9280,7 @@ GCCが特定の機種の欠点を克服するため、および、ある言語�
 
 @item -pthread
 @opindex pthread
-Link with the POSIX threads library.  This option is supported on 
-GNU/Linux targets, most other Unix derivatives, and also on 
-x86 Cygwin and MinGW targets.  On some targets this option also sets 
-flags for the preprocessor, so it should be used consistently for both
-compilation and linking.
+POSIXスレッドライブラリとのリンク。 このオプションは、GNU/Linuxターゲット、その他のほとんどのUnix派生物、x86 CygwinおよびMinGWターゲットでもサポートされている。 いくつかのターゲットでは、このオプションはプリプロセッサのフラグも設定するので、コンパイルとリンクの両方に一貫して使用する必要がある。
 
 @item -rdynamic
 @opindex rdynamic
@@ -9746,24 +9713,22 @@ Unix C コンパイラは伝統的に、共通ブロックにその変数を置�
 
 デフォルトの@option{-fno-verbose-asm}は、追加の情報が取り除かれ、2つのアセンブラファイルを比較するときに役立つ。
 
-The added comments include:
+加えられるコメントは以下を含む。
 
 @itemize @bullet
 
 @item
-information on the compiler version and command-line options,
+コンパイラバージョンとコマンドライン・オプションの情報。
 
 @item
-the source code lines associated with the assembly instructions,
-in the form FILENAME:LINENUMBER:CONTENT OF LINE,
+形式FILENAME:LINENUMBER:CONTENT OF LINEでのアセンブリ命令と結び付けられたソースコード行。
 
 @item
-hints on which high-level expressions correspond to
-the various assembly instruction operands.
+高レベルの式が様々なアセンブリ命令オペランドに対応するヒント。
 
 @end itemize
 
-For example, given this C source file:
+例えば、このCソースファイルが与えられ、
 
 @smallexample
 int test (int n)
@@ -9778,14 +9743,12 @@ int test (int n)
 @}
 @end smallexample
 
-compiling to (x86_64) assembly via @option{-S} and emitting the result
-direct to stdout via @option{-o} @option{-}
-
+@option{-S}経由で(x86_64)アセンブリへとコンパイルし、@option{-o} @option{-}経由で標準出力へと直接生成すると
 @smallexample
 gcc -S test.c -fverbose-asm -Os -o -
 @end smallexample
 
-gives output similar to this:
+このような出力になる。
 
 @smallexample
 	.file	"test.c"
@@ -9826,8 +9789,7 @@ test:
 	.section	.note.GNU-stack,"",@@progbits
 @end smallexample
 
-The comments are intended for humans rather than machines and hence the
-precise format of the comments is subject to change.
+コメントは機械ではなく人間を対象としているため、コメントの正確な形式は変更される可能性がある。
 
 @item -frecord-gcc-switches
 @opindex frecord-gcc-switches
@@ -9957,25 +9919,13 @@ switch分でジャンプテーブルをそれが他のコード生成戦略よ�
 
 @item -ftrampolines
 @opindex ftrampolines
-For targets that normally need trampolines for nested functions, always
-generate them instead of using descriptors.  Otherwise, for targets that
-do not need them, like for example HP-PA or IA-64, do nothing.
+通常ネストされた関数にトランポリンを必要とするターゲットの場合は、記述子を使用する代わりに常に生成する。それ以外の場合、HP-PAやIA-64のようなそれらを必要としないターゲットの場合は何も行わない。
 
-A trampoline is a small piece of code that is created at run time on the
-stack when the address of a nested function is taken, and is used to call
-the nested function indirectly.  Therefore, it requires the stack to be
-made executable in order for the program to work properly.
+トランポリンは、ネストされた関数のアドレスが取られたときに実行時にスタック上に作成され、ネストされた関数を間接的に呼び出すために使用される小さなコードである。したがって、プログラムが正常に動作するためにはスタックを実行可能にする必要があります。
 
-@option{-fno-trampolines} is enabled by default on a language by language
-basis to let the compiler avoid generating them, if it computes that this
-is safe, and replace them with descriptors.  Descriptors are made up of data
-only, but the generated code must be prepared to deal with them.  As of this
-writing, @option{-fno-trampolines} is enabled by default only for Ada.
+@option{-fno-trampolines}は、言語単位で言語に対してデフォルトで有効になっており、コンパイラが安全であると判断して記述子で置き換えないようコンパイラに指示する。記述子はデータのみで構成されているが、生成されたコードはそれらを処理するための準備が必要である。この記事の執筆時点では、@option{-fno-trampolines}はAdaの場合にのみデフォルトで有効になっています。
 
-Moreover, code compiled with @option{-ftrampolines} and code compiled with
-@option{-fno-trampolines} are not binary compatible if nested functions are
-present.  This option must therefore be used on a program-wide basis and be
-manipulated with extreme care.
+さらに、@option{-ftrampolines}でコンパイルされたコードと@option{-fno-trampolines}でコンパイルされたコードは、ネストされた関数が存在する場合、バイナリ互換ではない。したがって、このオプションはプログラム全体で使用する必要があり、細心の注意を払って操作する必要がある。
 
 @item -fvisibility=@r{[}default@r{|}internal@r{|}hidden@r{|}protected@r{]}
 @opindex fvisibility
