@@ -10322,15 +10322,15 @@ text / bss / data / heap / stack / dso開始場所のあるコンパイラ呼び
 @opindex fdump-unnumbered-links
 デバッグダンプをするとき(上の@option{-d}を見よ)、列の前後の命令へのリンクの命令番号を抑制する。
 
-@item -fdump-translation-unit @r{(C++のみ)}
-@itemx -fdump-translation-unit-@var{options} @r{(C++ のみ)}
+@item -fdump-translation-unit @r{(C++専用)}
+@itemx -fdump-translation-unit-@var{options} @r{(C++専用)}
 @opindex fdump-translation-unit
 全翻訳単位の木構造の表現をファイルにダンプする。ファイル名はソースファイル名に@file{.tu}を加えて作られ、
 ファイルは出力ファイルと同じディレクトリに作られる。もし@samp{-@var{options}}形式が使われたなら、
 @var{option}は@option{-fdump-tree}オプションで描写されたようにダンプの詳細を制御する。
 
-@item -fdump-class-hierarchy @r{(C++ only)}
-@itemx -fdump-class-hierarchy-@var{options} @r{(C++ only)}
+@item -fdump-class-hierarchy @r{(C++専用)}
+@itemx -fdump-class-hierarchy-@var{options} @r{(C++専用)}
 @opindex fdump-class-hierarchy
 それぞれのクラス階層と仮想関数テーブルレイアウトの表現をファイルにダンプする。ファイル名はソースファイル名に
 @file{.class}を加えることで作られ、ファイルは出力ファイルと同じ場所に作られる。もし@samp{-@var{options}}形式が使われたなら、
@@ -10449,27 +10449,13 @@ gcc -O2 -ftree-vectorize -fdump-tree-vect-blocks=foo.dump
 
 @enumerate
 @item
-Invoke GCC with @option{-fdump-passes} and in the @file{stderr} output
-look for a code that corresponds to the pass you are interested in.
-For example, the codes @code{tree-evrp}, @code{tree-vrp1}, and
-@code{tree-vrp2} correspond to the three Value Range Propagation passes.
-The number at the end distinguishes distinct invocations of the same pass.
+@option{-fdump-passes}でGCCを起動し、@file{stderr}の出力で目的のパスに対応するコードを探す。
+たとえば、@code{tree-evrp}、@code{tree-vrp1}、@code{tree-vrp2}というコードは、3つの値域伝播パスに対応している。
+最後の数字は、同じパスの別々の呼び出しを区別する。
 @item
-To enable the creation of the dump file, append the pass code to
-the @option{-fdump-} option prefix and invoke GCC with it.  For example,
-to enable the dump from the Early Value Range Propagation pass, invoke
-GCC with the @option{-fdump-tree-evrp} option.  Optionally, you may
-specify the name of the dump file.  If you don't specify one, GCC
-creates as described below.
+ダンプファイルの作成を有効にするには、パスコードを@option{-fdump-}オプション接頭辞に付加し、GCCをそれつきで呼ぶ。 たとえば、初期値範囲伝播パスからダンプを有効にするには、@option{-fdump-tree-evrp}オプションを指定してGCCを起動する。 オプションで、ダンプ・ファイルの名前を指定することもできる。 指定しない場合、GCCは以下のように作成する。
 @item
-Find the pass dump in a file whose name is composed of three components
-separated by a period: the name of the source file GCC was invoked to
-compile, a numeric suffix indicating the pass number followed by the
-letter @samp{t} for tree passes (and the letter @samp{r} for RTL passes),
-and finally the pass code.  For example, the Early VRP pass dump might
-be in a file named @file{myfile.c.038t.evrp} in the current working
-directory.  Note that the numeric codes are not stable and may change
-from one version of GCC to another.
+ピリオドで区切られた3つのコンポーネント、つまりGCCがコンパイルのために呼び出されたソースファイルの名前、パス番号の後に文字パス@samp{t}が続くツリーパスを示す数字サフィックス （RTLパスの場合は@samp{r}）、最後にパスコードを見つける。たとえば、初期VRPパスダンプは、現在の作業ディレクトリの@file{myfile.c.038t.evrp}という名前のファイルに存在する可能性がある。 数値コードは安定しておらず、GCCのあるバージョンから別のバージョンに変更される可能性があることに注意すること。
 @end enumerate
 
 @item -fopt-info
@@ -10929,17 +10915,11 @@ gcc -nostdlib @var{files}@dots{} `gcc -print-libgcc-file-name`
 
 @item -dumpversion
 @opindex dumpversion
-Print the compiler version (for example, @code{3.0}, @code{6.3.0} or @code{7})---and don't do
-anything else.  This is the compiler version used in filesystem paths,
-specs, can be depending on how the compiler has been configured just
-a single number (major version), two numbers separated by dot (major and
-minor version) or three numbers separated by dots (major, minor and patchlevel
-version).
+コンパイラのバージョン（@code {3.0}、@code {6.3.0}、@code {7}など）を出力する。他に何もしない。これはファイルシステムのパスと仕様で使用されるコンパイラのバージョンであり、コンパイラの設定方法によっては、単一の数字（メジャーバージョン）、ドットで区切られた2つの数字（メジャーとマイナーバージョン） ドット（メジャー、マイナー、パッチレベルのバージョン）になる。
 
 @item -dumpfullversion
 @opindex dumpfullversion
-Print the full compiler version, always 3 numbers separated by dots,
-major, minor and patchlevel version.
+完全なコンパイラバージョンを印刷します。常に3つの数字をドット、メジャー、マイナー、パッチレベルで区切る。
 
 @item -dumpspecs
 @opindex dumpspecs
@@ -11117,39 +11097,25 @@ ARM Cortex-A53エラッタ843419用の回避手段を有効化・無効化する
 @item -mno-low-precision-sqrt
 @opindex -mlow-precision-sqrt
 @opindex -mno-low-precision-sqrt
-Enable or disable the square root approximation.
-This option only has an effect if @option{-ffast-math} or
-@option{-funsafe-math-optimizations} is used as well.  Enabling this reduces
-precision of square root results to about 16 bits for
-single precision and to 32 bits for double precision.
-If enabled, it implies @option{-mlow-precision-recip-sqrt}.
+平方根近似を有効または無効にする。このオプションは、@option{-ffast-math}または@option{-funsafe-math-optimizations}を使用する場合にのみ有効である。 これを有効にすると、平方根の精度が単精度の場合は約16ビット、倍精度の場合は32ビットになる。有効な場合は、@option{-mlow-precision-recip-sqrt}を含む。
 
 @item -mlow-precision-div
 @item -mno-low-precision-div
 @opindex -mlow-precision-div
 @opindex -mno-low-precision-div
-Enable or disable the division approximation.
-This option only has an effect if @option{-ffast-math} or
-@option{-funsafe-math-optimizations} is used as well.  Enabling this reduces
-precision of division results to about 16 bits for
-single precision and to 32 bits for double precision.
+除算近似を有効または無効にする。このオプションは、@option{-ffast-math}または@option{-funsafe-math-optimizations}を使用する場合にのみ有効である。 これを有効にすると、除算結果の精度が単精度の場合は約16ビット、倍精度の場合は32ビットになる。
 
 @item -march=@var{name}
 @opindex march
 ターゲットアーキテクチャと、オプションで1つ以上の機能修飾子を指定する。オプションは形式
 @option{-march=@var{arch}@r{@{}+@r{[}no@r{]}@var{feature}@r{@}*}}である。
 
-The permissible values for @var{arch} are @samp{armv8-a},
-@samp{armv8.1-a}, @samp{armv8.2-a}, @samp{armv8.3-a} or @var{native}.
+@var{arch}の可能な値は@samp{armv8-a}, @samp{armv8.1-a}, @samp{armv8.2-a}, @samp{armv8.3-a}, @var{native}である。
 
-The value @samp{armv8.3-a} implies @samp{armv8.2-a} and enables compiler
-support for the ARMv8.3-A architecture extensions.
-
-The value @samp{armv8.2-a} implies @samp{armv8.1-a} and enables compiler
-support for the ARMv8.2-A architecture extensions.
-
+値@samp{armv8.3-a}は@samp{armv8.2-a}を含み、ARMv8.3-Aアーキテクチャ拡張のコンパイラサポートを有効にする。
+値@samp{armv8.2-a}は@samp{armv8.1-a}を含み、ARMv8.2-Aアーキテクチャ拡張のコンパイラサポートを有効にする。
 値@samp{armv8.1-a}は@samp{armv8-a}を含み、ARMv8.1アーキテクチャ拡張のコンパイラサポートを有効にする。
-ときに、@samp{+crc}と@samp{+lse}機能を有効にする。
+特に、@samp{+crc}と@samp{+lse}機能を有効にする。
 
 値@samp{native}はネイティブのAArch64 GNU/Linuxで利用可能であり、コンパイラにホストシステムの
 アーキテクチャを選ばせる。このオプションはもしコンパイラがホストシステムのアーキテクチャを
@@ -11206,18 +11172,11 @@ GCCは@var{name}を（まるで@option{-march}によってのように）アセ�
 
 @item -mpc-relative-literal-loads
 @opindex mpc-relative-literal-loads
-Enable PC-relative literal loads.  With this option literal pools are
-accessed using a single instruction and emitted after each function.  This
-limits the maximum size of functions to 1MB.  This is enabled by default for
-@option{-mcmodel=tiny}.
+PC相対のリテラルロードを有効にする。このオプションを使用すると、リテラルプールは単一の命令を使用してアクセスされ、各関数の後に放出される。 これにより、関数の最大サイズが1MBに制限される。これは、@option{-mcmodel=tiny}に対してデフォルトで有効になっている。
 
 @item -msign-return-address=@var{scope}
 @opindex msign-return-address
-Select the function scope on which return address signing will be applied.
-Permissible values are @samp{none}, which disables return address signing,
-@samp{non-leaf}, which enables pointer signing for functions which are not leaf
-functions, and @samp{all}, which enables pointer signing for all functions.  The
-default value is @samp{none}.
+戻りアドレスの署名が適用される関数スコープを選択する。許容値はリターンアドレスの署名を無効にする@samp{none}、リーフ関数でない関数のポインタ署名を有効にする@samp{non-leaf}、すべての関数のポインタ署名を有効にする@samp{all}。 デフォルト値は@samp{none}である。
 
 @end table
 
@@ -11239,7 +11198,7 @@ Crypto拡張を有効にする。これは拡張SIMDと浮動小数点命令も�
 @item lse
 ラージシステム実行命令を有効にする。これは@option{-march=armv8.1-a}のデフォルトである。
 @item fp16
-Enable FP16 extension.  This also enables floating-point instructions.
+FP16拡張を有効にする、これは浮動小数点命令も有効にする。
 
 @end table
 
@@ -11422,59 +11381,52 @@ ARC EM用にコンパイルする。
 ARC HS用にコンパイルする。
 
 @item em
-Compile for ARC EM CPU with no hardware extensions.
+ハードウェア拡張なしのARC EM CPU用にコンパイルする。
 
 @item em4
-Compile for ARC EM4 CPU.
+ARC EM4 CPU用にコンパイルする。
 
 @item em4_dmips
-Compile for ARC EM4 DMIPS CPU.
+ARC EM4 DMIPS CPU用にコンパイルする。
 
 @item em4_fpus
-Compile for ARC EM4 DMIPS CPU with the single-precision floating-point
-extension.
+単精度浮動小数点数を拡張したARC EM4 DMIPS CPU用にコンパイルする。
 
 @item em4_fpuda
-Compile for ARC EM4 DMIPS CPU with single-precision floating-point and
-double assist instructions.
+単精度浮動小数点および二重支援命令を使用するARC EM4 DMIPS CPU用にコンパイルする。
 
 @item hs
-Compile for ARC HS CPU with no hardware extensions except the atomic
-instructions.
+アトミック命令以外のハードウェア拡張機能を持たないARC HS CPU用にコンパイルする。
 
 @item hs34
-Compile for ARC HS34 CPU.
+ARC HS34 CPU用にコンパイルする。
 
 @item hs38
-Compile for ARC HS38 CPU.
+ARC HS38 CPU用にコンパイルする。
 
 @item hs38_linux
-Compile for ARC HS38 CPU with all hardware extensions on.
+すべてのハードウェア拡張がオンのARC HS38 CPU用にコンパイルする。
 
 @item arc600_norm
-Compile for ARC 600 CPU with @code{norm} instructions enabled.
+@code{norm}命令を有効にしてARC 600 CPU用にコンパイルする。
 
 @item arc600_mul32x16
-Compile for ARC 600 CPU with @code{norm} and 32x16-bit multiply 
-instructions enabled.
+@code{norm}命令と32x16ビット乗算命令を有効にしてARC 600 CPU用にコンパイルする。
 
 @item arc600_mul64
-Compile for ARC 600 CPU with @code{norm} and @code{mul64}-family 
-instructions enabled.
+@code{norm}と@code{mul64}族命令を有効にしてARC 600 CPU用にコンパイルする。
 
 @item arc601_norm
-Compile for ARC 601 CPU with @code{norm} instructions enabled.
+@code{norm}命令を有効にしてARC 601 CPU用にコンパイルする。
 
 @item arc601_mul32x16
-Compile for ARC 601 CPU with @code{norm} and 32x16-bit multiply
-instructions enabled.
+@code {norm}および32x16ビット乗算命令が有効なARC 601 CPU用にコンパイルする。
 
 @item arc601_mul64
-Compile for ARC 601 CPU with @code{norm} and @code{mul64}-family
-instructions enabled.
+@code{norm}と@code{mul64}族命令を使用してARC 601 CPU用にコンパイルする
 
 @item nps400
-Compile for ARC 700 on NPS400 chip.
+NPS400チップ上のARC 700用にコンパイルする。
 
 @end table
 
@@ -11558,7 +11510,7 @@ ARC HSコアのダブルロード・ストア命令を有効にする。
 
 @item -mtp-regno=@var{regno}
 @opindex mtp-regno
-Specify thread pointer register number.
+スレッドポインタレジスタ番号を指定する。
 
 @item -mmpy-option=@var{multo}
 @opindex mmpy-option
@@ -11606,15 +11558,15 @@ Specify thread pointer register number.
 
 @item 7
 @itemx plus_dmpy
-ARC HS SIMD support.
+ARC HS SIMDサポート。
 
 @item 8
 @itemx plus_macd
-ARC HS SIMD support.
+ARC HS SIMDサポート。
 
 @item 9
 @itemx plus_qmacw
-ARC HS SIMD support.
+ARC HS SIMDサポート。
 
 @end table
 
@@ -12041,13 +11993,7 @@ ARC750D用に調整する。
 @c not currently implemented
 @item -mapcs-stack-check
 @opindex mapcs-stack-check
-Generate code to check the amount of stack space available upon entry to
-every function (that actually uses some stack space).  If there is
-insufficient space available then either the function
-@code{__rt_stkovf_split_small} or @code{__rt_stkovf_split_big} is
-called, depending upon the amount of stack space required.  The runtime
-system is required to provide these functions.  The default is
-@option{-mno-apcs-stack-check}, since this produces smaller code.
+（実際にいくつかのスタック領域を使用する）すべての関数への入力時に使用可能なスタック領域の量をチェックするコードを生成する。 十分な空き容量がない場合、必要なスタック領域の量に応じて、@code{__rt_stkovf_split_small}関数または@code{__rt_stkovf_split_big}関数が呼び出される。 ランタイムシステムは、これらの機能を提供する必要がある。 デフォルトは@option{-mno-apcs-stack-check}である。これはより小さなコードを生成するためである。
 
 @c not currently implemented
 @item -mapcs-reentrant
@@ -12111,28 +12057,19 @@ FPU固有の呼び出し規約を使う。
 
 @option{armv4t}より古いアーキテクチャリビジョンは非推奨である。
 
-@option{-march=armv6s-m} is the @samp{armv6-m} architecture with support for
-the (now mandatory) SVC instruction.
+@option{-march=armv6s-m}は、（現在は必須の）SVC命令のサポートのある@samp{armv6-m}アーキテクチャである。
 
-@option{-march=armv6zk} is an alias for @samp{armv6kz}, existing for backwards
-compatibility.
+@option{-march=armv6zk}は@samp{armv6kz}の別名で後方互換のために存在する。
 
 @option{-march=armv7ve}は仮想化拡張のあるarmv7-aである。
 
 @option{-march=armv8-a+crc}はオプションのCRC32拡張のあるARMv8-Aアーキテクチャ用にコードを生成する。
 
-@option{-march=armv8.1-a} enables compiler support for the ARMv8.1-A
-architecture.  This also enables the features provided by
-@option{-march=armv8-a+crc}.
+@option{-march=armv8.1-a}は、ARMv8.1-Aアーキテクチャのコンパイラサポートを有効にする。 これにより、@option{-march=armv8-a+crc}によって提供される機能も有効になる。
 
-@option{-march=armv8.2-a} enables compiler support for the ARMv8.2-A
-architecture.  This also enables the features provided by
-@option{-march=armv8.1-a}.
+@option{-march=armv8.2-a}は、ARMv8.2-Aアーキテクチャのコンパイラサポートを有効にする。 これにより、@option{-march=armv8.1-a}によって提供される機能も有効になる。
 
-@option{-march=armv8.2-a+fp16} enables compiler support for the
-ARMv8.2-A architecture with the optional FP16 instructions extension.
-This also enables the features provided by @option{-march=armv8.1-a}
-and implies @option{-mfp16-format=ieee}.
+@option{-march=armv8.2-a+fp16}は、オプションのFP16命令拡張を含むARMv8.2-Aアーキテクチャのコンパイラサポートを有効にする。 これはまた、@option{-march=armv8.1-a}によって提供される機能を有効にし、@option{-mfp16-format=ieee}を意味する。
 
 @option{-march=native}はビルドコンピュータのアーキテクチャを自動で検出させる。
 現在は、この機能はGNU/Linuxでのみサポートされていて、すべてのアーキテクチャが認識されるわけではない。
@@ -12293,9 +12230,8 @@ PICアドレス計算で使われるレジスタを指定する。標準のPIC�
 @opindex mpic-data-is-text-relative
 それぞれのデータセグメントがロード時のテキストセグメントの相対であると仮定する。
 したがって、PC相対命令を使ったデータのアドレス計算を許可する。このオプションは
-VxWorksRTP以外のターゲットではデフォルトでオンである。  When
-disabled on such targets, it will enable @option{-msingle-pic-base} by
-default.
+VxWorksRTP以外のターゲットではデフォルトでオンである。 このようなターゲットで無効のときは、
+デフォルトで@option{-msingle-pic-base}が有効になる。
 
 @item -mpoke-function-name
 @opindex mpoke-function-name
@@ -12426,16 +12362,12 @@ ARMv8の規則に適合するためにITブロックの生成を制限する。I
 
 @item -mpure-code
 @opindex mpure-code
-Do not allow constant data to be placed in code sections.
-Additionally, when compiling for ELF object format give all text sections the
-ELF processor-specific section attribute @code{SHF_ARM_PURECODE}.  This option
-is only available when generating non-pic code for ARMv7-M targets.
+コードセクションに定数データを配置しない。さらに、ELFオブジェクト形式用にコンパイルするとき、すべてのテキストセクションにELFプロセッサ固有のセクション属性@code{SHF_ARM_PURECODE}が与えらる。 このオプションは、ARMv7-Mターゲット用のピクチャでないコードを生成する場合にのみ使用できる。
 
 @item -mcmse
 @opindex mcmse
-Generate secure code as per the "ARMv8-M Security Extensions: Requirements on
-Development Tools Engineering Specification", which can be found on
-@url{http://infocenter.arm.com/help/topic/com.arm.doc.ecm0359818/ECM0359818_armv8m_security_extensions_reqs_on_dev_tools_1_0.pdf}.
+「ARMv8-Mセキュリティ拡張機能：開発ツールのエンジニアリング仕様に関する要件」に従って、セキュアなコードを生成する。この文書は
+@url{http://infocenter.arm.com/help/topic/com.arm.doc.ecm0359818/ECM0359818_armv8m_security_extensions_reqs_on_dev_tools_1_0.pdf}にある。
 @end table
 
 @node AVR Options
