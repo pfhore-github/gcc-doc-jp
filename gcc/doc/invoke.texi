@@ -12441,27 +12441,13 @@ size.
 @opindex msp8
 スタックポインタレジスタと8ビットレジスタとして扱う。すなわち、スタックポインタの上位ビットを0と仮定する。一般的には、手でこのオプションを設定する必要はない。
 
-This option is used internally by the compiler to select and
-build multilibs for architectures @code{avr2} and @code{avr25}.
-These architectures mix devices with and without @code{SPH}.
-For any setting other than @option{-mmcu=avr2} or @option{-mmcu=avr25}
-the compiler driver adds or removes this option from the compiler
-proper's command line, because the compiler then knows if the device
-or architecture has an 8-bit stack pointer and thus no @code{SPH}
-register or not.
+このオプションは、コンパイラによって内部的に使用され、@code{avr2}と@code{avr25}アーキテクチャ用のマルチビルドを構築する。これらのアーキテクチャは、@code{SPH}の有無にかかわらずデバイスを混在させる。@option{-mmcu=avr2}または@option{-mmcu=avr25}以外の設定では、コンパイラはこのオプションをコンパイラ固有のコマンドラインから追加または削除する。これは、コンパイラがデバイスまたはアーキテクチャに8-bitスタックポインタを使用していて、@code{SPH}レジスタがあるかどうかを知っているためである。
 
 @item -mstrict-X
 @opindex mstrict-X
-Use address register @code{X} in a way proposed by the hardware.  This means
-that @code{X} is only used in indirect, post-increment or
-pre-decrement addressing.
+ハードウェアによって提案された方法でアドレスレジスタ@code{X}を使用する。 つまり、@code{X}は、間接、後置インクリメント、またはプリデクリメントのアドレッシングでのみ使用される。
 
-Without this option, the @code{X} register may be used in the same way
-as @code{Y} or @code{Z} which then is emulated by additional
-instructions.  
-For example, loading a value with @code{X+const} addressing with a
-small non-negative @code{const < 64} to a register @var{Rn} is
-performed as
+このオプションがなければ、@code{X}レジスタは@code{Y}または@code{Z}と同じ方法で使用されるかもしれず、そのときは追加の命令によってエミュレートされる。たとえば、レジスタ@var{Rn}に負でない@code{const <64}という小さな負の@code{X + const}で値をロードすると、次のように実行される。
 
 @example
 adiw r26, const   ; X += const
@@ -12471,91 +12457,61 @@ sbiw r26, const   ; X -= const
 
 @item -mtiny-stack
 @opindex mtiny-stack
-Only change the lower 8@tie{}bits of the stack pointer.
+スタックポインタの下位8ビットのみ変更する。
 
 @item -mfract-convert-truncate
 @opindex mfract-convert-truncate
-Allow to use truncation instead of rounding towards zero for fractional fixed-point types.
+固定小数点型で、ゼロに丸める代わりに切り捨てを使用する。
 
 @item -nodevicelib
 @opindex nodevicelib
-Don't link against AVR-LibC's device specific library @code{lib<mcu>.a}.
+AVR-LibCのデバイス固有ライブラリ@code{lib <mcu> .a}にはリンクしない。
 
 @item -Waddr-space-convert
 @opindex Waddr-space-convert
-Warn about conversions between address spaces in the case where the
-resulting address space is not contained in the incoming address space.
+結果のアドレススペースが受信アドレススペースに含まれていない場合のアドレススペース間の変換について警告する。
 
 @item -Wmisspelled-isr
 @opindex Wmisspelled-isr
-Warn if the ISR is misspelled, i.e. without __vector prefix.
-Enabled by default.
+ISRのスペルが間違っている場合、つまり__vectorプレフィックスがない場合に警告する。
+デフォルトでは有効である。
 @end table
 
-@subsubsection @code{EIND} and Devices with More Than 128 Ki Bytes of Flash
+@subsubsection @code{EIND}と128Kiバイト以上のフラッシュを持つデバイス
 @cindex @code{EIND}
-Pointers in the implementation are 16@tie{}bits wide.
-The address of a function or label is represented as word address so
-that indirect jumps and calls can target any code address in the
-range of 64@tie{}Ki words.
+実装のポインタは16ビット幅である。関数またはラベルのアドレスはワードアドレスとして表されるので、間接ジャンプおよび呼び出しは64@tie{}Kiワードの範囲内の任意のコードアドレスを対象とすることができる。
 
-In order to facilitate indirect jump on devices with more than 128@tie{}Ki
-bytes of program memory space, there is a special function register called
-@code{EIND} that serves as most significant part of the target address
-when @code{EICALL} or @code{EIJMP} instructions are used.
+128@tie{}Kiバイトを超えるプログラムメモリ空間を持つデバイスの間接ジャンプを容易にするために、@code{EICALL}及び@code{EIJMP}命令が使用されるときにターゲットアドレスの最も重要な部分として機能する@code{EIND}という特別な機能レジスタがある。
 
-Indirect jumps and calls on these devices are handled as follows by
-the compiler and are subject to some limitations:
+これらのデバイスでの間接ジャンプと呼び出しは、コンパイラによって次のように処理され、いくつかの制限がある。
 
 @itemize @bullet
 
 @item
-The compiler never sets @code{EIND}.
+コンパイラは決して@code{EIND}をセットしない。
 
 @item
-The compiler uses @code{EIND} implicitly in @code{EICALL}/@code{EIJMP}
-instructions or might read @code{EIND} directly in order to emulate an
-indirect call/jump by means of a @code{RET} instruction.
+コンパイラは、@code{EICALL}/@code{EIJMP}で暗黙的に@code{EIND}を使うかもしれず、@code{RET}命令を使って間接的な呼び出し/ジャンプをエミュレートするために@code {EIND}を直接読むかもしれない。
 
 @item
-The compiler assumes that @code{EIND} never changes during the startup
-code or during the application. In particular, @code{EIND} is not
-saved/restored in function or interrupt service routine
-prologue/epilogue.
+コンパイラは、起動コード中またはアプリケーション中に@code{EIND}が変更されないとみなす。 特に、@code{EIND}は、関数や割り込みサービスルーチンのプロローグ/エピローグでは保存/復元されない。
 
 @item
-For indirect calls to functions and computed goto, the linker
-generates @emph{stubs}. Stubs are jump pads sometimes also called
-@emph{trampolines}. Thus, the indirect call/jump jumps to such a stub.
-The stub contains a direct jump to the desired address.
+関数間接呼び出しと計算されたgotoの場合、リンカは@emph{スタブ}を生成する。 スタブは時には@emph{トランポリン}と呼ばれるジャンプパッドである。 したがって、間接コール/ジャンプはそのようなスタブにジャンプする。
+スタブには、目的のアドレスへの直接ジャンプが含まれている。
 
 @item
-Linker relaxation must be turned on so that the linker generates
-the stubs correctly in all situations. See the compiler option
-@option{-mrelax} and the linker option @option{--relax}.
-There are corner cases where the linker is supposed to generate stubs
-but aborts without relaxation and without a helpful error message.
+すべての状況でリンカがスタブを正しく生成できるように、リンカの緩和をオンにする必要がある。 コンパイラオプション@option{-mrelax}とリンカオプション@option{--relax}を参照せよ。リンカがスタブを生成するが、緩和せずに役立つエラーメッセージが表示されずに終了する特殊な状況がある。
 
 @item
-The default linker script is arranged for code with @code{EIND = 0}.
-If code is supposed to work for a setup with @code{EIND != 0}, a custom
-linker script has to be used in order to place the sections whose
-name start with @code{.trampolines} into the segment where @code{EIND}
-points to.
+デフォルトのリンカースクリプトは、@code{EIND = 0}のコード用に配置されている。コードが@code{EIND！= 0}で設定されている場合、カスタムリンカースクリプトを使用して、@code {.trampolines}で始まるセクションを@code{ EIND}が指し示す。
 
 @item
-The startup code from libgcc never sets @code{EIND}.
-Notice that startup code is a blend of code from libgcc and AVR-LibC.
-For the impact of AVR-LibC on @code{EIND}, see the
-@w{@uref{http://nongnu.org/avr-libc/user-manual/,AVR-LibC user manual}}.
+libgccの起動コードは@code {EIND}を設定しない。起動コードは、libgccとAVR-LibCのコードの組み合わせであることに注意せよ。AVR-LibCが@code {EIND}に与える影響については、
+@w{@uref{http://nongnu.org/avr-libc/user-manual/,AVR-LibC user manual}}を見よ
 
 @item
-It is legitimate for user-specific startup code to set up @code{EIND}
-early, for example by means of initialization code located in
-section @code{.init3}. Such code runs prior to general startup code
-that initializes RAM and calls constructors, but after the bit
-of startup code from AVR-LibC that sets @code{EIND} to the segment
-where the vector table is located.
+@code {.init3}セクションにある初期化コードなどを使用して、@code{EIND}を早期に設定することは、ユーザー固有のスタートアップコードにとって正当である。 このようなコードは、RAMを初期化してコンストラクタを呼び出す一般的な起動コードの前に実行されるが、AVR-LibCの起動コードのビットの後に、@code{EIND}をベクトルテーブルがあるセグメントに設定する
 @example
 #include <avr/io.h>
 
@@ -12569,39 +12525,33 @@ init3_set_eind (void)
 @end example
 
 @noindent
-The @code{__trampolines_start} symbol is defined in the linker script.
+@code{__trampolines_start}シンボルはリンカスクリプトで定義される。.
 
 @item
-Stubs are generated automatically by the linker if
-the following two conditions are met:
+次の2つの条件が満たされている場合、リンカーによって自動的にスタブが生成される。
 @itemize @minus
 
-@item The address of a label is taken by means of the @code{gs} modifier
-(short for @emph{generate stubs}) like so:
+@item ラベルのアドレスは、@code{gs}修飾子（@emph{generate stubs}の略語）によって次のように取得される。
 @example
 LDI r24, lo8(gs(@var{func}))
 LDI r25, hi8(gs(@var{func}))
 @end example
-@item The final location of that label is in a code segment
-@emph{outside} the segment where the stubs are located.
+@item そのラベルの最終的な位置は、スタブがあるセグメントのコードセグメントの@emph{外側}にある。
 @end itemize
 
 @item
-The compiler emits such @code{gs} modifiers for code labels in the
-following situations:
+コンパイラは、以下のような場合にコードラベルのための@code{gs}修飾子を発行する：
 @itemize @minus
-@item Taking address of a function or code label.
-@item Computed goto.
-@item If prologue-save function is used, see @option{-mcall-prologues}
-command-line option.
-@item Switch/case dispatch tables. If you do not want such dispatch
-tables you can specify the @option{-fno-jump-tables} command-line option.
-@item C and C++ constructors/destructors called during startup/shutdown.
-@item If the tools hit a @code{gs()} modifier explained above.
+@item 関数及びコードラベルのアドレスと取る
+@item 計算goto
+@item プロローグ保存の関数が使われたとき、@option{-mcall-prologues}コマンド行オプション参照
+@item switch/case分岐テーブル。このような分岐テーブルを必要としない場合は、@option {-fno-jump-tables}コマンドラインオプションを指定することができる。
+@item スタートアップ・シャットダウン中に呼ばれるCとC++では、のコンストラクタ・デストラクタ
+@item もしツールが上で説明した@code{gs()}修飾子に当たったとき
 @end itemize
 
 @item
-Jumping to non-symbolic addresses like so is @emph{not} supported:
+このような非シンボルアドレスへのジャンプはサポートされ@emph{ない}
 
 @example
 int main (void)
@@ -12611,8 +12561,8 @@ int main (void)
 @}
 @end example
 
-Instead, a stub has to be set up, i.e.@: the function has to be called
-through a symbol (@code{func_4} in the example):
+代わりに、スタブをセットアップしなければならない。すなわち、関数はシンボル（例では@code{func_4}）
+を通じて呼ばなくてはならない。
 
 @example
 int main (void)
@@ -12624,192 +12574,131 @@ int main (void)
 @}
 @end example
 
-and the application be linked with @option{-Wl,--defsym,func_4=0x4}.
-Alternatively, @code{func_4} can be defined in the linker script.
+アプリケーションは@option{-Wl,--defsym,func_4=0x4}でリンクされる。あるいは、リンカスクリプトで@code{func_4}を定義することもできる。
 @end itemize
 
-@subsubsection Handling of the @code{RAMPD}, @code{RAMPX}, @code{RAMPY} and @code{RAMPZ} Special Function Registers
+@subsubsection @code{RAMPD}, @code{RAMPX}, @code{RAMPY}, @code{RAMPZ}特別関数レジスタの扱い
 @cindex @code{RAMPD}
 @cindex @code{RAMPX}
 @cindex @code{RAMPY}
 @cindex @code{RAMPZ}
-Some AVR devices support memories larger than the 64@tie{}KiB range
-that can be accessed with 16-bit pointers.  To access memory locations
-outside this 64@tie{}KiB range, the content of a @code{RAMP}
-register is used as high part of the address:
-The @code{X}, @code{Y}, @code{Z} address register is concatenated
-with the @code{RAMPX}, @code{RAMPY}, @code{RAMPZ} special function
-register, respectively, to get a wide address. Similarly,
-@code{RAMPD} is used together with direct addressing.
+いくつかのAVRデバイスは、16ビットポインタでアクセスできる64@tie{}KiBの範囲を超えるメモリをサポートしている。 この64@tie{}KiB範囲外のメモリ位置にアクセスするには、@code{RAMP}レジスタの内容がアドレスの上位部分として使用される。@code{RAM}、@code{RAMPY}、@code{RAMPZ}特殊関数レジスタとそれぞれ連結され、@code{X}、@code{Y}、@code{Z}アドレスレジスタがそれぞれワイドアドレスを得るために@code{RAMPX}, @code{RAMPY}, @code{RAMPZ}特別関数レジスタと連結される。 同様に、@code{RAMPD}はダイレクトアドレッシングと一緒に使用される。
 
 @itemize
 @item
-The startup code initializes the @code{RAMP} special function
-registers with zero.
+起動コードは、@code{RAMP}特殊関数レジスタをゼロで初期化する。
 
 @item
-If a @ref{AVR Named Address Spaces,named address space} other than
-generic or @code{__flash} is used, then @code{RAMPZ} is set
-as needed before the operation.
+@ref{AVR Named Address Spaces,名前付き関数空間}が汎用または@code{__ flash}の他に使用されると、操作の前に必要に応じて@code{RAMPZ}が設定される。
 
 @item
-If the device supports RAM larger than 64@tie{}KiB and the compiler
-needs to change @code{RAMPZ} to accomplish an operation, @code{RAMPZ}
-is reset to zero after the operation.
+デバイスが64@tie{}KiBより大きいRAMをサポートし、コンパイラが操作を実行するために@code{RAMPZ}を変更する必要がある場合、@code{RAMPZ}は操作後に0にリセットされる。
 
 @item
-If the device comes with a specific @code{RAMP} register, the ISR
-prologue/epilogue saves/restores that SFR and initializes it with
-zero in case the ISR code might (implicitly) use it.
+デバイスに特定の@code{RAMP}レジスタが付いている場合、ISRプロローグ/エピローグはそのSFRを保存/復元し、ISRコードが（暗黙的に）使用する場合はゼロで初期化する。
 
 @item
-RAM larger than 64@tie{}KiB is not supported by GCC for AVR targets.
-If you use inline assembler to read from locations outside the
-16-bit address range and change one of the @code{RAMP} registers,
-you must reset it to zero after the access.
+64 KiBを超えるRAMは、AVRターゲットのGCCではサポートされていない。インラインアセンブラを使用して16ビットのアドレス範囲外の場所から読み取り、@code{RAMP}レジスタの1つを変更する場合は、アクセス後に0にリセットする必要がある。
 
 @end itemize
 
-@subsubsection AVR Built-in Macros
+@subsubsection AVR組み込みマクロ
 
-GCC defines several built-in macros so that the user code can test
-for the presence or absence of features.  Almost any of the following
-built-in macros are deduced from device capabilities and thus
-triggered by the @option{-mmcu=} command-line option.
+GCCは、ユーザーコードが機能の有無をテストできるように、いくつかのビルトインマクロを定義している。 次の組み込みマクロのほとんどは、デバイスの機能から導き出され、@option{-mmcu=}コマンドラインオプションによってトリガされる。
 
-For even more AVR-specific built-in macros see
-@ref{AVR Named Address Spaces} and @ref{AVR Built-in Functions}.
+さらなるAVR固有のマクロは@ref{AVR Named Address Spaces}と@ref{AVR Built-in Functions}。
 
 @table @code
 
 @item __AVR_ARCH__
-Build-in macro that resolves to a decimal number that identifies the
-architecture and depends on the @option{-mmcu=@var{mcu}} option.
-Possible values are:
+@option{-mmcu=@var{mcu}}オプションに依存する、アーキテクチャを識別する10進数に解決される組み込みマクロ。
+可能な値は次のとおり。
 
 @code{2}, @code{25}, @code{3}, @code{31}, @code{35},
 @code{4}, @code{5}, @code{51}, @code{6}
 
-for @var{mcu}=@code{avr2}, @code{avr25}, @code{avr3}, @code{avr31},
-@code{avr35}, @code{avr4}, @code{avr5}, @code{avr51}, @code{avr6},
-
-respectively and
+はそれぞれ@var{mcu}=@code{avr2}, @code{avr25}, @code{avr3}, @code{avr31},
+@code{avr35}, @code{avr4}, @code{avr5}, @code{avr51}, @code{avr6}であり、
 
 @code{100}, @code{102}, @code{104},
 @code{105}, @code{106}, @code{107}
 
-for @var{mcu}=@code{avrtiny}, @code{avrxmega2}, @code{avrxmega4},
-@code{avrxmega5}, @code{avrxmega6}, @code{avrxmega7}, respectively.
-If @var{mcu} specifies a device, this built-in macro is set
-accordingly. For example, with @option{-mmcu=atmega8} the macro is
-defined to @code{4}.
+はそれぞれ@var{mcu}=@code{avrtiny}, @code{avrxmega2}, @code{avrxmega4},
+@code{avrxmega5}, @code{avrxmega6}, @code{avrxmega7}である。
+@var{mcu}がデバイスを指定する場合、この組み込みマクロはそれに応じて設定される。 たとえば、@option{-mmcu=atmega8}の場合、マクロは@code {4}に定義される。
 
 @item __AVR_@var{Device}__
-Setting @option{-mmcu=@var{device}} defines this built-in macro which reflects
-the device's name. For example, @option{-mmcu=atmega8} defines the
-built-in macro @code{__AVR_ATmega8__}, @option{-mmcu=attiny261a} defines
-@code{__AVR_ATtiny261A__}, etc.
+@option{-mmcu=@var{device}}を設定すると、この組み込みマクロが定義され、デバイスの名前が反映される。 たとえば、@option{-mmcu=atmega8}は組み込みマクロ@code{__ AVR_ATmega8__}を定義し、@option{-mmcu=attiny261a}は@code{__ AVR_ATtiny261A__}などを定義する。
 
-The built-in macros' names follow
-the scheme @code{__AVR_@var{Device}__} where @var{Device} is
-the device name as from the AVR user manual. The difference between
-@var{Device} in the built-in macro and @var{device} in
-@option{-mmcu=@var{device}} is that the latter is always lowercase.
+組み込みマクロの名前は、@code{__ AVR_@var{Device}__}というスキームに従う。ここで、@var{Device}はAVRユーザーマニュアルのデバイス名である。 組み込みマクロの@var{Device}と@option{-mmcu=@var{device}}の@var{device}の違いは、後者は常に小文字であることである。
 
-If @var{device} is not a device but only a core architecture like
-@samp{avr51}, this macro is not defined.
+@var{device}がデバイスではなく、@samp{avr51}のようなコアアーキテクチャのみである場合、このマクロは定義されていない。
 
 @item __AVR_DEVICE_NAME__
-Setting @option{-mmcu=@var{device}} defines this built-in macro to
-the device's name. For example, with @option{-mmcu=atmega8} the macro
-is defined to @code{atmega8}.
+@option{-mmcu=@var{device}}を設定すると、この組み込みマクロがデバイス名に定義される。 たとえば、@option{-mmcu=atmega8}の場合、マクロは@code{atmega8}と定義される。
 
-If @var{device} is not a device but only a core architecture like
-@samp{avr51}, this macro is not defined.
+@var{device}がデバイスではなく、@samp {avr51}のようなコアアーキテクチャのみである場合、このマクロは定義されない。
 
 @item __AVR_XMEGA__
-The device / architecture belongs to the XMEGA family of devices.
+デバイス/アーキテクチャは、XMEGAファミリのデバイスに属す。
 
 @item __AVR_HAVE_ELPM__
-The device has the @code{ELPM} instruction.
+デバイスには@code{ELPM}命令がある。
 
 @item __AVR_HAVE_ELPMX__
-The device has the @code{ELPM R@var{n},Z} and @code{ELPM
-R@var{n},Z+} instructions.
+デバイスには、@code{ELPM R @var{n}, Z}と@code{ELPM R @var{n},Z+}命令がある。
 
 @item __AVR_HAVE_MOVW__
-The device has the @code{MOVW} instruction to perform 16-bit
-register-register moves.
+デバイスには、16ビットのレジスタレジスタの移動を実行するための@code{MOVW}命令がある。
 
 @item __AVR_HAVE_LPMX__
-The device has the @code{LPM R@var{n},Z} and
-@code{LPM R@var{n},Z+} instructions.
+デバイスには、@code{LPM R @var{n},Z}と@code {LPM R@var{n},Z+}命令がある。
 
 @item __AVR_HAVE_MUL__
-The device has a hardware multiplier. 
+デバイスには、ハードウェア乗算器がある。
 
 @item __AVR_HAVE_JMP_CALL__
-The device has the @code{JMP} and @code{CALL} instructions.
-This is the case for devices with at least 16@tie{}KiB of program
-memory.
+デバイスには@code {JMP}と@code {CALL}命令がある。これは、プログラムメモリの少なくとも16ビットのKiBを持つデバイスの場合である。
 
 @item __AVR_HAVE_EIJMP_EICALL__
 @itemx __AVR_3_BYTE_PC__
-The device has the @code{EIJMP} and @code{EICALL} instructions.
-This is the case for devices with more than 128@tie{}KiB of program memory.
-This also means that the program counter
-(PC) is 3@tie{}bytes wide.
+デバイスには、@code{EIJMP}と@code{EICALL}命令がある。128@tie{}KiB以上のプログラムメモリを持つデバイスの場合であり、プログラムカウンタ（PC）が3バイト幅であることも意味する。
 
 @item __AVR_2_BYTE_PC__
-The program counter (PC) is 2@tie{}bytes wide. This is the case for devices
-with up to 128@tie{}KiB of program memory.
+プログラムカウンタ（PC）は2バイト幅。 これは、最大128@tie{}KiBのプログラムメモリを持つデバイスの場合である。
 
 @item __AVR_HAVE_8BIT_SP__
 @itemx __AVR_HAVE_16BIT_SP__
-The stack pointer (SP) register is treated as 8-bit respectively
-16-bit register by the compiler.
-The definition of these macros is affected by @option{-mtiny-stack}.
+スタックポインタ（SP）レジスタは、コンパイラによって8ビットおよび16ビットのレジスタとして扱われる。
+これらのマクロの定義は@option {-mtiny-stack}の影響を受ける。
 
 @item __AVR_HAVE_SPH__
 @itemx __AVR_SP8__
-The device has the SPH (high part of stack pointer) special function
-register or has an 8-bit stack pointer, respectively.
-The definition of these macros is affected by @option{-mmcu=} and
-in the cases of @option{-mmcu=avr2} and @option{-mmcu=avr25} also
-by @option{-msp8}.
+デバイスは、SPH（スタックポインタの上位部分）特殊機能レジスタを持っているか、8ビットのスタックポインタを持っている。これらのマクロの定義は、@option{-mmcu=}と@option{-mmcu=avr2}と@option{-mmcu=avr25}の場合も@option{-msp8}の影響を受ける。
 
 @item __AVR_HAVE_RAMPD__
 @itemx __AVR_HAVE_RAMPX__
 @itemx __AVR_HAVE_RAMPY__
 @itemx __AVR_HAVE_RAMPZ__
-The device has the @code{RAMPD}, @code{RAMPX}, @code{RAMPY},
-@code{RAMPZ} special function register, respectively.
+デバイスには、それぞれ@code{RAMPD}、@code{RAMPX}、@code{RAMPY}、@code{RAMPZ}特殊関数レジスタがある。
 
 @item __NO_INTERRUPTS__
-This macro reflects the @option{-mno-interrupts} command-line option.
+このマクロは@option {-mno-interrupts}コマンドラインオプションを反映する。
 
 @item __AVR_ERRATA_SKIP__
 @itemx __AVR_ERRATA_SKIP_JMP_CALL__
-Some AVR devices (AT90S8515, ATmega103) must not skip 32-bit
-instructions because of a hardware erratum.  Skip instructions are
-@code{SBRS}, @code{SBRC}, @code{SBIS}, @code{SBIC} and @code{CPSE}.
-The second macro is only defined if @code{__AVR_HAVE_JMP_CALL__} is also
-set.
+一部のAVRデバイス（AT90S8515、ATmega103）は、ハードウェアエラッタのために32ビット命令をスキップしてはならない。 スキップ命令は@code{SBRS}、@code{SBRC}、@code{SBIS}、@code{SBIC}および@code{CPSE}である。
+2番目のマクロは、@code{__ AVR_HAVE_JMP_CALL__}も設定されている場合にのみ定義される。
 
 @item __AVR_ISA_RMW__
-The device has Read-Modify-Write instructions (XCH, LAC, LAS and LAT).
+このデバイスには、リード・モディファイ・ライト命令（XCH、LAC、LAS、LAT）がある。
 
 @item __AVR_SFR_OFFSET__=@var{offset}
-Instructions that can address I/O special function registers directly
-like @code{IN}, @code{OUT}, @code{SBI}, etc.@: may use a different
-address as if addressed by an instruction to access RAM like @code{LD}
-or @code{STS}. This offset depends on the device architecture and has
-to be subtracted from the RAM address in order to get the
-respective I/O@tie{}address.
+@code{IN}、@code{OUT}、@code{SBI}などのようなI / O特殊機能レジスタに直接対処できる命令は、@code{LD}または@code{STS}のようなRAMにアクセスする命令によってアドレス指定された場合とは異なるアドレスを使用することがある。 このオフセットはデバイスのアーキテクチャに依存し、それぞれのI / Oアドレスを得るためにRAMアドレスから減算する必要がある。
 
 @item __WITH_AVRLIBC__
-The compiler is configured to be used together with AVR-Libc.
-See the @option{--with-avrlibc} configure option.
+コンパイラは、AVR-Libcと一緒に使用するように構成されています。
+@option { - with-avrlibc}設定オプションを参照せよ。
 
 @end table
 
