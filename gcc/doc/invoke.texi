@@ -12869,63 +12869,50 @@ SDRAM用のスタンドアロンアプリケーションを構築する。 適�
 @end table
 
 @node CRIS Options
-@subsection CRIS Options
+@subsection CRISオプション
 @cindex CRIS Options
 
-These options are defined specifically for the CRIS ports.
+これらのオプションは、CRISポート専用に定義されている。
 
 @table @gcctabopt
 @item -march=@var{architecture-type}
 @itemx -mcpu=@var{architecture-type}
 @opindex march
 @opindex mcpu
-Generate code for the specified architecture.  The choices for
-@var{architecture-type} are @samp{v3}, @samp{v8} and @samp{v10} for
-respectively ETRAX@w{ }4, ETRAX@w{ }100, and ETRAX@w{ }100@w{ }LX@.
-Default is @samp{v0} except for cris-axis-linux-gnu, where the default is
-@samp{v10}.
+指定されたアーキテクチャのコードを生成する。 @var{architecture-type}の選択肢は、@samp{v3}、@samp{v8}、@samp{v10}である。それぞれ、ETRAX@w{ }4、ETRAX@w{ }100、およびETRAX@w{ }100@w{ }LXである。
+デフォルトはcris-axis-linux-gnuを除き、@samp{v0}であり、その場合は@samp{v10}である。
 
 @item -mtune=@var{architecture-type}
 @opindex mtune
-Tune to @var{architecture-type} everything applicable about the generated
-code, except for the ABI and the set of available instructions.  The
-choices for @var{architecture-type} are the same as for
-@option{-march=@var{architecture-type}}.
+ABIと使用可能な命令のセットを除いて、@var{architecture-type}に合わせて生成されたコードに関するすべてのものを調整する。 @var{architecture-type}の選択肢は、@option{-march=@var{architecture-type}}と同じである。
 
 @item -mmax-stack-frame=@var{n}
 @opindex mmax-stack-frame
-Warn when the stack frame of a function exceeds @var{n} bytes.
+関数のスタックフレームが@var{n}バイトを超えたときに警告する。
 
 @item -metrax4
 @itemx -metrax100
 @opindex metrax4
 @opindex metrax100
-The options @option{-metrax4} and @option{-metrax100} are synonyms for
-@option{-march=v3} and @option{-march=v8} respectively.
+オプション@option {-metrax4}と@option{-metrax100}は、それぞれ@option{-march = v3}と@option{-march = v8}の同義語である。
 
 @item -mmul-bug-workaround
 @itemx -mno-mul-bug-workaround
 @opindex mmul-bug-workaround
 @opindex mno-mul-bug-workaround
-Work around a bug in the @code{muls} and @code{mulu} instructions for CPU
-models where it applies.  This option is active by default.
+それが適用されるCPUモデルの@code{muls}と@code{mulu}命令のバグを回避する。 このオプションは、デフォルトで有効である。
 
 @item -mpdebug
 @opindex mpdebug
-Enable CRIS-specific verbose debug-related information in the assembly
-code.  This option also has the effect of turning off the @samp{#NO_APP}
-formatted-code indicator to the assembler at the beginning of the
-assembly file.
+CRIS固有の詳細なデバッグ関連情報をアセンブリコードで有効にする。 このオプションは、@samp{#NO_APP}フォーマットコードインジケータをアセンブラファイルの先頭でアセンブラに表示しないようにする効果もある。
 
 @item -mcc-init
 @opindex mcc-init
-Do not use condition-code results from previous instruction; always emit
-compare and test instructions before use of condition codes.
+前の命令の条件コード結果を使用しない。 条件コードを使用する前に、常に比較とテストの命令を出す。
 
 @item -mno-side-effects
 @opindex mno-side-effects
-Do not emit instructions with side effects in addressing modes other than
-post-increment.
+ポストインクリメント以外のアドレッシングモードで副作用のある命令を生成しない。
 
 @item -mstack-align
 @itemx -mno-stack-align
@@ -12939,11 +12926,7 @@ post-increment.
 @opindex mno-data-align
 @opindex mconst-align
 @opindex mno-const-align
-These options (@samp{no-} options) arrange (eliminate arrangements) for the
-stack frame, individual data and constants to be aligned for the maximum
-single data access size for the chosen CPU model.  The default is to
-arrange for 32-bit alignment.  ABI details such as structure layout are
-not affected by these options.
+これらのオプション（@samp{no-}オプション）は、選択したCPUモデルの最大単一データアクセスサイズに合わせて、スタックフレーム、個々のデータと定数を整列（配置を取り除く）する。 デフォルトでは、32ビットのアライメントを調整する。 構造レイアウトなどのABIの詳細は、これらのオプションの影響を受けない。
 
 @item -m32-bit
 @itemx -m16-bit
@@ -12951,49 +12934,36 @@ not affected by these options.
 @opindex m32-bit
 @opindex m16-bit
 @opindex m8-bit
-Similar to the stack- data- and const-align options above, these options
-arrange for stack frame, writable data and constants to all be 32-bit,
-16-bit or 8-bit aligned.  The default is 32-bit alignment.
+上記のstack-data-およびconst-alignオプションと同様に、これらのオプションは、スタックフレーム、書き込み可能なデータおよび定数をすべて32ビット、16ビットまたは8ビットに整列させるように配置する。 デフォルトは32ビット境界である。
 
 @item -mno-prologue-epilogue
 @itemx -mprologue-epilogue
 @opindex mno-prologue-epilogue
 @opindex mprologue-epilogue
-With @option{-mno-prologue-epilogue}, the normal function prologue and
-epilogue which set up the stack frame are omitted and no return
-instructions or return sequences are generated in the code.  Use this
-option only together with visual inspection of the compiled code: no
-warnings or errors are generated when call-saved registers must be saved,
-or storage for local variables needs to be allocated.
+@option{-mno-prologue-epilogue}では、スタックフレームを設定する通常の関数プロローグとエピローグは省略され、戻り命令や戻りシーケンスはコード内に生成されない。 このオプションは、コンパイルされたコードの目視検査と一緒にのみ使用すること。コールセーブされたレジスタを保存する必要がある場合、またはローカル変数の格納領域を割り当てる必要がある場合は、警告もエラーも生成されない。
 
 @item -mno-gotplt
 @itemx -mgotplt
 @opindex mno-gotplt
 @opindex mgotplt
-With @option{-fpic} and @option{-fPIC}, don't generate (do generate)
-instruction sequences that load addresses for functions from the PLT part
-of the GOT rather than (traditional on other architectures) calls to the
-PLT@.  The default is @option{-mgotplt}.
+@option{-fpic}と@option{-fPIC}と一緒に使用すると、PLTへの（他のアーキテクチャでは従来の）呼び出しではなく、GOTのPLT部分から関数のアドレスをロードする命令シーケンスを生成しない（する）。 デフォルトは@option{-mgotplt}である。
 
 @item -melf
 @opindex melf
-Legacy no-op option only recognized with the cris-axis-elf and
-cris-axis-linux-gnu targets.
+cris-axis-elfおよびcris-axis-linux-gnuターゲットでのみ認識される旧式の何もしないオプション。
 
 @item -mlinux
 @opindex mlinux
-Legacy no-op option only recognized with the cris-axis-linux-gnu target.
+cris-axis-linux-gnuターゲットでのみ認識される旧式の何もしないオプション。
 
 @item -sim
 @opindex sim
-This option, recognized for the cris-axis-elf, arranges
-to link with input-output functions from a simulator library.  Code,
-initialized data and zero-initialized data are allocated consecutively.
+このオプションは、cris-axis-elf用にのみ認識され、シミュレータ・ライブラリからの入出力関数とリンクする。 コード、初期化データ、ゼロ初期化データは連続して割り当てられる。
 
 @item -sim2
 @opindex sim2
-Like @option{-sim}, but pass linker options to locate initialized data at
-0x40000000 and zero-initialized data at 0x80000000.
+@option{-sim}と似ているが、初期化されたデータを0x40000000に配置し、ゼロ初期化データを0x80000000に配置すいるようにリンカオプションを渡す。
+
 @end table
 
 @node CR16 Options
