@@ -12833,51 +12833,39 @@ SDRAM用のスタンドアロンアプリケーションを構築する。 適�
 @end table
 
 @node C6X Options
-@subsection C6X Options
+@subsection C6Xオプション
 @cindex C6X Options
 
 @table @gcctabopt
 @item -march=@var{name}
 @opindex march
-This specifies the name of the target architecture.  GCC uses this
-name to determine what kind of instructions it can emit when generating
-assembly code.  Permissible names are: @samp{c62x},
-@samp{c64x}, @samp{c64x+}, @samp{c67x}, @samp{c67x+}, @samp{c674x}.
+これは、ターゲットアーキテクチャの名前を指定する。 GCCはこの名前を使用して、アセンブリコードを生成するときにどのような命令を発行できるかを判断する。 許可される名前は @samp{c62x},
+@samp{c64x}, @samp{c64x+}, @samp{c67x}, @samp{c67x+}, @samp{c674x}である。
 
 @item -mbig-endian
 @opindex mbig-endian
-Generate code for a big-endian target.
+ビッグエンディアンターゲット用のコードを生成する。
 
 @item -mlittle-endian
 @opindex mlittle-endian
-Generate code for a little-endian target.  This is the default.
+リトルエンディアンターゲット用のコードを生成する。これはデフォルトである。
 
 @item -msim
 @opindex msim
-Choose startup files and linker script suitable for the simulator.
+シミュレータに適した起動ファイルとリンカスクリプトを選択する。
 
 @item -msdata=default
 @opindex msdata=default
-Put small global and static data in the @code{.neardata} section,
-which is pointed to by register @code{B14}.  Put small uninitialized
-global and static data in the @code{.bss} section, which is adjacent
-to the @code{.neardata} section.  Put small read-only data into the
-@code{.rodata} section.  The corresponding sections used for large
-pieces of data are @code{.fardata}, @code{.far} and @code{.const}.
+@code{.neardata}セクションに小規模のグローバルデータと静的データを配置する。これはレジスタ@code{B14}によって指し示される。 小さな初期化されていないグローバルデータと静的データを@code{.bss}セクションに置く。これは@code{.neardata}セクションに隣接している。 読み込み専用の小さなデータを@code{.rodata}セクションに置く。 大量のデータに使用される対応するセクションは、@code{.fardata}、@code{.far}、@code{.const}である。
 
 @item -msdata=all
 @opindex msdata=all
-Put all data, not just small objects, into the sections reserved for
-small data, and use addressing relative to the @code{B14} register to
-access them.
+小規模なデータ用に予約されたセクションには、小さなオブジェクトだけでなく、すべてのデータを格納し、アクセスするために@code{B14}レジスタを基準にしたアドレス指定を使用する。
 
 @item -msdata=none
 @opindex msdata=none
-Make no use of the sections reserved for small data, and use absolute
-addresses to access all data.  Put all initialized global and static
-data in the @code{.fardata} section, and all uninitialized data in the
-@code{.far} section.  Put all constant data into the @code{.const}
-section.
+小さなデータ用に予約されたセクションを使用せず、絶対アドレスを使用してすべてのデータにアクセスする。 すべての初期化されたグローバルおよび静的データを@code{.fardata}セクションに入れ、すべての初期化されていないデータを@code{.far}セクションに置く。 すべての定数データを@code{.const}セクションに入れる。
+
 @end table
 
 @node CRIS Options
