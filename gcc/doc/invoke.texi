@@ -12967,43 +12967,38 @@ cris-axis-linux-gnuターゲットでのみ認識される旧式の何もしな�
 @end table
 
 @node CR16 Options
-@subsection CR16 Options
+@subsection CR16オプション
 @cindex CR16 Options
 
-These options are defined specifically for the CR16 ports.
+これらのオプションは、CR16ポート専用に定義されている。
 
 @table @gcctabopt
 
 @item -mmac
 @opindex mmac
-Enable the use of multiply-accumulate instructions. Disabled by default.
+乗算累算命令の使用を有効にする。 デフォルトでは無効である。
 
 @item -mcr16cplus
 @itemx -mcr16c
 @opindex mcr16cplus
 @opindex mcr16c
-Generate code for CR16C or CR16C+ architecture. CR16C+ architecture 
-is default.
+CR16CまたはCR16C +アーキテクチャ用のコードを生成する。 CR16C+アーキテクチャはデフォルトである。
 
 @item -msim
 @opindex msim
-Links the library libsim.a which is in compatible with simulator. Applicable
-to ELF compiler only.
+シミュレータと互換性のあるライブラリlibsim.aをリンクする。 ELFコンパイラにのみ適用される。
 
 @item -mint32
 @opindex mint32
-Choose integer type as 32-bit wide.
+整数型に32ビット長を選ぶ。
 
 @item -mbit-ops
 @opindex mbit-ops
-Generates @code{sbit}/@code{cbit} instructions for bit manipulations.
+ビット操作に@code{sbit}/@code{cbit}命令を生成する。
 
 @item -mdata-model=@var{model}
 @opindex mdata-model
-Choose a data model. The choices for @var{model} are @samp{near},
-@samp{far} or @samp{medium}. @samp{medium} is default.
-However, @samp{far} is not valid with @option{-mcr16c}, as the
-CR16C architecture does not support the far data model.
+データモデルを選択する。 @var{model}の選択肢は@samp{near}、@samp{far}または@samp{medium}である。 @samp{medium}はデフォルトである。ただし、@samp{far}は@option{-mcr16c}では有効ではない。これは、CR16Cアーキテクチャがfarデータモデルをサポートしていないためである。
 @end table
 
 @node Darwin Options
