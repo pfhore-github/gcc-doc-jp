@@ -11,140 +11,80 @@
 
 @item -D @var{name}
 @opindex D
-Predefine @var{name} as a macro, with definition @code{1}.
+@var{name}を定義[code{1}で事前に定義する。
 
 @item -D @var{name}=@var{definition}
-The contents of @var{definition} are tokenized and processed as if
-they appeared during translation phase three in a @samp{#define}
-directive.  In particular, the definition is truncated by
-embedded newline characters.
+@var{definition}の内容はトークン化され、変換フェーズ3で@samp{#define}ディレクティブに現れたかのように処理される。 特に、定義は埋め込み改行文字によって切り詰められる。
 
-If you are invoking the preprocessor from a shell or shell-like
-program you may need to use the shell's quoting syntax to protect
-characters such as spaces that have a meaning in the shell syntax.
+シェルまたはシェルのようなプログラムからプリプロセッサを呼び出す場合は、シェルの構文で意味を持つ文字などの文字を保護するために、シェルの引用構文を使用する必要がある。
 
-If you wish to define a function-like macro on the command line, write
-its argument list with surrounding parentheses before the equals sign
-(if any).  Parentheses are meaningful to most shells, so you should
-quote the option.  With @command{sh} and @command{csh},
-@option{-D'@var{name}(@var{args@dots{}})=@var{definition}'} works.
+コマンドラインで関数のようなマクロを定義したい場合は、（存在する場合）引数のリストを等号の前にカッコで囲む。 括弧はほとんどのシェルにとって意味があるので、オプションをクウォートする必要がある。 @command{sh}と@command{csh}では、@option{-D'@var{name}(@var{args@dots{}})=@var{definition}'}が動作する。
 
-@option{-D} and @option{-U} options are processed in the order they
-are given on the command line.  All @option{-imacros @var{file}} and
-@option{-include @var{file}} options are processed after all
-@option{-D} and @option{-U} options.
+@option{-D}と@option{-U}オプションは、コマンドラインで指定された順序で処理される。 すべての@option{-imacros@var{file}}と@option{-include@var{file}}オプションはすべての@option{-D}と@option{-U}の後に処理される。
 
 @item -U @var{name}
 @opindex U
-Cancel any previous definition of @var{name}, either built in or
-provided with a @option{-D} option.
+組み込みであるか@option{-D}オプションであるかにかかわらず、事前の@var{name}の定義を取り消す。
 
 @item -include @var{file}
 @opindex include
-Process @var{file} as if @code{#include "file"} appeared as the first
-line of the primary source file.  However, the first directory searched
-for @var{file} is the preprocessor's working directory @emph{instead of}
-the directory containing the main source file.  If not found there, it
-is searched for in the remainder of the @code{#include "@dots{}"} search
-chain as normal.
+@code{#include "file"}がプライマリソースファイルの最初の行として現れたかのように@var{file}を処理する。 ただし、@var{file}を検索する最初のディレクトリは、メインソースファイルを含むディレクトリの@emph{代わりに}、プリプロセッサの作業ディレクトリである。 そこに見つからない場合は、@code{#include "@dots{}"}検索チェーンの残りの部分で通常どおり検索される。
 
-If multiple @option{-include} options are given, the files are included
-in the order they appear on the command line.
+@option{-include}オプションが複数指定されている場合、ファイルはコマンドラインに表示される順序で含まれる。
 
 @item -imacros @var{file}
 @opindex imacros
-Exactly like @option{-include}, except that any output produced by
-scanning @var{file} is thrown away.  Macros it defines remain defined.
-This allows you to acquire all the macros from a header without also
-processing its declarations.
+@var{file}をスキャンして生成された出力がすべて破棄される点を除いて、@option{-include}とまったく同じ。 それが定義するマクロは定義されたままである。 これにより、宣言も処理せずにヘッダーからすべてのマクロを取得できる。
 
-All files specified by @option{-imacros} are processed before all files
-specified by @option{-include}.
+@option{-imacros}で指定されたすべてのファイルは、@option{-include}で指定されたすべてのファイルより前に処理される。
 
 @item -undef
 @opindex undef
-Do not predefine any system-specific or GCC-specific macros.  The
-standard predefined macros remain defined.
+システム固有またはGCC固有のマクロはあらかじめ定義しない。 標準の定義済みマクロは定義されたままである。
 @ifset cppmanual
 @xref{Standard Predefined Macros}.
 @end ifset
 
 @item -pthread
 @opindex pthread
-Define additional macros required for using the POSIX threads library.
-You should use this option consistently for both compilation and linking.
-This option is supported on GNU/Linux targets, most other Unix derivatives,
-and also on x86 Cygwin and MinGW targets.
+POSIXスレッド・ライブラリーを使用するために必要な追加のマクロを定義する。このオプションは、コンパイルとリンクの両方に一貫して使用する必要がある。このオプションは、GNU/Linuxターゲット、その他ほとんどのUnix派生物、さらには、x86 CygwinとMinGWターゲットでもサポートされている。
 
 @item -M
 @opindex M
 @cindex @command{make}
 @cindex dependencies, @command{make}
-Instead of outputting the result of preprocessing, output a rule
-suitable for @command{make} describing the dependencies of the main
-source file.  The preprocessor outputs one @command{make} rule containing
-the object file name for that source file, a colon, and the names of all
-the included files, including those coming from @option{-include} or
-@option{-imacros} command-line options.
+前処理の結果を出力する代わりに、メインソースファイルの依存関係を記述する@command{make}に適した規則を出力する。 プリプロセッサは、@option{-include}または@option{-imacros}コマンドラインオプションから来るものを含む、そのソースファイル、コロン、およびインクルードされたすべてのファイルの名前のオブジェクトファイル名を含む@command{make}ルールを出力する。
 
-Unless specified explicitly (with @option{-MT} or @option{-MQ}), the
-object file name consists of the name of the source file with any
-suffix replaced with object file suffix and with any leading directory
-parts removed.  If there are many included files then the rule is
-split into several lines using @samp{\}-newline.  The rule has no
-commands.
+（@option{-MT}または@option{-MQ}で）明示的に指定されていない限り、オブジェクトファイル名は、接尾辞がobject file接尾辞で置き換えられ、先頭のディレクトリ部分が削除されたソースファイルの名前で構成される。 インクルードされたファイルがたくさんある場合、ルールは@samp{\}-改行を使用して複数の行に分割される。 ルールにはコマンドがない。
 
-This option does not suppress the preprocessor's debug output, such as
-@option{-dM}.  To avoid mixing such debug output with the dependency
-rules you should explicitly specify the dependency output file with
-@option{-MF}, or use an environment variable like
-@env{DEPENDENCIES_OUTPUT} (@pxref{Environment Variables}).  Debug output
-is still sent to the regular output stream as normal.
+このオプションは、@option {-dM}のようにプリプロセッサのデバッグ出力を抑制しない。 このようなデバッグ出力を依存関係ルールと混同しないようにするには、依存関係出力ファイルを@option {-MF}で明示的に指定するか、@env{DEPENDENCIES_OUTPUT}（@pxref {環境変数}）などの環境変数を使用する必要がある。 デバッグ出力は通常どおり通常の出力ストリームに送られる。
 
-Passing @option{-M} to the driver implies @option{-E}, and suppresses
-warnings with an implicit @option{-w}.
+@option {-M}をドライバに渡すと、@option{-E}が暗黙の@option{-w}で警告を抑止する。
 
 @item -MM
 @opindex MM
-Like @option{-M} but do not mention header files that are found in
-system header directories, nor header files that are included,
-directly or indirectly, from such a header.
+@option{-M}と似ているが、システムヘッダディレクトリにあるヘッダファイルや、そのようなヘッダから直接的または間接的に含まれるヘッダファイルについては言及しない。
 
-This implies that the choice of angle brackets or double quotes in an
-@samp{#include} directive does not in itself determine whether that
-header appears in @option{-MM} dependency output.
+これは、@samp{#include}ディレクティブで角かっこや二重引用符を選択しても、そのヘッダが@option{-MM}依存出力に現れるかどうかが決まっていないことを意味する。
 
 @anchor{dashMF}
 @item -MF @var{file}
 @opindex MF
-When used with @option{-M} or @option{-MM}, specifies a
-file to write the dependencies to.  If no @option{-MF} switch is given
-the preprocessor sends the rules to the same place it would send
-preprocessed output.
+@option{-M}または@option {-MM}とともに使用する場合は、依存関係を書き込むファイルを指定する。 @option{-MF}スイッチが指定されていない場合、プリプロセッサは前処理された出力を送信する同じ場所にルールを送信する。
 
-When used with the driver options @option{-MD} or @option{-MMD},
-@option{-MF} overrides the default dependency output file.
+ドライバオプション@option{-MD}または@option{-MMD}とともに使用すると、@option{-MF}はデフォルトの依存関係出力ファイルを無効にする。
 
 @item -MG
 @opindex MG
-In conjunction with an option such as @option{-M} requesting
-dependency generation, @option{-MG} assumes missing header files are
-generated files and adds them to the dependency list without raising
-an error.  The dependency filename is taken directly from the
-@code{#include} directive without prepending any path.  @option{-MG}
-also suppresses preprocessed output, as a missing header file renders
-this useless.
+@option{-MG}は、依存性生成を要求する@option {-M}などのオプションとともに、ヘッダファイルが生成されていないと仮定し、エラーを発生させずに依存関係リストに追加する。 依存ファイル名は、パスの前に@code{#include}ディレクティブから直接取り込まれる。 @option{-MG}は前処理された出力を抑制する。欠落したヘッダファイルはこれを役に立たなくする。
 
-This feature is used in automatic updating of makefiles.
+この機能は、Makeファイルの自動更新に使用される。
 
 @item -MP
 @opindex MP
-This option instructs CPP to add a phony target for each dependency
-other than the main file, causing each to depend on nothing.  These
-dummy rules work around errors @command{make} gives if you remove header
-files without updating the @file{Makefile} to match.
+このオプションは、メインファイル以外の依存関係ごとに偽のターゲットを追加するようにCPPに指示し、それぞれが何も依存しないようにする。 @file{Makefile}を更新せずにヘッダファイルを削除すると、@command{make}はエラーを回避する。
 
-This is typical output:
+これは典型的な出力である：
 
 @smallexample
 test.o: test.c test.h
@@ -154,17 +94,11 @@ test.h:
 
 @item -MT @var{target}
 @opindex MT
+依存関係の生成によって生成されるルールのターゲットを変更する。 デフォルトでは、CPPはメイン入力ファイルの名前を取り、ディレクトリコンポーネントと@samp{.c}などのファイルサフィックスを削除し、プラットフォームの通常のオブジェクト接尾辞を追加する。 その結果がターゲットです。
 
-Change the target of the rule emitted by dependency generation.  By
-default CPP takes the name of the main input file, deletes any
-directory components and any file suffix such as @samp{.c}, and
-appends the platform's usual object suffix.  The result is the target.
+@option{-MT}オプションは、指定した文字列と正確に一致するようにターゲットを設定する。 複数のターゲットが必要な場合は、それらを@option{-MT}の単一引数として指定するか、複数の@option{-MT}オプションを使用できる。
 
-An @option{-MT} option sets the target to be exactly the string you
-specify.  If you want multiple targets, you can specify them as a single
-argument to @option{-MT}, or use multiple @option{-MT} options.
-
-For example, @option{@w{-MT '$(objpfx)foo.o'}} might give
+たとえば、@option{@w{-MT'$(objpfx)foo.o'}}の場合は、
 
 @smallexample
 $(objpfx)foo.o: foo.c
@@ -173,237 +107,132 @@ $(objpfx)foo.o: foo.c
 @item -MQ @var{target}
 @opindex MQ
 
-Same as @option{-MT}, but it quotes any characters which are special to
-Make.  @option{@w{-MQ '$(objpfx)foo.o'}} gives
+@option{-MT}と同じだが、Makeに特別な文字をすべて引用符で囲む。 @option{@w{-MQ'$(objpfx)foo.o'}}は以下を与える。
 
 @smallexample
 $$(objpfx)foo.o: foo.c
 @end smallexample
 
-The default target is automatically quoted, as if it were given with
-@option{-MQ}.
+デフォルトのターゲットは、@option{-MQ}のように自動的にクォートされる。
 
 @item -MD
 @opindex MD
-@option{-MD} is equivalent to @option{-M -MF @var{file}}, except that
-@option{-E} is not implied.  The driver determines @var{file} based on
-whether an @option{-o} option is given.  If it is, the driver uses its
-argument but with a suffix of @file{.d}, otherwise it takes the name
-of the input file, removes any directory components and suffix, and
-applies a @file{.d} suffix.
+@option{-MD}は、@option{-E}が暗黙指定されていないことを除いて、@option{-M -MF @var{file}}と同等である。 ドライバは、@option{-o}オプションが指定されているかどうかに基づいて、@var{file}を決定する。 そうである場合、ドライバはその引数を使用しますが接尾辞@file{.d}を使用する。そうでない場合は、入力ファイルの名前を取り、ディレクトリコンポーネントと接尾辞を削除し、@file{.d}接尾辞を適用する。
 
-If @option{-MD} is used in conjunction with @option{-E}, any
-@option{-o} switch is understood to specify the dependency output file
-(@pxref{dashMF,,-MF}), but if used without @option{-E}, each @option{-o}
-is understood to specify a target object file.
+@option{-MD}を@option{-E}と組み合わせて使用すると、@option{-o}スイッチは依存関係出力ファイル（@pxref {dashMF,,-MF}）を指定すると解釈されるが、 @option{-E}を指定しなければ、各@option{-o}はターゲットオブジェクトファイルを指定すると解釈される。
 
-Since @option{-E} is not implied, @option{-MD} can be used to generate
-a dependency output file as a side-effect of the compilation process.
+@option{-E}は暗黙指定されていないので、@option{-MD}を使用して、コンパイルプロセスの副作用として依存関係出力ファイルを生成することができる。
 
 @item -MMD
 @opindex MMD
-Like @option{-MD} except mention only user header files, not system
-header files.
+@option{-MD}と同様だが、システムヘッダーファイルではなく、ユーザーヘッダーファイルのみを記述する。
 
 @item -fpreprocessed
 @opindex fpreprocessed
-Indicate to the preprocessor that the input file has already been
-preprocessed.  This suppresses things like macro expansion, trigraph
-conversion, escaped newline splicing, and processing of most directives.
-The preprocessor still recognizes and removes comments, so that you can
-pass a file preprocessed with @option{-C} to the compiler without
-problems.  In this mode the integrated preprocessor is little more than
-a tokenizer for the front ends.
+入力ファイルがすでに前処理されていることをプリプロセッサに示す。 これは、マクロ展開、トリグラフ変換、エスケープされた改行スプライシング、およびほとんどのディレクティブの処理を抑制する。 プリプロセッサは依然としてコメントを認識して削除するので、@option{-C}で前処理されたファイルを問題なくコンパイラに渡すことができる。 このモードでは、統合プリプロセッサはほとんどフロントエンド用のトークナイザと変わらない。
 
-@option{-fpreprocessed} is implicit if the input file has one of the
-extensions @samp{.i}, @samp{.ii} or @samp{.mi}.  These are the
-extensions that GCC uses for preprocessed files created by
-@option{-save-temps}.
+入力ファイルが拡張子@samp{.i}、@samp{.ii}または@samp{.mi}のいずれかを持つ場合、@option{-fpreprocessed}は暗黙的である。 これらはGCCが@option{-save-temps}によって作成された前処理されたファイルに使用する拡張機能である。
 
 @item -fdirectives-only
 @opindex fdirectives-only
-When preprocessing, handle directives, but do not expand macros.
+前処理のときは、ディレクティブを処理するが、マクロは展開しない。
 
-The option's behavior depends on the @option{-E} and @option{-fpreprocessed}
-options.
+オプションの動作は、@option{-E}オプションと@option{-fpreprocessed}オプションによって異なります。
 
-With @option{-E}, preprocessing is limited to the handling of directives
-such as @code{#define}, @code{#ifdef}, and @code{#error}.  Other
-preprocessor operations, such as macro expansion and trigraph
-conversion are not performed.  In addition, the @option{-dD} option is
-implicitly enabled.
+@option{-E}を使用すると、前処理は@code{#define}、@code{#ifdef}、@code{#error}などのディレクティブの処理に限定される。 マクロ展開やトリグラフ変換などの他のプリプロセッサ処理は行われない。 さらに、@option {-dD}オプションは暗黙的に有効になっている。
 
-With @option{-fpreprocessed}, predefinition of command line and most
-builtin macros is disabled.  Macros such as @code{__LINE__}, which are
-contextually dependent, are handled normally.  This enables compilation of
-files previously preprocessed with @code{-E -fdirectives-only}.
+@option{-fpreprocessed}を使用すると、コマンドラインと大部分の組み込みマクロの事前定義が無効になる。 コンテキスト依存の@code{__ LINE__}などのマクロは、通常どおり処理される。 これにより、@code{-E -fdirectives-only}で前処理されたファイルのコンパイルが可能になる。
 
-With both @option{-E} and @option{-fpreprocessed}, the rules for
-@option{-fpreprocessed} take precedence.  This enables full preprocessing of
-files previously preprocessed with @code{-E -fdirectives-only}.
+@option{-E}と@option{-fpreprocessed}の両方で、@option{-fpreprocessed}のルールが優先される。 これにより、@code{-E -fdirectives-only}で前処理されたファイルの完全な前処理が可能になる。
 
 @item -fdollars-in-identifiers
 @opindex fdollars-in-identifiers
 @anchor{fdollars-in-identifiers}
-Accept @samp{$} in identifiers.
+識別子に@samp{$}を許容する。
 @ifset cppmanual
 @xref{Identifier characters}.
 @end ifset
 
 @item -fextended-identifiers
 @opindex fextended-identifiers
-Accept universal character names in identifiers.  This option is
-enabled by default for C99 (and later C standard versions) and C++.
+識別子のユニバーサルキャラクタ名を許容する。 このオプションは、C99（およびそれ以降のC標準バージョン）およびC++ではデフォルトで有効になっている。
 
 @item -fno-canonical-system-headers
 @opindex fno-canonical-system-headers
-When preprocessing, do not shorten system header paths with canonicalization.
+前処理の際に、正規化でシステムヘッダパスを短縮しない。
 
 @item -ftabstop=@var{width}
 @opindex ftabstop
-Set the distance between tab stops.  This helps the preprocessor report
-correct column numbers in warnings or errors, even if tabs appear on the
-line.  If the value is less than 1 or greater than 100, the option is
-ignored.  The default is 8.
+タブストップ間の距離を設定する。 これは、行にタブがあったとしても、プリプロセッサーが警告またはエラーの正しい列番号を報告するのに役立つ。 値が1より小さいか100より大きい場合、このオプションは無視される。 デフォルトは8である。
 
 @item -ftrack-macro-expansion@r{[}=@var{level}@r{]}
 @opindex ftrack-macro-expansion
-Track locations of tokens across macro expansions. This allows the
-compiler to emit diagnostic about the current macro expansion stack
-when a compilation error occurs in a macro expansion. Using this
-option makes the preprocessor and the compiler consume more
-memory. The @var{level} parameter can be used to choose the level of
-precision of token location tracking thus decreasing the memory
-consumption if necessary. Value @samp{0} of @var{level} de-activates
-this option. Value @samp{1} tracks tokens locations in a
-degraded mode for the sake of minimal memory overhead. In this mode
-all tokens resulting from the expansion of an argument of a
-function-like macro have the same location. Value @samp{2} tracks
-tokens locations completely. This value is the most memory hungry.
-When this option is given no argument, the default parameter value is
-@samp{2}.
+マクロ展開全体のトークンの場所を追跡する。 これにより、マクロ展開でコンパイルエラーが発生した場合、コンパイラは現在のマクロ展開スタックに関する診断を発行できる。 このオプションを使用すると、プリプロセッサとコンパイラはより多くのメモリを消費する。 @var{level}パラメータを使用して、トークンの位置追跡の精度レベルを選択し、必要に応じてメモリ消費を減らすことができる。 @var{level}の値@samp {0}はこのオプションを無効にする。 値@samp{1}は、メモリーオーバーヘッドを最小限に抑えるために、劣化モードのトークンの場所を追跡する。 このモードでは、関数のようなマクロの引数を展開した結果のすべてのトークンは同じ場所にある。 値@samp{2}はトークンの位置を完全に追跡する。 この値は、メモリに貪欲である。 このオプションに引数を指定しないと、デフォルトのパラメータ値は@samp{2}になる。
 
-Note that @code{-ftrack-macro-expansion=2} is activated by default.
+@code {-ftrack-macro-expansion=2}はデフォルトで有効になっていることに注意。
 
 @item -fexec-charset=@var{charset}
 @opindex fexec-charset
 @cindex character set, execution
-Set the execution character set, used for string and character
-constants.  The default is UTF-8.  @var{charset} can be any encoding
-supported by the system's @code{iconv} library routine.
+文字列と文字定数で使われる実行の文字集合をセットする。デフォルトはUTF-8である。@var{charset}はシステムの@code{iconv}ライブラリルーチンによってサポートされたエンコードのどれも使うことができる。
 
 @item -fwide-exec-charset=@var{charset}
 @opindex fwide-exec-charset
 @cindex character set, wide execution
-Set the wide execution character set, used for wide string and
-character constants.  The default is UTF-32 or UTF-16, whichever
-corresponds to the width of @code{wchar_t}.  As with
-@option{-fexec-charset}, @var{charset} can be any encoding supported
-by the system's @code{iconv} library routine; however, you will have
-problems with encodings that do not fit exactly in @code{wchar_t}.
+ワイド文字列と文字定数に使われるワイド実行文字集合をセットする。デフォルトは、@code{wchar_t}の幅に対応してUTF-32かUTF-16である。@option{-fexec-charset}と同様に、@var{charset}はシステムの@code{iconv}ライブラリルーチンによってサポートされたエンコードのどれも使うことができる。ただし、@code{wchar_t}に正しく合わないエンコードでは問題が生じるだろう。
 
 @item -finput-charset=@var{charset}
 @opindex finput-charset
 @cindex character set, input
-Set the input character set, used for translation from the character
-set of the input file to the source character set used by GCC@.  If the
-locale does not specify, or GCC cannot get this information from the
-locale, the default is UTF-8.  This can be overridden by either the locale
-or this command-line option.  Currently the command-line option takes
-precedence if there's a conflict.  @var{charset} can be any encoding
-supported by the system's @code{iconv} library routine.
+入力ファイルの文字セットからGCCで使用されるソース文字セットへの変換に使用される入力文字セットを設定する。ロケールが指定されていない場合、またはGCCがロケールからこの情報を取得できない場合、デフォルトはUTF-8である。 これは、ロケールまたはこのコマンドラインオプションのいずれかによって上書きすることができる。 現在、コマンドラインオプションは、競合が発生した場合に優先される。 @var{charset}は、システムの@code{iconv}ライブラリルーチンでサポートされているすべてのエンコーディングである。
 
 @ifclear cppmanual
 @item -fpch-deps
 @opindex fpch-deps
-When using precompiled headers (@pxref{Precompiled Headers}), this flag
-causes the dependency-output flags to also list the files from the
-precompiled header's dependencies.  If not specified, only the
-precompiled header are listed and not the files that were used to
-create it, because those files are not consulted when a precompiled
-header is used.
+プリコンパイルされたヘッダー（@pxref {Precompiled Headers}）を使用する場合、このフラグは依存関係出力フラグにプリコンパイル済みヘッダーの依存関係のファイルもリストさせる。 指定されていない場合、プリコンパイルされたヘッダーが使用されたときにこれらのファイルは参照されないため、プリコンパイルされたヘッダーのみがリストされ、作成に使用されたファイルはリストされない。
 
 @item -fpch-preprocess
 @opindex fpch-preprocess
-This option allows use of a precompiled header (@pxref{Precompiled
-Headers}) together with @option{-E}.  It inserts a special @code{#pragma},
-@code{#pragma GCC pch_preprocess "@var{filename}"} in the output to mark
-the place where the precompiled header was found, and its @var{filename}.
-When @option{-fpreprocessed} is in use, GCC recognizes this @code{#pragma}
-and loads the PCH@.
+このオプションは、プリコンパイルされたヘッダ（@pxref {Precompiled Headers}）を@option{-E}とともに使用できるようにする。 プリコンパイルされたヘッダが見つかった場所とその@var{filename}をマークするために、特殊な@code{#pragma}、@code{#pragma GCC pch_preprocess "@var{filename}"}を出力に挿入する。 @option{-fpreprocessed}が使用されているとき、GCCはこの@code{#pragma}を認識し、PCHをロードします。
 
-This option is off by default, because the resulting preprocessed output
-is only really suitable as input to GCC@.  It is switched on by
-@option{-save-temps}.
+結果として得られる前処理された出力は、GCCへの入力として本当に適しているだけなので、このオプションはデフォルトではオフになっている。 これは@option{-save-temps}によってスイッチオンされる。
 
-You should not write this @code{#pragma} in your own code, but it is
-safe to edit the filename if the PCH file is available in a different
-location.  The filename may be absolute or it may be relative to GCC's
-current directory.
+自分のコードに@code{#pragma}を書き込むべきではないが、PCHファイルが別の場所で利用可能な場合は、ファイル名を編集することは安全である。 ファイル名は絶対パスでも、GCCのカレントディレクトリからの相対パスでもかまわない。
 @end ifclear
 
 @item -fworking-directory
 @opindex fworking-directory
 @opindex fno-working-directory
-Enable generation of linemarkers in the preprocessor output that
-let the compiler know the current working directory at the time of
-preprocessing.  When this option is enabled, the preprocessor
-emits, after the initial linemarker, a second linemarker with the
-current working directory followed by two slashes.  GCC uses this
-directory, when it's present in the preprocessed input, as the
-directory emitted as the current working directory in some debugging
-information formats.  This option is implicitly enabled if debugging
-information is enabled, but this can be inhibited with the negated
-form @option{-fno-working-directory}.  If the @option{-P} flag is
-present in the command line, this option has no effect, since no
-@code{#line} directives are emitted whatsoever.
+プリプロセッサの出力にlinemarkerを生成できるようにする。これにより、コンパイラは前処理時に現在の作業ディレクトリを知ることができる。 このオプションを有効にすると、プリプロセッサーは、最初のラインマーカーの後に、現在の作業ディレクトリーに2つのスラッシュが続く2番目のラインマーカーを発行する。 GCCはこのディレクトリを、前処理された入力に存在する場合、いくつかのデバッグ情報形式で現在の作業ディレクトリとして発行されるディレクトリとして使用する。 このオプションは、デバッグ情報が有効になっている場合は暗黙的に有効になっているが、これは否定された形式の@option{-fno-working-directory}で禁止することができる。 @option{-P}フラグがコマンドラインにある場合、@code{#line}ディレクティブはまったく出力されないので、このオプションは効果がない。
 
 @item -A @var{predicate}=@var{answer}
 @opindex A
-Make an assertion with the predicate @var{predicate} and answer
-@var{answer}.  This form is preferred to the older form @option{-A
-@var{predicate}(@var{answer})}, which is still supported, because
-it does not use shell special characters.
+述語@var{predicate}と@var {answer}でアサーションを行う。 この形式は、@option{-A @var{predicate}(@var{answer})}より古い形式よりも優先される。これはシェルの特殊文字を使用しないため、引き続きサポートされている。
 @ifset cppmanual
 @xref{Obsolete Features}.
 @end ifset
 
 @item -A -@var{predicate}=@var{answer}
-Cancel an assertion with the predicate @var{predicate} and answer
-@var{answer}.
+述語@var{predicate}と@var{answer}でのアサーションをキャンセルする。
 
 @item -C
 @opindex C
-Do not discard comments.  All comments are passed through to the output
-file, except for comments in processed directives, which are deleted
-along with the directive.
+コメントを破棄しない。 すべてのコメントは、処理されたディレクティブのコメントを除いて、出力ファイルに渡され、ディレクティブとともに削除される。
 
-You should be prepared for side effects when using @option{-C}; it
-causes the preprocessor to treat comments as tokens in their own right.
-For example, comments appearing at the start of what would be a
-directive line have the effect of turning that line into an ordinary
-source line, since the first token on the line is no longer a @samp{#}.
+@option{-C}を使用するときは、副作用の準備が必要である。 プリプロセッサはトークンとしてコメントを処理する。 例えば、ディレクティブ行の先頭に現れるコメントは、その行を最初のトークンが@samp{#}でなくなったので、その行を通常のソース行に変換する効果がある。
 
 @item -CC
 @opindex CC
-Do not discard comments, including during macro expansion.  This is
-like @option{-C}, except that comments contained within macros are
-also passed through to the output file where the macro is expanded.
+マクロ展開中も含めてコメントを破棄しない。 これは@option{-C}と似ているが、マクロに含まれるコメントも、マクロが展開される出力ファイルにも渡される。
 
-In addition to the side-effects of the @option{-C} option, the
-@option{-CC} option causes all C++-style comments inside a macro
-to be converted to C-style comments.  This is to prevent later use
-of that macro from inadvertently commenting out the remainder of
-the source line.
+@option{-C}オプションの副作用に加えて、@option{-CC}オプションはマクロ内のすべてのC++スタイルのコメントをCスタイルのコメントに変換する。 これは、そのマクロの後での使用が誤ってソース行の残りの部分をコメントアウトするのを防ぐためである。
 
-The @option{-CC} option is generally used to support lint comments.
+@option{-CC}オプションは一般に、lintコメントをサポートするために使用される。
 
 @item -P
 @opindex P
-Inhibit generation of linemarkers in the output from the preprocessor.
-This might be useful when running the preprocessor on something that is
-not C code, and will be sent to a program which might be confused by the
-linemarkers.
+プリプロセッサからの出力にラインマーカーの生成を禁止する。
+これは、Cコードではないものでプリプロセッサを実行しているときに有用であり、ラインマーカーによって混乱する可能性があるプログラムに送られるだろう。
 @ifset cppmanual
 @xref{Preprocessor Output}.
 @end ifset
@@ -415,32 +244,26 @@ linemarkers.
 @opindex traditional-cpp
 @opindex traditional
 
-Try to imitate the behavior of pre-standard C preprocessors, as
-opposed to ISO C preprocessors.
+ISO Cプリプロセッサではなく、標準化前のCプリプロセッサの動作を真似しようとする。
 @ifset cppmanual
 @xref{Traditional Mode}.
 @end ifset
 @ifclear cppmanual
-See the GNU CPP manual for details.
+詳細はGNU CPPマニュアル参照。
 @end ifclear
 
-Note that GCC does not otherwise attempt to emulate a pre-standard 
-C compiler, and these options are only supported with the @option{-E} 
-switch, or when invoking CPP explicitly.
+GCCは標準化前のCコンパイラをエミュレートしようとはしないことに注意。これらのオプションは@option{-E}スイッチでのみ、またはCPPを明示的に呼び出す際にのみサポートされている。
 
 @item -trigraphs
 @opindex trigraphs
-Support ISO C trigraphs.
-These are three-character sequences, all starting with @samp{??}, that
-are defined by ISO C to stand for single characters.  For example,
-@samp{??/} stands for @samp{\}, so @samp{'??/n'} is a character
-constant for a newline.
+ISO Cトライグラフをサポートする。これらは3文字のシーケンスで、すべてが@samp {??}で始まり、
+ISO Cで定義されています。 たとえば、@samp{??/}は@samp{\}を表す。したがって、@samp{'??/n'}は改行の文字定数である。
 @ifset cppmanual
 @xref{Initial processing}.
 @end ifset
 
 @ifclear cppmanual
-The nine trigraphs and their replacements are
+9のトライグラフとその置換先は以下である。
 
 @smallexample
 Trigraph:       ??(  ??)  ??<  ??>  ??=  ??/  ??'  ??!  ??-
@@ -448,88 +271,60 @@ Replacement:      [    ]    @{    @}    #    \    ^    |    ~
 @end smallexample
 @end ifclear
 
-By default, GCC ignores trigraphs, but in
-standard-conforming modes it converts them.  See the @option{-std} and
-@option{-ansi} options.
+デフォルトでは、GCCはトリグラフを無視するが、標準準拠モードではそれを変換する。 @option{-std}オプションと@option{-ansi}オプションを参照せよ。
 
 @item -remap
 @opindex remap
-Enable special code to work around file systems which only permit very
-short file names, such as MS-DOS@.
+特別なコードを有効して、MS-DOSなどの非常に短いファイル名しか許可しないファイルシステムで動かす。
 
 @item -H
 @opindex H
-Print the name of each header file used, in addition to other normal
-activities.  Each name is indented to show how deep in the
-@samp{#include} stack it is.  Precompiled header files are also
-printed, even if they are found to be invalid; an invalid precompiled
-header file is printed with @samp{...x} and a valid one with @samp{...!} .
+他の通常のアクティビティに加えて、使用された各ヘッダファイルの名前を表示する。 それぞれの名前はインデントされて@samp{#include}スタックの深さを示す。 たとえ無効であっても、コンパイル済みのヘッダーファイルも出力される。 無効なプリコンパイル済みヘッダーファイルは@samp{... x}で印刷され、有効なものは@samp{...！}で印刷される。
 
 @item -d@var{letters}
 @opindex d
-Says to make debugging dumps during compilation as specified by
-@var{letters}.  The flags documented here are those relevant to the
-preprocessor.  Other @var{letters} are interpreted
-by the compiler proper, or reserved for future versions of GCC, and so
-are silently ignored.  If you specify @var{letters} whose behavior
-conflicts, the result is undefined.
+@var{letters}で指定されたコンパイル時にデバッグダンプを作成するように指示する。 ここで説明するフラグは、プリプロセッサに関連するフラグである。 他の@var{letters}は、コンパイラによって解釈されるか、GCCの将来のバージョン用に予約されているので、静かに無視されまる。 振る舞いが矛盾する@var{letters}を指定した場合、結果は未定義である。
 @ifclear cppmanual
-@xref{Developer Options}, for more information.
+詳しい情報は@xref{Developer Options}
 @end ifclear
 
 @table @gcctabopt
 @item -dM
 @opindex dM
-Instead of the normal output, generate a list of @samp{#define}
-directives for all the macros defined during the execution of the
-preprocessor, including predefined macros.  This gives you a way of
-finding out what is predefined in your version of the preprocessor.
-Assuming you have no file @file{foo.h}, the command
+通常の出力の代わりに、プリプロセッサの実行中に定義されたすべてのマクロの定義済みマクロを含む@samp{#define}ディレクティブのリストを生成する。 これにより、使用しているプリプロセッサのバージョンで定義されている内容を知ることができる。 あなたがファイル@file {foo.h}を持っていないと仮定すると、コマンド
 
 @smallexample
 touch foo.h; cpp -dM foo.h
 @end smallexample
 
 @noindent
-shows all the predefined macros.
+すべての定義済みマクロを表示する。
 
 @ifclear cppmanual
-If you use @option{-dM} without the @option{-E} option, @option{-dM} is
-interpreted as a synonym for @option{-fdump-rtl-mach}.
+@option{-d}を@option{-E}オプションなしで使用すると、@option{-dM}は@option {-fdump-rtl-mach}の同義語として解釈される。
 @xref{Developer Options, , ,gcc}.
 @end ifclear
 
 @item -dD
 @opindex dD
-Like @option{-dM} except in two respects: it does @emph{not} include the
-predefined macros, and it outputs @emph{both} the @samp{#define}
-directives and the result of preprocessing.  Both kinds of output go to
-the standard output file.
+2つの点を除いて@option{-dM}と似ている。それは定義済みマクロを含@emph{まず}、@samp{#define}ディレクティブと前処理の結果の@emph{両方}を出力する。出力の両方の種類は標準出力ファイルへと出力される。
 
 @item -dN
 @opindex dN
-Like @option{-dD}, but emit only the macro names, not their expansions.
+@option{-dD}と似ているが、マクロ名のみを生成し、式はしない。
 
 @item -dI
 @opindex dI
-Output @samp{#include} directives in addition to the result of
-preprocessing.
+前処理の結果に加えて、@samp{#include}ディレクティブも出力する。
 
 @item -dU
 @opindex dU
-Like @option{-dD} except that only macros that are expanded, or whose
-definedness is tested in preprocessor directives, are output; the
-output is delayed until the use or test of the macro; and
-@samp{#undef} directives are also output for macros tested but
-undefined at the time.
+@option{-dD}と似ているが、展開された、もしくはその定義性がプリプロセッサディレクティブで試験されたもののみが出力される。出力はマクロの使用か試験まで遅延される。@samp {#undef}ディレクティブは、テストされたマクロでは出力されるが、その時点では未定義である。
 @end table
 
 @item -fdebug-cpp
 @opindex fdebug-cpp
-This option is only useful for debugging GCC.  When used from CPP or with
-@option{-E}, it dumps debugging information about location maps.  Every
-token in the output is preceded by the dump of the map its location
-belongs to.
+このオプションは、GCCのデバッグにのみ有効です。 CPPまたは@option{-E}から使用すると、ロケーションマップに関するデバッグ情報をダンプする。 出力内のすべてのトークンの前には、その場所が所属するマップのダンプがある。
 
-When used from GCC without @option{-E}, this option has no effect.
+@option{-E}を指定せずにGCCから使用した場合、このオプションは効果がない。
 
