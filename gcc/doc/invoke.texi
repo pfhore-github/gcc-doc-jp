@@ -10767,7 +10767,7 @@ not overridden}をセットすることでそうなる。
 
 @item -ftime-report-details
 @opindex ftime-report-details
-Record the time consumed by infrastructure parts separately for each pass.
+インフラストラクチャの部品が費やす時間をパスごとに個別に記録する。
 
 @item -fira-verbose=@var{n}
 @opindex fira-verbose
@@ -12371,7 +12371,7 @@ ARMv8の規則に適合するためにITブロックの生成を制限する。I
 @end table
 
 @node AVR Options
-@subsection AVR Options
+@subsection AVRオプション
 @cindex AVR Options
 
 これらのオプションはAVR実装用に定義されている。
@@ -12383,7 +12383,7 @@ Atmel AVR命令セットアーキテクチャ(ISA)かMCUタイプを指定する
 
 このオプションのデフォルトは@tie{}@samp{avr2}である。
 
-GCCは以下のAVRデバイスとISAおサポートしている。
+GCCは以下のAVRデバイスとISAをサポートしている。
 
 @include avr-mmcu.texi
 
