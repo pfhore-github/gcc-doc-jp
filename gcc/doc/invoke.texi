@@ -13002,114 +13002,55 @@ CR16CまたはCR16C +アーキテクチャ用のコードを生成する。 CR16
 @end table
 
 @node Darwin Options
-@subsection Darwin Options
+@subsection Darwinオプション
 @cindex Darwin options
 
-These options are defined for all architectures running the Darwin operating
-system.
+これらのオプションは、Darwinオペレーティングシステムを実行しているすべてのアーキテクチャで定義されています。
 
-FSF GCC on Darwin does not create ``fat'' object files; it creates
-an object file for the single architecture that GCC was built to
-target.  Apple's GCC on Darwin does create ``fat'' files if multiple
-@option{-arch} options are used; it does so by running the compiler or
-linker multiple times and joining the results together with
-@file{lipo}.
+DarwinのFSF GCCは、「fat」オブジェクトファイルを作成しない。 GCCがターゲットとする構築された単一アーキテクチャ用のオブジェクトファイルを作成する。 AppleのGCCは、複数の@option{-arch}オプションが使用されている場合、 「fat」ファイルを作成する。 コンパイラーやリンカーを複数回実行し、結果を@file{lipo}と一緒に結合することでそうする。
 
-The subtype of the file created (like @samp{ppc7400} or @samp{ppc970} or
-@samp{i686}) is determined by the flags that specify the ISA
-that GCC is targeting, like @option{-mcpu} or @option{-march}.  The
-@option{-force_cpusubtype_ALL} option can be used to override this.
+（@samp{ppc7400}や@samp{ppc970}や@samp{i686}のような）作成されるファイルのサブタイプは、GCCがターゲットとするISAを指定するフラグ@option{-mcpu}や@option{-march}で決定される。これを無効にするには、 @option{-force_cpusubtype_ALL}オプションを使用できる。
 
-The Darwin tools vary in their behavior when presented with an ISA
-mismatch.  The assembler, @file{as}, only permits instructions to
-be used that are valid for the subtype of the file it is generating,
-so you cannot put 64-bit instructions in a @samp{ppc750} object file.
-The linker for shared libraries, @file{/usr/bin/libtool}, fails
-and prints an error if asked to create a shared library with a less
-restrictive subtype than its input files (for instance, trying to put
-a @samp{ppc970} object file in a @samp{ppc7400} library).  The linker
-for executables, @command{ld}, quietly gives the executable the most
-restrictive subtype of any of its input files.
+Darwinのツールは、ISAの不一致がある場合の動作が異なる。 アセンブラ@file{as}は、生成しているファイルのサブタイプに有効な命令のみを使用できるため、64ビット命令を@samp{ppc750}オブジェクトファイルに入れることはできない。 共有ライブラリのリンカー@file{/usr/bin/libtool}は、入力ファイルよりも制限の少ないサブタイプで共有ライブラリを作成するように要求された場合に失敗し、エラーを表示する。（例えば、@samp{ppc970}オブジェクトファイルを@samp{ppc7400}ライブラリに置こうとすると）。実行可能ファイルのリンカー@command {ld}は、実行可能ファイルに入力ファイルの中で最も制限的なサブタイプを静かに提供する。
 
 @table @gcctabopt
 @item -F@var{dir}
 @opindex F
-Add the framework directory @var{dir} to the head of the list of
-directories to be searched for header files.  These directories are
-interleaved with those specified by @option{-I} options and are
-scanned in a left-to-right order.
+フレームワークディレクトリ@var{dir}をリストの先頭に追加するヘッダファイルを検索するディレクトリ。これらのディレクトリは@option{-I}オプションで指定されたものに差し挟まれ、左から右の順序でスキャンされる。
 
-A framework directory is a directory with frameworks in it.  A
-framework is a directory with a @file{Headers} and/or
-@file{PrivateHeaders} directory contained directly in it that ends
-in @file{.framework}.  The name of a framework is the name of this
-directory excluding the @file{.framework}.  Headers associated with
-the framework are found in one of those two directories, with
-@file{Headers} being searched first.  A subframework is a framework
-directory that is in a framework's @file{Frameworks} directory.
-Includes of subframework headers can only appear in a header of a
-framework that contains the subframework, or in a sibling subframework
-header.  Two subframeworks are siblings if they occur in the same
-framework.  A subframework should not have the same name as a
-framework; a warning is issued if this is violated.  Currently a
-subframework cannot have subframeworks; in the future, the mechanism
-may be extended to support this.  The standard frameworks can be found
-in @file{/System/Library/Frameworks} and
-@file{/Library/Frameworks}.  An example include looks like
-@code{#include <Framework/header.h>}, where @file{Framework} denotes
-the name of the framework and @file{header.h} is found in the
-@file{PrivateHeaders} or @file{Headers} directory.
+フレームワークディレクトリは、フレームワークを持つディレクトリである。フレームワークとは、@file{.framework}で終わる@file{Headers}や@file{PrivateHeaders}ディレクトリが直接入っているディレクトリである。フレームワークの名前は、@file{.framework}を除いたこのディレクトリの名前である。フレームワークに関連付けられたヘッダーは、@file{Headers}が最初に検索される2つのディレクトリのうちの1つにある。サブフレームワークは、フレームワークの@file{Frameworks}ディレクトリにあるフレームワークディレクトリである。サブフレームワークヘッダーのインクルードは、サブフレームワークを含むフレームワークのヘッダーにのみ、または兄弟サブフレームヘッダーにのみ表示できる。 2つのサブフレームワークは、同じフレームワーク内に存在する場合、兄弟である。サブフレームワークはフレームワークと同じ名前であってはならない。これに違反すると警告が出る。現在、サブフレームワークはサブフレームワークを持つことができない。将来、このメカニズムを拡張することができるだろう。標準のフレームワークは@file{/System/Library/Frameworks}と@file{/Library/Frameworks}にある。例のincludeは@include<Framework/header.h>}のように見え、@fileFramework}はフレームワークの名前を表し、@file{header.h}は@file{PrivateHeaders}や@file{Headers}ディレクトリを表す。
 
 @item -iframework@var{dir}
 @opindex iframework
-Like @option{-F} except the directory is a treated as a system
-directory.  The main difference between this @option{-iframework} and
-@option{-F} is that with @option{-iframework} the compiler does not
-warn about constructs contained within header files found via
-@var{dir}.  This option is valid only for the C family of languages.
+@option {-F}と似ているが、ディレクトリはシステムディレクトリとして扱われる。 この@option{-iframework}と@option{-F}の主な違いは、@option{-iframework}の場合、コンパイラは@var{dir}を介して見つかるヘッダファイルに含まれている構文について警告しないということである。 このオプションはC言語族の言語でのみ有効である。
 
 @item -gused
 @opindex gused
-Emit debugging information for symbols that are used.  For stabs
-debugging format, this enables @option{-feliminate-unused-debug-symbols}.
-This is by default ON@.
+使用されているシンボルのデバッグ情報を出力する。 stabsデバッグ形式では、これは@option{-feliminate-unused-debug-symbols}を有効にする。これは、デフォルトでONになっている。
 
 @item -gfull
 @opindex gfull
-Emit debugging information for all symbols and types.
+すべてのシンボルとタイプのデバッグ情報を出力する。
 
 @item -mmacosx-version-min=@var{version}
-The earliest version of MacOS X that this executable will run on
-is @var{version}.  Typical values of @var{version} include @code{10.1},
-@code{10.2}, and @code{10.3.9}.
+この実行可能ファイルが実行されるMacOS Xの最も古いバージョンは@var{version}である。 @var {version}の典型的な値は@code{10.1}、@code{10.2}、@code{10.3.9}である。
 
-If the compiler was built to use the system's headers by default,
-then the default for this option is the system version on which the
-compiler is running, otherwise the default is to make choices that
-are compatible with as many systems and code bases as possible.
+コンパイラがデフォルトでシステムのヘッダーを使用するように構築されている場合、このオプションのデフォルトはコンパイラが実行されているシステムのバージョンである。それ以外の場合、デフォルトはできるだけ多くのシステムおよびコードベースと互換性がある。
 
 @item -mkernel
 @opindex mkernel
-Enable kernel development mode.  The @option{-mkernel} option sets
-@option{-static}, @option{-fno-common}, @option{-fno-use-cxa-atexit},
+カーネル開発モードを有効にする。 @option{-mkernel}は@option{-static}, @option{-fno-common}, @option{-fno-use-cxa-atexit},
 @option{-fno-exceptions}, @option{-fno-non-call-exceptions},
-@option{-fapple-kext}, @option{-fno-weak} and @option{-fno-rtti} where
-applicable.  This mode also sets @option{-mno-altivec},
-@option{-msoft-float}, @option{-fno-builtin} and
-@option{-mlong-branch} for PowerPC targets.
+@option{-fapple-kext}, @option{-fno-weak}, @option{-fno-rtti}を適用可能な場所で有効にする。
+このモードはさらにPowerPCターゲットでは@option{-mno-altivec},
+@option{-msoft-float}, @option{-fno-builtin}と
+@option{-mlong-branch}を有効にする。
 
 @item -mone-byte-bool
 @opindex mone-byte-bool
-Override the defaults for @code{bool} so that @code{sizeof(bool)==1}.
-By default @code{sizeof(bool)} is @code{4} when compiling for
-Darwin/PowerPC and @code{1} when compiling for Darwin/x86, so this
-option has no effect on x86.
+@code{sizeofbool）= 1}のように、@code {bool}のデフォルトを上書きする。デフォルトでは、Darwin/PowerPC用にコンパイルするときは@code{sizeofbool}は@code{4}、Darwin/x86用にコンパイルするときは@code{1}なので、このオプションはx86には影響しない。
 
-@strong{Warning:} The @option{-mone-byte-bool} switch causes GCC
-to generate code that is not binary compatible with code generated
-without that switch.  Using this switch may require recompiling all
-other modules in a program, including system libraries.  Use this
-switch to conform to a non-default data model.
+@strong{警告:} @option{--one-byte-bool}スイッチは、GCCに、そのスイッチなしで生成されたコードとバイナリ互換性のないコードを生成させる。 このスイッチを使用するには、システムライブラリを含むプログラム内の他のすべてのモジュールを再コンパイルする必要がある。 このスイッチを使用して、デフォルト以外のデータモデルに準拠させる。
 
 @item -mfix-and-continue
 @itemx -ffix-and-continue
@@ -13117,45 +13058,37 @@ switch to conform to a non-default data model.
 @opindex mfix-and-continue
 @opindex ffix-and-continue
 @opindex findirect-data
-Generate code suitable for fast turnaround development, such as to
-allow GDB to dynamically load @file{.o} files into already-running
-programs.  @option{-findirect-data} and @option{-ffix-and-continue}
-are provided for backwards compatibility.
+GDBが既に実行中のプログラムに@file{.o}ファイルを動的にロードできるように、高速ターンアラウンド開発に適したコードを生成する。 下位互換性のために@option{-findirect-data}と@option {-ffix-and-continue}が提供されている。
 
 @item -all_load
 @opindex all_load
+静的アーカイブライブラリのすべてのメンバーを読み込む。詳細は、man ld（1）を参照せよ。
 Loads all members of static archive libraries.
 See man ld(1) for more information.
 
 @item -arch_errors_fatal
 @opindex arch_errors_fatal
-Cause the errors having to do with files that have the wrong architecture
-to be fatal.
+誤ったアーキテクチャを持つファイルと関係しているエラーは致命的なものにする。
 
 @item -bind_at_load
 @opindex bind_at_load
-Causes the output file to be marked such that the dynamic linker will
-bind all undefined references when the file is loaded or launched.
+ファイルがロードまたは起動されたときに、ダイナミックリンカが定義されていないすべての参照をバインドするように、出力ファイルにマークを付ける。
 
 @item -bundle
 @opindex bundle
-Produce a Mach-o bundle format file.
-See man ld(1) for more information.
+Mach-oバンドル形式ファイルを作成する。詳細は、man ld（1）を参照せよ。
 
 @item -bundle_loader @var{executable}
 @opindex bundle_loader
-This option specifies the @var{executable} that will load the build
-output file being linked.  See man ld(1) for more information.
+このオプションはリンクされているビルド出力ファイルをロードする@var{executable}を指定する。 詳細は、man ld（1）を参照せよ。
 
 @item -dynamiclib
 @opindex dynamiclib
-When passed this option, GCC produces a dynamic library instead of
-an executable when linking, using the Darwin @file{libtool} command.
+このオプションを渡すと、GCCはDarwinの@file{libtool}コマンドを使用して、リンク時に実行可能ファイルではなく動的ライブラリを生成する。
 
 @item -force_cpusubtype_ALL
 @opindex force_cpusubtype_ALL
-This causes GCC's output file to have the @samp{ALL} subtype, instead of
-one controlled by the @option{-mcpu} or @option{-march} option.
+これにより、GCCの出力ファイルは、@option {-mcpu}または@option{-march}オプションで制御されるものではなく、@samp{ALL}サブタイプになります。
 
 @item -allowable_client  @var{client_name}
 @itemx -client_name
@@ -13278,12 +13211,11 @@ one controlled by the @option{-mcpu} or @option{-march} option.
 @opindex unexported_symbols_list
 @opindex weak_reference_mismatches
 @opindex whatsloaded
-These options are passed to the Darwin linker.  The Darwin linker man page
-describes them in detail.
+これらのオプションはDarwinリンカーに渡される。 Darwinのリンカのmanページに詳細が記述されている。
 @end table
 
 @node DEC Alpha Options
-@subsection DEC Alpha Options
+@subsection DEC Alpha オプション
 
 These @samp{-m} options are defined for the DEC Alpha implementations:
 
