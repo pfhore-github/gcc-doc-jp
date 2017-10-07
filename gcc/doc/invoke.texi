@@ -13458,314 +13458,270 @@ divとmod命令を使わない。
 @end table
 
 @node FRV Options
-@subsection FRV Options
+@subsection FRVオプション
 @cindex FRV Options
 
 @table @gcctabopt
 @item -mgpr-32
 @opindex mgpr-32
 
-Only use the first 32 general-purpose registers.
+最初の32個の汎用レジスタのみを使用する。
 
 @item -mgpr-64
 @opindex mgpr-64
 
-Use all 64 general-purpose registers.
+64個の汎用レジスタをすべて使用する。
 
 @item -mfpr-32
 @opindex mfpr-32
 
-Use only the first 32 floating-point registers.
+最初の32個の浮動小数点レジスタのみを使用する。
 
 @item -mfpr-64
 @opindex mfpr-64
 
-Use all 64 floating-point registers.
+64個の浮動小数点レジスタをすべて使用する。
 
 @item -mhard-float
 @opindex mhard-float
 
-Use hardware instructions for floating-point operations.
+浮動小数点演算にはハードウェア命令を使用する。
 
 @item -msoft-float
 @opindex msoft-float
 
-Use library routines for floating-point operations.
+浮動小数点演算にはライブラリルーチンを使用する。
 
 @item -malloc-cc
 @opindex malloc-cc
 
-Dynamically allocate condition code registers.
+条件コードレジスタを動的に割り当てる。
 
 @item -mfixed-cc
 @opindex mfixed-cc
 
-Do not try to dynamically allocate condition code registers, only
-use @code{icc0} and @code{fcc0}.
+条件コードレジスタを動的に割り当てようとはせず、@code{icc0}と@code{fcc0}だけを使用する。
 
 @item -mdword
 @opindex mdword
 
-Change ABI to use double word insns.
+ダブルワードinsnsを使用するようにABIを変更する。
 
 @item -mno-dword
 @opindex mno-dword
 
-Do not use double word instructions.
+ダブルワード命令は使用しない。
 
 @item -mdouble
 @opindex mdouble
 
-Use floating-point double instructions.
+浮動小数点の倍精度命令を使用する。
 
 @item -mno-double
 @opindex mno-double
 
-Do not use floating-point double instructions.
+浮動小数点の倍精度命令を使用しない。
 
 @item -mmedia
 @opindex mmedia
 
-Use media instructions.
+メディア命令を使う。
 
 @item -mno-media
 @opindex mno-media
 
-Do not use media instructions.
+メディア命令を使わない。
 
 @item -mmuladd
 @opindex mmuladd
 
-Use multiply and add/subtract instructions.
+乗加算・乗減算命令を使う。
 
 @item -mno-muladd
 @opindex mno-muladd
 
-Do not use multiply and add/subtract instructions.
+乗加算・乗減算命令を使わない。
 
 @item -mfdpic
 @opindex mfdpic
 
-Select the FDPIC ABI, which uses function descriptors to represent
-pointers to functions.  Without any PIC/PIE-related options, it
-implies @option{-fPIE}.  With @option{-fpic} or @option{-fpie}, it
-assumes GOT entries and small data are within a 12-bit range from the
-GOT base address; with @option{-fPIC} or @option{-fPIE}, GOT offsets
-are computed with 32 bits.
-With a @samp{bfin-elf} target, this option implies @option{-msim}.
+関数へのポインタを表すために関数記述子を使用するFDPIC ABIを選択する。 PIC/PIE関連のオプションがなければ、それは@option{-fPIE}を意味する。 @option{-fpic}または@option{-fpie}を使用すると、GOTエントリと小データがGOTベースアドレスから12ビットの範囲内にあるとみなされる。 @option{-fPIC}または@option{-fPIE}を指定すると、GOTオフセットは32ビットで計算される。@samp{bfin-elf}ターゲットの場合、このオプションは@option{-msim}を意味する。
 
 @item -minline-plt
 @opindex minline-plt
 
-Enable inlining of PLT entries in function calls to functions that are
-not known to bind locally.  It has no effect without @option{-mfdpic}.
-It's enabled by default if optimizing for speed and compiling for
-shared libraries (i.e., @option{-fPIC} or @option{-fpic}), or when an
-optimization option such as @option{-O3} or above is present in the
-command line.
+ローカルにバインドされていない関数に対する関数呼び出しのPLTエントリのインライン化を有効にする。 @option{-mfdpic}なしでは効果はない。共有ライブラリ（つまり、@option{-fPIC}や@option{-fpic}）用に速度でコンパイルされるか、@option{-O3}以上のような最適化が有効の場合はデフォルトで有効である。
 
 @item -mTLS
 @opindex mTLS
 
-Assume a large TLS segment when generating thread-local code.
+スレッドローカルコードを生成するときは、大きなTLSセグメントを仮定する。
 
 @item -mtls
 @opindex mtls
 
-Do not assume a large TLS segment when generating thread-local code.
+スレッドローカルコードを生成するときに大きなTLSセグメントを想定しない。
 
 @item -mgprel-ro
 @opindex mgprel-ro
 
-Enable the use of @code{GPREL} relocations in the FDPIC ABI for data
-that is known to be in read-only sections.  It's enabled by default,
-except for @option{-fpic} or @option{-fpie}: even though it may help
-make the global offset table smaller, it trades 1 instruction for 4.
-With @option{-fPIC} or @option{-fPIE}, it trades 3 instructions for 4,
-one of which may be shared by multiple symbols, and it avoids the need
-for a GOT entry for the referenced symbol, so it's more likely to be a
-win.  If it is not, @option{-mno-gprel-ro} can be used to disable it.
+読取り専用セクションにあることが知られているデータについては、FDPIC ABIの@code{GPREL}再配置の使用を有効にする。 @option{-fpic}または@option{-fpie}を除いて、デフォルトで有効になっている。グローバルオフセットテーブルを小さくするのに役立つかもしれないが、１命令を4つに変える。@option{-fPIC}または@option{-fPIE}では、3命令を4に変え、そのうちの1つを複数のシンボルで共有することができ、参照シンボルのGOTエントリが不要になるため、勝つ可能性が高くなる。 そうでない場合は、@option{-mno-gprel-ro}を使用して無効にすることができる。
 
 @item -multilib-library-pic
 @opindex multilib-library-pic
 
-Link with the (library, not FD) pic libraries.  It's implied by
-@option{-mlibrary-pic}, as well as by @option{-fPIC} and
-@option{-fpic} without @option{-mfdpic}.  You should never have to use
-it explicitly.
+（FDでなく、ライブラリの）picライブラリにリンクする。 これは、@option{-mlibrary-pic}と、@option{-fPIC}と@option{-fpic}（@option{-mfdpic}なし）によって暗示されている。 明示的に使用する必要はない。
 
 @item -mlinked-fp
 @opindex mlinked-fp
 
-Follow the EABI requirement of always creating a frame pointer whenever
-a stack frame is allocated.  This option is enabled by default and can
-be disabled with @option{-mno-linked-fp}.
+スタックフレームが割り当てられるたびに必ずフレームポインタを作成するというEABIの要求に従う。 このオプションはデフォルトで有効になっており、@option{-mno-linked-fp}で無効にすることができる。
 
 @item -mlong-calls
 @opindex mlong-calls
 
-Use indirect addressing to call functions outside the current
-compilation unit.  This allows the functions to be placed anywhere
-within the 32-bit address space.
+間接アドレッシングを使用して、現在のコンパイル単位の外にある関数を呼び出す。 これにより、関数を32ビットアドレス空間のどこにでも配置することができる。
 
 @item -malign-labels
 @opindex malign-labels
 
-Try to align labels to an 8-byte boundary by inserting NOPs into the
-previous packet.  This option only has an effect when VLIW packing
-is enabled.  It doesn't create new packets; it merely adds NOPs to
-existing ones.
+前のパケットにNOPを挿入して、ラベルを8バイトの境界に揃える。 このオプションは、VLIWパッキングが有効な場合にのみ有効である。 新しいパケットは作成されない。 単に既存のものにNOPを追加するだけである。
 
 @item -mlibrary-pic
 @opindex mlibrary-pic
 
-Generate position-independent EABI code.
+位置独立のEABIコードを生成する。
 
 @item -macc-4
 @opindex macc-4
 
-Use only the first four media accumulator registers.
+最初の4メディアアクセレーターレジスタのみを使う。
 
 @item -macc-8
 @opindex macc-8
 
-Use all eight media accumulator registers.
+全８メディアアクセレーターレジスタを使う。
 
 @item -mpack
 @opindex mpack
 
-Pack VLIW instructions.
+VLIW命令を詰める。
 
 @item -mno-pack
 @opindex mno-pack
 
-Do not pack VLIW instructions.
+VLIW命令を詰めない。
 
 @item -mno-eflags
 @opindex mno-eflags
 
-Do not mark ABI switches in e_flags.
+e_flags内でABIスイッチをマークしない。
 
 @item -mcond-move
 @opindex mcond-move
 
-Enable the use of conditional-move instructions (default).
+条件ムーブ命令の使用を有効化する（デフォルト）。
 
-This switch is mainly for debugging the compiler and will likely be removed
-in a future version.
+このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -mno-cond-move
 @opindex mno-cond-move
 
-Disable the use of conditional-move instructions.
+条件ムーブ命令の使用を無効化する。
 
-This switch is mainly for debugging the compiler and will likely be removed
-in a future version.
+このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -mscc
 @opindex mscc
 
-Enable the use of conditional set instructions (default).
+条件付きセット命令の使用を有効化する。（デフォルト）
 
-This switch is mainly for debugging the compiler and will likely be removed
-in a future version.
+このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -mno-scc
 @opindex mno-scc
 
-Disable the use of conditional set instructions.
+条件付きセット命令の使用を無効化する。
 
-This switch is mainly for debugging the compiler and will likely be removed
-in a future version.
+このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -mcond-exec
 @opindex mcond-exec
 
-Enable the use of conditional execution (default).
+条件付き実行の使用を有効化する。（デフォルト）
 
-This switch is mainly for debugging the compiler and will likely be removed
-in a future version.
+このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -mno-cond-exec
 @opindex mno-cond-exec
 
-Disable the use of conditional execution.
+条件付き実行の使用を無効化する。
 
-This switch is mainly for debugging the compiler and will likely be removed
-in a future version.
+このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -mvliw-branch
 @opindex mvliw-branch
 
-Run a pass to pack branches into VLIW instructions (default).
+分岐をVLIW命令に詰めるパスを走らせる。（デフォルト）
 
-This switch is mainly for debugging the compiler and will likely be removed
-in a future version.
+このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -mno-vliw-branch
 @opindex mno-vliw-branch
 
-Do not run a pass to pack branches into VLIW instructions.
+分岐をVLIW命令に詰めるパスを走らせない。
 
-This switch is mainly for debugging the compiler and will likely be removed
-in a future version.
+このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -mmulti-cond-exec
 @opindex mmulti-cond-exec
 
-Enable optimization of @code{&&} and @code{||} in conditional execution
-(default).
+@code{&&}と@code{||}の条件付き実行での最適化を有効化する。（デフォルト）
 
-This switch is mainly for debugging the compiler and will likely be removed
-in a future version.
+このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -mno-multi-cond-exec
 @opindex mno-multi-cond-exec
 
-Disable optimization of @code{&&} and @code{||} in conditional execution.
+@code{&&}と@code{||}の条件付き実行での最適化を無効化する。
 
-This switch is mainly for debugging the compiler and will likely be removed
-in a future version.
+このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -mnested-cond-exec
 @opindex mnested-cond-exec
 
-Enable nested conditional execution optimizations (default).
+入れ子条件付き実行最適化を有効化する。（デフォルト）
 
-This switch is mainly for debugging the compiler and will likely be removed
-in a future version.
+このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -mno-nested-cond-exec
 @opindex mno-nested-cond-exec
 
-Disable nested conditional execution optimizations.
+入れ子条件付き実行最適化を無効化する。
 
-This switch is mainly for debugging the compiler and will likely be removed
-in a future version.
+このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -moptimize-membar
 @opindex moptimize-membar
 
-This switch removes redundant @code{membar} instructions from the
-compiler-generated code.  It is enabled by default.
+このスイッチは冗長な@code{membar}命令をコンパイラが生成したコードから取り除く。デフォルトで有効である。
 
 @item -mno-optimize-membar
 @opindex mno-optimize-membar
 
-This switch disables the automatic removal of redundant @code{membar}
-instructions from the generated code.
+このスイッチは生成されたコードから冗長な@code{membar}を自動的に除去するのを無効化する。
 
 @item -mtomcat-stats
 @opindex mtomcat-stats
 
-Cause gas to print out tomcat statistics.
+gasにtomcat統計を出力させる。
 
 @item -mcpu=@var{cpu}
 @opindex mcpu
 
-Select the processor type for which to generate code.  Possible values are
+生成コードのプロセッサタイプを指定する。可能な値は
 @samp{frv}, @samp{fr550}, @samp{tomcat}, @samp{fr500}, @samp{fr450},
-@samp{fr405}, @samp{fr400}, @samp{fr300} and @samp{simple}.
+@samp{fr405}, @samp{fr400}, @samp{fr300} と@samp{simple}である。
 
 @end table
 
