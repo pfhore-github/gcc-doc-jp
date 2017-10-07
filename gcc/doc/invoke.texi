@@ -13726,53 +13726,41 @@ gasにtomcat統計を出力させる。
 @end table
 
 @node GNU/Linux Options
-@subsection GNU/Linux Options
+@subsection GNU/Linuxオプション
 
-These @samp{-m} options are defined for GNU/Linux targets:
+これらの@samp{-m}オプションはGNU / Linuxターゲットに対して定義されています：
 
 @table @gcctabopt
 @item -mglibc
 @opindex mglibc
-Use the GNU C library.  This is the default except
-on @samp{*-*-linux-*uclibc*}, @samp{*-*-linux-*musl*} and
-@samp{*-*-linux-*android*} targets.
+GNU Cライブラリを使う。これは@samp{*-*-linux-*uclibc*}, @samp{*-*-linux-*musl*}, 
+@samp{*-*-linux-*android*}ターゲット以外でのデフォルトである。
 
 @item -muclibc
 @opindex muclibc
-Use uClibc C library.  This is the default on
-@samp{*-*-linux-*uclibc*} targets.
+uClibc Cライブラリを使う。これは@samp{*-*-linux-*uclibc*}ターゲットでのデフォルトである。
 
 @item -mmusl
 @opindex mmusl
-Use the musl C library.  This is the default on
-@samp{*-*-linux-*musl*} targets.
+musl Cライブラリを使う。これは@samp{*-*-linux-*musl*}ターゲットでのデフォルトである。
 
 @item -mbionic
 @opindex mbionic
-Use Bionic C library.  This is the default on
-@samp{*-*-linux-*android*} targets.
+Bionic Cライブラリを使う。これは@samp{*-*-linux-*android*}ターゲットでのデフォルトである。
 
 @item -mandroid
 @opindex mandroid
-Compile code compatible with Android platform.  This is the default on
-@samp{*-*-linux-*android*} targets.
+Andriodプラットフォームで互換性のあるコードをコンパイルする。これは@samp{*-*-linux-*android*}ターゲットでのデフォルトである。
 
-When compiling, this option enables @option{-mbionic}, @option{-fPIC},
-@option{-fno-exceptions} and @option{-fno-rtti} by default.  When linking,
-this option makes the GCC driver pass Android-specific options to the linker.
-Finally, this option causes the preprocessor macro @code{__ANDROID__}
-to be defined.
+コンパイル時には、デフォルトで@option{-mbionic}、@option{-fPIC}、@option{-fno-exceptions}、@option{-fno-rtti}を有効にする。 リンクするとき、このオプションはGCCドライバがAndroid固有のオプションをリンカに渡すようにする。 最後に、このオプションはプリプロセッサマクロ@code{__ ANDROID__}を定義させます。
 
 @item -tno-android-cc
 @opindex tno-android-cc
-Disable compilation effects of @option{-mandroid}, i.e., do not enable
-@option{-mbionic}, @option{-fPIC}, @option{-fno-exceptions} and
-@option{-fno-rtti} by default.
+@option{-mandroid}のコンパイル効果を無効にする。つまり、デフォルトでは、@option{-mbionic}、@option{-fPIC}、@option{-fno-exceptions}、@option{-fno-rtti}を有効にしない。
 
 @item -tno-android-ld
 @opindex tno-android-ld
-Disable linking effects of @option{-mandroid}, i.e., pass standard Linux
-linking options to the linker.
+@option{-mandroid}のリンク効果を無効にします。つまり、標準のLinuxリンクオプションをリンカーに渡す。
 
 @end table
 
