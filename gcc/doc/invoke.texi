@@ -13421,21 +13421,17 @@ EV6としてスケジュールし、BWX、CIX、FIX、およびMAX拡張をサ�
 @subsection FR30オプション
 @cindex FR30 Options
 
-These options are defined specifically for the FR30 port.
+これらのオプションは、FR30ポート専用に定義されている。
 
 @table @gcctabopt
 
 @item -msmall-model
 @opindex msmall-model
-Use the small address space model.  This can produce smaller code, but
-it does assume that all symbolic values and addresses fit into a
-20-bit range.
+小さなアドレス空間モデルを使用する。 これにより、より小さなコードが生成されるが、すべてのシンボリックな値とアドレスが20ビットの範囲に収まると仮定する。
 
 @item -mno-lsim
 @opindex mno-lsim
-Assume that runtime support has been provided and so there is no need
-to include the simulator library (@file{libsim.a}) on the linker
-command line.
+実行時サポートが提供されていると仮定して、シミュレータライブラリ（@file{libsim.a}）をリンカコマンドラインに含める必要をなくす。
 
 @end table
 
