@@ -13436,29 +13436,24 @@ EV6としてスケジュールし、BWX、CIX、FIX、およびMAX拡張をサ�
 @end table
 
 @node FT32 Options
-@subsection FT32 Options
+@subsection FT32オプション
 @cindex FT32 Options
 
-These options are defined specifically for the FT32 port.
+これらのオプションは、FT32ポート専用に定義されている。
 
 @table @gcctabopt
 
 @item -msim
 @opindex msim
-Specifies that the program will be run on the simulator.  This causes
-an alternate runtime startup and library to be linked.
-You must not use this option when generating programs that will run on
-real hardware; you must provide your own runtime library for whatever
-I/O functions are needed.
+プログラムをシミュレータ上で実行することを指定する。 これにより、別のランタイム起動とライブラリがリンクされる。 実際のハードウェア上で動作するプログラムを生成するときは、このオプションを使用してはならない。 どのI/O関数が必要なのかに関わらず、独自のランタイムライブラリを用意する必要がある。
 
 @item -mlra
 @opindex mlra
-Enable Local Register Allocation.  This is still experimental for FT32,
-so by default the compiler uses standard reload.
+ローカルレジスタ割り付けを有効にする。 これはFT32ではまだ実験的なので、デフォルトでコンパイラは標準リロードを使用する。
 
 @item -mnodiv
 @opindex mnodiv
-Do not use div and mod instructions.
+divとmod命令を使わない。
 
 @end table
 
