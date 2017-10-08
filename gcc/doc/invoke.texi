@@ -1658,7 +1658,7 @@ ISO標準が必要としない特定のマクロを定めることを控える�
 @item c90
 @itemx c89
 @itemx iso9899:1990
-ISO C90プログラムすべてをサポートする。（ISO C90と衝突するいくつかのGNU拡張は無効化される。Cコードでは
+ISO C90プログラムすべてをサポートする。（ISO C90と衝突するいくつかのGNU拡張は無効にされる。Cコードでは
 @option{-ansi}と同じである。
 
 @item iso9899:199409
@@ -1796,7 +1796,7 @@ GCCは通常ある組み込み関数をもっと効率よく扱うために特�
 もっと効率のよいコードを生成するために、その関数の情報を使うかもしれない。例えば、@code{printf}が組み込みならば
 @option{-Wformat}での悪い呼び出しに警告を与え、@code{strlen}はグローバルメモリを修正しないことを知っている。
 
-@option{-fno-builtin-@var{function}}オプションは組み込み関数@var{function}のみを無効化する。
+@option{-fno-builtin-@var{function}}オプションは組み込み関数@var{function}のみを無効にする。
 @var{function}は@samp{__builtin_}で始まってはならない。もしこのバージョンのGCCで組み込みでない関数の名前の
 場合は、このオプションは無視される。対応する@option{-fbuiltin-@var{function}}オプションはない。もし、
 @option{-fno-builtin}か@option{-ffreestanding}を使っていて選択的に組み込み関数を有効にしたいならば、以下の様な
@@ -2045,7 +2045,7 @@ const/ststic_cast, 前置++/-- テンプレート引数として使われるク�
 @item -faligned-new
 @opindex faligned-new
 @code{void:: operator new(std::size_t)}が提供する以上のアラインメントを要求する型のC++17@code{new}の
-サポートを有効化する。@code{-faligned-new=32}のような数値の引数は（バイト単位で）どのぐらいのアラインメントが
+サポートを有効にする。@code{-faligned-new=32}のような数値の引数は（バイト単位で）どのぐらいのアラインメントが
 その関数で提供されているを指定するために使うことができるが、殆どのユーザはデフォルトの@code{alignof(std::max_align_t)}
 を上書きする必要はないだろう。
 
@@ -2093,7 +2093,7 @@ void f()
 @end smallexample
 
 この推論はC++11標準で元々提案された意味へのありうる拡張として実装されたが、最終標準の一部ではなかったので、
-デフォルトで無効化された。このオプションは非推奨であり、G++の将来のバージョンでは削除されるかもしれない。
+デフォルトで無効にされた。このオプションは非推奨であり、G++の将来のバージョンでは削除されるかもしれない。
 
 @item -ffriend-injection
 @opindex ffriend-injection
@@ -2165,7 +2165,7 @@ C++11とOpneMPは@code{thread_local}と@code{threadprivate}変数が動的に（
 
 @item -fms-extensions
 @opindex fms-extensions
-MFCで使われている、暗黙のintやメンバへのポインタを非標準の構文で得るような構造についての警告を無効化する。
+MFCで使われている、暗黙のintやメンバへのポインタを非標準の構文で得るような構造についての警告を無効にする。
 
 @item -fnew-inheriting-ctors
 @opindex fnew-inheriting-ctors
@@ -2182,7 +2182,7 @@ Core issue150、テンプレートテンプレートパラメータとデフォ�
 
 @item -fno-nonansi-builtins
 @opindex fno-nonansi-builtins
-ANSI/ISO Cで義務付けられていない関数の組み込み宣言を無効化する。これは、@code{ffs}, @code{alloca}, @code{_exit}, @code{index}, @code{bzero},
+ANSI/ISO Cで義務付けられていない関数の組み込み宣言を無効にする。これは、@code{ffs}, @code{alloca}, @code{_exit}, @code{index}, @code{bzero},
 @code{conjf}や他の関連した関数が含まれる。
 
 @item -fnothrow-opt
@@ -2197,7 +2197,7 @@ ANSI/ISO Cで義務付けられていない関数の組み込み宣言を無効�
 
 @item -fno-optional-diags
 @opindex fno-optional-diags
-標準がコンパイラが発行する必要が無いと言っている診断を無効化する。現在、G++によって発行されるそのような唯一の診断はクラス内で複数の意味を持つ名前
+標準がコンパイラが発行する必要が無いと言っている診断を無効にする。現在、G++によって発行されるそのような唯一の診断はクラス内で複数の意味を持つ名前
 に関するものである。
 
 @item -fpermissive
@@ -2210,7 +2210,7 @@ ANSI/ISO Cで義務付けられていない関数の組み込み宣言を無効�
 テンプレート引数とシグネチャのtypedefか形名をテンプレートシグネチャの後ろに出力する。（例えば、@code{void f(int)}ではなく
 @code{void f(T) [with T = int]}。エラーメッセージがクラステンプレートの特殊化を参照するとき、コンパイラはテンプレートのデフォルトテンプレート引数を
 省略する。もしこれらの振る舞いがエラーメッセージを理解するのを易しくするのではなく、難しくしているときは、@option{-fno-pretty-templates}を使って
-無効化することができる。
+無効にすることができる。
 
 @item -frepo
 @opindex frepo
@@ -2219,7 +2219,7 @@ Instantiation}。
 
 @item -fno-rtti
 @opindex fno-rtti
-C++実行時型識別の機能(@code{dynamic_cast}と@code{typeid})で使うための仮想関数のある全クラスについての情報の出力を無効化する。
+C++実行時型識別の機能(@code{dynamic_cast}と@code{typeid})で使うための仮想関数のある全クラスについての情報の出力を無効にする。
 もし言語のこれらの機能を使わないならば、このフラグを使うことで空間を少し節約できる。例外の扱いも同じ情報を使うが、G++は必要に応じて
 生成することに注意する。実行時型情報を使わないキャストでは@code{dynamic_cast}演算子はまだ使用可能である。すなわち、@code{void*}や
 曖昧でない基底クラスへのキャスト
@@ -2597,7 +2597,7 @@ GCCでコンパイルするときだけ有効化標識である。これはヌ�
 @item -Wno-non-template-friend @r{(C++とObjective-C++専用)}
 @opindex Wno-non-template-friend
 @opindex Wnon-template-friend
-非テンプレート化されたフレンド関数がテンプレート内で宣言された時の警告を無効化する。
+非テンプレート化されたフレンド関数がテンプレート内で宣言された時の警告を無効にする。
 ISO標準以前の実装である非常に古いバージョンのGCCは@samp{friend foo(int)}のような宣言で、フレンドの名前が非修飾識別子
 であるならば、それはテンプレート関数の部分特殊化として解釈し得た。互換性の問題を診断する警告が存在し、デフォルトで有効である。
 
@@ -2637,7 +2637,7 @@ b->f();
 @item -Wno-pmf-conversions @r{(C++とObjective-C++専用)}
 @opindex Wno-pmf-conversions
 @opindex Wpmf-conversions
-メンバ関数への結合ポインタから通常のポインタへの変換についての診断を無効化する。
+メンバ関数への結合ポインタから通常のポインタへの変換についての診断を無効にする。
 
 @item -Wsign-promo @r{(C++とObjective-C++専用)}
 @opindex Wsign-promo
@@ -2765,7 +2765,7 @@ GNUランタイムは特別なコンパイラフラグを必要としない別�
 @item -fobjc-nilcheck
 @opindex fobjc-nilcheck
 ABIのバージョン2のNeXTランタイムで、実際のメソッド呼び出しを行う前にメソッド呼び出しのレシーバーがnilかをチェックする。
-これはデフォルトであり、@option{-fno-objc-nilcheck}を使って無効化できる。
+これはデフォルトであり、@option{-fno-objc-nilcheck}を使って無効にできる。
 クラスメソッドとsuper呼び出しはこのフラグをセットしたかにかかわらずnilのチェックは決して行われない。
 現在このフラグはGNUランタイムや、NeXTランタイムABIの古いバージョンでは何もしない。
 
@@ -2798,7 +2798,7 @@ NeXTランタイムでコンパイルしているとき、コンパイラは@cod
 @opindex flocal-ivars
 デフォルトではObjective=Cでのインスタンス変数はそれらが宣言されているクラスのメソッド内でローカス変数が宣言されているかのように
 アクセス可能である。これはインスタンス変数と同じ名前でクラスメソッド内にローカルに宣言されたか、グローバルに宣言された他の変数を隠す。
-@option{-fno-local-ivars}フラグを指定するとこの振る舞いを無効化して変数を隠す問題を避ける。
+@option{-fno-local-ivars}フラグを指定するとこの振る舞いを無効にして変数を隠す問題を避ける。
 
 @item -fivar-visibility=@r{[}public@r{|}protected@r{|}private@r{|}package@r{]}
 @opindex fivar-visibility
@@ -3082,7 +3082,7 @@ diffは色が付くかも付かないかもしれず、診断と同じ規則が�
 
 それぞれの制御可能な警告の警告メッセージは警告を制御するオプションを含む。そのオプションは
 上で描写された@option{-Werror=}と@option{-Wno-error=}で使うことができる。
-（警告メッセージ内のオプションの出力は@option{-fno-diagnostics-show-option}フラグで無効化できる）
+（警告メッセージ内のオプションの出力は@option{-fno-diagnostics-show-option}フラグで無効にできる）
 
 @option{-Werror=}@var{foo}を指定すると自動的に@option{-W}@var{foo}を含むことに注意。
 しかし、@option{-Wno-error=}@var{foo}は何も含まない。
@@ -3122,7 +3122,7 @@ ISO Cでは、使われるどんな@option{-std}オプションで特定され�
 このオプションで、それらは拒絶される。
 
 名前が@samp{__}で始まって終わる代替キーワードの用法は、@option{-Wpedantic}では警告メッセージを引き起こさない。
-@code{__extension__}に追従する表現も、衒学的な警告が無効化される。しかし、システム・ヘッダファイルだけでこれらの脱出ルートを使うべきである。アプリケーション・プログラムは、それらを避けるべきである。@xref{Alternate Keywords}。
+@code{__extension__}に追従する表現も、衒学的な警告が無効にされる。しかし、システム・ヘッダファイルだけでこれらの脱出ルートを使うべきである。アプリケーション・プログラムは、それらを避けるべきである。@xref{Alternate Keywords}。
 
 あるユーザーは、厳しいISO C適合のための検査プログラムに@option{-Wpedantic}を使おうと試みる。それらは、それらが欲するものではないとすぐにわかる。
 それは、いくつかの非ISO実行を見つけるが、全てではない。 ― それらISO Cが@emph{_要求する_}の診断とその診断で加えられるものだけである。
@@ -3266,11 +3266,11 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 コンパイルした時で変わっている場合は、プロファイルフィードバックのファイルはソースファイルと
 一致することができず、GCCはプロファイルフィードバック情報を使うことができない。
 デフォルトでは、この警告は有効でエラーとして扱われる。
-@option{-Wno-coverage-mismatch}は警告を無効化するために使うことができ、
-@option{-Wno-error=coverage-mismatch}はエラーを無効化するために使うことができる。
-この警告のエラーを無効化すると、貧弱な最適化のコードを生成する可能性があり、
+@option{-Wno-coverage-mismatch}は警告を無効にするために使うことができ、
+@option{-Wno-error=coverage-mismatch}はエラーを無効にするために使うことができる。
+この警告のエラーを無効にすると、貧弱な最適化のコードを生成する可能性があり、
 既存のコードベースへのバグ修正のようなとても小さな変更の場合のみ有用である。
-この警告を完全に無効化することは勧められない。
+この警告を完全に無効にすることは勧められない。
 
 @item -Wno-cpp
 @r{(C, Objective-C, C++, Objective-C++とFortran専用)}
@@ -3316,7 +3316,7 @@ float area(float radius)
 他のformat属性(@pxref{Function Attributes})、@code{printf}, @code{scanf}, @code{strftime}, @code{strfmon}
 (X/Open拡張でCで標準ではない)ファミリー（および他のターゲット固有のファミリー）が含まれる。
 format属性なしでどの関数がチェックされるかは選択された標準バージョンに依存して、指定された属性無しの
-そのようなチェックは@option{-ffreestanding}か@option{-fno-builtin}で無効化される。
+そのようなチェックは@option{-ffreestanding}か@option{-fno-builtin}で無効にされる。
 
 GNU libc版2.2によってサポートされるフォーマット機能に対してフォーマットは照合される。これらは、
 すべてのISO C90とC99機能を含み、Single Unix SpecificationとあるBSDとGNU拡張からの機能も同様である。
@@ -3334,9 +3334,9 @@ GNU libc版2.2によってサポートされるフォーマット機能に対し
 @opindex Wformat=1
 オプション@option{-Wformat}は@option{-Wformat=1}と等価であり、@option{-Wno-format}は@option{-Wformat=0}と等価である。
 @option{-Wformat}はいくつかの関数でnullフォーマット引数の検査も行うので、@option{-Wformat}は@option{-Wnonnull}も含む。
-フォーマット・チェックのこのレベルのある側面は、以下のオプションで無効化できる。 @option{-Wno-format-contains-nul},
+フォーマット・チェックのこのレベルのある側面は、以下のオプションで無効にできる。 @option{-Wno-format-contains-nul},
 @option{-Wno-format-extra-args}, @option{-Wno-format-zero-length}。
-@option{-Wformat}は@option{-Wall}で有効化される。
+@option{-Wformat}は@option{-Wall}で有効にされる。
 
 @item -Wno-format-contains-nul
 @opindex Wno-format-contains-nul
@@ -3483,14 +3483,14 @@ void f (int a, int b)
 @opindex Wno-nonnull
 @code{nonnull}関数属性によって非nullを要求するようにマークされている引数にnullポインタを渡すことについて警告する。
 
-@option{-Wnonnull}は@option{-Wall}と@option{-Wformat}に含まれている。@option{-Wno-nonnull}オプションで無効化できる。
+@option{-Wnonnull}は@option{-Wall}と@option{-Wformat}に含まれている。@option{-Wno-nonnull}オプションで無効にできる。
 
 @item -Wnonnull-compare
 @opindex Wnonnull-compare
 @opindex Wno-nonnull-compare
 @code{nonnull}関数属性でマークされた引数とnullをその関数内で比較すると警告する。
 
-@option{-Wnonnull-compare}は@option{-Wall}に含まれる。@option{-Wno-nonnull-compare}で無効化できる。
+@option{-Wnonnull-compare}は@option{-Wall}に含まれる。@option{-Wno-nonnull-compare}で無効にできる。
 
 @item -Wnull-dereference
 @opindex Wnull-dereference
@@ -3606,7 +3606,7 @@ CおよびC++形式のコメントの全体が以下で並べられた与えら�
 
 @itemize @bullet
 
-@item @option{-Wimplicit-fallthrough=0}は警告完全に無効化する
+@item @option{-Wimplicit-fallthrough=0}は警告完全に無効にする
 
 @item @option{-Wimplicit-fallthrough=1}は@code{.*}正規表現の一致し、
 どんなコメントも落下コメントとして使うことができる
@@ -3647,7 +3647,7 @@ CおよびC++形式のコメントの全体が以下で並べられた与えら�
 @end itemize
 
 @item @option{-Wimplicit-fallthrough=5}はどんなコメントも落下コメントとして認識せずに、
-属性のみが警告を無効化する。
+属性のみが警告を無効にする。
 
 @end itemize
 
@@ -3979,7 +3979,7 @@ C++では定数変数が@code{#define}を置き換えたのｄエラーではな
 
 @table @gcctabopt
 @item -Wunused-const-variable=1
-これはCでは@option{-Wunused-variable}によって有効化される警告レベルである。
+これはCでは@option{-Wunused-variable}によって有効にされる警告レベルである。
 主要コンパイル単位で定義された未使用の静的定数変数についてのみ警告し、includeされたヘッダ
 で宣言された静的定数変数は警告しない。
 
@@ -4376,7 +4376,7 @@ void func (signed int n)
 
 @item -Warray-bounds=2
 この警告は構造体の終わりの配列とポインタ経由でアクセスされる配列の境界外アクセスについても警告する。
-これは多数の偽陽性を与えるかもしれず、デフォルトで無効化される。
+これは多数の偽陽性を与えるかもしれず、デフォルトで無効にされる。
 @end table
 
 @item -Wbool-compare
@@ -4677,7 +4677,7 @@ for (SomeIterator i = SomeObj.begin(); i != SomeObj.end(); ++i)
 @option{-Wformat}とGNU拡張なしの@option{-pednatic}を組み合わせて使った時に、
 このオプションは非ISOの@code{printf} / @code{scanf}フォーマットを
 MSランタイムに依存して、ウィンドウズターゲットで使われる@code{I32}, @code{I64}, @code{I}
-指定子で使った時の警告を無効化する。
+指定子で使った時の警告を無効にする。
 
 @item -Waligned-new
 @opindex Waligned-new
@@ -4766,7 +4766,7 @@ if (p == '\0')
 @opindex Wno-c90-c99-compat
 ISO C90にはないが、ISO C99にはある機能について警告する。たお手羽、可変長配列の使用、
 @code{long long}型、@code{bool}型、複合定数、指示付きの初期化子など。このオプションは標準モードと
-独立である。傾向は@code{__extension__}に続く式では無効化される。
+独立である。傾向は@code{__extension__}に続く式では無効にされる。
 
 @item -Wc99-c11-compat @r{(CとObjective-C専用)}
 @opindex Wc99-c11-compat
@@ -4774,7 +4774,7 @@ ISO C90にはないが、ISO C99にはある機能について警告する。た
 ISO C99にはないが、ISO C11にはある機能について警告する。例えば、匿名構造体と共用体の使用、
 @code{_Atomic}型指定子、@code{_Thread_local}ストレージクラス指定子、
 @code{_Alignas}指定子、@code{Alignof}演算子、@code{_Generic}キーワードなど。
-このオプションは標準モードと独立である。傾向は@code{__extension__}に続く式では無効化される。
+このオプションは標準モードと独立である。傾向は@code{__extension__}に続く式では無効にされる。
 
 @item -Wc++-compat @r{(CとObjective-C専用)}
 @opindex Wc++-compat
@@ -4845,15 +4845,15 @@ C++をコンパイルするとき、文字列定数から@code{char *}への廃�
 値が変わるかもしれない暗黙の変換について警告する。これは@code{x}が@code{double}の時の@code{abs (x)}のような、実数と整数の変換、
 @code {unsigned ui = -1}のような符号ありと符号なしの変換。@code{sqrtf (M_PI)}のようなより小さい型への変換を含む。
 @code{abs ((int) x)} and @code{ui = (unsigned) -1}のような明示的なキャスト、および@code{abs (2.0)}のような値の変化しない変換は警告しない。
-符号ありと符号なしの整数間の変換の警告は@option{-Wno-sign-conversion}で無効化できる。
+符号ありと符号なしの整数間の変換の警告は@option{-Wno-sign-conversion}で無効にできる。
 
 C++では、ユーザ定義の混乱したオーバーロード解決、@code{void}、同じ型、基底クラスかそれへの参照型への変換のような、型変換演算子を使わない変換にも
-警告する。符号付きと符号なし整数間の変換は@option{-Wsign-conversion}で明示的に有効化しないかぎりデフォルトで無効化される。
+警告する。符号付きと符号なし整数間の変換は@option{-Wsign-conversion}で明示的に有効にしないかぎりデフォルトで無効にされる。
 
 @item -Wno-conversion-null @r{(C++とObjective-C++のみ)}
 @opindex Wconversion-null
 @opindex Wno-conversion-null
-@code{NULL}と非ポインタ型の変換を警告しない。@option{-Wconversion-null}はデフォルトで有効化される。
+@code{NULL}と非ポインタ型の変換を警告しない。@option{-Wconversion-null}はデフォルトで有効にされる。
 
 @item -Wzero-as-null-pointer-constant @r{(C++とObjective-C++のみ)}
 @opindex Wzero-as-null-pointer-constant
@@ -4937,7 +4937,7 @@ Cではこの警告は@option{-Wall}で有効になる。
 これは宣言された時に初期化された変数についてのみ警告する。この警告はCとObjective-Cでのみサポートされている。
 C++ではこの種類の分岐はどのみちエラーである。
 
-@option{-Wjump-misses-init}は@option{-Wc++-compat}に含まれている。@option{-Wno-jump-misses-init}オプションで無効化できる。
+@option{-Wjump-misses-init}は@option{-Wc++-compat}に含まれている。@option{-Wno-jump-misses-init}オプションで無効にできる。
 
 @item -Wsign-compare
 @opindex Wsign-compare
@@ -5265,7 +5265,7 @@ struct foo
 @} __attribute__ ((packed));
 @end smallexample
 
-この警告はデフォルトで有効である。この警告を無効化するには、@option{-Wno-packed-bitfield-compat}を使う。
+この警告はデフォルトで有効である。この警告を無効にするには、@option{-Wno-packed-bitfield-compat}を使う。
 
 @item -Wpadded
 @opindex Wpadded
@@ -5378,7 +5378,7 @@ struct foo
 
 GCCは既知の値の小さい可変長配列をただの配列に最適化するかもしれず、したがって、そのような配列では警告が発せられないかもしれないことに注意する。
 
-この警告は@option{-Wall}によっては有効化されず、@option{-ftree-vrp}が活性（@option{-O2}以上のデフォルト）のときだけ活性になる。
+この警告は@option{-Wall}によっては有効にされず、@option{-ftree-vrp}が活性（@option{-O2}以上のデフォルト）のときだけ活性になる。
 
 @option{-Walloca-larger-than=@var{n}}も見よ。
 
@@ -5391,7 +5391,7 @@ GCCは既知の値の小さい可変長配列をただの配列に最適化す�
 @item -Wdisabled-optimization
 @opindex Wdisabled-optimization
 @opindex Wno-disabled-optimization
-要求される最適化パスが無効化されていたら警告する。この警告は一般的にはあなたのコードに何か悪いことがあることを意味するのではない。
+要求される最適化パスが無効にされていたら警告する。この警告は一般的にはあなたのコードに何か悪いことがあることを意味するのではない。
 単にGCCでの最適化器がコードを効果的に扱うことができないこと意味する。しばしば、問題はコードが大きすぎるか複雑すぎることにある。
 GCCは最適化自身が大量の過度の時間を取りそうな場合はプログラムの最適化を拒否する。
 
@@ -5399,7 +5399,7 @@ GCCは最適化自身が大量の過度の時間を取りそうな場合はプ�
 @opindex Wpointer-sign
 @opindex Wno-pointer-sign
 異なる符号性のポインタ引数渡しか代入について警告する。このオプションはCとObjective-Cでのみサポートされている。
-これは@option{-Wall}と@option{-Wpedantic}に含まれていて、@option{-Wno-pointer-sign}で無効化できる。
+これは@option{-Wall}と@option{-Wpedantic}に含まれていて、@option{-Wno-pointer-sign}で無効にできる。
 
 @item -Wstack-protector
 @opindex Wstack-protector
@@ -5415,7 +5415,7 @@ C標準で指定された「最小の最大」長より長い文字列定数に�
 制限は文字列定数連結の@emph{_後に_}に適用され、最後のNULはカウントしない。C90では、制限は509文字である。
 C99では4095に引き上げられた。C++98では規範的な最小最大値が指定されていないので、C++では長すぎる文字列を診断しない。
 
-このオプションは@option{-pedantic}に含まれていて、@option{-Wno-overlength-strings}で無効化できる。
+このオプションは@option{-pedantic}に含まれていて、@option{-Wno-overlength-strings}で無効にできる。
 
 @item -Wunsuffixed-float-constants @r{(CとObjective-C専用)}
 @opindex Wunsuffixed-float-constants
@@ -5715,7 +5715,7 @@ DWARFで巻き戻し情報を生成する。
 すべての最適化がフラグで直接制御できるわけではない。フラグを持つ最適化だけがこの節でリストされている。
 
 大抵の最適化は@option{-O}レベルがコマンドラインでセットされているときだけ有効になる。さもなければ、個々の最適化フラグが指定されていても
-無効化される。
+無効にされる。
 
 ターゲットとGCCでがどのように設定されているかに依存して、ここでリストされた他にそれぞれの@option{-O}レベルで有効になる最適化の集合が少し異なる。
 GCCを@option{-Q --help=optimizers}で起動することでそれぞれのレベルで有効になる正確な最適化の集合を見つけることができる。
@@ -5841,7 +5841,7 @@ GCCを@option{-Q --help=optimizers}で起動することでそれぞれのレベ
 サイズを最適化する。@option{-Os}はコードサイズを典型的に増やさない@option{-O2}最適化を有効にする。それはコードサイズを削減するように設計された
 さらなる最適化も行う。
 
-@option{-Os}は以下の最適化フラグを無効化する。
+@option{-Os}は以下の最適化フラグを無効にする。
 @gccoptlist{-falign-functions  -falign-jumps  -falign-loops 
 -falign-labels  -freorder-blocks  -freorder-blocks-algorithm=stc 
 -freorder-blocks-and-partition  -fprefetch-loop-arrays}
@@ -5874,7 +5874,7 @@ Fortran固有の@option{-fno-protect-parens}と@option{-fstack-arrays}をオン�
 それぞれの関数が返るとすぐに関数呼び出しの引数をポップする。関数呼び出しの後に引数をポップしなければならない機種では、
 コンパイラは通常いくつかの関数呼び出しのスタックで引数を計算して一度にポップする。
 
-レベル@option{-O}, @option{-O2}, @option{-O3}, @option{-Os}で無効化される。
+レベル@option{-O}, @option{-O2}, @option{-O3}, @option{-Os}で無効にされる。
 
 @item -fforward-propagate
 @opindex fforward-propagate
@@ -5885,9 +5885,9 @@ RTLでの前方伝搬パスを実行する。このパスは2つの命令を結�
 
 @item -ffp-contract=@var{style}
 @opindex ffp-contract
-@option{-ffp-contract=off}は浮動小数点表現構築を無効化する。
-@option{-ffp-contract=fast}はもしターゲットがネイティブでサポートしているなら融合乗加算操作の形式のような浮動小数点表現構築を有効化する。
-@option{-ffp-contract=on}はもし言語標準が許すなら浮動小数点表現構築をを有効化する。現在は実装されておらず、@option{-ffp-contract=off}と同等に扱う。
+@option{-ffp-contract=off}は浮動小数点表現構築を無効にする。
+@option{-ffp-contract=fast}はもしターゲットがネイティブでサポートしているなら融合乗加算操作の形式のような浮動小数点表現構築を有効にする。
+@option{-ffp-contract=on}はもし言語標準が許すなら浮動小数点表現構築をを有効にする。現在は実装されておらず、@option{-ffp-contract=off}と同等に扱う。
 
 デフォルトは@option{-ffp-contract=fast}である。
 
@@ -6112,7 +6112,7 @@ CSEがelse句のない単純な@code{if}文に出会ったならば、@option{-f
 大域共通部分式除去パスを行う。このパスは大域定数とコピーの伝搬も行う。
 
 @emph{_注意_：} GCC拡張の計算gotoを使ったプログラムをコンパイルするときは、
-大域共通部分式除去パスをコマンドラインで@option{-fno-gcse}を加える事で無効化したほうがよい実行時パフォーマンスを得るかもしれにあ。
+大域共通部分式除去パスをコマンドラインで@option{-fno-gcse}を加える事で無効にしたほうがよい実行時パフォーマンスを得るかもしれにあ。
 
 レベル@option{-O2}, @option{-O3}, @option{-Os}で有効になる。
 
@@ -6205,12 +6205,12 @@ GCCでの他の最適化パスはヌルポインタの無用なチェックを�
 ポインタがチェックされるなら、nullではありえないと仮定する。
 
 しかし、ある環境ではこの仮定は真ではないことに注意。この振る舞いに依存したプログラムでは、
-@option{-fno-delete-null-pointer-checks}を使ってこの最適化を無効化する。
+@option{-fno-delete-null-pointer-checks}を使ってこの最適化を無効にする。
 
 このオプションはたいていのターゲットではデフォルトで有効である。Nios II ELFでは、デフォルトでオフである。
-AVRILとCR16では、このオプションは完全に無効化される。
+AVRILとCR16では、このオプションは完全に無効にされる。
 
-データフロー情報を使うパスは別の最適化レベルで独立して有効化される。
+データフロー情報を使うパスは別の最適化レベルで独立して有効にされる。
 
 @item -fdevirtualize
 @opindex fdevirtualize
@@ -6232,7 +6232,7 @@ AVRILとCR16では、このオプションは完全に無効化される。
 
 ローカル変換モードでリンク時最適化器を走らせるとき、積極的な非仮想化のために必要とされる余分の情報を流れ出させる。
 このオプションはより多くの非仮想化を使用可能にするが、かなり流れられたデータのサイズを増やす。この理由で、
-それはデフォルトで無効化されている。
+それはデフォルトで無効にされている。
 
 @item -fexpensive-optimizations
 @opindex fexpensive-optimizations
@@ -6252,7 +6252,7 @@ AVRILとCR16では、このオプションは完全に無効化される。
 C++では、オブジェクトの値はその生存期間内での変更しか影響しない。コンストラクタが始まった時、
 オブジェクトは不定値を持っていて、生存期間中の変更はオブジェクトが破壊された時に消える。
 通常非到達ストア除去はこれの利点を使う。もしあなたのコードがオブジェクトの生存期間を超えて存在する領域のオブジェクトの値に
-依存しているならば、このフラグをつかってこの最適化を無効化することができる。コンストラクタが始まる前のストアを保持するが
+依存しているならば、このフラグをつかってこの最適化を無効にすることができる。コンストラクタが始まる前のストアを保持するが
 （例えば、あなたのnew演算子がオブジェクト領域をクリアするので）、デストラクタの後ではオブジェクトが死んでいるとまだ扱うためには、
 @option{-flifetime-dse=1}を使う。デフォルトの振る舞いは明示的に@option{-flifetime-dse=2}で選択できる。
 @option{-flifetime-dse=0}は@option{-fno-lifetime-dse}と等価である。
@@ -6303,12 +6303,12 @@ Chaitin-Briggs色付けはすべてのアーキテクチャで実装されてい
 
 @item -fno-ira-share-save-slots
 @opindex fno-ira-share-save-slots
-呼び出しを通して生存する呼び出しで使われるハードレジスタの保存で使うスタックスロットの共有を無効化する。
+呼び出しを通して生存する呼び出しで使われるハードレジスタの保存で使うスタックスロットの共有を無効にする。
 それぞれのハードレジスタ別のスタックスロットを持ち、結果の関数のスタックフレームを大きくなる。
 
 @item -fno-ira-share-spill-slots
 @opindex fno-ira-share-spill-slots
-擬似レジスタを割り当てるスタックスロットの共有を無効化する。ハードレジスタがないそれぞれの擬似レジスタは別々のスタックスロットを持ち、
+擬似レジスタを割り当てるスタックスロットの共有を無効にする。ハードレジスタがないそれぞれの擬似レジスタは別々のスタックスロットを持ち、
 結果の関数のスタックフレームは大きくなる。
 
 @item -flra-remat
@@ -6843,9 +6843,9 @@ SSA→通常フェーズの間に一時式置換を行う。単一使用・単�
 ベクトル化で使われるコストモデルを変更する。@var{model}引数は @samp{unlimited}, @samp{dynamic}, @samp{cheap}の一つであるべきである。
 @samp{unlimited}モデルではベクトル化されたコードパスは利益があると仮定される一方、
 @samp{dynamic}モデルではランタイムチェックがベクトル化されたコードパスが繰り返し回数が元のスカラーループが実行される時よりも
-速いだろう時のみ有効化するように守る。@samp{cheap}モデルは、そうすることがたとえばデータ依存またはアラインメントの必須の
+速いだろう時のみ有効にするように守る。@samp{cheap}モデルは、そうすることがたとえばデータ依存またはアラインメントの必須の
 ランタイム・チェックのために
-ひどく高くつく時にループベクトル化を無効化するが、それ以外は@samp{dynamic}モデルと等しい。
+ひどく高くつく時にループベクトル化を無効にするが、それ以外は@samp{dynamic}モデルと等しい。
 
 @item -fsimd-cost-model=@var{model}
 @opindex fsimd-cost-model
@@ -6868,7 +6868,7 @@ OpenMPかCilk PLus simdディレクティブマークされたループのベク
 
 @item -fsplit-ivs-in-unroller
 @opindex fsplit-ivs-in-unroller
-最初の繰り返しでの値を使って展開されたループの後半の繰り返しでの導出変数の値の表現を有効化する。
+最初の繰り返しでの値を使って展開されたループの後半の繰り返しでの導出変数の値の表現を有効にする。
 これはループ依存連鎖を壊すので、スケジューリングパスの効率性を向上させる。
 
 @option{-fweb}とCSEの組み合わせはしばしば同じ効果を得るために十分である。しかし、これはループ本体が
@@ -6901,7 +6901,7 @@ OpenMPかCilk PLus simdディレクティブマークされたループのベク
 このオプションはより良いコードもより悪いコードも生成するかもしれない。結果はソースコード内のループの構造に
 強く依存する。
 
-レベル@option{-Os}で無効化される。
+レベル@option{-Os}で無効にされる。
 
 @item -fno-printf-return-value
 @opindex fno-printf-return-value
@@ -6921,7 +6921,7 @@ if (snprintf (buf, "%08x", i) >= sizeof buf)
 @itemx -fno-peephole2
 @opindex fno-peephole
 @opindex fno-peephole2
-機種依存の覗き穴最適化を無効化する。@option{-fno-peephole}と@option{-fno-peephole2}の違いは
+機種依存の覗き穴最適化を無効にする。@option{-fno-peephole}と@option{-fno-peephole2}の違いは
 コンパイラ内でどのように実装されているかである。あるターゲットは片方を使い、別のはもう片方を使い、一部は両方使う。
 
 @option{-fpeephole}はデフォルトで有効である。
@@ -6935,7 +6935,7 @@ GCCをはもしプロファイリングフィードバック(@option{-fprofile-a
 分岐確率を推測するのにヒューリスティックを使う。
 これらのヒューリスティックは制御フローグラフにもとづいている。もし分岐確率が@code{__builtin_expect}で指定されているならば、
 ヒューリスティックは制御フローグラフの残りの分岐確率を推測するのに使われ、@code{__builtin_expect}情報が考慮に入れられる。
-ヒューリスティックと@code{__builtin_expect}の相互作用は複雑になりえ、ある場合には、ヒューリスティックを無効化して
+ヒューリスティックと@code{__builtin_expect}の相互作用は複雑になりえ、ある場合には、ヒューリスティックを無効にして
 @code{__builtin_expect}の高架が理解しやすくすることが役立つかもしれない。
 
 デフォルトはレベル@option{-O}, @option{-O2}, @option{-O3}, @option{-Os}では@option{-fguess-branch-probability}である。
@@ -7283,14 +7283,14 @@ LTOの現在の実装は異なるタイプのホストで移植性があるバ�
 リンク時最適化器で使われる分割アルゴリズムを指定する。値は元のソースファイルを反映する
 分割を指定する@samp{1to1}か、（可能なときは）同等のサイズのチャンクへと分割するように指定する@samp{balanced}か、
 可能な限り各シンボルで新しい領域を作る@samp{max}のどれかである。
-アルゴリズムとして@samp{none}を指定すると分割を無効化して完全にストリーミングする。
+アルゴリズムとして@samp{none}を指定すると分割を無効にして完全にストリーミングする。
 デフォルト値は@samp{balanced}である。様々なコード順序問題の回避方法として@samp{1to1}を使うことができる一方、
 @samp{max}分割は内部テスト専用を意図している。値@samp{one}が正確に一つの分割が使われるべきであることを指定するのに対し、
 値@samp{none}は分割を迂回してリンク時最適化ステップをWPAフェーズから直接実行する。
 
 @item -flto-odr-type-merging
 @opindex flto-odr-type-merging
-リンク時にC++型のマングル化された形名のストリーミングとその統合を有効化する。これはLTOオブジェクトファイルのサイズを増やすが、
+リンク時にC++型のマングル化された形名のストリーミングとその統合を有効にする。これはLTOオブジェクトファイルのサイズを増やすが、
 単一定義規則違反の診断を有効にする。
 
 @item -flto-compression-level=@var{n}
@@ -7301,7 +7301,7 @@ LTOの現在の実装は異なるタイプのホストで移植性があるバ�
 
 @item -fuse-linker-plugin
 @opindex fuse-linker-plugin
-リンク時最適化でリンカプラグインの使用を有効化する。このオプションはリンカでのプラグインサポートに依存していて、
+リンク時最適化でリンカプラグインの使用を有効にする。このオプションはリンカでのプラグインサポートに依存していて、
 goldかGNU ld 2.21以降で利用可能である。
 
 このオプションはGIMPLEバイトコードのあるオブジェクトファイルをライブラリアーカイブから抽出することを可能にする。
@@ -7520,7 +7520,7 @@ x+0.0や0.0*xのような表現の単純化を(@option{-ffinite-math-only}であ
 
 @item -frounding-math
 @opindex frounding-math
-デフォルトの浮動小数点丸への振る舞いを仮定した変換と最適化を無効化する。
+デフォルトの浮動小数点丸への振る舞いを仮定した変換と最適化を無効にする。
 これはすべての浮動小数点数から整数への０への丸めと、他のすべての算術切り詰めでの最近傍丸めである。
 このオプションはFP丸めモードを動的に変更するか、非標準の丸めモードで実行されるかもしれないプログラムに指定すべきである。
 このオプションはコンパイル時の（丸めモードによって影響されるかもしれない）浮動小数点数の定数展開と符号依存の丸めモード
@@ -7528,21 +7528,21 @@ x+0.0や0.0*xのような表現の単純化を(@option{-ffinite-math-only}であ
 
 デフォルトは@option{-fno-rounding-math}である。
 
-このオプションは実験的で、現在は丸めモードに影響されるすべてのGCCは最適化を無効化することは保証されない、
+このオプションは実験的で、現在は丸めモードに影響されるすべてのGCCは最適化を無効にすることは保証されない、
 GCCの将来のバージョンはC99の@code{FENV_ACCESS}プラグマを使うことでこの設定のもっと細かい制御を提供するかもしれない。
 このコマンドラインオプションは@code{FENV_ACCESS}のデフォルトの状態を指定するのに使われるだろう。
 
 @item -fsignaling-nans
 @opindex fsignaling-nans
 IEEEシグナルNaNがユーザ可視のトラップを浮動小数点操作の間に生成するかもしれないと仮定してコードをコンパイルする。
-このオプションをセットするとシグナルNaNで可視の例外の数を変えるかもしれない最適化を無効化する。
+このオプションをセットするとシグナルNaNで可視の例外の数を変えるかもしれない最適化を無効にする。
 このオプションは@option{-ftrapping-math}を含んでいる。
 
 このオプションはプリプロセッサマクロ@code{__SUPPORT_SNAN__}を定義させる。
 
 デフォルトは@option{-fno-signaling-nans}である。
 
-このオプションは実験的で現在はすべてのシグナルNaNの振る舞いに影響するGCCの最適化を無効化することは保証されない。
+このオプションは実験的で現在はすべてのシグナルNaNの振る舞いに影響するGCCの最適化を無効にすることは保証されない。
 
 @item -fno-fp-int-builtin-inexact
 @opindex fno-fp-int-builtin-inexact
@@ -7560,7 +7560,7 @@ IEEEシグナルNaNがユーザ可視のトラップを浮動小数点操作の�
 @opindex fcx-limited-range
 有効にした時、このオプションは複素数除算を行うときに範囲縮小ステップが必要ないと述べる。
 さらに、複素数乗算や除算の結果が@code{NaN + I*NaN}であるかをチェックせず、その場合の状況を救う必要がないとする。
-デフォルトは@option{-fno-cx-limited-range}であるが、@option{-ffast-math}で有効化される。
+デフォルトは@option{-fno-cx-limited-range}であるが、@option{-ffast-math}で有効にされる。
 
 このオプションはISO C99での@code{CX_LIMITED_RANGE}プラグマのデフォルト設を制御する。しかし、
 このオプションはすべての言語に適用される。
@@ -7901,7 +7901,7 @@ combat可視性のあるC++のインライン関数が複数のコンパイル�
 @item gcse-cost-distance-ratio
 GCSE最適化によって移動させる表現の最大距離の計算での拡大率。これは現在コード持ち上げ過程でのみサポートされていrう。
 比率を大きくするほど、もっと積極的なコード持ち上げが単純な式によって、すなわち、コストが
-@option{gcse-unrestricted-cost}未満である式によって行われる。0を指定すると単純な式の持ち上げを無効化する。
+@option{gcse-unrestricted-cost}未満である式によって行われる。0を指定すると単純な式の持ち上げを無効にする。
 デフォルト値は10である。
 
 @item gcse-unrestricted-cost
@@ -8082,7 +8082,7 @@ GCCは自身のメモリ割り当てを管理するためにガベージコレ�
 
 デフォルトはRAM/8、RLIMIT_TSS、RLIMIT_DATAかRLIMIT_ASが拡張しないことを保証しようとする限界の最小
 であるが、下界は4096(４メガバイト）で上界は131072(１２８メガバイト）である。もしGCCは特定のプラットフォームで
-RAMを計算出来ない時は、下界が使われる。このパラメータをとても大きくすると事実上ガベージコレクションを無効化する。
+RAMを計算出来ない時は、下界が使われる。このパラメータをとても大きくすると事実上ガベージコレクションを無効にする。
 このパラメータと@option{ggc-min-expand}をゼロにすると全機会で完全収集を引き起こす。
 
 @item max-reload-search-insns
@@ -8114,7 +8114,7 @@ cselibが考慮するメモリ場所の最大値。値を増やすともっと�
 ブロック間推測スケジューリング用のソースブロック到達の（パーセントでの）最小確率。デフォルト値は40である。
 
 @item max-sched-extend-regions-iters
-CFGを通しての拡張領域への繰り返しの最大数。値0（デフォルト）は領域拡張を無効化する。
+CFGを通しての拡張領域への繰り返しの最大数。値0（デフォルト）は領域拡張を無効にする。
 
 @item max-sched-insn-conflict-delay
 推測移動で考慮されるinsnの最大衝突遅延。デフォルト値は3である。
@@ -8196,7 +8196,7 @@ RTLコンバイナが結合しようとする命令の最大数。デフォル�
 @item use-canonical-types
 コンパイラが「正規の」型システムを使うべき。デフォルトでは、これは常に1であるべきで、
 C++とObjective-C++で型を比較するのにもっと効率のいい内部メカニズムを使う。しかし、
-もし正規型システムでのバグが比較の失敗を起こすならば、正規型を無効化するためにこの値を0にセットする。
+もし正規型システムでのバグが比較の失敗を起こすならば、正規型を無効にするためにこの値を0にセットする。
 
 @item switch-conversion-max-branch-ratio
 switch初期化変換がswitch内で@option{switch-conversion-max-branch-ratio}の分岐の数倍よりも大きい配列を作ることを拒否する。
@@ -8251,7 +8251,7 @@ LRAは、以降のinsnでのレジスタで再ロードされる値を再利用�
 @item max-vartrack-size
 任意の関数の変数追跡データフロー解析の間に使うハッシュテーブルスロットの最大値をセットする。
 もしこの制限が有効にされた代入での変数追跡で超えたならば、その関数からすべてのデバッグinsnを取り除いた後に
-その関数の解析はそれ無しで再試行される。もし制限がデバッグinsnなしでさえ超過したならば、変数追跡解析はその関数では完全に無効化される。
+その関数の解析はそれ無しで再試行される。もし制限がデバッグinsnなしでさえ超過したならば、変数追跡解析はその関数では完全に無効にされる。
 このパラメータを０にすると無制限になる。
 
 @item max-vartrack-expr-depth
@@ -8355,7 +8355,7 @@ C++名検索が識別子のために失敗するとき、提案について相�
 
 @item max-stores-to-sink
 降下可能な条件付きストア対の最大数。もしベクトル化(@option{-ftree-vectorize})とif変換
-(@option{-ftree-loop-if-convert})のどちらかが無効化されているなら0にセットする。
+(@option{-ftree-loop-if-convert})のどちらかが無効にされているなら0にセットする。
 デフォルトは2である。
 
 @item allow-store-data-races
@@ -8386,36 +8386,36 @@ C++名検索が識別子のために失敗するとき、提案について相�
 @item asan-globals
 グローバルオブジェクトのバッファ溢れ検知を有効にする。この種類の防護は
 @option{-fsanitize=address}オプションを使うときにはデフォルトで有効である。
-グローバルオブジェクト防御を無効化するには@option{--param asan-globals=0}を使う。
+グローバルオブジェクト防御を無効にするには@option{--param asan-globals=0}を使う。
 
 @item asan-stack
 スタックオブジェクトでのバッファ溢れ検知を有効にする。この種類の防護は
 @option{-fsanitize=address}オプションを使うときにはデフォルトで有効である。
-スタック防御を無効化するには@option{--param asan-stack=0}オプションを使う。
+スタック防御を無効にするには@option{--param asan-stack=0}オプションを使う。
 
 @item asan-instrument-reads
 メモリ読み出しでのバッファ溢れ検知を有効にする。この種類の防護は
 @option{-fsanitize=address}オプションを使うときにはデフォルトで有効である。
-メモリ読み出し防御を無効化するには@option{--param asan-instrument-reads=0}を使う。
+メモリ読み出し防御を無効にするには@option{--param asan-instrument-reads=0}を使う。
 
 @item asan-instrument-writes
 メモリ書き込みでのバッファ溢れ検知を有効にする。この種類の防護は
 @option{-fsanitize=address}オプションを使うときにはデフォルトで有効である。
-メモリ書き込み防御を無効化するには@option{--param asan-instrument-writes=0}オプションを使う。
+メモリ書き込み防御を無効にするには@option{--param asan-instrument-writes=0}オプションを使う。
 
 @item asan-memintrin
 組み込み関数の検知を有効にする。この種類の防護は
 @option{-fsanitize=address}オプションを使うときにはデフォルトで有効である。
-組み込み関数防御を無効化するには@option{--param asan-memintrin=0}を使う。
+組み込み関数防御を無効にするには@option{--param asan-memintrin=0}を使う。
 
 @item asan-use-after-return
-使用後に復帰の検知を有効化する。この種類の防護は
+使用後に復帰の検知を有効にする。この種類の防護は
 @option{-fsanitize=address}オプションを使うときにはデフォルトで有効である。
-使用後復帰の検知を無効化するには、@option{--param asan-use-after-return=0}を使う。
+使用後復帰の検知を無効にするには、@option{--param asan-use-after-return=0}を使う。
 
 @item asan-instrumentation-with-call-threshold
 もし測定される関数のメモリアクセスの数がこの数以上なら、インラインチェックの代わりにコールバックを使う。
-例えば、インラインコードを無効化するには、@option{--param asan-instrumentation-with-call-threshold=0}を使う。
+例えば、インラインコードを無効にするには、@option{--param asan-instrumentation-with-call-threshold=0}を使う。
 
 @item chkp-max-ctor-size
 ポインタ範囲チェッカで生成される静的コンストラクタは、最適化レベル@option{-O1}以上では
@@ -8444,7 +8444,7 @@ parloopsによって並列化されたループ用のompスケジュールのス
 
 @item hsa-gen-debug-stores
 libgompプラグインによってそれから読まれて、報告されるHSAカーネルの範囲内で、特別なデバッグ・ストアの放出を使用可能にする。
-これらのストアの生成はデフォルトで無効化されているて、それを使用可能にするために、@option{--param hsa-gen-debug-stores=1}を使う。
+これらのストアの生成はデフォルトで無効にされているて、それを使用可能にするために、@option{--param hsa-gen-debug-stores=1}を使う。
 
 @item max-speculative-devirt-maydefs
 投機的に非仮想化できるかもしれない仮想呼び出しを呼び出すオブジェクトの動的型を指定する確実に定義されているものの検索時に解析する
@@ -8746,7 +8746,7 @@ null値の返却を検知する。
 @item -fno-sanitize=all
 @opindex fno-sanitize=all
 
-このオプションはすべての前で有効にしたサニタイザを無効化する。あるサニタイザは一緒に使うことができないので、
+このオプションはすべての前で有効にしたサニタイザを無効にする。あるサニタイザは一緒に使うことができないので、
 @option{-fsanitize=all}は許可されていない。
 
 @item -fasan-shadow-offset=@var{number}
@@ -8773,7 +8773,7 @@ null値の返却を検知する。
 @option{-fsanitize=kernel-address} 、@option{-fsanitize=address}でのみ働く。
 これらのサニタイザではエラー回復はデフォルトでオンであり、例外は@option{-fsanitize=address}であり、この機能は実験的である。
 @option{-fsanitize-recover=all}と@option{-fno-sanitize-recover=all}も受理され、前者はそれをサポートするすべてのサニタイザ
-の回復を有効にし、後者はそれをサポートするすべてのサニタイザで回復を無効化する。
+の回復を有効にし、後者はそれをサポートするすべてのサニタイザで回復を無効にする。
 
 コンパイラー側でリカバリー・モードをオンにしても、ランタイム・ライブラリー側でもリカバリー・モードを使用可能にする必要がある。そうしないと、障害は依然として致命的である。
 実行時ライブラリのデフォルトはThreadSanitizerとUndefinedBehaviorSanitizerでは@code{halt_on_error = 0}であるが、AddressSanitizerのデフォルト値は@code{halt_on_error = 1}である。 これは、対応する環境変数の@code{halt_on_error}フラグをセットすることでオーバーライドできる。
@@ -8896,7 +8896,7 @@ Bounds Checker builtins}を見よ。
 @opindex fno-chkp-treat-zero-dynamic-size-as-infinite
 このオプションで、ポインタ境界チェッカによる代わりにその動的に取得されたサイズが0である不完全型の
 オブジェクトを無限サイズを持つとして扱う。このオプションはもしプログラムがあるシンボルののサイズ情報が
-失われているライブラリとリンクするときに役立つかもしれない。デフォルトで無効化されている。
+失われているライブラリとリンクするときに役立つかもしれない。デフォルトで無効にされている。
 
 @item -fchkp-check-read
 @opindex fchkp-check-read
@@ -9497,7 +9497,7 @@ GNUリンカ（2.16以降）はこのオプションの必須のサポートを�
 @opindex no-sysroot-suffix
 あるターゲットで、接尾辞は使われた他のオプションに依存して、@option{--sysroot}で指定されたルートディレクトリに加えられ、
 ヘッダは例えば@file{@var{dir}/usr/include}の代わりに@file{@var{dir}/@var{suffix}/usr/include}で見つかるかもしれない。
-このオプションはそのような接尾辞を無効化する。
+このオプションはそのような接尾辞を無効にする。
 
 @end table
 
@@ -9595,7 +9595,7 @@ GNUリンカ（2.16以降）はこのオプションの必須のサポートを�
 @item -fwrapv
 @opindex fwrapv
 このオプションは、コンパイラが加算、減算、乗算の符号付き算術桁あふれが2の補数表現を使って循環すると仮定させる。
-このフラグはある最適化を有効化して別のものを無効化する。このオプションはJavaフロントエンドでは、Java言語仕様で要求されているので
+このフラグはある最適化を有効にして別のものを無効にする。このオプションはJavaフロントエンドでは、Java言語仕様で要求されているので
 デフォルトである。オプション@option{-ftrapv}と@option{-fwrapv}は
 それぞれを上書きし、コマンドラインで@option{-ftrapv} @option{-fwrapv}を使うと@option{-fwrapv}が有効になる。
 有効オプションのみが上書きするので、コマンドラインでの@option{-ftrapv} @option{-fwrapv} @option{-fno-wrapv}は
@@ -9603,11 +9603,11 @@ GNUリンカ（2.16以降）はこのオプションの必須のサポートを�
 
 @item -fexceptions
 @opindex fexceptions
-例外処理を有効化する。例外を伝搬するのに必要な追加のコードを生成する。
+例外処理を有効にする。例外を伝搬するのに必要な追加のコードを生成する。
 あるターゲットでは、これはGCCに全関数のフレーム巻き戻し情報を生成させることを暗示し、それはかなりのデータサイズオーバーヘッド
 を生むが、実行には影響しない。もしこのオプションを指定しないならば通常は例外処理が必要なC++ののような言語ではデフォルトで有効にし、
 C++ののような通常は必要としない言語では無効にする。しかし、C++で書かれた例外処理と適切に相互作用する必要があるC++コードをコンパイルするときは
-このオプションを有効にする必要があるかもしれない。もし例外処理を使わない古いC++プログラムをコンパイルするならばこのオプションを無効化したいかもしれない。
+このオプションを有効にする必要があるかもしれない。もし例外処理を使わない古いC++プログラムをコンパイルするならばこのオプションを無効にしたいかもしれない。
 
 @item -fnon-call-exceptions
 @opindex fnon-call-exceptions
@@ -10164,7 +10164,7 @@ cfglayoutモードへの変換の後にダンプする。
 
 @item -fdump-rtl-loop2
 @opindex fdump-rtl-loop2
-@option{-fdump-rtl-loop2}はrtlループ最適化パスの後のダンプを有効化する
+@option{-fdump-rtl-loop2}はrtlループ最適化パスの後のダンプを有効にする
 
 @item -fdump-rtl-mach
 @opindex fdump-rtl-mach
@@ -10399,7 +10399,7 @@ RTLをダンプするとき、デフォルトのLISP風表現の代わりに薄�
 @item stats
 パスについての様々な統計のダンプを有効にする。（すべてのダンプ・オプションによって引き受けられるというわけではない）
 @item blocks
-基本ブロック境界の表示を有効にする。（生ダンプでは無効化される）
+基本ブロック境界の表示を有効にする。（生ダンプでは無効にされる）
 @item graph
 他の示されたダンプ・ファイル（@option{-fdump-rtl-@var{pass}}）の各々で、
 @file{@var{file}.@var{passid}.@var{pass}.dot}にGraphVizで見ることにふさわしい制御フロー・グラフの表現をダンプする。
@@ -10563,35 +10563,35 @@ gcc -fopt-info-vec-missed=vec.miss -fopt-info-loop-optimized=loop.opt
 @opindex fdisable-
 @opindex fenable-
 
-これは明示的に最適化パスを無効化・有効化するために使われるオプションの集合である。
-これらのオプションはGCCをデバッグするために使われる。コンパイラのユーザはパスを有効化・無効化するためには
+これは明示的に最適化パスを無効・有効にするために使われるオプションの集合である。
+これらのオプションはGCCをデバッグするために使われる。コンパイラのユーザはパスを有効・無効にするためには
 代わりに通常のオプションを使うべきである。
 
 @table @gcctabopt
 
 @item -fdisable-ipa-@var{pass}
-IPAパス@var{pass}を無効化する。@var{pass}はパスの名前である。もし同じパスがコンパイラで静的に複数回呼ばれるならば、
+IPAパス@var{pass}を無効にする。@var{pass}はパスの名前である。もし同じパスがコンパイラで静的に複数回呼ばれるならば、
 パス名は１から始まる順番の番号を加えるべきである。
 
 @item -fdisable-rtl-@var{pass}
 @itemx -fdisable-rtl-@var{pass}=@var{range-list}
-RTLパス@var{pass}を無効化する。@var{pass}はパス名である。もし同じパスがコンパイラで静的に複数回呼ばれるならば、
+RTLパス@var{pass}を無効にする。@var{pass}はパス名である。もし同じパスがコンパイラで静的に複数回呼ばれるならば、
 パス名は１から始まる順番の番号を加えるべきである。@var{range-list}は関数範囲かアセンブラ名のコンマ区切りのリストである。
 それぞれの範囲はコロン区切りのペアである。範囲は両端を含む。もし範囲が自明ならば、数値のペアは単一の数に単純化できる。
-もし関数の呼び出しグラフノードの@var{uid}が指定された範囲の一つに入らないならば、@var{pass}はその関数で無効化される。
+もし関数の呼び出しグラフノードの@var{uid}が指定された範囲の一つに入らないならば、@var{pass}はその関数で無効にされる。
 @var{uid}はダンプファイルの関数ヘッダに現れ、パス名はオプション@option{-fdump-passes}を使ってダンプできる。
 
 @item -fdisable-tree-@var{pass}
 @itemx -fdisable-tree-@var{pass}=@var{range-list}
-木パス@var{pass}を無効化する。オプション引数の説明は@option{-fdisable-rtl}を見よ。
+木パス@var{pass}を無効にする。オプション引数の説明は@option{-fdisable-rtl}を見よ。
 
 @item -fenable-ipa-@var{pass}
-IPAパス@var{pass}を有効化する。@var{pass}はパス名である。もし同じパスがコンパイラで静的に複数回呼ばれるならば、
+IPAパス@var{pass}を有効にする。@var{pass}はパス名である。もし同じパスがコンパイラで静的に複数回呼ばれるならば、
 パス名は１から始まる順番の番号を加えるべきである。
 
 @item -fenable-rtl-@var{pass}
 @itemx -fenable-rtl-@var{pass}=@var{range-list}
-RTLパス@var{pass}を有効化する。オプション引数の説明と例は@option{-fdisable-rtl}を見よ。
+RTLパス@var{pass}を有効にする。オプション引数の説明と例は@option{-fdisable-rtl}を見よ。
 
 @item -fenable-tree-@var{pass}
 @itemx -fenable-tree-@var{pass}=@var{range-list}
@@ -10727,7 +10727,7 @@ gcc -save-temps=obj foobar.c -o dir2/yfoobar
 @var{opts}のために使われ、さもなければデフォルトの@option{-gtoggle}が使われる。
 
 等号はあるが@var{opts}のない@option{-fcompare-debug=}は@option{-fno-compare-debug}と等価であり、
-最終表現のダンプを無効化して、@env{GCC_COMPARE_DEBUG}さえも効果が出ることを防ぐ。
+最終表現のダンプを無効にして、@env{GCC_COMPARE_DEBUG}さえも効果が出ることを防ぐ。
 
 @option{-fcompare-debug}テストの間、完全なカバーを確かめるために、@option{-fcompare-debug-not-overridden}を言うために、
 @env{GCC_COMPARE_DEBUG}をセットし、GCCはそれをがどんな（プリプロセス、アセンブリ・リンクでない）実際のコンパイルでも
@@ -11078,13 +11078,13 @@ TSL変数の動的アクセス用のスレッド局所領域メカニズムと�
 @itemx -mno-fix-cortex-a53-835769
 @opindex mfix-cortex-a53-835769
 @opindex mno-fix-cortex-a53-835769
-ARM Cortex-A53エラッタ番号835769用の回避手段を有効化・無効化する。これはメモリ命令と64ビット整数乗算演算命令の間にNOP命令を挟むことに関連する。
+ARM Cortex-A53エラッタ番号835769用の回避手段を有効・無効にする。これはメモリ命令と64ビット整数乗算演算命令の間にNOP命令を挟むことに関連する。
 
 @item -mfix-cortex-a53-843419
 @itemx -mno-fix-cortex-a53-843419
 @opindex mfix-cortex-a53-843419
 @opindex mno-fix-cortex-a53-843419
-ARM Cortex-A53エラッタ843419用の回避手段を有効化・無効化する。このエラッタ回避手段はリンク時に行われ、これはリンカに対応するフラグを渡すだけである。
+ARM Cortex-A53エラッタ843419用の回避手段を有効・無効にする。このエラッタ回避手段はリンク時に行われ、これはリンカに対応するフラグを渡すだけである。
 
 @item -mlow-precision-recip-sqrt
 @item -mno-low-precision-recip-sqrt
@@ -11311,7 +11311,7 @@ NaNが存在するか、２つの異なる小さい数が比較されて差が0�
 @opindex mno-postinc
 @opindex mno-postmodify
 それぞれ、32ビットロードの分割、後置インクリメントアドレスの生成、後置修正アドレスの生成を
-無効化するコード生成調整。デフォルトは@option{msplit-lohi},
+無効にするコード生成調整。デフォルトは@option{msplit-lohi},
 @option{-mpost-inc}, @option{-mpost-modify}。
 
 @item -mnovect-double
@@ -11442,7 +11442,7 @@ FPX:倍精度FPX命令を生成し、高速実装用に調整する。
 
 @item -mno-dpfp-lrsr
 @opindex mno-dpfp-lrsr
-FPX拡張補助レジスタの使用から@code{lr}と@code{sr}SR命令を無効化する。
+FPX拡張補助レジスタの使用から@code{lr}と@code{sr}SR命令を無効にする。
 
 @item -mea
 @opindex mea
@@ -11754,7 +11754,7 @@ bbitピープホールを有効にする。
 
 @item -mno-brcc
 @opindex mno-brcc
-このオプションは@code{BRcc}命令を生成するための@file{arc_reorg}でのターゲット固有のパスを無効化する。
+このオプションは@code{BRcc}命令を生成するための@file{arc_reorg}でのターゲット固有のパスを無効にする。
 これは結合子パスによって導出される@code{BRcc}生成には影響しない。
 
 @item -mcase-vector-pcrel
@@ -11778,7 +11778,7 @@ pc相対switchケーステーブルを使う。これはcase表短縮を有効�
 
 @item -mearly-cbranchsi
 @opindex mearly-cbranchsi
-cbranchsiパターンのリロード前の使用を有効化する。
+cbranchsiパターンのリロード前の使用を有効にする。
 
 @item -mexpand-adddi
 @opindex mexpand-adddi
@@ -11786,7 +11786,7 @@ RTL生成時に@code{adddi3}と@code{subdi3}を@code{add.f}、@code{adc}など�
 
 @item -mindexed-loads
 @opindex mindexed-loads
-添字ロードの使用を有効化する。これはある最適化器が添字付きストアがあつと仮定してしまい、
+添字ロードの使用を有効にする。これはある最適化器が添字付きストアがあつと仮定してしまい、
 それはこの場合には成り立たないので問題になりうる。
 
 @opindex mlra
@@ -13248,7 +13248,7 @@ Alphaアーキテクチャは、パフォーマンスを最大限に高めるよ
 
 @table @samp
 @item n
-これがデフォルト（通常）の設定である。 有効化される唯一のトラップは、ソフトウェアで無効にすることができないトラップ（例えば、ゼロトラップによる除算）である。
+これがデフォルト（通常）の設定である。 有効にされる唯一のトラップは、ソフトウェアで無効にすることができないトラップ（例えば、ゼロトラップによる除算）である。
 
 @item u
 @samp{n}によって有効にされたトラップに加えて、アンダーフロートラップも有効である。
@@ -13618,42 +13618,42 @@ e_flags内でABIスイッチをマークしない。
 @item -mcond-move
 @opindex mcond-move
 
-条件ムーブ命令の使用を有効化する（デフォルト）。
+条件ムーブ命令の使用を有効にする（デフォルト）。
 
 このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -mno-cond-move
 @opindex mno-cond-move
 
-条件ムーブ命令の使用を無効化する。
+条件ムーブ命令の使用を無効にする。
 
 このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -mscc
 @opindex mscc
 
-条件付きセット命令の使用を有効化する。（デフォルト）
+条件付きセット命令の使用を有効にする。（デフォルト）
 
 このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -mno-scc
 @opindex mno-scc
 
-条件付きセット命令の使用を無効化する。
+条件付きセット命令の使用を無効にする。
 
 このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -mcond-exec
 @opindex mcond-exec
 
-条件付き実行の使用を有効化する。（デフォルト）
+条件付き実行の使用を有効にする。（デフォルト）
 
 このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -mno-cond-exec
 @opindex mno-cond-exec
 
-条件付き実行の使用を無効化する。
+条件付き実行の使用を無効にする。
 
 このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
@@ -13674,28 +13674,28 @@ e_flags内でABIスイッチをマークしない。
 @item -mmulti-cond-exec
 @opindex mmulti-cond-exec
 
-@code{&&}と@code{||}の条件付き実行での最適化を有効化する。（デフォルト）
+@code{&&}と@code{||}の条件付き実行での最適化を有効にする。（デフォルト）
 
 このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -mno-multi-cond-exec
 @opindex mno-multi-cond-exec
 
-@code{&&}と@code{||}の条件付き実行での最適化を無効化する。
+@code{&&}と@code{||}の条件付き実行での最適化を無効にする。
 
 このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -mnested-cond-exec
 @opindex mnested-cond-exec
 
-入れ子条件付き実行最適化を有効化する。（デフォルト）
+入れ子条件付き実行最適化を有効にする。（デフォルト）
 
 このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
 @item -mno-nested-cond-exec
 @opindex mno-nested-cond-exec
 
-入れ子条件付き実行最適化を無効化する。
+入れ子条件付き実行最適化を無効にする。
 
 このスイッチは主にコンパイラをデバッグするためのスイッチで、将来のバージョンでは削除される可能性がある。
 
@@ -13707,7 +13707,7 @@ e_flags内でABIスイッチをマークしない。
 @item -mno-optimize-membar
 @opindex mno-optimize-membar
 
-このスイッチは生成されたコードから冗長な@code{membar}を自動的に除去するのを無効化する。
+このスイッチは生成されたコードから冗長な@code{membar}を自動的に除去するのを無効にする。
 
 @item -mtomcat-stats
 @opindex mtomcat-stats
@@ -13983,7 +13983,7 @@ Generate (or don't) code for the GNU linker.  This is the default.
 @itemx -msdata
 @opindex mno-sdata
 @opindex msdata
-小さいデータセクションを使う最適化を無効化（有効化）する。これは、オプティマイザのバグの回避策に役立つかもしれない。
+小さいデータセクションを使う最適化を無（有）効にする。これは、オプティマイザのバグの回避策に役立つかもしれない。
 
 @item -mconstant-gp
 @opindex mconstant-gp
@@ -14069,37 +14069,37 @@ DWARF行番号デバッグ情報用のアセンブラコードを生成しない
 @itemx -msched-br-data-spec
 @opindex mno-sched-br-data-spec
 @opindex msched-br-data-spec
-リロードする前にデータ推測スケジューリングを無（有）効化する。その結果、@code{ld.a}命令とそれに対応するチェック命令（@code{ld.c} / @code{chk.a}）が生成される。 デフォルト設定は無効です。
+リロードする前にデータ推測スケジューリングを無（有）効にする。その結果、@code{ld.a}命令とそれに対応するチェック命令（@code{ld.c} / @code{chk.a}）が生成される。 デフォルト設定は無効です。
 
 @item -msched-ar-data-spec
 @itemx -mno-sched-ar-data-spec
 @opindex msched-ar-data-spec
 @opindex mno-sched-ar-data-spec
-リロード後にデータ推測スケジューリングを有（無）効化する。その結果、@code{ld.a}命令とそれに対応するチェック命令（@code{ld.c} / @code{chk.a}）が生成される。デフォルト設定は有効である。
+リロード後にデータ推測スケジューリングを有（無）効にする。その結果、@code{ld.a}命令とそれに対応するチェック命令（@code{ld.c} / @code{chk.a}）が生成される。デフォルト設定は有効である。
 
 @item -mno-sched-control-spec
 @itemx -msched-control-spec
 @opindex mno-sched-control-spec
 @opindex msched-control-spec
-制御投機的スケジューリングを無（有）効化する。 この機能は、領域スケジュール設定時にのみ使用できる（すなわち、リロード前）。 これにより、@code{ld.s}命令とそれに対応するチェック命令@code{chk.s}が生成される。デフォルト設定は無効である。
+制御投機的スケジューリングを無（有）効にする。 この機能は、領域スケジュール設定時にのみ使用できる（すなわち、リロード前）。 これにより、@code{ld.s}命令とそれに対応するチェック命令@code{chk.s}が生成される。デフォルト設定は無効である。
 
 @item -msched-br-in-data-spec
 @itemx -mno-sched-br-in-data-spec
 @opindex msched-br-in-data-spec
 @opindex mno-sched-br-in-data-spec
-リロード前にデータ投機的ロードに依存する命令の投機的スケジューリングを有（無）効化する。 これは、@option{-msched-br-data-spec}を有効にした場合にのみ有効である。 デフォルト設定は有効である。
+リロード前にデータ投機的ロードに依存する命令の投機的スケジューリングを有（無）効にする。 これは、@option{-msched-br-data-spec}を有効にした場合にのみ有効である。 デフォルト設定は有効である。
 
 @item -msched-ar-in-data-spec
 @itemx -mno-sched-ar-in-data-spec
 @opindex msched-ar-in-data-spec
 @opindex mno-sched-ar-in-data-spec
-リロード後のデータ投機的ロードに依存する命令の投機的スケジューリングを有（無）効化する。 これは、@option{-msched-ar-data-spec}を有効にした場合にのみ有効である。デフォルト設定は有効である。
+リロード後のデータ投機的ロードに依存する命令の投機的スケジューリングを有（無）効にする。 これは、@option{-msched-ar-data-spec}を有効にした場合にのみ有効である。デフォルト設定は有効である。
 
 @item -msched-in-control-spec
 @itemx -mno-sched-in-control-spec
 @opindex msched-in-control-spec
 @opindex mno-sched-in-control-spec
-制御投機的負荷に依存する命令の投機的スケジューリングを有（無）効化する。これは、@option{-msched-control-spec}が有効な場合にのみ有効である。デフォルト設定は有効である。
+制御投機的負荷に依存する命令の投機的スケジューリングを有（無）効にする。これは、@option{-msched-control-spec}が有効な場合にのみ有効である。デフォルト設定は有効である。
 
 @item -mno-sched-prefer-non-data-spec-insns
 @itemx -msched-prefer-non-data-spec-insns
@@ -14151,31 +14151,31 @@ DWARF行番号デバッグ情報用のアセンブラコードを生成しない
 @end table
 
 @node LM32 Options
-@subsection LM32 Options
+@subsection LM32オプション
 @cindex LM32 options
 
-These @option{-m} options are defined for the LatticeMico32 architecture:
+これらの@option{-m}オプションは、LatticeMico32アーキテクチャ用に定義されている。
 
 @table @gcctabopt
 @item -mbarrel-shift-enabled
 @opindex mbarrel-shift-enabled
-Enable barrel-shift instructions.
+バレルシフト命令を有効にする。
 
 @item -mdivide-enabled
 @opindex mdivide-enabled
-Enable divide and modulus instructions.
+除算と剰余命令を有効にする。
 
 @item -mmultiply-enabled
 @opindex multiply-enabled
-Enable multiply instructions.
+乗算命令を有効にする。
 
 @item -msign-extend-enabled
 @opindex msign-extend-enabled
-Enable sign extend instructions.
+符号拡張命令を有効にする。
 
 @item -muser-enabled
 @opindex muser-enabled
-Enable user-defined instructions.
+ユーザー定義の命令を有効にする。
 
 @end table
 
