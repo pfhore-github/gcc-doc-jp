@@ -14291,40 +14291,24 @@ M32R/R用のコードを生成する。これはデフォルトである。
 @end table
 
 @node M680x0 Options
-@subsection M680x0 Options
+@subsection M680x0オプション
 @cindex M680x0 options
 
-These are the @samp{-m} options defined for M680x0 and ColdFire processors.
-The default settings depend on which architecture was selected when
-the compiler was configured; the defaults for the most common choices
-are given below.
+これらは、M680x0とColdFireプロセッサーで定義された@samp {-m}オプションである。デフォルト設定は、コンパイラの設定時に選択されたアーキテクチャによって異なる。 最も一般的な選択肢のデフォルトが以下に示されている。
 
 @table @gcctabopt
 @item -march=@var{arch}
 @opindex march
-Generate code for a specific M680x0 or ColdFire instruction set
-architecture.  Permissible values of @var{arch} for M680x0
-architectures are: @samp{68000}, @samp{68010}, @samp{68020},
-@samp{68030}, @samp{68040}, @samp{68060} and @samp{cpu32}.  ColdFire
-architectures are selected according to Freescale's ISA classification
-and the permissible values are: @samp{isaa}, @samp{isaaplus},
-@samp{isab} and @samp{isac}.
+特定のM680x0またはColdFire命令セットアーキテクチャ用のコードを生成する。M680x0アーキテクチャ用の@var{arch}の許容値は次のとおりである。@samp{68000}、@samp{68010}、@samp{68020}、@samp{68030}、@samp{68040}、@samp{68060}、@samp{cpu32}である。ColdFireアーキテクチャはFreescaleのISA分類に従って選択され、許容値は@samp{isaa}、@samp{isaaplus}、@samp{isab}、@samp{isac}である。
 
-GCC defines a macro @code{__mcf@var{arch}__} whenever it is generating
-code for a ColdFire target.  The @var{arch} in this macro is one of the
-@option{-march} arguments given above.
+GCCは、ColdFireターゲット用のコードを生成しているときは常に、マクロ@code{__ mcf@var{arch}__}を定義する。 このマクロの@var{arch}は、上記の@option{-march}引数の1つである。
 
-When used together, @option{-march} and @option{-mtune} select code
-that runs on a family of similar processors but that is optimized
-for a particular microarchitecture.
+@option{-march}と@option{-mtune}を併用すると、類似のプロセッサファミリで実行されるが特定のマイクロアーキテクチャに最適化されたコードを選択する。
 
 @item -mcpu=@var{cpu}
 @opindex mcpu
-Generate code for a specific M680x0 or ColdFire processor.
-The M680x0 @var{cpu}s are: @samp{68000}, @samp{68010}, @samp{68020},
-@samp{68030}, @samp{68040}, @samp{68060}, @samp{68302}, @samp{68332}
-and @samp{cpu32}.  The ColdFire @var{cpu}s are given by the table
-below, which also classifies the CPUs into families:
+特定のM680x0またはColdFireプロセッサ用のコードを生成する。M680x0 @var{cpu}は次のとおりである：@samp{68000}、@samp{68010}、@samp{68020}、@samp{68030}、@samp{68040}、@samp{68060}、@samp{68302}、@samp{68332}
+@samp{cpu32}である。ColdFire@var{cpu}は、以下の表で与えられる。この表はまた、CPUをファミリに分類する。
 
 @multitable @columnfractions 0.20 0.80
 @item @strong{Family} @tab @strong{@samp{-mcpu} arguments}
@@ -14353,328 +14337,208 @@ below, which also classifies the CPUs into families:
 @item @samp{5475} @tab @samp{5470} @samp{5471} @samp{5472} @samp{5473} @samp{5474} @samp{5475} @samp{547x} @samp{5480} @samp{5481} @samp{5482} @samp{5483} @samp{5484} @samp{5485}
 @end multitable
 
-@option{-mcpu=@var{cpu}} overrides @option{-march=@var{arch}} if
-@var{arch} is compatible with @var{cpu}.  Other combinations of
-@option{-mcpu} and @option{-march} are rejected.
+@var{arch}が@var{cpu}と互換性がある場合、@option{-mcpu=@var{cpu}}は@option{-march=@var{arch}}をオーバーライドする。 @option{-mcpu}と@option{-march}の他の組み合わせは拒否される。
 
-GCC defines the macro @code{__mcf_cpu_@var{cpu}} when ColdFire target
-@var{cpu} is selected.  It also defines @code{__mcf_family_@var{family}},
-where the value of @var{family} is given by the table above.
+GCCは、ColdFireターゲット@var{cpu}が選択されているときにマクロ@code {__mcf_cpu_@var{cpu}}を定義する。また、@code{__mcf_family_@var{family}}を定義する。ここで、@var{family}の値は上記の表によって与えられる。
 
 @item -mtune=@var{tune}
 @opindex mtune
-Tune the code for a particular microarchitecture within the
-constraints set by @option{-march} and @option{-mcpu}.
-The M680x0 microarchitectures are: @samp{68000}, @samp{68010},
-@samp{68020}, @samp{68030}, @samp{68040}, @samp{68060}
-and @samp{cpu32}.  The ColdFire microarchitectures
-are: @samp{cfv1}, @samp{cfv2}, @samp{cfv3}, @samp{cfv4} and @samp{cfv4e}.
+@option {-march}と@option {-mcpu}で設定された制約内で、特定のマイクロアーキテクチャのコードをチューニングする。M680x0マイクロアーキテクチャは、@samp{68000}、@samp{68010}、@samp{68020}、@samp{68030}、@samp{68040}、@samp{68060}、@samp{cpu32}である。ColdFireのマイクロアーキテクチャは、@samp{cfv1}、@samp{cfv2}、@samp{cfv3}、@samp{cfv4}、@samp{cfv4e}である。
 
-You can also use @option{-mtune=68020-40} for code that needs
-to run relatively well on 68020, 68030 and 68040 targets.
-@option{-mtune=68020-60} is similar but includes 68060 targets
-as well.  These two options select the same tuning decisions as
-@option{-m68020-40} and @option{-m68020-60} respectively.
+68020、68030、および68040のターゲットで比較的よく動作する必要のあるコードには、@option{-mtune=68020-40}を使用することもできる。@option{-mtune=68020-60}は似ていますが、68060個のターゲットも含む。 これらの2つのオプションは、それぞれ@option{-m68020-40}と@option{-m68020-60}と同じチューニングの決定を選択する。
 
-GCC defines the macros @code{__mc@var{arch}} and @code{__mc@var{arch}__}
-when tuning for 680x0 architecture @var{arch}.  It also defines
-@code{mc@var{arch}} unless either @option{-ansi} or a non-GNU @option{-std}
-option is used.  If GCC is tuning for a range of architectures,
-as selected by @option{-mtune=68020-40} or @option{-mtune=68020-60},
-it defines the macros for every architecture in the range.
+GCCは680x0アーキテクチャ@var {arch}をチューニングするとき、マクロ@code{__mc@var{arch}}と@code{__mc@var{arch}__}を定義します。
+。
+また、@ option {-ansi}またはGNU以外の@option {-std}オプションを使用しない限り、@code{mc@var{arch}}も定義する。GCCが@option{-mtune=68020-40}または@option{-mtune=68020-60}で選択されたアーキテクチャの範囲に対してチューニングを行っている場合、GCCは範囲内のすべてのアーキテクチャのマクロを定義する。
 
-GCC also defines the macro @code{__m@var{uarch}__} when tuning for
-ColdFire microarchitecture @var{uarch}, where @var{uarch} is one
-of the arguments given above.
+GCCはColdFireマイクロアーキテクチャ@var {uarch}のチューニングの際に@code{__m@var{uarch}__}マクロも定義する。ここで、@var{uarch}は上記の引数の1つである。
 
 @item -m68000
 @itemx -mc68000
 @opindex m68000
 @opindex mc68000
-Generate output for a 68000.  This is the default
-when the compiler is configured for 68000-based systems.
-It is equivalent to @option{-march=68000}.
+68000の出力を生成する。これは、コンパイラが68000ベースのシステム用に構成されている場合のデフォルトである。 @option{-march = 68000}と同じである。
 
-Use this option for microcontrollers with a 68000 or EC000 core,
-including the 68008, 68302, 68306, 68307, 68322, 68328 and 68356.
+68008、68302、68306、68307、68322、68328、および68356を含む68000またはEC000コアを搭載したマイクロコントローラには、このオプションを使用する。
 
 @item -m68010
 @opindex m68010
-Generate output for a 68010.  This is the default
-when the compiler is configured for 68010-based systems.
-It is equivalent to @option{-march=68010}.
+68010の出力を生成する。これは、コンパイラが68010ベースのシステム用に構成されている場合のデフォルトである。 @option{-march = 68010}と同等である。
 
 @item -m68020
 @itemx -mc68020
 @opindex m68020
 @opindex mc68020
-Generate output for a 68020.  This is the default
-when the compiler is configured for 68020-based systems.
-It is equivalent to @option{-march=68020}.
+68020の出力を生成する。これは、コンパイラが68020ベースのシステム用に構成されている場合のデフォルトである。 @option{-march = 68020}と同等である。
 
 @item -m68030
 @opindex m68030
-Generate output for a 68030.  This is the default when the compiler is
-configured for 68030-based systems.  It is equivalent to
-@option{-march=68030}.
+68030の出力を生成する。これは、コンパイラが68030ベースのシステム用に構成されている場合のデフォルトである。 @option{-march = 68030}と同等である。
 
 @item -m68040
 @opindex m68040
-Generate output for a 68040.  This is the default when the compiler is
-configured for 68040-based systems.  It is equivalent to
-@option{-march=68040}.
+68040の出力を生成する。これは、コンパイラが68040ベースのシステム用に構成されている場合のデフォルトである。 @option{-march = 68040}と同等です。
 
-This option inhibits the use of 68881/68882 instructions that have to be
-emulated by software on the 68040.  Use this option if your 68040 does not
-have code to emulate those instructions.
+このオプションは、68040のソフトウェアでエミュレートする必要がある68881/68882命令の使用を禁止する。68040にこれらの命令をエミュレートするコードがない場合は、このオプションを使用する。
 
 @item -m68060
 @opindex m68060
-Generate output for a 68060.  This is the default when the compiler is
-configured for 68060-based systems.  It is equivalent to
-@option{-march=68060}.
+68060の出力を生成する。これは、コンパイラが68060ベースのシステム用に構成されている場合のデフォルトである。 @option{-march = 68060}と同等である。
 
-This option inhibits the use of 68020 and 68881/68882 instructions that
-have to be emulated by software on the 68060.  Use this option if your 68060
-does not have code to emulate those instructions.
+このオプションは、68060のソフトウェアでエミュレートする必要のある68020および68881/68882命令の使用を禁止する。68060にこれらの命令をエミュレートするコードがない場合は、このオプションを使用する。
 
 @item -mcpu32
 @opindex mcpu32
-Generate output for a CPU32.  This is the default
-when the compiler is configured for CPU32-based systems.
-It is equivalent to @option{-march=cpu32}.
+CPU32の出力を生成する。 コンパイラがCPU32ベースのシステム用に構成されている場合のデフォルトである。 @option{-march=cpu32}と同等である。
 
-Use this option for microcontrollers with a
-CPU32 or CPU32+ core, including the 68330, 68331, 68332, 68333, 68334,
-68336, 68340, 68341, 68349 and 68360.
+68330、68331、68332、68333、68334、68336、68340、68341、68349、68360を含むCPU32またはCPU32 +コアを搭載したマイクロコントローラには、このオプションを使用する。
 
 @item -m5200
 @opindex m5200
-Generate output for a 520X ColdFire CPU@.  This is the default
-when the compiler is configured for 520X-based systems.
-It is equivalent to @option{-mcpu=5206}, and is now deprecated
-in favor of that option.
+520X ColdFire CPU用の出力を生成する。 これは、コンパイラが520Xベースのシステム用に設定されている場合のデフォルトである。これは@option{-mcpu=5206}と同等で、現在はそのオプションの方がいいために非推奨である。
 
-Use this option for microcontroller with a 5200 core, including
-the MCF5202, MCF5203, MCF5204 and MCF5206.
+MCF5202、MCF5203、MCF5204、MCF5206を含む5200コアのマイクロコントローラには、このオプションを使用する。
 
 @item -m5206e
 @opindex m5206e
-Generate output for a 5206e ColdFire CPU@.  The option is now
-deprecated in favor of the equivalent @option{-mcpu=5206e}.
+5206e ColdFire CPU用の出力を生成します。 このオプションは現在非推奨で、対応する@option{-mcpu=5206e}を使用する。
 
 @item -m528x
 @opindex m528x
-Generate output for a member of the ColdFire 528X family.
-The option is now deprecated in favor of the equivalent
-@option{-mcpu=528x}.
+ColdFire 528X族のメンバ用の出力を生成する。 このオプションは現在非推奨で、対応する@option{-mcpu=5206e}を使用する。
 
 @item -m5307
 @opindex m5307
-Generate output for a ColdFire 5307 CPU@.  The option is now deprecated
-in favor of the equivalent @option{-mcpu=5307}.
+ColdFire 5307 CPU用の出力を生成します。このオプションは非推奨になり、対応する@option{-mcpu=5307}を使用する。
 
 @item -m5407
 @opindex m5407
-Generate output for a ColdFire 5407 CPU@.  The option is now deprecated
-in favor of the equivalent @option{-mcpu=5407}.
+ColdFire 5407 CPU用の出力を生成します。このオプションは非推奨になり、対応する@option{-mcpu=5407}を使用する。
 
 @item -mcfv4e
 @opindex mcfv4e
-Generate output for a ColdFire V4e family CPU (e.g.@: 547x/548x).
-This includes use of hardware floating-point instructions.
-The option is equivalent to @option{-mcpu=547x}, and is now
-deprecated in favor of that option.
+ColdFire V4e族CPU用（例えば547x/548x）の出力を生成する。このオプションは@option{-mcpu=547x}と同等で、そのオプションの方がいいために非推奨である。
 
 @item -m68020-40
 @opindex m68020-40
-Generate output for a 68040, without using any of the new instructions.
-This results in code that can run relatively efficiently on either a
-68020/68881 or a 68030 or a 68040.  The generated code does use the
-68881 instructions that are emulated on the 68040.
+新しい命令を使用せずに、68040の出力を生成する。 これにより、68020/68881または68030または68040で比較的効率的に実行できるコードが生成される。生成されたコードでは、68040でエミュレートされる68881命令が使用される。
 
-The option is equivalent to @option{-march=68020} @option{-mtune=68020-40}.
+このオプションは、@option{-march=68020} @option{-mtune=68020-40}と同等である。
 
 @item -m68020-60
 @opindex m68020-60
-Generate output for a 68060, without using any of the new instructions.
-This results in code that can run relatively efficiently on either a
-68020/68881 or a 68030 or a 68040.  The generated code does use the
-68881 instructions that are emulated on the 68060.
+新しい命令を使用せずに、68060の出力を生成する。 これにより、68020/68881または68030または68040で比較的効率的に実行できるコードが生成される。生成されたコードでは、68060でエミュレートされる68881命令が使用される。
 
-The option is equivalent to @option{-march=68020} @option{-mtune=68020-60}.
+このオプションは、@option{-march=68020} @option{-mtune=68020-60}と同等である。
 
 @item -mhard-float
 @itemx -m68881
 @opindex mhard-float
 @opindex m68881
-Generate floating-point instructions.  This is the default for 68020
-and above, and for ColdFire devices that have an FPU@.  It defines the
-macro @code{__HAVE_68881__} on M680x0 targets and @code{__mcffpu__}
-on ColdFire targets.
+浮動小数点命令を生成する。 これは、68020以上の場合、およびFPUがあるColdFireデバイスの場合はデフォルトである。 これは、M680x0ターゲットでマクロ@code{__ HAVE_68881__}、ColdFireターゲットで@code{__ mcffpu__}を定義する。
 
 @item -msoft-float
 @opindex msoft-float
-Do not generate floating-point instructions; use library calls instead.
-This is the default for 68000, 68010, and 68832 targets.  It is also
-the default for ColdFire devices that have no FPU.
+浮動小数点命令を生成しない。 代わりにライブラリ呼び出しを使用する。これは、68000、68010、および68832ターゲットのデフォルトである。 FPUを持たないColdFireデバイスのデフォルト値でもある。
 
 @item -mdiv
 @itemx -mno-div
 @opindex mdiv
 @opindex mno-div
-Generate (do not generate) ColdFire hardware divide and remainder
-instructions.  If @option{-march} is used without @option{-mcpu},
-the default is ``on'' for ColdFire architectures and ``off'' for M680x0
-architectures.  Otherwise, the default is taken from the target CPU
-(either the default CPU, or the one specified by @option{-mcpu}).  For
-example, the default is ``off'' for @option{-mcpu=5206} and ``on'' for
-@option{-mcpu=5206e}.
+ColdFireのハードウェア除算および剰余命令を生成する（生成しない）。@option{-mcpu}を使用せずに@option{-march}を使用すると、デフォルトはColdFireアーキテクチャでは「オン」、M680x0アーキテクチャでは「オフ」になる。
+それ以外の場合、デフォルトはターゲットCPU（デフォルトCPUか@option{-mcpu}で指定されたCPU）から取得される。  たとえば、デフォルトは、@option{-mcpu = 5206}では「オフ」、@option{-mcpu = 5206e}では「オン」である。
 
-GCC defines the macro @code{__mcfhwdiv__} when this option is enabled.
+GCCは、このオプションを有効にするとマクロ@code{__ mcfhwdiv__}を定義する。
 
 @item -mshort
 @opindex mshort
-Consider type @code{int} to be 16 bits wide, like @code{short int}.
-Additionally, parameters passed on the stack are also aligned to a
-16-bit boundary even on targets whose API mandates promotion to 32-bit.
+@code{int}型は、@code{short int}のように、16ビット幅であるとみなす。さらに、スタック上で渡されるパラメータは、APIが32ビットへの昇格を要求するターゲットであっても、16ビット境界にアライメントされる。
 
 @item -mno-short
 @opindex mno-short
-Do not consider type @code{int} to be 16 bits wide.  This is the default.
+@code{int}型を16ビット幅とみなさない。 これがデフォルトである。
 
 @item -mnobitfield
 @itemx -mno-bitfield
 @opindex mnobitfield
 @opindex mno-bitfield
-Do not use the bit-field instructions.  The @option{-m68000}, @option{-mcpu32}
-and @option{-m5200} options imply @w{@option{-mnobitfield}}.
+ビットフィールド命令は使用しない。 @option{-m68000}、@option{-mcpu32}、@option{-m5200}のオプションは@w{@option{-mnobitfield}}を含む。
 
 @item -mbitfield
 @opindex mbitfield
-Do use the bit-field instructions.  The @option{-m68020} option implies
-@option{-mbitfield}.  This is the default if you use a configuration
-designed for a 68020.
+ビットフィールド命令を使用する。 @option{-m68020}オプションは、@option{-mbitfield}を含む。これは、68020用に設計された構成を使用する場合のデフォルトである。
 
 @item -mrtd
 @opindex mrtd
-Use a different function-calling convention, in which functions
-that take a fixed number of arguments return with the @code{rtd}
-instruction, which pops their arguments while returning.  This
-saves one instruction in the caller since there is no need to pop
-the arguments there.
+異なる関数呼び出し規約を使い、引数の数が固定されている関数が@code{rtd}命令で返されるようにする。 これにより、引数をポップする必要がないため、呼び出し元に1つの命令が節約される。
 
-This calling convention is incompatible with the one normally
-used on Unix, so you cannot use it if you need to call libraries
-compiled with the Unix compiler.
+この呼び出し規約は、Unixで通常使用されているものとは互換性がないため、Unixコンパイラでコンパイルされたライブラリを呼び出す必要がある場合は使用できない。
 
-Also, you must provide function prototypes for all functions that
-take variable numbers of arguments (including @code{printf});
-otherwise incorrect code is generated for calls to those
-functions.
+また、可変数の引数（@code{printf}を含む）をとるすべての関数の関数プロトタイプを提供する必要がある。 さもなければ、それらの関数への呼び出しに対して誤ったコードが生成される。
 
-In addition, seriously incorrect code results if you call a
-function with too many arguments.  (Normally, extra arguments are
-harmlessly ignored.)
+さらに、あまりにも多くの引数を指定して関数を呼び出すと、コードが誤って不正確になる。 （通常、余分な引数は無害に無視される。）
 
-The @code{rtd} instruction is supported by the 68010, 68020, 68030,
-68040, 68060 and CPU32 processors, but not by the 68000 or 5200.
+@code{rtd}命令は、68010、68020、68030、68040、68060、およびCPU32プロセッサで動作するが、68000または5200では動作しない。
 
 @item -mno-rtd
 @opindex mno-rtd
-Do not use the calling conventions selected by @option{-mrtd}.
-This is the default.
-
+@option {-mrtd}によって選択された呼び出し規約を使用しない。これがデフォルトである。
+D
 @item -malign-int
 @itemx -mno-align-int
 @opindex malign-int
 @opindex mno-align-int
-Control whether GCC aligns @code{int}, @code{long}, @code{long long},
-@code{float}, @code{double}, and @code{long double} variables on a 32-bit
-boundary (@option{-malign-int}) or a 16-bit boundary (@option{-mno-align-int}).
-Aligning variables on 32-bit boundaries produces code that runs somewhat
-faster on processors with 32-bit busses at the expense of more memory.
+GCCが@code{int}、@code{long}、@code{long long}、@code{float}、@code{double}、@code{long double}を32ビット境界にするか（@option {-mnn-align-int}）および16ビット境界にするか（@option {-mine-align-int}）を指定する。32ビット境界で変数を調整すると、32ビットバスのプロセッサでより高速に実行されるコードが生成され、メモリが増える。
 
-@strong{Warning:} if you use the @option{-malign-int} switch, GCC
-aligns structures containing the above types differently than
-most published application binary interface specifications for the m68k.
+@strong{警告：} @option{-malign-int}スイッチを使用すると、GCCは、上記の型を含む構造体を、m68kの公開アプリケーションバイナリインタフェース仕様とは異なる方法で整列する。
 
 @item -mpcrel
 @opindex mpcrel
-Use the pc-relative addressing mode of the 68000 directly, instead of
-using a global offset table.  At present, this option implies @option{-fpic},
-allowing at most a 16-bit offset for pc-relative addressing.  @option{-fPIC} is
-not presently supported with @option{-mpcrel}, though this could be supported for
-68020 and higher processors.
+グローバルオフセットテーブルを使用する代わりに、68000のpc相対アドレッシングモードを直接使用する。 現在のところ、このオプションは@option{-fpic}を意味し、PC相対アドレッシングでは最大16ビットのオフセットが可能である。 @option{-fPIC}は現在、@option{-mpcrel}でサポートされていないが、これは68020以上のプロセッサでサポートされる可能性がある。
 
 @item -mno-strict-align
 @itemx -mstrict-align
 @opindex mno-strict-align
 @opindex mstrict-align
-Do not (do) assume that unaligned memory references are handled by
-the system.
+アライメントされていないメモリ参照がシステムによって処理されるとは仮定しない（する）。
 
 @item -msep-data
-Generate code that allows the data segment to be located in a different
-area of memory from the text segment.  This allows for execute-in-place in
-an environment without virtual memory management.  This option implies
-@option{-fPIC}.
+データセグメントをテキストセグメントとは異なるメモリ領域に配置できるようにするコードを生成する。これにより、仮想メモリ管理のない環境での実行が可能になる。 このオプションは@option{-fPIC}を含む。
 
 @item -mno-sep-data
-Generate code that assumes that the data segment follows the text segment.
-This is the default.
+データセグメントがテキストセグメントに続くことを前提とするコードを生成する。 これがデフォルトである。
 
 @item -mid-shared-library
-Generate code that supports shared libraries via the library ID method.
-This allows for execute-in-place and shared libraries in an environment
-without virtual memory management.  This option implies @option{-fPIC}.
+ライブラリIDメソッドを介して共有ライブラリをサポートするコードを生成する。これにより、仮想メモリー管理のない環境で、現場で実行されたライブラリーおよび共用ライブラリーが可能になる。 このオプションは@option{-fPIC}を含む。
 
 @item -mno-id-shared-library
-Generate code that doesn't assume ID-based shared libraries are being used.
-This is the default.
+IDベースの共有ライブラリが使用されていることを前提としないコードを生成します。これがデフォルトである。
 
 @item -mshared-library-id=n
-Specifies the identification number of the ID-based shared library being
-compiled.  Specifying a value of 0 generates more compact code; specifying
-other values forces the allocation of that number to the current
-library, but is no more space- or time-efficient than omitting this option.
+コンパイルされるIDベースの共有ライブラリの識別番号を指定する。 0の値を指定すると、よりコンパクトなコードが生成される。 他の値を指定すると、その番号を現在のライブラリに強制的に割り当てることができるが、このオプションを省略するよりもスペースや時間効率が高くならない。
 
 @item -mxgot
 @itemx -mno-xgot
 @opindex mxgot
 @opindex mno-xgot
-When generating position-independent code for ColdFire, generate code
-that works if the GOT has more than 8192 entries.  This code is
-larger and slower than code generated without this option.  On M680x0
-processors, this option is not needed; @option{-fPIC} suffices.
+ColdFireの位置非依存コードを生成する場合、GOTに8192を超えるエントリがある場合に動作するコードを生成する。 このコードは、このオプションを指定せずに生成されたコードよりも大きく、処理速度が遅くなる。 M680x0プロセッサでは、このオプションは不要である。 @option {-fPIC}で十分である。
 
-GCC normally uses a single instruction to load values from the GOT@.
-While this is relatively efficient, it only works if the GOT
-is smaller than about 64k.  Anything larger causes the linker
-to report an error such as:
+GCCは通常、単一の命令を使用してGOTから値をロードする。これは比較的効率的だが、GOTが約64kより小さい場合にのみ機能する。 大きな値を指定すると、リンカーは次のようなエラーを報告する。
 
 @cindex relocation truncated to fit (ColdFire)
 @smallexample
 relocation truncated to fit: R_68K_GOT16O foobar
 @end smallexample
 
-If this happens, you should recompile your code with @option{-mxgot}.
-It should then work with very large GOTs.  However, code generated with
-@option{-mxgot} is less efficient, since it takes 4 instructions to fetch
-the value of a global symbol.
+このような場合は、コードを@option{-mxgot}で再コンパイルする必要がある。それは非常に大きなGOTで動作するはずである。 しかし、@option{-mxgot}で生成されたコードは、大域シンボルの値をフェッチするために4つの命令を必要とするため、あまり効率的ではない。
 
-Note that some linkers, including newer versions of the GNU linker,
-can create multiple GOTs and sort GOT entries.  If you have such a linker,
-you should only need to use @option{-mxgot} when compiling a single
-object file that accesses more than 8192 GOT entries.  Very few do.
+GNUリンカの新しいバージョンを含むいくつかのリンカは、複数のGOTを作成してGOTエントリをソートできることに注意すること。 このようなリンカーがある場合は、8192個を超えるGOTエントリにアクセスする単一のオブジェクトファイルをコンパイルするときに@option{-mxgot}を使用するだけで済む。 それをするのは非常に少ない。
 
-These options have no effect unless GCC is generating
-position-independent code.
+GCCが位置に依存しないコードを生成していない限り、これらのオプションは効果がない。
 
 @item -mlong-jump-table-offsets
 @opindex mlong-jump-table-offsets
-Use 32-bit offsets in @code{switch} tables.  The default is to use
-16-bit offsets.
+@code{switch}テーブルでは32ビットのオフセットを使用する。 デフォルトでは、16ビットのオフセットが使用される。
 
 @end table
 
