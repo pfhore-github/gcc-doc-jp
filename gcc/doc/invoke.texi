@@ -98,7 +98,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 @cindex grouping options
 @cindex options, grouping
 @command{gcc}プログラムはオプションとファイル名をオペランドとして受理する。多くのオプションは複数文字の
-名前である。したがって複数の単一文字オプションはグループ化@emph{できない}。@option{-dv}は@w{@samp{-d -v}}とは
+名前である。したがって複数の単一文字オプションはグループ化@emph{_できない_}。@option{-dv}は@w{@samp{-d -v}}とは
 全く異なる。
 
 @cindex order of options
@@ -1983,7 +1983,7 @@ g++ -g -fstrict-enums -O -c firstClass.C
 @option{-std}のような、Cプログラムをコンパイルする幾つかのオプションはC++プログラムにも関連する。
 @xref{C Dialect Options,,C変種を制御するオプション}.
 
-ここにC++プログラムをコンパイルするとき@emph{だけ}のオプションのリストがある。
+ここにC++プログラムをコンパイルするとき@emph{_だけ_}のオプションのリストがある。
 
 @table @gcctabopt
 
@@ -2699,7 +2699,7 @@ gcc -g -fgnu-runtime -O -c some_class.m
 Objective-CがC言語の拡張なので、Objective-CのコンパイルはCフロントエンド特有の（例えば、@option{-Wtraditional}）オプション
 も使うことができる。ことに注意する。同様に、Objective-C++コンパイルはC++と特有のオプション（例えば、@option{-Wabi}を使うことができる。
 
-ここにObjective-CとObjective-C++プログラム@emph{専用}のオプションのリストがある。
+ここにObjective-CとObjective-C++プログラム@emph{_専用_}のオプションのリストがある。
 
 @table @gcctabopt
 @item -fconstant-string-class=@var{class-name}
@@ -2869,7 +2869,7 @@ Objective-C代入がガベージコレクタで妨害される時には警告す
 
 @item -fdiagnostics-show-location=once
 @opindex fdiagnostics-show-location
-行送り返しモードでのみ意味を持つ。診断メッセージ報告器にソース場所情報を@emph{一度}だけを発するように命じる。
+行送り返しモードでのみ意味を持つ。診断メッセージ報告器にソース場所情報を@emph{_一度_}だけを発するように命じる。
 つまり、メッセージが単一の物理行にを収まらないほど長く、行送りをしなければならない場合には、
 以降の継続行では、（接頭辞として）ソース場所は二度とは発されない。これは、デフォルトふるまいである。
 
@@ -3125,7 +3125,7 @@ ISO Cでは、使われるどんな@option{-std}オプションで特定され�
 @code{__extension__}に追従する表現も、衒学的な警告が無効化される。しかし、システム・ヘッダファイルだけでこれらの脱出ルートを使うべきである。アプリケーション・プログラムは、それらを避けるべきである。@xref{Alternate Keywords}。
 
 あるユーザーは、厳しいISO C適合のための検査プログラムに@option{-Wpedantic}を使おうと試みる。それらは、それらが欲するものではないとすぐにわかる。
-それは、いくつかの非ISO実行を見つけるが、全てではない。 ― それらISO Cが@emph{要求する}の診断とその診断で加えられるものだけである。
+それは、いくつかの非ISO実行を見つけるが、全てではない。 ― それらISO Cが@emph{_要求する_}の診断とその診断で加えられるものだけである。
 
 ISO Cに適合することの失敗の報告の機能はある状況では役立つかもしれないが、かなりの更なる働きを必要として、@option{-Wpedantic}と全く異なる。我々には、近い将来、そのような機能をサポートする計画はない。
 
@@ -4471,7 +4471,7 @@ else if (p->q != NULL) @{ @dots{} @}
 システムヘッダからの警告は、通常は本当の問題を指しておらず、コンパイラの出力を読みにくくするという仮定で、
 通常は抑制されている。このコマンドラインオプションを使うと、ユーザコードで起こったかのようにシステムヘッダからの警告を
 出力するようにGCCに伝える。しかし、このオプションと組み合わせで@option{-Wall}を使ってもシステムヘッダの未知のプラグマ
-は警告され@emph{ない}ことに注意する。そのためには、@option{-Wunknown-pragmas}を使わなくてはならない。
+は警告され@emph{_ない_}ことに注意する。そのためには、@option{-Wunknown-pragmas}を使わなくてはならない。
 
 @item -Wtautological-compare
 @opindex Wtautological-compare
@@ -4560,7 +4560,7 @@ ISO文字列連結の使用を検知した時。
 
 @item
 ISO C方式の関数定義の使用。この警告はプロトタイプ宣言や可変長関数では、それらのISO Cの機能がlibiberryの伝統的なCの互換性マクロ
-@code{PARAMS}と@code{VPARAMS}で使われているので意図的に発せられ@emph{ない}。この警告は入れ子関数でも、この機能がすでにGCC拡張であって、
+@code{PARAMS}と@code{VPARAMS}で使われているので意図的に発せられ@emph{_ない_}。この警告は入れ子関数でも、この機能がすでにGCC拡張であって、
 伝統的なC互換性と無関係なので素通りされる。
 @end itemize
 
@@ -5412,7 +5412,7 @@ GCCは最適化自身が大量の過度の時間を取りそうな場合はプ�
 C標準で指定された「最小の最大」長より長い文字列定数について警告する。最近のコンパイラは一般的には
 標準の最小限度よりずっと長い文字列定数を許すが、とても移植性のあるプログラムは長い文字列を使うのを避けるべきである。
 
-制限は文字列定数連結の@emph{後に}に適用され、最後のNULはカウントしない。C90では、制限は509文字である。
+制限は文字列定数連結の@emph{_後に_}に適用され、最後のNULはカウントしない。C90では、制限は509文字である。
 C99では4095に引き上げられた。C++98では規範的な最小最大値が指定されていないので、C++では長すぎる文字列を診断しない。
 
 このオプションは@option{-pedantic}に含まれていて、@option{-Wno-overlength-strings}で無効化できる。
@@ -5985,9 +5985,9 @@ VAXのようなある機種では、このフラグは効果がない、なぜ�
 
 インライン化を制御する個々のパラメータとそれらのパラメータのデフォルトは文書の下を見よ。
 
-@emph{注意:} デフォルトの振る舞いを起こす@option{-finline-limit}の値はないかもしれない。
+@emph{_注意_:} デフォルトの振る舞いを起こす@option{-finline-limit}の値はないかもしれない。
 
-@emph{注意:} 擬似命令は、この文脈では、抽象的な関数のサイズの尺度である。それはアセンブリ命令の数を表すわけでは全く無く、
+@emph{_注意_:} 擬似命令は、この文脈では、抽象的な関数のサイズの尺度である。それはアセンブリ命令の数を表すわけでは全く無く、
 その正確な意味はリリースが変わるごとに変化するかもしれない。
 
 @item -fno-keep-inline-dllexport
@@ -6111,7 +6111,7 @@ CSEがelse句のない単純な@code{if}文に出会ったならば、@option{-f
 @opindex fgcse
 大域共通部分式除去パスを行う。このパスは大域定数とコピーの伝搬も行う。
 
-@emph{注意：} GCC拡張の計算gotoを使ったプログラムをコンパイルするときは、
+@emph{_注意_：} GCC拡張の計算gotoを使ったプログラムをコンパイルするときは、
 大域共通部分式除去パスをコマンドラインで@option{-fno-gcse}を加える事で無効化したほうがよい実行時パフォーマンスを得るかもしれにあ。
 
 レベル@option{-O2}, @option{-O3}, @option{-Os}で有効になる。
@@ -9039,7 +9039,7 @@ Bounds Checker builtins}を見よ。
 この情報はもし定義されていたら環境変数@env{VTV_LOGS_DIR}の名前のディレクトリ、さもなければ現在の作業ディレクトリの
 @file{vtv_set_ptr_data.log}という名前のファイルに書かれる。
 
-注意：この機能はログファイルにデータを@emph{加える}。もし新鮮なログファイルがほしいならば、既存のファイルを確実に削除すべきである。
+注意：この機能はログファイルにデータを@emph{_加える_}。もし新鮮なログファイルがほしいならば、既存のファイルを確実に削除すべきである。
 
 @item -fvtv-counts
 @opindex fvtv-counts
@@ -9050,7 +9050,7 @@ Bounds Checker builtins}を見よ。
 @file{vtv_count_data.log}という名前のファイルに書かれる。それはさらにクラスごとにvtableポインタ・セットの寸法を数えて、
 同じディレクトリに@file{vtv_class_set_sizes.log}にこの情報を書く。
 
-注意：この機能はログファイルにデータを@emph{加える}。もし新鮮なログファイルがほしいならば、既存のファイルを確実に削除すべきである。
+注意：この機能はログファイルにデータを@emph{_加える_}。もし新鮮なログファイルがほしいならば、既存のファイルを確実に削除すべきである。
 
 @item -finstrument-functions
 @opindex finstrument-functions
@@ -9612,7 +9612,7 @@ C++ののような通常は必要としない言語では無効にする。し�
 @item -fnon-call-exceptions
 @opindex fnon-call-exceptions
 トラップ命令が例外を投げることを可能にするコードを生成する。これはプラットフォーム固有の必ずしもすべての場所では存在しない
-ランタイムサポートが必要なことに注意する。さらに、これは@emph{トラップ}命令が例外を投げることしか許可しない。
+ランタイムサポートが必要なことに注意する。さらに、これは@emph{_トラップ_}命令が例外を投げることしか許可しない。
 すなわち、メモリ参照か浮動小数点命令である。@code{SIGALRM}のような任意のシグナルハンドラから投げられる例外は許可しない。
 
 @item -fdelete-dead-exceptions
@@ -10741,7 +10741,7 @@ not overridden}をセットすることでそうなる。
 ダンプファイルと保存された一時ファイルは、最初によって制し得されたものを上書きするのを防ぐために
 第二コンパイルの間は@code{.gk}の追加拡張子を含むように名前を変える。
 
-このオプションをコンパイルドライバに渡したときは、@emph{最初の}コンパイルをスキップさせ、
+このオプションをコンパイルドライバに渡したときは、@emph{_最初の_}コンパイルをスキップさせ、
 コンパイラ自身をデバッグするときを除いてあまり役に立たなくする。
 
 @item -gtoggle
@@ -12497,7 +12497,7 @@ ISRのスペルが間違っている場合、つまり__vectorプレフィック
 コンパイラは、起動コード中またはアプリケーション中に@code{EIND}が変更されないとみなす。 特に、@code{EIND}は、関数や割り込みサービスルーチンのプロローグ/エピローグでは保存/復元されない。
 
 @item
-関数間接呼び出しと計算されたgotoの場合、リンカは@emph{スタブ}を生成する。 スタブは時には@emph{トランポリン}と呼ばれるジャンプパッドである。 したがって、間接コール/ジャンプはそのようなスタブにジャンプする。
+関数間接呼び出しと計算されたgotoの場合、リンカは@emph{_スタブ_}を生成する。 スタブは時には@emph{_トランポリン_}と呼ばれるジャンプパッドである。 したがって、間接コール/ジャンプはそのようなスタブにジャンプする。
 スタブには、目的のアドレスへの直接ジャンプが含まれている。
 
 @item
@@ -12536,7 +12536,7 @@ init3_set_eind (void)
 LDI r24, lo8(gs(@var{func}))
 LDI r25, hi8(gs(@var{func}))
 @end example
-@item そのラベルの最終的な位置は、スタブがあるセグメントのコードセグメントの@emph{外側}にある。
+@item そのラベルの最終的な位置は、スタブがあるセグメントのコードセグメントの@emph{_外側_}にある。
 @end itemize
 
 @item
@@ -12551,7 +12551,7 @@ LDI r25, hi8(gs(@var{func}))
 @end itemize
 
 @item
-このような非シンボルアドレスへのジャンプはサポートされ@emph{ない}
+このような非シンボルアドレスへのジャンプはサポートされ@emph{_ない_}
 
 @example
 int main (void)
@@ -13238,7 +13238,7 @@ Mach-oバンドル形式ファイルを作成する。詳細は、man ld（1）�
 
 @item -mieee
 @opindex mieee
-Alphaアーキテクチャは、パフォーマンスを最大限に高めるように最適化された浮動小数点ハードウェアを実装する。 これは、ほとんどIEEE浮動小数点標準に準拠している。 ただし、完全な準拠のためには、ソフトウェアの補助が必要である。 このオプションは、@var{inexact-flag}が維持されていないことを@emph{除いては}完全にIEEE準拠のコードを生成する（下記参照）。 このオプションをオンにすると、プリプロセッサマクロ@code{_IEEE_FP}がコンパイル時に定義される。 結果として生成されるコードの効率は低下するが、正規化されていない数値や、非数やプラスマイナスの無限大などの例外的なIEEE値を正しくサポートすることができる。 他のAlphaコンパイラはこのオプションを@option{-ieee_with_no_inexact}と呼んでいる。
+Alphaアーキテクチャは、パフォーマンスを最大限に高めるように最適化された浮動小数点ハードウェアを実装する。 これは、ほとんどIEEE浮動小数点標準に準拠している。 ただし、完全な準拠のためには、ソフトウェアの補助が必要である。 このオプションは、@var{inexact-flag}が維持されていないことを@emph{_除いては_}完全にIEEE準拠のコードを生成する（下記参照）。 このオプションをオンにすると、プリプロセッサマクロ@code{_IEEE_FP}がコンパイル時に定義される。 結果として生成されるコードの効率は低下するが、正規化されていない数値や、非数やプラスマイナスの無限大などの例外的なIEEE値を正しくサポートすることができる。 他のAlphaコンパイラはこのオプションを@option{-ieee_with_no_inexact}と呼んでいる。
 
 @item -mieee-with-inexact
 @opindex mieee-with-inexact
@@ -13304,7 +13304,7 @@ Alphaアーキテクチャでは、浮動小数点トラップは不正確であ
 @opindex mbuild-constants
 通常、GCCは32ビットまたは64ビット整数定数を調べて、2つまたは3つの命令で小さな定数から構造体を構築できるかどうかを調べる。 できない場合は定数をリテラルとして出力し、実行時にデータセグメントからロードするコードを生成する。
 
-このオプションを使用すると、たとえより多くの命令を使ったとしても（最大で6）GCCが@emph{すべての}整数定数をコードを使って構築するように要求する。
+このオプションを使用すると、たとえより多くの命令を使ったとしても（最大で6）GCCが@emph{_すべての_}整数定数をコードを使って構築するように要求する。
 
 通常、このオプションを使用して共有ライブラリの動的ローダを構築する。 共有ライブラリそのものでは、変数と定数を自分のデータセグメントで見つける前に、メモリ内で自身を再配置する必要がある。
 
@@ -13808,21 +13808,15 @@ H8/300HおよびH8Sでは、H8/300と同じアライメント規則を使用す�
 @end table
 
 @node HPPA Options
-@subsection HPPA Options
+@subsection HPPAオプション
 @cindex HPPA Options
 
-These @samp{-m} options are defined for the HPPA family of computers:
+これらの@samp {-m}オプションは、HPPAファミリのコンピュータに対して定義されている。
 
 @table @gcctabopt
 @item -march=@var{architecture-type}
 @opindex march
-Generate code for the specified architecture.  The choices for
-@var{architecture-type} are @samp{1.0} for PA 1.0, @samp{1.1} for PA
-1.1, and @samp{2.0} for PA 2.0 processors.  Refer to
-@file{/usr/lib/sched.models} on an HP-UX system to determine the proper
-architecture option for your machine.  Code compiled for lower numbered
-architectures runs on higher numbered architectures, but not the
-other way around.
+指定されたアーキテクチャのコードを生成する。 @var{architecture-type}の選択肢は、PA 1.0では@samp{1.0}、PA 1.1では@samp{1.1}、PA 2.0プロセッサでは@samp{2.0}である。 使用のマシンに適したアーキテクチャー・オプションを判別するには、HP-UXシステムの@file{/usr/lib/sched.models}を参照せよ。 低い番号のアーキテクチャ用にコンパイルされたコードは、高い番号のアーキテクチャ上で実行されるが、それ以外の方法では実行されない。
 
 @item -mpa-risc-1-0
 @itemx -mpa-risc-1-1
@@ -13830,98 +13824,66 @@ other way around.
 @opindex mpa-risc-1-0
 @opindex mpa-risc-1-1
 @opindex mpa-risc-2-0
-Synonyms for @option{-march=1.0}, @option{-march=1.1}, and @option{-march=2.0} respectively.
+@option{-march=1.0}、@option{-march=1.1}、@option{-march=2.0}の同義語である。
 
 @item -mcaller-copies
 @opindex mcaller-copies
-The caller copies function arguments passed by hidden reference.  This
-option should be used with care as it is not compatible with the default
-32-bit runtime.  However, only aggregates larger than eight bytes are
-passed by hidden reference and the option provides better compatibility
-with OpenMP.
+呼び出し元は、隠し参照によって渡された関数引数をコピーする。 このオプションは、デフォルトの32ビット・ランタイムと互換性がないため、注意して使用する必要がある。 ただし、8バイトを超える集約のみが非表示の参照で渡され、このオプションはOpenMPとの互換性が向上する。
 
 @item -mjump-in-delay
 @opindex mjump-in-delay
-This option is ignored and provided for compatibility purposes only.
+このオプションは無視され、互換性の目的でのみ提供される。
 
 @item -mdisable-fpregs
 @opindex mdisable-fpregs
-Prevent floating-point registers from being used in any manner.  This is
-necessary for compiling kernels that perform lazy context switching of
-floating-point registers.  If you use this option and attempt to perform
-floating-point operations, the compiler aborts.
+任意の方法で浮動小数点レジスタが使用されないようにする。 これは、浮動小数点レジスタの遅延コンテキスト切り替えを実行するカーネルをコンパイルするために必要である。 このオプションを使用して浮動小数点演算を実行しようとすると、コンパイラは異常終了する。
 
 @item -mdisable-indexing
 @opindex mdisable-indexing
-Prevent the compiler from using indexing address modes.  This avoids some
-rather obscure problems when compiling MIG generated code under MACH@.
+コンパイラがインデックスアドレスモードを使用しないようにする。 これにより、MACHの下でMIG生成コードをコンパイルするときに、あまり目立たない問題が回避される。
 
 @item -mno-space-regs
 @opindex mno-space-regs
-Generate code that assumes the target has no space registers.  This allows
-GCC to generate faster indirect calls and use unscaled index address modes.
+ターゲットにスペースレジスタがないことを前提としたコードを生成する。 これにより、GCCはより高速の間接呼び出しを生成し、スケーリングされていないインデックスアドレスモードを使用できる。
 
-Such code is suitable for level 0 PA systems and kernels.
+このようなコードはレベル0のPAシステムとカーネルに適している。
 
 @item -mfast-indirect-calls
 @opindex mfast-indirect-calls
-Generate code that assumes calls never cross space boundaries.  This
-allows GCC to emit code that performs faster indirect calls.
+コールがスペース境界を越えることがないと想定するコードを生成する。 これにより、GCCはより高速な間接呼び出しを実行するコードを発行することができる。
 
-This option does not work in the presence of shared libraries or nested
-functions.
+このオプションは、共有ライブラリまたはネストされた関数が存在する場合は機能しない。
 
 @item -mfixed-range=@var{register-range}
 @opindex mfixed-range
-Generate code treating the given register range as fixed registers.
-A fixed register is one that the register allocator cannot use.  This is
-useful when compiling kernel code.  A register range is specified as
-two registers separated by a dash.  Multiple register ranges can be
-specified separated by a comma.
+与えられたレジスタ範囲を固定レジスタとして扱うコードを生成する。 固定レジスタは、レジスタアロケータが使用できないレジスタである。 カーネルコードをコンパイルするときに便利である。 レジスタ範囲は、ダッシュで区切られた2つのレジスタとして指定される。 カンマで区切って複数のレジスタ範囲を指定することができる。
 
 @item -mlong-load-store
 @opindex mlong-load-store
-Generate 3-instruction load and store sequences as sometimes required by
-the HP-UX 10 linker.  This is equivalent to the @samp{+k} option to
-the HP compilers.
+HP-UX 10リンカで時々必要となる3命令ロードおよびストアシーケンスを生成する。 これはHPコンパイラの@samp{+k}オプションと同じである。
 
 @item -mportable-runtime
 @opindex mportable-runtime
-Use the portable calling conventions proposed by HP for ELF systems.
+ELFシステムには、HPが提案した移植性呼び出し規則を使用する。
 
 @item -mgas
 @opindex mgas
-Enable the use of assembler directives only GAS understands.
+GASだけが理解できるアセンブラディレクティブの使用を有効にする。
 
 @item -mschedule=@var{cpu-type}
 @opindex mschedule
-Schedule code according to the constraints for the machine type
-@var{cpu-type}.  The choices for @var{cpu-type} are @samp{700}
-@samp{7100}, @samp{7100LC}, @samp{7200}, @samp{7300} and @samp{8000}.  Refer
-to @file{/usr/lib/sched.models} on an HP-UX system to determine the
-proper scheduling option for your machine.  The default scheduling is
-@samp{8000}.
+マシンタイプ@var{cpu-type}の制約に従ってコードをスケジュールする。 @var{cpu-type}の選択肢は、@samp{700} @samp{7100}、@samp{7100LC}、@samp{7200}、@samp{7300}、@samp{8000}である。 使用のマシンに適したスケジューリング・オプションを判別するには、HP-UXシステムの@file{/usr/lib/sched.models}を参照せよ。 デフォルトのスケジューリングは@samp{8000}である。
 
 @item -mlinker-opt
 @opindex mlinker-opt
-Enable the optimization pass in the HP-UX linker.  Note this makes symbolic
-debugging impossible.  It also triggers a bug in the HP-UX 8 and HP-UX 9
-linkers in which they give bogus error messages when linking some programs.
+HP-UXリンカで最適化パスを有効にするい。 これによりシンボリックデバッグが不可能になることに注意すること。 また、HP-UX 8およびHP-UX 9リンカでは、いくつかのプログラムをリンクするときに偽のエラーメッセージを表示するバグが発生する。
 
 @item -msoft-float
 @opindex msoft-float
-Generate output containing library calls for floating point.
-@strong{Warning:} the requisite libraries are not available for all HPPA
-targets.  Normally the facilities of the machine's usual C compiler are
-used, but this cannot be done directly in cross-compilation.  You must make
-your own arrangements to provide suitable library functions for
-cross-compilation.
+浮動小数点のライブラリ呼び出しを含む出力を生成する。
+@strong{警告：}必要なライブラリは、すべてのHPPAターゲットで利用できるわけではない。 通常、マシンの通常のCコンパイラの機能が使用されるが、これはクロスコンパイルで直接行うことはできない。 クロスコンパイルに適したライブラリ関数を提供するために、独自の手配をしなければならない。
 
-@option{-msoft-float} changes the calling convention in the output file;
-therefore, it is only useful if you compile @emph{all} of a program with
-this option.  In particular, you need to compile @file{libgcc.a}, the
-library that comes with GCC, with @option{-msoft-float} in order for
-this to work.
+@option {-msoft-float}は、出力ファイルの呼び出し規約を変更する。 したがって、このオプションでプログラムの@emph{_すべて_}をコンパイルする場合にのみ有用である。 特に、GCCに付属のライブラリである@file{libgcc.a}を@option{-msoft-float}とコンパイルする必要がある。
 
 @item -msio
 @opindex msio
