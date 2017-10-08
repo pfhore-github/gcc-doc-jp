@@ -14180,34 +14180,21 @@ DWARF行番号デバッグ情報用のアセンブラコードを生成しない
 @end table
 
 @node M32C Options
-@subsection M32C Options
+@subsection M32Cオプション
 @cindex M32C options
 
 @table @gcctabopt
 @item -mcpu=@var{name}
 @opindex mcpu=
-Select the CPU for which code is generated.  @var{name} may be one of
-@samp{r8c} for the R8C/Tiny series, @samp{m16c} for the M16C (up to
-/60) series, @samp{m32cm} for the M16C/80 series, or @samp{m32c} for
-the M32C/80 series.
+コードが生成されるCPUを選択する。 @var{name}は、R8C / Tinyシリーズでは@samp{r8c}、M16Cシリーズ（/ 60まで）では@samp{m16c}、M16C / 80シリーズでは@samp{m32cm}、 @samp{m32c}はM32C / 80シリーズ用である。
 
 @item -msim
 @opindex msim
-Specifies that the program will be run on the simulator.  This causes
-an alternate runtime library to be linked in which supports, for
-example, file I/O@.  You must not use this option when generating
-programs that will run on real hardware; you must provide your own
-runtime library for whatever I/O functions are needed.
+プログラムをシミュレータ上で実行することを指定する。 これにより、ファイルI/Oなどをサポートする別のランタイムライブラリがリンクされる。 実際のハードウェア上で動作するプログラムを生成するときは、このオプションを使用してはならない。 どのI/O関数が必要なのかに関わらず、独自のランタイムライブラリを用意する必要がある。
 
 @item -memregs=@var{number}
 @opindex memregs=
-Specifies the number of memory-based pseudo-registers GCC uses
-during code generation.  These pseudo-registers are used like real
-registers, so there is a tradeoff between GCC's ability to fit the
-code into available registers, and the performance penalty of using
-memory instead of registers.  Note that all modules in a program must
-be compiled with the same value for this option.  Because of that, you
-must not use this option with GCC's default runtime libraries.
+コード生成時にGCCが使用するメモリベースの擬似レジスタの数を指定する。 これらの擬似レジスタは実レジスタのように使用されるため、GCCのコードを使用可能なレジスタに収める能力と、レジスタの代わりにメモリを使用する際のパフォーマンス上のペナルティがある。 このオプションには、プログラム内のすべてのモジュールを同じ値でコンパイルする必要がある。 そのため、GCCのデフォルトのランタイムライブラリではこのオプションを使用してはならない。
 
 @end table
 
