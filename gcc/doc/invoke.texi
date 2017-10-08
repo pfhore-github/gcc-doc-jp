@@ -14199,124 +14199,94 @@ DWARF行番号デバッグ情報用のアセンブラコードを生成しない
 @end table
 
 @node M32R/D Options
-@subsection M32R/D Options
+@subsection M32R/D オプション
 @cindex M32R/D options
 
-These @option{-m} options are defined for Renesas M32R/D architectures:
+これらの@option{-m}オプションは、ルネサスM32R/Dのアーキテクチャで定義されています。
 
 @table @gcctabopt
 @item -m32r2
 @opindex m32r2
-Generate code for the M32R/2@.
+M32R/2用のコードを生成する。
 
 @item -m32rx
 @opindex m32rx
-Generate code for the M32R/X@.
+M32R/X用のコードを生成する。
 
 @item -m32r
 @opindex m32r
-Generate code for the M32R@.  This is the default.
+M32R/R用のコードを生成する。これはデフォルトである。
 
 @item -mmodel=small
 @opindex mmodel=small
-Assume all objects live in the lower 16MB of memory (so that their addresses
-can be loaded with the @code{ld24} instruction), and assume all subroutines
-are reachable with the @code{bl} instruction.
-This is the default.
+すべてのオブジェクトがメモリの下位16MBにあると仮定し、（そのアドレスは@code{ld24}命令でロードできるようになる）、すべてのサブルーチンは@code{bl}命令で到達可能であると仮定する。 これがデフォルトである。
 
-The addressability of a particular object can be set with the
-@code{model} attribute.
+特定のオブジェクトのアドレス可能性は@code{model}属性で設定できる。
 
 @item -mmodel=medium
 @opindex mmodel=medium
-Assume objects may be anywhere in the 32-bit address space (the compiler
-generates @code{seth/add3} instructions to load their addresses), and
-assume all subroutines are reachable with the @code{bl} instruction.
+オブジェクトが32ビットアドレス空間のどこにもあるかもしれないと仮定し、（コンパイラがアドレスをロードするために@code{seth/add3}命令を生成する）、すべてのサブルーチンが@code{bl}命令で到達可能であると仮定する。
 
 @item -mmodel=large
 @opindex mmodel=large
-Assume objects may be anywhere in the 32-bit address space (the compiler
-generates @code{seth/add3} instructions to load their addresses), and
-assume subroutines may not be reachable with the @code{bl} instruction
-(the compiler generates the much slower @code{seth/add3/jl}
-instruction sequence).
+オブジェクトが32ビットアドレス空間のどこにもあるかもしれないと仮定し、（コンパイラがアドレスをロードするために@code{seth/add3}命令を生成する）、@code{bl}命令でサブルーチンに到達できないと仮定する。（コンパイラははるかに遅い@code{seth/add3/jl}命令シーケンスを生成する）
 
 @item -msdata=none
 @opindex msdata=none
-Disable use of the small data area.  Variables are put into
-one of @code{.data}, @code{.bss}, or @code{.rodata} (unless the
-@code{section} attribute has been specified).
-This is the default.
+小さなデータ領域の使用を無効にする。 変数は（@code{section}属性が指定されていない限り）@code{.data}、@code{.bss}、@code{.rodata}のいずれかに入れられる。 これがデフォルトである。
 
-The small data area consists of sections @code{.sdata} and @code{.sbss}.
-Objects may be explicitly put in the small data area with the
-@code{section} attribute using one of these sections.
+小さなデータ領域は、セクション@code{.sdata}と@code{.sbss}で構成されている。 オブジェクトは、これらのセクションの1つを使用して、@code{section}属性を持つ小さなデータ領域に明示的に置くことができる。
 
 @item -msdata=sdata
 @opindex msdata=sdata
-Put small global and static data in the small data area, but do not
-generate special code to reference them.
+小規模なデータ領域に小さなグローバルおよび静的データを入れるが、それらを参照する特別なコードは生成しない。
 
 @item -msdata=use
 @opindex msdata=use
-Put small global and static data in the small data area, and generate
-special instructions to reference them.
+小規模なデータ領域に小さなグローバルおよび静的データを入れ、それを参照する特別な命令を生成する。
 
 @item -G @var{num}
 @opindex G
 @cindex smaller data references
-Put global and static objects less than or equal to @var{num} bytes
-into the small data or BSS sections instead of the normal data or BSS
-sections.  The default value of @var{num} is 8.
-The @option{-msdata} option must be set to one of @samp{sdata} or @samp{use}
-for this option to have any effect.
+@var{num}バイト以下のグローバルおよび静的オブジェクトを、通常のデータまたはBSSセクションの代わりに、小さなデータまたはBSSセクションに配置する。 @var{num}のデフォルト値は8である。@option{-msdata}オプションは、@samp{sdata}または@samp{use}のいずれかに設定する必要がある。
 
-All modules should be compiled with the same @option{-G @var{num}} value.
-Compiling with different values of @var{num} may or may not work; if it
-doesn't the linker gives an error message---incorrect code is not
-generated.
+すべてのモジュールは同じ@option{-G @var{num}}値でコンパイルする必要がある。 異なる値の@var{num}を使ってコンパイルすると、うまく動作しない場合がある。 リンカーがエラーメッセージを表示しない場合、間違ったコードは生成されない。
 
 @item -mdebug
 @opindex mdebug
-Makes the M32R-specific code in the compiler display some statistics
-that might help in debugging programs.
+コンパイラ内のM32R固有のコードで、プログラムのデバッグに役立ついくつかの統計情報が表示される。
 
 @item -malign-loops
 @opindex malign-loops
-Align all loops to a 32-byte boundary.
+すべてのループを32バイト境界に揃えます。
 
 @item -mno-align-loops
 @opindex mno-align-loops
-Do not enforce a 32-byte alignment for loops.  This is the default.
+ループに32バイトのアライメントを強制しない。 これがデフォルトである。
 
 @item -missue-rate=@var{number}
 @opindex missue-rate=@var{number}
-Issue @var{number} instructions per cycle.  @var{number} can only be 1
-or 2.
+サイクルごとに@var{number}命令を発行する。 @var{number}は1または2しか指定できない。
 
 @item -mbranch-cost=@var{number}
 @opindex mbranch-cost=@var{number}
-@var{number} can only be 1 or 2.  If it is 1 then branches are
-preferred over conditional code, if it is 2, then the opposite applies.
+@var{number}は1または2しか指定できない。1の場合は条件コードよりも分岐が優先され、2の場合は逆が適用される。
 
 @item -mflush-trap=@var{number}
 @opindex mflush-trap=@var{number}
-Specifies the trap number to use to flush the cache.  The default is
-12.  Valid numbers are between 0 and 15 inclusive.
+キャッシュをフラッシュするために使用するトラップ番号を指定する。 デフォルトは12である。有効な数値は0から15である。
 
 @item -mno-flush-trap
 @opindex mno-flush-trap
-Specifies that the cache cannot be flushed by using a trap.
+トラップを使用してキャッシュをフラッシュできないことを指定する。
 
 @item -mflush-func=@var{name}
 @opindex mflush-func=@var{name}
-Specifies the name of the operating system function to call to flush
-the cache.  The default is @samp{_flush_cache}, but a function call
-is only used if a trap is not available.
+キャッシュをフラッシュするために呼び出すオペレーティングシステム関数の名前を指定する。 デフォルトは@samp{_flush_cache}であるが、関数呼び出しはトラップが利用できない場合にのみ使用される。
 
 @item -mno-flush-func
 @opindex mno-flush-func
-Indicates that there is no OS function for flushing the cache.
+キャッシュをフラッシュするためのOS機能がないことを示す。
 
 @end table
 
