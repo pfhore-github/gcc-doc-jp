@@ -12407,8 +12407,6 @@ GCCは以下のAVRデバイスとISAをサポートしている。
 @item -mcall-prologues
 @opindex mcall-prologues
 関数プロローグ/エピローグは、適切なサブルーチンへの呼び出しとして展開される。 コードサイズが小さくなる。
-Functions prologues/epilogues are expanded as calls to appropriate
-subroutines.  Code size is smaller.
 
 @item -mint8
 @opindex mint8
@@ -13887,117 +13885,50 @@ HP-UXリンカで最適化パスを有効にするい。 これによりシン�
 
 @item -msio
 @opindex msio
-Generate the predefine, @code{_SIO}, for server IO@.  The default is
-@option{-mwsio}.  This generates the predefines, @code{__hp9000s700},
-@code{__hp9000s700__} and @code{_WSIO}, for workstation IO@.  These
-options are available under HP-UX and HI-UX@.
+サーバーIOの事前定義、@code{_SIO}を生成する。 デフォルトは@option{-mwsio}である。 これにより、ワークステーションIOの事前定義、@code{__hp9000s700}、@code{__hp9000s700__}および@code{_WSIO}が生成される。 これらのオプションは、HP-UXおよびHI-UXの下で使用できる。
 
 @item -mgnu-ld
 @opindex mgnu-ld
-Use options specific to GNU @command{ld}.
-This passes @option{-shared} to @command{ld} when
-building a shared library.  It is the default when GCC is configured,
-explicitly or implicitly, with the GNU linker.  This option does not
-affect which @command{ld} is called; it only changes what parameters
-are passed to that @command{ld}.
-The @command{ld} that is called is determined by the
-@option{--with-ld} configure option, GCC's program search path, and
-finally by the user's @env{PATH}.  The linker used by GCC can be printed
-using @samp{which `gcc -print-prog-name=ld`}.  This option is only available
-on the 64-bit HP-UX GCC, i.e.@: configured with @samp{hppa*64*-*-hpux*}.
+GNU @command{ld}に固有のオプションを使用する。共有ライブラリを構築するときに、@option{-shared}を@command{ld}に渡す。 GCCが明示的または暗黙的にGNUリンカーで設定されている場合は、これがデフォルトである。 このオプションは、どの@command{ld}が呼び出されるかには影響しない。 その@command{ld}に渡されるパラメータだけが変更される。 呼び出される@command{ld}は、@option{-with-ld}設定オプション、GCCのプログラム検索パス、最後にユーザの@env{PATH}によって決まる。 GCCで使用されるリンカーは@samp{which `gcc -print-prog-name=ld`}を使用して出力できる。 このオプションは、64ビットHP-UX GCCでのみ使用できる。つまり、@samp{hppa*64*-*-hpux*}で構成されている場合。
 
 @item -mhp-ld
 @opindex mhp-ld
-Use options specific to HP @command{ld}.
-This passes @option{-b} to @command{ld} when building
-a shared library and passes @option{+Accept TypeMismatch} to @command{ld} on all
-links.  It is the default when GCC is configured, explicitly or
-implicitly, with the HP linker.  This option does not affect
-which @command{ld} is called; it only changes what parameters are passed to that
-@command{ld}.
-The @command{ld} that is called is determined by the @option{--with-ld}
-configure option, GCC's program search path, and finally by the user's
-@env{PATH}.  The linker used by GCC can be printed using @samp{which
-`gcc -print-prog-name=ld`}.  This option is only available on the 64-bit
-HP-UX GCC, i.e.@: configured with @samp{hppa*64*-*-hpux*}.
+HP @command{ld}に固有のオプションを使用する。共有ライブラリをビルドするときに@option{-b}を@command{ld}に渡し、すべてのリンクで@option{+Accept TypeMismatch}を@command{ld}に渡します。 GCCが明示的または暗黙的にHPリンカーで設定されている場合は、これがデフォルトである。このオプションは、どの@command{ld}が呼び出されるかには影響しない。 その@command{ld}に渡されるパラメータだけが変更される。 呼び出される@command{ld}は、@option{-with-ld}設定オプション、GCCのプログラム検索パス、最後にユーザの@env{PATH}によって決まる。 GCCで使用されるリンカーは@samp{which `gcc -print-prog-name=ld`}を使用して出力できる。 このオプションは、64ビットHP-UX GCCでのみ使用できる。つまり、@samp{hppa*64*-*-hpux*}で構成されている場合。
 
 @item -mlong-calls
 @opindex mno-long-calls
-Generate code that uses long call sequences.  This ensures that a call
-is always able to reach linker generated stubs.  The default is to generate
-long calls only when the distance from the call site to the beginning
-of the function or translation unit, as the case may be, exceeds a
-predefined limit set by the branch type being used.  The limits for
-normal calls are 7,600,000 and 240,000 bytes, respectively for the
-PA 2.0 and PA 1.X architectures.  Sibcalls are always limited at
-240,000 bytes.
+ロング・コールシーケンスを使用するコードを生成する。これにより、呼び出しが常にリンカによって生成されたスタブに到達できるようになる。デフォルトでは、コールサイトから関数または変換ユニットの先頭までの距離が、使用されているブランチタイプによって設定された事前定義された制限を超える場合にのみ、ロング・コールを生成する。通常のコールの制限は、PA 2.0およびPA 1.Xアーキテクチャでそれぞれ7,600,000と240,000バイトである。 Sibcallsは常に240,000バイトに制限されている。
 
-Distances are measured from the beginning of functions when using the
-@option{-ffunction-sections} option, or when using the @option{-mgas}
-and @option{-mno-portable-runtime} options together under HP-UX with
-the SOM linker.
+距離は、@option{-ffunction-sections}オプションを使用するとき、またはSOMリンカーのあるHP-UXで@option{-mgas}オプションと@option{-mno-portable-runtime}オプションを一緒に使用するとき、関数の始めから測られる。
 
-It is normally not desirable to use this option as it degrades
-performance.  However, it may be useful in large applications,
-particularly when partial linking is used to build the application.
+パフォーマンスを低下させるので、通常このオプションを使用することは望ましくない。 ただし、大規模なアプリケーションでは、特に部分的なリンクを使用してアプリケーションを構築する場合に役立つ。
 
-The types of long calls used depends on the capabilities of the
-assembler and linker, and the type of code being generated.  The
-impact on systems that support long absolute calls, and long pic
-symbol-difference or pc-relative calls should be relatively small.
-However, an indirect call is used on 32-bit ELF systems in pic code
-and it is quite long.
+使用されるロング・コールの種類は、アセンブラとリンカの機能、および生成されるコードの種類によって異なる。 ロング絶対コール、長いピクチャシンボル差分、またはPC相対コールをサポートするシステムへの影響は比較的小さいはずである。 しかし、間接呼び出しは、32ビットELFシステムではpicコードで使用されており、かなり長い。
 
 @item -munix=@var{unix-std}
 @opindex march
-Generate compiler predefines and select a startfile for the specified
-UNIX standard.  The choices for @var{unix-std} are @samp{93}, @samp{95}
-and @samp{98}.  @samp{93} is supported on all HP-UX versions.  @samp{95}
-is available on HP-UX 10.10 and later.  @samp{98} is available on HP-UX
-11.11 and later.  The default values are @samp{93} for HP-UX 10.00,
-@samp{95} for HP-UX 10.10 though to 11.00, and @samp{98} for HP-UX 11.11
-and later.
+コンパイラ前定義を生成し、指定されたUNIX標準の開始ファイルが選択される。 @var{unix-std}の選択肢は@samp{93}、@samp{95}、@samp{98}である。 @samp{93}は、すべてのHP-UXバージョンでサポートされている。 @samp{95}は、HP-UX 10.10以降で使用できる。 @samp{98}は、HP-UX 11.11以降で使用できる。デフォルト値は、HP-UX 10.00では@samp{93}、HP-UX 10.10から11.00では@samp{95}、HP-UX 11.11以降では@samp{98}である。
 
-@option{-munix=93} provides the same predefines as GCC 3.3 and 3.4.
-@option{-munix=95} provides additional predefines for @code{XOPEN_UNIX}
-and @code{_XOPEN_SOURCE_EXTENDED}, and the startfile @file{unix95.o}.
-@option{-munix=98} provides additional predefines for @code{_XOPEN_UNIX},
-@code{_XOPEN_SOURCE_EXTENDED}, @code{_INCLUDE__STDC_A1_SOURCE} and
-@code{_INCLUDE_XOPEN_SOURCE_500}, and the startfile @file{unix98.o}.
+@option{-munix=93}は、GCC 3.3と3.4と同じ事前定義を提供する。 @option{-munix=95}は、@code{XOPEN_UNIX}と@code{_XOPEN_SOURCE_EXTENDED}、および@file{unix95.o}の開始ファイルに追加の事前定義を提供する。
+@option{-munix=98}は、@code{_XOPEN_UNIX}、@code{_XOPEN_SOURCE_EXTENDED}、@code{_INCLUDE__STDC_A1_SOURCE}、@code{_INCLUDE_XOPEN_SOURCE_500}、および開始ファイル@file{unix98.o}の追加定義を提供する。
 
-It is @emph{important} to note that this option changes the interfaces
-for various library routines.  It also affects the operational behavior
-of the C library.  Thus, @emph{extreme} care is needed in using this
-option.
+このオプションは、さまざまなライブラリルーチンのインターフェイスを変更することに注意することが@emph{_重要_}である。 また、Cライブラリの動作上の動作にも影響する。 したがって、このオプションの使用には@emph{_細心_}の注意が必要です。
 
-Library code that is intended to operate with more than one UNIX
-standard must test, set and restore the variable @code{__xpg4_extended_mask}
-as appropriate.  Most GNU software doesn't provide this capability.
+複数のUNIX標準で動作するライブラリコードは、必要に応じて変数@code{__ xpg4_extended_mask}をテスト、設定、復元する必要がある。 ほとんどのGNUソフトウェアはこの機能を提供していない。
 
 @item -nolibdld
 @opindex nolibdld
-Suppress the generation of link options to search libdld.sl when the
-@option{-static} option is specified on HP-UX 10 and later.
+HP-UX 10以降で@option{-static}オプションが指定されている場合、libdld.slを検索するリンクオプションの生成を抑制する。
 
 @item -static
 @opindex static
-The HP-UX implementation of setlocale in libc has a dependency on
-libdld.sl.  There isn't an archive version of libdld.sl.  Thus,
-when the @option{-static} option is specified, special link options
-are needed to resolve this dependency.
+libcのsetlocaleのHP-UX実装は、libdld.slに依存している。 libdld.slのアーカイブバージョンはない。 したがって、@option{-static}オプションを指定すると、この依存関係を解決するために特別なリンクオプションが必要になる。
 
-On HP-UX 10 and later, the GCC driver adds the necessary options to
-link with libdld.sl when the @option{-static} option is specified.
-This causes the resulting binary to be dynamic.  On the 64-bit port,
-the linkers generate dynamic binaries by default in any case.  The
-@option{-nolibdld} option can be used to prevent the GCC driver from
-adding these link options.
+HP-UX 10以降では、@option {-static}オプションが指定されている場合、GCCドライバはlibdld.slとリンクするために必要なオプションを追加する。これにより結果のバイナリが動的になる。 64ビットポートでは、リンカはどのような場合でもデフォルトで動的バイナリを生成する。 @option{-nolibdld}オプションは、GCCドライバがこれらのリンクオプションを追加しないようにするために使用できる。
 
 @item -threads
 @opindex threads
-Add support for multithreading with the @dfn{dce thread} library
-under HP-UX@.  This option sets flags for both the preprocessor and
-linker.
+HP-UXの@dfn{dce thread}ライブラリを使用して、マルチスレッドのサポートを追加する。 このオプションは、プリプロセッサとリンカの両方のフラグを設定する。
 @end table
 
 @node IA-64 Options
