@@ -14615,165 +14615,134 @@ GCCが位置に依存しないコードを生成していない限り、これ�
 @end table
 
 @node MeP Options
-@subsection MeP Options
+@subsection MePオプション
 @cindex MeP options
 
 @table @gcctabopt
 
 @item -mabsdiff
 @opindex mabsdiff
-Enables the @code{abs} instruction, which is the absolute difference
-between two registers.
+2つのレジスタ間の絶対差である@code{abs}命令を有効にする。
 
 @item -mall-opts
 @opindex mall-opts
-Enables all the optional instructions---average, multiply, divide, bit
-operations, leading zero, absolute difference, min/max, clip, and
-saturation.
-
+すべてのオプション命令（平均、乗算、除算、ビット演算、先行ゼロ、絶対差、最小/最大、クリップ、および彩度）を有効にする。
 
 @item -maverage
 @opindex maverage
-Enables the @code{ave} instruction, which computes the average of two
-registers.
+2つのレジスタの平均を計算する@code{ave}命令を有効にする。
 
 @item -mbased=@var{n}
 @opindex mbased=
-Variables of size @var{n} bytes or smaller are placed in the
-@code{.based} section by default.  Based variables use the @code{$tp}
-register as a base register, and there is a 128-byte limit to the
-@code{.based} section.
+@var{n}バイト以下の変数は、デフォルトで@code{.based}セクションに置かれる。 ベースの変数はベースレジスタとして@code{$tp}レジスタを使い、@code{.based}セクションには128バイトの制限がある。
 
 @item -mbitops
 @opindex mbitops
-Enables the bit operation instructions---bit test (@code{btstm}), set
-(@code{bsetm}), clear (@code{bclrm}), invert (@code{bnotm}), and
-test-and-set (@code{tas}).
+ビット操作命令を有効にする。ビットテスト（@code{btstm}）、セット（@code{bsetm}）、クリア（@code{bclrm}）、反転（@code{bnotm}）、テスト・アンド・セット（@code{tas}）。
 
 @item -mc=@var{name}
 @opindex mc=
-Selects which section constant data is placed in.  @var{name} may
-be @samp{tiny}, @samp{near}, or @samp{far}.
+どのセクションの定数データが配置されるかを選択する。 @var{name}は@samp{tiny}、@samp{near}、@samp{far}である。
 
 @item -mclip
 @opindex mclip
-Enables the @code{clip} instruction.  Note that @option{-mclip} is not
-useful unless you also provide @option{-mminmax}.
+@code{clip}命令を有効にする。 @option{-mclips}は、@option{-mminmax}も指定しないと便利ではないことに注意する。
 
 @item -mconfig=@var{name}
 @opindex mconfig=
-Selects one of the built-in core configurations.  Each MeP chip has
-one or more modules in it; each module has a core CPU and a variety of
-coprocessors, optional instructions, and peripherals.  The
-@code{MeP-Integrator} tool, not part of GCC, provides these
-configurations through this option; using this option is the same as
-using all the corresponding command-line options.  The default
-configuration is @samp{default}.
+組み込みコア構成の1つを選択する。各MePチップには1つ以上のモジュールがある。 各モジュールには、コアCPUと、さまざまなコプロセッサ、オプションの命令、および周辺機能がある。GCCの一部ではない@code{MeP-Integrator}ツールは、このオプションを通してこれらの設定を提供する。 このオプションを使用することは、対応するすべてのコマンドラインオプションを使用することと同じである。デフォルト設定は@samp{default}である。
 
 @item -mcop
 @opindex mcop
-Enables the coprocessor instructions.  By default, this is a 32-bit
-coprocessor.  Note that the coprocessor is normally enabled via the
-@option{-mconfig=} option.
+コプロセッサ命令を有効にする。 デフォルトでは、これは32ビットコプロセッサです。 コプロセッサは、通常、@option{-mconfig=}オプションで有効になることに注意。
 
 @item -mcop32
 @opindex mcop32
-Enables the 32-bit coprocessor's instructions.
+32ビットコプロセッサの命令を有効にする。
 
 @item -mcop64
 @opindex mcop64
-Enables the 64-bit coprocessor's instructions.
+64ビットコプロセッサの命令を有効にする。
 
 @item -mivc2
 @opindex mivc2
-Enables IVC2 scheduling.  IVC2 is a 64-bit VLIW coprocessor.
+IVC2スケジューリングを有効にする。 IVC2は64ビットVLIWコプロセッサである。
 
 @item -mdc
 @opindex mdc
-Causes constant variables to be placed in the @code{.near} section.
+定数変数を@code {.near}セクションに配置する。
 
 @item -mdiv
 @opindex mdiv
-Enables the @code{div} and @code{divu} instructions.
+@code{div}命令と@code{divu}命令を有効にする。
 
 @item -meb
 @opindex meb
-Generate big-endian code.
+ビッグエンディアンコードを生成する。
 
 @item -mel
 @opindex mel
-Generate little-endian code.
+リトルエンディアンコードを生成する。
 
 @item -mio-volatile
 @opindex mio-volatile
-Tells the compiler that any variable marked with the @code{io}
-attribute is to be considered volatile.
+@code{io}属性でマークされた変数がvolatileとみなされることをコンパイラに伝える。
 
 @item -ml
 @opindex ml
-Causes variables to be assigned to the @code{.far} section by default.
+デフォルトで@code{.far}セクションに変数を代入する。
 
 @item -mleadz
 @opindex mleadz
-Enables the @code{leadz} (leading zero) instruction.
+@code{leadz}（リーディングゼロ）命令を有効にする。
 
 @item -mm
 @opindex mm
-Causes variables to be assigned to the @code{.near} section by default.
+デフォルトで@code{.near}セクションに変数を割り当てるようにする。
 
 @item -mminmax
 @opindex mminmax
-Enables the @code{min} and @code{max} instructions.
+@code{min}命令と@code{max}命令を有効にする。
 
 @item -mmult
 @opindex mmult
-Enables the multiplication and multiply-accumulate instructions.
+乗算命令と積和命令を有効にする。
 
 @item -mno-opts
 @opindex mno-opts
-Disables all the optional instructions enabled by @option{-mall-opts}.
+@option {-mall-opts}で有効になっているすべてのオプション命令を無効にする。
 
 @item -mrepeat
 @opindex mrepeat
-Enables the @code{repeat} and @code{erepeat} instructions, used for
-low-overhead looping.
+低オーバーヘッドループで使用される@code{repeat}と@code{erepeat}命令を有効にする。
 
 @item -ms
 @opindex ms
-Causes all variables to default to the @code{.tiny} section.  Note
-that there is a 65536-byte limit to this section.  Accesses to these
-variables use the @code{%gp} base register.
+すべての変数をデフォルトで@code{.tiny}セクションにする。このセクションには65536バイトの制限があることに注意。これらの変数へのアクセスは、@code{%gp}ベースレジスタを使用する。
 
 @item -msatur
 @opindex msatur
-Enables the saturation instructions.  Note that the compiler does not
-currently generate these itself, but this option is included for
-compatibility with other tools, like @code{as}.
+飽和命令を有効にする。 コンパイラは現在これ自身を生成しないが、このオプションは@code{as}のような他のツールとの互換性のために含まれている。
 
 @item -msdram
 @opindex msdram
-Link the SDRAM-based runtime instead of the default ROM-based runtime.
+既定のROMベースのランタイムの代わりにSDRAMベースのランタイムをリンクする。
 
 @item -msim
 @opindex msim
-Link the simulator run-time libraries.
+シミュレータランタイムライブラリをリンクする。
 
 @item -msimnovec
 @opindex msimnovec
-Link the simulator runtime libraries, excluding built-in support
-for reset and exception vectors and tables.
+シミュレータランタイムライブラリをリンクするが、リセットおよび例外ベクタとテーブルのビルトインサポートは除く。
 
 @item -mtf
 @opindex mtf
-Causes all functions to default to the @code{.far} section.  Without
-this option, functions default to the @code{.near} section.
+すべての関数をデフォルトで@code{.far}セクションにする。このオプションがなければ、関数はデフォルトで@code {.near}セクションになる。
 
 @item -mtiny=@var{n}
 @opindex mtiny=
-Variables that are @var{n} bytes or smaller are allocated to the
-@code{.tiny} section.  These variables use the @code{$gp} base
-register.  The default for this option is 4, but note that there's a
-65536-byte limit to the @code{.tiny} section.
+@var{n}バイト以下の変数は@code{.tiny}セクションに割り当てられる。 これらの変数は、@code{$gp}ベースレジスタを使用する。このオプションのデフォルトは4だが、@code{.tiny}セクションには65536バイトの制限がある。
 
 @end table
 
