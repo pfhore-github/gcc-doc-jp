@@ -14294,7 +14294,7 @@ M32R/R用のコードを生成する。これはデフォルトである。
 @subsection M680x0オプション
 @cindex M680x0 options
 
-これらは、M680x0とColdFireプロセッサーで定義された@samp {-m}オプションである。デフォルト設定は、コンパイラの設定時に選択されたアーキテクチャによって異なる。 最も一般的な選択肢のデフォルトが以下に示されている。
+これらは、M680x0とColdFireプロセッサーで定義された@samp{-m}オプションである。デフォルト設定は、コンパイラの設定時に選択されたアーキテクチャによって異なる。 最も一般的な選択肢のデフォルトが以下に示されている。
 
 @table @gcctabopt
 @item -march=@var{arch}
@@ -14482,8 +14482,8 @@ GCCは、このオプションを有効にするとマクロ@code{__ mcfhwdiv__}
 
 @item -mno-rtd
 @opindex mno-rtd
-@option {-mrtd}によって選択された呼び出し規約を使用しない。これがデフォルトである。
-D
+@option{-mrtd}によって選択された呼び出し規約を使用しない。これがデフォルトである。
+
 @item -malign-int
 @itemx -mno-align-int
 @opindex malign-int
@@ -14543,11 +14543,10 @@ GCCが位置に依存しないコードを生成していない限り、これ�
 @end table
 
 @node MCore Options
-@subsection MCore Options
+@subsection MCoreオプション 
 @cindex MCore options
 
-These are the @samp{-m} options defined for the Motorola M*Core
-processors.
+これらはMotorola M * Coreプロセッサ用に定義された@samp{-m}オプションである。
 
 @table @gcctabopt
 
@@ -14555,69 +14554,63 @@ processors.
 @itemx -mno-hardlit
 @opindex mhardlit
 @opindex mno-hardlit
-Inline constants into the code stream if it can be done in two
-instructions or less.
+2命令以下で実行できる場合は、コードストリームへ定数をインライン化する。
 
 @item -mdiv
 @itemx -mno-div
 @opindex mdiv
 @opindex mno-div
-Use the divide instruction.  (Enabled by default).
+除算命令を使う。（デフォルトで有効である）
 
 @item -mrelax-immediate
 @itemx -mno-relax-immediate
 @opindex mrelax-immediate
 @opindex mno-relax-immediate
-Allow arbitrary-sized immediates in bit operations.
+ビット操作での任意サイズの定数を許可する。
 
 @item -mwide-bitfields
 @itemx -mno-wide-bitfields
 @opindex mwide-bitfields
 @opindex mno-wide-bitfields
-Always treat bit-fields as @code{int}-sized.
+常にビットフィールドを@code{int}のサイズとして扱う。
 
 @item -m4byte-functions
 @itemx -mno-4byte-functions
 @opindex m4byte-functions
 @opindex mno-4byte-functions
-Force all functions to be aligned to a 4-byte boundary.
+強制的に全関数を4バイト境界に揃えさせる。
 
 @item -mcallgraph-data
 @itemx -mno-callgraph-data
 @opindex mcallgraph-data
 @opindex mno-callgraph-data
-Emit callgraph information.
+コールグラフ情報を生成する。
 
 @item -mslow-bytes
 @itemx -mno-slow-bytes
 @opindex mslow-bytes
 @opindex mno-slow-bytes
-Prefer word access when reading byte quantities.
+バイト数を読み取るときは、ワードアクセスを優先する。
 
 @item -mlittle-endian
 @itemx -mbig-endian
 @opindex mlittle-endian
 @opindex mbig-endian
-Generate code for a little-endian target.
+リトルエンディアンターゲットのコードを生成する。
 
 @item -m210
 @itemx -m340
 @opindex m210
 @opindex m340
-Generate code for the 210 processor.
+210プロセッサ用のコードを生成する。
 
 @item -mno-lsim
 @opindex mno-lsim
-Assume that runtime support has been provided and so omit the
-simulator library (@file{libsim.a)} from the linker command line.
+実行時のサポートが提供されていると仮定し、リンカのコマンドラインからシミュレータライブラリ（@file{libsim.a}）を省略する。
 
 @item -mstack-increment=@var{size}
 @opindex mstack-increment
-Set the maximum amount for a single stack increment operation.  Large
-values can increase the speed of programs that contain functions
-that need a large amount of stack space, but they can also trigger a
-segmentation fault if the stack is extended too much.  The default
-value is 0x1000.
+単一のスタック増分操作の最大量を設定する。 大きな値を指定すると、大量のスタック領域を必要とする関数を含むプログラムの速度が向上する可能性があるが、スタックがあまりにも長くなると、セグメンテーション違反が発生する可能性がある。 デフォルト値は0x1000である。
 
 @end table
 
