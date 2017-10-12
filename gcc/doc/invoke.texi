@@ -14845,30 +14845,26 @@ MicroBlazeベクタを必要としないアプリケーション向け。 この
 @end table
 
 @node MIPS Options
-@subsection MIPS Options
+@subsection MIPSオプション
 @cindex MIPS options
 
 @table @gcctabopt
 
 @item -EB
 @opindex EB
-Generate big-endian code.
+ビッグエンディアンコードを生成する。
 
 @item -EL
 @opindex EL
-Generate little-endian code.  This is the default for @samp{mips*el-*-*}
-configurations.
+リトルエンディアンコードを生成する。これは@samp{mips*el-*-*}構成でのデフォルトである。
 
 @item -march=@var{arch}
 @opindex march
-Generate code that runs on @var{arch}, which can be the name of a
-generic MIPS ISA, or the name of a particular processor.
-The ISA names are:
+@var{arch}で走るコードを生成し、それは汎用MIPS ISの名前であるか、特定のプロセッサ名である。ISA名は
 @samp{mips1}, @samp{mips2}, @samp{mips3}, @samp{mips4},
 @samp{mips32}, @samp{mips32r2}, @samp{mips32r3}, @samp{mips32r5},
 @samp{mips32r6}, @samp{mips64}, @samp{mips64r2}, @samp{mips64r3},
-@samp{mips64r5} and @samp{mips64r6}.
-The processor names are:
+@samp{mips64r5}, @samp{mips64r6}。プロセッサ名は
 @samp{4kc}, @samp{4km}, @samp{4kp}, @samp{4ksc},
 @samp{4kec}, @samp{4kem}, @samp{4kep}, @samp{4ksd},
 @samp{5kc}, @samp{5kf},
@@ -14895,148 +14891,104 @@ The processor names are:
 @samp{sr71000},
 @samp{vr4100}, @samp{vr4111}, @samp{vr4120}, @samp{vr4130}, @samp{vr4300},
 @samp{vr5000}, @samp{vr5400}, @samp{vr5500},
-@samp{xlr} and @samp{xlp}.
-The special value @samp{from-abi} selects the
-most compatible architecture for the selected ABI (that is,
-@samp{mips1} for 32-bit ABIs and @samp{mips3} for 64-bit ABIs)@.
+@samp{xlr}, @samp{xlp}.
+特別な値@samp{from-abi}は、選択されたABI（つまり、32ビットABIでは@samp{mips1}、64ビットABIでは@samp{mips3}）に対して最も互換性の高いアーキテクチャを選択する。
 
-The native Linux/GNU toolchain also supports the value @samp{native},
-which selects the best architecture option for the host processor.
-@option{-march=native} has no effect if GCC does not recognize
-the processor.
+ネイティブのLinux/GNUツールチェーンは、@samp{native}という値もサポートしている。これは、ホストプロセッサに最適なアーキテクチャオプションを選択する。gccがプロセッサを認識しない場合、@option{-march = native}は効果がない。
 
-In processor names, a final @samp{000} can be abbreviated as @samp{k}
-(for example, @option{-march=r2k}).  Prefixes are optional, and
-@samp{vr} may be written @samp{r}.
+プロセッサ名では、最終的な@samp{000}を@samp{k}と省略することができる（たとえば、@option{-march = r2k}）。 接頭辞はオプションで、@samp {vr}は@samp{r}と書くことができる。
 
-Names of the form @samp{@var{n}f2_1} refer to processors with
-FPUs clocked at half the rate of the core, names of the form
-@samp{@var{n}f1_1} refer to processors with FPUs clocked at the same
-rate as the core, and names of the form @samp{@var{n}f3_2} refer to
-processors with FPUs clocked a ratio of 3:2 with respect to the core.
-For compatibility reasons, @samp{@var{n}f} is accepted as a synonym
-for @samp{@var{n}f2_1} while @samp{@var{n}x} and @samp{@var{b}fx} are
-accepted as synonyms for @samp{@var{n}f1_1}.
+@samp{@var{n}f2_1}という形式の名前は、コアの半分の速度でクロックされるFPUを持つプロセッサを指し、@samp{@var{n}f1_1}形式の名前は、コアと同じ速度でクロックされるFPUを持つプロセッサを指し、@samp{@var{n}f3_2}の形式の名前は、コアに対してFPUが3：2でクロックされているプロセッサを指す。互換性のため、@samp{@var{n}f}は@samp{@var{n}f2_1}の同義語として受け入れられ、@samp{@var{n}x}と@samp{@var{fx}は@samp{@var{n}f1_1}の同義語として受け入れられる。
 
-GCC defines two macros based on the value of this option.  The first
-is @code{_MIPS_ARCH}, which gives the name of target architecture, as
-a string.  The second has the form @code{_MIPS_ARCH_@var{foo}},
-where @var{foo} is the capitalized value of @code{_MIPS_ARCH}@.
-For example, @option{-march=r2000} sets @code{_MIPS_ARCH}
-to @code{"r2000"} and defines the macro @code{_MIPS_ARCH_R2000}.
+GCCは、このオプションの値に基づいて2つのマクロを定義する。最初は@code{_MIPS_ARCH}で、ターゲットアーキテクチャの名前を文字列で示す。2番目の形式は@code{_MIPS_ARCH_@var{foo}}の形式で、ここで@var{foo}は@code{_MIPS_ARCH}の大文字の値である。たとえば、@option{-march = r2000}は@code{_MIPS_ARCH}を@code{"r2000"}に設定し、マクロ@code{_MIPS_ARCH_R2000}を定義する。
 
-Note that the @code{_MIPS_ARCH} macro uses the processor names given
-above.  In other words, it has the full prefix and does not
-abbreviate @samp{000} as @samp{k}.  In the case of @samp{from-abi},
-the macro names the resolved architecture (either @code{"mips1"} or
-@code{"mips3"}).  It names the default architecture when no
-@option{-march} option is given.
+@code {_MIPS_ARCH}マクロは、上記のプロセッサ名を使用することに注意せよ。つまり、完全な接頭辞を持ち、@samp{000}を@samp{k}と省略しない。@samp{from-abi}の場合、マクロは解決されたアーキテクチャ（@code{"mips1"}または@code{"mips3"}）に名前を付けます。それは@option{-march}オプションが指定されていない場合のデフォルトアーキテクチャに名前を与える。
 
 @item -mtune=@var{arch}
 @opindex mtune
-Optimize for @var{arch}.  Among other things, this option controls
-the way instructions are scheduled, and the perceived cost of arithmetic
-operations.  The list of @var{arch} values is the same as for
-@option{-march}.
+@var{arch}のために最適化する。 とりわけ、このオプションは、命令のスケジューリング方法と、算術演算の知覚されるコストを制御する。 @var{arch}値のリストは、@option{-march}と同じである。
 
-When this option is not used, GCC optimizes for the processor
-specified by @option{-march}.  By using @option{-march} and
-@option{-mtune} together, it is possible to generate code that
-runs on a family of processors, but optimize the code for one
-particular member of that family.
+このオプションを使用しないと、GCCは@option{-march}で指定されたプロセッサに対して最適化する。 @option{-march}と@option {-mtune}を一緒に使用することで、プロセッサファミリ上で動作するが、そのファミリの特定のメンバのコードに最適化するコードを生成できる。
 
-@option{-mtune} defines the macros @code{_MIPS_TUNE} and
-@code{_MIPS_TUNE_@var{foo}}, which work in the same way as the
-@option{-march} ones described above.
+@option{-mtune}はマクロ@code {_MIPS_TUNE}と@code{_MIPS_TUNE_@var{foo}}を定義する。これらは上記の@option{-march}と同様に動作する。
 
 @item -mips1
 @opindex mips1
-Equivalent to @option{-march=mips1}.
+@option{-march=mips1}と等価である。
 
 @item -mips2
 @opindex mips2
-Equivalent to @option{-march=mips2}.
+@option{-march=mips2}と等価である。
 
 @item -mips3
 @opindex mips3
-Equivalent to @option{-march=mips3}.
+@option{-march=mips3}と等価である。
 
 @item -mips4
 @opindex mips4
-Equivalent to @option{-march=mips4}.
+@option{-march=mips4}と等価である。
 
 @item -mips32
 @opindex mips32
-Equivalent to @option{-march=mips32}.
+@option{-march=mips32}と等価である。
 
 @item -mips32r3
 @opindex mips32r3
-Equivalent to @option{-march=mips32r3}.
+@option{-march=mips32r3}と等価である。
 
 @item -mips32r5
 @opindex mips32r5
-Equivalent to @option{-march=mips32r5}.
+@option{-march=mips32r5}と等価である。
 
 @item -mips32r6
 @opindex mips32r6
-Equivalent to @option{-march=mips32r6}.
+@option{-march=mips32r6}と等価である。
 
 @item -mips64
 @opindex mips64
-Equivalent to @option{-march=mips64}.
+@option{-march=mips64}と等価である。
 
 @item -mips64r2
 @opindex mips64r2
-Equivalent to @option{-march=mips64r2}.
+@option{-march=mips64r2}と等価である。
 
 @item -mips64r3
 @opindex mips64r3
-Equivalent to @option{-march=mips64r3}.
+@option{-march=mips64r3}と等価である。
 
 @item -mips64r5
 @opindex mips64r5
-Equivalent to @option{-march=mips64r5}.
+@option{-march=mips64r5}と等価である。
 
 @item -mips64r6
 @opindex mips64r6
-Equivalent to @option{-march=mips64r6}.
+@option{-march=mips64r6}と等価である。
 
 @item -mips16
 @itemx -mno-mips16
 @opindex mips16
 @opindex mno-mips16
-Generate (do not generate) MIPS16 code.  If GCC is targeting a
-MIPS32 or MIPS64 architecture, it makes use of the MIPS16e ASE@.
+MIPS16コードを生成する（しない）。GCCがMIPS32またはMIPS64アーキテクチャをターゲットにしている場合は、MIPS16e ASEを使用する。
 
-MIPS16 code generation can also be controlled on a per-function basis
-by means of @code{mips16} and @code{nomips16} attributes.
-@xref{Function Attributes}, for more information.
+MIPS16コードの生成は、@code{mips16}属性と@code{nomips16}属性を使用して、関数ごとに制御することもできる。さらなる情報は@xref{Function Attributes}.
 
 @item -mflip-mips16
 @opindex mflip-mips16
-Generate MIPS16 code on alternating functions.  This option is provided
-for regression testing of mixed MIPS16/non-MIPS16 code generation, and is
-not intended for ordinary use in compiling user code.
+交代関数でMIPS16コードを生成する。 このオプションは、MIPS16/非MIPS16混在コード生成の回帰テスト用に提供されていて、ユーザーコードのコンパイルでは通常の使用を意図したものではない。
 
 @item -minterlink-compressed
 @item -mno-interlink-compressed
 @opindex minterlink-compressed
 @opindex mno-interlink-compressed
-Require (do not require) that code using the standard (uncompressed) MIPS ISA
-be link-compatible with MIPS16 and microMIPS code, and vice versa.
+標準（非圧縮）MIPS ISAを使用してそのコードをMIPS16およびmicroMIPSコードとリンク互換にすることを要求する（しない）。
 
-For example, code using the standard ISA encoding cannot jump directly
-to MIPS16 or microMIPS code; it must either use a call or an indirect jump.
-@option{-minterlink-compressed} therefore disables direct jumps unless GCC
-knows that the target of the jump is not compressed.
+たとえば、標準のISAエンコーディングを使用するコードは、MIPS16またはmicroMIPSコードに直接ジャンプすることはできない。 コールまたは間接ジャンプを使用する必要がある。@option{-minterlink-compressed}はジャンプのターゲットが圧縮されていないことをGCCが知っていない限り直接ジャンプを無効にする。
 
 @item -minterlink-mips16
 @itemx -mno-interlink-mips16
 @opindex minterlink-mips16
 @opindex mno-interlink-mips16
-Aliases of @option{-minterlink-compressed} and
-@option{-mno-interlink-compressed}.  These options predate the microMIPS ASE
-and are retained for backwards compatibility.
+@option{-minterlink-compressed}と@option{-mno-interlink-compressed}の別名。 これらのオプションは、microMIPS ASEより前からあり、下位互換性のために保持されている。
 
 @item -mabi=32
 @itemx -mabi=o64
@@ -15048,213 +15000,130 @@ and are retained for backwards compatibility.
 @opindex mabi=n32
 @opindex mabi=64
 @opindex mabi=eabi
-Generate code for the given ABI@.
+与えられたABI用のコードを生成する。
 
-Note that the EABI has a 32-bit and a 64-bit variant.  GCC normally
-generates 64-bit code when you select a 64-bit architecture, but you
-can use @option{-mgp32} to get 32-bit code instead.
+EABIには32ビット版と64ビット版がある。 GCCは通常、64ビットアーキテクチャを選択すると64ビットコードを生成するが、代わりに@option{-mgp32}を使用して32ビットコードを得ることができる。
 
-For information about the O64 ABI, see
-@uref{http://gcc.gnu.org/@/projects/@/mipso64-abi.html}.
+O64ABIについては@uref{http://gcc.gnu.org/@/projects/@/mipso64-abi.html}参照。
 
-GCC supports a variant of the o32 ABI in which floating-point registers
-are 64 rather than 32 bits wide.  You can select this combination with
-@option{-mabi=32} @option{-mfp64}.  This ABI relies on the @code{mthc1}
-and @code{mfhc1} instructions and is therefore only supported for
-MIPS32R2, MIPS32R3 and MIPS32R5 processors.
+GCCは浮動小数点レジスタが32ビット幅ではなく64ビットであるo32 ABIの変形をサポートしている。 この組み合わせは、@option{-mabi=32} @option{-mfp64}で選択できる。 このABIは@code{mthc1}命令と@code{mfhc1}命令に依存しているため、MIPS32R2、MIPS32R3、MIPS32R5プロセッサでのみサポートされている。
 
-The register assignments for arguments and return values remain the
-same, but each scalar value is passed in a single 64-bit register
-rather than a pair of 32-bit registers.  For example, scalar
-floating-point values are returned in @samp{$f0} only, not a
-@samp{$f0}/@samp{$f1} pair.  The set of call-saved registers also
-remains the same in that the even-numbered double-precision registers
-are saved.
+引数と戻り値のレジスタ割り当ては同じだが、各スカラー値は1組の32ビットレジスタではなく1つの64ビットレジスタに渡される。 たとえば、スカラー浮動小数点値は@samp{$f0}/@samp{$f1}のペアではなく、@samp{$f0}にのみ返される。 また、偶数番号の倍精度レジスタが保存されるため、コールセーブされたレジスタのセットは同じままである。
 
-Two additional variants of the o32 ABI are supported to enable
-a transition from 32-bit to 64-bit registers.  These are FPXX
-(@option{-mfpxx}) and FP64A (@option{-mfp64} @option{-mno-odd-spreg}).
-The FPXX extension mandates that all code must execute correctly
-when run using 32-bit or 64-bit registers.  The code can be interlinked
-with either FP32 or FP64, but not both.
-The FP64A extension is similar to the FP64 extension but forbids the
-use of odd-numbered single-precision registers.  This can be used
-in conjunction with the @code{FRE} mode of FPUs in MIPS32R5
-processors and allows both FP32 and FP64A code to interlink and
-run in the same process without changing FPU modes.
+32ビットから64ビットのレジスタへの遷移を可能にするために、o32 ABIの2つの追加の変種がサポートされている。 FPXX（@option{-mfpxx}）とFP64A（@option{-mfp64} @option {-mno-odd-spreg}）である。
+FPXX拡張機能では、32ビットまたは64ビットのレジスタを使用して実行する場合、すべてのコードを正しく実行する必要がある。 コードは、FP32またはFP64のいずれかで相互にリンクできるが、両方ではリンクできない。FP64A拡張はFP64拡張と似ているが、奇数番号の単精度レジスタは使用できない。 これは、MIPS32R5プロセッサのFPUの@code{FRE}モードと組み合わせて使用することができ、FP32とFP64Aの両方のコードをFPUモードを変更せずに同じプロセスで相互リンクして実行することができる。
 
 @item -mabicalls
 @itemx -mno-abicalls
 @opindex mabicalls
 @opindex mno-abicalls
-Generate (do not generate) code that is suitable for SVR4-style
-dynamic objects.  @option{-mabicalls} is the default for SVR4-based
-systems.
+SVR4スタイルの動的オブジェクトに適したコードを生成する（しない）。 @option{-mabicalls}はSVR4ベースのシステムのデフォルトである。
 
 @item -mshared
 @itemx -mno-shared
-Generate (do not generate) code that is fully position-independent,
-and that can therefore be linked into shared libraries.  This option
-only affects @option{-mabicalls}.
+完全な位置に依存せず、したがって共有ライブラリにリンクできるコードを生成する（しない）。 このオプションは@option{-mabicalls}にのみ影響する。
 
-All @option{-mabicalls} code has traditionally been position-independent,
-regardless of options like @option{-fPIC} and @option{-fpic}.  However,
-as an extension, the GNU toolchain allows executables to use absolute
-accesses for locally-binding symbols.  It can also use shorter GP
-initialization sequences and generate direct calls to locally-defined
-functions.  This mode is selected by @option{-mno-shared}.
+すべての@option{-mabicalls}コードは、@option{-fPIC}や@option {-fpic}のようなオプションにかかわらず、伝統的に位置に依存しなかった。 しかし、拡張として、GNUツールチェーンは、実行可能ファイルがローカルバインディングシンボルに絶対アクセスを使用できるようにする。 より短いGP初期化シーケンスを使用して、ローカル定義関数への直接呼び出しを生成することもできる。 このモードは、@option{-mno-shared}によって選択されます。
 
-@option{-mno-shared} depends on binutils 2.16 or higher and generates
-objects that can only be linked by the GNU linker.  However, the option
-does not affect the ABI of the final executable; it only affects the ABI
-of relocatable objects.  Using @option{-mno-shared} generally makes
-executables both smaller and quicker.
+@option{-mno-shared}はbinutils 2.16以降に依存し、GNUリンカーによってのみリンクできるオブジェクトを生成する。 ただし、このオプションは最終実行可能ファイルのABIには影響しない。 再配置可能オブジェクトのABIにのみ影響する。 @option{-mno-shared}を使うと、一般的に実行ファイルのサイズが小さくなり、速くなる。
 
-@option{-mshared} is the default.
+@option{-mshared}がデフォルトである。
 
 @item -mplt
 @itemx -mno-plt
 @opindex mplt
 @opindex mno-plt
-Assume (do not assume) that the static and dynamic linkers
-support PLTs and copy relocations.  This option only affects
-@option{-mno-shared -mabicalls}.  For the n64 ABI, this option
-has no effect without @option{-msym32}.
+静的リンカーと動的リンカーがPLTとコピーの再配置をサポートしていると仮定する（しない）。 このオプションは@option{-mno-shared -mabicalls}にのみ影響する。 n64 ABIの場合、このオプションは@option{-msym32}なしでは効果がない。
 
-You can make @option{-mplt} the default by configuring
-GCC with @option{--with-mips-plt}.  The default is
-@option{-mno-plt} otherwise.
+
+@option{-with-mips-plt}でGCCを構成することで、@option{-mplt}をデフォルトにすることができる。デフォルトは、@option{-mno-plt}である。
 
 @item -mxgot
 @itemx -mno-xgot
 @opindex mxgot
 @opindex mno-xgot
-Lift (do not lift) the usual restrictions on the size of the global
-offset table.
+グローバルオフセットテーブルのサイズに関する通常の制限を持ち上る（持ち上げない）。
 
-GCC normally uses a single instruction to load values from the GOT@.
-While this is relatively efficient, it only works if the GOT
-is smaller than about 64k.  Anything larger causes the linker
-to report an error such as:
+GCCは通常、単一の命令を使用してGOTから値をロードする。これは比較的効率的だが、GOTが約64kより小さい場合にのみ機能する。 大きな値を指定すると、リンカーは次のようなエラーを報告する。
 
 @cindex relocation truncated to fit (MIPS)
 @smallexample
 relocation truncated to fit: R_MIPS_GOT16 foobar
 @end smallexample
 
-If this happens, you should recompile your code with @option{-mxgot}.
-This works with very large GOTs, although the code is also
-less efficient, since it takes three instructions to fetch the
-value of a global symbol.
+このような場合は、コードを@option{-mxgot}で再コンパイルする必要がある。これは非常に大きなGOTで動作するが、グローバルシンボルの値をフェッチするには3つの命令が必要なため、コードの効率も悪い。
 
-Note that some linkers can create multiple GOTs.  If you have such a
-linker, you should only need to use @option{-mxgot} when a single object
-file accesses more than 64k's worth of GOT entries.  Very few do.
+いくつかのリンカは複数のGOTを作成できることに注意せよ。 このようなリンカーがある場合は、単一のオブジェクトファイルが64kを超えるGOTエントリにアクセスする場合にのみ、@option{-mxgot}を使用する必要がある。非常に少ない。
 
-These options have no effect unless GCC is generating position
-independent code.
+GCCが位置独立コードを生成しない限り、これらのオプションは効果がない。
 
 @item -mgp32
 @opindex mgp32
-Assume that general-purpose registers are 32 bits wide.
+汎用目的レジスタが32ビット長であると仮定する。
 
 @item -mgp64
 @opindex mgp64
-Assume that general-purpose registers are 64 bits wide.
+汎用目的レジスタが64ビット長であると仮定する。
 
 @item -mfp32
 @opindex mfp32
-Assume that floating-point registers are 32 bits wide.
+浮動小数点レジスタが32ビット長であると仮定する。
 
 @item -mfp64
 @opindex mfp64
-Assume that floating-point registers are 64 bits wide.
+浮動小数点レジスタが64ビット長であると仮定する。
 
 @item -mfpxx
 @opindex mfpxx
-Do not assume the width of floating-point registers.
+浮動小数点レジスタの幅を仮定しない。
 
 @item -mhard-float
 @opindex mhard-float
-Use floating-point coprocessor instructions.
+浮動小数点コプロセッサ命令を使う。
 
 @item -msoft-float
 @opindex msoft-float
-Do not use floating-point coprocessor instructions.  Implement
-floating-point calculations using library calls instead.
+浮動小数点コプロセッサ命令を使わない。代わりにライブラリ呼び出しを使って浮動小数点計算を実装する。
 
 @item -mno-float
 @opindex mno-float
-Equivalent to @option{-msoft-float}, but additionally asserts that the
-program being compiled does not perform any floating-point operations.
-This option is presently supported only by some bare-metal MIPS
-configurations, where it may select a special set of libraries
-that lack all floating-point support (including, for example, the
-floating-point @code{printf} formats).  
-If code compiled with @option{-mno-float} accidentally contains
-floating-point operations, it is likely to suffer a link-time
-or run-time failure.
+@option{-msoft-float}と同等だが、コンパイルされるプログラムが浮動小数点演算を実行しないことをさらに主張する。このオプションは現在、一部のベアメタルMIPS構成でのみサポートされている。ここでは、すべての浮動小数点サポート（浮動小数点@code{printf}形式など）が不足している特別なライブラリセットを選択できる。@option{-mno-float}でコンパイルされたコードに、誤って浮動小数点演算が含まれていると、リンク時または実行時にエラーが発生する可能性がある。
 
 @item -msingle-float
 @opindex msingle-float
-Assume that the floating-point coprocessor only supports single-precision
-operations.
+単精度操作のみをサポートする浮動小数点コプロセッサを仮定する。
 
 @item -mdouble-float
 @opindex mdouble-float
-Assume that the floating-point coprocessor supports double-precision
-operations.  This is the default.
+倍精度操作をサポートする浮動小数点コプロセッサを仮定する。これはデフォルトである。
 
 @item -modd-spreg
 @itemx -mno-odd-spreg
 @opindex modd-spreg
 @opindex mno-odd-spreg
-Enable the use of odd-numbered single-precision floating-point registers
-for the o32 ABI.  This is the default for processors that are known to
-support these registers.  When using the o32 FPXX ABI, @option{-mno-odd-spreg}
-is set by default.
+o32 ABIに奇数番号の単精度浮動小数点レジスタを使用可能にする。 これは、これらのレジスタをサポートすることが知られているプロセッサのデフォルトである。 o32 FPXX ABIを使用する場合、デフォルトで@option{-mno-odd-spreg}が設定される。
 
 @item -mabs=2008
 @itemx -mabs=legacy
 @opindex mabs=2008
 @opindex mabs=legacy
-These options control the treatment of the special not-a-number (NaN)
-IEEE 754 floating-point data with the @code{abs.@i{fmt}} and
-@code{neg.@i{fmt}} machine instructions.
+これらのオプションは、特別な非数（NaN）IEEE 754浮動小数点データの処理を、@code{abs.@i{fmt}}および@code{neg.@i{fmt}}マシン命令で制御する。
 
-By default or when @option{-mabs=legacy} is used the legacy
-treatment is selected.  In this case these instructions are considered
-arithmetic and avoided where correct operation is required and the
-input operand might be a NaN.  A longer sequence of instructions that
-manipulate the sign bit of floating-point datum manually is used
-instead unless the @option{-ffinite-math-only} option has also been
-specified.
+デフォルトで、または@option{-mabs=legacy}を使用すると、従来の処置が選択される。 この場合、これらの命令は算術演算とみなされ、入力オペランドがNaNかもしれず、正しい演算が必要な場合は避けてるべきである。 @option{-ffinite-math-only}オプションも指定されていない限り、手動で浮動小数点データの符号ビットを操作するより長い一連の命令が代わりに使用される。
 
-The @option{-mabs=2008} option selects the IEEE 754-2008 treatment.  In
-this case these instructions are considered non-arithmetic and therefore
-operating correctly in all cases, including in particular where the
-input operand is a NaN.  These instructions are therefore always used
-for the respective operations.
+@option{-mabs=2008}オプションは、IEEE 754-2008処理を選択する。 この場合、これらの命令は非算術とみなされ、したがって、特に入力オペランドがNaNの場合を含むすべての場合において正しく動作する。 したがって、これらの命令は、それぞれの操作に常に使用される。
 
 @item -mnan=2008
 @itemx -mnan=legacy
 @opindex mnan=2008
 @opindex mnan=legacy
-These options control the encoding of the special not-a-number (NaN)
-IEEE 754 floating-point data.
+これらのオプションは、特殊非数（NaN）IEEE 754浮動小数点データのエンコードを制御する。
 
-The @option{-mnan=legacy} option selects the legacy encoding.  In this
-case quiet NaNs (qNaNs) are denoted by the first bit of their trailing
-significand field being 0, whereas signaling NaNs (sNaNs) are denoted
-by the first bit of their trailing significand field being 1.
+@option{-mnan=legacy}オプションは、レガシーエンコーディングを選択する。 この場合、静かなNaN（qNaNs）は、後続の仮数フィールドの最初のビットが0であると示され、シグナリングNaN（sNaNs）は、後続の仮数フィールドの最初のビットが1で表される。
 
-The @option{-mnan=2008} option selects the IEEE 754-2008 encoding.  In
-this case qNaNs are denoted by the first bit of their trailing
-significand field being 1, whereas sNaNs are denoted by the first bit of
-their trailing significand field being 0.
+@option{-mnan=2008}オプションは、IEEE 754-2008エンコーディングを選択する。 この場合、qNaNsは、後続の仮数フィールドの最初のビットが1であり、sNaNsは、後続の仮数フィールドの最初のビットが0であることによって示される。
 
-The default is @option{-mnan=legacy} unless GCC has been configured with
-@option{--with-nan=2008}.
+GCCが@option{-with-nan=2008}で構成されていない限り、デフォルトは@option{-mnan=legacy}である。
 
 @item -mllsc
 @itemx -mno-llsc
