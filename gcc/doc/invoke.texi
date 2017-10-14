@@ -14898,7 +14898,7 @@ MicroBlazeベクタを必要としないアプリケーション向け。 この
 
 プロセッサ名では、最終的な@samp{000}を@samp{k}と省略することができる（たとえば、@option{-march = r2k}）。 接頭辞はオプションで、@samp {vr}は@samp{r}と書くことができる。
 
-@samp{@var{n}f2_1}という形式の名前は、コアの半分の速度でクロックされるFPUを持つプロセッサを指し、@samp{@var{n}f1_1}形式の名前は、コアと同じ速度でクロックされるFPUを持つプロセッサを指し、@samp{@var{n}f3_2}の形式の名前は、コアに対してFPUが3：2でクロックされているプロセッサを指す。互換性のため、@samp{@var{n}f}は@samp{@var{n}f2_1}の同義語として受け入れられ、@samp{@var{n}x}と@samp{@var{fx}は@samp{@var{n}f1_1}の同義語として受け入れられる。
+@samp{@var{n}f2_1}という形式の名前は、コアの半分の速度でクロックされるFPUを持つプロセッサを指し、@samp{@var{n}f1_1}形式の名前は、コアと同じ速度でクロックされるFPUを持つプロセッサを指し、@samp{@var{n}f3_2}の形式の名前は、コアに対してFPUが3：2でクロックされているプロセッサを指す。互換性のため、@samp{@var{n}f}は@samp{@var{n}f2_1}の同義語として受け入れられ、@samp{@var{n}x}と@samp{@var{fx}}は@samp{@var{n}f1_1}の同義語として受け入れられる。
 
 GCCは、このオプションの値に基づいて2つのマクロを定義する。最初は@code{_MIPS_ARCH}で、ターゲットアーキテクチャの名前を文字列で示す。2番目の形式は@code{_MIPS_ARCH_@var{foo}}の形式で、ここで@var{foo}は@code{_MIPS_ARCH}の大文字の値である。たとえば、@option{-march = r2000}は@code{_MIPS_ARCH}を@code{"r2000"}に設定し、マクロ@code{_MIPS_ARCH_R2000}を定義する。
 
@@ -15129,395 +15129,281 @@ GCCが@option{-with-nan=2008}で構成されていない限り、デフォルト
 @itemx -mno-llsc
 @opindex mllsc
 @opindex mno-llsc
-Use (do not use) @samp{ll}, @samp{sc}, and @samp{sync} instructions to
-implement atomic memory built-in functions.  When neither option is
-specified, GCC uses the instructions if the target architecture
-supports them.
+アトミックメモリの組み込み関数を実装するために、@samp{ll}、@samp{sc}、@samp{sync}命令を使用しない。いずれのオプションも指定されていない場合、GCCはターゲットアーキテクチャがそれらをサポートしていればその命令を使用する。
 
-@option{-mllsc} is useful if the runtime environment can emulate the
-instructions and @option{-mno-llsc} can be useful when compiling for
-nonstandard ISAs.  You can make either option the default by
-configuring GCC with @option{--with-llsc} and @option{--without-llsc}
-respectively.  @option{--with-llsc} is the default for some
-configurations; see the installation documentation for details.
+@option{-mllsc}は、ランタイム環境で命令をエミュレートできる場合に便利である。また、非標準のISA用にコンパイルする場合は、@option{-mno-llsc}を使用すると便利である。 GCCを@option{-with-llsc}と@option{-without-llsc}でそれぞれ構成することで、いずれかのオプションをデフォルトにすることができる。 @option{-with-llsc}はいくつかの設定ではデフォルトである。 詳細については、インストールマニュアルを参照せよ。
 
 @item -mdsp
 @itemx -mno-dsp
 @opindex mdsp
 @opindex mno-dsp
-Use (do not use) revision 1 of the MIPS DSP ASE@.
-@xref{MIPS DSP Built-in Functions}.  This option defines the
-preprocessor macro @code{__mips_dsp}.  It also defines
-@code{__mips_dsp_rev} to 1.
+MIPS DSP ASEのリビジョン1を使用する（しない）。@xref{MIPS DSP Built-in Functions}
+このオプションはプリプロセッサマクロ@code{__mips_dsp}を定義する。 また、@code{__mips_dsp_rev}を1に定義する。
 
 @item -mdspr2
 @itemx -mno-dspr2
 @opindex mdspr2
 @opindex mno-dspr2
-Use (do not use) revision 2 of the MIPS DSP ASE@.
-@xref{MIPS DSP Built-in Functions}.  This option defines the
-preprocessor macros @code{__mips_dsp} and @code{__mips_dspr2}.
-It also defines @code{__mips_dsp_rev} to 2.
+MIPS DSP ASEのリビジョン2を使用する（しない）。@xref{MIPS DSP Built-in Functions}
+このオプションはプリプロセッサマクロ@code{__mips_dsp}を定義する。 また、@code{__mips_dsp_rev}を2に定義する。
 
 @item -msmartmips
 @itemx -mno-smartmips
 @opindex msmartmips
 @opindex mno-smartmips
-Use (do not use) the MIPS SmartMIPS ASE.
+MIPS SmartMIPS ASEを使用する（しない）。
 
 @item -mpaired-single
 @itemx -mno-paired-single
 @opindex mpaired-single
 @opindex mno-paired-single
-Use (do not use) paired-single floating-point instructions.
-@xref{MIPS Paired-Single Support}.  This option requires
-hardware floating-point support to be enabled.
+組単精度命令を使用する（しない）。@xref{MIPS Paired-Single Support} このオプションはハードウェア浮動小数点サポートを有効にする必要がある。
 
 @item -mdmx
 @itemx -mno-mdmx
 @opindex mdmx
 @opindex mno-mdmx
-Use (do not use) MIPS Digital Media Extension instructions.
-This option can only be used when generating 64-bit code and requires
-hardware floating-point support to be enabled.
+MIPSデジタルメディア拡張命令を使用する（しない）。このオプションは64ビットコードを生成し、ハードウェア浮動小数点サポートを有効にする必要がある。
 
 @item -mips3d
 @itemx -mno-mips3d
 @opindex mips3d
 @opindex mno-mips3d
-Use (do not use) the MIPS-3D ASE@.  @xref{MIPS-3D Built-in Functions}.
-The option @option{-mips3d} implies @option{-mpaired-single}.
+MIPS-3D ASEを使用する（しない）。@xref{MIPS-3D Built-in Functions} オプション@option{-mips3d}は@option{-mpaired-single}を含む。
 
 @item -mmicromips
 @itemx -mno-micromips
 @opindex mmicromips
 @opindex mno-mmicromips
-Generate (do not generate) microMIPS code.
+microMIPSコードを生成する（しない）。
 
-MicroMIPS code generation can also be controlled on a per-function basis
-by means of @code{micromips} and @code{nomicromips} attributes.
-@xref{Function Attributes}, for more information.
+microMIPSコードの生成は、@code{micromips}属性と@code {nomicromips}属性を使用して、関数ごとに制御することもできる。
+さらなる情報は、@xref{Function Attributes}
 
 @item -mmt
 @itemx -mno-mt
 @opindex mmt
 @opindex mno-mt
-Use (do not use) MT Multithreading instructions.
+MTマルチスレッド命令を使用する（しない）。
 
 @item -mmcu
 @itemx -mno-mcu
 @opindex mmcu
 @opindex mno-mcu
-Use (do not use) the MIPS MCU ASE instructions.
+MIPS MCU ASE命令を使用する（しない）。
 
 @item -meva
 @itemx -mno-eva
 @opindex meva
 @opindex mno-eva
-Use (do not use) the MIPS Enhanced Virtual Addressing instructions.
+MIPS拡張仮想アドレス命令を使用する（しない）。
 
 @item -mvirt
 @itemx -mno-virt
 @opindex mvirt
 @opindex mno-virt
-Use (do not use) the MIPS Virtualization (VZ) instructions.
+MIPS仮想化(VZ)命令を使用する（しない）。
 
 @item -mxpa
 @itemx -mno-xpa
 @opindex mxpa
 @opindex mno-xpa
-Use (do not use) the MIPS eXtended Physical Address (XPA) instructions.
+MIPS拡張物理アドレス（XPA）命令を使用する（しない）。
 
 @item -mlong64
 @opindex mlong64
-Force @code{long} types to be 64 bits wide.  See @option{-mlong32} for
-an explanation of the default and the way that the pointer size is
-determined.
+@code{long}型を64ビット長に強制する。デフォルトの説明とポインタサイズの決定方法は
+@option{-mlong32}を見よ。
 
 @item -mlong32
 @opindex mlong32
-Force @code{long}, @code{int}, and pointer types to be 32 bits wide.
+@code{long}, @code{int}, ポインタサイズを32ビット長に強制する。
 
-The default size of @code{int}s, @code{long}s and pointers depends on
-the ABI@.  All the supported ABIs use 32-bit @code{int}s.  The n64 ABI
-uses 64-bit @code{long}s, as does the 64-bit EABI; the others use
-32-bit @code{long}s.  Pointers are the same size as @code{long}s,
-or the same size as integer registers, whichever is smaller.
+@code{int}と@code{long}のデフォルトサイズはABIに依存する。サポートされている全ABIは32ビットの@code{int}を使う。n64 ABIは64ビットの@code{long}を使う、EABIもそうする。他は32ビットの@code{long}を使う。ポインタは@code{long}と同じサイズか、整数レジスタと同じサイズの、小さい方である。
 
 @item -msym32
 @itemx -mno-sym32
 @opindex msym32
 @opindex mno-sym32
-Assume (do not assume) that all symbols have 32-bit values, regardless
-of the selected ABI@.  This option is useful in combination with
-@option{-mabi=64} and @option{-mno-abicalls} because it allows GCC
-to generate shorter and faster references to symbolic addresses.
+全シンボルが、選択されたABIにかかわらず、32ビット値を持つと仮定する（しない）。このオプションは、@option{-mabi=64}と@option{-mno-abicalls}と組み合わせて使用すると、GCCがシンボリックアドレスへのより短い、より速い参照を生成できるので便利である。
 
 @item -G @var{num}
 @opindex G
-Put definitions of externally-visible data in a small data section
-if that data is no bigger than @var{num} bytes.  GCC can then generate
-more efficient accesses to the data; see @option{-mgpopt} for details.
+そのデータが@var{num}バイトより大きくない場合は、外部データの定義を小さなデータセクションに置く。 GCCは、データへのより効率的なアクセスを生成することができる。 詳細は@option{-mgpopt}を参照。
 
-The default @option{-G} option depends on the configuration.
+デフォルトの@option{-G}オプションは構成によって異なる。
 
 @item -mlocal-sdata
 @itemx -mno-local-sdata
 @opindex mlocal-sdata
 @opindex mno-local-sdata
-Extend (do not extend) the @option{-G} behavior to local data too,
-such as to static variables in C@.  @option{-mlocal-sdata} is the
-default for all configurations.
+@option{-G}の振る舞いをCの静的変数など、ローカルデータにも拡張する（しない）。 @option{-mlocal-sdata}はすべての構成のデフォルトである。
 
-If the linker complains that an application is using too much small data,
-you might want to try rebuilding the less performance-critical parts with
-@option{-mno-local-sdata}.  You might also want to build large
-libraries with @option{-mno-local-sdata}, so that the libraries leave
-more room for the main program.
+リンカーが、アプリケーションが小さすぎるデータを使用していると不平を言う場合は、@option{-mno-local-sdata}を使用してパフォーマンスが重要でない部分を再構築したいかもしれない。 また、@option{-mno-local-sdata}を使用して大きなライブラリを構築して、ライブラリがメインプログラムのための余地を残したかもしれない。
 
 @item -mextern-sdata
 @itemx -mno-extern-sdata
 @opindex mextern-sdata
 @opindex mno-extern-sdata
-Assume (do not assume) that externally-defined data is in
-a small data section if the size of that data is within the @option{-G} limit.
-@option{-mextern-sdata} is the default for all configurations.
+そのデータのサイズが@option{-G}の範囲内にある場合、外部定義されたデータが小さなデータセクションにあると仮定する（しない）。@option{-mextern-sdata}はすべての構成のデフォルトである。
 
-If you compile a module @var{Mod} with @option{-mextern-sdata} @option{-G
-@var{num}} @option{-mgpopt}, and @var{Mod} references a variable @var{Var}
-that is no bigger than @var{num} bytes, you must make sure that @var{Var}
-is placed in a small data section.  If @var{Var} is defined by another
-module, you must either compile that module with a high-enough
-@option{-G} setting or attach a @code{section} attribute to @var{Var}'s
-definition.  If @var{Var} is common, you must link the application
-with a high-enough @option{-G} setting.
+@option{-mextern-sdata} @option{-G @var{num}} @option{-mgpopt}でモジュール@var{Mod}をコンパイルし、@var{Mod}が@var{num}バイトより大きくない変数@var{Var}を参照しているならば、@var{Var}が小さなデータセクションに配置されていることを確認する必要がある。 @var{Var}が別のモジュールで定義されている場合は、十分な大きい@option{-G}設定でモジュールをコンパイルするか、@var{Var}の定義に@code{section}属性を付加する必要がある。 @var{Var}が共通の場合は、アプリケーションを十分な大きさの@option{-G}設定でリンクする必要がある。
 
-The easiest way of satisfying these restrictions is to compile
-and link every module with the same @option{-G} option.  However,
-you may wish to build a library that supports several different
-small data limits.  You can do this by compiling the library with
-the highest supported @option{-G} setting and additionally using
-@option{-mno-extern-sdata} to stop the library from making assumptions
-about externally-defined data.
+これらの制限を満たす最も簡単な方法は、すべてのモジュールを同じ@option{-G}オプションでコンパイルしてリンクすることである。 ただし、いくつかの小さなデータ制限をサポートするライブラリを構築することもできる。 サポートされている最高の@option{-G}設定を使用してライブラリをコンパイルし、さらに@option{-mno-extern-sdata}を使用して、ライブラリが外部定義データに関する前提を作成するのを止めることで、これを行うことができる。
 
 @item -mgpopt
 @itemx -mno-gpopt
 @opindex mgpopt
 @opindex mno-gpopt
-Use (do not use) GP-relative accesses for symbols that are known to be
-in a small data section; see @option{-G}, @option{-mlocal-sdata} and
-@option{-mextern-sdata}.  @option{-mgpopt} is the default for all
-configurations.
+小さなデータセクションにあることが分かっているシンボルには、GP相対アクセスを使用する（しない）。 @option {-G}、@option{-mlocal-sdata}、@option{-mextern-sdata}参照。 @option {-mgpopt}はすべての構成のデフォルトである。
 
-@option{-mno-gpopt} is useful for cases where the @code{$gp} register
-might not hold the value of @code{_gp}.  For example, if the code is
-part of a library that might be used in a boot monitor, programs that
-call boot monitor routines pass an unknown value in @code{$gp}.
-(In such situations, the boot monitor itself is usually compiled
-with @option{-G0}.)
+@option{-mno-gpopt}は、@code{$gp}レジスタが@code{_gp}の値を保持しない場合に便利である。 たとえば、コードがブートモニターで使用されるライブラリーの一部である場合、ブートモニタールーチンを呼び出すプログラムは、未知の値を@code{$gp}に渡す。（このような状況では、通常ブートモニター自体は@option{-G0}でコンパイルされる）。
 
-@option{-mno-gpopt} implies @option{-mno-local-sdata} and
-@option{-mno-extern-sdata}.
+@option{-mno-gpopt}は@option{-mno-local-sdata}と@option{-mno-extern-sdata}を含む。
 
 @item -membedded-data
 @itemx -mno-embedded-data
 @opindex membedded-data
 @opindex mno-embedded-data
-Allocate variables to the read-only data section first if possible, then
-next in the small data section if possible, otherwise in data.  This gives
-slightly slower code than the default, but reduces the amount of RAM required
-when executing, and thus may be preferred for some embedded systems.
+可能であれば、読み取り専用データセクションに変数を割り当て、可能であれば小さなデータセクションに次に変数を割り当て、それ以外の場合はデータに割り当てる。 これは、デフォルトよりもわずかに遅いコードを提供するが、実行時に必要なRAMの量が減るため、一部の組み込みシステムでは望ましいことがある。
 
 @item -muninit-const-in-rodata
 @itemx -mno-uninit-const-in-rodata
 @opindex muninit-const-in-rodata
 @opindex mno-uninit-const-in-rodata
-Put uninitialized @code{const} variables in the read-only data section.
-This option is only meaningful in conjunction with @option{-membedded-data}.
+読み込み専用データセクションに初期化されていない@code{const}変数を入れる。このオプションは@option{-membedded-data}との組み合わせでのみ意味がある。
 
 @item -mcode-readable=@var{setting}
 @opindex mcode-readable
-Specify whether GCC may generate code that reads from executable sections.
-There are three possible settings:
+GCCが実行可能セクションから読み込むコードを生成するかどうかを指定する。可能な設定は3つある。
 
 @table @gcctabopt
 @item -mcode-readable=yes
-Instructions may freely access executable sections.  This is the
-default setting.
+命令は自由に実行可能セクションにアクセスできる。これはデフォルトの設定である。
 
 @item -mcode-readable=pcrel
-MIPS16 PC-relative load instructions can access executable sections,
-but other instructions must not do so.  This option is useful on 4KSc
-and 4KSd processors when the code TLBs have the Read Inhibit bit set.
-It is also useful on processors that can be configured to have a dual
-instruction/data SRAM interface and that, like the M4K, automatically
-redirect PC-relative loads to the instruction RAM.
+MIPS16 PC相対ロード命令は実行可能セクションにアクセスできるが、他の命令ではできない。 このオプションは、コードTLBに読み取り禁止ビットが設定されている場合、4KScおよび4KSdプロセッサで有効である。 また、デュアル命令/データSRAMインタフェースを持つように構成することができ、M4Kと同様に、PC相対ロードを自動的に命令RAMにリダイレクトするプロセッサでも便利である。
 
 @item -mcode-readable=no
-Instructions must not access executable sections.  This option can be
-useful on targets that are configured to have a dual instruction/data
-SRAM interface but that (unlike the M4K) do not automatically redirect
-PC-relative loads to the instruction RAM.
+命令は実行可能セクションにアクセスしてはならない。 このオプションは、デュアル命令/データSRAMインタフェースを持つように構成されているターゲットで有効だが、M4Kとは異なり、PC相対ロードを自動的に命令RAMにリダイレクトしない。
 @end table
 
 @item -msplit-addresses
 @itemx -mno-split-addresses
 @opindex msplit-addresses
 @opindex mno-split-addresses
-Enable (disable) use of the @code{%hi()} and @code{%lo()} assembler
-relocation operators.  This option has been superseded by
-@option{-mexplicit-relocs} but is retained for backwards compatibility.
+@code{％hi()}および@code{％lo()}アセンブラ再配置演算子の使用を有効（無効）化する。 このオプションは@option{-mexplicit-relocs}に取って代わられたが、下位互換性のために残されている。
 
 @item -mexplicit-relocs
 @itemx -mno-explicit-relocs
 @opindex mexplicit-relocs
 @opindex mno-explicit-relocs
-Use (do not use) assembler relocation operators when dealing with symbolic
-addresses.  The alternative, selected by @option{-mno-explicit-relocs},
-is to use assembler macros instead.
+シンボリックアドレスを扱う場合は、アセンブラ再配置演算子を使用する（しない）。 @option{-mno-explicit-relocs}で選択された代替は、代わりにアセンブラマクロを使用することである。
 
-@option{-mexplicit-relocs} is the default if GCC was configured
-to use an assembler that supports relocation operators.
+再配置オペレータをサポートするアセンブラを使用するようにGCCを設定した場合、@option{-mexplicit-relocs}がデフォルトである。
 
 @item -mcheck-zero-division
 @itemx -mno-check-zero-division
 @opindex mcheck-zero-division
 @opindex mno-check-zero-division
-Trap (do not trap) on integer division by zero.
+ゼロによる整数除算をトラップする（しない）。
 
-The default is @option{-mcheck-zero-division}.
+デフォルトは@option{-mcheck-zero-division}である。
 
 @item -mdivide-traps
 @itemx -mdivide-breaks
 @opindex mdivide-traps
 @opindex mdivide-breaks
-MIPS systems check for division by zero by generating either a
-conditional trap or a break instruction.  Using traps results in
-smaller code, but is only supported on MIPS II and later.  Also, some
-versions of the Linux kernel have a bug that prevents trap from
-generating the proper signal (@code{SIGFPE}).  Use @option{-mdivide-traps} to
-allow conditional traps on architectures that support them and
-@option{-mdivide-breaks} to force the use of breaks.
+MIPSシステムは、条件付きトラップまたはブレーク命令のいずれかを生成することによってゼロ除算をチェックする。 トラップを使用すると、コードが小さくなるが、MIPS II以降でのみサポートされている。 また、Linuxカーネルのバージョンによっては、トラップが適切なシグナル（@code{SIGFPE}）を生成できないバグがある。 @option{-mdivide-traps}を使用すると、それらをサポートするアーキテクチャの条件付きトラップを許可し、@option{-mdivide-breaks}は強制的にブレークを使用できる。
 
-The default is usually @option{-mdivide-traps}, but this can be
-overridden at configure time using @option{--with-divide=breaks}.
-Divide-by-zero checks can be completely disabled using
-@option{-mno-check-zero-division}.
+デフォルトは通常@option{-mdivide-traps}だが、構成時に@option{-with-divide=breaks}を使用して上書きすることができる。
+ゼロ除算は、@option{-mno-check-zero-division}を使用して完全に無効にすることができる。
 
 @item -mload-store-pairs
 @itemx -mno-load-store-pairs
 @opindex mload-store-pairs
 @opindex mno-load-store-pairs
-Enable (disable) an optimization that pairs consecutive load or store
-instructions to enable load/store bonding.  This option is enabled by
-default but only takes effect when the selected architecture is known
-to support bonding.
+ロード/ストア結合を有効にするために連続したロード命令またはストア命令をペアにする最適化を有効（無効）化する。 このオプションはデフォルトで有効になっているが、選択したアーキテクチャがボンディングをサポートすることがわかっている場合にのみ効果がある。
 
 @item -mmemcpy
 @itemx -mno-memcpy
 @opindex mmemcpy
 @opindex mno-memcpy
-Force (do not force) the use of @code{memcpy} for non-trivial block
-moves.  The default is @option{-mno-memcpy}, which allows GCC to inline
-most constant-sized copies.
+@code{memcpy}の使用が非自明なブロック移動になるよう強制する（しない）。 デフォルトは@option{-mno-memcpy}で、これはGCCがほとんど一定のサイズのコピーをインライン化することを可能にする。
 
 @item -mlong-calls
 @itemx -mno-long-calls
 @opindex mlong-calls
 @opindex mno-long-calls
-Disable (do not disable) use of the @code{jal} instruction.  Calling
-functions using @code{jal} is more efficient but requires the caller
-and callee to be in the same 256 megabyte segment.
+@code{jal}命令の使用を無効にする（しない）。 @code{jal}を使って関数を呼び出すほうが効率的だが、呼び出し元と呼び出し先が同じ256メガバイトのセグメントに存在する必要がある。
 
-This option has no effect on abicalls code.  The default is
-@option{-mno-long-calls}.
+このオプションはabicallsコードには影響しない。 デフォルトは@option{-mno-long-calls}である。
 
 @item -mmad
 @itemx -mno-mad
 @opindex mmad
 @opindex mno-mad
-Enable (disable) use of the @code{mad}, @code{madu} and @code{mul}
-instructions, as provided by the R4650 ISA@.
+R4650 ISAによって提供されている@code{mad}, @code{madu}, @code{mul}の使用を有効（無効）化する。
 
 @item -mimadd
 @itemx -mno-imadd
 @opindex mimadd
 @opindex mno-imadd
-Enable (disable) use of the @code{madd} and @code{msub} integer
-instructions.  The default is @option{-mimadd} on architectures
-that support @code{madd} and @code{msub} except for the 74k 
-architecture where it was found to generate slower code.
+@code{madd}と@code{msub}整数命令の使用を有効（無効）化する。デフォルトは@code{madd}と@code{msub}をサポートするアーキテクチャでは@code{-mimadd}だが、例外は74kアーキテクチャで、そこではより遅いコードを生成することがわかっている。
 
 @item -mfused-madd
 @itemx -mno-fused-madd
 @opindex mfused-madd
 @opindex mno-fused-madd
-Enable (disable) use of the floating-point multiply-accumulate
-instructions, when they are available.  The default is
-@option{-mfused-madd}.
+利用可能な場所では、浮動小数点乗加算命令の使用を有効（無効）化する。デフォルトでは@option{-mfused-madd}。
 
-On the R8000 CPU when multiply-accumulate instructions are used,
-the intermediate product is calculated to infinite precision
-and is not subject to the FCSR Flush to Zero bit.  This may be
-undesirable in some circumstances.  On other processors the result
-is numerically identical to the equivalent computation using
-separate multiply, add, subtract and negate instructions.
+乗算累算命令が使用されている場合のR8000 CPUでは、中間積は無限精度に計算され、FCSRゼロからゼロへのビットの影響を受けない。 これは、場合によっては望ましくないことがある。 他のプロセッサでは、結果は、別々の乗算、加算、減算、および否定命令を使用した同等の計算と数値的に同じである。
 
 @item -nocpp
 @opindex nocpp
-Tell the MIPS assembler to not run its preprocessor over user
-assembler files (with a @samp{.s} suffix) when assembling them.
+MIPSアセンブラにアセンブラを実行する前に、ユーザ・アセンブラ・ファイル（@samp{.s}接尾辞付き）に対してプリプロセッサを実行しないように指示する。
 
 @item -mfix-24k
 @item -mno-fix-24k
 @opindex mfix-24k
 @opindex mno-fix-24k
-Work around the 24K E48 (lost data on stores during refill) errata.
-The workarounds are implemented by the assembler rather than by GCC@.
+24K E48（リフィル中のストアでのデータ喪失）正誤表を回避する。回避策はGCCではなくアセンブラで実装されている。
 
 @item -mfix-r4000
 @itemx -mno-fix-r4000
 @opindex mfix-r4000
 @opindex mno-fix-r4000
-Work around certain R4000 CPU errata:
+いくつかのR4000 CPUでの正誤表を回避する。
 @itemize @minus
 @item
-A double-word or a variable shift may give an incorrect result if executed
-immediately after starting an integer division.
+整数除算を開始した直後にダブルワードまたは可変シフトを実行すると、不正な結果が返されることがある。
 @item
-A double-word or a variable shift may give an incorrect result if executed
-while an integer multiplication is in progress.
+整数乗算が実行されている間にダブルワードまたは可変シフトが実行されると、不正な結果が返されることがある。
 @item
-An integer division may give an incorrect result if started in a delay slot
-of a taken branch or a jump.
+分岐の分岐やジャンプの遅延スロットで開始された場合、整数除算で不正な結果が得られることがある。
 @end itemize
 
 @item -mfix-r4400
 @itemx -mno-fix-r4400
 @opindex mfix-r4400
 @opindex mno-fix-r4400
-Work around certain R4400 CPU errata:
+いくつかのR4400 CPUでの正誤表を回避する。
 @itemize @minus
 @item
-A double-word or a variable shift may give an incorrect result if executed
-immediately after starting an integer division.
+整数除算を開始した直後にダブルワードまたは可変シフトを実行すると、不正な結果が返されることがある。
 @end itemize
 
 @item -mfix-r10000
 @itemx -mno-fix-r10000
 @opindex mfix-r10000
 @opindex mno-fix-r10000
-Work around certain R10000 errata:
+いくつかのR10000 CPUでの正誤表を回避する。
 @itemize @minus
 @item
-@code{ll}/@code{sc} sequences may not behave atomically on revisions
-prior to 3.0.  They may deadlock on revisions 2.6 and earlier.
+@code{ll}/@code{sc}シーケンスは、3.0より前のリビジョンではアトミックに動作しない。 2.6以前のリビジョンではデッドロックする可能性がある。
 @end itemize
 
-This option can only be used if the target architecture supports
-branch-likely instructions.  @option{-mfix-r10000} is the default when
-@option{-march=r10000} is used; @option{-mno-fix-r10000} is the default
-otherwise.
+このオプションは、ターゲットアーキテクチャが分岐予測命令をサポートしている場合にのみ使用できる。 @option{-march = r10000}を使用すると、@option{-mfix-r10000}がデフォルトである。 そうでない場合、@option{-mno-fix-r10000}がデフォルトである。
 
 @item -mfix-rm7000
 @itemx -mno-fix-rm7000
