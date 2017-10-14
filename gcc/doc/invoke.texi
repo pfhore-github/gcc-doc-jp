@@ -1694,7 +1694,7 @@ ISO C11のGNU変種。これはCコードのデフォルトである。名前@sa
 
 @item c++98
 @itemx c++03
-1998年のISO C++標準＋2003の技術的な正誤表と追加の不具合報告。C++コードでの@option{-ansi}と同じ。
+1998年のISO C++標準＋2003の技術的なエラッタと追加の不具合報告。C++コードでの@option{-ansi}と同じ。
 
 @item gnu++98
 @itemx gnu++03
@@ -15367,13 +15367,13 @@ MIPSアセンブラにアセンブラを実行する前に、ユーザ・アセ�
 @item -mno-fix-24k
 @opindex mfix-24k
 @opindex mno-fix-24k
-24K E48（リフィル中のストアでのデータ喪失）正誤表を回避する。回避策はGCCではなくアセンブラで実装されている。
+24K E48（リフィル中のストアでのデータ喪失）エラッタを回避する。回避策はGCCではなくアセンブラで実装されている。
 
 @item -mfix-r4000
 @itemx -mno-fix-r4000
 @opindex mfix-r4000
 @opindex mno-fix-r4000
-いくつかのR4000 CPUでの正誤表を回避する。
+いくつかのR4000 CPUでのエラッタを回避する。
 @itemize @minus
 @item
 整数除算を開始した直後にダブルワードまたは可変シフトを実行すると、不正な結果が返されることがある。
@@ -15387,7 +15387,7 @@ MIPSアセンブラにアセンブラを実行する前に、ユーザ・アセ�
 @itemx -mno-fix-r4400
 @opindex mfix-r4400
 @opindex mno-fix-r4400
-いくつかのR4400 CPUでの正誤表を回避する。
+いくつかのR4400 CPUでのエラッタを回避する。
 @itemize @minus
 @item
 整数除算を開始した直後にダブルワードまたは可変シフトを実行すると、不正な結果が返されることがある。
@@ -15397,7 +15397,7 @@ MIPSアセンブラにアセンブラを実行する前に、ユーザ・アセ�
 @itemx -mno-fix-r10000
 @opindex mfix-r10000
 @opindex mno-fix-r10000
-いくつかのR10000 CPUでの正誤表を回避する。
+いくつかのR10000 CPUでのエラッタを回避する。
 @itemize @minus
 @item
 @code{ll}/@code{sc}シーケンスは、3.0より前のリビジョンではアトミックに動作しない。 2.6以前のリビジョンではデッドロックする可能性がある。
@@ -15408,138 +15408,90 @@ MIPSアセンブラにアセンブラを実行する前に、ユーザ・アセ�
 @item -mfix-rm7000
 @itemx -mno-fix-rm7000
 @opindex mfix-rm7000
-Work around the RM7000 @code{dmult}/@code{dmultu} errata.  The
-workarounds are implemented by the assembler rather than by GCC@.
+RM7000 @code{dmult}/@code{dmultu}エラッタを回避する。 回避策はGCCではなくアセンブラで実装されている。
 
 @item -mfix-vr4120
 @itemx -mno-fix-vr4120
 @opindex mfix-vr4120
-Work around certain VR4120 errata:
+特定のVR4120エラッタを回避する：
 @itemize @minus
 @item
-@code{dmultu} does not always produce the correct result.
+@code{dmultu}は必ずしも正しい結果を出すとは限らない。
 @item
-@code{div} and @code{ddiv} do not always produce the correct result if one
-of the operands is negative.
+オペランドの1つが負の場合、@code{div}と@code{ddiv}は常に正しい結果を生成するとは限らない。
 @end itemize
-The workarounds for the division errata rely on special functions in
-@file{libgcc.a}.  At present, these functions are only provided by
-the @code{mips64vr*-elf} configurations.
+除算のエラッタの回避策は@file{libgcc.a}の特別な機能に依存している。 現在のところ、これらの関数は@code{mips64vr*-elf}の構成によってのみ提供される。
 
-Other VR4120 errata require a NOP to be inserted between certain pairs of
-instructions.  These errata are handled by the assembler, not by GCC itself.
+他のVR4120のエラッタでは、特定の命令ペアの間にNOPを挿入する必要がある。これらのエラッタはGCC自身ではなく、アセンブラで処理される。
 
 @item -mfix-vr4130
 @opindex mfix-vr4130
-Work around the VR4130 @code{mflo}/@code{mfhi} errata.  The
-workarounds are implemented by the assembler rather than by GCC,
-although GCC avoids using @code{mflo} and @code{mfhi} if the
-VR4130 @code{macc}, @code{macchi}, @code{dmacc} and @code{dmacchi}
-instructions are available instead.
+VR4130 @code{mflo}/@code{mfhi}エラッタを回避する。 回避策は、GCCではなくアセンブラで実装されているが、代わりにVR4130 @code{macc}、@code{macchi}、@code{dmacc}、@code{dmacchi}命令が利用可能な場合には、GCCは@code{mflo}と@code{mfhi}の使用を避ける。
 
 @item -mfix-sb1
 @itemx -mno-fix-sb1
 @opindex mfix-sb1
-Work around certain SB-1 CPU core errata.
-(This flag currently works around the SB-1 revision 2
-``F1'' and ``F2'' floating-point errata.)
+特定のSB-1 CPUコアエラッタを回避する。（このフラグは現在、SB-1リビジョン2の 「F1」と 「F2」の浮動小数点エラッタで動作する）。
 
 @item -mr10k-cache-barrier=@var{setting}
 @opindex mr10k-cache-barrier
-Specify whether GCC should insert cache barriers to avoid the
-side-effects of speculation on R10K processors.
+R10Kプロセッサで投機の副作用を避けるために、GCCがキャッシュバリアを挿入するかどうかを指定する。
 
-In common with many processors, the R10K tries to predict the outcome
-of a conditional branch and speculatively executes instructions from
-the ``taken'' branch.  It later aborts these instructions if the
-predicted outcome is wrong.  However, on the R10K, even aborted
-instructions can have side effects.
+多くのプロセッサーと共通して、R10Kは条件付き分岐の結果を予測し、 「取られた」分岐からの命令を投機的に実行しようとする。予測結果が間違っている場合は、後でこれらの命令を中止する。しかし、R10Kでは、中断された命令でさえも副作用が生じる可能性がある。
 
-This problem only affects kernel stores and, depending on the system,
-kernel loads.  As an example, a speculatively-executed store may load
-the target memory into cache and mark the cache line as dirty, even if
-the store itself is later aborted.  If a DMA operation writes to the
-same area of memory before the ``dirty'' line is flushed, the cached
-data overwrites the DMA-ed data.  See the R10K processor manual
-for a full description, including other potential problems.
+この問題はカーネルストアにのみ影響し、システムに応じてカーネルがロードされる。 一例として、投機的に実行されるストアは、ターゲットメモリをキャッシュにロードし、ストア自体が後で中断されたとしても、キャッシュラインを汚れたとマークし得る。 「汚れた」行がフラッシュされる前にDMA操作が同じメモリー領域に書き込むと、キャッシュされたデータはDMAされたデータを上書きする。 その他の潜在的な問題も含め、詳細な説明はR10Kプロセッサのマニュアルを参照せよ。
 
-One workaround is to insert cache barrier instructions before every memory
-access that might be speculatively executed and that might have side
-effects even if aborted.  @option{-mr10k-cache-barrier=@var{setting}}
-controls GCC's implementation of this workaround.  It assumes that
-aborted accesses to any byte in the following regions does not have
-side effects:
+回避策の1つは、投機的に実行され、中止されても副作用を持つかもしれないメモリアクセスの前にキャッシュバリア命令を挿入することである。 @option{-mr10k-cache-barrier=@var{setting}}は、この回避策のGCC実装を制御する。次の領域のバイトへの中止されたアクセスには副作用がないものとする。
 
 @enumerate
 @item
-the memory occupied by the current function's stack frame;
+現在の関数のスタックフレームが占めるメモリ。
 
 @item
-the memory occupied by an incoming stack argument;
+入ってくるスタック引数が占めるメモリ。
 
 @item
-the memory occupied by an object with a link-time-constant address.
+リンク時定数アドレスのあるオブジェクトが占めるメモリ。
 @end enumerate
 
-It is the kernel's responsibility to ensure that speculative
-accesses to these regions are indeed safe.
+これらの領域への投機的なアクセスが実際に安全であることを保証するのは、カーネルの責任である。
 
-If the input program contains a function declaration such as:
+入力プログラムに次のような関数宣言が含まれているとする。
 
 @smallexample
 void foo (void);
 @end smallexample
 
-then the implementation of @code{foo} must allow @code{j foo} and
-@code{jal foo} to be executed speculatively.  GCC honors this
-restriction for functions it compiles itself.  It expects non-GCC
-functions (such as hand-written assembly code) to do the same.
+そのとき@code{foo}の実装は@code{j foo}と@code{jal foo}が投機的に実行されるようにする必要がある。 GCCはコンパイルする関数に対してこの制限を認めている。 GCC以外の関数（手書きのアセンブリコードなど）も同じことを期待する。
 
-The option has three forms:
+オプションは3形式ある。
 
 @table @gcctabopt
 @item -mr10k-cache-barrier=load-store
-Insert a cache barrier before a load or store that might be
-speculatively executed and that might have side effects even
-if aborted.
+投機的に実行され、中止されても副作用を伴うかもしれないロードまたはストアの前にキャッシュ・バリアーを挿入する。
 
 @item -mr10k-cache-barrier=store
-Insert a cache barrier before a store that might be speculatively
-executed and that might have side effects even if aborted.
+投機的に実行され、中止されても副作用を伴うかもしれないストアの前にキャッシュ・バリアーを挿入する。
 
 @item -mr10k-cache-barrier=none
-Disable the insertion of cache barriers.  This is the default setting.
+キャッシュバリアの挿入を無効にする。 これがデフォルト設定である。
 @end table
 
 @item -mflush-func=@var{func}
 @itemx -mno-flush-func
 @opindex mflush-func
-Specifies the function to call to flush the I and D caches, or to not
-call any such function.  If called, the function must take the same
-arguments as the common @code{_flush_func}, that is, the address of the
-memory range for which the cache is being flushed, the size of the
-memory range, and the number 3 (to flush both caches).  The default
-depends on the target GCC was configured for, but commonly is either
-@code{_flush_func} or @code{__cpu_flush}.
+IおよびDキャッシュをフラッシュするために呼ぶ関数を指定するか、またはそのような関数を呼び出さないように指定する。 呼び出された場合、関数は共通の@code{_flush_func}と同じ引数、つまりキャッシュがフラッシュされるメモリ範囲のアドレス、メモリ範囲のサイズ、 両方のキャッシュ）。 デフォルトはターゲットGCCが設定されているかどうかによって異なるが、通常は@code{_flush_func}または@code{__ cpu_flush}である。
 
 @item mbranch-cost=@var{num}
 @opindex mbranch-cost
-Set the cost of branches to roughly @var{num} ``simple'' instructions.
-This cost is only a heuristic and is not guaranteed to produce
-consistent results across releases.  A zero cost redundantly selects
-the default, which is based on the @option{-mtune} setting.
+おおまかに@var{num}の「単純な」命令にブランチのコストを設定する。このコストはヒューリスティックであり、リリース間で一貫した結果を保証するものではない。 ゼロコストは、@option {-mtune}設定に基づくデフォルトを重複して選択する。
 
 @item -mbranch-likely
 @itemx -mno-branch-likely
 @opindex mbranch-likely
 @opindex mno-branch-likely
-Enable or disable use of Branch Likely instructions, regardless of the
-default for the selected architecture.  By default, Branch Likely
-instructions may be generated if they are supported by the selected
-architecture.  An exception is for the MIPS32 and MIPS64 architectures
-and processors that implement those architectures; for those, Branch
-Likely instructions are not be generated by default because the MIPS32
-and MIPS64 architectures specifically deprecate their use.
+
+選択したアーキテクチャのデフォルトにかかわらず、分岐可能命令の使用を有効または無効にする。 デフォルトでは、選択されたアーキテクチャでサポートされている場合、分岐可能命令が生成されることがある。これらのアーキテクチャを実装するMIPS32およびMIPS64アーキテクチャとプロセッサは例外である。 MIPS32およびMIPS64アーキテクチャは特にその使用を非推奨にするため、分岐可能命令はデフォルトで生成されない
 
 @item -mcompact-branches=never
 @itemx -mcompact-branches=optimal
@@ -15547,120 +15499,75 @@ and MIPS64 architectures specifically deprecate their use.
 @opindex mcompact-branches=never
 @opindex mcompact-branches=optimal
 @opindex mcompact-branches=always
-These options control which form of branches will be generated.  The
-default is @option{-mcompact-branches=optimal}.
+これらのオプションは、生成される分岐の形式を制御する。 デフォルトは@option{-mcompact-branches=optimal}である。
 
-The @option{-mcompact-branches=never} option ensures that compact branch
-instructions will never be generated.
+@option{-mcompact-branches=never}オプションはコンパクトブランチ命令が生成されることがないことを保証する。
+@option {-mcompact-branches = always}オプションを指定すると、使用可能なコンパクトブランチ命令が生成される。 コンパクト分岐命令が利用可能でない場合、代わりに分岐の遅延スロット形式が使用される。
 
-The @option{-mcompact-branches=always} option ensures that a compact
-branch instruction will be generated if available.  If a compact branch
-instruction is not available, a delay slot form of the branch will be
-used instead.
+このオプションは、MIPSリリース6以降でサポートされている。
 
-This option is supported from MIPS Release 6 onwards.
-
-The @option{-mcompact-branches=optimal} option will cause a delay slot
-branch to be used if one is available in the current ISA and the delay
-slot is successfully filled.  If the delay slot is not filled, a compact
-branch will be chosen if one is available.
+@option{-mcompact-branches=optimal}オプションを指定すると、現在のISAで利用可能な遅延スロットがあれば、遅延スロットブランチが使用され、遅延スロットは正常に埋められる。 遅延スロットが満たされていない場合、使用可能なコンパクトブランチが選択される。
 
 @item -mfp-exceptions
 @itemx -mno-fp-exceptions
 @opindex mfp-exceptions
-Specifies whether FP exceptions are enabled.  This affects how
-FP instructions are scheduled for some processors.
-The default is that FP exceptions are
-enabled.
+FP例外を有効にするかどうかを指定する。 これは、FP命令がいくつかのプロセッサーにスケジュールされる方法に影響する。 デフォルトでは、FP例外が有効になっている。
 
-For instance, on the SB-1, if FP exceptions are disabled, and we are emitting
-64-bit code, then we can use both FP pipes.  Otherwise, we can only use one
-FP pipe.
+たとえば、SB-1では、FP例外を無効にして64ビットコードを発行している場合は、両方のFPパイプを使用できる。 それ以外の場合は、FPパイプは1つしか使用できない。
 
 @item -mvr4130-align
 @itemx -mno-vr4130-align
 @opindex mvr4130-align
-The VR4130 pipeline is two-way superscalar, but can only issue two
-instructions together if the first one is 8-byte aligned.  When this
-option is enabled, GCC aligns pairs of instructions that it
-thinks should execute in parallel.
+VR4130パイプラインは2ウェイスーパスカラだが、最初のパイプラインが8バイトアライメントの場合は、2つの命令のみを発行できる。  このオプションを有効にすると、GCCは並列に実行する必要があると考えられる命令のペアを整列させる。
 
-This option only has an effect when optimizing for the VR4130.
-It normally makes code faster, but at the expense of making it bigger.
-It is enabled by default at optimization level @option{-O3}.
+このオプションは、VR4130を最適化する場合にのみ有効である。通常はコードを高速化するが、コードの大きさは犠牲になる。デフォルトでは、最適化レベルの@option{-O3}で有効になる。
 
 @item -msynci
 @itemx -mno-synci
 @opindex msynci
-Enable (disable) generation of @code{synci} instructions on
-architectures that support it.  The @code{synci} instructions (if
-enabled) are generated when @code{__builtin___clear_cache} is
-compiled.
+サポートするアーキテクチャで@code{synci}命令の生成を有効（無効）にする。 @code{__builtin___clear_cache}をコンパイルすると、@code{synci}命令（使用可能な場合）が生成される。
 
-This option defaults to @option{-mno-synci}, but the default can be
-overridden by configuring GCC with @option{--with-synci}.
+このオプションのデフォルトは@option{-mno-synci}だが、デフォルトはGCCを@option{-with-synci}で構成することで上書きすることができる。
 
-When compiling code for single processor systems, it is generally safe
-to use @code{synci}.  However, on many multi-core (SMP) systems, it
-does not invalidate the instruction caches on all cores and may lead
-to undefined behavior.
+シングルプロセッサシステム用のコードをコンパイルするときは、一般的に@code{synci}を使用しても安全である。 ただし、多くのマルチコア（SMP）システムでは、すべてのコアの命令キャッシュを無効にすることはなく、未定義の動作につながる可能性がある。
 
 @item -mrelax-pic-calls
 @itemx -mno-relax-pic-calls
 @opindex mrelax-pic-calls
-Try to turn PIC calls that are normally dispatched via register
-@code{$25} into direct calls.  This is only possible if the linker can
-resolve the destination at link time and if the destination is within
-range for a direct call.
+通常は@code{$25}のレジスタを使って直接呼び出されるPICコールをダイレクトコールにするようにする。 リンカがリンク時に宛先を解決でき、宛先が直接呼び出しの範囲内にある場合にのみ可能である。
 
-@option{-mrelax-pic-calls} is the default if GCC was configured to use
-an assembler and a linker that support the @code{.reloc} assembly
-directive and @option{-mexplicit-relocs} is in effect.  With
-@option{-mno-explicit-relocs}, this optimization can be performed by the
-assembler and the linker alone without help from the compiler.
+GCCが@code{.reloc}アセンブリディレクティブをサポートし、@option{-mexplicit-relocs}が有効であるアセンブラとリンカを使用するように設定されている場合、@option{-mrelax-pic-calls}がデフォルトである。@option{-mno-explicit-relocs}を使用すると、コンパイラの助けを借りずにアセンブラとリンカだけでこの最適化を実行できる。
 
 @item -mmcount-ra-address
 @itemx -mno-mcount-ra-address
 @opindex mmcount-ra-address
 @opindex mno-mcount-ra-address
-Emit (do not emit) code that allows @code{_mcount} to modify the
-calling function's return address.  When enabled, this option extends
-the usual @code{_mcount} interface with a new @var{ra-address}
-parameter, which has type @code{intptr_t *} and is passed in register
-@code{$12}.  @code{_mcount} can then modify the return address by
-doing both of the following:
+@code{_mcount}が呼び出し関数の戻りアドレスを変更できるようにするコードを発行する（しない）。このオプションを有効にすると、通常の@code{_count}インターフェイスが新しい@var{ra-address}パラメータで拡張される。このパラメータは、@code{intptr_t *}タイプであり、レジスタ@code{$ 2}に渡される。 @code{_mcount}は、次の両方を実行して戻りアドレスを変更できる。
 @itemize
 @item
-Returning the new address in register @code{$31}.
+新しいアドレスを登録する@code{$31}。
 @item
-Storing the new address in @code{*@var{ra-address}},
-if @var{ra-address} is nonnull.
+@var{ra-address}がNULLでない場合、新しいアドレスを@code{*@ var{ra-address}}に格納する。
 @end itemize
 
-The default is @option{-mno-mcount-ra-address}.
+デフォルトは@option{-mno-mcount-ra-address}である。
 
 @item -mframe-header-opt
 @itemx -mno-frame-header-opt
 @opindex mframe-header-opt
-Enable (disable) frame header optimization in the o32 ABI.  When using the
-o32 ABI, calling functions will allocate 16 bytes on the stack for the called
-function to write out register arguments.  When enabled, this optimization
-will suppress the allocation of the frame header if it can be determined that
-it is unused.
+o32 ABIでフレームヘッダーの最適化を有効（無効）にする。o32 ABIを使用する場合、呼び出し関数は呼び出された関数のスタックに16バイトを割り当ててレジスタの引数を書き出す。この最適化を有効にすると、フレームヘッダーが未使用であると判断できる場合、この最適化によってフレームヘッダーの割り当てが抑制される。
 
-This optimization is off by default at all optimization levels.
+この最適化は、デフォルトではすべての最適化レベルでオフになっている。
 
 @item -mlxc1-sxc1
 @itemx -mno-lxc1-sxc1
 @opindex mlxc1-sxc1
-When applicable, enable (disable) the generation of @code{lwxc1},
-@code{swxc1}, @code{ldxc1}, @code{sdxc1} instructions.  Enabled by default.
+該当する場合は、@code{lwxc1}、@code{swxc1}、@code{ldxc1}、@code{sdxc1}命令の生成を有効（無効）にする。 デフォルトでは有効である。
 
 @item -mmadd4
 @itemx -mno-madd4
 @opindex mmadd4
-When applicable, enable (disable) the generation of 4-operand @code{madd.s},
-@code{madd.d} and related instructions.  Enabled by default.
+該当する場合、4オペランド@code{madd.s}、@code{madd.d}および関連する命令の生成を有効（無効）にする。 デフォルトでは有効である。
 
 @end table
 
