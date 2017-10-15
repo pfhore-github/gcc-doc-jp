@@ -15638,89 +15638,69 @@ o32 ABIでフレームヘッダーの最適化を有効（無効）にする。o
 @end table
 
 @node MN10300 Options
-@subsection MN10300 Options
+@subsection MN10300オプション
 @cindex MN10300 options
 
-These @option{-m} options are defined for Matsushita MN10300 architectures:
+これらの@option{-m}オプションは、Matsushita MN10300アーキテクチャ用に定義されている。
 
 @table @gcctabopt
 @item -mmult-bug
 @opindex mmult-bug
-Generate code to avoid bugs in the multiply instructions for the MN10300
-processors.  This is the default.
+MN10300プロセッサの乗算命令のバグを回避するコードを生成する。 これがデフォルトである。
 
 @item -mno-mult-bug
 @opindex mno-mult-bug
-Do not generate code to avoid bugs in the multiply instructions for the
-MN10300 processors.
+MN10300プロセッサの乗算命令のバグを回避するコードを生成しない。
 
 @item -mam33
 @opindex mam33
-Generate code using features specific to the AM33 processor.
+AM33プロセッサ固有の機能を使用してコードを生成する。
 
 @item -mno-am33
 @opindex mno-am33
-Do not generate code using features specific to the AM33 processor.  This
-is the default.
+AM33プロセッサ固有の機能を使用してコードを生成しない。 これがデフォルトである。
 
 @item -mam33-2
 @opindex mam33-2
-Generate code using features specific to the AM33/2.0 processor.
+AM33/2.0プロセッサ固有の機能を使用してコードを生成する。
 
 @item -mam34
 @opindex mam34
-Generate code using features specific to the AM34 processor.
+AM34プロセッサ固有の機能を使用してコードを生成する。
 
 @item -mtune=@var{cpu-type}
 @opindex mtune
-Use the timing characteristics of the indicated CPU type when
-scheduling instructions.  This does not change the targeted processor
-type.  The CPU type must be one of @samp{mn10300}, @samp{am33},
-@samp{am33-2} or @samp{am34}.
+命令をスケジューリングするときは、指定されたCPUタイプのタイミング特性を使用する。 これは、対象のプロセッサタイプを変更しない。 CPUタイプは@samp{mn10300}、@samp{am33}、@samp{am33-2}、@samp{am34}のいずれかでなければならない。
 
 @item -mreturn-pointer-on-d0
 @opindex mreturn-pointer-on-d0
-When generating a function that returns a pointer, return the pointer
-in both @code{a0} and @code{d0}.  Otherwise, the pointer is returned
-only in @code{a0}, and attempts to call such functions without a prototype
-result in errors.  Note that this option is on by default; use
-@option{-mno-return-pointer-on-d0} to disable it.
+ポインタを返す関数を生成するときは、ポインタを@code{a0}と@code{d0}の両方に返す。 そうでなければ、ポインタは@code{a0}でのみ返され、プロトタイプなしでそのような関数を呼び出そうとするとエラーが発生する。 このオプションはデフォルトでオンになっている。 @option{-mno-return-pointer-on-d0}を使用して無効にする。
 
 @item -mno-crt0
 @opindex mno-crt0
-Do not link in the C run-time initialization object file.
+Cランタイム初期化オブジェクトファイルにはリンクしない。
 
 @item -mrelax
 @opindex mrelax
-Indicate to the linker that it should perform a relaxation optimization pass
-to shorten branches, calls and absolute memory addresses.  This option only
-has an effect when used on the command line for the final link step.
+分岐、呼び出し、および絶対メモリアドレスを短縮するリラクゼーション最適化パスを実行する必要があることをリンカーに示す。 このオプションは、最終リンクステップのコマンドライン使用でのみ効果がある。
 
-This option makes symbolic debugging impossible.
+このオプションはシンボリックデバッグを不可能にする。
 
 @item -mliw
 @opindex mliw
-Allow the compiler to generate @emph{Long Instruction Word}
-instructions if the target is the @samp{AM33} or later.  This is the
-default.  This option defines the preprocessor macro @code{__LIW__}.
+ターゲットが@samp {AM33}以上の場合、コンパイラが@emph{_ロング命令ワード_}命令を生成できるようにする。 これがデフォルトである。 このオプションはプリプロセッサマクロ@code{__LIW__}を定義する。
 
 @item -mnoliw
 @opindex mnoliw
-Do not allow the compiler to generate @emph{Long Instruction Word}
-instructions.  This option defines the preprocessor macro
-@code{__NO_LIW__}.
+コンパイラが@emph{ロング命令ワード}命令を生成することを許可しない。 このオプションはプリプロセッサマクロ@code{__NO_LIW__}を定義する。
 
 @item -msetlb
 @opindex msetlb
-Allow the compiler to generate the @emph{SETLB} and @emph{Lcc}
-instructions if the target is the @samp{AM33} or later.  This is the
-default.  This option defines the preprocessor macro @code{__SETLB__}.
+ターゲットが@samp{AM33}以降の場合、コンパイラが@emph{SETLB}命令と@emph{Lcc}命令を生成できるようにする。 これがデフォルトである。 このオプションはプリプロセッサマクロ@code{__SETLB__}を定義する。
 
 @item -mnosetlb
 @opindex mnosetlb
-Do not allow the compiler to generate @emph{SETLB} or @emph{Lcc}
-instructions.  This option defines the preprocessor macro
-@code{__NO_SETLB__}.
+コンパイラが@emph{SETLB}命令または@emph{Lcc}命令を生成することを許可しない。 このオプションはプリプロセッサマクロ@code{__NO_SETLB__}を定義します。
 
 @end table
 
