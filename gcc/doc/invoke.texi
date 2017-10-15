@@ -15572,89 +15572,69 @@ o32 ABIでフレームヘッダーの最適化を有効（無効）にする。o
 @end table
 
 @node MMIX Options
-@subsection MMIX Options
+@subsection MMIXオプション
 @cindex MMIX Options
 
-These options are defined for the MMIX:
+これらのオプションは、MMIXに対して定義されている。
 
 @table @gcctabopt
 @item -mlibfuncs
 @itemx -mno-libfuncs
 @opindex mlibfuncs
 @opindex mno-libfuncs
-Specify that intrinsic library functions are being compiled, passing all
-values in registers, no matter the size.
+サイズに関係なく、すべての値をレジスタで渡し、組み込みライブラリ関数がコンパイルされると指定する。
 
 @item -mepsilon
 @itemx -mno-epsilon
 @opindex mepsilon
 @opindex mno-epsilon
-Generate floating-point comparison instructions that compare with respect
-to the @code{rE} epsilon register.
+@code{rE}イプシロンレジスタに関して比較する浮動小数点比較命令を生成する。
 
 @item -mabi=mmixware
 @itemx -mabi=gnu
 @opindex mabi=mmixware
 @opindex mabi=gnu
-Generate code that passes function parameters and return values that (in
-the called function) are seen as registers @code{$0} and up, as opposed to
-the GNU ABI which uses global registers @code{$231} and up.
+関数のパラメータを渡し、グローバルレジスタ@code{$231}以上を使用するGNU ABIとは対照的に（呼び出された関数内の）値をレジスタ@code{$0}以上で返すコードを生成する。
 
 @item -mzero-extend
 @itemx -mno-zero-extend
 @opindex mzero-extend
 @opindex mno-zero-extend
-When reading data from memory in sizes shorter than 64 bits, use (do not
-use) zero-extending load instructions by default, rather than
-sign-extending ones.
+64ビットより短いサイズのメモリからデータを読み込むときは、符号拡張するのではなく、ゼロ拡張のロード命令をデフォルトで使用するい（しない）。
 
 @item -mknuthdiv
 @itemx -mno-knuthdiv
 @opindex mknuthdiv
 @opindex mno-knuthdiv
-Make the result of a division yielding a remainder have the same sign as
-the divisor.  With the default, @option{-mno-knuthdiv}, the sign of the
-remainder follows the sign of the dividend.  Both methods are
-arithmetically valid, the latter being almost exclusively used.
+残余を生じる除算の結果を除数と同じ符号にする。 デフォルトの@option{-mno-knuthdiv}では、残りの符号は被除数の符号に従う。 両方の方法は算術的に有効であり、後者はほぼ独占的に使用される。
 
 @item -mtoplevel-symbols
 @itemx -mno-toplevel-symbols
 @opindex mtoplevel-symbols
 @opindex mno-toplevel-symbols
-Prepend (do not prepend) a @samp{:} to all global symbols, so the assembly
-code can be used with the @code{PREFIX} assembly directive.
+アセンブラコードを@code{PREFIX}アセンブリディレクティブと一緒に使用できるように、@samp{:}をすべてのグローバルシンボルの前に追加する（しない）。
 
 @item -melf
 @opindex melf
-Generate an executable in the ELF format, rather than the default
-@samp{mmo} format used by the @command{mmix} simulator.
+@command{mmix}シミュレータで使用されるデフォルトの@samp{mmo}フォーマットではなく、ELFフォーマットで実行可能ファイルを生成する。
 
 @item -mbranch-predict
 @itemx -mno-branch-predict
 @opindex mbranch-predict
 @opindex mno-branch-predict
-Use (do not use) the probable-branch instructions, when static branch
-prediction indicates a probable branch.
+静的分岐予測が分岐の可能性が高いことを示す場合に、分岐可能命令を使用する（しない）。
 
 @item -mbase-addresses
 @itemx -mno-base-addresses
 @opindex mbase-addresses
 @opindex mno-base-addresses
-Generate (do not generate) code that uses @emph{base addresses}.  Using a
-base address automatically generates a request (handled by the assembler
-and the linker) for a constant to be set up in a global register.  The
-register is used for one or more base address requests within the range 0
-to 255 from the value held in the register.  The generally leads to short
-and fast code, but the number of different data items that can be
-addressed is limited.  This means that a program that uses lots of static
-data may require @option{-mno-base-addresses}.
+@emph{_ベースアドレス_}を使用するコードを生成する（しない）。ベースアドレスを使用すると、定数がグローバルレジスタに設定されるための要求（アセンブラとリンカによって処理される）が自動的に生成される。レジスタは、レジスタに保持されている値から0〜255の範囲内の1つ以上のベースアドレス要求に対して使用される。一般的に短くて速いコードにつながるが、対処できるさまざまなデータ項目の数は限られている。つまり、多くの静的データを使用するプログラムでは、@option{-mno-base-addresses}が必要になる場合がある。
 
 @item -msingle-exit
 @itemx -mno-single-exit
 @opindex msingle-exit
 @opindex mno-single-exit
-Force (do not force) generated code to have a single exit point in each
-function.
+生成されたコードに各関数の単一の終了点を強制する（しない）。
 @end table
 
 @node MN10300 Options
