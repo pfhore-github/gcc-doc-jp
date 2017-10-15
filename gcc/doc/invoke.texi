@@ -15705,28 +15705,26 @@ Cランタイム初期化オブジェクトファイルにはリンクしない�
 @end table
 
 @node Moxie Options
-@subsection Moxie Options
+@subsection Moxieオプション
 @cindex Moxie Options
 
 @table @gcctabopt
 
 @item -meb
 @opindex meb
-Generate big-endian code.  This is the default for @samp{moxie-*-*}
-configurations.
+ビッグエンディアンコードを生成する。 これは@samp{moxie-*-*}構成のデフォルトである。
 
 @item -mel
 @opindex mel
-Generate little-endian code.
+リトルコードを生成する。
 
 @item -mmul.x
 @opindex mmul.x
-Generate mul.x and umul.x instructions.  This is the default for
-@samp{moxiebox-*-*} configurations.
+mul.xとumul.x命令を生成する。 これは@samp{moxiebox-*-*}構成のデフォルトである。
 
 @item -mno-crt0
 @opindex mno-crt0
-Do not link in the C run-time initialization object file.
+Cランタイム初期化オブジェクトファイルにはリンクしない。
 
 @end table
 
