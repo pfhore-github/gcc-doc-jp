@@ -15806,96 +15806,92 @@ Cランタイム初期化オブジェクトファイルにはリンクしない�
 @end table
 
 @node NDS32 Options
-@subsection NDS32 Options
+@subsection NDS32オプション
 @cindex NDS32 Options
 
-These options are defined for NDS32 implementations:
+これらのオプションは、NDS32実装で定義されている。
 
 @table @gcctabopt
 
 @item -mbig-endian
 @opindex mbig-endian
-Generate code in big-endian mode.
+ビッグエンディアンモードでコードを生成する。
 
 @item -mlittle-endian
 @opindex mlittle-endian
-Generate code in little-endian mode.
+リトルエンディアンモードでコードを生成する。
 
 @item -mreduced-regs
 @opindex mreduced-regs
-Use reduced-set registers for register allocation.
+レジスタ割当に縮小セットレジスタを使う。
 
 @item -mfull-regs
 @opindex mfull-regs
-Use full-set registers for register allocation.
+レジスタ割当に完全セットレジスタを使う。
 
 @item -mcmov
 @opindex mcmov
-Generate conditional move instructions.
+条件付きムーブ命令を生成する。
 
 @item -mno-cmov
 @opindex mno-cmov
-Do not generate conditional move instructions.
+条件付きムーブ命令を生成しない。
 
 @item -mperf-ext
 @opindex mperf-ext
-Generate performance extension instructions.
+パフォーマンス拡張命令を生成する。
 
 @item -mno-perf-ext
 @opindex mno-perf-ext
-Do not generate performance extension instructions.
+パフォーマンス拡張命令を生成しない。
 
 @item -mv3push
 @opindex mv3push
-Generate v3 push25/pop25 instructions.
+v3 push25/pop25命令を生成する。
 
 @item -mno-v3push
 @opindex mno-v3push
-Do not generate v3 push25/pop25 instructions.
+push25/pop25命令を生成しない。
 
 @item -m16-bit
 @opindex m16-bit
-Generate 16-bit instructions.
+16ビット命令を生成する。
 
 @item -mno-16-bit
 @opindex mno-16-bit
-Do not generate 16-bit instructions.
+16ビット命令を生成しない。
 
 @item -misr-vector-size=@var{num}
 @opindex misr-vector-size
-Specify the size of each interrupt vector, which must be 4 or 16.
+割り込みベクタごとのサイズを指定する。4か16でなければならない。
 
 @item -mcache-block-size=@var{num}
 @opindex mcache-block-size
-Specify the size of each cache block,
-which must be a power of 2 between 4 and 512.
+キャッシュブロックごとのサイズを指定する。4から512までの2のベキ乗でなければならない。
 
 @item -march=@var{arch}
 @opindex march
-Specify the name of the target architecture.
+ターゲットアーキテクチャの名前を指定する。
 
 @item -mcmodel=@var{code-model}
 @opindex mcmodel
-Set the code model to one of
+キャッシュモデルは以下の中からセットする。
 @table @asis
 @item @samp{small}
-All the data and read-only data segments must be within 512KB addressing space.
-The text segment must be within 16MB addressing space.
+すべてのデータおよび読み取り専用データセグメントは、512KBのアドレス空間内になければならない。テキストセグメントは16MBのアドレス空間内になければならない。
 @item @samp{medium}
-The data segment must be within 512KB while the read-only data segment can be
-within 4GB addressing space.  The text segment should be still within 16MB
-addressing space.
+データセグメントは512KB以内でなければならず、読み取り専用データセグメントは4GBアドレス空間内にある必要がある。 テキストセグメントは16MB以内でなければならない
 @item @samp{large}
-All the text and data segments can be within 4GB addressing space.
+すべてのテキストとデータセグメントは4GBのアドレス空間内に置ける。
 @end table
 
 @item -mctor-dtor
 @opindex mctor-dtor
-Enable constructor/destructor feature.
+コンストラクタ・デストラクタの機能を有効にする。
 
 @item -mrelax
 @opindex mrelax
-Guide linker to relax instructions.
+リンカに命令を緩和するように示す。
 
 @end table
 
