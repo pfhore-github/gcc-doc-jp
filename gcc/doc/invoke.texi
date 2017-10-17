@@ -15729,127 +15729,79 @@ Cランタイム初期化オブジェクトファイルにはリンクしない�
 @end table
 
 @node MSP430 Options
-@subsection MSP430 Options
+@subsection MSP430オプション
 @cindex MSP430 Options
 
-These options are defined for the MSP430:
+これらのオプションは、MSP430用に定義されている。
 
 @table @gcctabopt
 
 @item -masm-hex
 @opindex masm-hex
-Force assembly output to always use hex constants.  Normally such
-constants are signed decimals, but this option is available for
-testsuite and/or aesthetic purposes.
+アセンブリの出力に常に16進定数を使用するように強制する。 通常、このような定数は符号付き小数だが、このオプションはテストスイートや審美的な目的で利用できる。
 
 @item -mmcu=
 @opindex mmcu=
-Select the MCU to target.  This is used to create a C preprocessor
-symbol based upon the MCU name, converted to upper case and pre- and
-post-fixed with @samp{__}.  This in turn is used by the
-@file{msp430.h} header file to select an MCU-specific supplementary
-header file.
+対象とするMCUを選択する。これはMCU名に基づいてCプリプロセッサシンボルを作成し、大文字に変換し、@samp{__}で前後に置く。 これは、@file{msp430.h}ヘッダファイルによってMCU固有の補助ヘッダファイルを選択するために使用される。
 
-The option also sets the ISA to use.  If the MCU name is one that is
-known to only support the 430 ISA then that is selected, otherwise the
-430X ISA is selected.  A generic MCU name of @samp{msp430} can also be
-used to select the 430 ISA.  Similarly the generic @samp{msp430x} MCU
-name selects the 430X ISA.
+このオプションは、使用するISAも設定する。 MCU名が430 ISAのみをサポートすることがわかっているものであれば、それが選択され、そうでなければ430X ISAが選択される。 @samp{msp430}の汎用MCU名を使用して430 ISAを選択することもできる。 同様に、一般的な@samp{msp430x} MCU名は430X ISAを選択する。
 
-In addition an MCU-specific linker script is added to the linker
-command line.  The script's name is the name of the MCU with
-@file{.ld} appended.  Thus specifying @option{-mmcu=xxx} on the @command{gcc}
-command line defines the C preprocessor symbol @code{__XXX__} and
-cause the linker to search for a script called @file{xxx.ld}.
+さらに、MCU固有のリンカスクリプトがリンカコマンドラインに追加される。 スクリプトの名前は、@file{.ld}が付加されたMCUの名前である。@command{gcc}コマンドラインで@option{-mmcu = xxx}を指定すると、Cプリプロセッサシンボル@code{__ XXX__}が定義され、リンカは@file{xxx.ld}というスクリプトを検索する。
 
-This option is also passed on to the assembler.
+このオプションはアセンブラにも渡される。
 
 @item -mwarn-mcu
 @itemx -mno-warn-mcu
 @opindex mwarn-mcu
 @opindex mno-warn-mcu
-This option enables or disables warnings about conflicts between the
-MCU name specified by the @option{-mmcu} option and the ISA set by the
-@option{-mcpu} option and/or the hardware multiply support set by the
-@option{-mhwmult} option.  It also toggles warnings about unrecognized
-MCU names.  This option is on by default.
+このオプションは、@option{-mmcu}オプションで指定したMCU名と@option{-mcpu}オプションで設定したISA間の競合や、@option{-mhwmult}オプションで設定したハードウェア多重サポートを無効にするかどうかの警告を有効または無効にする。 また、認識されないMCU名についての警告を切り替える。 このオプションは、デフォルトでオンになっている。
 
 @item -mcpu=
 @opindex mcpu=
-Specifies the ISA to use.  Accepted values are @samp{msp430},
-@samp{msp430x} and @samp{msp430xv2}.  This option is deprecated.  The
-@option{-mmcu=} option should be used to select the ISA.
+使用するISAを指定する。 受け入れられる値は@samp{msp430}、@samp{msp430x}、@samp{msp430xv2}である。 このオプションは非推奨である。@option{-mmcu=}オプションを使用してISAを選択する必要がある。
 
 @item -msim
 @opindex msim
-Link to the simulator runtime libraries and linker script.  Overrides
-any scripts that would be selected by the @option{-mmcu=} option.
+シミュレータランタイムライブラリとリンカスクリプトにリンクする。 @option{-mmcu=}オプションで選択されるスクリプトを上書きする。
 
 @item -mlarge
 @opindex mlarge
-Use large-model addressing (20-bit pointers, 32-bit @code{size_t}).
+ラージモデルのアドレスを使う。（20ビットポインタ、32ビット@code{size_t}）
 
 @item -msmall
 @opindex msmall
-Use small-model addressing (16-bit pointers, 16-bit @code{size_t}).
+スモールモデルのアドレスを使う。（16ビットポインタ、16ビットの@code{size_t}）
 
 @item -mrelax
 @opindex mrelax
-This option is passed to the assembler and linker, and allows the
-linker to perform certain optimizations that cannot be done until
-the final link.
+このオプションはアセンブラとリンカに渡され、リンカは最終的なリンクまで実行できない特定の最適化を実行できるようにする。
 
 @item mhwmult=
 @opindex mhwmult=
-Describes the type of hardware multiply supported by the target.
-Accepted values are @samp{none} for no hardware multiply, @samp{16bit}
-for the original 16-bit-only multiply supported by early MCUs.
-@samp{32bit} for the 16/32-bit multiply supported by later MCUs and
-@samp{f5series} for the 16/32-bit multiply supported by F5-series MCUs.
-A value of @samp{auto} can also be given.  This tells GCC to deduce
-the hardware multiply support based upon the MCU name provided by the
-@option{-mmcu} option.  If no @option{-mmcu} option is specified or if
-the MCU name is not recognized then no hardware multiply support is
-assumed.  @code{auto} is the default setting.
+ターゲットによってサポートされているハードウェア乗算の種類を記述する。受け入れられた値は、ハードウェア乗算がない場合は@samp{none}、初期MCUがサポートする元の16ビットのみ乗算では@samp{16bit}である。それ以降のMCUで16/32ビット乗算でサポートされる@samp{32bit}と、F5シリーズMCUで16/32ビット乗算でサポートされる@samp{f5series}がある。
+@samp{auto}の値も与えられる。これは、GCCに、@option{-mmcu}オプションによって提供されるMCU名に基づいてハードウェア乗算サポートを推測するように指示する。@option{-mmcu}オプションが指定されていない場合、またはMCU名が認識されない場合、ハードウェア乗算サポートは想定されない。 @code{auto}がデフォルト設定である。
 
-Hardware multiplies are normally performed by calling a library
-routine.  This saves space in the generated code.  When compiling at
-@option{-O3} or higher however the hardware multiplier is invoked
-inline.  This makes for bigger, but faster code.
+ハードウェア乗算は、通常、ライブラリルーチンを呼び出すことによって実行される。 これにより、生成されたコードの領域が節約される。 @option{-O3}以上でコンパイルすると、ハードウェア乗数がインラインで呼び出される。 これは、より大きいが速いコードになる。
 
-The hardware multiply routines disable interrupts whilst running and
-restore the previous interrupt state when they finish.  This makes
-them safe to use inside interrupt handlers as well as in normal code.
+ハードウェア乗算ルーチンは、終了時に以前の割り込み状態を実行して復元しながら割り込みを無効にする。 これにより、通常のコードと同様に、内部の割り込みハンドラを安全に使用することができる。
 
 @item -minrt
 @opindex minrt
-Enable the use of a minimum runtime environment - no static
-initializers or constructors.  This is intended for memory-constrained
-devices.  The compiler includes special symbols in some objects
-that tell the linker and runtime which code fragments are required.
+静的な初期化子やコンストラクタなしで、最小限の実行時環境を使用できるようにする。 これはメモリが制約されたデバイスを対象としている。 コンパイラには、リンカとランタイムにコードフラグメントが必要であることを伝える、いくつかのオブジェクトに特殊なシンボルが含まれている。
 
 @item -mcode-region=
 @itemx -mdata-region=
 @opindex mcode-region
 @opindex mdata-region
-These options tell the compiler where to place functions and data that
-do not have one of the @code{lower}, @code{upper}, @code{either} or
-@code{section} attributes.  Possible values are @code{lower},
-@code{upper}, @code{either} or @code{any}.  The first three behave
-like the corresponding attribute.  The fourth possible value -
-@code{any} - is the default.  It leaves placement entirely up to the
-linker script and how it assigns the standard sections
-(@code{.text}, @code{.data}, etc) to the memory regions.
+これらのオプションは、@code{lower}、@code{upper}、@code{either}、または@code{section}属性のいずれも持たない関数とデータの配置場所をコンパイラに指示する。 可能な値は@code{lower}、@code{upper}、@code{either}または@code any}である。 最初の3つは、対応する属性のように動作する。 4番目に可能な値 - @code{any} - がデフォルトである。 これは、リンカスクリプト全体と、標準セクション（@code{.text}、@code{.data}など）をメモリ領域に割り当てる方法で完全に置く。
 
 @item -msilicon-errata=
 @opindex msilicon-errata
-This option passes on a request to assembler to enable the fixes for
-the named silicon errata.
+このオプションは、指定されたシリコンエラッタの修正を有効にするためにアセンブラに要求を渡す。
 
 @item -msilicon-errata-warn=
 @opindex msilicon-errata-warn
-This option passes on a request to the assembler to enable warning
-messages when a silicon errata might need to be applied.
+このオプションは、シリコンエラッタを適用する必要がある場合に警告メッセージを有効にするように、アセンブラに要求を渡す。
 
 @end table
 
