@@ -15793,7 +15793,7 @@ Cランタイム初期化オブジェクトファイルにはリンクしない�
 @itemx -mdata-region=
 @opindex mcode-region
 @opindex mdata-region
-これらのオプションは、@code{lower}、@code{upper}、@code{either}、または@code{section}属性のいずれも持たない関数とデータの配置場所をコンパイラに指示する。 可能な値は@code{lower}、@code{upper}、@code{either}または@code any}である。 最初の3つは、対応する属性のように動作する。 4番目に可能な値 - @code{any} - がデフォルトである。 これは、リンカスクリプト全体と、標準セクション（@code{.text}、@code{.data}など）をメモリ領域に割り当てる方法で完全に置く。
+これらのオプションは、@code{lower}、@code{upper}、@code{either}、または@code{section}属性のいずれも持たない関数とデータの配置場所をコンパイラに指示する。 可能な値は@code{lower}、@code{upper}、@code{either}または@code{any}である。 最初の3つは、対応する属性のように動作する。 4番目に可能な値 - @code{any} - がデフォルトである。 これは、リンカスクリプト全体と、標準セクション（@code{.text}、@code{.data}など）をメモリ領域に割り当てる方法で完全に置く。
 
 @item -msilicon-errata=
 @opindex msilicon-errata
@@ -15896,114 +15896,80 @@ push25/pop25命令を生成しない。
 @end table
 
 @node Nios II Options
-@subsection Nios II Options
+@subsection Nios IIオプション
 @cindex Nios II options
 @cindex Altera Nios II options
 
-These are the options defined for the Altera Nios II processor.
+これらは、アルテラのNios IIプロセッサ用に定義されたオプションである。
 
 @table @gcctabopt
 
 @item -G @var{num}
 @opindex G
 @cindex smaller data references
-Put global and static objects less than or equal to @var{num} bytes
-into the small data or BSS sections instead of the normal data or BSS
-sections.  The default value of @var{num} is 8.
+@var{num}バイト以下のグローバルおよび静的オブジェクトを、通常のデータまたはBSSセクションではなく小データまたはBSSセクションに配置する。 @var{num}のデフォルト値は8である。
 
 @item -mgpopt=@var{option}
 @item -mgpopt
 @itemx -mno-gpopt
 @opindex mgpopt
 @opindex mno-gpopt
-Generate (do not generate) GP-relative accesses.  The following 
-@var{option} names are recognized:
+GP相対アクセスを生成する（しない）。以下の@var{option}名が認識される。
 
 @table @samp
 
 @item none
-Do not generate GP-relative accesses.
+GP相対アクセスを生成しない。
 
 @item local
-Generate GP-relative accesses for small data objects that are not 
-external, weak, or uninitialized common symbols.  
-Also use GP-relative addressing for objects that
-have been explicitly placed in a small data section via a @code{section}
-attribute.
+外部、弱い、または初期化されていない共通シンボルではない小さなデータオブジェクトに対して、GP相対アクセスを生成する。また、小さなデータセクションに明示的に配置されたオブジェクトには、@code{section}属性でGP相対アドレス指定を使用する。
 
 @item global
-As for @samp{local}, but also generate GP-relative accesses for
-small data objects that are external, weak, or common.  If you use this option,
-you must ensure that all parts of your program (including libraries) are
-compiled with the same @option{-G} setting.
+@samp{local}と同様に、外部、弱い、または共通の小さなデータオブジェクトに対するGP相対アクセスも生成する。 このオプションを使用する場合は、プログラムのすべての部分（ライブラリを含む）が同じ@option{-G}設定でコンパイルされていることを確認する必要がある。
 
 @item data
-Generate GP-relative accesses for all data objects in the program.  If you
-use this option, the entire data and BSS segments
-of your program must fit in 64K of memory and you must use an appropriate
-linker script to allocate them within the addressable range of the
-global pointer.
+プログラム内のすべてのデータオブジェクトに対するGP相対アクセスを生成する。 このオプションを使用する場合は、プログラムのデータおよびBSSセグメント全体が64Kのメモリに収まる必要があり、適切なリンカスクリプトを使用してグローバルポインタのアドレス指定可能な範囲内に割り当てる必要がある。
 
 @item all
-Generate GP-relative addresses for function pointers as well as data
-pointers.  If you use this option, the entire text, data, and BSS segments
-of your program must fit in 64K of memory and you must use an appropriate
-linker script to allocate them within the addressable range of the
-global pointer.
+関数ポインタとデータポインタのGP相対アドレスを生成する。 このオプションを使用する場合は、プログラムのテキスト、データ、およびBSSセグメント全体が64Kのメモリに収まる必要があり、適切なリンカスクリプトを使用して、グローバルポインタのアドレス指定可能な範囲内に適切なリンカスクリプトを割り当てる必要がある。
 
 @end table
 
-@option{-mgpopt} is equivalent to @option{-mgpopt=local}, and
-@option{-mno-gpopt} is equivalent to @option{-mgpopt=none}.
+@option{-mgpopt}は@option{-mgpopt=local}と同等で、@option{-mno-gpopt}は@option{-mgpopt=none}と同じである。
 
-The default is @option{-mgpopt} except when @option{-fpic} or
-@option{-fPIC} is specified to generate position-independent code.
-Note that the Nios II ABI does not permit GP-relative accesses from
-shared libraries.
+位置非依存コードを生成するために@option{-fpic}または@option{-fPIC}が指定されている場合を除いて、デフォルトは@option{-mgpopt}である。Nios II ABIでは、共有ライブラリからのGP相対アクセスは許可されていない。
 
-You may need to specify @option{-mno-gpopt} explicitly when building
-programs that include large amounts of small data, including large
-GOT data sections.  In this case, the 16-bit offset for GP-relative
-addressing may not be large enough to allow access to the entire 
-small data section.
+大規模なGOTデータセクションを含む大量の小さなデータを含むプログラムを構築する場合は、明示的に@option{-mno-gpopt}を指定する必要がある。 この場合、GP相対アドレス指定のための16ビットオフセットは、小さなデータセクション全体にアクセスするのに十分なほど大きくないことがある。
 
 @item -mel
 @itemx -meb
 @opindex mel
 @opindex meb
-Generate little-endian (default) or big-endian (experimental) code,
-respectively.
+それぞれリトルエンディアン（デフォルト）またはビッグエンディアン（実験的）コードを生成する。
 
 @item -march=@var{arch}
 @opindex march
-This specifies the name of the target Nios II architecture.  GCC uses this
-name to determine what kind of instructions it can emit when generating
-assembly code.  Permissible names are: @samp{r1}, @samp{r2}.
+ターゲットNios IIアーキテクチャの名前を指定する。 GCCはこの名前を使用して、アセンブリコードを生成するときにどのような命令を発行できるかを判断する。 許可される名前は@samp{r1}、@samp{r2}である。
 
-The preprocessor macro @code{__nios2_arch__} is available to programs,
-with value 1 or 2, indicating the targeted ISA level.
+プリプロセッサマクロの@code{__ nios2_arch__}は、ターゲットISAレベルを示す値1または2のプログラムで使用できる。
 
 @item -mbypass-cache
 @itemx -mno-bypass-cache
 @opindex mno-bypass-cache
 @opindex mbypass-cache
-Force all load and store instructions to always bypass cache by 
-using I/O variants of the instructions. The default is not to
-bypass the cache.
+命令のI/Oバリアントを使用して、すべてのロードおよびストア命令が常にキャッシュをバイパスするようにする。 デフォルトでは、キャッシュをバイパスしない。
 
 @item -mno-cache-volatile 
 @itemx -mcache-volatile       
 @opindex mcache-volatile 
 @opindex mno-cache-volatile
-Volatile memory access bypass the cache using the I/O variants of 
-the load and store instructions. The default is not to bypass the cache.
+揮発性メモリアクセスは、ロードおよびストア命令のI / Oバリアントを使用してキャッシュをバイパスします。 デフォルトでは、キャッシュをバイパスしない。
 
 @item -mno-fast-sw-div
 @itemx -mfast-sw-div
 @opindex mno-fast-sw-div
 @opindex mfast-sw-div
-Do not use table-based fast divide for small numbers. The default 
-is to use the fast divide at @option{-O3} and above.
+小さい数に対してはテーブルベースの高速除算を使用する。 デフォルトでは、@option{-O3}以上の高速除算が使用される。
 
 @item -mno-hw-mul
 @itemx -mhw-mul
@@ -16017,171 +15983,133 @@ is to use the fast divide at @option{-O3} and above.
 @opindex mhw-mulx
 @opindex mno-hw-div
 @opindex mhw-div
-Enable or disable emitting @code{mul}, @code{mulx} and @code{div} family of 
-instructions by the compiler. The default is to emit @code{mul}
-and not emit @code{div} and @code{mulx}.
+コンパイラが@code{mul}、@code{mulx}、@code{div}命令ファミリを有効または無効にする。 デフォルトでは、@code{mul}を発行し、@code{div}と@code{mulx}は発行しない。
 
 @item -mbmx
 @itemx -mno-bmx
 @itemx -mcdx
 @itemx -mno-cdx
-Enable or disable generation of Nios II R2 BMX (bit manipulation) and
-CDX (code density) instructions.  Enabling these instructions also
-requires @option{-march=r2}.  Since these instructions are optional
-extensions to the R2 architecture, the default is not to emit them.
+Nios II R2 BMX（ビット操作）およびCDX（コード密度）命令の生成を有効または無効にする。 これらの命令を有効にするには、@option{-march=r2}も必要である。これらの命令はR2アーキテクチャのオプションの拡張であるため、デフォルトではそれらを発行しない。
 
 @item -mcustom-@var{insn}=@var{N}
 @itemx -mno-custom-@var{insn}
 @opindex mcustom-@var{insn}
 @opindex mno-custom-@var{insn}
-Each @option{-mcustom-@var{insn}=@var{N}} option enables use of a
-custom instruction with encoding @var{N} when generating code that uses 
-@var{insn}.  For example, @option{-mcustom-fadds=253} generates custom
-instruction 253 for single-precision floating-point add operations instead
-of the default behavior of using a library call.
+各@option{-mcustom-@var{insn}=@var{N}}オプションは、@var{insn}を使用するコードを生成するときに@var{N}をエンコードするカスタム命令の使用を可能にする。たとえば、@option{-mcustom-fadds=253}は、ライブラリ呼び出しを使用するデフォルトの動作ではなく、単精度浮動小数点加算演算用のカスタム命令253を生成する。
 
-The following values of @var{insn} are supported.  Except as otherwise
-noted, floating-point operations are expected to be implemented with
-normal IEEE 754 semantics and correspond directly to the C operators or the
-equivalent GCC built-in functions (@pxref{Other Builtins}).
+@var{insn}の以下の値がサポートされている。 特に明記されていない限り、浮動小数点演算は通常のIEEE 754セマンティクスで実装され、C演算子または同等のGCC組み込み関数（@pxref {Other Builtins}）に直接対応している。
 
-Single-precision floating point:
+単精度浮動小数点数：
 @table @asis
 
 @item @samp{fadds}, @samp{fsubs}, @samp{fdivs}, @samp{fmuls}
-Binary arithmetic operations.
+二項算術命令
 
 @item @samp{fnegs}
-Unary negation.
+単項否定
 
 @item @samp{fabss}
-Unary absolute value.
+単項絶対値
 
 @item @samp{fcmpeqs}, @samp{fcmpges}, @samp{fcmpgts}, @samp{fcmples}, @samp{fcmplts}, @samp{fcmpnes}
-Comparison operations.
+比較操作
 
 @item @samp{fmins}, @samp{fmaxs}
-Floating-point minimum and maximum.  These instructions are only
-generated if @option{-ffinite-math-only} is specified.
+浮動小数点最小・最大。これらの命令は@option{-ffinite-math-only}が指定されたときのみ生成される。
 
 @item @samp{fsqrts}
-Unary square root operation.
+単項平方根命令。
 
 @item @samp{fcoss}, @samp{fsins}, @samp{ftans}, @samp{fatans}, @samp{fexps}, @samp{flogs}
-Floating-point trigonometric and exponential functions.  These instructions
-are only generated if @option{-funsafe-math-optimizations} is also specified.
+浮動小数点数三角関数と指数関数。 これらの命令は、@option{-funsafe-math-optimizations}も指定されている場合にのみ生成される。
 
 @end table
 
-Double-precision floating point:
+倍精度浮動小数点数：
 @table @asis
 
 @item @samp{faddd}, @samp{fsubd}, @samp{fdivd}, @samp{fmuld}
-Binary arithmetic operations.
+二項算術命令
 
 @item @samp{fnegd}
-Unary negation.
+単項否定
 
 @item @samp{fabsd}
-Unary absolute value.
+単項絶対値
 
 @item @samp{fcmpeqd}, @samp{fcmpged}, @samp{fcmpgtd}, @samp{fcmpled}, @samp{fcmpltd}, @samp{fcmpned}
-Comparison operations.
+比較操作
 
 @item @samp{fmind}, @samp{fmaxd}
-Double-precision minimum and maximum.  These instructions are only
-generated if @option{-ffinite-math-only} is specified.
+倍精度最小・最大。これらの命令は@option{-ffinite-math-only}が指定されたときのみ生成される。
 
 @item @samp{fsqrtd}
-Unary square root operation.
+単項平方根命令。
 
 @item @samp{fcosd}, @samp{fsind}, @samp{ftand}, @samp{fatand}, @samp{fexpd}, @samp{flogd}
-Double-precision trigonometric and exponential functions.  These instructions
-are only generated if @option{-funsafe-math-optimizations} is also specified.
+倍精度三角関数と指数関数。 これらの命令は、@option{-funsafe-math-optimizations}も指定されている場合にのみ生成される。
 
 @end table
 
-Conversions:
+変換：
 @table @asis
 @item @samp{fextsd}
-Conversion from single precision to double precision.
+単精度から倍精度への変換
 
 @item @samp{ftruncds}
+倍精度から単精度への変換
 Conversion from double precision to single precision.
 
 @item @samp{fixsi}, @samp{fixsu}, @samp{fixdi}, @samp{fixdu}
-Conversion from floating point to signed or unsigned integer types, with
-truncation towards zero.
+浮動小数点数から符号付き・符号なし整数への0への切り詰めによる変換。
 
 @item @samp{round}
-Conversion from single-precision floating point to signed integer,
-rounding to the nearest integer and ties away from zero.
-This corresponds to the @code{__builtin_lroundf} function when
-@option{-fno-math-errno} is used.
+単精度浮動小数点数から符号付き整数への、0から遠い方向への最近接丸め。
+これは@option{-fno-math-errno}が使われたときには@code{__builtin_lroundf}関数に対応する。
 
 @item @samp{floatis}, @samp{floatus}, @samp{floatid}, @samp{floatud}
-Conversion from signed or unsigned integer types to floating-point types.
+符号付きまたは符号なし整数型から浮動小数点型への変換。
 
 @end table
 
-In addition, all of the following transfer instructions for internal
-registers X and Y must be provided to use any of the double-precision
-floating-point instructions.  Custom instructions taking two
-double-precision source operands expect the first operand in the
-64-bit register X.  The other operand (or only operand of a unary
-operation) is given to the custom arithmetic instruction with the
-least significant half in source register @var{src1} and the most
-significant half in @var{src2}.  A custom instruction that returns a
-double-precision result returns the most significant 32 bits in the
-destination register and the other half in 32-bit register Y.  
-GCC automatically generates the necessary code sequences to write
-register X and/or read register Y when double-precision floating-point
-instructions are used.
+さらに、倍精度浮動小数点命令のいずれかを使用するには、内部レジスタXおよびYの次の転送命令をすべて提供する必要がある。 2つの倍精度ソース・オペランドを取るカスタム命令は、64ビット・レジスタXの最初のオペランドを必要とする。他のオペランド（または単項演算のオペランドのみ）は、ソースレジスタ@var{src1}の最下位半分と@var {src2}の最上位半分を持つカスタム算術命令に与えられる。倍精度結果を返すカスタム命令は、デスティネーションレジスタの最上位32ビットと32ビットレジスタYの残りの半分を返す。倍精度浮動小数点命令が使用される場合、GCCは自動的にレジスタXおよび/またはレジスタYを書き込むために必要なコードシーケンスを生成する。
 
 @table @asis
 
 @item @samp{fwrx}
-Write @var{src1} into the least significant half of X and @var{src2} into
-the most significant half of X.
+@var{src1}をXの最下位半分に、@var{src2}をXの最上位半分に書き出す。
 
 @item @samp{fwry}
-Write @var{src1} into Y.
+@var{src1}をYへと書き出す。
 
 @item @samp{frdxhi}, @samp{frdxlo}
-Read the most or least (respectively) significant half of X and store it in
-@var{dest}.
+Xの最上位または最下位（それぞれ）を読み、それを@var{dest}に格納する。
 
 @item @samp{frdy}
-Read the value of Y and store it into @var{dest}.
+Yの値を読み@var{dest}に格納する。
 @end table
 
-Note that you can gain more local control over generation of Nios II custom
-instructions by using the @code{target("custom-@var{insn}=@var{N}")}
-and @code{target("no-custom-@var{insn}")} function attributes
-(@pxref{Function Attributes})
-or pragmas (@pxref{Function Specific Option Pragmas}).
+@code{target("custom@var{insn}=@var{N}"}}と@code{target("no-custom-@var{insn}")}関数属性（@pxref{Function Attributes}）またはプラグマ（@pxref{Function Specific Option Pragmas}）を使用してNios IIカスタム命令の生成をローカルで制御することができる。
 
 @item -mcustom-fpu-cfg=@var{name}
 @opindex mcustom-fpu-cfg
 
-This option enables a predefined, named set of custom instruction encodings
-(see @option{-mcustom-@var{insn}} above).  
-Currently, the following sets are defined:
+このオプションは、あらかじめ定義されたカスタム命令エンコーディングのセットを有効にする（上記の@option{-mcustom-@var{insn}}参照）。現在、以下のセットが定義されています。
 
-@option{-mcustom-fpu-cfg=60-1} is equivalent to:
+@option{-mcustom-fpu-cfg=60-1}は以下と同等である。
 @gccoptlist{-mcustom-fmuls=252 
 -mcustom-fadds=253 
 -mcustom-fsubs=254 
 -fsingle-precision-constant}
 
-@option{-mcustom-fpu-cfg=60-2} is equivalent to:
+@option{-mcustom-fpu-cfg=60-2}は以下と同等である。
 @gccoptlist{-mcustom-fmuls=252 
 -mcustom-fadds=253 
 -mcustom-fsubs=254 
 -mcustom-fdivs=255 
 -fsingle-precision-constant}
 
-@option{-mcustom-fpu-cfg=72-3} is equivalent to:
+@option{-mcustom-fpu-cfg=72-3}は以下と同等である。
 @gccoptlist{-mcustom-floatus=243 
 -mcustom-fixsi=244 
 -mcustom-floatis=245 
@@ -16195,46 +16123,31 @@ Currently, the following sets are defined:
 -mcustom-fdivs=255 
 -fsingle-precision-constant}
 
-Custom instruction assignments given by individual
-@option{-mcustom-@var{insn}=} options override those given by
-@option{-mcustom-fpu-cfg=}, regardless of the
-order of the options on the command line.
+個別の@option{-mcustom-@var{insn}=}オプションで指定されたカスタム命令の割り当ては、コマンドラインでのオプションの順序にかかわらず、@option{-mcustom-fpu-cfg=}で指定されたものを上書きする。
 
-Note that you can gain more local control over selection of a FPU
-configuration by using the @code{target("custom-fpu-cfg=@var{name}")}
-function attribute (@pxref{Function Attributes})
-or pragma (@pxref{Function Specific Option Pragmas}).
+@code{target("custom-fpu-cfg=@var{name}")}関数の属性（@pxref {Function Attributes}）やプラグマ（@pxref{Function Specific Option Pragmas}）を使用することで、FPU構成の選択をより詳細に制御できる。
 
 @end table
 
-These additional @samp{-m} options are available for the Altera Nios II
-ELF (bare-metal) target:
+これらの追加の@samp {-m}オプションは、アルテラのNios II ELF（ベアメタル）ターゲットで使用できます。
 
 @table @gcctabopt
 
 @item -mhal
 @opindex mhal
-Link with HAL BSP.  This suppresses linking with the GCC-provided C runtime
-startup and termination code, and is typically used in conjunction with
-@option{-msys-crt0=} to specify the location of the alternate startup code
-provided by the HAL BSP.
+HAL BSPとのリンク。 これにより、GCC提供のCランタイムスタートアップコードと終了コードとのリンクが抑制され、通常はHAL BSPによって提供される代替起動コードの場所を指定するために@option{-msys-crt0=}と組み合わせて使用される。
 
 @item -msmallc
 @opindex msmallc
-Link with a limited version of the C library, @option{-lsmallc}, rather than
-Newlib.
+Newlibではなく、Cライブラリの制限されたバージョンである@option{-lsmallc}とリンクする。
 
 @item -msys-crt0=@var{startfile}
 @opindex msys-crt0
-@var{startfile} is the file name of the startfile (crt0) to use 
-when linking.  This option is only useful in conjunction with @option{-mhal}.
+@var{startfile}は、リンク時に使用する開始ファイル（crt0）のファイル名である。 このオプションは@option{-mhal}と組み合わせて使用すると便利である。
 
 @item -msys-lib=@var{systemlib}
 @opindex msys-lib
-@var{systemlib} is the library name of the library that provides
-low-level system calls required by the C library,
-e.g. @code{read} and @code{write}.
-This option is typically used to link with a library provided by a HAL BSP.
+@var{systemlib}は、Cライブラリが必要とする低レベルのシステムコールを提供するライブラリのライブラリ名である。例えば、@code{read}と@code {write}である。このオプションは通常、HAL BSPによって提供されるライブラリとリンクするために使用される。
 
 @end table
 
