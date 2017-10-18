@@ -16307,10 +16307,10 @@ DECアセンブラ構文を使う。これはPDP-11が@samp{pdp11-*-bs}以外で
 @end table
 
 @node PowerPC Options
-@subsection PowerPC Options
+@subsection PowerPCオプション
 @cindex PowerPC options
 
-These are listed under @xref{RS/6000 and PowerPC Options}.
+@xref{RS/6000 and PowerPC Options}で挙げられている。
 
 @node RISC-V Options
 @subsection RISC-V Options
