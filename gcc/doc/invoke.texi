@@ -16313,66 +16313,60 @@ DECアセンブラ構文を使う。これはPDP-11が@samp{pdp11-*-bs}以外で
 @xref{RS/6000 and PowerPC Options}で挙げられている。
 
 @node RISC-V Options
-@subsection RISC-V Options
+@subsection RISC-Vオプション
 @cindex RISC-V Options
 
-These command-line options are defined for RISC-V targets:
+これらのコマンドラインオプションは、RISC-Vターゲットに対して定義されている。
 
 @table @gcctabopt
 @item -mbranch-cost=@var{n}
 @opindex mbranch-cost
-Set the cost of branches to roughly @var{n} instructions.
+分岐のコストをおおよそ@var{n}命令に設定する。
 
 @item -mmemcpy
 @itemx -mno-memcpy
 @opindex mmemcpy
-Don't optimize block moves.
+ブロックのムーブを最適化しない。
 
 @item -mplt
 @itemx -mno-plt
 @opindex plt
-When generating PIC code, allow the use of PLTs. Ignored for non-PIC.
+PICコードを生成するときは、PLTを使用できるようにする。 非PICの場合は無視される。
 
 @item -mabi=@var{ABI-string}
 @opindex mabi
-Specify integer and floating-point calling convention.  This defaults to the
-natural calling convention: e.g.@ LP64 for RV64I, ILP32 for RV32I, LP64D for
-RV64G.
+整数と浮動小数点の呼び出し規約を指定する。 これはデフォルトの自然な呼び出し規約である。 例えば、RV64Iの場合はLP64、RV32Iの場合はILP32、RV64Gの場合はLP64Dである。
 
 @item -mfdiv
 @itemx -mno-fdiv
 @opindex mfdiv
-Use hardware floating-point divide and square root instructions.  This requires
-the F or D extensions for floating-point registers.
+ハードウェア浮動小数点除算および平方根命令を使用する。 これには、浮動小数点レジスタのFまたはD拡張が必要である。
 
 @item -mdiv
 @itemx -mno-div
 @opindex mdiv
-Use hardware instructions for integer division.  This requires the M extension.
+整数除算にはハードウェア命令を使用する。 これにはM拡張が必要である。
 
 @item -march=@var{ISA-string}
 @opindex march
-Generate code for given RISC-V ISA (e.g.@ @samp{rv64im}).  ISA strings must be
-lower-case.  Examples include @samp{rv64i}, @samp{rv32g}, and @samp{rv32imaf}.
+与えられたRISC-V ISAのコードを生成する（@samp{rv64im}など）。 ISA文字列は小文字でなければならない。 例には、@samp{rv64i}、@samp{rv32g}、@samp{rv32imaf}がある。
 
 @item -mtune=@var{processor-string}
 @opindex mtune
-Optimize the output for the given processor, specified by microarchitecture
-name.
+マイクロアーキテクチャ名で指定された、指定されたプロセッサの出力を最適化する。
 
 @item -msmall-data-limit=@var{n}
 @opindex msmall-data-limit
-Put global and static data smaller than @var{n} bytes into a special section
-(on some targets).
+@var{n}バイトよりも小さいグローバルデータと静的データを（特定のターゲット上では）特別なセクションに入れる。
 
 @item -msave-restore
 @itemx -mno-save-restore
 @opindex msave-restore
-Use smaller but slower prologue and epilogue code.
+小さいが遅いプロローグとエピローグのコードを使う。
 
 @item -mcmodel=@var{code-model}
 @opindex mcmodel
-Specify the code model.
+コードモデルを指定する。
 
 @end table
 
