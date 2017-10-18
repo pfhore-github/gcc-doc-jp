@@ -16152,11 +16152,11 @@ Newlibではなく、Cライブラリの制限されたバージョンである@
 @end table
 
 @node Nvidia PTX Options
-@subsection Nvidia PTX Options
+@subsection Nvidia PTXオプション
 @cindex Nvidia PTX options
 @cindex nvptx options
 
-These options are defined for Nvidia PTX:
+これらのオプションは、Nvidia PTX用に定義されている。
 
 @table @gcctabopt
 
@@ -16164,48 +16164,27 @@ These options are defined for Nvidia PTX:
 @itemx -m64
 @opindex m32
 @opindex m64
-Generate code for 32-bit or 64-bit ABI.
+32ビットまたは64ビットABI用のコードを生成する。
 
 @item -mmainkernel
 @opindex mmainkernel
-Link in code for a __main kernel.  This is for stand-alone instead of
-offloading execution.
+__mainカーネルのコードをリンクする。 これは、オフロード実行ではなくスタンドアロン用である。
 
 @item -moptimize
 @opindex moptimize
-Apply partitioned execution optimizations.  This is the default when any
-level of optimization is selected.
+パーティション化された実行最適化を適用する。 これは、最適化のレベルが選択されている場合のデフォルトである。
 
 @item -msoft-stack
 @opindex msoft-stack
-Generate code that does not use @code{.local} memory
-directly for stack storage. Instead, a per-warp stack pointer is
-maintained explicitly. This enables variable-length stack allocation (with
-variable-length arrays or @code{alloca}), and when global memory is used for
-underlying storage, makes it possible to access automatic variables from other
-threads, or with atomic instructions. This code generation variant is used
-for OpenMP offloading, but the option is exposed on its own for the purpose
-of testing the compiler; to generate code suitable for linking into programs
-using OpenMP offloading, use option @option{-mgomp}.
+スタック格納のために@code{.local}メモリを直接使用しないコードを生成する。 代わりに、ワープごとのスタックポインタが明示的に保持される。 これにより、可変長配列の割り当て（可変長配列または@code {alloca}）が可能になる。グローバルメモリを基になるストレージに使用すると、他のスレッドやアトミック命令から自動変数にアクセスすることができる。 このコード生成バリアントはOpenMPオフロードに使用されるが、オプションはコンパイラをテストするために単独で公開されている。 OpenMPオフロードを使用してプログラムにリンクするのに適したコードを生成するには、オプション@option{-mgomp}を使用する。
 
 @item -muniform-simt
 @opindex muniform-simt
-Switch to code generation variant that allows to execute all threads in each
-warp, while maintaining memory state and side effects as if only one thread
-in each warp was active outside of OpenMP SIMD regions.  All atomic operations
-and calls to runtime (malloc, free, vprintf) are conditionally executed (iff
-current lane index equals the master lane index), and the register being
-assigned is copied via a shuffle instruction from the master lane.  Outside of
-SIMD regions lane 0 is the master; inside, each thread sees itself as the
-master.  Shared memory array @code{int __nvptx_uni[]} stores all-zeros or
-all-ones bitmasks for each warp, indicating current mode (0 outside of SIMD
-regions).  Each thread can bitwise-and the bitmask at position @code{tid.y}
-with current lane index to compute the master lane index.
+あたかも1つのスレッドしかOpenMP SIMD領域外でアクティブであるかのようにメモリ状態と副作用を維持しながら、各ワープ内のすべてのスレッドを実行できるコード生成バリアントに切り替える。 すべてのアトミック操作とランタイム呼び出し（malloc、free、vprintf）は条件付きで実行される（現在のレーンインデックスがマスタレーンインデックスと等しい場合）。割り当てられるレジスタはマスターレーンからのシャッフル命令によってコピーされる。 SIMD領域の外側では、レーン0がマスタである。 内部では、各スレッドはマスターとして自分自身を見る。 共有メモリ配列@code{int __nvptx_uni []}は、現在のモード（SIMD領域外の0）を示す、各ワープのすべて0またはすべて1のビットマスクを格納する。 各スレッドはビットごとに、ビットマップは@code{tid.y}にあり、現在のレーンインデックスでマスターレーンインデックスを計算できる。
 
 @item -mgomp
 @opindex mgomp
-Generate code for use in OpenMP offloading: enables @option{-msoft-stack} and
-@option{-muniform-simt} options, and selects corresponding multilib variant.
+OpenMPオフロードで使用するコードを生成する：@option{-msoft-stack}と@option{-muniform-simt}オプションを有効にし、対応するmultilibバリアントを選択する。
 
 @end table
 
