@@ -16281,50 +16281,28 @@ DECアセンブラ構文を使う。これはPDP-11が@samp{pdp11-*-bs}以外で
 @end table
 
 @node picoChip Options
-@subsection picoChip Options
+@subsection picoChipオプション
 @cindex picoChip options
 
-These @samp{-m} options are defined for picoChip implementations:
+これらの@samp {-m}オプションは、picoChip実装用に定義されている。
 
 @table @gcctabopt
 
 @item -mae=@var{ae_type}
 @opindex mcpu
-Set the instruction set, register set, and instruction scheduling
-parameters for array element type @var{ae_type}.  Supported values
-for @var{ae_type} are @samp{ANY}, @samp{MUL}, and @samp{MAC}.
+配列要素型@var{ae_type}の命令セット、レジスタセット、および命令スケジューリングパラメータを設定する。 @var{ae_type}にサポートされる値は@samp{ANY}、@samp{MUL}、@samp{MAC}である。
 
-@option{-mae=ANY} selects a completely generic AE type.  Code
-generated with this option runs on any of the other AE types.  The
-code is not as efficient as it would be if compiled for a specific
-AE type, and some types of operation (e.g., multiplication) do not
-work properly on all types of AE.
+@option{-mae=ANY}は、完全な汎用AEタイプを選択する。 このオプションで生成されるコードは、他のAEタイプのいずれかで実行される。 コードは、特定のAEタイプ用にコンパイルされた場合ほど効率的でなく、いくつかのタイプの操作（例えば、乗算）は、すべてのタイプのAEで適切に機能しない。
 
-@option{-mae=MUL} selects a MUL AE type.  This is the most useful AE type
-for compiled code, and is the default.
+@option{-mae = MUL}はMUL AEタイプを選択する。 これは、コンパイルされたコードで最も有用なAEタイプであり、デフォルトである。
 
-@option{-mae=MAC} selects a DSP-style MAC AE.  Code compiled with this
-option may suffer from poor performance of byte (char) manipulation,
-since the DSP AE does not provide hardware support for byte load/stores.
+@option {-mae = MAC}はDSPスタイルのMAC AEを選択する。 このオプションでコンパイルされたコードは、バイトA/D変換がバイトロード/ストアのハードウェアサポートを提供しないため、バイト（char）操作のパフォーマンスが低下する可能性がある。
 
 @item -msymbol-as-address
-Enable the compiler to directly use a symbol name as an address in a
-load/store instruction, without first loading it into a
-register.  Typically, the use of this option generates larger
-programs, which run faster than when the option isn't used.  However, the
-results vary from program to program, so it is left as a user option,
-rather than being permanently enabled.
+コンパイラがロード/ストア命令のアドレスとしてシンボル名を直接使用し、最初にレジスタにロードすることはないようにさせる。 通常、このオプションを使用するとより大きなプログラムが生成され、オプションを使用しない場合よりも速く実行される。 ただし、結果はプログラムによって異なるので、永続的に有効にするのではなく、ユーザーオプションとして残してある。
 
 @item -mno-inefficient-warnings
-Disables warnings about the generation of inefficient code.  These
-warnings can be generated, for example, when compiling code that
-performs byte-level memory operations on the MAC AE type.  The MAC AE has
-no hardware support for byte-level memory operations, so all byte
-load/stores must be synthesized from word load/store operations.  This is
-inefficient and a warning is generated to indicate
-that you should rewrite the code to avoid byte operations, or to target
-an AE type that has the necessary hardware support.  This option disables
-these warnings.
+非効率なコードの生成に関する警告を無効にする。 これらの警告は、たとえば、MAC AEタイプでバイトレベルのメモリ操作を実行するコードをコンパイルするときに生成される。 MAC AEには、バイトレベルのメモリ操作に対するハードウェアサポートがないため、すべてのバイトロード/ストアをワードロード/ストア操作から合成する必要がある。 これは非効率的であり、バイト操作を避けるためにコードを書き直す必要があることを示す警告が生成されるか、または必要なハードウェアサポートを持つAEタイプをターゲットにするよう警告が生成される。 このオプションは、これらの警告を無効にする。
 
 @end table
 
