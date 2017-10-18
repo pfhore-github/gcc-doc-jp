@@ -16189,100 +16189,95 @@ OpenMPオフロードで使用するコードを生成する：@option{-msoft-st
 @end table
 
 @node PDP-11 Options
-@subsection PDP-11 Options
+@subsection PDP-11オプション
 @cindex PDP-11 Options
 
-These options are defined for the PDP-11:
+これらのオプションは、PDP-11用に定義されている
 
 @table @gcctabopt
 @item -mfpu
 @opindex mfpu
-Use hardware FPP floating point.  This is the default.  (FIS floating
-point on the PDP-11/40 is not supported.)
+ハードウェアFPP浮動小数点を使用します。 これがデフォルトである。（PDP-11/40上のFIS浮動小数点はサポートされていない。）
 
 @item -msoft-float
 @opindex msoft-float
-Do not use hardware floating point.
+ハードウェア浮動小数点を使用しない。
 
 @item -mac0
 @opindex mac0
-Return floating-point results in ac0 (fr0 in Unix assembler syntax).
+浮動小数点の結果をac0（UNIXアセンブラの構文ではfr0）で返す。
 
 @item -mno-ac0
 @opindex mno-ac0
-Return floating-point results in memory.  This is the default.
+浮動小数点の結果をメモリに返します。 これがデフォルトである。
 
 @item -m40
 @opindex m40
-Generate code for a PDP-11/40.
+PDP-11/40用コードを生成する。
 
 @item -m45
 @opindex m45
-Generate code for a PDP-11/45.  This is the default.
+PDP-11/45用コードを生成する。 これがデフォルトである。
 
 @item -m10
 @opindex m10
-Generate code for a PDP-11/10.
+PDP-11/10用コードを生成する。
 
 @item -mbcopy-builtin
 @opindex mbcopy-builtin
-Use inline @code{movmemhi} patterns for copying memory.  This is the
-default.
+メモリのコピーには、インラインの@code{movmemhi}パターンを使用する。 これがデフォルトである。
 
 @item -mbcopy
 @opindex mbcopy
-Do not use inline @code{movmemhi} patterns for copying memory.
+メモリをコピーするためにインライン@code {movmemhi}パターンを使用しない。
 
 @item -mint16
 @itemx -mno-int32
 @opindex mint16
 @opindex mno-int32
-Use 16-bit @code{int}.  This is the default.
+16ビットの@code{int}を使う。これがデフォルトである。
 
 @item -mint32
 @itemx -mno-int16
 @opindex mint32
 @opindex mno-int16
-Use 32-bit @code{int}.
+32ビットの@code{int}を使う。
 
 @item -mfloat64
 @itemx -mno-float32
 @opindex mfloat64
 @opindex mno-float32
-Use 64-bit @code{float}.  This is the default.
+64ビットの@code{float}を使用する。 これがデフォルトです。
 
 @item -mfloat32
 @itemx -mno-float64
 @opindex mfloat32
 @opindex mno-float64
-Use 32-bit @code{float}.
+32ビットの@code{float}を使用する。
 
 @item -mabshi
 @opindex mabshi
-Use @code{abshi2} pattern.  This is the default.
+@code{abshi2}パターンを使う。これがデフォルトである。
 
 @item -mno-abshi
 @opindex mno-abshi
-Do not use @code{abshi2} pattern.
+@code{abshi2}パターンを使わない。
 
 @item -mbranch-expensive
 @opindex mbranch-expensive
-Pretend that branches are expensive.  This is for experimenting with
-code generation only.
+分岐が高価だと主張する。 これは、コード生成の実験専用である。
 
 @item -mbranch-cheap
 @opindex mbranch-cheap
-Do not pretend that branches are expensive.  This is the default.
+分岐が高価だと主張しない。これがデフォルトである。
 
 @item -munix-asm
 @opindex munix-asm
-Use Unix assembler syntax.  This is the default when configured for
-@samp{pdp11-*-bsd}.
+Unixアセンブラ構文を使う。これは@samp{pdp11-*-bsd}で構成された場合のデフォルトである。
 
 @item -mdec-asm
 @opindex mdec-asm
-Use DEC assembler syntax.  This is the default when configured for any
-PDP-11 target other than @samp{pdp11-*-bsd}.
+DECアセンブラ構文を使う。これはPDP-11が@samp{pdp11-*-bs}以外で構成された場合のデフォルトである。
 @end table
 
 @node picoChip Options
