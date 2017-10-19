@@ -16371,15 +16371,14 @@ PICコードを生成するときは、PLTを使用できるようにする。 �
 @end table
 
 @node RL78 Options
-@subsection RL78 Options
+@subsection RL78オプション
 @cindex RL78 Options
 
 @table @gcctabopt
 
 @item -msim
 @opindex msim
-Links in additional target libraries to support operation within a
-simulator.
+シミュレータ内の操作をサポートするための追加のターゲットライブラリ内のリンク。
 
 @item -mmul=none
 @itemx -mmul=g10
@@ -16387,49 +16386,22 @@ simulator.
 @itemx -mmul=g14
 @itemx -mmul=rl78
 @opindex mmul
-Specifies the type of hardware multiplication and division support to
-be used.  The simplest is @code{none}, which uses software for both
-multiplication and division.  This is the default.  The @code{g13}
-value is for the hardware multiply/divide peripheral found on the
-RL78/G13 (S2 core) targets.  The @code{g14} value selects the use of
-the multiplication and division instructions supported by the RL78/G14
-(S3 core) parts.  The value @code{rl78} is an alias for @code{g14} and
-the value @code{mg10} is an alias for @code{none}.
+使用するハードウェア乗算および除算サポートのタイプを指定する。 最も簡単なのは、乗算と除算の両方にソフトウェアを使用する@code{none}である。 これがデフォルトである。 値@code{g13}は、RL78/G13（S2コア）ターゲットで検出されたハードウェア乗除算周辺機器の値である。 値@code{g14}は、RL78/G14（S3コア）でサポートされている乗算命令と除算命令の使用を選する。 @code{rl78}は@code{g14}の別名で、@code{mg10}は@code{none}の別名である。
 
-In addition a C preprocessor macro is defined, based upon the setting
-of this option.  Possible values are: @code{__RL78_MUL_NONE__},
-@code{__RL78_MUL_G13__} or @code{__RL78_MUL_G14__}.
+さらに、このオプションの設定に基づいて、Cプリプロセッサマクロが定義されている。 可能な値は、@code{__RL78_MUL_NONE__}、@code{__RL78_MUL_G13__}または@code {__RL78_MUL_G14__}である。
 
 @item -mcpu=g10
 @itemx -mcpu=g13
 @itemx -mcpu=g14
 @itemx -mcpu=rl78
 @opindex mcpu
-Specifies the RL78 core to target.  The default is the G14 core, also
-known as an S3 core or just RL78.  The G13 or S2 core does not have
-multiply or divide instructions, instead it uses a hardware peripheral
-for these operations.  The G10 or S1 core does not have register
-banks, so it uses a different calling convention.
+ターゲットにするRL78コアを指定する。デフォルトはG14コアで、S3コアまたはRL78とも呼ばれる。 G13またはS2コアは、乗算および除算命令を持たず、代わりにこれらの操作にハードウェア周辺機器を使用する。 G10またはS1コアにはレジスタバンクがないため、別の呼び出し規約が使用される
 
-If this option is set it also selects the type of hardware multiply
-support to use, unless this is overridden by an explicit
-@option{-mmul=none} option on the command line.  Thus specifying
-@option{-mcpu=g13} enables the use of the G13 hardware multiply
-peripheral and specifying @option{-mcpu=g10} disables the use of
-hardware multiplications altogether.
+このオプションが設定されている場合は、コマンドラインの明示的な@option{-mmul=none}オプションで上書きされない限り、使用するハードウェア乗算サポートのタイプも選択される。したがって、@option{-mcpu = g13}を指定すると、G13ハードウェア乗算周辺機能を使用できる。また、@option{-mcpu=g10}を指定すると、ハードウェア乗算の使用が完全に無効になる。
 
-Note, although the RL78/G14 core is the default target, specifying
-@option{-mcpu=g14} or @option{-mcpu=rl78} on the command line does
-change the behavior of the toolchain since it also enables G14
-hardware multiply support.  If these options are not specified on the
-command line then software multiplication routines will be used even
-though the code targets the RL78 core.  This is for backwards
-compatibility with older toolchains which did not have hardware
-multiply and divide support.
+コマンドラインで@option{-mcpu=g14}または@option{-mcpu=rl78}を指定すると、G4のハードウェア乗算サポートも有効になるため、RL78/G14コアはデフォルトのターゲットだが、ツールチェーンの動作は変更される。これらのオプションがコマンドラインで指定されていない場合、コードがRL78コアをターゲットにしていても、ソフトウェア乗算ルーチンが使用される。これは、ハードウェア乗算および除算サポートを持たない古いツールチェーンとの下位互換性のためである。
 
-In addition a C preprocessor macro is defined, based upon the setting
-of this option.  Possible values are: @code{__RL78_G10__},
-@code{__RL78_G13__} or @code{__RL78_G14__}.
+さらに、このオプションの設定に基づいて、Cプリプロセッサマクロが定義されている。可能な値は、@code{__RL78_G10__}、@code{__RL78_G13__}または@code{__RL78_G14__}である。
 
 @item -mg10
 @itemx -mg13
@@ -16439,37 +16411,23 @@ of this option.  Possible values are: @code{__RL78_G10__},
 @opindex mg13
 @opindex mg14
 @opindex mrl78
-These are aliases for the corresponding @option{-mcpu=} option.  They
-are provided for backwards compatibility.
+これらは対応する@option{-mcpu=}オプションの別名である。 後方互換性のために提供されている。
 
 @item -mallregs
 @opindex mallregs
-Allow the compiler to use all of the available registers.  By default
-registers @code{r24..r31} are reserved for use in interrupt handlers.
-With this option enabled these registers can be used in ordinary
-functions as well.
+コンパイラが使用可能なすべてのレジスタを使用できるようにする。 デフォルトでは、レジスタ@code{r24..r31}は割り込みハンドラで使用するために予約されている。 このオプションを有効にすると、これらのレジスタは通常の関数でも使用できる。
 
 @item -m64bit-doubles
 @itemx -m32bit-doubles
 @opindex m64bit-doubles
 @opindex m32bit-doubles
-Make the @code{double} data type be 64 bits (@option{-m64bit-doubles})
-or 32 bits (@option{-m32bit-doubles}) in size.  The default is
-@option{-m32bit-doubles}.
+@code{double}データ型を64ビット（@option{-m64bit-doubles}）または32ビット（@option{-m32bit-doubles}）のサイズにする。 デフォルトは@option{-m32bit-doubles}である。
 
 @item -msave-mduc-in-interrupts
 @item -mno-save-mduc-in-interrupts
 @opindex msave-mduc-in-interrupts
 @opindex mno-save-mduc-in-interrupts
-Specifies that interrupt handler functions should preserve the
-MDUC registers.  This is only necessary if normal code might use
-the MDUC registers, for example because it performs multiplication
-and division operations.  The default is to ignore the MDUC registers
-as this makes the interrupt handlers faster.  The target option -mg13
-needs to be passed for this to work as this feature is only available
-on the G13 target (S2 core).  The MDUC registers will only be saved
-if the interrupt handler performs a multiplication or division
-operation or it calls another function.
+割り込みハンドラ関数がMDUCレジスタを保持する必要があることを指定する。 これは、通常のコードがMDUCレジスタを使用する場合にのみ必要である。たとえば、乗算と除算を実行するため。 デフォルトでは、MDUCレジスタは無視されるため、割り込みハンドラが高速になる。 この機能はG13ターゲット（S2コア）でのみ使用できるため、ターゲットオプション-mg13を渡す必要がある。 MDUCレジスタは、割り込みハンドラが乗算または除算演算を実行するか、または別の関数を呼び出す場合にのみ保存される。
 
 @end table
 
