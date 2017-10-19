@@ -16432,11 +16432,11 @@ PICコードを生成するときは、PLTを使用できるようにする。 �
 @end table
 
 @node RS/6000 and PowerPC Options
-@subsection IBM RS/6000 and PowerPC Options
+@subsection IBM RS/6000とPowerPCのオプション
 @cindex RS/6000 and PowerPC Options
 @cindex IBM RS/6000 and PowerPC Options
 
-These @samp{-m} options are defined for the IBM RS/6000 and PowerPC:
+これらの@samp {-m}オプションは、IBM RS / 6000とPowerPC用に定義されている。
 @table @gcctabopt
 @item -mpowerpc-gpopt
 @itemx -mno-powerpc-gpopt
@@ -16480,54 +16480,25 @@ These @samp{-m} options are defined for the IBM RS/6000 and PowerPC:
 @opindex mno-mfpgpr
 @opindex mhard-dfp
 @opindex mno-hard-dfp
-You use these options to specify which instructions are available on the
-processor you are using.  The default value of these options is
-determined when configuring GCC@.  Specifying the
-@option{-mcpu=@var{cpu_type}} overrides the specification of these
-options.  We recommend you use the @option{-mcpu=@var{cpu_type}} option
-rather than the options listed above.
+これらのオプションを使用して、使用しているプロセッサで使用可能な命令を指定する。 これらのオプションのデフォルト値は、GCC @を設定するときに決定される。 @option{-mcpu=@var{cpu_type}}を指定すると、これらのオプションの指定が上書きされる。 上記のオプションではなく、@option{-mcpu=@var{cpu_type}}オプションを使用することを推奨する。
 
-Specifying @option{-mpowerpc-gpopt} allows
-GCC to use the optional PowerPC architecture instructions in the
-General Purpose group, including floating-point square root.  Specifying
-@option{-mpowerpc-gfxopt} allows GCC to
-use the optional PowerPC architecture instructions in the Graphics
-group, including floating-point select.
+@option{-mpowerpc-gpopt}を指定すると、GCCは、汎用目的のグループ（浮動小数点平方根を含む）でオプションのPowerPCアーキテクチャ命令を使用することができる。 @option{-mpowerpc-gfxopt}を指定すると、GCCはグラフィックスグループ内のオプションのPowerPCアーキテクチャ命令（浮動小数点選択を含む）を使用することができる。
 
-The @option{-mmfcrf} option allows GCC to generate the move from
-condition register field instruction implemented on the POWER4
-processor and other processors that support the PowerPC V2.01
-architecture.
-The @option{-mpopcntb} option allows GCC to generate the popcount and
-double-precision FP reciprocal estimate instruction implemented on the
-POWER5 processor and other processors that support the PowerPC V2.02
-architecture.
-The @option{-mpopcntd} option allows GCC to generate the popcount
-instruction implemented on the POWER7 processor and other processors
-that support the PowerPC V2.06 architecture.
-The @option{-mfprnd} option allows GCC to generate the FP round to
-integer instructions implemented on the POWER5+ processor and other
-processors that support the PowerPC V2.03 architecture.
-The @option{-mcmpb} option allows GCC to generate the compare bytes
-instruction implemented on the POWER6 processor and other processors
-that support the PowerPC V2.05 architecture.
-The @option{-mmfpgpr} option allows GCC to generate the FP move to/from
-general-purpose register instructions implemented on the POWER6X
-processor and other processors that support the extended PowerPC V2.05
-architecture.
-The @option{-mhard-dfp} option allows GCC to generate the decimal
-floating-point instructions implemented on some POWER processors.
+@option{-mmfcrf}オプションを使用すると、GCCはPOWER4プロセッサーおよびPowerPC V2.01アーキテクチャーをサポートする他のプロセッサーで実装された条件レコード・フィールド命令からの移動を生成することができる。
+@option{-mpopcntb}オプションを使用すると、GCCはPOWER5プロセッサーおよびPowerPC V2.02アーキテクチャーをサポートする他のプロセッサーで実装されたpopcountおよび倍精度のFP逆数推定命令を生成できる。
+@option{-mpopcntd}オプションを使用すると、GCCはPOWER7プロセッサーとPowerPC V2.06アーキテクチャーをサポートする他のプロセッサーで実装されたpopcount命令を生成することができる。
+@option{-mfprnd}オプションを使用すると、GCCはPOWER5+プロセッサとPowerPC V2.03アーキテクチャをサポートする他のプロセッサで実装されたFP命令の整数命令を生成することができる。
+@option{-mpopcntd}オプションを使用すると、GCCはPOWER7プロセッサーとPowerPC V2.06アーキテクチャーをサポートする他のプロセッサーで実装されたpopcount命令を生成することができる。
+@option{-mfprnd}オプションを使用すると、GCCはPOWER5+プロセッサとPowerPC V2.03アーキテクチャをサポートする他のプロセッサで実装されたFP命令の整数命令を生成することができる。
+@option{-mcmpb}オプションを使用すると、GCCはPower6プロセッサーとPowerPC V2.05アーキテクチャーをサポートする他のプロセッサーで実装された比較バイト命令を生成することができる。
+@option{-mmfpgpr}オプションを使用すると、GCCは拡張POWERPC V2.05アーキテクチャーをサポートするPOWER6Xプロセッサーや他のプロセッサーに実装されている汎用レジスタ命令との間でFP移動を発生させることができる。
+@option{-mhard-dfp}オプションを使用すると、GCCは一部のPOWERプロセッサで実装された10進浮動小数点命令を生成できる。
 
-The @option{-mpowerpc64} option allows GCC to generate the additional
-64-bit instructions that are found in the full PowerPC64 architecture
-and to treat GPRs as 64-bit, doubleword quantities.  GCC defaults to
-@option{-mno-powerpc64}.
+@option{-mpowerpc64}オプションを使用すると、GCCは完全なPowerPC64アーキテクチャにある追加の64ビット命令を生成し、GPRを64ビットのダブルワード数として扱うことができる。 GCCのデフォルトは@option{-mno-powerpc64}である。
 
 @item -mcpu=@var{cpu_type}
 @opindex mcpu
-Set architecture type, register usage, and
-instruction scheduling parameters for machine type @var{cpu_type}.
-Supported values for @var{cpu_type} are @samp{401}, @samp{403},
+マシンタイプ@var{cpu_type}のアーキテクチャタイプ、レジスタ使用法、および命令スケジューリングパラメータを設定する。@var{cpu_type}のサポートされている値は@samp{401}, @samp{403},
 @samp{405}, @samp{405fp}, @samp{440}, @samp{440fp}, @samp{464}, @samp{464fp},
 @samp{476}, @samp{476fp}, @samp{505}, @samp{601}, @samp{602}, @samp{603},
 @samp{603e}, @samp{604}, @samp{604e}, @samp{620}, @samp{630}, @samp{740},
@@ -16537,21 +16508,13 @@ Supported values for @var{cpu_type} are @samp{401}, @samp{403},
 @samp{e6500}, @samp{ec603e}, @samp{G3}, @samp{G4}, @samp{G5},
 @samp{titan}, @samp{power3}, @samp{power4}, @samp{power5}, @samp{power5+},
 @samp{power6}, @samp{power6x}, @samp{power7}, @samp{power8},
-@samp{power9}, @samp{powerpc}, @samp{powerpc64}, @samp{powerpc64le},
-and @samp{rs64}.
+@samp{power9}, @samp{powerpc}, @samp{powerpc64}, @samp{powerpc64le}, @samp{rs64}である。
 
-@option{-mcpu=powerpc}, @option{-mcpu=powerpc64}, and
-@option{-mcpu=powerpc64le} specify pure 32-bit PowerPC (either
-endian), 64-bit big endian PowerPC and 64-bit little endian PowerPC
-architecture machine types, with an appropriate, generic processor
-model assumed for scheduling purposes.
+@option{-mcpu=powerpc}, @option{-mcpu=powerpc64}, @option{-mcpu=powerpc64le}は純粋な32ビットPowerPC（エンディアン）、64ビットビッグエンディアンPowerPCおよび64ビットリトルエンディアンPowerPCアーキテクチャのマシンタイプを指定し、適切な汎用プロセッサモデルをスケジューリングの目的で使用する。 
 
-The other options specify a specific processor.  Code generated under
-those options runs best on that processor, and may not run at all on
-others.
+他のオプションは、特定のプロセッサを指定する。 これらのオプションで生成されたコードは、そのプロセッサ上で最適に実行され、他のプロセッサ上ではまったく動作しない可能性がある。
 
-The @option{-mcpu} options automatically enable or disable the
-following options:
+@option{-mcpu}オプションは、自動的に次のオプションを有効または無効にする。
 
 @gccoptlist{-maltivec  -mfprnd  -mhard-float  -mmfcrf  -mmultiple 
 -mpopcntb -mpopcntd  -mpowerpc64 
@@ -16560,151 +16523,93 @@ following options:
 -mcrypto -mdirect-move -mhtm -mpower8-fusion -mpower8-vector 
 -mquad-memory -mquad-memory-atomic -mfloat128 -mfloat128-hardware}
 
-The particular options set for any particular CPU varies between
-compiler versions, depending on what setting seems to produce optimal
-code for that CPU; it doesn't necessarily reflect the actual hardware's
-capabilities.  If you wish to set an individual option to a particular
-value, you may specify it after the @option{-mcpu} option, like
-@option{-mcpu=970 -mno-altivec}.
+特定のCPUに設定される特定のオプションは、そのCPUに最適なコードを生成するような設定に応じて、コンパイラのバージョンによって異なる。 実際のハードウェアの機能を必ずしも反映しているとは限らない。 個々のオプションを特定の値に設定したい場合は、@option -mcpu = 970 -mno-altivec}のように@option{-mcpu}オプションの後に指定することができる。
 
-On AIX, the @option{-maltivec} and @option{-mpowerpc64} options are
-not enabled or disabled by the @option{-mcpu} option at present because
-AIX does not have full support for these options.  You may still
-enable or disable them individually if you're sure it'll work in your
-environment.
+AIXでは、@option{-maltivec}および@option{-mpowerpc64}オプションは、AIXがこれらのオプションを完全にサポートしていないため、現在のところ@option{-mcpu}オプションによって使用可能または使用不可にされていない。 あなたの環境で動作することが確実であれば、それらを個別に有効または無効にすることができる。
 
 @item -mtune=@var{cpu_type}
 @opindex mtune
-Set the instruction scheduling parameters for machine type
-@var{cpu_type}, but do not set the architecture type or register usage,
-as @option{-mcpu=@var{cpu_type}} does.  The same
-values for @var{cpu_type} are used for @option{-mtune} as for
-@option{-mcpu}.  If both are specified, the code generated uses the
-architecture and registers set by @option{-mcpu}, but the
-scheduling parameters set by @option{-mtune}.
+マシンタイプ@var{cpu_type}の命令スケジューリングパラメータを設定するが、@option{-mcpu=@var{cpu_type}}のようにアーキテクチャタイプやレジスタの使用方法は設定しない。 @option{-mcpu}と同じ@var{cpu_type}の値が@option{-mtune}に使用される。 どちらも指定されていれば、@option{-mcpu}で設定されたアーキテクチャとレジスタが使用されるが、@option{-mtune}で設定されたスケジューリングパラメータが使用される。
 
 @item -mcmodel=small
 @opindex mcmodel=small
-Generate PowerPC64 code for the small model: The TOC is limited to
-64k.
+小さなモデル用のPowerPC64コードを生成する：TOCは64kに制限されている。
 
 @item -mcmodel=medium
 @opindex mcmodel=medium
-Generate PowerPC64 code for the medium model: The TOC and other static
-data may be up to a total of 4G in size.  This is the default for 64-bit
-Linux.
+中間モデル用のPowerPC64コードを生成する：TOCとその他の静的データは合計で4Gまでである。 これは64ビットLinuxのデフォルトです。
 
 @item -mcmodel=large
 @opindex mcmodel=large
-Generate PowerPC64 code for the large model: The TOC may be up to 4G
-in size.  Other data and code is only limited by the 64-bit address
-space.
+大型モデルのPowerPC64コードを生成する：TOCのサイズは最大4Gである。 他のデータとコードは、64ビットのアドレス空間によってのみ制限される。
 
 @item -maltivec
 @itemx -mno-altivec
 @opindex maltivec
 @opindex mno-altivec
-Generate code that uses (does not use) AltiVec instructions, and also
-enable the use of built-in functions that allow more direct access to
-the AltiVec instruction set.  You may also need to set
-@option{-mabi=altivec} to adjust the current ABI with AltiVec ABI
-enhancements.
+AltiVec命令を使用する（使用しない）コードを生成し、AltiVec命令セットへのより直接的なアクセスを可能にする組み込み関数の使用も可能にする。 現在のABIをAltiVec ABI拡張で調整するには、@option{-mabi=altivec}を設定する必要がある。
 
-When @option{-maltivec} is used, rather than @option{-maltivec=le} or
-@option{-maltivec=be}, the element order for AltiVec intrinsics such
-as @code{vec_splat}, @code{vec_extract}, and @code{vec_insert} 
-match array element order corresponding to the endianness of the
-target.  That is, element zero identifies the leftmost element in a
-vector register when targeting a big-endian platform, and identifies
-the rightmost element in a vector register when targeting a
-little-endian platform.
+@option{-maltivec=le}や@option{-maltivec=be}ではなく、@option{-maltivec}を使用すると、@code{vec_splat}や@code{vec_extract}などのAltiVec組み込み関数の要素の順序は、 および@code{vec_insert}は、ターゲットのエンディアンに対応する配列要素の順序に一致する。 つまり、要素ゼロは、ビッグエンディアンプラットフォームをターゲットにするときにベクトルレジスタの最も左の要素を識別し、リトルエンディアンプラットフォームをターゲットにするときにベクトルレジスタの最も右の要素を識別する。
 
 @item -maltivec=be
 @opindex maltivec=be
-Generate AltiVec instructions using big-endian element order,
-regardless of whether the target is big- or little-endian.  This is
-the default when targeting a big-endian platform.
+ターゲットがビッグエンディアンかリトルエンディアンかにかかわらず、ビッグエンディアンの要素順序を使用してAltiVec命令を生成する。 これは、ビッグエンディアンのプラットフォームをターゲットとする場合のデフォルトである。
 
-The element order is used to interpret element numbers in AltiVec
-intrinsics such as @code{vec_splat}, @code{vec_extract}, and
-@code{vec_insert}.  By default, these match array element order
-corresponding to the endianness for the target.
-
+要素の順序は、@code{vec_splat}、@code{vec_extract}、@code{vec_insert}などのAltiVec組み込み関数の要素番号を解釈するために使用される。 デフォルトでは、ターゲットのエンディアンに対応する配列要素の順序に一致する。
 @item -maltivec=le
 @opindex maltivec=le
-Generate AltiVec instructions using little-endian element order,
-regardless of whether the target is big- or little-endian.  This is
-the default when targeting a little-endian platform.  This option is
-currently ignored when targeting a big-endian platform.
+ターゲットがビッグエンディアンかリトルエンディアンかにかかわらず、リトルエンディアンの要素順序を使用してAltiVec命令を生成する。 これは、リトルエンディアンプラットフォームをターゲットとする場合のデフォルトである。 このオプションは、ビッグエンディアンのプラットフォームをターゲットにする場合は現在無視される。
 
-The element order is used to interpret element numbers in AltiVec
-intrinsics such as @code{vec_splat}, @code{vec_extract}, and
-@code{vec_insert}.  By default, these match array element order
-corresponding to the endianness for the target.
-
+要素の順序は、@code{vec_splat}、@code{vec_extract}、@code{vec_insert}などのAltiVec組み込み関数の要素番号を解釈するために使用される。 デフォルトでは、ターゲットのエンディアンに対応する配列要素の順序に一致する。
 @item -mvrsave
 @itemx -mno-vrsave
 @opindex mvrsave
 @opindex mno-vrsave
-Generate VRSAVE instructions when generating AltiVec code.
+AltiVecコードを生成するときにVRSAVE命令を生成する。
 
 @item -mgen-cell-microcode
 @opindex mgen-cell-microcode
-Generate Cell microcode instructions.
+Cellマイクロコード命令を生成する。
 
 @item -mwarn-cell-microcode
 @opindex mwarn-cell-microcode
-Warn when a Cell microcode instruction is emitted.  An example
-of a Cell microcode instruction is a variable shift.
+Cellのマイクロコード命令が発行されたときに警告する。 Cellマイクロコード命令の一例は、可変シフトである。
 
 @item -msecure-plt
 @opindex msecure-plt
-Generate code that allows @command{ld} and @command{ld.so}
-to build executables and shared
-libraries with non-executable @code{.plt} and @code{.got} sections.
-This is a PowerPC
-32-bit SYSV ABI option.
+@command{ld}と@command{ld.so}が実行不可能な@code{.plt}セクションと@code{.got}セクションで実行可能ファイルと共有ライブラリをビルドできるようなコードを生成する。 これはPowerPC 32ビットSYSV ABIオプションである。
 
 @item -mbss-plt
 @opindex mbss-plt
-Generate code that uses a BSS @code{.plt} section that @command{ld.so}
-fills in, and
-requires @code{.plt} and @code{.got}
-sections that are both writable and executable.
-This is a PowerPC 32-bit SYSV ABI option.
+@command{ld.so}が書き込むBSS@code {.plt}セクションを使用するコードを生成し、書き込み可能で実行可能な@code{.plt}セクションと@code{.got}セクションを要求する。 これはPowerPC 32ビットSYSV ABIオプションである。
 
 @item -misel
 @itemx -mno-isel
 @opindex misel
 @opindex mno-isel
-This switch enables or disables the generation of ISEL instructions.
+このスイッチは、ISEL命令の生成を有効または無効にする。
 
 @item -misel=@var{yes/no}
-This switch has been deprecated.  Use @option{-misel} and
-@option{-mno-isel} instead.
+このスイッチは非推奨である。 代わりに、@option{-misel}と@option{-mno-isel}を使うこと。
 
 @item -mlra
 @opindex mlra
-Enable Local Register Allocation. By default the port uses LRA.
-(i.e. @option{-mno-lra}).
+ローカルレジスタ割り付けを有効にする。 デフォルトでは、ポートはLRAを使用します。 （つまり、@option{-mno-lra}）。
 
 @item -mspe
 @itemx -mno-spe
 @opindex mspe
 @opindex mno-spe
-This switch enables or disables the generation of SPE simd
-instructions.
+このスイッチは、SPE simd命令の生成を有効または無効にする。
 
 @item -mpaired
 @itemx -mno-paired
 @opindex mpaired
 @opindex mno-paired
-This switch enables or disables the generation of PAIRED simd
-instructions.
+このスイッチは、PAIRED simd命令の生成を有効または無効にする。
 
 @item -mspe=@var{yes/no}
-This option has been deprecated.  Use @option{-mspe} and
-@option{-mno-spe} instead.
+このオプションは非推奨である。 代わりに@option{-mspe}と@option{-mno-spe}を使うこと。
 
 @item -mvsx
 @itemx -mno-vsx
