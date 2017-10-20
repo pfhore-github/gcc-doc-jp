@@ -16089,7 +16089,7 @@ Xの最上位または最下位（それぞれ）を読み、それを@var{dest}
 Yの値を読み@var{dest}に格納する。
 @end table
 
-@code{target("custom@var{insn}=@var{N}"}}と@code{target("no-custom-@var{insn}")}関数属性（@pxref{Function Attributes}）またはプラグマ（@pxref{Function Specific Option Pragmas}）を使用してNios IIカスタム命令の生成をローカルで制御することができる。
+@code{target("custom@var{insn}=@var{N}")}と@code{target("no-custom-@var{insn}")}関数属性（@pxref{Function Attributes}）またはプラグマ（@pxref{Function Specific Option Pragmas}）を使用してNios IIカスタム命令の生成をローカルで制御することができる。
 
 @item -mcustom-fpu-cfg=@var{name}
 @opindex mcustom-fpu-cfg
@@ -16480,7 +16480,7 @@ PICコードを生成するときは、PLTを使用できるようにする。 �
 @opindex mno-mfpgpr
 @opindex mhard-dfp
 @opindex mno-hard-dfp
-これらのオプションを使用して、使用しているプロセッサで使用可能な命令を指定する。 これらのオプションのデフォルト値は、GCC @を設定するときに決定される。 @option{-mcpu=@var{cpu_type}}を指定すると、これらのオプションの指定が上書きされる。 上記のオプションではなく、@option{-mcpu=@var{cpu_type}}オプションを使用することを推奨する。
+これらのオプションを使用して、使用しているプロセッサで使用可能な命令を指定する。 これらのオプションのデフォルト値は、GCCを設定するときに決定される。 @option{-mcpu=@var{cpu_type}}を指定すると、これらのオプションの指定が上書きされる。 上記のオプションではなく、@option{-mcpu=@var{cpu_type}}オプションを使用することを推奨する。
 
 @option{-mpowerpc-gpopt}を指定すると、GCCは、汎用目的のグループ（浮動小数点平方根を含む）でオプションのPowerPCアーキテクチャ命令を使用することができる。 @option{-mpowerpc-gfxopt}を指定すると、GCCはグラフィックスグループ内のオプションのPowerPCアーキテクチャ命令（浮動小数点選択を含む）を使用することができる。
 
@@ -16523,7 +16523,7 @@ PICコードを生成するときは、PLTを使用できるようにする。 �
 -mcrypto -mdirect-move -mhtm -mpower8-fusion -mpower8-vector 
 -mquad-memory -mquad-memory-atomic -mfloat128 -mfloat128-hardware}
 
-特定のCPUに設定される特定のオプションは、そのCPUに最適なコードを生成するような設定に応じて、コンパイラのバージョンによって異なる。 実際のハードウェアの機能を必ずしも反映しているとは限らない。 個々のオプションを特定の値に設定したい場合は、@option -mcpu = 970 -mno-altivec}のように@option{-mcpu}オプションの後に指定することができる。
+特定のCPUに設定される特定のオプションは、そのCPUに最適なコードを生成するような設定に応じて、コンパイラのバージョンによって異なる。 実際のハードウェアの機能を必ずしも反映しているとは限らない。 個々のオプションを特定の値に設定したい場合は、@option{-mcpu=970 -mno-altivec}のように@option{-mcpu}オプションの後に指定することができる。
 
 AIXでは、@option{-maltivec}および@option{-mpowerpc64}オプションは、AIXがこれらのオプションを完全にサポートしていないため、現在のところ@option{-mcpu}オプションによって使用可能または使用不可にされていない。 あなたの環境で動作することが確実であれば、それらを個別に有効または無効にすることができる。
 
@@ -16615,77 +16615,55 @@ Cellのマイクロコード命令が発行されたときに警告する。 Cel
 @itemx -mno-vsx
 @opindex mvsx
 @opindex mno-vsx
-Generate code that uses (does not use) vector/scalar (VSX)
-instructions, and also enable the use of built-in functions that allow
-more direct access to the VSX instruction set.
+ベクトル/スカラー（VSX）命令を使用する（しない）コードを生成し、VSX命令セットへのより直接的なアクセスを可能にする組み込み関数の使用も可能にする。
 
 @item -mcrypto
 @itemx -mno-crypto
 @opindex mcrypto
 @opindex mno-crypto
-Enable the use (disable) of the built-in functions that allow direct
-access to the cryptographic instructions that were added in version
-2.07 of the PowerPC ISA.
+PowerPC ISAのバージョン2.07で追加された暗号化命令に直接アクセスできる組み込み関数の使用を有効（無効）にする。
 
 @item -mdirect-move
 @itemx -mno-direct-move
 @opindex mdirect-move
 @opindex mno-direct-move
-Generate code that uses (does not use) the instructions to move data
-between the general purpose registers and the vector/scalar (VSX)
-registers that were added in version 2.07 of the PowerPC ISA.
+PowerPC ISAのバージョン2.07で追加された汎用レジスタとベクトル/スカラー（VSX）レジスタ間でデータを移動する命令を使用する（しない）コードを生成する。
 
 @item -mhtm
 @itemx -mno-htm
 @opindex mhtm
 @opindex mno-htm
-Enable (disable) the use of the built-in functions that allow direct
-access to the Hardware Transactional Memory (HTM) instructions that
-were added in version 2.07 of the PowerPC ISA.
+PowerPC ISAのバージョン2.07で追加されたハードウェアトランザクションメモリ（HTM）命令に直接アクセスできる組み込み関数の使用を有効（無効）にする。
 
 @item -mpower8-fusion
 @itemx -mno-power8-fusion
 @opindex mpower8-fusion
 @opindex mno-power8-fusion
-Generate code that keeps (does not keeps) some integer operations
-adjacent so that the instructions can be fused together on power8 and
-later processors.
+Power8以降のプロセッサで命令を融合させるために、整数演算を隣接して保持するコードを生成する。
 
 @item -mpower8-vector
 @itemx -mno-power8-vector
 @opindex mpower8-vector
 @opindex mno-power8-vector
-Generate code that uses (does not use) the vector and scalar
-instructions that were added in version 2.07 of the PowerPC ISA.  Also
-enable the use of built-in functions that allow more direct access to
-the vector instructions.
+PowerPC ISAのバージョン2.07で追加されたベクトルおよびスカラー命令を使用する（しない）コードを生成する。 また、ベクトル命令へのより直接的なアクセスを可能にする組み込み関数の使用を可能にする。
 
 @item -mquad-memory
 @itemx -mno-quad-memory
 @opindex mquad-memory
 @opindex mno-quad-memory
-Generate code that uses (does not use) the non-atomic quad word memory
-instructions.  The @option{-mquad-memory} option requires use of
-64-bit mode.
+非アトミック・クワッドワードメモリ命令を使用する（しない）コードを生成する。 @option{-mquad-memory}オプションを使用するには、64ビットモードを使用する必要がある。
 
 @item -mquad-memory-atomic
 @itemx -mno-quad-memory-atomic
 @opindex mquad-memory-atomic
 @opindex mno-quad-memory-atomic
-Generate code that uses (does not use) the atomic quad word memory
-instructions.  The @option{-mquad-memory-atomic} option requires use of
-64-bit mode.
+アトミッククワッドワードメモリ命令を使用する（しない）コードを生成する。 @option{-mquad-memory-atomic}オプションを使用するには、64ビットモードを使用する必要がある。
 
 @item -mupper-regs-di
 @itemx -mno-upper-regs-di
 @opindex mupper-regs-di
 @opindex mno-upper-regs-di
-Generate code that uses (does not use) the scalar instructions that
-target all 64 registers in the vector/scalar floating point register
-set that were added in version 2.06 of the PowerPC ISA when processing
-integers.  @option{-mupper-regs-di} is turned on by default if you use
-any of the @option{-mcpu=power7}, @option{-mcpu=power8},
-@option{-mcpu=power9}, or @option{-mvsx} options.
+整数処理時にPowerPC ISAのバージョン2.06で追加されたベクトル/スカラー浮動小数点レジスタセット内の64個のレジスタすべてを対象とするスカラー命令を使用する（しない）コードを生成する。 @option{-mcpu=power7}、@option{-mcpu=power8}、@option{-mcpu=power9}、または@option{-mvsx}オプションを使用すると、デフォルトで@option {-mupper-regs-di}がオンになる。
 
 @item -mupper-regs-df
 @itemx -mno-upper-regs-df
