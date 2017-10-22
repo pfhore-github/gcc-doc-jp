@@ -17147,74 +17147,32 @@ Mach-O（Darwin）システムでは、このオプションは直接呼び出�
 
 @item -mveclibabi=@var{type}
 @opindex mveclibabi
-Specifies the ABI type to use for vectorizing intrinsics using an
-external library.  The only type supported at present is @samp{mass},
-which specifies to use IBM's Mathematical Acceleration Subsystem
-(MASS) libraries for vectorizing intrinsics using external libraries.
-GCC currently emits calls to @code{acosd2}, @code{acosf4},
-@code{acoshd2}, @code{acoshf4}, @code{asind2}, @code{asinf4},
-@code{asinhd2}, @code{asinhf4}, @code{atan2d2}, @code{atan2f4},
-@code{atand2}, @code{atanf4}, @code{atanhd2}, @code{atanhf4},
-@code{cbrtd2}, @code{cbrtf4}, @code{cosd2}, @code{cosf4},
-@code{coshd2}, @code{coshf4}, @code{erfcd2}, @code{erfcf4},
-@code{erfd2}, @code{erff4}, @code{exp2d2}, @code{exp2f4},
-@code{expd2}, @code{expf4}, @code{expm1d2}, @code{expm1f4},
-@code{hypotd2}, @code{hypotf4}, @code{lgammad2}, @code{lgammaf4},
-@code{log10d2}, @code{log10f4}, @code{log1pd2}, @code{log1pf4},
-@code{log2d2}, @code{log2f4}, @code{logd2}, @code{logf4},
-@code{powd2}, @code{powf4}, @code{sind2}, @code{sinf4}, @code{sinhd2},
-@code{sinhf4}, @code{sqrtd2}, @code{sqrtf4}, @code{tand2},
-@code{tanf4}, @code{tanhd2}, and @code{tanhf4} when generating code
-for power7.  Both @option{-ftree-vectorize} and
-@option{-funsafe-math-optimizations} must also be enabled.  The MASS
-libraries must be specified at link time.
+外部ライブラリを使用して組み込み関数をベクトル化するために使用するABIタイプを指定する。 現在サポートされているタイプは@samp{mass}のみで、外部ライブラリを使用して組み込み関数をベクトル化するためにIBMのMASS（Mathematical Acceleration Subsystem）ライブラリを使用することを指定する。GCCは現在、power7のコードを生成するときに、@code{acosd2}, @code{acosf4}, @code{acoshd2}, @code{acoshf4}, @code{asind2}, @code{asinf4},
+@code{asinhd2}, @code{asinhf4}, @code{atan2d2}, @code{atan2f4}, @code{atand2}, @code{atanf4}, @code{atanhd2}, @code{atanhf4}, @code{cbrtd2}, @code{cbrtf4}, @code{cosd2}, @code{cosf4}, @code{coshd2}, @code{coshf4}, @code{erfcd2}, @code{erfcf4}, @code{erfd2}, @code{erff4}, @code{exp2d2}, @code{exp2f4}, @code{expd2}, @code{expf4}, @code{expm1d2}, @code{expm1f4}, @code{hypotd2}, @code{hypotf4}, @code{lgammad2}, @code{lgammaf4}, @code{log10d2}, @code{log10f4}, @code{log1pd2}, @code{log1pf4}, @code{log2d2}, @code{log2f4}, @code{logd2}, @code{logf4}, @code{powd2}, @code{powf4}, @code{sind2}, @code{sinf4}, @code{sinhd2}, @code{sinhf4}, @code{sqrtd2}, @code{sqrtf4}, @code{tand2}, @code{tanf4}, @code{tanhd2}, and @code{tanhf4}への呼び出しを生成する。@option{-ftree-vectorize}と@option{-funsafe-math-optimizations}も有効にする必要がある。 MASSライブラリは、リンク時に指定する必要がある。
 
 @item -mfriz
 @itemx -mno-friz
 @opindex mfriz
-Generate (do not generate) the @code{friz} instruction when the
-@option{-funsafe-math-optimizations} option is used to optimize
-rounding of floating-point values to 64-bit integer and back to floating
-point.  The @code{friz} instruction does not return the same value if
-the floating-point number is too large to fit in an integer.
+@option{-funsafe-math-optimizations}オプションを使用して浮動小数点値の64ビット整数への丸めを最適化し、浮動小数点に戻すときに、@code{friz}命令を生成する（しない）。 浮動小数点数が大きすぎて整数に収まらない場合、@code{friz}命令は同じ値を返さない。
 
 @item -mpointers-to-nested-functions
 @itemx -mno-pointers-to-nested-functions
 @opindex mpointers-to-nested-functions
-Generate (do not generate) code to load up the static chain register
-(@code{r11}) when calling through a pointer on AIX and 64-bit Linux
-systems where a function pointer points to a 3-word descriptor giving
-the function address, TOC value to be loaded in register @code{r2}, and
-static chain value to be loaded in register @code{r11}.  The
-@option{-mpointers-to-nested-functions} is on by default.  You cannot
-call through pointers to nested functions or pointers
-to functions compiled in other languages that use the static chain if
-you use @option{-mno-pointers-to-nested-functions}.
+関数ポインタが、関数ポインタを与える3ワード・ディスクリプタ、レジスタ@code{r2}にロードされるTOC値、レジスタ@code{r11}にロードされる静的チェーン値を指すAIXと64ビットLinuxシステムでポインタを通して呼び出したとき、静的チェーンレジスタ（@code{r11}）をロードするコードを生成する（しない）。@option{-mpointers-to-nested-functions}はデフォルトでオンになっている。 @option{-mno-pointer-to-nested-functions}を使用すると、ネストした関数へのポインタや静的チェーンを使用する他の言語でコンパイルされた関数へのポインタを呼び出すことはできない。
 
 @item -msave-toc-indirect
 @itemx -mno-save-toc-indirect
 @opindex msave-toc-indirect
-Generate (do not generate) code to save the TOC value in the reserved
-stack location in the function prologue if the function calls through
-a pointer on AIX and 64-bit Linux systems.  If the TOC value is not
-saved in the prologue, it is saved just before the call through the
-pointer.  The @option{-mno-save-toc-indirect} option is the default.
+関数がAIXおよび64ビットLinuxシステム上のポインターを呼び出す場合、関数プロローグの予約済みスタック位置にTOC値を保存するコードを生成する（しない）。 TOC値がプロローグに保存されていない場合は、ポインターを呼び出す直前に保存される。 @option{-mno-save-toc-indirect}オプションがデフォルトである。
 
 @item -mcompat-align-parm
 @itemx -mno-compat-align-parm
 @opindex mcompat-align-parm
-Generate (do not generate) code to pass structure parameters with a
-maximum alignment of 64 bits, for compatibility with older versions
-of GCC.
+GCCの古いバージョンとの互換性のために、最大64ビットのアライメントで構造体パラメータを渡すコードを生成する（しない）。
 
-Older versions of GCC (prior to 4.9.0) incorrectly did not align a
-structure parameter on a 128-bit boundary when that structure contained
-a member requiring 128-bit alignment.  This is corrected in more
-recent versions of GCC.  This option may be used to generate code
-that is compatible with functions compiled with older versions of
-GCC.
+古いバージョンのGCC（4.9.0より前）では、構造体が128ビット境界を必要とするメンバを含んでいた場合、構造体パラメータが128ビット境界上に正しく配置されなかった。 これはGCCの最近のバージョンで修正されている。 このオプションは、GCCの古いバージョンでコンパイルされた関数と互換性のあるコードを生成するために使用されていない。
 
-The @option{-mno-compat-align-parm} option is the default.
+@option {-mno-compat-align-parm}オプションがデフォルトである。
 
 @item -mstack-protector-guard=@var{guard}
 @itemx -mstack-protector-guard-reg=@var{reg}
@@ -17222,16 +17180,9 @@ The @option{-mno-compat-align-parm} option is the default.
 @opindex mstack-protector-guard
 @opindex mstack-protector-guard-reg
 @opindex mstack-protector-guard-offset
-Generate stack protection code using canary at @var{guard}.  Supported
-locations are @samp{global} for global canary or @samp{tls} for per-thread
-canary in the TLS block (the default with GNU libc version 2.4 or later).
+@var{guard}にカナリアを使用してスタック保護コードを生成します。 サポートされている場所は、TLSブロック（GNU libcバージョン2.4以降のデフォルト）でグローバルカナリアンの場合は@samp{global}、スレッドごとカナリアンの場合は@samp{tls}である。
 
-With the latter choice the options
-@option{-mstack-protector-guard-reg=@var{reg}} and
-@option{-mstack-protector-guard-offset=@var{offset}} furthermore specify
-which register to use as base register for reading the canary, and from what
-offset from that base register. The default for those is as specified in the
-relevant ABI.
+後者のオプションでは、@option{-mstack-protector-guard-reg=@var{reg}}オプションと@option{-mstack-protector-guard-offset=@var{offset}}オプションは、 カナリアを読み取るためのベースレジスタと、そのベースレジスタからのどのオフセットからのものかを示します。 これらのデフォルトは、関連するABIで指定されている。
 @end table
 
 @node RX Options
