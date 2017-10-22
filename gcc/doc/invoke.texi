@@ -17186,214 +17186,116 @@ GCCの古いバージョンとの互換性のために、最大64ビットのア
 @end table
 
 @node RX Options
-@subsection RX Options
+@subsection RXオプション
 @cindex RX Options
 
-These command-line options are defined for RX targets:
+これらのコマンドラインオプションは、RXターゲットに対して定義されている。
 
 @table @gcctabopt
 @item -m64bit-doubles
 @itemx -m32bit-doubles
 @opindex m64bit-doubles
 @opindex m32bit-doubles
-Make the @code{double} data type be 64 bits (@option{-m64bit-doubles})
-or 32 bits (@option{-m32bit-doubles}) in size.  The default is
-@option{-m32bit-doubles}.  @emph{Note} RX floating-point hardware only
-works on 32-bit values, which is why the default is
-@option{-m32bit-doubles}.
+@code{double}データ型を64ビット（@option{-m64bit-doubles}）または32ビット（@option{-m32bit-doubles}）のサイズにする。 デフォルトは@option{-m32bit-doubles}である。 @emph{_注意_} RX浮動小数点ハードウェアは32ビット値でのみ動作する。そのため、デフォルトは@option{-m32bit-doubles}である。
 
 @item -fpu
 @itemx -nofpu
 @opindex fpu
 @opindex nofpu
-Enables (@option{-fpu}) or disables (@option{-nofpu}) the use of RX
-floating-point hardware.  The default is enabled for the RX600
-series and disabled for the RX200 series.
+RX浮動小数点ハードウェアの使用を有効（@option{-fpu}）または無効（@option{-nofpu}）にする。 デフォルトはRX600シリーズでは有効、RX200シリーズでは無効である。
 
-Floating-point instructions are only generated for 32-bit floating-point 
-values, however, so the FPU hardware is not used for doubles if the
-@option{-m64bit-doubles} option is used.
+ただし、浮動小数点命令は32ビット浮動小数点値に対してのみ生成されるため、@option{-m64bit-doubles}オプションが使用されている場合、FPUハードウェアは倍精度には使用されない。
 
-@emph{Note} If the @option{-fpu} option is enabled then
-@option{-funsafe-math-optimizations} is also enabled automatically.
-This is because the RX FPU instructions are themselves unsafe.
+@emph{_注意_} @option{-fpu}オプションを有効にすると、@option{-funsafe-math-optimizations}も自動的に有効になる。 これは、RX FPU命令自体が危険であるためである。
 
 @item -mcpu=@var{name}
 @opindex mcpu
-Selects the type of RX CPU to be targeted.  Currently three types are
-supported, the generic @samp{RX600} and @samp{RX200} series hardware and
-the specific @samp{RX610} CPU.  The default is @samp{RX600}.
+ターゲットにするRX CPUのタイプを選択する。 現在、汎用@samp{RX600}と@samp{RX200}シリーズハードウェアと特定の@samp{RX610}CPUの3種類がサポートされている。 デフォルトは@samp{RX600}である。
 
-The only difference between @samp{RX600} and @samp{RX610} is that the
-@samp{RX610} does not support the @code{MVTIPL} instruction.
+@samp{RX600}と@samp {RX610}の唯一の違いは、@code{RX610}が@code{MVTIPL}命令をサポートしていないことである。
 
-The @samp{RX200} series does not have a hardware floating-point unit
-and so @option{-nofpu} is enabled by default when this type is
-selected.
+@samp{RX200}シリーズにはハードウェア浮動小数点ユニットがないため、このタイプが選択されている場合はデフォルトで@option{-nofpu}が有効になっている。
 
 @item -mbig-endian-data
 @itemx -mlittle-endian-data
 @opindex mbig-endian-data
 @opindex mlittle-endian-data
-Store data (but not code) in the big-endian format.  The default is
-@option{-mlittle-endian-data}, i.e.@: to store data in the little-endian
-format.
+データをビッグエンディアン形式で格納する（コードはしない）。 デフォルトは@option{-mlittle-endian-data}である。すなわち、リトルエンディアン形式でデータを格納する。
 
 @item -msmall-data-limit=@var{N}
 @opindex msmall-data-limit
-Specifies the maximum size in bytes of global and static variables
-which can be placed into the small data area.  Using the small data
-area can lead to smaller and faster code, but the size of area is
-limited and it is up to the programmer to ensure that the area does
-not overflow.  Also when the small data area is used one of the RX's
-registers (usually @code{r13}) is reserved for use pointing to this
-area, so it is no longer available for use by the compiler.  This
-could result in slower and/or larger code if variables are pushed onto
-the stack instead of being held in this register.
+小さなデータ領域に配置できるグローバルおよび静的変数の最大サイズをバイト単位で指定する。 小さなデータ領域を使用すると、コードが小さくて高速になる可能性があるが、領域のサイズは限られていて、領域がオーバーフローしないかどうかはプログラマにまかされている。 小さなデータ領域が使用されている場合には、RXのレジスタの1つ（通常は@code{r13}）はこの領域を指すために予約されているため、コンパイラでは使用できなくなる。 この結果、変数がこのレジスタに保持されるのではなくスタックにプッシュされると、コードの速度が遅くなりコードが大きくなることもある。
 
-Note, common variables (variables that have not been initialized) and
-constants are not placed into the small data area as they are assigned
-to other sections in the output executable.
+一般的な変数（初期化されていない変数）と定数は、実行可能な出力の他のセクションに割り当てられているため、小さなデータ領域には配置されない。
 
-The default value is zero, which disables this feature.  Note, this
-feature is not enabled by default with higher optimization levels
-(@option{-O2} etc) because of the potentially detrimental effects of
-reserving a register.  It is up to the programmer to experiment and
-discover whether this feature is of benefit to their program.  See the
-description of the @option{-mpid} option for a description of how the
-actual register to hold the small data area pointer is chosen.
+デフォルト値は0で、この機能は無効になっている。 この機能は、レジスタを予約すると悪影響を受ける可能性があるため、デフォルトでは高度な最適化レベル（@option {-O2}など）では有効になっていない。 この機能がプログラムに有益であるかどうかを実験して発見することはプログラマの責任である。 小さなデータ領域ポインタを保持する実際のレジスタの選択方法については、@option{-mpid}オプションの説明を参照せよ。
 
 @item -msim
 @itemx -mno-sim
 @opindex msim
 @opindex mno-sim
-Use the simulator runtime.  The default is to use the libgloss
-board-specific runtime.
+シミュレータランタイムを使用する。 デフォルトでは、libglossボード固有のランタイムを使用する。
 
 @item -mas100-syntax
 @itemx -mno-as100-syntax
 @opindex mas100-syntax
 @opindex mno-as100-syntax
-When generating assembler output use a syntax that is compatible with
-Renesas's AS100 assembler.  This syntax can also be handled by the GAS
-assembler, but it has some restrictions so it is not generated by default.
+アセンブラ出力を生成する場合に、ルネサスのAS100アセンブラと互換性のある構文を使用する。 この構文はGASアセンブラでも処理できるが、いくつかの制限があり、デフォルトでは生成されない。
 
 @item -mmax-constant-size=@var{N}
 @opindex mmax-constant-size
-Specifies the maximum size, in bytes, of a constant that can be used as
-an operand in a RX instruction.  Although the RX instruction set does
-allow constants of up to 4 bytes in length to be used in instructions,
-a longer value equates to a longer instruction.  Thus in some
-circumstances it can be beneficial to restrict the size of constants
-that are used in instructions.  Constants that are too big are instead
-placed into a constant pool and referenced via register indirection.
+RX命令のオペランドとして使用できる定数の最大サイズをバイト単位で指定する。RX命令セットは、長さが最大4バイトの定数を命令で使用することを可能にするが、より長い値はより長い命令に等しい。したがって、状況によっては、命令で使用される定数のサイズを制限することが有益である。大きすぎる定数は、代わりに定数プールに配置され、レジスタの間接参照によって参照される。
 
-The value @var{N} can be between 0 and 4.  A value of 0 (the default)
-or 4 means that constants of any size are allowed.
+値@var{N}は0と4の間で指定できる。値0（デフォルト）または4は、任意のサイズの定数が許可されることを意味する。
 
 @item -mrelax
 @opindex mrelax
-Enable linker relaxation.  Linker relaxation is a process whereby the
-linker attempts to reduce the size of a program by finding shorter
-versions of various instructions.  Disabled by default.
+リンカーの緩和を有効にする。 リンカー緩和は、リンカーがさまざまな命令の短いバージョンを見つけることによってプログラムのサイズを縮小しようとするプロセスである。 デフォルトでは無効である。
 
 @item -mint-register=@var{N}
 @opindex mint-register
-Specify the number of registers to reserve for fast interrupt handler
-functions.  The value @var{N} can be between 0 and 4.  A value of 1
-means that register @code{r13} is reserved for the exclusive use
-of fast interrupt handlers.  A value of 2 reserves @code{r13} and
-@code{r12}.  A value of 3 reserves @code{r13}, @code{r12} and
-@code{r11}, and a value of 4 reserves @code{r13} through @code{r10}.
-A value of 0, the default, does not reserve any registers.
+高速割り込みハンドラ機能用に予約するレジスタの数を指定する。値@var{N}は0と4の間にある。1という値は、レジスタ@code{r13}が高速割り込みハンドラ専用に予約されていることを意味する。 2の値は@code{r13}と@code{r12}を予約する。3の値は@code{r13}、@code{r12}と@code{r11}を予約し、4の値は@code{r13}から@code{r10}を予約する。デフォルトの値0は、レジスタを予約しない。
 
 @item -msave-acc-in-interrupts
 @opindex msave-acc-in-interrupts
-Specifies that interrupt handler functions should preserve the
-accumulator register.  This is only necessary if normal code might use
-the accumulator register, for example because it performs 64-bit
-multiplications.  The default is to ignore the accumulator as this
-makes the interrupt handlers faster.
+割り込みハンドラ関数がアキュムレータレジスタを保持する必要があることを指定する。 これは、たとえば64ビット乗算を実行するなど、通常のコードでアキュムレータレジスタを使用する場合にのみ必要である。 デフォルトでは、アキュムレータは無視されるため、割り込みハンドラが高速になる。
 
 @item -mpid
 @itemx -mno-pid
 @opindex mpid
 @opindex mno-pid
-Enables the generation of position independent data.  When enabled any
-access to constant data is done via an offset from a base address
-held in a register.  This allows the location of constant data to be
-determined at run time without requiring the executable to be
-relocated, which is a benefit to embedded applications with tight
-memory constraints.  Data that can be modified is not affected by this
-option.
+位置に依存しないデータの生成を有効にする。 有効にされると、定数データへのアクセスは、レジスタに保持されたベースアドレスからのオフセットを介して行わる。 これにより、実行可能ファイルの再配置を必要とせずに、実行時に定数データの位置を決定することができる。これは、厳しいメモリ制約を伴う組み込みアプリケーションのメリットである。 このオプションによって、変更可能なデータは影響を受けない。
 
-Note, using this feature reserves a register, usually @code{r13}, for
-the constant data base address.  This can result in slower and/or
-larger code, especially in complicated functions.
+この機能を使用すると、定数データベースのアドレスには、通常@code{r13}のレジスタが予約される。 これにより、特に複雑な機能では、コードの速度が遅くなることがある。
 
-The actual register chosen to hold the constant data base address
-depends upon whether the @option{-msmall-data-limit} and/or the
-@option{-mint-register} command-line options are enabled.  Starting
-with register @code{r13} and proceeding downwards, registers are
-allocated first to satisfy the requirements of @option{-mint-register},
-then @option{-mpid} and finally @option{-msmall-data-limit}.  Thus it
-is possible for the small data area register to be @code{r8} if both
-@option{-mint-register=4} and @option{-mpid} are specified on the
-command line.
+定数データベースアドレスを保持するために選択された実際のレジスタは、@option{-msmall-data-limit}および/または@option{-mint-register}コマンドラインオプションが有効かどうかによって異なる。レジスタ@code{r13}から始め下方に進み、レジスタは最初に@option{-mint-register}、次に@option {-mpid}、最後に@option{-msmall-data-limit}の要件を満たすように割り当てられる。したがって、@option{-mint-register=4}と@option{-mpid}の両方がコマンドラインで指定されている場合、小さなデータエリアレジスタは@code{r8}になる可能性がある。
 
-By default this feature is not enabled.  The default can be restored
-via the @option{-mno-pid} command-line option.
+デフォルトでは、この機能は有効になっていない。 デフォルトは、@option{-mno-pid}コマンドラインオプションで復元できる。
 
 @item -mno-warn-multiple-fast-interrupts
 @itemx -mwarn-multiple-fast-interrupts
 @opindex mno-warn-multiple-fast-interrupts
 @opindex mwarn-multiple-fast-interrupts
-Prevents GCC from issuing a warning message if it finds more than one
-fast interrupt handler when it is compiling a file.  The default is to
-issue a warning for each extra fast interrupt handler found, as the RX
-only supports one such interrupt.
+ファイルをコンパイル中に複数の高速割り込みハンドラが見つかった場合、GCCが警告メッセージを出さないようにする。 RXは、このような割り込みの1つのみをサポートするため、デフォルトでは、見つかった追加の高速割り込みハンドラごとに警告を発行する。
 
 @item -mallow-string-insns
 @itemx -mno-allow-string-insns
 @opindex mallow-string-insns
 @opindex mno-allow-string-insns
-Enables or disables the use of the string manipulation instructions
-@code{SMOVF}, @code{SCMPU}, @code{SMOVB}, @code{SMOVU}, @code{SUNTIL}
-@code{SWHILE} and also the @code{RMPA} instruction.  These
-instructions may prefetch data, which is not safe to do if accessing
-an I/O register.  (See section 12.2.7 of the RX62N Group User's Manual
-for more information).
+文字列操作命令@code{SMOVF}、@code{SCMPU}、@code{SMOVB}、@code{SMOVU}、@code{SUNTIL}、@code{SWHILE}、@code{SWILE}、@code{RMPA}命令の使用を有効または無効にする 。 これらの命令はデータをプリフェッチする可能性があり、I / Oレジスタにアクセスする場合は安全ではなお。 （詳細についてはRX62Nグループユーザーズマニュアルの12.2.7節参照）。
 
-The default is to allow these instructions, but it is not possible for
-GCC to reliably detect all circumstances where a string instruction
-might be used to access an I/O register, so their use cannot be
-disabled automatically.  Instead it is reliant upon the programmer to
-use the @option{-mno-allow-string-insns} option if their program
-accesses I/O space.
+デフォルトではこれらの命令が許可されているが、I / Oレジスタにアクセスするために文字列命令が使用される可能性のあるすべての状況をGCCが確実に検出することはできないため、その使用を自動的に無効にすることはできない。 代わりに、プログラムがI/O空間にアクセスする場合、@option{-mno-allow-string-insns}オプションを使用することはプログラマに依存している。
 
-When the instructions are enabled GCC defines the C preprocessor
-symbol @code{__RX_ALLOW_STRING_INSNS__}, otherwise it defines the
-symbol @code{__RX_DISALLOW_STRING_INSNS__}.
+命令が有効になると、GCCはCプリプロセッサシンボル@code{__RX_ALLOW_STRING_INSNS__}を定義する。それ以外の場合はシンボル@code {__RX_DISALLOW_STRING_INSNS__}を定義する。
 
 @item -mjsr
 @itemx -mno-jsr
 @opindex mjsr
 @opindex mno-jsr
-Use only (or not only) @code{JSR} instructions to access functions.
-This option can be used when code size exceeds the range of @code{BSR}
-instructions.  Note that @option{-mno-jsr} does not mean to not use
-@code{JSR} but instead means that any type of branch may be used.
+関数にアクセスするには@code{JSR}命令だけ（ではなく）使用する。このオプションは、コードサイズが@code{BSR}命令の範囲を超える場合に使用できる。 @option{-mno-jsr}は@code {JSR}を使用しないことを意味するのではなく、任意の種類のブランチを使用できることを意味する。
 @end table
 
-@emph{Note:} The generic GCC command-line option @option{-ffixed-@var{reg}}
-has special significance to the RX port when used with the
-@code{interrupt} function attribute.  This attribute indicates a
-function intended to process fast interrupts.  GCC ensures
-that it only uses the registers @code{r10}, @code{r11}, @code{r12}
-and/or @code{r13} and only provided that the normal use of the
-corresponding registers have been restricted via the
-@option{-ffixed-@var{reg}} or @option{-mint-register} command-line
-options.
+@emph{_注意：_}一般的なGCCのコマンドラインオプション@option{-ffixed-@var{reg}}は、@code{interrupt}関数属性とともに使用するとき、RXポートに対して特別な意味を持つ。 この属性は、高速割り込みを処理する機能を示す。 GCCは、レジスタ@code{r10}、@code{r11}、@code{r12}および/または@code{r13}のみを使用し、対応するレジスタの通常の使用が@option{-ffixed-@var{reg}}または@option {-mint-register}コマンドラインオプションを使用する。
 
 @node S/390 and zSeries Options
 @subsection S/390 and zSeries Options
