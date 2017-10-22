@@ -6352,7 +6352,7 @@ LRAは利益があるならば再実体化（再計算）を試みる。
 
 @item -fsched-pressure
 @opindex fsched-pressure
-レジスタ割当前のレジスタ圧感知のinsnスケジューリングを有効位にする。
+レジスタ割当前のレジスタ圧感知の命令スケジューリングを有効位にする。
 これはレジスタ割当前のスケジューリングが有効の時だけ意味を持つ。すなわち、@option{-fschedule-insns}でか、@option{-O2}以上。
 このオプションの使用は利用可能なレジスタの数を超えてレジスタ圧が増え、続いてレジスタ割当で溢れることを防ぎ
 コード生成を向上させサイズを削減する。
@@ -6370,16 +6370,16 @@ LRAは利益があるならば再実体化（再計算）を試みる。
 @item -fsched-stalled-insns
 @itemx -fsched-stalled-insns=@var{n}
 @opindex fsched-stalled-insns
-第2スケジューリングパスの間に準備リストへ停止中のinsnのキューから（もし存在すれば）どのくらい多くのinsnを
-時期早々に移動できるかを定義する。@option{-fno-sched-stalled-insns}は時期早々には一つもinsnを移動できないことを意味し、
-@option{-fsched-stalled-insns=0}は時期早々に移動できるキューされたinsnの移動個数に制限がないことを意味する。
+第2スケジューリングパスの間に準備リストへ停止中の命令のキューから（もし存在すれば）どのくらい多くの命令を
+時期早々に移動できるかを定義する。@option{-fno-sched-stalled-insns}は時期早々には一つも命令を移動できないことを意味し、
+@option{-fsched-stalled-insns=0}は時期早々に移動できるキューされた命令の移動個数に制限がないことを意味する。
 値のない@option{-fsched-stalled-insns}は@option{-fsched-stalled-insns=1}と等価である。
 
 @item -fsched-stalled-insns-dep
 @itemx -fsched-stalled-insns-dep=@var{n}
 @opindex fsched-stalled-insns-dep
-停止中のinsn全体のキューから時期早々に除去する候補である停止中のinsnの依存関係をどのくらい多くの
-insnグループ（サイクル）で確認するかを定義する。これは第2スケジューリングパスの間でのみ効果があり、
+停止中の命令全体のキューから時期早々に除去する候補である停止中の命令の依存関係をどのくらい多くの
+命令グループ（サイクル）で確認するかを定義する。これは第2スケジューリングパスの間でのみ効果があり、
 @option{-fsched-stalled-insns}が使われている場合、その場合のみ効果がある。
 @option{-fno-sched-stalled-insns-dep}は@option{-fsched-stalled-insns-dep=0}と等価である。
 値なしの@option{-fsched-stalled-insns-dep}は@option{-fsched-stalled-insns-dep=1}と等価である。
@@ -6779,7 +6779,7 @@ ENDDO
 
 @item -ftree-loop-im
 @opindex ftree-loop-im
-木でのループ不変式移動を行う。このパスはRTLレベルで扱うのが難しい不変式（関数呼び出し、非自明のinsn列へと拡張される操作）
+木でのループ不変式移動を行う。このパスはRTLレベルで扱うのが難しい不変式（関数呼び出し、非自明の命令列へと拡張される操作）
 のみを動かす。@option{-funswitch-loops}でループの外の不変である条件のオペランドも移動するので、
 ループ非スイッチ化で単なる自明不変解析を使うことができる。このパスはストア移動も含んでいる。
 
@@ -7769,7 +7769,7 @@ RTL if-conversionは、ブロックの周りの条件分岐を削除し、それ
 計算gotoへジャンプするブロックへの重複する命令の最大値。
 いくつかのパスにおいて@math{O(N^2)}ふるまいを避けるために、
 GCCはできるだけ遅く、早く計算されたgotosをコンパイル・プロセスを分解し、それらをできるだけ遅くに結合する。
-max-goto-duplication-insnsを超えない基本ブロックの末端での計算ジャンプのみが結合される。
+max-goto-duplication-命令を超えない基本ブロックの末端での計算ジャンプのみが結合される。
 デフォルト値は8である。
 
 @item max-delay-slot-insn-search
@@ -7949,7 +7949,7 @@ bbと比較する類似のbbの最大量。これは木末端マージの二次�
 引き剥がされた列を通したホットな経路の分岐の最大値。
 
 @item max-completely-peeled-insns
-完全に引き剥がされたループのinsnの最大値。
+完全に引き剥がされたループの命令の最大値。
 
 @item max-completely-peel-times
 完全引き剥がしに適したループの繰り返し数の最大値。
@@ -7958,13 +7958,13 @@ bbと比較する類似のbbの最大量。これは木末端マージの二次�
 完全引き剥がしに適した入れ子ループの最大深さ。
 
 @item max-unswitch-insns
-非分岐されたループのinsnの最大値。
+非分岐されたループの命令の最大値。
 
 @item max-unswitch-level
 単一ループでの非分岐された分岐の最大値。
 
 @item max-loop-headers-insns
-コピーループヘッダによって複製されるループヘッダでのinsnの最大数。
+コピーループヘッダによって複製されるループヘッダでの命令の最大数。
 
 @item lim-expensive
 ループ不変移動での高価な式の最小コスト。
@@ -8105,10 +8105,10 @@ cselibが考慮するメモリ場所の最大値。値を増やすともっと�
 選択的スケジューラでパイプライン化で考慮される領域のブロックの最大数。デフォルト値は15である。
 
 @item max-sched-region-insns
-ブロック間スケジューリングで考慮される領域のinsnの最大数。デフォルト値は100である。
+ブロック間スケジューリングで考慮される領域の命令の最大数。デフォルト値は100である。
 
 @item max-pipeline-region-insns
-選択的スケジューラでのパイプライン化で考慮される領域のinsnの最大数。デフォルト値は200である。
+選択的スケジューラでのパイプライン化で考慮される領域の命令の最大数。デフォルト値は200である。
 
 @item min-spec-prob
 ブロック間推測スケジューリング用のソースブロック到達の（パーセントでの）最小確率。デフォルト値は40である。
@@ -8117,10 +8117,10 @@ cselibが考慮するメモリ場所の最大値。値を増やすともっと�
 CFGを通しての拡張領域への繰り返しの最大数。値0（デフォルト）は領域拡張を無効にする。
 
 @item max-sched-insn-conflict-delay
-推測移動で考慮されるinsnの最大衝突遅延。デフォルト値は3である。
+推測移動で考慮される命令の最大衝突遅延。デフォルト値は3である。
 
 @item sched-spec-prob-cutoff
-推測成功で、推測insnがスケジューリングされる（パーセントでの）最小確率。
+推測成功で、推測命令がスケジューリングされる（パーセントでの）最小確率。
 デフォルト値は40である。
 
 @item sched-state-edge-prob-cutoff
@@ -8233,7 +8233,7 @@ IRAはループ不変式を移動するための決定のために(@option{-O3}�
 それは典型的な命令によって必要となるレジスタの最小数である。この値は数々の実験で最良であることがわかっている。
 
 @item lra-inheritance-ebb-probability-cutoff
-LRAは、以降のinsnでのレジスタで再ロードされる値を再利用しようと試みる。
+LRAは、以降の命令でのレジスタで再ロードされる値を再利用しようと試みる。
 この最適化は継承と呼ばれる。EBBはこの最適化をするための領域として使われる。
 パラメータはLRAでEBBを継承するためにBBを加えるために使われる最小のフォールスルーの最小確率を
 パーセントで定義する。パラメータのデフォルト値は40である。値はx86-64でのSPEC2000の数々の実行から選択された。
@@ -8250,8 +8250,8 @@ LRAは、以降のinsnでのレジスタで再ロードされる値を再利用�
 
 @item max-vartrack-size
 任意の関数の変数追跡データフロー解析の間に使うハッシュテーブルスロットの最大値をセットする。
-もしこの制限が有効にされた代入での変数追跡で超えたならば、その関数からすべてのデバッグinsnを取り除いた後に
-その関数の解析はそれ無しで再試行される。もし制限がデバッグinsnなしでさえ超過したならば、変数追跡解析はその関数では完全に無効にされる。
+もしこの制限が有効にされた代入での変数追跡で超えたならば、その関数からすべてのデバッグ命令を取り除いた後に
+その関数の解析はそれ無しで再試行される。もし制限がデバッグ命令なしでさえ超過したならば、変数追跡解析はその関数では完全に無効にされる。
 このパラメータを０にすると無制限になる。
 
 @item max-vartrack-expr-depth
@@ -8262,9 +8262,9 @@ LRAは、以降のinsnでのレジスタで再ロードされる値を再利用�
 デフォルトは12である。
 
 @item min-nondebug-insn-uid
-非デバッグinsn用にこのパラメータで始まるuidを使う。このパラメータ未満の範囲は
-@option{-fvar-tracking-assignments}で作られるデバッグinsn用に排他的に予約されているが、
-デバッグinsnはこれより上の（重ならない）udiをもし予約された範囲が枯渇したなら使うかもしれない。
+非デバッグ命令用にこのパラメータで始まるuidを使う。このパラメータ未満の範囲は
+@option{-fvar-tracking-assignments}で作られるデバッグ命令用に排他的に予約されているが、
+デバッグ命令はこれより上の（重ならない）udiをもし予約された範囲が枯渇したなら使うかもしれない。
 
 @item ipa-sra-ptr-growth-factor
 それらの累積的なサイズが@option{ipa-sra-ptr-growth-factor}の最初のポインタ・パラメータのサイズ倍以下の時だけ、
@@ -10554,7 +10554,7 @@ gcc -fopt-info-vec-missed=vec.miss -fopt-info-loop-optimized=loop.opt
 命令スケジューリングを使うターゲットで、このオプションはダンプファイルへのスケジューラのデバッグ出力の量を制御する。
 
 ゼロより大きい@var{n}では、@option{-fsched-verbose}は@option{-fdump-rtl-sched1}と@option{-fdump-rtl-sched2}と同じ情報を
-出力する。1より大きな@var{n}では、基本ブロック確率、詳細の準備リスト情報、unit/insn情報も出力する。
+出力する。1より大きな@var{n}では、基本ブロック確率、詳細の準備リスト情報、unit/命令情報も出力する。
 2より大きな@var{n}では、強制終了点でのRTL、制御フロー、領域情報も含まれる。4より大きな@var{n}では、
 @option{-fsched-verbose}は依存情報も含まれる。
 
@@ -11713,7 +11713,7 @@ XYメモリ拡張を有効にするためにアセンブラへ渡される。
 @table @gcctabopt
 @item -mlong-calls
 @opindex mlong-calls
-呼び出しinsnをレジスタ間接呼び出しとして生成し、したがって完全な32ビット範囲へのアクセスを提供する。
+呼び出し命令をレジスタ間接呼び出しとして生成し、したがって完全な32ビット範囲へのアクセスを提供する。
 
 @item -mmedium-calls
 @opindex mmedium-calls
@@ -12775,7 +12775,7 @@ IDベースの共有ライブラリが使用されていることを前提とし
 
 @item -mno-leaf-id-shared-library
 @opindex mno-leaf-id-shared-library
-コンパイル中のコードがID共有ライブラリとリンクしないと仮定しない。 jumpおよびcall insnsのコードがより遅く生成される。
+コンパイル中のコードがID共有ライブラリとリンクしないと仮定しない。 jumpおよびcall 命令のコードがより遅く生成される。
 
 @item -mshared-library-id=n
 @opindex mshared-library-id
@@ -13503,7 +13503,7 @@ divとmod命令を使わない。
 @item -mdword
 @opindex mdword
 
-ダブルワードinsnsを使用するようにABIを変更する。
+ダブルワード命令を使用するようにABIを変更する。
 
 @item -mno-dword
 @opindex mno-dword
@@ -16669,95 +16669,60 @@ PowerPC ISAのバージョン2.07で追加されたベクトルおよびスカ�
 @itemx -mno-upper-regs-df
 @opindex mupper-regs-df
 @opindex mno-upper-regs-df
-Generate code that uses (does not use) the scalar double precision
-instructions that target all 64 registers in the vector/scalar
-floating point register set that were added in version 2.06 of the
-PowerPC ISA.  @option{-mupper-regs-df} is turned on by default if you
-use any of the @option{-mcpu=power7}, @option{-mcpu=power8},
-@option{-mcpu=power9}, or @option{-mvsx} options.
+PowerPC ISAのバージョン2.06で追加されたベクトル/スカラー浮動小数点レジスタセット内の64個のレジスタすべてを対象とするスカラー倍精度命令を使用する（しない）コードを生成する。@option{-mupper-regs-df}は、@option{-mcpu=power7}, @option{-mcpu=power8}, @option{-mcpu=power9}, @option{-mvsx}オプションのどれかを使うとデフォルト有効になる。
 
 @item -mupper-regs-sf
 @itemx -mno-upper-regs-sf
 @opindex mupper-regs-sf
 @opindex mno-upper-regs-sf
-Generate code that uses (does not use) the scalar single precision
-instructions that target all 64 registers in the vector/scalar
-floating point register set that were added in version 2.07 of the
-PowerPC ISA.  @option{-mupper-regs-sf} is turned on by default if you
-use either of the @option{-mcpu=power8}, @option{-mpower8-vector}, or
-@option{-mcpu=power9} options.
+PowerPC ISAのバージョン2.07で追加されたベクトル/スカラー浮動小数点レジスタセット内の64個のレジスタすべてを対象とするスカラー単精度命令を使用する（しない）コードを生成する。@option{-mupper-regs-sf}は、@option{-mcpu=power8}, @option{-mpower8-vector}, @option{-mcpu=power9}オプションのどれかを使うとデフォルト有効になる。
 
 @item -mupper-regs
 @itemx -mno-upper-regs
 @opindex mupper-regs
 @opindex mno-upper-regs
-Generate code that uses (does not use) the scalar
-instructions that target all 64 registers in the vector/scalar
-floating point register set, depending on the model of the machine.
+マシンのモデルに応じて、ベクトル/スカラー浮動小数点レジスタセット内の64個のレジスタすべてを対象とするスカラー命令を使用する（しない）コードを生成する。
 
-If the @option{-mno-upper-regs} option is used, it turns off both
-@option{-mupper-regs-sf} and @option{-mupper-regs-df} options.
+@option{-mno-upper-regs}オプションを使用すると、@option{-mupper-regs-sf}オプションと@option{-mupper-regs-df}オプションの両方がオフになる。
 
 @item -mfloat128
 @itemx -mno-float128
 @opindex mfloat128
 @opindex mno-float128
-Enable/disable the @var{__float128} keyword for IEEE 128-bit floating point
-and use either software emulation for IEEE 128-bit floating point or
-hardware instructions.
+ソフトウェアエミュレーションまたはハードウェア命令を使用したIEEE 128ビット浮動小数点の@var{__float128}キーワードを有効/無効にする。
 
-The VSX instruction set (@option{-mvsx}, @option{-mcpu=power7}, or
-@option{-mcpu=power8}) must be enabled to use the @option{-mfloat128}
-option.  The @option{-mfloat128} option only works on PowerPC 64-bit
-Linux systems.
+@option{-mfloat128}オプションを使用するには、VSX命令セット（@option{-mvsx}、@option{-mcpu=power7}、または@option{-mcpu=power8}）を有効にする必要がある。 @option{-mfloat128}オプションは、PowerPC 64ビットLinuxシステムでのみ動作する。
 
-If you use the ISA 3.0 instruction set (@option{-mcpu=power9}), the
-@option{-mfloat128} option will also enable the generation of ISA 3.0
-IEEE 128-bit floating point instructions.  Otherwise, IEEE 128-bit
-floating point will be done with software emulation.
+ISA 3.0命令セット（@option{-mcpu=power9}）を使用すると、@option{-mfloat128}オプションによってISA 3.0 IEEE 128ビット浮動小数点命令の生成も可能になる。 それ以外の場合、IEEE 128ビット浮動小数点はソフトウェアエミュレーションで行われる。
 
 @item -mfloat128-hardware
 @itemx -mno-float128-hardware
 @opindex mfloat128-hardware
 @opindex mno-float128-hardware
-Enable/disable using ISA 3.0 hardware instructions to support the
-@var{__float128} data type.
+@var{__float128}データ型をサポートするためにISA 3.0ハードウェア命令を有効/無効にする。
 
-If you use @option{-mfloat128-hardware}, it will enable the option
-@option{-mfloat128} as well.
+@option{-mfloat128-hardware}を使用すると、オプション@option{-mfloat128}も有効になる。
 
-If you select ISA 3.0 instructions with @option{-mcpu=power9}, but do
-not use either @option{-mfloat128} or @option{-mfloat128-hardware},
-the IEEE 128-bit floating point support will not be enabled.
+@option{-mcpu=power9}でISA 3.0命令を選択し、@option{-mfloat128}または@option{-mfloat128-hardware}を使用しないと、IEEE 128ビット浮動小数点サポートは有効にならない。
 
 @item -mfloat-gprs=@var{yes/single/double/no}
 @itemx -mfloat-gprs
 @opindex mfloat-gprs
-This switch enables or disables the generation of floating-point
-operations on the general-purpose registers for architectures that
-support it.
+このスイッチは、それをサポートするアーキテクチャの汎用レジスタで浮動小数点演算の生成を有効または無効にする。
 
-The argument @samp{yes} or @samp{single} enables the use of
-single-precision floating-point operations.
+引数@samp{yes}または@samp{single}は、単精度浮動小数点演算の使用を可能にする。
 
-The argument @samp{double} enables the use of single and
-double-precision floating-point operations.
+引数@samp{double}は、単精度浮動小数点演算と倍精度浮動小数点演算の使用を可能にする。
 
-The argument @samp{no} disables floating-point operations on the
-general-purpose registers.
+引数@samp{no}は、汎用レジスタ上の浮動小数点演算を無効にする。
 
-This option is currently only available on the MPC854x.
+このオプションは現在、MPC854xでのみ使用できる。
 
 @item -m32
 @itemx -m64
 @opindex m32
 @opindex m64
-Generate code for 32-bit or 64-bit environments of Darwin and SVR4
-targets (including GNU/Linux).  The 32-bit environment sets int, long
-and pointer to 32 bits and generates code that runs on any PowerPC
-variant.  The 64-bit environment sets int to 32 bits and long and
-pointer to 64 bits, and generates code for PowerPC64, as for
-@option{-mpowerpc64}.
+DarwinおよびSVR4ターゲット（GNU/Linuxを含む）の32ビットまたは64ビット環境用のコードを生成する。 32ビット環境は、int、long、および32ビットへのポインタを設定し、任意のPowerPCバリアントで実行されるコードを生成する。 64ビット環境では、intを32ビット、longとポインタを64ビットに設定し、PowerPC64用のコードを@option{-mpowerpc64}と同様に生成する。
 
 @item -mfull-toc
 @itemx -mno-fp-in-toc
@@ -16767,497 +16732,311 @@ pointer to 64 bits, and generates code for PowerPC64, as for
 @opindex mno-fp-in-toc
 @opindex mno-sum-in-toc
 @opindex mminimal-toc
-Modify generation of the TOC (Table Of Contents), which is created for
-every executable file.  The @option{-mfull-toc} option is selected by
-default.  In that case, GCC allocates at least one TOC entry for
-each unique non-automatic variable reference in your program.  GCC
-also places floating-point constants in the TOC@.  However, only
-16,384 entries are available in the TOC@.
+実行可能ファイルごとに作成されるTOC（目次）の生成を変更する。 @option{-mfull-toc}オプションはデフォルトで選択されている。その場合、GCCはプログラム内の一意の非自動変数参照ごとに少なくとも1つのTOCエントリを割り当てる。 GCCは浮動小数点定数もTOCに配置する。ただし、TOCでは16,384エントリしか利用できない。
 
-If you receive a linker error message that saying you have overflowed
-the available TOC space, you can reduce the amount of TOC space used
-with the @option{-mno-fp-in-toc} and @option{-mno-sum-in-toc} options.
-@option{-mno-fp-in-toc} prevents GCC from putting floating-point
-constants in the TOC and @option{-mno-sum-in-toc} forces GCC to
-generate code to calculate the sum of an address and a constant at
-run time instead of putting that sum into the TOC@.  You may specify one
-or both of these options.  Each causes GCC to produce very slightly
-slower and larger code at the expense of conserving TOC space.
 
-If you still run out of space in the TOC even when you specify both of
-these options, specify @option{-mminimal-toc} instead.  This option causes
-GCC to make only one TOC entry for every file.  When you specify this
-option, GCC produces code that is slower and larger but which
-uses extremely little TOC space.  You may wish to use this option
-only on files that contain less frequently-executed code.
+使用可能なTOC領域がオーバーフローしたというリンカーエラーメッセージが表示された場合は、@option{-mno-fp-in-toc}および@option{-mno-sum-in}で使用されるTOC領域の量を減らすことができる。@option{-mno-fp-in-toc}は、GCCが浮動小数点定数をTOCに入れないようにし、@option{-mno-sum-in-toc}はGCCにアドレスと その合計をTOCに入れるのではなく、実行時に定数を返す。これらのオプションの1つまたは両方を指定することができる。それぞれは、TOCのスペースを節約する代わりに、GCCに非常にわずかに遅く大きなコードを生成させる。
+
+これらのオプションの両方を指定してもTOCのスペースが足りなくなった場合は、代わりに@option{-mminimal-toc}を指定する。 このオプションを指定すると、GCCはすべてのファイルに対してTOCエントリを1つだけ作成する。 このオプションを指定すると、GCCはコードの生成速度が遅くなるが、TOCの容量はごくわずかになる。 このオプションは、実行頻度の低いコードを含むファイルに対してのみ使用したいかもしれない。
 
 @item -maix64
 @itemx -maix32
 @opindex maix64
 @opindex maix32
-Enable 64-bit AIX ABI and calling convention: 64-bit pointers, 64-bit
-@code{long} type, and the infrastructure needed to support them.
-Specifying @option{-maix64} implies @option{-mpowerpc64},
-while @option{-maix32} disables the 64-bit ABI and
-implies @option{-mno-powerpc64}.  GCC defaults to @option{-maix32}.
+64ビットのAIX ABIおよび呼び出し規約：64ビット・ポインタ、64ビットの@code{long}タイプ、およびそれらをサポートするために必要なインフラストラクチャを有効にする。@option{-maix64}は@option{-mpowerpc64}を含み、@option{-maix32}は64ビットABIを無効にし、@option{-mno-powerpc64}を含む。 GCCのデフォルトは@option{-maix32}である。
 
 @item -mxl-compat
 @itemx -mno-xl-compat
 @opindex mxl-compat
 @opindex mno-xl-compat
-Produce code that conforms more closely to IBM XL compiler semantics
-when using AIX-compatible ABI@.  Pass floating-point arguments to
-prototyped functions beyond the register save area (RSA) on the stack
-in addition to argument FPRs.  Do not assume that most significant
-double in 128-bit long double value is properly rounded when comparing
-values and converting to double.  Use XL symbol names for long double
-support routines.
+AIX互換のABIを使用している場合、IBM XLコンパイラのセマンティクスに準拠したコードを生成する。引数FPRに加えて、スタック上のレジスタ退避領域（RSA）を超えてプロトタイプ関数に浮動小数点引数を渡す。値を比較してdoubleに変換するとき、128ビットlong double値の最も重要なdoubleが適切に丸められていると仮定しない。long doubleサポート・ルーチンにはXLシンボル名を使用する。
 
-The AIX calling convention was extended but not initially documented to
-handle an obscure K&R C case of calling a function that takes the
-address of its arguments with fewer arguments than declared.  IBM XL
-compilers access floating-point arguments that do not fit in the
-RSA from the stack when a subroutine is compiled without
-optimization.  Because always storing floating-point arguments on the
-stack is inefficient and rarely needed, this option is not enabled by
-default and only is necessary when calling subroutines compiled by IBM
-XL compilers without optimization.
+AIXの呼び出し規約は拡張されたが、宣言された引数よりも引数が少ない引数のアドレスを取る関数を呼び出すK＆R Cの不明確なケースを処理するために、最初は文書化されていなかった。IBM XLコンパイラは、サブルーチンが最適化されずにコンパイルされたときにスタックからRSAに収まらない浮動小数点引数にアクセスする。スタックに常に浮動小数点引数を格納するのは非効率的で、めったに必要ないので、このオプションはデフォルトでは有効になっていなく、最適化せずにIBM XLコンパイラでコンパイルされたサブルーチンを呼び出すときにのみ必要である。
 
 @item -mpe
 @opindex mpe
-Support @dfn{IBM RS/6000 SP} @dfn{Parallel Environment} (PE)@.  Link an
-application written to use message passing with special startup code to
-enable the application to run.  The system must have PE installed in the
-standard location (@file{/usr/lpp/ppe.poe/}), or the @file{specs} file
-must be overridden with the @option{-specs=} option to specify the
-appropriate directory location.  The Parallel Environment does not
-support threads, so the @option{-mpe} option and the @option{-pthread}
-option are incompatible.
+@dfn {IBM RS/6000 SP} @dfn {Parallel Environment}（PE）をサポートする。 特別なスタートアップコードでメッセージパッシングを使用するように記述されたアプリケーションをリンクして、アプリケーションを実行できるようにする。 システムはPEを標準の場所（@file{/usr/lpp/ppe.poe/}）にインストールする必要がある。また、適切なディレクトリの場所を指定するために@file{specs}ファイルを@option{-specs=}オプションで上書きする必要がある。 パラレル環境はスレッドをサポートしないため、@option{-mpe}オプションと@option{-pthread}オプションは互換性がない。
 
 @item -malign-natural
 @itemx -malign-power
 @opindex malign-natural
 @opindex malign-power
-On AIX, 32-bit Darwin, and 64-bit PowerPC GNU/Linux, the option
-@option{-malign-natural} overrides the ABI-defined alignment of larger
-types, such as floating-point doubles, on their natural size-based boundary.
-The option @option{-malign-power} instructs GCC to follow the ABI-specified
-alignment rules.  GCC defaults to the standard alignment defined in the ABI@.
+AIX、32ビットDarwin、および64ビットPowerPC GNU/Linuxの場合、オプション@option{-malign-natural}は浮動小数点倍精度型のような自然なサイズベースの境界より大きな型でのABI定義の整列をオーバーライドする。オプション@option{-malign-power}は、GCCにABI指定のアラインメント規則に従うよう指示しする。 GCCのデフォルトは、ABIで定義されている標準的な配置である。
 
-On 64-bit Darwin, natural alignment is the default, and @option{-malign-power}
-is not supported.
+64ビットDarwinでは、自然な配置がデフォルトであり、@option{-malign-power}はサポートされていない。
 
 @item -msoft-float
 @itemx -mhard-float
 @opindex msoft-float
 @opindex mhard-float
-Generate code that does not use (uses) the floating-point register set.
-Software floating-point emulation is provided if you use the
-@option{-msoft-float} option, and pass the option to GCC when linking.
+浮動小数点レジスタセットを使用しない（する）コードを生成します。@option{-msoft-float}オプションを使用するとソフトウェア浮動小数点エミュレーションが提供され、リンク時にGCCにオプションが渡される。
 
 @item -msingle-float
 @itemx -mdouble-float
 @opindex msingle-float
 @opindex mdouble-float
-Generate code for single- or double-precision floating-point operations.
-@option{-mdouble-float} implies @option{-msingle-float}.
+単精度または倍精度浮動小数点演算用のコードを生成する。 @option{-mdouble-float}は@option{-msingle-float}を含む。
 
 @item -msimple-fpu
 @opindex msimple-fpu
-Do not generate @code{sqrt} and @code{div} instructions for hardware
-floating-point unit.
+ハードウェア浮動小数点ユニットの@code{sqrt}命令と@code{div}命令を生成しない。
 
 @item -mfpu=@var{name}
 @opindex mfpu
-Specify type of floating-point unit.  Valid values for @var{name} are
-@samp{sp_lite} (equivalent to @option{-msingle-float -msimple-fpu}),
-@samp{dp_lite} (equivalent to @option{-mdouble-float -msimple-fpu}),
-@samp{sp_full} (equivalent to @option{-msingle-float}),
-and @samp{dp_full} (equivalent to @option{-mdouble-float}).
+浮動小数点ユニットのタイプを指定する。@var{name}の有効な値は@samp{sp_lite}（@option{-msingle-float -msimple-fpu}と同じ）、@samp{dp_lite}（@option{-mdouble-float -msimple-fpu}と同じ）、@samp{sp_full}（@option{-msingle-float}と同じ）、@samp{dp_full}（@option{-mdouble-float}と同じ）である。
 
 @item -mxilinx-fpu
 @opindex mxilinx-fpu
-Perform optimizations for the floating-point unit on Xilinx PPC 405/440.
+ザイリンクスPPC 405/440の浮動小数点ユニットの最適化を実行する。
 
 @item -mmultiple
 @itemx -mno-multiple
 @opindex mmultiple
 @opindex mno-multiple
-Generate code that uses (does not use) the load multiple word
-instructions and the store multiple word instructions.  These
-instructions are generated by default on POWER systems, and not
-generated on PowerPC systems.  Do not use @option{-mmultiple} on little-endian
-PowerPC systems, since those instructions do not work when the
-processor is in little-endian mode.  The exceptions are PPC740 and
-PPC750 which permit these instructions in little-endian mode.
+複数ワードのロード命令とストアの複数ワード命令を使用する（しない）コードを生成する。これらの命令は、デフォルトではPOWERシステムで生成され、PowerPCシステムでは生成されない。リトルエンディアンのPowerPCシステムでは、これらの命令がプロセッサがリトルエンディアンモードの時は動作しないため、@option{-multiple}は使用しないこと。例外は、リトルエンディアンモードでこれらの命令を許可するPPC740とPPC750である。
 
 @item -mstring
 @itemx -mno-string
 @opindex mstring
 @opindex mno-string
-Generate code that uses (does not use) the load string instructions
-and the store string word instructions to save multiple registers and
-do small block moves.  These instructions are generated by default on
-POWER systems, and not generated on PowerPC systems.  Do not use
-@option{-mstring} on little-endian PowerPC systems, since those
-instructions do not work when the processor is in little-endian mode.
-The exceptions are PPC740 and PPC750 which permit these instructions
-in little-endian mode.
+ロード文字列命令とストア文字列ワード命令を使用し、複数のレジスタを保存し、小さなブロック移動を行うコードを生成する（しない）。デフォルトではPOWERシステムで生成され、PowerPCシステムでは生成されない。リトルエンディアンのPowerPCシステムでは、これらの命令がプロセッサがリトルエンディアンモードの時は動作しないため、@option{-multiple}は使用しないこと。例外は、リトルエンディアンモードでこれらの命令を許可するPPC740とPPC750である。
 
 @item -mupdate
 @itemx -mno-update
 @opindex mupdate
 @opindex mno-update
-Generate code that uses (does not use) the load or store instructions
-that update the base register to the address of the calculated memory
-location.  These instructions are generated by default.  If you use
-@option{-mno-update}, there is a small window between the time that the
-stack pointer is updated and the address of the previous frame is
-stored, which means code that walks the stack frame across interrupts or
-signals may get corrupted data.
+ベースレジスタを計算されたメモリ位置のアドレスに更新するロードまたはストア命令を使用する（しない）コードを生成する。これらの命令は、デフォルトで生成される。 @option{-mno-update}を使用すると、スタックポインタが更新されてから前のフレームのアドレスが格納されるまでの間に小さなウィンドウが表示され、それはスタックフレームを割り込みまたは信号を迂回して歩くコードは破損したデータを取得する可能性があることを意味する。
 
 @item -mavoid-indexed-addresses
 @itemx -mno-avoid-indexed-addresses
 @opindex mavoid-indexed-addresses
 @opindex mno-avoid-indexed-addresses
-Generate code that tries to avoid (not avoid) the use of indexed load
-or store instructions. These instructions can incur a performance
-penalty on Power6 processors in certain situations, such as when
-stepping through large arrays that cross a 16M boundary.  This option
-is enabled by default when targeting Power6 and disabled otherwise.
+インデックス付きのロードまたはストア命令の使用を回避する（しない）コードを生成する。 これらの命令は、16M境界を横切る大きなアレイをステップ実行する場合など、特定の状況でPower6プロセッサでパフォーマンスの低下を招く可能性がある。 このオプションは、Power6をターゲットに設定するとデフォルトで有効になり、それ以外の場合は無効になる。
 
 @item -mfused-madd
 @itemx -mno-fused-madd
 @opindex mfused-madd
 @opindex mno-fused-madd
-Generate code that uses (does not use) the floating-point multiply and
-accumulate instructions.  These instructions are generated by default
-if hardware floating point is used.  The machine-dependent
-@option{-mfused-madd} option is now mapped to the machine-independent
-@option{-ffp-contract=fast} option, and @option{-mno-fused-madd} is
-mapped to @option{-ffp-contract=off}.
+浮動小数点乗加算命令を使用する（しない）コードを生成する。 ハードウェア浮動小数点が使用されている場合、これらの命令はデフォルトで生成される。 マシンに依存する@option{-mfused-madd}オプションは、マシンに依存しない@option{-ffp-contract=fast}オプションにマップされ、@option{-mno-fused-madd}は@option{-ffp-contract=off}にマップされる。
 
 @item -mmulhw
 @itemx -mno-mulhw
 @opindex mmulhw
 @opindex mno-mulhw
-Generate code that uses (does not use) the half-word multiply and
-multiply-accumulate instructions on the IBM 405, 440, 464 and 476 processors.
-These instructions are generated by default when targeting those
-processors.
+IBM 405,440,464、および476プロセッサ上のハーフワード乗算命令および乗加算命令を使用する（しない）コードを生成する。これらの命令は、これらのプロセッサーを対象とするときにデフォルトで生成される。
 
 @item -mdlmzb
 @itemx -mno-dlmzb
 @opindex mdlmzb
 @opindex mno-dlmzb
-Generate code that uses (does not use) the string-search @samp{dlmzb}
-instruction on the IBM 405, 440, 464 and 476 processors.  This instruction is
-generated by default when targeting those processors.
+IBM 405、440、464、および476プロセッサーで文字列検索@samp{dlmzb}命令を使用する（しない）コードを生成する。この命令は、これらのプロセッサーを対象とするときにデフォルトで生成される。
 
 @item -mno-bit-align
 @itemx -mbit-align
 @opindex mno-bit-align
 @opindex mbit-align
-On System V.4 and embedded PowerPC systems do not (do) force structures
-and unions that contain bit-fields to be aligned to the base type of the
-bit-field.
+System V.4および組み込みPowerPCシステムでは、ビットフィールドを含む構造体および共用体をビットフィールドの基本型にアラインメントさせない（させる）。
 
-For example, by default a structure containing nothing but 8
-@code{unsigned} bit-fields of length 1 is aligned to a 4-byte
-boundary and has a size of 4 bytes.  By using @option{-mno-bit-align},
-the structure is aligned to a 1-byte boundary and is 1 byte in
-size.
+例えば、デフォルトでは、長さ1の8個の@code{unsigned}ビットフィールドを含む構造体は、4バイト境界にアライメントされ、4バイトのサイズを持つ。 @option{-mno-bit-align}を使用すると、構造体は1バイトの境界に揃えられ、1バイトのサイズになる。
 
 @item -mno-strict-align
 @itemx -mstrict-align
 @opindex mno-strict-align
 @opindex mstrict-align
-On System V.4 and embedded PowerPC systems do not (do) assume that
-unaligned memory references are handled by the system.
+System V.4および組み込みPowerPCシステムでは、アライメントされていないメモリ参照がシステムによって処理されるとは想定しない。
 
 @item -mrelocatable
 @itemx -mno-relocatable
 @opindex mrelocatable
 @opindex mno-relocatable
-Generate code that allows (does not allow) a static executable to be
-relocated to a different address at run time.  A simple embedded
-PowerPC system loader should relocate the entire contents of
-@code{.got2} and 4-byte locations listed in the @code{.fixup} section,
-a table of 32-bit addresses generated by this option.  For this to
-work, all objects linked together must be compiled with
-@option{-mrelocatable} or @option{-mrelocatable-lib}.
-@option{-mrelocatable} code aligns the stack to an 8-byte boundary.
+実行時に静的な実行可能ファイルを別のアドレスに再配置できるようにする（しない）コードを生成する。 単純な組み込みPowerPCシステムローダーは、@code{.got2}の全内容と、このオプションによって生成された32ビットアドレスのテーブルである@code{.fixup}セクションにリストされている4バイトの場所を再配置する必要がある。 これを行うには、リンクされたすべてのオブジェクトを、@option{-mrelocatable}または@option{-mrelocatable-lib}でコンパイルする必要がある。
 
 @item -mrelocatable-lib
 @itemx -mno-relocatable-lib
 @opindex mrelocatable-lib
 @opindex mno-relocatable-lib
-Like @option{-mrelocatable}, @option{-mrelocatable-lib} generates a
-@code{.fixup} section to allow static executables to be relocated at
-run time, but @option{-mrelocatable-lib} does not use the smaller stack
-alignment of @option{-mrelocatable}.  Objects compiled with
-@option{-mrelocatable-lib} may be linked with objects compiled with
-any combination of the @option{-mrelocatable} options.
+@option{-mrelocatable-lib}は@option{-mrelocatable}と同様に、実行時に静的実行ファイルを再配置できるように@code{.fixup}セクションを生成するが、@option {-mrelocatable-lib}は、@option {-mrelocatable}の小さなスタックアライメントを使用しない。 @option{-mrelocatable-lib}でコンパイルされたオブジェクトは、@option{-mrelocatable}オプションの任意の組み合わせでコンパイルされたオブジェクトとリンクできる。
 
 @item -mno-toc
 @itemx -mtoc
 @opindex mno-toc
 @opindex mtoc
-On System V.4 and embedded PowerPC systems do not (do) assume that
-register 2 contains a pointer to a global area pointing to the addresses
-used in the program.
+System V.4および組み込みPowerPCシステムでは、レジスタ2に、プログラムで使用されているアドレスを指すグローバル領域へのポインタが含まれているとは想定しない。
 
 @item -mlittle
 @itemx -mlittle-endian
 @opindex mlittle
 @opindex mlittle-endian
-On System V.4 and embedded PowerPC systems compile code for the
-processor in little-endian mode.  The @option{-mlittle-endian} option is
-the same as @option{-mlittle}.
+System V.4および組み込みPowerPCシステムでは、プロセッサのコードをリトルエンディアンモードでコンパイルする。@option{-mlittle-endian}オプションは@option{-mlittle}と同じである。
 
 @item -mbig
 @itemx -mbig-endian
 @opindex mbig
 @opindex mbig-endian
-On System V.4 and embedded PowerPC systems compile code for the
-processor in big-endian mode.  The @option{-mbig-endian} option is
-the same as @option{-mbig}.
+System V.4および組み込みPowerPCシステムでは、プロセッサのコードをビッグエンディアンモードでコンパイルする。@option{-big-endian}オプションは@option{-mbig}と同じである。
 
 @item -mdynamic-no-pic
 @opindex mdynamic-no-pic
-On Darwin and Mac OS X systems, compile code so that it is not
-relocatable, but that its external references are relocatable.  The
-resulting code is suitable for applications, but not shared
-libraries.
+DarwinとMac OS Xシステムでは、再配置可能ではないはその外部参照が再配置可能になるようにコードをコンパイルする。 結果のコードは、アプリケーションには適しているが、共有ライブラリには適していない。
 
 @item -msingle-pic-base
 @opindex msingle-pic-base
-Treat the register used for PIC addressing as read-only, rather than
-loading it in the prologue for each function.  The runtime system is
-responsible for initializing this register with an appropriate value
-before execution begins.
+PICアドレッシングに使用するレジスタは、各関数のプロローグに読み込むのではなく、読み取り専用として扱う。 ランタイムシステムは、実行を開始する前にこのレジスタを適切な値で初期化する必要がある。
 
 @item -mprioritize-restricted-insns=@var{priority}
 @opindex mprioritize-restricted-insns
-This option controls the priority that is assigned to
-dispatch-slot restricted instructions during the second scheduling
-pass.  The argument @var{priority} takes the value @samp{0}, @samp{1},
-or @samp{2} to assign no, highest, or second-highest (respectively) 
-priority to dispatch-slot restricted
-instructions.
+このオプションは、2回目のスケジューリングパスでディスパッチスロット制限付き命令に割り当てられる優先度を制御する。 引数@var{priority}は、ディスパッチスロット制限付き命令にno、highest、またはsecond（最高）の優先度を割り当てるために、値@samp{0}、@samp{1}、または@samp{2}をとる。
 
 @item -msched-costly-dep=@var{dependence_type}
 @opindex msched-costly-dep
-This option controls which dependences are considered costly
-by the target during instruction scheduling.  The argument
-@var{dependence_type} takes one of the following values:
+このオプションは、命令スケジューリング中にターゲットによって高価とみなされる依存関係を制御する。 引数@var{dependence_type}は、次のいずれかの値をとる。
 
 @table @asis
 @item @samp{no}
-No dependence is costly.
+どの依存性も高価ではない。
 
 @item @samp{all}
-All dependences are costly.
+全依存性は高価である。
 
 @item @samp{true_store_to_load}
-A true dependence from store to load is costly.
+ストアからロードへの真の依存性が高価である。
 
 @item @samp{store_to_load}
-Any dependence from store to load is costly.
+ストアからロードへの全依存性が高価である。
 
 @item @var{number}
-Any dependence for which the latency is greater than or equal to 
-@var{number} is costly.
+レイテンシが@var{number}以上の依存関係は高価である。
 @end table
 
 @item -minsert-sched-nops=@var{scheme}
 @opindex minsert-sched-nops
-This option controls which NOP insertion scheme is used during
-the second scheduling pass.  The argument @var{scheme} takes one of the
-following values:
+このオプションは、2回目のスケジューリングパスで使用されるNOP挿入方式を制御する。 引数@var{scheme}は、次の値のいずれかをとる：
 
 @table @asis
 @item @samp{no}
-Don't insert NOPs.
+NOPを挿入しない。
 
 @item @samp{pad}
-Pad with NOPs any dispatch group that has vacant issue slots,
-according to the scheduler's grouping.
+スケジューラのグルーピングに従って、発行スロットが空いているディスパッチグループをNOPで埋める。
 
 @item @samp{regroup_exact}
-Insert NOPs to force costly dependent insns into
-separate groups.  Insert exactly as many NOPs as needed to force an insn
-to a new group, according to the estimated processor grouping.
+NOPを挿入して、高価な依存命令を別々のグループに強制する。 推定されたプロセッサグループに従って、命令を新しいグループに強制するために必要な数だけ正確にNOPを挿入する。
 
 @item @var{number}
-Insert NOPs to force costly dependent insns into
-separate groups.  Insert @var{number} NOPs to force an insn to a new group.
+NOPを挿入して、高価な依存命令を別々のグループに強制する。 @var{number}NOPを挿入して命令を新しいグループに強制する。
 @end table
 
 @item -mcall-sysv
 @opindex mcall-sysv
-On System V.4 and embedded PowerPC systems compile code using calling
-conventions that adhere to the March 1995 draft of the System V
-Application Binary Interface, PowerPC processor supplement.  This is the
-default unless you configured GCC using @samp{powerpc-*-eabiaix}.
+System V.4および組み込みPowerPCシステムでは、System V Application Binary InterfaceのPowerPCプロセッサ補足の1995年3月のドラフトを遵守した呼び出し規約を使用してコードをコンパイルする。@samp {powerpc-*-eabiaix}を使ってGCCを設定していない限り、これがデフォルトである。
 
 @item -mcall-sysv-eabi
 @itemx -mcall-eabi
 @opindex mcall-sysv-eabi
 @opindex mcall-eabi
-Specify both @option{-mcall-sysv} and @option{-meabi} options.
+@option{-mcall-sysv}と@option{-meabi}の両方のオプションを指定する。
 
 @item -mcall-sysv-noeabi
 @opindex mcall-sysv-noeabi
-Specify both @option{-mcall-sysv} and @option{-mno-eabi} options.
+@option{-mcall-sysv}と@option{-mno-eabi}の両方のオプションを指定する。
 
 @item -mcall-aixdesc
 @opindex m
-On System V.4 and embedded PowerPC systems compile code for the AIX
-operating system.
+System V.4および組み込みPowerPCシステムで、AIXオペレーティング・システムのコードをコンパイルする。
 
 @item -mcall-linux
 @opindex mcall-linux
-On System V.4 and embedded PowerPC systems compile code for the
-Linux-based GNU system.
+System V.4および組み込みPowerPCシステムで、LinuxベースのGNUシステムのコードをコンパイルする。
 
 @item -mcall-freebsd
 @opindex mcall-freebsd
-On System V.4 and embedded PowerPC systems compile code for the
-FreeBSD operating system.
+System V.4および組み込みPowerPCシステムで、FreeBSDオペレーティングシステムのコードをコンパイルする。
 
 @item -mcall-netbsd
 @opindex mcall-netbsd
-On System V.4 and embedded PowerPC systems compile code for the
-NetBSD operating system.
+System V.4および組み込みPowerPCシステムで、NetBSDオペレーティングシステムのコードをコンパイルする。
 
 @item -mcall-openbsd
 @opindex mcall-netbsd
-On System V.4 and embedded PowerPC systems compile code for the
-OpenBSD operating system.
+System V.4および組み込みPowerPCシステムで、OpenBSDオペレーティングシステムのコードをコンパイルする。
 
 @item -maix-struct-return
 @opindex maix-struct-return
-Return all structures in memory (as specified by the AIX ABI)@.
+メモリ内にすべての構造体を返す（AIX ABIで指定）。
 
 @item -msvr4-struct-return
 @opindex msvr4-struct-return
-Return structures smaller than 8 bytes in registers (as specified by the
-SVR4 ABI)@.
+8バイトより小さい構造体をレジスタで返す（SVR4 ABIで指定）。
 
 @item -mabi=@var{abi-type}
 @opindex mabi
-Extend the current ABI with a particular extension, or remove such extension.
-Valid values are @samp{altivec}, @samp{no-altivec}, @samp{spe},
-@samp{no-spe}, @samp{ibmlongdouble}, @samp{ieeelongdouble},
-@samp{elfv1}, @samp{elfv2}@.
+現在のABIを特定の拡張を追加するか、そのような拡張を削除する。可能な値は、@samp{altivec}, @samp{no-altivec}, @samp{spe}, @samp{no-spe}, @samp{ibmlongdouble}, @samp{ieeelongdouble}, @samp{elfv1}, @samp{elfv2}。
 
 @item -mabi=spe
 @opindex mabi=spe
-Extend the current ABI with SPE ABI extensions.  This does not change
-the default ABI, instead it adds the SPE ABI extensions to the current
-ABI@.
+現在のABIをSPE ABI拡張で拡張する。これはデフォルトのABIを変更するのではなく、現在のABIにSPE ABI拡張を追加する。
 
 @item -mabi=no-spe
 @opindex mabi=no-spe
-Disable Book-E SPE ABI extensions for the current ABI@.
+現在のABIのBook-E SPE ABI拡張機能を無効にする。
 
 @item -mabi=ibmlongdouble
 @opindex mabi=ibmlongdouble
-Change the current ABI to use IBM extended-precision long double.
-This is a PowerPC 32-bit SYSV ABI option.
+現在のABIを変更して、IBM拡張精度long doubleを使用する。これはPowerPC 32ビットSYSV ABIオプションである。
 
 @item -mabi=ieeelongdouble
 @opindex mabi=ieeelongdouble
-Change the current ABI to use IEEE extended-precision long double.
-This is a PowerPC 32-bit Linux ABI option.
+現在のABIをIEEE拡張精度のlong doubleを使用するように変更する。これは、PowerPC 32ビットLinux ABIオプションである。
 
 @item -mabi=elfv1
 @opindex mabi=elfv1
-Change the current ABI to use the ELFv1 ABI.
-This is the default ABI for big-endian PowerPC 64-bit Linux.
-Overriding the default ABI requires special system support and is
-likely to fail in spectacular ways.
+現在のABIをELFv1 ABIを使用するように変更する。これは、ビッグエンディアンのPowerPC 64ビットLinuxのデフォルトのABIである。デフォルトのABIを無効にするには特別なシステムサポートが必要で、壮大な方法で失敗する可能性がある。
 
 @item -mabi=elfv2
 @opindex mabi=elfv2
-Change the current ABI to use the ELFv2 ABI.
-This is the default ABI for little-endian PowerPC 64-bit Linux.
-Overriding the default ABI requires special system support and is
-likely to fail in spectacular ways.
+現在のABIをELFv2 ABIを使用するように変更する。これは、ビッグエンディアンのPowerPC 64ビットLinuxのデフォルトのABIである。デフォルトのABIを無効にするには特別なシステムサポートが必要で、壮大な方法で失敗する可能性がある。
 
 @item -mgnu-attribute
 @itemx -mno-gnu-attribute
 @opindex mgnu-attribute
 @opindex mno-gnu-attribute
-Emit .gnu_attribute assembly directives to set tag/value pairs in a
-.gnu.attributes section that specify ABI variations in function
-parameters or return values.
+.gnu_attributeアセンブリディレクティブを発行して、関数パラメータまたは戻り値のABIバリエーションを指定する.gnu.attributesセクションのタグ/値ペアを設定する。
 
 @item -mprototype
 @itemx -mno-prototype
 @opindex mprototype
 @opindex mno-prototype
-On System V.4 and embedded PowerPC systems assume that all calls to
-variable argument functions are properly prototyped.  Otherwise, the
-compiler must insert an instruction before every non-prototyped call to
-set or clear bit 6 of the condition code register (@code{CR}) to
-indicate whether floating-point values are passed in the floating-point
-registers in case the function takes variable arguments.  With
-@option{-mprototype}, only calls to prototyped variable argument functions
-set or clear the bit.
+System V.4および組み込みPowerPCシステムでは、可変引数関数へのすべての呼び出しが適切にプロトタイプ化されていることを前提としている。 それ以外の場合は、コンパイラは、プロトタイプ化されていないすべての呼び出しの前に、条件コードレジスタ(@code{CR})のビット6を設定またはクリアして関数が可変引数をとる場合に浮動小数点値を浮動小数点レジスタに渡すかどうかを示す命令を挿入する必要がある。 @option{-mprototype}では、プロトタイプの可変引数関数への呼び出しだけがビットを設定またはクリアする。
 
 @item -msim
 @opindex msim
-On embedded PowerPC systems, assume that the startup module is called
-@file{sim-crt0.o} and that the standard C libraries are @file{libsim.a} and
-@file{libc.a}.  This is the default for @samp{powerpc-*-eabisim}
-configurations.
+組み込みPowerPCシステムで、起動モジュールは@file{sim-crt0.o}と呼ばれ、標準Cライブラリは@file{libsim.a}と@file{libc.a}であると仮定する。これは@samp{powerpc-*-eabisim}設定のデフォルトである。
 
 @item -mmvme
 @opindex mmvme
-On embedded PowerPC systems, assume that the startup module is called
-@file{crt0.o} and the standard C libraries are @file{libmvme.a} and
-@file{libc.a}.
+組み込みPowerPCシステムで、起動モジュールは@file{crt0.o}と呼ばれ、標準Cライブラリは@file{libmvme.a}と@file{libc.a}であると仮定する。
 
 @item -mads
 @opindex mads
-On embedded PowerPC systems, assume that the startup module is called
-@file{crt0.o} and the standard C libraries are @file{libads.a} and
-@file{libc.a}.
+組み込みPowerPCシステムで、起動モジュールが@file{crt0.o}と呼ばれ、標準Cライブラリは@file{libads.a}と@file{libc.a}であると仮定する。
 
 @item -myellowknife
 @opindex myellowknife
-On embedded PowerPC systems, assume that the startup module is called
-@file{crt0.o} and the standard C libraries are @file{libyk.a} and
-@file{libc.a}.
+組み込みPowerPCシステムで、起動モジュールは@file{crt0.o}と呼ばれ、標準Cライブラリは@file{libyk.a}と@file{libc.a}であると仮定する。
 
 @item -mvxworks
 @opindex mvxworks
-On System V.4 and embedded PowerPC systems, specify that you are
-compiling for a VxWorks system.
+System V.4および組み込みPowerPCシステムでは、VxWorksシステム用にコンパイルすることを指定する。
 
 @item -memb
 @opindex memb
-On embedded PowerPC systems, set the @code{PPC_EMB} bit in the ELF flags
-header to indicate that @samp{eabi} extended relocations are used.
+埋め込みPowerPCシステムでは、ELFフラグヘッダーの@code{PPC_EMB}ビットを設定して、@samp{eabi}拡張再配置が使用されていることを示す。
 
 @item -meabi
 @itemx -mno-eabi
 @opindex meabi
 @opindex mno-eabi
-On System V.4 and embedded PowerPC systems do (do not) adhere to the
-Embedded Applications Binary Interface (EABI), which is a set of
-modifications to the System V.4 specifications.  Selecting @option{-meabi}
-means that the stack is aligned to an 8-byte boundary, a function
-@code{__eabi} is called from @code{main} to set up the EABI
-environment, and the @option{-msdata} option can use both @code{r2} and
-@code{r13} to point to two separate small data areas.  Selecting
-@option{-mno-eabi} means that the stack is aligned to a 16-byte boundary,
-no EABI initialization function is called from @code{main}, and the
-@option{-msdata} option only uses @code{r13} to point to a single
-small data area.  The @option{-meabi} option is on by default if you
-configured GCC using one of the @samp{powerpc*-*-eabi*} options.
+System V.4および組み込みPowerPCシステムでは、System V.4仕様の変更セットであるEmbedded Applications Binary Interface（EABI）に準拠する（しない）。@option {-meabi}を選択すると、スタックが8バイトの境界に揃えられ、関数@code{__eabi}が@code{main}から呼び出されてEABI環境が設定され、@option{-msdata} オプションは、@code{r2}と@code{r13}の両方を使用して、2つの別々の小さなデータ領域を指し示すことができる。@option{-mno-eabi}を選択すると、スタックが16バイトの境界に揃えられ、EABI初期化関数は@code{main}から呼び出されず、@option{-msdata}オプションは、単一の小さなデータ領域を指すために@code {r13}だけを使用するようになる。@samp{powerpc*-*-eabi*}オプションの1つを使ってGCCを設定した場合、@option{-meabi}オプションはデフォルトでオンになっている。
 
 @item -msdata=eabi
 @opindex msdata=eabi
