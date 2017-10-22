@@ -17036,192 +17036,114 @@ System V.4および組み込みPowerPCシステムでは、VxWorksシステム�
 @itemx -mno-eabi
 @opindex meabi
 @opindex mno-eabi
-System V.4および組み込みPowerPCシステムでは、System V.4仕様の変更セットであるEmbedded Applications Binary Interface（EABI）に準拠する（しない）。@option {-meabi}を選択すると、スタックが8バイトの境界に揃えられ、関数@code{__eabi}が@code{main}から呼び出されてEABI環境が設定され、@option{-msdata} オプションは、@code{r2}と@code{r13}の両方を使用して、2つの別々の小さなデータ領域を指し示すことができる。@option{-mno-eabi}を選択すると、スタックが16バイトの境界に揃えられ、EABI初期化関数は@code{main}から呼び出されず、@option{-msdata}オプションは、単一の小さなデータ領域を指すために@code {r13}だけを使用するようになる。@samp{powerpc*-*-eabi*}オプションの1つを使ってGCCを設定した場合、@option{-meabi}オプションはデフォルトでオンになっている。
+System V.4および組み込みPowerPCシステムで、System V.4仕様の変更セットであるEmbedded Applications Binary Interface（EABI）に準拠する（しない）。@option {-meabi}を選択すると、スタックが8バイトの境界に揃えられ、関数@code{__eabi}が@code{main}から呼び出されてEABI環境が設定され、@option{-msdata} オプションは、@code{r2}と@code{r13}の両方を使用して、2つの別々の小さなデータ領域を指し示すことができる。@option{-mno-eabi}を選択すると、スタックが16バイトの境界に揃えられ、EABI初期化関数は@code{main}から呼び出されず、@option{-msdata}オプションは、単一の小さなデータ領域を指すために@code {r13}だけを使用するようになる。@samp{powerpc*-*-eabi*}オプションの1つを使ってGCCを設定した場合、@option{-meabi}オプションはデフォルトでオンになっている。
 
 @item -msdata=eabi
 @opindex msdata=eabi
-On System V.4 and embedded PowerPC systems, put small initialized
-@code{const} global and static data in the @code{.sdata2} section, which
-is pointed to by register @code{r2}.  Put small initialized
-non-@code{const} global and static data in the @code{.sdata} section,
-which is pointed to by register @code{r13}.  Put small uninitialized
-global and static data in the @code{.sbss} section, which is adjacent to
-the @code{.sdata} section.  The @option{-msdata=eabi} option is
-incompatible with the @option{-mrelocatable} option.  The
-@option{-msdata=eabi} option also sets the @option{-memb} option.
+System V.4および組み込みPowerPCシステムで、小さな初期化された@code{const}グローバルデータと静的データを@code{.sdata2}セクションに置く。このセクションは、@code {r2}によって参照される。 小さな初期化された非@code{const}グローバルデータと静的データを@code{.sdata}セクションに置いてください。これはレジスタ@code{r13}によって指されている。 @code{.sdss}セクションに隣接する@code{.sbss}セクションに、小さな初期化されていないグローバルデータと静的データを配置する。 @option{-msdata=eabi}オプションは、@option{-mrelocatable}オプションと互換性がない。 @option{-msdata=eabi}オプションは@option{-memb}オプションも設定する。
 
 @item -msdata=sysv
 @opindex msdata=sysv
-On System V.4 and embedded PowerPC systems, put small global and static
-data in the @code{.sdata} section, which is pointed to by register
-@code{r13}.  Put small uninitialized global and static data in the
-@code{.sbss} section, which is adjacent to the @code{.sdata} section.
-The @option{-msdata=sysv} option is incompatible with the
-@option{-mrelocatable} option.
+System V.4および組み込みPowerPCシステムで、小規模のグローバルおよび静的データを@code{.sdata}セクションに配置する。これは、レジスタ @code{r13}によって指し示される。小さな初期化されていないグローバルデータと静的データを、 @code{.sdss}セクションに隣接する@code{.sbss}セクションに配置する。 @option{-msdata=sysv}オプションは、@option{-mrelocatable}オプションと互換性がない。
 
 @item -msdata=default
 @itemx -msdata
 @opindex msdata=default
 @opindex msdata
-On System V.4 and embedded PowerPC systems, if @option{-meabi} is used,
-compile code the same as @option{-msdata=eabi}, otherwise compile code the
-same as @option{-msdata=sysv}.
+System V.4および組み込みPowerPCシステムで、@option{-meabi}を使用する場合、@option{-msdata=eabi}と同じコードをコンパイルする。そうでない場合は、@option{-msdata=sysv}と同じコードをコンパイルする。
 
 @item -msdata=data
 @opindex msdata=data
-On System V.4 and embedded PowerPC systems, put small global
-data in the @code{.sdata} section.  Put small uninitialized global
-data in the @code{.sbss} section.  Do not use register @code{r13}
-to address small data however.  This is the default behavior unless
-other @option{-msdata} options are used.
+System V.4および組み込みPowerPCシステムで、小さなグローバルデータを@code{.sdata}セクションに配置する。 小さな初期化されていないグローバルデータを@code{.sbss}セクションに入れる。 しかし、小さなデータに対処するためにレジスタ@code{r13}を使用しない。 他の@option{-msdata}オプションを使用しない限り、これはデフォルトの動作である。
 
 @item -msdata=none
 @itemx -mno-sdata
 @opindex msdata=none
 @opindex mno-sdata
-On embedded PowerPC systems, put all initialized global and static data
-in the @code{.data} section, and all uninitialized data in the
-@code{.bss} section.
+組み込みPowerPCシステムで、初期化されたグローバルデータと静的データを@code{.data}セクションに、初期化されていないすべてのデータを@code{.bss}セクションに配置する。
 
 @item -mblock-move-inline-limit=@var{num}
 @opindex mblock-move-inline-limit
-Inline all block moves (such as calls to @code{memcpy} or structure
-copies) less than or equal to @var{num} bytes.  The minimum value for
-@var{num} is 32 bytes on 32-bit targets and 64 bytes on 64-bit
-targets.  The default value is target-specific.
+@var{num}バイト以下のすべてのブロック移動（@code{memcpy}や構造体コピーの呼び出しなど）をインライン化する。 @var{num}の最小値は、32ビット・ターゲットでは32バイト、64ビット・ターゲットでは64バイトである。 デフォルト値はターゲット固有である。
 
 @item -G @var{num}
 @opindex G
 @cindex smaller data references (PowerPC)
 @cindex .sdata/.sdata2 references (PowerPC)
-On embedded PowerPC systems, put global and static items less than or
-equal to @var{num} bytes into the small data or BSS sections instead of
-the normal data or BSS section.  By default, @var{num} is 8.  The
-@option{-G @var{num}} switch is also passed to the linker.
-All modules should be compiled with the same @option{-G @var{num}} value.
+埋め込みPowerPCシステムで、@var{num}バイト以下のグローバルおよび静的アイテムを、通常のデータまたはBSSセクションではなく、小データまたはBSSセクションに配置する。 デフォルトでは、@var{num}は8である。@option{-G @var {num}}スイッチもリンカに渡される。 すべてのモジュールは同じ@option{-G @var {num}}値でコンパイルする必要がある。
 
 @item -mregnames
 @itemx -mno-regnames
 @opindex mregnames
 @opindex mno-regnames
-On System V.4 and embedded PowerPC systems do (do not) emit register
-names in the assembly language output using symbolic forms.
+System V.4および組み込みPowerPCシステムでは、シンボリックフォームを使用してアセンブリ言語出力のレジスタ名を発行する（しない）。
 
 @item -mlongcall
 @itemx -mno-longcall
 @opindex mlongcall
 @opindex mno-longcall
-By default assume that all calls are far away so that a longer and more
-expensive calling sequence is required.  This is required for calls
-farther than 32 megabytes (33,554,432 bytes) from the current location.
-A short call is generated if the compiler knows
-the call cannot be that far away.  This setting can be overridden by
-the @code{shortcall} function attribute, or by @code{#pragma
-longcall(0)}.
+デフォルトでは、すべてのコールが遠く離れているため、より長くより高価なコールシーケンスが必要になると想定する。 これは、現在の場所から32メガバイト（33,554,432バイト）を超えた呼び出しに必要である。コンパイラーがその呼び出しを遠くにすることができないことを知っている場合、短い呼び出しが生成される。 この設定は、@code{shortcall}関数の属性、または@code{#pragma longcall（0）}によって無効にすることができる。
 
-Some linkers are capable of detecting out-of-range calls and generating
-glue code on the fly.  On these systems, long calls are unnecessary and
-generate slower code.  As of this writing, the AIX linker can do this,
-as can the GNU linker for PowerPC/64.  It is planned to add this feature
-to the GNU linker for 32-bit PowerPC systems as well.
+いくつかのリンカは、範囲外のコールを検出し、その場でグルーコードを生成することができる。 これらのシステムでは、長い呼び出しは不要で、より遅いコードを生成する。 この記事の執筆時点では、PowerPC/64のGNUリンカーと同様に、AIXリンカーがこれを行うことができる。 この機能を32ビットPowerPCシステムのGNUリンカに追加する予定である。
 
-On Darwin/PPC systems, @code{#pragma longcall} generates @code{jbsr
-callee, L42}, plus a @dfn{branch island} (glue code).  The two target
-addresses represent the callee and the branch island.  The
-Darwin/PPC linker prefers the first address and generates a @code{bl
-callee} if the PPC @code{bl} instruction reaches the callee directly;
-otherwise, the linker generates @code{bl L42} to call the branch
-island.  The branch island is appended to the body of the
-calling function; it computes the full 32-bit address of the callee
-and jumps to it.
+Darwin/PPCシステムでは、@code{#pragma longcall}は@code{jbsr callee, L42}と@dfn{branch island（分岐島）}（グルーコード）を生成する。 2つのターゲットアドレスは、呼び出し先と分岐島を表します。 Darwin/PPCリンカは、最初のアドレスを優先し、PPC @code{bl}命令が呼び出し先に直接到達すると、@code{bl callee}を生成する。 それ以外の場合、リンカーは分岐島を呼び出すために@code {bl L42}を生成する。分岐島は呼び出し関数の本体に追加される。 呼び出し先の全32ビットアドレスを計算し、そのアドレスにジャンプする。
 
-On Mach-O (Darwin) systems, this option directs the compiler emit to
-the glue for every direct call, and the Darwin linker decides whether
-to use or discard it.
+Mach-O（Darwin）システムでは、このオプションは直接呼び出しごとにコンパイラに前直接呼び出しのグルーを生成するように指示し、Darwinリンカーはそれを使用するか廃棄するかを決定する。
 
-In the future, GCC may ignore all longcall specifications
-when the linker is known to generate glue.
+将来、GCCは、リンカーがグルーを生成することが知られている場合、すべてのロングコール仕様を無視するかもしれない。
 
 @item -mtls-markers
 @itemx -mno-tls-markers
 @opindex mtls-markers
 @opindex mno-tls-markers
-Mark (do not mark) calls to @code{__tls_get_addr} with a relocation
-specifying the function argument.  The relocation allows the linker to
-reliably associate function call with argument setup instructions for
-TLS optimization, which in turn allows GCC to better schedule the
-sequence.
+@code{__tls_get_addr}への呼び出しには、関数の引数を指定して再配置を行う（行わない）。 再配置により、リンカーは関数呼び出しをTLS最適化の引数設定命令に確実に関連付けることができ、これによりGCCはシーケンスをよりよくスケジューリングできるようになる。
 
 @item -mrecip
 @itemx -mno-recip
 @opindex mrecip
-This option enables use of the reciprocal estimate and
-reciprocal square root estimate instructions with additional
-Newton-Raphson steps to increase precision instead of doing a divide or
-square root and divide for floating-point arguments.  You should use
-the @option{-ffast-math} option when using @option{-mrecip} (or at
-least @option{-funsafe-math-optimizations},
-@option{-ffinite-math-only}, @option{-freciprocal-math} and
-@option{-fno-trapping-math}).  Note that while the throughput of the
-sequence is generally higher than the throughput of the non-reciprocal
-instruction, the precision of the sequence can be decreased by up to 2
-ulp (i.e.@: the inverse of 1.0 equals 0.99999994) for reciprocal square
-roots.
+このオプションを使用すると、除算または平方根を実行する代わりに、追加のニュートンラフソンステップを逆数推定と逆平方根推定命令を使用して、精度を上げ浮動小数点引数を除算することができる。 @option{-mrecip}を使うときは、@option{-fastsafe-math-optimizations}、@option{-ffinite-math-only}、@option{-freciprocal-math}と@option{-fno-trapping-math}）を指定する。 シーケンスのスループットは一般に非相反命令のスループットよりも高いが、シーケンスの精度は、逆平方根に対して最大2ulp（すなわち、逆数1.0は0.99999994に等しい）減少させることがありうることに留意すること。
 
 @item -mrecip=@var{opt}
 @opindex mrecip=opt
-This option controls which reciprocal estimate instructions
-may be used.  @var{opt} is a comma-separated list of options, which may
-be preceded by a @code{!} to invert the option:
+このオプションは、どの逆算見積り命令を使用するかを制御する。 @var{opt}はコンマで区切られたオプションのリストである。オプションの前に@code{!}を付けてオプションを反転することができる：
 
 @table @samp
 
 @item all
-Enable all estimate instructions.
+すべての見積もり命令を有効にする。
 
 @item default 
-Enable the default instructions, equivalent to @option{-mrecip}.
+@option{-mrecip}と同じデフォルトの命令を有効にする。
 
 @item none 
-Disable all estimate instructions, equivalent to @option{-mno-recip}.
+@option{-mno-recipe}と同等の、すべての見積もり命令を無効にする。
 
 @item div 
-Enable the reciprocal approximation instructions for both 
-single and double precision.
+単精度と倍精度の両方の逆数近似命令を有効にする。
 
 @item divf 
-Enable the single-precision reciprocal approximation instructions.
+単精度の逆数近似命令を有効にする。
 
 @item divd 
-Enable the double-precision reciprocal approximation instructions.
+倍精度の逆数近似命令を有効にする。
 
-@item rsqrt 
-Enable the reciprocal square root approximation instructions for both
-single and double precision.
+@item rsqrt
+単精度と倍精度の両方で逆平方根近似命令を有効にする。 
 
 @item rsqrtf 
-Enable the single-precision reciprocal square root approximation instructions.
+単精度の逆数平方根近似命令を有効にする。
 
 @item rsqrtd 
-Enable the double-precision reciprocal square root approximation instructions.
+倍精度の逆数平方根近似命令を有効にする。
 
 @end table
 
-So, for example, @option{-mrecip=all,!rsqrtd} enables
-all of the reciprocal estimate instructions, except for the
-@code{FRSQRTE}, @code{XSRSQRTEDP}, and @code{XVRSQRTEDP} instructions
-which handle the double-precision reciprocal square root calculations.
+たとえば、@option{-mrecip=all,!rsqrtd}は倍精度逆数平方根の計算を扱う@code {FRSQRTE}、@code {XSRSQRTEDP}、@code {XVRSQRTEDP}の命令を除いてすべての逆数見積もり命令を有効にする。
 
 @item -mrecip-precision
 @itemx -mno-recip-precision
 @opindex mrecip-precision
-Assume (do not assume) that the reciprocal estimate instructions
-provide higher-precision estimates than is mandated by the PowerPC
-ABI.  Selecting @option{-mcpu=power6}, @option{-mcpu=power7} or
-@option{-mcpu=power8} automatically selects @option{-mrecip-precision}.
-The double-precision square root estimate instructions are not generated by
-default on low-precision machines, since they do not provide an
-estimate that converges after three steps.
+逆数見積もり命令がPowerPC ABIよりも高い精度の見積もりを提供すると仮定する（しない）。@option{-mcpu=power6}、@option{-mcpu=power7}または@option{-mcpu=power8}を選択すると、自動的に@option{-mrecip-precision}が選択される。2倍精度平方根推定命令は、3ステップ後に収束する推定値を提供しないため、低精度機械ではデフォルトで生成されない。
 
 @item -mveclibabi=@var{type}
 @opindex mveclibabi
