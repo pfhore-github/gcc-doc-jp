@@ -17439,47 +17439,47 @@ TPF OS固有のブランチをオペレーティング・システムのトレ�
 @end table
 
 @node Score Options
-@subsection Score Options
+@subsection Scoreオプション
 @cindex Score Options
 
-These options are defined for Score implementations:
+これらのオプションは、Score実装で定義されている。
 
 @table @gcctabopt
 @item -meb
 @opindex meb
-Compile code for big-endian mode.  This is the default.
+ビッグエンディアンモード用にコードをコンパイルする。これがデフォルトである。
 
 @item -mel
 @opindex mel
-Compile code for little-endian mode.
+リトルエンディアンモード用にコードをコンパイルする。
 
 @item -mnhwloop
 @opindex mnhwloop
-Disable generation of @code{bcnz} instructions.
+@code{bcnz}命令の生成を無効化する。
 
 @item -muls
 @opindex muls
-Enable generation of unaligned load and store instructions.
+アラインされていないロードおよびストア命令の生成を有効にする。
 
 @item -mmac
 @opindex mmac
-Enable the use of multiply-accumulate instructions. Disabled by default.
+乗加算命令の使用を有効にする。 デフォルトでは無効である。
 
 @item -mscore5
 @opindex mscore5
-Specify the SCORE5 as the target architecture.
+ターゲットアーキテクチャとしてSCORE5を指定する。
 
 @item -mscore5u
 @opindex mscore5u
-Specify the SCORE5U of the target architecture.
+ターゲットアーキテクチャとしてSCORE5Uを指定する。
 
 @item -mscore7
 @opindex mscore7
-Specify the SCORE7 as the target architecture. This is the default.
+ターゲットアーキテクチャとしてSCORE7を指定する。これはデフォルトである。
 
 @item -mscore7d
 @opindex mscore7d
-Specify the SCORE7D as the target architecture.
+ターゲットアーキテクチャとしてSCORE7Dを指定する。
 @end table
 
 @node SH Options
