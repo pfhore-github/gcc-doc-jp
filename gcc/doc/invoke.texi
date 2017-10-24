@@ -17298,264 +17298,144 @@ RX命令のオペランドとして使用できる定数の最大サイズをバ
 @emph{_注意：_}一般的なGCCのコマンドラインオプション@option{-ffixed-@var{reg}}は、@code{interrupt}関数属性とともに使用するとき、RXポートに対して特別な意味を持つ。 この属性は、高速割り込みを処理する機能を示す。 GCCは、レジスタ@code{r10}、@code{r11}、@code{r12}および/または@code{r13}のみを使用し、対応するレジスタの通常の使用が@option{-ffixed-@var{reg}}または@option {-mint-register}コマンドラインオプションを使用する。
 
 @node S/390 and zSeries Options
-@subsection S/390 and zSeries Options
+@subsection S/390とzSeriesのオプション
 @cindex S/390 and zSeries Options
 
-These are the @samp{-m} options defined for the S/390 and zSeries architecture.
+これらは、S / 390およびzSeriesアーキテクチャー用に定義された@samp {-m}オプションである。
 
 @table @gcctabopt
 @item -mhard-float
 @itemx -msoft-float
 @opindex mhard-float
 @opindex msoft-float
-Use (do not use) the hardware floating-point instructions and registers
-for floating-point operations.  When @option{-msoft-float} is specified,
-functions in @file{libgcc.a} are used to perform floating-point
-operations.  When @option{-mhard-float} is specified, the compiler
-generates IEEE floating-point instructions.  This is the default.
+ハードウェア浮動小数点命令と浮動小数点演算用のレジスタを使用する（しない）。 @option{-msoft-float}を指定すると、@file{libgcc.a}の関数が浮動小数点演算の実行に使用される。 @option{-mhard-float}を指定すると、コンパイラはIEEE浮動小数点命令を生成する。 これがデフォルトである。
 
 @item -mhard-dfp
 @itemx -mno-hard-dfp
 @opindex mhard-dfp
 @opindex mno-hard-dfp
-Use (do not use) the hardware decimal-floating-point instructions for
-decimal-floating-point operations.  When @option{-mno-hard-dfp} is
-specified, functions in @file{libgcc.a} are used to perform
-decimal-floating-point operations.  When @option{-mhard-dfp} is
-specified, the compiler generates decimal-floating-point hardware
-instructions.  This is the default for @option{-march=z9-ec} or higher.
+10進浮動小数点演算にはハードウェア10進浮動小数点命令を使用する（しない）。 @option{-mno-hard-dfp}を指定すると、@file{libgcc.a}の関数を使用して10進浮動小数点演算が実行される。 @option{-mhard-dfp}を指定すると、コンパイラは10進浮動小数点ハードウェア命令を生成する。 これは、@option{-march=z9-ec}以上のデフォルトである。
 
 @item -mlong-double-64
 @itemx -mlong-double-128
 @opindex mlong-double-64
 @opindex mlong-double-128
-These switches control the size of @code{long double} type. A size
-of 64 bits makes the @code{long double} type equivalent to the @code{double}
-type. This is the default.
+これらのスイッチは、@code{long double}型のサイズを制御する。 64ビットのサイズは、@code{long double}型を@code{double}型と等価にする。 これがデフォルトである。
 
 @item -mbackchain
 @itemx -mno-backchain
 @opindex mbackchain
 @opindex mno-backchain
-Store (do not store) the address of the caller's frame as backchain pointer
-into the callee's stack frame.
-A backchain may be needed to allow debugging using tools that do not understand
-DWARF call frame information.
-When @option{-mno-packed-stack} is in effect, the backchain pointer is stored
-at the bottom of the stack frame; when @option{-mpacked-stack} is in effect,
-the backchain is placed into the topmost word of the 96/160 byte register
-save area.
+呼び出し元のフレームのアドレスをバックチェーンポインタとして呼び出し先のスタックフレームに格納する（しない）。DWARFコールフレーム情報を理解していないツールを使用してデバッグを可能にするには、バックチェーンが必要な場合がある。@option{-mno-packed-stack}が有効な場合、バックチェーンポインタはスタックフレームの一番下に格納される。 @option{-mpacked-stack}が有効な場合、バックチェーンは96/160バイトレジスタ保存領域の最上位ワードに配置される。
 
-In general, code compiled with @option{-mbackchain} is call-compatible with
-code compiled with @option{-mmo-backchain}; however, use of the backchain
-for debugging purposes usually requires that the whole binary is built with
-@option{-mbackchain}.  Note that the combination of @option{-mbackchain},
-@option{-mpacked-stack} and @option{-mhard-float} is not supported.  In order
-to build a linux kernel use @option{-msoft-float}.
+一般に、@option{-mbackchain}でコンパイルされたコードは、@option{-mmo-backchain}でコンパイルされたコードと呼び出し互換である。 しかし、デバッグの目的でバックチェーンを使用するには、通常、バイナリ全体が@option{-mbackchain}で構築されている必要がある。@option{-mbackchain}、@option{-mpacked-stack}と@option{-mhard-float}の組み合わせはサポートされていないことに注意せよ。 Linuxカーネルを構築するには、@option{-msoft-float}を使用する。
 
-The default is to not maintain the backchain.
+デフォルトはバックチェーンを維持しない。
 
 @item -mpacked-stack
 @itemx -mno-packed-stack
 @opindex mpacked-stack
 @opindex mno-packed-stack
-Use (do not use) the packed stack layout.  When @option{-mno-packed-stack} is
-specified, the compiler uses the all fields of the 96/160 byte register save
-area only for their default purpose; unused fields still take up stack space.
-When @option{-mpacked-stack} is specified, register save slots are densely
-packed at the top of the register save area; unused space is reused for other
-purposes, allowing for more efficient use of the available stack space.
-However, when @option{-mbackchain} is also in effect, the topmost word of
-the save area is always used to store the backchain, and the return address
-register is always saved two words below the backchain.
+パックされたスタックレイアウトを使用する（しない）。 @option{-mno-packed-stack}を指定すると、コンパイラは96/160バイトレジスタ保存領域のすべてのフィールドをデフォルトの目的でのみ使用する。未使用のフィールドはそれでもスタック領域を占有する。@option{-mpacked-stack}を指定すると、レジスタ退避領域はレジスタ退避領域の先頭に密集して配置される。未使用スペースは他の目的で再利用され、使用可能なスタックスペースをより効率的に使用することができる。ただし、@option{-mbackchain}も有効な場合、保存領域の最上位ワードは常にバックチェーンを格納するために使用され、戻りアドレスレジスタは常にバックチェーンの2ワード下に保存される。
 
-As long as the stack frame backchain is not used, code generated with
-@option{-mpacked-stack} is call-compatible with code generated with
-@option{-mno-packed-stack}.  Note that some non-FSF releases of GCC 2.95 for
-S/390 or zSeries generated code that uses the stack frame backchain at run
-time, not just for debugging purposes.  Such code is not call-compatible
-with code compiled with @option{-mpacked-stack}.  Also, note that the
-combination of @option{-mbackchain},
-@option{-mpacked-stack} and @option{-mhard-float} is not supported.  In order
-to build a linux kernel use @option{-msoft-float}.
+スタックフレームバックチェーンが使用されていない限り、@option{-mpacked-stack}で生成されたコードは、@option{-mno-packed-stack}で生成されたコードと呼び出し互換である。 FSF以外のリリースのGCC 2.95（S/390またはzSeries用）では、デバッグの目的だけでなく、実行時にスタックフレームバックチェーンを使用するコードが生成されたことに注意せよ。 このようなコードは、@option{-mpacked-stack}でコンパイルされたコードとの呼び出し互換性はない。また、@option{-mbackchain}、@option{-mpacked-stack}と@option {-mhard-float}の組み合わせはサポートされていない。Linuxカーネルを構築するには、@option{-msoft-float}を使用する。
 
-The default is to not use the packed stack layout.
+デフォルトでは、パックドスタックレイアウトは使用されない。
 
 @item -msmall-exec
 @itemx -mno-small-exec
 @opindex msmall-exec
 @opindex mno-small-exec
-Generate (or do not generate) code using the @code{bras} instruction
-to do subroutine calls.
-This only works reliably if the total executable size does not
-exceed 64k.  The default is to use the @code{basr} instruction instead,
-which does not have this limitation.
+サブルーチン呼び出しを行うために@code{bras}命令を使ってコードを生成する（しない）。これは、実行可能な合計サイズが64kを超えない場合にのみ、確実に機能する。 デフォルトでは、@code{basr}命令を代わりに使用し、それにはこの制限はない。
 
 @item -m64
 @itemx -m31
 @opindex m64
 @opindex m31
-When @option{-m31} is specified, generate code compliant to the
-GNU/Linux for S/390 ABI@.  When @option{-m64} is specified, generate
-code compliant to the GNU/Linux for zSeries ABI@.  This allows GCC in
-particular to generate 64-bit instructions.  For the @samp{s390}
-targets, the default is @option{-m31}, while the @samp{s390x}
-targets default to @option{-m64}.
+@option{-m31}を指定すると、S/390 ABI向けGNU/Linuxに準拠したコードを生成する。@option{-m64}を指定すると、zSeries ABI向けGNU/Linuxに準拠したコードが生成される。 これにより、特にGCCは64ビット命令を生成することができる。@samp{s390}ターゲットの場合、デフォルトは@option{-m31}だが、@samp{s390x}ターゲットはデフォルトで@option{-m64}になる。
 
 @item -mzarch
 @itemx -mesa
 @opindex mzarch
 @opindex mesa
-When @option{-mzarch} is specified, generate code using the
-instructions available on z/Architecture.
-When @option{-mesa} is specified, generate code using the
-instructions available on ESA/390.  Note that @option{-mesa} is
-not possible with @option{-m64}.
-When generating code compliant to the GNU/Linux for S/390 ABI,
-the default is @option{-mesa}.  When generating code compliant
-to the GNU/Linux for zSeries ABI, the default is @option{-mzarch}.
+@option{-mzarch}を指定すると、z/Architectureで使用可能な命令を使用してコードを生成する。@option{-mesa}を指定した場合は、ESA/390で使用可能な命令を使用してコードを生成する。 @option{-mesa}は@option{-m64}では使用できない。S/390 ABI向けGNU/Linuxに準拠したコードを生成する場合、デフォルトは@option{-mesa}である。zSeries ABI向けGNU/Linuxに準拠したコードを生成する場合、デフォルトは@option{-mzarch}である。
 
 @item -mhtm
 @itemx -mno-htm
 @opindex mhtm
 @opindex mno-htm
-The @option{-mhtm} option enables a set of builtins making use of
-instructions available with the transactional execution facility
-introduced with the IBM zEnterprise EC12 machine generation
-@ref{S/390 System z Built-in Functions}.
-@option{-mhtm} is enabled by default when using @option{-march=zEC12}.
+@option{-mhtm}オプションは、IBM zEnterprise EC12マシン世代で導入されたトランザクショナル実行機能で使用可能な命令を使用した組み込み関数のセットを使用可能にする。@ref{S/390 System z Built-in Functions}。@option{-mhtm}は、@option{-march=zEC12}を使用している場合、デフォルトで有効になっている。
 
 @item -mvx
 @itemx -mno-vx
 @opindex mvx
 @opindex mno-vx
-When @option{-mvx} is specified, generate code using the instructions
-available with the vector extension facility introduced with the IBM
-z13 machine generation.
-This option changes the ABI for some vector type values with regard to
-alignment and calling conventions.  In case vector type values are
-being used in an ABI-relevant context a GAS @samp{.gnu_attribute}
-command will be added to mark the resulting binary with the ABI used.
-@option{-mvx} is enabled by default when using @option{-march=z13}.
+@option {-mvx}を指定すると、IBM z13マシン生成で導入されたベクトル拡張機能で使用可能な命令を使用してコードを生成する。このオプションは、整列と呼び出し規約に関して、いくつかのベクトル型の値をABIに変更する。 ベクトル型の値がABI関連の文脈で使用されている場合は、GAS @samp{.gnu_attribute}コマンドを使用して、使用されたABIで結果のバイナリをマークする。@option{-mvx}は、@option{-march = z13}を使用すると、デフォルトで有効になる。
 
 @item -mzvector
 @itemx -mno-zvector
 @opindex mzvector
 @opindex mno-zvector
-The @option{-mzvector} option enables vector language extensions and
-builtins using instructions available with the vector extension
-facility introduced with the IBM z13 machine generation.
-This option adds support for @samp{vector} to be used as a keyword to
-define vector type variables and arguments.  @samp{vector} is only
-available when GNU extensions are enabled.  It will not be expanded
-when requesting strict standard compliance e.g. with @option{-std=c99}.
-In addition to the GCC low-level builtins @option{-mzvector} enables
-a set of builtins added for compatibility with AltiVec-style
-implementations like Power and Cell.  In order to make use of these
-builtins the header file @file{vecintrin.h} needs to be included.
-@option{-mzvector} is disabled by default.
+@option{-mzvector}オプションを使用すると、IBM z13マシン生成で導入されたベクトル拡張機能で使用可能な命令を使用して、ベクトル言語拡張および組み込み関数を使用できる。このオプションは、@samp{vector}のサポートを追加し、ベクトル型の変数と引数を定義するキーワードとして使用する。 @samp{vector}は、GNU拡張機能が有効な場合にのみ使用できる。たとえば、@option{-std = c99}を指定するような、標準のコンプライアンスを厳格に要求する場合には展開されない。GCCの低レベルの組み込み関数@option{-mzvector}は、PowerやCellなどのAltiVecスタイルの実装との互換性のために追加された組み込み関数を有効にする。 これらの組み込み関数を使用するには、ヘッダファイル@file{vecintrin.h}をインクルードする必要がある。@option{-mzvector}はデフォルトでは無効になっている。
 
 @item -mmvcle
 @itemx -mno-mvcle
 @opindex mmvcle
 @opindex mno-mvcle
-Generate (or do not generate) code using the @code{mvcle} instruction
-to perform block moves.  When @option{-mno-mvcle} is specified,
-use a @code{mvc} loop instead.  This is the default unless optimizing for
-size.
+ブロック移動を実行するための@code{mvcle}命令を使用してコードを生成する（しない）。 @option{-mno-mvcle}を指定すると、代わりに@code{mvc}ループを使用する。 サイズを最適化しない限り、これがデフォルトである。
 
 @item -mdebug
 @itemx -mno-debug
 @opindex mdebug
 @opindex mno-debug
-Print (or do not print) additional debug information when compiling.
-The default is to not print debug information.
+コンパイル時に追加のデバッグ情報を出力する（またはしない）。デフォルトでは、デバッグ情報は表示されない。
 
 @item -march=@var{cpu-type}
 @opindex march
-Generate code that runs on @var{cpu-type}, which is the name of a
-system representing a certain processor type.  Possible values for
-@var{cpu-type} are @samp{z900}/@samp{arch5}, @samp{z990}/@samp{arch6},
-@samp{z9-109}, @samp{z9-ec}/@samp{arch7}, @samp{z10}/@samp{arch8},
-@samp{z196}/@samp{arch9}, @samp{zEC12}, @samp{z13}/@samp{arch11}, and
-@samp{native}.
+@var{cpu-type}で実行されるコードを生成する。これは、特定のプロセッサタイプを表すシステムの名前である。 @var{cpu-type}に可能な値は、@samp{z900}/@samp{arch5}, @samp{z990}/@samp{arch6}, @samp{z9-109}, @samp{z9-ec}/@samp{arch7}, @samp{z10}/@samp{arch8}, @samp{z196}/@samp{arch9}, @samp{zEC12}, @samp{z13}/@samp{arch11}, @samp{native}である。
 
-The default is @option{-march=z900}.  @samp{g5}/@samp{arch3} and
-@samp{g6} are deprecated and will be removed with future releases.
+デフォルトは@option{-march=z900}である。 @samp{g5}/@samp{arch3}と@samp{g6}は非推奨であり、将来のリリースで削除される予定である。
 
-Specifying @samp{native} as cpu type can be used to select the best
-architecture option for the host processor.
-@option{-march=native} has no effect if GCC does not recognize the
-processor.
+@samp{native}をcpuタイプとして指定すると、ホストプロセッサに最適なアーキテクチャオプションを選択できる。gccがプロセッサを認識しない場合、@option{-march=native}は効果がない。
 
 @item -mtune=@var{cpu-type}
 @opindex mtune
-Tune to @var{cpu-type} everything applicable about the generated code,
-except for the ABI and the set of available instructions.
-The list of @var{cpu-type} values is the same as for @option{-march}.
-The default is the value used for @option{-march}.
+@var{cpu-type}に対して、ABIと使用可能な命令のセットを除いて、生成されたコードに関するすべてを調整する。@var{cpu-type}の値のリストは、@option{-march}の値と同じである。デフォルトは、@option{-march}に使用される値である。
 
 @item -mtpf-trace
 @itemx -mno-tpf-trace
 @opindex mtpf-trace
 @opindex mno-tpf-trace
-Generate code that adds (does not add) in TPF OS specific branches to trace
-routines in the operating system.  This option is off by default, even
-when compiling for the TPF OS@.
+TPF OS固有のブランチをオペレーティング・システムのトレース・ルーチンに追加する（しない）コードを生成する。 このオプションは、TPF OS用にコンパイルしていても、デフォルトではオフになっている。
 
 @item -mfused-madd
 @itemx -mno-fused-madd
 @opindex mfused-madd
 @opindex mno-fused-madd
-Generate code that uses (does not use) the floating-point multiply and
-accumulate instructions.  These instructions are generated by default if
-hardware floating point is used.
+浮動小数点乗算および累算命令を使用する（しない）コードを生成する。 ハードウェア浮動小数点が使用されている場合、これらの命令はデフォルトで生成される。
 
 @item -mwarn-framesize=@var{framesize}
 @opindex mwarn-framesize
-Emit a warning if the current function exceeds the given frame size.  Because
-this is a compile-time check it doesn't need to be a real problem when the program
-runs.  It is intended to identify functions that most probably cause
-a stack overflow.  It is useful to be used in an environment with limited stack
-size e.g.@: the linux kernel.
+現在の関数が指定されたフレームサイズを超えた場合に警告を出す。これはコンパイル時のチェックであるため、プログラムを実行するときに実際の問題である必要はない。おそらくスタックオーバーフローを引き起こす可能性のある関数を識別するためのものである。スタックサイズが制限された環境、例えばLinuxカーネルで使用すると便利である。
 
 @item -mwarn-dynamicstack
 @opindex mwarn-dynamicstack
-Emit a warning if the function calls @code{alloca} or uses dynamically-sized
-arrays.  This is generally a bad idea with a limited stack size.
+関数が@code{alloca}を呼び出すか、動的にサイズの配列を使用する場合は警告を出る。これは一般的に、制限されたスタックサイズでは悪い考えである。
 
 @item -mstack-guard=@var{stack-guard}
 @itemx -mstack-size=@var{stack-size}
 @opindex mstack-guard
 @opindex mstack-size
-If these options are provided the S/390 back end emits additional instructions in
-the function prologue that trigger a trap if the stack size is @var{stack-guard}
-bytes above the @var{stack-size} (remember that the stack on S/390 grows downward).
-If the @var{stack-guard} option is omitted the smallest power of 2 larger than
-the frame size of the compiled function is chosen.
-These options are intended to be used to help debugging stack overflow problems.
-The additionally emitted code causes only little overhead and hence can also be
-used in production-like systems without greater performance degradation.  The given
-values have to be exact powers of 2 and @var{stack-size} has to be greater than
-@var{stack-guard} without exceeding 64k.
-In order to be efficient the extra code makes the assumption that the stack starts
-at an address aligned to the value given by @var{stack-size}.
-The @var{stack-guard} option can only be used in conjunction with @var{stack-size}.
+973/5000
+これらのオプションが提供されている場合、S/390バックエンドは、スタック・サイズが@var{stack-size}よりも@var{stack-guard}バイト大きい場合、トラップを起動する追加の命令を関数プロローグに出す。（S / 390ではスタックが下向きに成長することを思い出すこと）。@var{stack-guard}オプションを省略すると、コンパイルされた関数のフレームサイズよりも大きな2の最小の累乗が選択される。これらのオプションは、スタックオーバーフローの問題のデバッグに役立つ。追加的に放出されるコードは、わずかなオーバーヘッドしか生じさせず、従って、より性能低下のない生産様のシステムにおいても使用されることも可能である。。与えられた値は正確な2のべき乗でなければならず、@var{stack-size}は64kを超えてはならず、@var{stack-guard}より大きくなければならない。効率を上げるために、余分なコードは、スタックが@var{stack-size}によって与えられた値に揃えられたアドレスで開始するという前提を作る。
 
 @item -mhotpatch=@var{pre-halfwords},@var{post-halfwords}
 @opindex mhotpatch
-If the hotpatch option is enabled, a ``hot-patching'' function
-prologue is generated for all functions in the compilation unit.
-The funtion label is prepended with the given number of two-byte
-NOP instructions (@var{pre-halfwords}, maximum 1000000).  After
-the label, 2 * @var{post-halfwords} bytes are appended, using the
-largest NOP like instructions the architecture allows (maximum
-1000000).
+ホットパッチオプションを有効にすると、コンパイルユニット内のすべての関数に対して "ホットパッチ"機能のプロローグが生成される。funtionラベルには、指定された2バイトのNOP命令（@var{pre-halfwords}、最大1000000）が付加される。ラベルの後には、アーキテクチャーが許す最大のNOP命令（最大1000000）を使用して、2 * @var{post-halfwords}バイトが追加される。
 
-If both arguments are zero, hotpatching is disabled.
+両方の引数がゼロの場合、ホットパッチは無効になる。
 
-This option can be overridden for individual functions with the
-@code{hotpatch} attribute.
+このオプションは、@code{hotpatch}属性を持つ個々の関数に対してオーバーライドできる。
 @end table
 
 @node Score Options
