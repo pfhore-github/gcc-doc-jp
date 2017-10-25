@@ -17483,450 +17483,316 @@ TPF OS固有のブランチをオペレーティング・システムのトレ�
 @end table
 
 @node SH Options
-@subsection SH Options
+@subsection SHオプション
 
-These @samp{-m} options are defined for the SH implementations:
+これらの@samp {-m}オプションはSH実装で定義されている。
 
 @table @gcctabopt
 @item -m1
 @opindex m1
-Generate code for the SH1.
+SH1用のコードを生成する。
 
 @item -m2
 @opindex m2
-Generate code for the SH2.
+SH2用のコードを生成する。
 
 @item -m2e
-Generate code for the SH2e.
+SH2e用のコードを生成する。
 
 @item -m2a-nofpu
 @opindex m2a-nofpu
-Generate code for the SH2a without FPU, or for a SH2a-FPU in such a way
-that the floating-point unit is not used.
+FPUを使用しないSH2a、または浮動小数点ユニットが使用されないSH2a-FPU用のコードを生成する。
 
 @item -m2a-single-only
 @opindex m2a-single-only
-Generate code for the SH2a-FPU, in such a way that no double-precision
-floating-point operations are used.
+倍精度浮動小数点演算が使用されないSH2a-FPU用のコードを生成する。
 
 @item -m2a-single
 @opindex m2a-single
-Generate code for the SH2a-FPU assuming the floating-point unit is in
-single-precision mode by default.
+浮動小数点ユニットがデフォルトで単精度モードであると仮定して、SH2a-FPU用のコードを生成する。
 
 @item -m2a
 @opindex m2a
-Generate code for the SH2a-FPU assuming the floating-point unit is in
-double-precision mode by default.
+浮動小数点ユニットがデフォルトで倍精度モードであると仮定して、SH2a-FPU用のコードを生成する。
 
 @item -m3
 @opindex m3
-Generate code for the SH3.
+SH3用のコードを生成する。
 
 @item -m3e
 @opindex m3e
-Generate code for the SH3e.
+SH3e用のコードを生成する。
 
 @item -m4-nofpu
 @opindex m4-nofpu
-Generate code for the SH4 without a floating-point unit.
+浮動小数点ユニットなしのSH4用のコードを生成する。
 
 @item -m4-single-only
 @opindex m4-single-only
-Generate code for the SH4 with a floating-point unit that only
-supports single-precision arithmetic.
+単精度演算のみをサポートする浮動小数点ユニットを使用したSH4用のコードを生成する。
 
 @item -m4-single
 @opindex m4-single
-Generate code for the SH4 assuming the floating-point unit is in
-single-precision mode by default.
+浮動小数点ユニットがデフォルトで単精度モードであると仮定して、SH4用のコードを生成する。
 
 @item -m4
 @opindex m4
-Generate code for the SH4.
+SH4用のコードを生成する。
 
 @item -m4-100
 @opindex m4-100
-Generate code for SH4-100.
+SH4-100用のコードを生成する。
 
 @item -m4-100-nofpu
 @opindex m4-100-nofpu
-Generate code for SH4-100 in such a way that the
-floating-point unit is not used.
+浮動小数点ユニットを使用しないでSH4-100用のコードを生成する。
 
 @item -m4-100-single
 @opindex m4-100-single
-Generate code for SH4-100 assuming the floating-point unit is in
-single-precision mode by default.
+浮動小数点ユニットがデフォルトで単精度モードであると仮定して、SH4-100用のコードを生成する。
 
 @item -m4-100-single-only
 @opindex m4-100-single-only
-Generate code for SH4-100 in such a way that no double-precision
-floating-point operations are used.
+倍精度浮動小数点演算を使用しないでSH4-100用のコードを生成する。
 
 @item -m4-200
 @opindex m4-200
-Generate code for SH4-200.
+SH4-200用のコードを生成する。
 
 @item -m4-200-nofpu
 @opindex m4-200-nofpu
-Generate code for SH4-200 without in such a way that the
-floating-point unit is not used.
+浮動小数点ユニットを使用しないでSH4-200のコードを生成する。
 
 @item -m4-200-single
 @opindex m4-200-single
-Generate code for SH4-200 assuming the floating-point unit is in
-single-precision mode by default.
+浮動小数点ユニットがデフォルトで単精度モードであると仮定して、SH4-200のコードを生成する。
 
 @item -m4-200-single-only
 @opindex m4-200-single-only
-Generate code for SH4-200 in such a way that no double-precision
-floating-point operations are used.
+倍精度浮動小数点演算を使用しないでSH4-200のコードを生成する。
 
 @item -m4-300
 @opindex m4-300
-Generate code for SH4-300.
+SH4-300用のコードを生成する。
 
 @item -m4-300-nofpu
 @opindex m4-300-nofpu
-Generate code for SH4-300 without in such a way that the
-floating-point unit is not used.
+浮動小数点ユニットを使用しないでSH4-300のコードを生成する。
 
 @item -m4-300-single
 @opindex m4-300-single
-Generate code for SH4-300 in such a way that no double-precision
-floating-point operations are used.
+浮動小数点ユニットがデフォルトで単精度モードであると仮定して、SH4-300のコードを生成する。
 
 @item -m4-300-single-only
 @opindex m4-300-single-only
-Generate code for SH4-300 in such a way that no double-precision
-floating-point operations are used.
+倍精度浮動小数点演算を使用しないでSH4-300のコードを生成する。
 
 @item -m4-340
 @opindex m4-340
-Generate code for SH4-340 (no MMU, no FPU).
+SH4-340用のコードを生成する（MMUなし、FPUなし）。
 
 @item -m4-500
 @opindex m4-500
-Generate code for SH4-500 (no FPU).  Passes @option{-isa=sh4-nofpu} to the
-assembler.
+SH4-500（FPUなし）用のコードを生成します。 @option{-isa=sh4-nofpu}をアセンブラに渡す。
 
 @item -m4a-nofpu
 @opindex m4a-nofpu
-Generate code for the SH4al-dsp, or for a SH4a in such a way that the
-floating-point unit is not used.
+浮動小数点ユニットを使用しないでSH4al-dspまたはSH4a用のコードを生成する。
 
 @item -m4a-single-only
 @opindex m4a-single-only
-Generate code for the SH4a, in such a way that no double-precision
-floating-point operations are used.
+倍精度浮動小数点演算を使用しないでSH4a用のコードを生成します。
 
 @item -m4a-single
 @opindex m4a-single
-Generate code for the SH4a assuming the floating-point unit is in
-single-precision mode by default.
+浮動小数点ユニットがデフォルトで単精度モードであると仮定して、SH4a用のコードを生成する。
 
 @item -m4a
 @opindex m4a
-Generate code for the SH4a.
+SH4a用のコードを生成する。
 
 @item -m4al
 @opindex m4al
-Same as @option{-m4a-nofpu}, except that it implicitly passes
-@option{-dsp} to the assembler.  GCC doesn't generate any DSP
-instructions at the moment.
+@option{-m4a-nofpu}と同じだが、暗黙的に@option{-dsp}がアセンブラに渡さる。 GCCは現時点ではDSP命令を生成しない。
 
 @item -mb
 @opindex mb
-Compile code for the processor in big-endian mode.
+ビッグエンディアンモードでプロセッサのコードをコンパイルする。
 
 @item -ml
 @opindex ml
-Compile code for the processor in little-endian mode.
+リトルエンディアンモードでプロセッサのコードをコンパイルする。
 
 @item -mdalign
 @opindex mdalign
-Align doubles at 64-bit boundaries.  Note that this changes the calling
-conventions, and thus some functions from the standard C library do
-not work unless you recompile it first with @option{-mdalign}.
+64ビット境界で倍精度を整列させる。 これは呼び出し規約を変更するので、標準Cライブラリの一部の関数は、@option{-mdalign}で最初に再コンパイルしないと機能しない。
 
 @item -mrelax
 @opindex mrelax
-Shorten some address references at link time, when possible; uses the
-linker option @option{-relax}.
+可能であれば、リンク時にいくつかのアドレス参照を短くする。 リンカオプション@option{-relax}を使用する。
 
 @item -mbigtable
 @opindex mbigtable
-Use 32-bit offsets in @code{switch} tables.  The default is to use
-16-bit offsets.
+@code{switch}テーブルでは32ビットのオフセットを使用する。 デフォルトでは、16ビットのオフセットが使用される。
 
 @item -mbitops
 @opindex mbitops
-Enable the use of bit manipulation instructions on SH2A.
+SH2Aでビット操作命令を使用できるようにする。
 
 @item -mfmovd
 @opindex mfmovd
-Enable the use of the instruction @code{fmovd}.  Check @option{-mdalign} for
-alignment constraints.
+命令@code{fmovd}の使用を有効にする。 整列の制約については、@option{-mdalign}を確認せよ。
 
 @item -mrenesas
 @opindex mrenesas
-Comply with the calling conventions defined by Renesas.
+ルネサスが定めた呼び出し規約に従う。
 
 @item -mno-renesas
 @opindex mno-renesas
-Comply with the calling conventions defined for GCC before the Renesas
-conventions were available.  This option is the default for all
-targets of the SH toolchain.
+ルネサスの規約が利用可能になる前に、GCC用に定義された呼び出し規約に従う。 このオプションは、SHツールチェーンのすべてのターゲットのデフォルトである。
 
 @item -mnomacsave
 @opindex mnomacsave
-Mark the @code{MAC} register as call-clobbered, even if
-@option{-mrenesas} is given.
+@option{-mrenesas}が指定されていても、@code{MAC}レジスタに呼び出しで破壊されるとマークする。
 
 @item -mieee
 @itemx -mno-ieee
 @opindex mieee
 @opindex mno-ieee
-Control the IEEE compliance of floating-point comparisons, which affects the
-handling of cases where the result of a comparison is unordered.  By default
-@option{-mieee} is implicitly enabled.  If @option{-ffinite-math-only} is
-enabled @option{-mno-ieee} is implicitly set, which results in faster
-floating-point greater-equal and less-equal comparisons.  The implicit settings
-can be overridden by specifying either @option{-mieee} or @option{-mno-ieee}.
+浮動小数点比較のIEEE準拠を制御する。比較の結果が順序付けられていない場合の処理に影響する。デフォルトでは、@option{-mieee}は暗黙的に有効になっている。@option{-ffinite-math-only}を有効にすると、@option{-mno-ieee}が暗黙的に設定される。その結果、より高速の浮動小数点のより大きな等価比較とより小さい等しい比較が行われる。 暗黙の設定は、@option{-mieee}または@option{-mno-ieee}のいずれかを指定することによって上書きできる。
 
 @item -minline-ic_invalidate
 @opindex minline-ic_invalidate
-Inline code to invalidate instruction cache entries after setting up
-nested function trampolines.
-This option has no effect if @option{-musermode} is in effect and the selected
-code generation option (e.g. @option{-m4}) does not allow the use of the @code{icbi}
-instruction.
-If the selected code generation option does not allow the use of the @code{icbi}
-instruction, and @option{-musermode} is not in effect, the inlined code
-manipulates the instruction cache address array directly with an associative
-write.  This not only requires privileged mode at run time, but it also
-fails if the cache line had been mapped via the TLB and has become unmapped.
+ネストされた関数トランポリンを設定した後に命令キャッシュエントリを無効にするコードをインライン化する。@option{-musermode}が有効で、選択されたコード生成オプション（@option{-m4}など）で@code{icbi}命令を使用できない場合、このオプションは無効である。選択されたコード生成オプションが@code{icbi}命令の使用を許可せず、@option{-musermode}が有効でない場合、インラインコードは命令キャッシュアドレス配列を連想書き込みで直接操作する。これは、実行時に特権モードを必要とするだけでなく、キャッシュラインが元々TLBを介してマップされていて、マップされなくなった場合にも失敗する。
 
 @item -misize
 @opindex misize
-Dump instruction size and location in the assembly code.
+アセンブリコードの命令サイズと位置をダンプする。
 
 @item -mpadstruct
 @opindex mpadstruct
-This option is deprecated.  It pads structures to multiple of 4 bytes,
-which is incompatible with the SH ABI@.
+このオプションは非推奨である。 SH ABIと互換性のない4バイトの倍数に構造体を埋め込む。
 
 @item -matomic-model=@var{model}
 @opindex matomic-model=@var{model}
-Sets the model of atomic operations and additional parameters as a comma
-separated list.  For details on the atomic built-in functions see
-@ref{__atomic Builtins}.  The following models and parameters are supported:
+アトミック操作のモデルと追加パラメータをコンマ区切りのリストとして設定する。アトミック組み込み関数の詳細については、@ref {__atomic Builtins}を参照せよ。  次のモデルとパラメータがサポートされている。
 
 @table @samp
 
 @item none
-Disable compiler generated atomic sequences and emit library calls for atomic
-operations.  This is the default if the target is not @code{sh*-*-linux*}.
+コンパイラが生成したアトミック操作を無効にし、アトミック操作のライブラリ呼び出しを発行する。 ターゲットが@code {sh*-*-linux*}でない場合、これがデフォルトである。
 
 @item soft-gusa
-Generate GNU/Linux compatible gUSA software atomic sequences for the atomic
-built-in functions.  The generated atomic sequences require additional support
-from the interrupt/exception handling code of the system and are only suitable
-for SH3* and SH4* single-core systems.  This option is enabled by default when
-the target is @code{sh*-*-linux*} and SH3* or SH4*.  When the target is SH4A,
-this option also partially utilizes the hardware atomic instructions
-@code{movli.l} and @code{movco.l} to create more efficient code, unless
-@samp{strict} is specified.  
+アトミック組み込み関数用のGNU/Linux互換gUSAソフトウェアのアトミック列を生成する。生成されたアトミック列は、システムの割り込み/例外処理コードからの追加サポートを必要とし、SH3*およびSH4*シングルコアシステムにのみ適している。このオプションは、ターゲットが@code{sh*-*-linux*}とSH3*またはSH4*の場合、デフォルトで有効になる。ターゲットがSH4Aの場合、このオプションは@samp{strict}が指定されていない限り、ハードコードの原子命令@code{movli.l}と@code{movco.l}を部分的に利用してより効率的なコードを作成する。
 
 @item soft-tcb
-Generate software atomic sequences that use a variable in the thread control
-block.  This is a variation of the gUSA sequences which can also be used on
-SH1* and SH2* targets.  The generated atomic sequences require additional
-support from the interrupt/exception handling code of the system and are only
-suitable for single-core systems.  When using this model, the @samp{gbr-offset=}
-parameter has to be specified as well.
+スレッド制御ブロック内の変数を使用するソフトウェアのアトミック列を生成する。これは、SH1*およびSH2*ターゲットでも使用できるgUSAシーケンスのバリエーションである。生成されたアトミック列は、システムの割り込み/例外処理コードからの追加サポートを必要とし、シングルコアシステムにのみ適している。このモデルを使用する場合、@samp{gbr-offset=}パラメータも指定する必要がある。
 
 @item soft-imask
-Generate software atomic sequences that temporarily disable interrupts by
-setting @code{SR.IMASK = 1111}.  This model works only when the program runs
-in privileged mode and is only suitable for single-core systems.  Additional
-support from the interrupt/exception handling code of the system is not
-required.  This model is enabled by default when the target is
-@code{sh*-*-linux*} and SH1* or SH2*.
+@code{SR.IMASK=1111}を設定して、一時的に割り込みを無効にするソフトウェアのアトミック列を生成する。このモデルは、プログラムが特権モードで動作し、シングルコアシステムにのみ適している場合にのみ機能する。システムの割り込み/例外処理コードからの追加のサポートは必要ない。 このモデルは、ターゲットが@code{sh*-*-linux*}とSH1*またはSH2*の場合、デフォルトで有効になる。
 
 @item hard-llcs
-Generate hardware atomic sequences using the @code{movli.l} and @code{movco.l}
-instructions only.  This is only available on SH4A and is suitable for
-multi-core systems.  Since the hardware instructions support only 32 bit atomic
-variables access to 8 or 16 bit variables is emulated with 32 bit accesses.
-Code compiled with this option is also compatible with other software
-atomic model interrupt/exception handling systems if executed on an SH4A
-system.  Additional support from the interrupt/exception handling code of the
-system is not required for this model.
+@code{movli.l}命令と@code{movco.l}命令のみを使用して、ハードウェアアトミック列を生成する。これはSH4Aでのみ利用可能で、マルチコアシステムに適している。ハードウェア命令は32ビットのアトミック変数のみをサポートするため、8または16ビット変数へのアクセスは32ビットアクセスでエミュレートされる。このオプションでコンパイルされたコードは、SH4Aシステム上で実行される場合、他のソフトウェアアトミックモデル割り込み/例外処理システムとも互換性がある。このモデルでは、システムの割り込み/例外処理コードの追加サポートは必要ない。
 
 @item gbr-offset=
-This parameter specifies the offset in bytes of the variable in the thread
-control block structure that should be used by the generated atomic sequences
-when the @samp{soft-tcb} model has been selected.  For other models this
-parameter is ignored.  The specified value must be an integer multiple of four
-and in the range 0-1020.
+このパラメータは、@samp{soft-tcb}モデルが選択されているときに、生成されたアトミック列によって使用されるスレッド制御ブロック構造内の変数のオフセットをバイト単位で指定する。他のモデルの場合、このパラメータは無視される。 指定する値は、4の整数倍で、0〜1020の範囲で指定する必要がある。
 
 @item strict
-This parameter prevents mixed usage of multiple atomic models, even if they
-are compatible, and makes the compiler generate atomic sequences of the
-specified model only.
+このパラメータは、互換性があっても複数のアトミックモデルを混在して使用することを防ぎ、指定されたモデルのアトミック列のみをコンパイラに生成させる。
 
 @end table
 
 @item -mtas
 @opindex mtas
-Generate the @code{tas.b} opcode for @code{__atomic_test_and_set}.
-Notice that depending on the particular hardware and software configuration
-this can degrade overall performance due to the operand cache line flushes
-that are implied by the @code{tas.b} instruction.  On multi-core SH4A
-processors the @code{tas.b} instruction must be used with caution since it
-can result in data corruption for certain cache configurations.
+@code{__ atomic_test_and_set}の@code {tas.b}オペコードを生成する。特定のハードウェアとソフトウェアの設定によっては、@code{tas.b}命令によって暗示されるオペランドキャッシュラインフラッシュによって全体的なパフォーマンスが低下する可能性があることに注意せよ。マルチコアSH4Aプロセッサでは、特定のキャッシュ構成でデータが破損する可能性があるため、@code{tas.b}命令は慎重に使用する必要がある。
 
 @item -mprefergot
 @opindex mprefergot
-When generating position-independent code, emit function calls using
-the Global Offset Table instead of the Procedure Linkage Table.
+位置に依存しないコードを生成する場合は、プロシージャのリンケージテーブルの代わりにグローバルオフセットテーブルを使用して関数呼び出しを発行する。
 
 @item -musermode
 @itemx -mno-usermode
 @opindex musermode
 @opindex mno-usermode
-Don't allow (allow) the compiler generating privileged mode code.  Specifying
-@option{-musermode} also implies @option{-mno-inline-ic_invalidate} if the
-inlined code would not work in user mode.  @option{-musermode} is the default
-when the target is @code{sh*-*-linux*}.  If the target is SH1* or SH2*
-@option{-musermode} has no effect, since there is no user mode.
+特権モードコードを生成するコンパイラを許可するい（しない）。 @option{-musermode}を指定すると、インラインコードがユーザモードで動作しない場合は、@option{-mno-inline-ic_invalidate}も意味する。 targetが@code{sh*-*-linux*}の場合、@option{-musermode}がデフォルトである。ターゲットがSH1*またはSH2*の場合、@option{-musermode}は効果がない。なぜなら、ユーザーモードがないからである。
 
 @item -multcost=@var{number}
 @opindex multcost=@var{number}
-Set the cost to assume for a multiply insn.
+乗算命令の想定コストを設定します。
 
 @item -mdiv=@var{strategy}
 @opindex mdiv=@var{strategy}
-Set the division strategy to be used for integer division operations.
-@var{strategy} can be one of: 
+整数除算操作に使用する除算ストラテジーを設定する。 @var{strategy}は次のいずれかである
 
 @table @samp
 
 @item call-div1
-Calls a library function that uses the single-step division instruction
-@code{div1} to perform the operation.  Division by zero calculates an
-unspecified result and does not trap.  This is the default except for SH4,
-SH2A and SHcompact.
+単一ステップ除算命令@code{div1}を使用して操作を実行するライブラリ関数を呼び出す。 ゼロ除算は、不特定の結果を計算し、トラップしまない。 これは、SH4、SH2A、およびSHcompactを除くデフォルトである。
 
 @item call-fp
-Calls a library function that performs the operation in double precision
-floating point.  Division by zero causes a floating-point exception.  This is
-the default for SHcompact with FPU.  Specifying this for targets that do not
-have a double precision FPU defaults to @code{call-div1}.
+倍精度浮動小数点で演算を実行するライブラリ関数を呼び出す。 ゼロ除算は浮動小数点例外を発生させる。 これはFPUを使用するSHcompactのデフォルトである。 倍精度FPUを持たないターゲットに対してこれを指定すると、デフォルトで@code{call-div1}になる。
 
 @item call-table
-Calls a library function that uses a lookup table for small divisors and
-the @code{div1} instruction with case distinction for larger divisors.  Division
-by zero calculates an unspecified result and does not trap.  This is the default
-for SH4.  Specifying this for targets that do not have dynamic shift
-instructions defaults to @code{call-div1}.
+小さな除数のルックアップテーブルと@code{div1}命令を使用するライブラリ関数を呼び出し、大きな除数の場合を分岐する。ゼロ除算は、不特定の結果を計算し、トラップしない。これはSH4のデフォルトである。 動的シフト命令を持たないターゲットに対してこれを指定すると、デフォルトでは@code{call-div1}になる。
 
 @end table
 
-When a division strategy has not been specified the default strategy is
-selected based on the current target.  For SH2A the default strategy is to
-use the @code{divs} and @code{divu} instructions instead of library function
-calls.
+分割戦略が指定されていない場合、現在のターゲットに基づいてデフォルト戦略が選択される。 SH2Aの場合、デフォルトの戦略は、ライブラリ関数呼び出しの代わりに@code{divs}命令と@code{divu}命令を使用することである。
 
 @item -maccumulate-outgoing-args
 @opindex maccumulate-outgoing-args
-Reserve space once for outgoing arguments in the function prologue rather
-than around each call.  Generally beneficial for performance and size.  Also
-needed for unwinding to avoid changing the stack frame around conditional code.
+各呼び出しの周りではなく、関数のプロローグで発信する引数用に一度スペースを予約する。 パフォーマンスとサイズには一般的に有益である。 また、条件コードの周りのスタックフレームを変更しないようにするための巻き戻しのためにも必要である。
 
 @item -mdivsi3_libfunc=@var{name}
 @opindex mdivsi3_libfunc=@var{name}
-Set the name of the library function used for 32-bit signed division to
-@var{name}.
-This only affects the name used in the @samp{call} division strategies, and
-the compiler still expects the same sets of input/output/clobbered registers as
-if this option were not present.
+32ビット符号付き除算に使用するライブラリ関数の名前を@var{name}に設定する。
+これは、@samp{call}除算戦略で使用される名前にのみ影響し、このオプションが存在しない場合と同じように、コンパイラは入力/出力/破壊されるレジスタの同じセットを引き続き予測する。
 
 @item -mfixed-range=@var{register-range}
 @opindex mfixed-range
-Generate code treating the given register range as fixed registers.
-A fixed register is one that the register allocator can not use.  This is
-useful when compiling kernel code.  A register range is specified as
-two registers separated by a dash.  Multiple register ranges can be
-specified separated by a comma.
+与えられたレジスタ範囲を固定レジスタとして扱うコードを生成する。固定レジスタは、レジスタアロケータが使用できないレジスタである。 カーネルコードをコンパイルするときに便利である。レジスタ範囲は、ダッシュで区切られた2つのレジスタとして指定される。カンマで区切って複数のレジスタ範囲を指定することができる。
 
 @item -mbranch-cost=@var{num}
 @opindex mbranch-cost=@var{num}
-Assume @var{num} to be the cost for a branch instruction.  Higher numbers
-make the compiler try to generate more branch-free code if possible.  
-If not specified the value is selected depending on the processor type that
-is being compiled for.
+@var{num}を分岐命令のコストと仮定する。可能であれば、より多くのブランチなしのコードを生成しようとする。
+指定されていない場合は、コンパイル対象のプロセッサタイプに応じて値が選択される。
 
 @item -mzdcbranch
 @itemx -mno-zdcbranch
 @opindex mzdcbranch
 @opindex mno-zdcbranch
-Assume (do not assume) that zero displacement conditional branch instructions
-@code{bt} and @code{bf} are fast.  If @option{-mzdcbranch} is specified, the
-compiler prefers zero displacement branch code sequences.  This is
-enabled by default when generating code for SH4 and SH4A.  It can be explicitly
-disabled by specifying @option{-mno-zdcbranch}.
+ゼロ置換条件分岐命令@code{bt}と@code{bf}が高速であると仮定する（しない）。@option {-mzdcbranch}を指定すると、コンパイラはゼロ変位分岐コードシーケンスを優先する。これは、SH4とSH4Aのコードを生成するときにデフォルトで有効になる。@option{-mno-zdcbranch}を指定することによって明示的に無効にすることができる。
 
 @item -mcbranch-force-delay-slot
 @opindex mcbranch-force-delay-slot
-Force the usage of delay slots for conditional branches, which stuffs the delay
-slot with a @code{nop} if a suitable instruction cannot be found.  By default
-this option is disabled.  It can be enabled to work around hardware bugs as
-found in the original SH7055.
+条件付きブランチのための遅延スロットの使用を強制する。これは、適切な命令が見つからない場合、遅延スロットに@code{nop}を詰め込む。デフォルトでは、このオプションは無効になっている。 オリジナルSH7055のハードウェアバグを回避することができる。
 
 @item -mfused-madd
 @itemx -mno-fused-madd
 @opindex mfused-madd
 @opindex mno-fused-madd
-Generate code that uses (does not use) the floating-point multiply and
-accumulate instructions.  These instructions are generated by default
-if hardware floating point is used.  The machine-dependent
-@option{-mfused-madd} option is now mapped to the machine-independent
-@option{-ffp-contract=fast} option, and @option{-mno-fused-madd} is
-mapped to @option{-ffp-contract=off}.
+浮動小数点乗加算命令を使用する（しない）コードを生成する。ハードウェア浮動小数点が使用されている場合、これらの命令はデフォルトで生成される。マシンに依存する@option{-mfused-madd}オプションは、マシンに依存しない@option{-ffp-contract=fast}オプションにマップされ、@option{-mno-fused-madd}は@option{-ffp-contract=off}を指定する。
 
 @item -mfsca
 @itemx -mno-fsca
 @opindex mfsca
 @opindex mno-fsca
-Allow or disallow the compiler to emit the @code{fsca} instruction for sine
-and cosine approximations.  The option @option{-mfsca} must be used in
-combination with @option{-funsafe-math-optimizations}.  It is enabled by default
-when generating code for SH4A.  Using @option{-mno-fsca} disables sine and cosine
-approximations even if @option{-funsafe-math-optimizations} is in effect.
+コンパイラが正弦および余弦の近似のために@code{fsca}命令を出すのを許可する、または許可しない。オプション@option {-mfsca}は、@option{-funsafe-math-optimizations}と組み合わせて使用する必要がある。SH4A用のコードを生成するときは、デフォルトで有効になっている。@option{-mno-fsca}を使用すると、@option{-funsafe-math-optimizations}が有効な場合でも正弦と余弦の近似は無効になる。
 
 @item -mfsrra
 @itemx -mno-fsrra
 @opindex mfsrra
 @opindex mno-fsrra
-Allow or disallow the compiler to emit the @code{fsrra} instruction for
-reciprocal square root approximations.  The option @option{-mfsrra} must be used
-in combination with @option{-funsafe-math-optimizations} and
-@option{-ffinite-math-only}.  It is enabled by default when generating code for
-SH4A.  Using @option{-mno-fsrra} disables reciprocal square root approximations
-even if @option{-funsafe-math-optimizations} and @option{-ffinite-math-only} are
-in effect.
+コンパイラが逆平方根近似のために@code{fsrra}命令を出すのを許可する、または許可しない。
+オプション@option{-mfsrra}は、@option{-funsafe-math-optimizations}および@option{-ffinite-math-only}と組み合わせて使用する必要がある。SH4A用のコードを生成するときは、デフォルトで有効になっている。@option{-mno-fsrra}を使用すると、@option{-funsafe-math-optimizations}と@option{-ffinite-math-only}が有効な場合でも、逆数平方根近似が無効になる。
 
 @item -mpretend-cmove
 @opindex mpretend-cmove
-Prefer zero-displacement conditional branches for conditional move instruction
-patterns.  This can result in faster code on the SH4 processor.
+条件付き移動命令パターンのゼロ変位条件分岐を優先する。 これにより、SH4プロセッサでより高速なコードが生成される可能性がある。
 
 @item -mfdpic
 @opindex fdpic
-Generate code using the FDPIC ABI.
+FDPIC ABIを使用してコードを生成する。
 
 @end table
 
