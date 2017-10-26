@@ -17815,163 +17815,104 @@ FDPIC ABIを使用してコードを生成する。
 
 @end table
 
-These switches are supported in addition to the above on Solaris 2:
+これらのスイッチは、Solaris 2で上記に加えてサポートされている。
 
 @table @gcctabopt
 @item -pthreads
 @opindex pthreads
-This is a synonym for @option{-pthread}.
+これは@option{-pthread}の同義語である。
 @end table
 
 @node SPARC Options
-@subsection SPARC Options
+@subsection SPARCオプション
 @cindex SPARC options
 
-These @samp{-m} options are supported on the SPARC:
+これらの@samp {-m}オプションは、SPARCでサポートされている。
 
 @table @gcctabopt
 @item -mno-app-regs
 @itemx -mapp-regs
 @opindex mno-app-regs
 @opindex mapp-regs
-Specify @option{-mapp-regs} to generate output using the global registers
-2 through 4, which the SPARC SVR4 ABI reserves for applications.  Like the
-global register 1, each global register 2 through 4 is then treated as an
-allocable register that is clobbered by function calls.  This is the default.
+SPARC SVR4 ABIがアプリケーション用に予約するグローバルレジスタ2～4を使用して出力を生成するには、@option{-mapp-regs}を指定する。 グローバル・レジスタ1と同様に、各グローバル・レジスタ2～4は、関数呼び出しによって保護される割り当て可能なレジスタとして扱われる。 これがデフォルトである。
 
-To be fully SVR4 ABI-compliant at the cost of some performance loss,
-specify @option{-mno-app-regs}.  You should compile libraries and system
-software with this option.
+一部のパフォーマンス低下を犠牲にして完全にSVR4 ABIに準拠するには、@option{-mno-app-regs}を指定する。 このオプションでライブラリとシステムソフトウェアをコンパイルする必要がある。
 
 @item -mflat
 @itemx -mno-flat
 @opindex mflat
 @opindex mno-flat
-With @option{-mflat}, the compiler does not generate save/restore instructions
-and uses a ``flat'' or single register window model.  This model is compatible
-with the regular register window model.  The local registers and the input
-registers (0--5) are still treated as ``call-saved'' registers and are
-saved on the stack as needed.
+@option {-mflat}では、コンパイラは保存/復元命令を生成せず、 「フラット」またはシングルレジスタウィンドウモデルを使用する。このモデルは、正規のレジスタウィンドウモデルと互換性がある。ローカルレジスタおよび入力レジスタ（0～5）は、依然として「コールセーブされた」レジスタとして扱われ、必要に応じてスタックに保存される。
 
-With @option{-mno-flat} (the default), the compiler generates save/restore
-instructions (except for leaf functions).  This is the normal operating mode.
+@option{-mno-flat}（デフォルト）では、コンパイラは保存/復元命令を生成する（リーフ関数を除く）。これは通常の動作モードである。
 
 @item -mfpu
 @itemx -mhard-float
 @opindex mfpu
 @opindex mhard-float
-Generate output containing floating-point instructions.  This is the
-default.
+浮動小数点命令を含む出力を生成する。 これがデフォルトである。
 
 @item -mno-fpu
 @itemx -msoft-float
 @opindex mno-fpu
 @opindex msoft-float
-Generate output containing library calls for floating point.
-@strong{Warning:} the requisite libraries are not available for all SPARC
-targets.  Normally the facilities of the machine's usual C compiler are
-used, but this cannot be done directly in cross-compilation.  You must make
-your own arrangements to provide suitable library functions for
-cross-compilation.  The embedded targets @samp{sparc-*-aout} and
-@samp{sparclite-*-*} do provide software floating-point support.
+浮動小数点のライブラリ呼び出しを含む出力を生成する。@strong{注意：}必要なライブラリは、すべてのSPARCターゲットで利用できるわけではない。通常、マシンの通常のCコンパイラの機能が使用されるが、これはクロスコンパイルで直接行うことはできない。クロスコンパイルに適したライブラリ関数を提供するために、独自の手配をしなければならない。 埋め込みターゲット@samp{sparc-*-aout}と@samp {sparclite-*-*}は、ソフトウェア浮動小数点サポートを提供する。
 
-@option{-msoft-float} changes the calling convention in the output file;
-therefore, it is only useful if you compile @emph{all} of a program with
-this option.  In particular, you need to compile @file{libgcc.a}, the
-library that comes with GCC, with @option{-msoft-float} in order for
-this to work.
+@option{-msoft-float}は、出力ファイルの呼び出し規約を変更する。 したがって、このオプションでプログラムの@emph{_すべて_}をコンパイルする場合にのみ有用である。特に、GCCに付属のライブラリである@file{libgcc.a}を@option{-msoft-float}とコンパイルする必要がある。
 
 @item -mhard-quad-float
 @opindex mhard-quad-float
-Generate output containing quad-word (long double) floating-point
-instructions.
+クワッドワード（long double）浮動小数点命令を含む出力を生成する。
 
 @item -msoft-quad-float
 @opindex msoft-quad-float
-Generate output containing library calls for quad-word (long double)
-floating-point instructions.  The functions called are those specified
-in the SPARC ABI@.  This is the default.
+クワッドワード（long double）浮動小数点命令のライブラリ呼び出しを含む出力を生成する。 呼び出される関数はSPARC ABIで指定された関数である。これがデフォルトである。
 
-As of this writing, there are no SPARC implementations that have hardware
-support for the quad-word floating-point instructions.  They all invoke
-a trap handler for one of these instructions, and then the trap handler
-emulates the effect of the instruction.  Because of the trap handler overhead,
-this is much slower than calling the ABI library routines.  Thus the
-@option{-msoft-quad-float} option is the default.
+この記事の執筆時点では、クワッドワード浮動小数点命令のハードウェアをサポートするSPARC実装はないん。 これらの命令はいずれもこれらの命令のいずれかのトラップハンドラを呼び出し、トラップハンドラは命令の効果をエミュレートする。 トラップハンドラのオーバーヘッドのために、ABIライブラリルーチンを呼び出すよりもはるかに時間がかかる。 したがって、@option{-msoft-quad-float}オプションがデフォルトである。
 
 @item -mno-unaligned-doubles
 @itemx -munaligned-doubles
 @opindex mno-unaligned-doubles
 @opindex munaligned-doubles
-Assume that doubles have 8-byte alignment.  This is the default.
+倍精度は8バイトのアライメントを持つと仮定する。 これがデフォルトである。
 
-With @option{-munaligned-doubles}, GCC assumes that doubles have 8-byte
-alignment only if they are contained in another type, or if they have an
-absolute address.  Otherwise, it assumes they have 4-byte alignment.
-Specifying this option avoids some rare compatibility problems with code
-generated by other compilers.  It is not the default because it results
-in a performance loss, especially for floating-point code.
+@option{-munaligned-doubles}を指定すると、GCCは、それらが他の型に含まれているか、さもなければ絶対アドレスを保つ場合に限り、double型が8バイトのアライメントを持つとみなす。それ以外の場合は、4バイトのアライメントがあるとみなされる。このオプションを指定すると、他のコンパイラで生成されたコードとの稀な互換性の問題を回避できる。特に浮動小数点コードの場合、パフォーマンスが低下するため、デフォルトではない。
 
 @item -muser-mode
 @itemx -mno-user-mode
 @opindex muser-mode
 @opindex mno-user-mode
-Do not generate code that can only run in supervisor mode.  This is relevant
-only for the @code{casa} instruction emitted for the LEON3 processor.  This
-is the default.
+スーパーバイザモードでしか実行できないコードを生成しない。 これは、LEON3プロセッサ用に生成された@code{casa}命令にのみ関係する。 これがデフォルトである。
 
 @item -mfaster-structs
 @itemx -mno-faster-structs
 @opindex mfaster-structs
 @opindex mno-faster-structs
-With @option{-mfaster-structs}, the compiler assumes that structures
-should have 8-byte alignment.  This enables the use of pairs of
-@code{ldd} and @code{std} instructions for copies in structure
-assignment, in place of twice as many @code{ld} and @code{st} pairs.
-However, the use of this changed alignment directly violates the SPARC
-ABI@.  Thus, it's intended only for use on targets where the developer
-acknowledges that their resulting code is not directly in line with
-the rules of the ABI@.
+@option {-mfaster-structs}を使用すると、構造体は8バイトの境界整列を持つ必要があるとコンパイラは想定する。これにより、@code{ld}と@code{st}の2倍の代わりに、構造割り当てのコピーに@code{ldd}命令と@code{std}命令のペアを使用することができる。ただし、この変更されたアラインメントの使用は、SPARC ABIに直接違反する。したがって、開発者が結果のコードがABIのルールに直接沿ったものではないことを認識しているターゲットでのみ使用することを意図している。
 
 @item -mstd-struct-return
 @itemx -mno-std-struct-return
 @opindex mstd-struct-return
 @opindex mno-std-struct-return
-With @option{-mstd-struct-return}, the compiler generates checking code
-in functions returning structures or unions to detect size mismatches
-between the two sides of function calls, as per the 32-bit ABI@.
+コンパイラは、@option{-mstd-struct-return}を使用して、構造体または共用体を返す関数にチェックコードを生成し、32ビットABIのように関数呼び出しの両側のサイズの不一致を検出する。
 
-The default is @option{-mno-std-struct-return}.  This option has no effect
-in 64-bit mode.
+デフォルトは@option{-mno-std-struct-return}である。 このオプションは、64ビットモードでは効果がない。
 
 @item -mlra
 @itemx -mno-lra
 @opindex mlra
 @opindex mno-lra
-Enable Local Register Allocation.  This is the default for SPARC since GCC 7
-so @option{-mno-lra} needs to be passed to get old Reload.
+ローカルレジスタ割り付けを有効にする。 これはGCC 7以降のSPARCのデフォルトのため、古いリロードを得るためには@option{-mno-lra}を渡す必要がある。
 
 @item -mcpu=@var{cpu_type}
 @opindex mcpu
-Set the instruction set, register set, and instruction scheduling parameters
-for machine type @var{cpu_type}.  Supported values for @var{cpu_type} are
-@samp{v7}, @samp{cypress}, @samp{v8}, @samp{supersparc}, @samp{hypersparc},
-@samp{leon}, @samp{leon3}, @samp{leon3v7}, @samp{sparclite}, @samp{f930},
-@samp{f934}, @samp{sparclite86x}, @samp{sparclet}, @samp{tsc701}, @samp{v9},
-@samp{ultrasparc}, @samp{ultrasparc3}, @samp{niagara}, @samp{niagara2},
-@samp{niagara3}, @samp{niagara4}, @samp{niagara7} and @samp{m8}.
+マシンタイプ@var {cpu_type}の命令セット、レジスタセット、および命令スケジューリングパラメータを設定する。 @var{cpu_type}のサポートされている値は@samp{v7}, @samp{cypress}, @samp{v8}, @samp{supersparc}, @samp{hypersparc}, @samp{leon}, @samp{leon3}, @samp{leon3v7}, @samp{sparclite}, @samp{f930}, @samp{f934}, @samp{sparclite86x}, @samp{sparclet}, @samp{tsc701}, @samp{v9}, @samp{ultrasparc}, @samp{ultrasparc3}, @samp{niagara}, @samp{niagara2}, @samp{niagara3}, @samp{niagara4}, @samp{niagara7}, @samp{m8}である。
 
-Native Solaris and GNU/Linux toolchains also support the value @samp{native},
-which selects the best architecture option for the host processor.
-@option{-mcpu=native} has no effect if GCC does not recognize
-the processor.
+ネイティブSolarisおよびGNU / Linuxツールチェーンは、@samp{native}という値もサポートしている。これは、ホストプロセッサに最適なアーキテクチャオプションを選択する。GCCがプロセッサを認識しない場合、@option{-mcpu=native}は効果がない。
 
-Default instruction scheduling parameters are used for values that select
-an architecture and not an implementation.  These are @samp{v7}, @samp{v8},
-@samp{sparclite}, @samp{sparclet}, @samp{v9}.
+デフォルトの命令スケジューリングパラメータは、アーキテクチャを選択する値であり、実装ではない。 これらは@samp{v7}、@samp{v8}、@samp{sparclite}、@samp{sparclet}、@samp{v9}である。
 
-Here is a list of each supported architecture and their supported
-implementations.
+サポートされている各アーキテクチャとサポートされている実装の一覧を示す。
 
 @table @asis
 @item v7
@@ -17991,26 +17932,11 @@ ultrasparc, ultrasparc3, niagara, niagara2, niagara3, niagara4,
 niagara7, m8
 @end table
 
-By default (unless configured otherwise), GCC generates code for the V7
-variant of the SPARC architecture.  With @option{-mcpu=cypress}, the compiler
-additionally optimizes it for the Cypress CY7C602 chip, as used in the
-SPARCStation/SPARCServer 3xx series.  This is also appropriate for the older
-SPARCStation 1, 2, IPX etc.
+デフォルトでは（別途設定されていない限り）、GCCはSPARCアーキテクチャのV7版のコードを生成する。 @option{-mcpu=cypress}を使用すると、コンパイラはSPARCStation / SPARCServer 3xxシリーズで使用されているCypress CY7C602チップ用に最適化する。これは古いSPARCStation 1,2、IPXなどにも適している。
 
-With @option{-mcpu=v8}, GCC generates code for the V8 variant of the SPARC
-architecture.  The only difference from V7 code is that the compiler emits
-the integer multiply and integer divide instructions which exist in SPARC-V8
-but not in SPARC-V7.  With @option{-mcpu=supersparc}, the compiler additionally
-optimizes it for the SuperSPARC chip, as used in the SPARCStation 10, 1000 and
-2000 series.
+@option{-mcpu=v8}を指定すると、GCCはSPARCアーキテクチャのV8版のコードを生成する。 V7コードとの唯一の違いは、コンパイラがSPARC-V8には存在し、SPARC-V7には存在しない整数乗算命令と整数除算命令を発行することである。 @option{-mcpu=supersparc}を指定すると、コンパイラはSPARCStation 10,1000,2000シリーズで使用されているように、SuperSPARCチップ用にコンパイラを最適化する。
 
-With @option{-mcpu=sparclite}, GCC generates code for the SPARClite variant of
-the SPARC architecture.  This adds the integer multiply, integer divide step
-and scan (@code{ffs}) instructions which exist in SPARClite but not in SPARC-V7.
-With @option{-mcpu=f930}, the compiler additionally optimizes it for the
-Fujitsu MB86930 chip, which is the original SPARClite, with no FPU@.  With
-@option{-mcpu=f934}, the compiler additionally optimizes it for the Fujitsu
-MB86934 chip, which is the more recent SPARClite with FPU@.
+@option{-mcpu=sparclite}を使用すると、GCCはSPARCアーキテクチャのSPARCliteバリアントのコードを生成する。これによりSPARCliteには存在するが、SPARC-V7には存在しない整数の乗算、整数除算のステップとスキャン（@code{ffs}）命令が追加される。@option {-mcpu=f930}を使用すると、コンパイラは元のSPARCliteであるFujitsu MB86930チップ（FPUなし）に最適化する。@option{-mcpu=f934}を指定すると、FPU付きのSPARCliteであるFujitsu MB86934チップ用に最適化される。
 
 With @option{-mcpu=sparclet}, GCC generates code for the SPARClet variant of
 the SPARC architecture.  This adds the integer multiply, multiply/accumulate,
