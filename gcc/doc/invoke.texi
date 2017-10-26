@@ -17938,244 +17938,154 @@ niagara7, m8
 
 @option{-mcpu=sparclite}を使用すると、GCCはSPARCアーキテクチャのSPARCliteバリアントのコードを生成する。これによりSPARCliteには存在するが、SPARC-V7には存在しない整数の乗算、整数除算のステップとスキャン（@code{ffs}）命令が追加される。@option {-mcpu=f930}を使用すると、コンパイラは元のSPARCliteであるFujitsu MB86930チップ（FPUなし）に最適化する。@option{-mcpu=f934}を指定すると、FPU付きのSPARCliteであるFujitsu MB86934チップ用に最適化される。
 
-With @option{-mcpu=sparclet}, GCC generates code for the SPARClet variant of
-the SPARC architecture.  This adds the integer multiply, multiply/accumulate,
-integer divide step and scan (@code{ffs}) instructions which exist in SPARClet
-but not in SPARC-V7.  With @option{-mcpu=tsc701}, the compiler additionally
-optimizes it for the TEMIC SPARClet chip.
+@option{-mcpu=sparclet}を使用すると、GCCはSPARCアーキテクチャのSPARCletバリアントのコードを生成する。これにより、SPARCletには存在するが、SPARC-V7には存在しない整数の乗算、乗算/累積、整数除算のステップとスキャン（@code{ffs}）命令が追加される。 @option{-mcpu=tsc701}では、TEMIC SPARCletチップ用に最適化されている。
 
-With @option{-mcpu=v9}, GCC generates code for the V9 variant of the SPARC
-architecture.  This adds 64-bit integer and floating-point move instructions,
-3 additional floating-point condition code registers and conditional move
-instructions.  With @option{-mcpu=ultrasparc}, the compiler additionally
-optimizes it for the Sun UltraSPARC I/II/IIi chips.  With
-@option{-mcpu=ultrasparc3}, the compiler additionally optimizes it for the
-Sun UltraSPARC III/III+/IIIi/IIIi+/IV/IV+ chips.  With
-@option{-mcpu=niagara}, the compiler additionally optimizes it for
-Sun UltraSPARC T1 chips.  With @option{-mcpu=niagara2}, the compiler
-additionally optimizes it for Sun UltraSPARC T2 chips. With
-@option{-mcpu=niagara3}, the compiler additionally optimizes it for Sun
-UltraSPARC T3 chips.  With @option{-mcpu=niagara4}, the compiler
-additionally optimizes it for Sun UltraSPARC T4 chips.  With
-@option{-mcpu=niagara7}, the compiler additionally optimizes it for
-Oracle SPARC M7 chips.  With @option{-mcpu=m8}, the compiler
-additionally optimizes it for Oracle M8 chips.
+@option {-mcpu=v9}を指定すると、GCCはSPARCアーキテクチャのV9版のコードを生成する。これにより、64ビット整数および浮動小数点移動命令、3つの追加浮動小数点条件コード・レジスタおよび条件付き移動命令が追加される。@option{-mcpu=ultrasparc}を使用すると、コンパイラはSun UltraSPARC I / II / IIiチップ用にコンパイラを最適化する。@option{-mcpu=ultrasparc}を使用すると、コンパイラはSun UltraSPARC I / II / IIiチップ用にコンパイラを最適化する。 @option{-mcpu=ultrasparc3}を使用すると、コンパイラはSun UltraSPARC III / III + / IIIi + / IV / IV +チップ用にコンパイラを最適化する。@option{-mcpu=niagara}を使用すると、コンパイラはSun UltraSPARC T1チップ用にコンパイラを最適化する。@option{-mcpu=niagara2}を使用すると、コンパイラはSun UltraSPARC T2チップ用にコンパイラを最適化する。@option{-mcpu=niagara3}では、コンパイラはSun UltraSPARC T3チップ用にコンパイラを最適化する。@option{-mcpu=niagara4}では、コンパイラはSun UltraSPARC T4チップ用にコンパイラを最適化する。@option{-mcpu=niagara7}を使用すると、コンパイラはOracle SPARC M7チップ用にコンパイラを最適化する。 @option{-mcpu=m8}を指定すると、コンパイラはOracle M8チップ用にコンパイラを最適化する。
 
 @item -mtune=@var{cpu_type}
 @opindex mtune
-Set the instruction scheduling parameters for machine type
-@var{cpu_type}, but do not set the instruction set or register set that the
-option @option{-mcpu=@var{cpu_type}} does.
+マシンタイプ@var {cpu_type}の命令スケジューリングパラメータを設定するが、オプション@option{-mcpu=@var{cpu_type}}が実行する命令セットまたはレジスタセットは設定しない。
 
-The same values for @option{-mcpu=@var{cpu_type}} can be used for
-@option{-mtune=@var{cpu_type}}, but the only useful values are those
-that select a particular CPU implementation.  Those are
-@samp{cypress}, @samp{supersparc}, @samp{hypersparc}, @samp{leon},
-@samp{leon3}, @samp{leon3v7}, @samp{f930}, @samp{f934},
-@samp{sparclite86x}, @samp{tsc701}, @samp{ultrasparc},
-@samp{ultrasparc3}, @samp{niagara}, @samp{niagara2}, @samp{niagara3},
-@samp{niagara4}, @samp{niagara7} and @samp{m8}.  With native Solaris
-and GNU/Linux toolchains, @samp{native} can also be used.
+@option{-mcpu=@var{cpu_type}}と同じ値を@option{-mtune=@var{cpu_type}}に使用できるが、唯一有用な値は特定のCPU実装を選択する値であるす。それらは@samp{cypress}, @samp{supersparc}, @samp{hypersparc}, @samp{leon}, @samp{leon3}, @samp{leon3v7}, @samp{f930}, @samp{f934}, @samp{sparclite86x}, @samp{tsc701}, @samp{ultrasparc}, @samp{ultrasparc3}, @samp{niagara}, @samp{niagara2}, @samp{niagara3}, @samp{niagara4}, @samp{niagara7}, @samp{m8}である。 ネイティブのSolarisおよびGNU/Linuxツールチェーンでは、@samp{native}も使用できる。 
 
 @item -mv8plus
 @itemx -mno-v8plus
 @opindex mv8plus
 @opindex mno-v8plus
-With @option{-mv8plus}, GCC generates code for the SPARC-V8+ ABI@.  The
-difference from the V8 ABI is that the global and out registers are
-considered 64 bits wide.  This is enabled by default on Solaris in 32-bit
-mode for all SPARC-V9 processors.
+@option {-mv8plus}を指定すると、GCCはSPARC-V8 + ABI用のコードを生成する。 V8 ABIとの違いは、グローバルレジスタとアウトレジスタが64ビット幅とみなされることである。これは、すべてのSPARC-V9プロセッサで32ビットモードのSolarisでデフォルトで有効になる。
 
 @item -mvis
 @itemx -mno-vis
 @opindex mvis
 @opindex mno-vis
-With @option{-mvis}, GCC generates code that takes advantage of the UltraSPARC
-Visual Instruction Set extensions.  The default is @option{-mno-vis}.
+@option {-mvis}を使用すると、GCCはUltraSPARC Visual Instruction Set拡張機能を利用するコードを生成する。デフォルトは@option {-mno-vis}である。
 
 @item -mvis2
 @itemx -mno-vis2
 @opindex mvis2
 @opindex mno-vis2
-With @option{-mvis2}, GCC generates code that takes advantage of
-version 2.0 of the UltraSPARC Visual Instruction Set extensions.  The
-default is @option{-mvis2} when targeting a cpu that supports such
-instructions, such as UltraSPARC-III and later.  Setting @option{-mvis2}
-also sets @option{-mvis}.
+@option {-mvis2}を使用すると、GCCはUltraSPARC Visual Instruction Set拡張のバージョン2.0を利用するコードを生成する。UltraSPARC-III以降など、そのような命令をサポートするCPUを対象とする場合、デフォルトは@option{-mvis2}である。
 
 @item -mvis3
 @itemx -mno-vis3
 @opindex mvis3
 @opindex mno-vis3
-With @option{-mvis3}, GCC generates code that takes advantage of
-version 3.0 of the UltraSPARC Visual Instruction Set extensions.  The
-default is @option{-mvis3} when targeting a cpu that supports such
-instructions, such as niagara-3 and later.  Setting @option{-mvis3}
-also sets @option{-mvis2} and @option{-mvis}.
+@option {-mvis3}を使用すると、GCCはUltraSPARC Visual Instruction Set拡張のバージョン3.0を利用するコードを生成する。niagara-3以降のような命令をサポートしているCPUを対象とする場合、デフォルトは@option{-mvis3}である。@option {-mvis3}を設定すると、@option {-mvis2}と@option {-mvis}も設定される。
 
 @item -mvis4
 @itemx -mno-vis4
 @opindex mvis4
 @opindex mno-vis4
-With @option{-mvis4}, GCC generates code that takes advantage of
-version 4.0 of the UltraSPARC Visual Instruction Set extensions.  The
-default is @option{-mvis4} when targeting a cpu that supports such
-instructions, such as niagara-7 and later.  Setting @option{-mvis4}
-also sets @option{-mvis3}, @option{-mvis2} and @option{-mvis}.
+@option{-mvis4}を使用すると、GCCはUltraSPARC Visual Instruction Set拡張のバージョン4.0を利用するコードを生成する。 niagara-7以降のような命令をサポートしているCPUを対象にする場合、デフォルトは@option{-mvis4}である。 @option{-mvis4}を設定すると、@option{-mvis3}、@option{-mvis2}、@option{-mvis}も設定される。
 
 @item -mvis4b
 @itemx -mno-vis4b
 @opindex mvis4b
 @opindex mno-vis4b
-With @option{-mvis4b}, GCC generates code that takes advantage of
-version 4.0 of the UltraSPARC Visual Instruction Set extensions, plus
-the additional VIS instructions introduced in the Oracle SPARC
-Architecture 2017.  The default is @option{-mvis4b} when targeting a
-cpu that supports such instructions, such as m8 and later.  Setting
-@option{-mvis4b} also sets @option{-mvis4}, @option{-mvis3},
-@option{-mvis2} and @option{-mvis}.
+@option{-mvis4b}を使用すると、GCCはUltraSPARC Visual Instruction Set拡張のバージョン4.0と、Oracle SPARC Architecture 2017で導入された追加のVIS命令を利用するコードを生成する。 m8以降のような命令をサポートするCPUを対象とする場合、デフォルトは@option{-mvis4b}である。 @option{-mvis4b}を設定すると、@option{-mvis4}、@option{-mvis3}、@option{-mvis2}、@option{-mvis}も設定される。
 
 @item -mcbcond
 @itemx -mno-cbcond
 @opindex mcbcond
 @opindex mno-cbcond
-With @option{-mcbcond}, GCC generates code that takes advantage of the UltraSPARC
-Compare-and-Branch-on-Condition instructions.  The default is @option{-mcbcond}
-when targeting a CPU that supports such instructions, such as Niagara-4 and
-later.
+@option{-mcbcond}を指定すると、GCCはUltraSPARC条件つきコンペア・アンド・ブランチ命令を利用したコードを生成する。 Niagara-4以降のような命令をサポートするCPUを対象とする場合、デフォルトは@option{-mcbcond}である。
 
 @item -mfmaf
 @itemx -mno-fmaf
 @opindex mfmaf
 @opindex mno-fmaf
-With @option{-mfmaf}, GCC generates code that takes advantage of the UltraSPARC
-Fused Multiply-Add Floating-point instructions.  The default is @option{-mfmaf}
-when targeting a CPU that supports such instructions, such as Niagara-3 and
-later.
+@option{-mfmaf}を使用すると、GCCは、UltraSPARC 乗加算融合浮動小数点命令を利用するコードを生成する。 Niagara-3以降のような命令をサポートするCPUを対象とする場合、デフォルトは@option{-mfmaf}である。
 
 @item -mfsmuld
 @itemx -mno-fsmuld
 @opindex mfsmuld
 @opindex mno-fsmuld
-With @option{-mfsmuld}, GCC generates code that takes advantage of the
-Floating-point Multiply Single to Double (FsMULd) instruction.  The default is
-@option{-mfsmuld} when targeting a CPU supporting the architecture versions V8
-or V9 with FPU except @option{-mcpu=leon}.
+@option{-mfsmuld}を使用すると、GCCは浮動小数点倍精度単精度（FsMULd）命令を利用するコードを生成する。@option{-mcpu=leon}を除くFPUでアーキテクチャバージョンV8またはV9をサポートしているCPUを対象とする場合、デフォルトは@option{-mfsmuld}である。
 
 @item -mpopc
 @itemx -mno-popc
 @opindex mpopc
 @opindex mno-popc
-With @option{-mpopc}, GCC generates code that takes advantage of the UltraSPARC
-Population Count instruction.  The default is @option{-mpopc}
-when targeting a CPU that supports such an instruction, such as Niagara-2 and
-later.
+@option{-mpopc}を指定すると、GCCはUltraSPARC Population Count命令を利用するコードを生成する。Niagara-2以降のような命令をサポートしているCPUを対象とする場合、デフォルトは@option{-mpopc}である。
 
 @item -msubxc
 @itemx -mno-subxc
 @opindex msubxc
 @opindex mno-subxc
-With @option{-msubxc}, GCC generates code that takes advantage of the UltraSPARC
-Subtract-Extended-with-Carry instruction.  The default is @option{-msubxc}
-when targeting a CPU that supports such an instruction, such as Niagara-7 and
-later.
+@option{-msubxc}を使用すると、GCCはUltraSPARC キャリー減算拡張命令を利用したコードを生成する。Niagara-7以降のような命令をサポートしているCPUを対象とする場合、デフォルトは@option{-msubxc}である。
 
 @item -mfix-at697f
 @opindex mfix-at697f
-Enable the documented workaround for the single erratum of the Atmel AT697F
-processor (which corresponds to erratum #13 of the AT697E processor).
+Atmel AT697Fプロセッサの単一のエラッタ（AT697Eプロセッサのエラータ＃13に対応）について、文書化された回避策を有効にする。
 
 @item -mfix-ut699
 @opindex mfix-ut699
-Enable the documented workarounds for the floating-point errata and the data
-cache nullify errata of the UT699 processor.
+UT699プロセッサの浮動小数点エラッタとデータキャッシュ無効化エラータについて、文書化された回避策を有効にする。
 
 @item -mfix-ut700
 @opindex mfix-ut700
-Enable the documented workaround for the back-to-back store errata of
-the UT699E/UT700 processor.
+UT699E/UT700プロセッサのバックツーバックストアエラッタについて、文書化された回避策を有効にする。
 
 @item -mfix-gr712rc
 @opindex mfix-gr712rc
-Enable the documented workaround for the back-to-back store errata of
-the GR712RC processor.
+GR712RCプロセッサのバックツーバックストアエラッタについて、文書化された回避策を有効にする。
 @end table
 
-These @samp{-m} options are supported in addition to the above
-on SPARC-V9 processors in 64-bit environments:
+これらの@samp{-m}オプションは、上記の64ビット環境のSPARC-V9プロセッサでサポートされている。
 
 @table @gcctabopt
 @item -m32
 @itemx -m64
 @opindex m32
 @opindex m64
-Generate code for a 32-bit or 64-bit environment.
-The 32-bit environment sets int, long and pointer to 32 bits.
-The 64-bit environment sets int to 32 bits and long and pointer
-to 64 bits.
+32ビットまたは64ビット環境用のコードを生成します。32ビット環境はint、long、およびポインタを32ビットに設定する。64ビット環境ではintを32ビット、longとポインタ64ビットに設定する。
 
 @item -mcmodel=@var{which}
 @opindex mcmodel
-Set the code model to one of
+コードモデルを次のいずれかに設定する。
 
 @table @samp
 @item medlow
-The Medium/Low code model: 64-bit addresses, programs
-must be linked in the low 32 bits of memory.  Programs can be statically
-or dynamically linked.
+中位/低コード・モデル：64ビット・アドレス、プログラムはメモリの低位32ビットにリンクする必要がある。 プログラムは静的または動的にリンクできる。
 
 @item medmid
-The Medium/Middle code model: 64-bit addresses, programs
-must be linked in the low 44 bits of memory, the text and data segments must
-be less than 2GB in size and the data segment must be located within 2GB of
-the text segment.
+中位/中コードモデル：64ビットアドレス、プログラムはメモリの低位44ビットにリンクする必要がある。テキストとデータセグメントのサイズは2GB未満で、データセグメントはテキストセグメントの2GB以内に配置する必要がある。
 
 @item medany
-The Medium/Anywhere code model: 64-bit addresses, programs
-may be linked anywhere in memory, the text and data segments must be less
-than 2GB in size and the data segment must be located within 2GB of the
-text segment.
+中位/任意コードモデル：64ビットアドレス、プログラムはメモリ内のどこにでもリンクできる。テキストとデータセグメントのサイズは2GB未満で、データセグメントはテキストセグメントの2GB以内に配置する必要がある。
 
 @item embmedany
-The Medium/Anywhere code model for embedded systems:
-64-bit addresses, the text and data segments must be less than 2GB in
-size, both starting anywhere in memory (determined at link time).  The
-global register %g4 points to the base of the data segment.  Programs
-are statically linked and PIC is not supported.
+組み込みシステム用の中位/任意コードモデル：64ビットのアドレスでは、テキストセグメントとデータセグメントのサイズは2GB未満でなければならず、どちらもメモリ内の任意の場所（リンク時に決定）から開始する必要がある。  グローバル・レジスタ％g4は、データ・セグメントのベースを指す。プログラムは静的にリンクされており、PICはサポートされていない。
 @end table
 
 @item -mmemory-model=@var{mem-model}
 @opindex mmemory-model
-Set the memory model in force on the processor to one of
+プロセッサの強制的なメモリモデルを次のいずれかに設定する。
 
 @table @samp
 @item default
-The default memory model for the processor and operating system.
+プロセッサーとオペレーティングシステムのデフォルトのメモリーモデル。
 
 @item rmo
-Relaxed Memory Order
+緩和されたメモリ順序
 
 @item pso
-Partial Store Order
+部分ストア順序
 
 @item tso
-Total Store Order
+完全ストア順序
 
 @item sc
-Sequential Consistency
+シーケンシャル一貫性
 @end table
 
-These memory models are formally defined in Appendix D of the SPARC-V9
-architecture manual, as set in the processor's @code{PSTATE.MM} field.
+これらのメモリモデルは、プロセッサの@code{PSTATE.MM}フィールドで設定されているように、SPARC-V9アーキテクチャマニュアルの付録Dで正式に定義されている。
 
 @item -mstack-bias
 @itemx -mno-stack-bias
 @opindex mstack-bias
 @opindex mno-stack-bias
-With @option{-mstack-bias}, GCC assumes that the stack pointer, and
-frame pointer if present, are offset by @minus{}2047 which must be added back
-when making stack frame references.  This is the default in 64-bit mode.
-Otherwise, assume no such offset is present.
+@option{-mstack-bias}を指定すると、GCCはスタックポインタとフレームポインタが存在すればそれを@minus{}2047でオフセットしているとみなす。これはスタックフレーム参照の際に追加する必要がある。 これは64ビットモードのデフォルトである。それ以外の場合は、そのようなオフセットが存在しないと仮定する。
 @end table
 
 @node SPU Options
