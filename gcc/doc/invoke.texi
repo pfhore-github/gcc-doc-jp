@@ -18233,22 +18233,19 @@ SPUが無期限に停止する原因となるハードウェアのバグを回�
 @end table
 
 @node TILEPro Options
-@subsection TILEPro Options
+@subsection TILEProオプション
 @cindex TILEPro options
 
-These @samp{-m} options are supported on the TILEPro:
+これらの@samp{-m}オプションはTILEProでサポートされている：
 
 @table @gcctabopt
 @item -mcpu=@var{name}
 @opindex mcpu
-Selects the type of CPU to be targeted.  Currently the only supported
-type is @samp{tilepro}.
+ターゲットにするCPUのタイプを選択する。 現在サポートされているタイプは@samp{tilepro}のみである。
 
 @item -m32
 @opindex m32
-Generate code for a 32-bit environment, which sets int, long, and
-pointer to 32 bits.  This is the only supported behavior so the flag
-is essentially ignored.
+int、long、および32ビットへのポインタを設定する32ビット環境用のコードを生成する。 これはサポートされている唯一の動作なので、フラグは本質的に無視される。
 @end table
 
 @node V850 Options
