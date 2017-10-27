@@ -18089,10 +18089,10 @@ GR712RCプロセッサのバックツーバックストアエラッタについ�
 @end table
 
 @node SPU Options
-@subsection SPU Options
+@subsection SPUオプション
 @cindex SPU options
 
-These @samp{-m} options are supported on the SPU:
+これらの@samp {-m}オプションはSPUでサポートされている：
 
 @table @gcctabopt
 @item -mwarn-reloc
@@ -18100,126 +18100,74 @@ These @samp{-m} options are supported on the SPU:
 @opindex mwarn-reloc
 @opindex merror-reloc
 
-The loader for SPU does not handle dynamic relocations.  By default, GCC
-gives an error when it generates code that requires a dynamic
-relocation.  @option{-mno-error-reloc} disables the error,
-@option{-mwarn-reloc} generates a warning instead.
+SPUのローダーは動的再配置を処理しない。 デフォルトでは、GCCは動的再配置を必要とするコードを生成するとエラーを返す。 @option{-mno-error-reloc}はエラーを無効にし、@option{-mwarn-reloc}は警告を生成する。
 
 @item -msafe-dma
 @itemx -munsafe-dma
 @opindex msafe-dma
 @opindex munsafe-dma
 
-Instructions that initiate or test completion of DMA must not be
-reordered with respect to loads and stores of the memory that is being
-accessed.
-With @option{-munsafe-dma} you must use the @code{volatile} keyword to protect
-memory accesses, but that can lead to inefficient code in places where the
-memory is known to not change.  Rather than mark the memory as volatile,
-you can use @option{-msafe-dma} to tell the compiler to treat
-the DMA instructions as potentially affecting all memory.  
+DMAの開始またはテストの完了を指示する命令を、アクセスされているメモリのロードおよびストアに関して並べ替えてはならないと指示する。@option{-munsafe-dma}を使用すると、メモリアクセスを保護するために@code{volatile}キーワードを使用する必要があるが、メモリが変更されないことが分かっている場所で非効率的なコードが発生する可能性がある。 メモリをvolatileとしてマークするのではなく、@option{-msafe-dma}を使用してDMA命令をすべてのメモリに潜在的に影響を及ぼすものとして扱うようにコンパイラに指示することができる。
 
 @item -mbranch-hints
 @opindex mbranch-hints
 
-By default, GCC generates a branch hint instruction to avoid
-pipeline stalls for always-taken or probably-taken branches.  A hint
-is not generated closer than 8 instructions away from its branch.
-There is little reason to disable them, except for debugging purposes,
-or to make an object a little bit smaller.
+デフォルトでは、GCCは分岐ヒント命令を生成して、常に実行された分岐またはおそらく実行された分岐のパイプラインストールを回避する。ヒントは、そのブランチから8命令以上離れて生成されない。デバッグの目的を除いて、それらを無効にしたり、オブジェクトを少し小さくする理由はほとんどない。
 
 @item -msmall-mem
 @itemx -mlarge-mem
 @opindex msmall-mem
 @opindex mlarge-mem
 
-By default, GCC generates code assuming that addresses are never larger
-than 18 bits.  With @option{-mlarge-mem} code is generated that assumes
-a full 32-bit address.
+デフォルトでは、GCCはアドレスが決して18ビットより大きくないと仮定してコードを生成する。完全な32ビットアドレスを前提とした@option{-mlarge-mem}コードが生成される。
 
 @item -mstdmain
 @opindex mstdmain
 
-By default, GCC links against startup code that assumes the SPU-style
-main function interface (which has an unconventional parameter list).
-With @option{-mstdmain}, GCC links your program against startup
-code that assumes a C99-style interface to @code{main}, including a
-local copy of @code{argv} strings.
+デフォルトでは、GCCはSPUスタイルのメイン関数インタフェース（非定型パラメータリストを持つ）を想定したスタートアップコードとリンクする。@option{-mstdmain}を使うと、GCCはあなたのプログラムを、@code{argv}文字列のローカルコピーを含め、@code {main}へのC99スタイルのインタフェースを想定したスタートアップコードとリンクする。
 
 @item -mfixed-range=@var{register-range}
 @opindex mfixed-range
-Generate code treating the given register range as fixed registers.
-A fixed register is one that the register allocator cannot use.  This is
-useful when compiling kernel code.  A register range is specified as
-two registers separated by a dash.  Multiple register ranges can be
-specified separated by a comma.
+与えられたレジスタ範囲を固定レジスタとして扱うコードを生成する。固定レジスタは、レジスタアロケータが使用できないレジスタである。カーネルコードをコンパイルするときに便利である。 レジスタ範囲は、ダッシュで区切られた2つのレジスタとして指定される。カンマで区切って複数のレジスタ範囲を指定することができる。
 
 @item -mea32
 @itemx -mea64
 @opindex mea32
 @opindex mea64
-Compile code assuming that pointers to the PPU address space accessed
-via the @code{__ea} named address space qualifier are either 32 or 64
-bits wide.  The default is 32 bits.  As this is an ABI-changing option,
-all object code in an executable must be compiled with the same setting.
+@code{__ ea}という名前のアドレス空間修飾子を介してアクセスされるPPUアドレス空間へのポインタが32または64ビット幅であると仮定してコードをコンパイルする。 デフォルトは32ビットである。これはABI変更オプションなので、実行可能ファイル内のすべてのオブジェクトコードは同じ設定でコンパイルする必要がある。
 
 @item -maddress-space-conversion
 @itemx -mno-address-space-conversion
 @opindex maddress-space-conversion
 @opindex mno-address-space-conversion
-Allow/disallow treating the @code{__ea} address space as superset
-of the generic address space.  This enables explicit type casts
-between @code{__ea} and generic pointer as well as implicit
-conversions of generic pointers to @code{__ea} pointers.  The
-default is to allow address space pointer conversions.
+@code{__ ea}アドレス空間を汎用アドレス空間のスーパーセットとして扱うことを許可/禁止する。  これにより、@code{__ ea}と汎用ポインタの間の明示的な型キャストが可能になる。また、@code{__ ea}ポインタへの汎用ポインタの暗黙的な変換も可能である。デフォルトでは、アドレス空間ポインタの変換を許可する。
 
 @item -mcache-size=@var{cache-size}
 @opindex mcache-size
-This option controls the version of libgcc that the compiler links to an
-executable and selects a software-managed cache for accessing variables
-in the @code{__ea} address space with a particular cache size.  Possible
-options for @var{cache-size} are @samp{8}, @samp{16}, @samp{32}, @samp{64}
-and @samp{128}.  The default cache size is 64KB.
+このオプションは、コンパイラが実行可能ファイルにリンクするlibgccのバージョンを制御し、特定のキャッシュサイズを持つ@code{__ ea}アドレス空間の変数にアクセスするためのソフトウェア管理キャッシュを選択する。 @var{cache-size}の可能なオプションは@samp{8}、@samp{16}、@samp{32}、@samp{64}、@samp{128}である。 デフォルトのキャッシュサイズは64KBである。
 
 @item -matomic-updates
 @itemx -mno-atomic-updates
 @opindex matomic-updates
 @opindex mno-atomic-updates
-This option controls the version of libgcc that the compiler links to an
-executable and selects whether atomic updates to the software-managed
-cache of PPU-side variables are used.  If you use atomic updates, changes
-to a PPU variable from SPU code using the @code{__ea} named address space
-qualifier do not interfere with changes to other PPU variables residing
-in the same cache line from PPU code.  If you do not use atomic updates,
-such interference may occur; however, writing back cache lines is
-more efficient.  The default behavior is to use atomic updates.
+このオプションは、コンパイラが実行可能ファイルにリンクするlibgccのバージョンを制御し、PPU側の変数のソフトウェア管理キャッシュのアトミック更新を使用するかどうかを選択する。  アトミック更新を使用する場合、@code{__ ea}という名前のアドレススペース修飾子を使用してSPUコードからPPU変数を変更しても、PPUコードから同じキャッシュラインに存在する他のPPU変数への変更は妨げられない。アトミック更新を使用しない場合、そのような干渉が発生する可能性がある。 しかし、キャッシュラインを書き戻すほうが効率的である。デフォルトの動作では、アトミック更新を使用する。
 
 @item -mdual-nops
 @itemx -mdual-nops=@var{n}
 @opindex mdual-nops
-By default, GCC inserts NOPs to increase dual issue when it expects
-it to increase performance.  @var{n} can be a value from 0 to 10.  A
-smaller @var{n} inserts fewer NOPs.  10 is the default, 0 is the
-same as @option{-mno-dual-nops}.  Disabled with @option{-Os}.
+デフォルトでは、GCCはNOPを挿入して、パフォーマンスを向上させることを期待するときに二重問題を増やす。@var{n}には0から10の値を指定できる。より小さい@var{n}はより少ないNOPを挿入する。10がデフォルトで、0は@option{-mno-dual-nops}と同じである。@option{-Os}で無効になっている。
 
 @item -mhint-max-nops=@var{n}
 @opindex mhint-max-nops
-Maximum number of NOPs to insert for a branch hint.  A branch hint must
-be at least 8 instructions away from the branch it is affecting.  GCC
-inserts up to @var{n} NOPs to enforce this, otherwise it does not
-generate the branch hint.
+分岐ヒントに挿入するNOPの最大数。分岐ヒントは、影響を受けるブランチから少なくとも8命令離れている必要がある。GCCはこれを強制するために@var{n}個のNOPを挿入し、そうでなければ分岐ヒントを生成する。
 
 @item -mhint-max-distance=@var{n}
 @opindex mhint-max-distance
-The encoding of the branch hint instruction limits the hint to be within
-256 instructions of the branch it is affecting.  By default, GCC makes
-sure it is within 125.
+分岐ヒント命令の符号化は、影響を与えている分岐の256命令以内にヒントを制限する。 デフォルトでは、GCCは125以内であることを確認する。
 
 @item -msafe-hints
 @opindex msafe-hints
-Work around a hardware bug that causes the SPU to stall indefinitely.
-By default, GCC inserts the @code{hbrp} instruction to make sure
-this stall won't happen.
+SPUが無期限に停止する原因となるハードウェアのバグを回避する。デフォルトでは、GCCは@code{hbrp}命令を挿入して、このストールが起こらないようにする。
 
 @end table
 
