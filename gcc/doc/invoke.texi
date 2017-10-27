@@ -18201,41 +18201,35 @@ SPUが無期限に停止する原因となるハードウェアのバグを回�
 @end table
 
 @node TILE-Gx Options
-@subsection TILE-Gx Options
+@subsection TILE-Gxオプション
 @cindex TILE-Gx options
 
-These @samp{-m} options are supported on the TILE-Gx:
+これらの@samp {-m}オプションはTILE-Gxでサポートされている：
 
 @table @gcctabopt
 @item -mcmodel=small
 @opindex mcmodel=small
-Generate code for the small model.  The distance for direct calls is
-limited to 500M in either direction.  PC-relative addresses are 32
-bits.  Absolute addresses support the full address range.
+小さなモデルのコードを生成する。直接呼び出しの距離はどちらの方向にも500Mに制限されている。PC相対アドレスは32ビットです。絶対アドレスは完全なアドレス範囲をサポートする。
 
 @item -mcmodel=large
 @opindex mcmodel=large
-Generate code for the large model.  There is no limitation on call
-distance, pc-relative addresses, or absolute addresses.
+大型モデル用のコードを生成します。呼び出し距離、PC相対アドレス、または絶対アドレスに制限はない。
 
 @item -mcpu=@var{name}
 @opindex mcpu
-Selects the type of CPU to be targeted.  Currently the only supported
-type is @samp{tilegx}.
+ターゲットにするCPUのタイプを選択します。 現在サポートされているタイプは@samp{tilegx}のみである。
 
 @item -m32
 @itemx -m64
 @opindex m32
 @opindex m64
-Generate code for a 32-bit or 64-bit environment.  The 32-bit
-environment sets int, long, and pointer to 32 bits.  The 64-bit
-environment sets int to 32 bits and long and pointer to 64 bits.
+32ビットまたは64ビット環境用のコードを生成する。32ビット環境では、int、long、および32ビットへのポインタが設定される。64ビット環境ではintを32ビット、longとポインタを64ビットをに設定する。
 
 @item -mbig-endian
 @itemx -mlittle-endian
 @opindex mbig-endian
 @opindex mlittle-endian
-Generate code in big/little endian mode, respectively.
+ビッグ/リトルエンディアンモードでコードを生成します。
 @end table
 
 @node TILEPro Options
