@@ -18172,36 +18172,30 @@ SPUが無期限に停止する原因となるハードウェアのバグを回�
 @end table
 
 @node System V Options
-@subsection Options for System V
+@subsection System Vオプション
 
-These additional options are available on System V Release 4 for
-compatibility with other compilers on those systems:
+これらの追加オプションは、System V Release 4で、これらのシステム上の他のコンパイラとの互換性のために利用できる。
 
 @table @gcctabopt
 @item -G
 @opindex G
-Create a shared object.
-It is recommended that @option{-symbolic} or @option{-shared} be used instead.
+共有オブジェクトを作成する。代わりに@option{-symbolic}または@option{-shared}を使用することを推奨する。
 
 @item -Qy
 @opindex Qy
-Identify the versions of each tool used by the compiler, in a
-@code{.ident} assembler directive in the output.
+出力の@code{.ident}アセンブラ指示文で、コンパイラが使用する各ツールのバージョンを指定する。
 
 @item -Qn
 @opindex Qn
-Refrain from adding @code{.ident} directives to the output file (this is
-the default).
+@code{.ident}ディレクティブを出力ファイルに追加しない（これがデフォルト）。
 
 @item -YP,@var{dirs}
 @opindex YP
-Search the directories @var{dirs}, and no others, for libraries
-specified with @option{-l}.
+ディレクトリ@var{dirs}を検索し、@option{-l}で指定されたライブラリを探す。
 
 @item -Ym,@var{dir}
 @opindex Ym
-Look in the directory @var{dir} to find the M4 preprocessor.
-The assembler uses this option.
+ディレクトリ@var{dir}を見て、M4プリプロセッサを見つけてる。アセンブラはこのオプションを使用する。
 @c This is supposed to go with a -Yd for predefined M4 macro files, but
 @c the generic assembler that comes with Solaris takes just -Ym.
 @end table
