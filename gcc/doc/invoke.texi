@@ -18249,235 +18249,177 @@ int、long、および32ビットへのポインタを設定する32ビット環
 @end table
 
 @node V850 Options
-@subsection V850 Options
+@subsection V850オプション
 @cindex V850 Options
 
-These @samp{-m} options are defined for V850 implementations:
+これらの@samp{-m}オプションは、V850実装で定義されている。
 
 @table @gcctabopt
 @item -mlong-calls
 @itemx -mno-long-calls
 @opindex mlong-calls
 @opindex mno-long-calls
-Treat all calls as being far away (near).  If calls are assumed to be
-far away, the compiler always loads the function's address into a
-register, and calls indirect through the pointer.
+すべての呼び出しを遠く（近く）として扱う。 呼び出しが遠くにあると仮定すると、コンパイラは常に関数のアドレスをレジスタにロードし、ポインタを介して間接を呼び出す。
 
 @item -mno-ep
 @itemx -mep
 @opindex mno-ep
 @opindex mep
-Do not optimize (do optimize) basic blocks that use the same index
-pointer 4 or more times to copy pointer into the @code{ep} register, and
-use the shorter @code{sld} and @code{sst} instructions.  The @option{-mep}
-option is on by default if you optimize.
+同じインデックスポインタを使用する基本ブロックを4回以上最適化（最適化）してポインタを@code{ep}レジスタにコピーし、より短い@code{sld}命令と@code{sst}命令を使用しない。@option{-mep}オプションは、最適化するとデフォルトでオンになっている。
 
 @item -mno-prolog-function
 @itemx -mprolog-function
 @opindex mno-prolog-function
 @opindex mprolog-function
-Do not use (do use) external functions to save and restore registers
-at the prologue and epilogue of a function.  The external functions
-are slower, but use less code space if more than one function saves
-the same number of registers.  The @option{-mprolog-function} option
-is on by default if you optimize.
+関数のプロローグとエピローグでレジスタを保存および復元するために外部関数を使用しない（する）。 外部関数は遅くなるが、複数の関数が同じ数のレジスタを保存する場合は、より少ないコードスペースを使用する。 @option{-mprolog-function}オプションは、最適化するとデフォルトでオンになっている。
 
 @item -mspace
 @opindex mspace
-Try to make the code as small as possible.  At present, this just turns
-on the @option{-mep} and @option{-mprolog-function} options.
+できるだけコードを小さくしてみる。 現在のところ、これは@option{-mep}オプションと@option{-mprolog-function}オプションをオンにするだけである。
 
 @item -mtda=@var{n}
 @opindex mtda
-Put static or global variables whose size is @var{n} bytes or less into
-the tiny data area that register @code{ep} points to.  The tiny data
-area can hold up to 256 bytes in total (128 bytes for byte references).
+@var{n}バイト以下の静的変数または大域変数を、@code{ep}の指す小さなデータ領域に入れる。小さなデータ領域は合計で256バイト（バイト参照の場合は128バイト）まで保持できる。
 
 @item -msda=@var{n}
 @opindex msda
-Put static or global variables whose size is @var{n} bytes or less into
-the small data area that register @code{gp} points to.  The small data
-area can hold up to 64 kilobytes.
+@var{n}バイト以下の静的変数または大域変数を、@code{gp}を指す小さなデータ領域に入れる。 小さなデータ領域は64キロバイトまで保持できる。
 
 @item -mzda=@var{n}
 @opindex mzda
-Put static or global variables whose size is @var{n} bytes or less into
-the first 32 kilobytes of memory.
+@var{n}バイト以下のサイズの静的変数または大域変数をメモリの最初の32キロバイトに入れる。
 
 @item -mv850
 @opindex mv850
-Specify that the target processor is the V850.
+ターゲット・プロセッサーがV850であることを指定する。
 
 @item -mv850e3v5
 @opindex mv850e3v5
-Specify that the target processor is the V850E3V5.  The preprocessor
-constant @code{__v850e3v5__} is defined if this option is used.
+ターゲット・プロセッサーがV850E3V5であることを指定する。 このオプションを使用すると、プリプロセッサ定数@code{__v850e3v5__}が定義される。
 
 @item -mv850e2v4
 @opindex mv850e2v4
-Specify that the target processor is the V850E3V5.  This is an alias for
-the @option{-mv850e3v5} option.
+ターゲット・プロセッサーがV850E3V5であることを指定する。 これは@option{-mv850e3v5}オプションのエイリアスである。
 
 @item -mv850e2v3
 @opindex mv850e2v3
-Specify that the target processor is the V850E2V3.  The preprocessor
-constant @code{__v850e2v3__} is defined if this option is used.
+ターゲット・プロセッサーがV850E2V3であることを指定する。 このオプションを使用すると、プリプロセッサ定数@code {__v850e2v3__}が定義される。
 
 @item -mv850e2
 @opindex mv850e2
-Specify that the target processor is the V850E2.  The preprocessor
-constant @code{__v850e2__} is defined if this option is used.
+ターゲット・プロセッサーがV850E2であることを指定する。 このオプションを使用すると、プリプロセッサ定数@code{__v850e2__}が定義される。
 
 @item -mv850e1
 @opindex mv850e1
-Specify that the target processor is the V850E1.  The preprocessor
-constants @code{__v850e1__} and @code{__v850e__} are defined if
-this option is used.
+ターゲット・プロセッサーがV850E1であることを指定する。 このオプションを使用すると、プリプロセッサの定数@code{__v850e1__}と@code{__v850e__}が定義される。
 
 @item -mv850es
 @opindex mv850es
-Specify that the target processor is the V850ES.  This is an alias for
-the @option{-mv850e1} option.
+ターゲット・プロセッサーがV850ESであることを指定する。 これは@option{-mv850e1}オプションのエイリアスである。
 
 @item -mv850e
 @opindex mv850e
-Specify that the target processor is the V850E@.  The preprocessor
-constant @code{__v850e__} is defined if this option is used.
+ターゲット・プロセッサーがV850Eであることを指定する。このオプションを使用すると、プリプロセッサ定数@code{__v850e__}が定義される。
 
-If neither @option{-mv850} nor @option{-mv850e} nor @option{-mv850e1}
-nor @option{-mv850e2} nor @option{-mv850e2v3} nor @option{-mv850e3v5}
-are defined then a default target processor is chosen and the
-relevant @samp{__v850*__} preprocessor constant is defined.
+@option{-mv850}、@option{-mv850e}、@option{-mv850e1}、@option{-mv850e2}、および@option{-mv850e2v3}や@option {-mv850e3v5}のどれも定義されていない場合、デフォルトのターゲット・プロセッサが選択され、関連する@samp{__ v850 * __}プリプロセッサ定数が定義される。
 
-The preprocessor constants @code{__v850} and @code{__v851__} are always
-defined, regardless of which processor variant is the target.
+プリプロセッサの定数@code{__ v850}と@code{__ v851__}は、ターゲットとなるプロセッサの種類に関係なく常に定義される。
 
 @item -mdisable-callt
 @itemx -mno-disable-callt
 @opindex mdisable-callt
 @opindex mno-disable-callt
-This option suppresses generation of the @code{CALLT} instruction for the
-v850e, v850e1, v850e2, v850e2v3 and v850e3v5 flavors of the v850
-architecture.
+このオプションは、v850アーキテクチャーのv850e、v850e1、v850e2、v850e2v3、およびv850e3v5フレーバーの@code {CALLT}命令の生成を抑制する。
 
-This option is enabled by default when the RH850 ABI is
-in use (see @option{-mrh850-abi}), and disabled by default when the
-GCC ABI is in use.  If @code{CALLT} instructions are being generated
-then the C preprocessor symbol @code{__V850_CALLT__} is defined.
+このオプションは、RH850 ABIが使用されている場合（デフォルトでは@option{-mrh850-abi}を参照）、デフォルトで有効になっている。GCC ABIが使用されている場合、デフォルトでは無効になっている。 @code{CALLT}命令が生成されている場合、Cプリプロセッサシンボル@code{__ V850_CALLT__}が定義される。
 
 @item -mrelax
 @itemx -mno-relax
 @opindex mrelax
 @opindex mno-relax
-Pass on (or do not pass on) the @option{-mrelax} command-line option
-to the assembler.
+@option{-mrelax}コマンドラインオプションをアセンブラに渡す（渡さない）。
 
 @item -mlong-jumps
 @itemx -mno-long-jumps
 @opindex mlong-jumps
 @opindex mno-long-jumps
-Disable (or re-enable) the generation of PC-relative jump instructions.
+PC相対ジャンプ命令の生成を無効にする（または再び有効にする）。
 
 @item -msoft-float
 @itemx -mhard-float
 @opindex msoft-float
 @opindex mhard-float
-Disable (or re-enable) the generation of hardware floating point
-instructions.  This option is only significant when the target
-architecture is @samp{V850E2V3} or higher.  If hardware floating point
-instructions are being generated then the C preprocessor symbol
-@code{__FPU_OK__} is defined, otherwise the symbol
-@code{__NO_FPU__} is defined.
+ハードウェア浮動小数点命令の生成を無効にする（または再び有効にする）。 このオプションは、ターゲット・アーキテクチャーが@samp{V850E2V3}以上の場合にのみ重要である。 ハードウェア浮動小数点命令が生成されている場合は、Cプリプロセッサシンボル@code{__ FPU_OK__}が定義される。そうでない場合、シンボル@code{__NO_FPU__}が定義される。
 
 @item -mloop
 @opindex mloop
-Enables the use of the e3v5 LOOP instruction.  The use of this
-instruction is not enabled by default when the e3v5 architecture is
-selected because its use is still experimental.
+e3v5 LOOP命令の使用を有効にする。 e3v5アーキテクチャが選択されている場合、その命令の使用はまだ実験的であるので、このデフォルトでは有効になっていない。
 
 @item -mrh850-abi
 @itemx -mghs
 @opindex mrh850-abi
 @opindex mghs
-Enables support for the RH850 version of the V850 ABI.  This is the
-default.  With this version of the ABI the following rules apply:
+V850 ABIのRH850バージョンのサポートを有効にする。 これがデフォルトである。 このバージョンのABIでは、以下のルールが適用される。
 
 @itemize
 @item
-Integer sized structures and unions are returned via a memory pointer
-rather than a register.
+整数サイズの構造体と共用体は、レジスタではなくメモリポインタを介して返される。
 
 @item
-Large structures and unions (more than 8 bytes in size) are passed by
-value.
+大きな構造体と共用体（サイズが8バイト以上）は値渡しされる。
 
 @item
-Functions are aligned to 16-bit boundaries.
+関数は16ビットの境界に揃えられる。
 
 @item
-The @option{-m8byte-align} command-line option is supported.
+@option {-m8byte-align}コマンドラインオプションがサポートされる。
 
 @item
-The @option{-mdisable-callt} command-line option is enabled by
-default.  The @option{-mno-disable-callt} command-line option is not
-supported.
+@option {-mdisable-callt}コマンドラインオプションは、デフォルトで有効になっている。@option{-mno-disable-callt}コマンドラインオプションはサポートされていない。
 @end itemize
 
-When this version of the ABI is enabled the C preprocessor symbol
-@code{__V850_RH850_ABI__} is defined.
+このバージョンのABIを有効にすると、Cプリプロセッサシンボル@code {__ V850_RH850_ABI__}が定義される。
 
 @item -mgcc-abi
 @opindex mgcc-abi
-Enables support for the old GCC version of the V850 ABI.  With this
-version of the ABI the following rules apply:
+古いGCCバージョンのV850 ABIをサポートする。 このバージョンのABIでは、以下のルールが適用される。
 
 @itemize
 @item
-Integer sized structures and unions are returned in register @code{r10}.
+整数サイズの構造体と共用体はレジスタ@code{r10}に返される。
 
 @item
-Large structures and unions (more than 8 bytes in size) are passed by
-reference.
+大きな構造体と共用体（サイズが8バイト以上）は、参照渡しされる。
 
 @item
-Functions are aligned to 32-bit boundaries, unless optimizing for
-size.
+関数は、サイズを最適化しない限り、32ビットの境界に整列される。
 
 @item
-The @option{-m8byte-align} command-line option is not supported.
+@option{-m8byte-align}コマンドラインオプションはサポートされていない。
 
 @item
-The @option{-mdisable-callt} command-line option is supported but not
-enabled by default.
+@option{-mdisable-callt}コマンドラインオプションはサポートされていないが、デフォルトでは有効になっていない。
 @end itemize
 
-When this version of the ABI is enabled the C preprocessor symbol
-@code{__V850_GCC_ABI__} is defined.
+このバージョンのABIを有効にすると、Cプリプロセッサシンボル@code{__V850_GCC_ABI__}が定義される。
 
 @item -m8byte-align
 @itemx -mno-8byte-align
 @opindex m8byte-align
 @opindex mno-8byte-align
-Enables support for @code{double} and @code{long long} types to be
-aligned on 8-byte boundaries.  The default is to restrict the
-alignment of all objects to at most 4-bytes.  When
-@option{-m8byte-align} is in effect the C preprocessor symbol
-@code{__V850_8BYTE_ALIGN__} is defined.
+@code{double}型と@code{long long}型を8バイトの境界に整列させるためのサポートを有効にする。 デフォルトでは、すべてのオブジェクトの配置を最大で4バイトに制限する。 @option{-m8byte-align}が有効な場合、Cプリプロセッサシンボル@code{__V850_8BYTE_ALIGN__}が定義される。
 
 @item -mbig-switch
 @opindex mbig-switch
-Generate code suitable for big switch tables.  Use this option only if
-the assembler/linker complain about out of range branches within a switch
-table.
+大きなスイッチテーブルに適したコードを生成する。 このオプションは、アセンブラ/リンカがスイッチテーブル内の範囲外の分岐に不平を言う場合にのみ使用する。
 
 @item -mapp-regs
 @opindex mapp-regs
-This option causes r2 and r5 to be used in the code generated by
-the compiler.  This setting is the default.
+このオプションを指定すると、コンパイラによって生成されたコードでr2とr5が使用される。 この設定はデフォルトである。
 
 @item -mno-app-regs
 @opindex mno-app-regs
-This option causes r2 and r5 to be treated as fixed registers.
+このオプションは、r2とr5を固定レジスタとして扱う。
 
 @end table
 
