@@ -18424,26 +18424,23 @@ V850 ABIのRH850バージョンのサポートを有効にする。 これがデ
 @end table
 
 @node VAX Options
-@subsection VAX Options
+@subsection VAXオプション
 @cindex VAX options
 
-These @samp{-m} options are defined for the VAX:
+これらの@samp{-m}オプションは、VAXに対して定義されている。
 
 @table @gcctabopt
 @item -munix
 @opindex munix
-Do not output certain jump instructions (@code{aobleq} and so on)
-that the Unix assembler for the VAX cannot handle across long
-ranges.
+VAXのUnixアセンブラが長距離で処理できない特定のジャンプ命令（@code{aobleq}など）を出力しない。
 
 @item -mgnu
 @opindex mgnu
-Do output those jump instructions, on the assumption that the
-GNU assembler is being used.
+GNUアセンブラが使用されていることを前提に、これらのジャンプ命令を出力する。
 
 @item -mg
 @opindex mg
-Output code for G-format floating-point numbers instead of D-format.
+D-フォーマットの代わりにG-フォーマット浮動小数点数のコードを出力する。
 @end table
 
 @node Visium Options
