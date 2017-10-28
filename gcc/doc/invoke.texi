@@ -18495,31 +18495,26 @@ D-フォーマットの代わりにG-フォーマット浮動小数点数のコ�
 @end table
 
 @node VMS Options
-@subsection VMS Options
+@subsection VMSオプション
 
-These @samp{-m} options are defined for the VMS implementations:
+これらの@samp {-m}オプションは、VMS実装に対して定義されている。
 
 @table @gcctabopt
 @item -mvms-return-codes
 @opindex mvms-return-codes
-Return VMS condition codes from @code{main}. The default is to return POSIX-style
-condition (e.g.@ error) codes.
+@code{main}からVMS条件コードを返す。 デフォルトでは、POSIXスタイルの条件（たとえばエラー）コードが返される。
 
 @item -mdebug-main=@var{prefix}
 @opindex mdebug-main=@var{prefix}
-Flag the first routine whose name starts with @var{prefix} as the main
-routine for the debugger.
+@var{prefix}で始まる名前の最初のルーチンに、デバッガのメインルーチンとしてフラグを立てる。
 
 @item -mmalloc64
 @opindex mmalloc64
-Default to 64-bit memory allocation routines.
+デフォルトは64ビットメモリ割り当てルーチンである。
 
 @item -mpointer-size=@var{size}
 @opindex mpointer-size=@var{size}
-Set the default size of pointers. Possible options for @var{size} are
-@samp{32} or @samp{short} for 32 bit pointers, @samp{64} or @samp{long}
-for 64 bit pointers, and @samp{no} for supporting only 32 bit pointers.
-The later option disables @code{pragma pointer_size}.
+ポインタのデフォルトサイズを設定する。@var{size}の可能なオプションは、32ビットポインタの場合は@samp{32}または@samp{short}、64ビットポインタの場合は@samp{64}または@samp{long}、32ビットポインタのみをサポートする@samp{no}。後のオプションは@code{pragma pointer_size}を無効にする。
 @end table
 
 @node VxWorks Options
