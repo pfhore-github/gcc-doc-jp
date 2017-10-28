@@ -18444,74 +18444,54 @@ D-フォーマットの代わりにG-フォーマット浮動小数点数のコ�
 @end table
 
 @node Visium Options
-@subsection Visium Options
+@subsection Visiumオプション
 @cindex Visium options
 
 @table @gcctabopt
 
 @item -mdebug
 @opindex mdebug
-A program which performs file I/O and is destined to run on an MCM target
-should be linked with this option.  It causes the libraries libc.a and
-libdebug.a to be linked.  The program should be run on the target under
-the control of the GDB remote debugging stub.
+ファイルI/Oを実行し、MCMターゲット上で実行する予定のプログラムは、このオプションにリンクする必要がある。これにより、ライブラリlibc.aとlibdebug.aがリンクされる。プログラムは、GDBリモートデバッグスタブの制御下でターゲット上で実行する必要がある。
 
 @item -msim
 @opindex msim
-A program which performs file I/O and is destined to run on the simulator
-should be linked with option.  This causes libraries libc.a and libsim.a to
-be linked.
+ファイルI/Oを実行し、シミュレータ上で動作するように設計されたプログラムは、オプションつきでリンクする必要がある。 これにより、ライブラリlibc.aとlibsim.aがリンクされる。
 
 @item -mfpu
 @itemx -mhard-float
 @opindex mfpu
 @opindex mhard-float
-Generate code containing floating-point instructions.  This is the
-default.
+浮動小数点命令を含むコードを生成する。 これがデフォルトである。
 
 @item -mno-fpu
 @itemx -msoft-float
 @opindex mno-fpu
 @opindex msoft-float
-Generate code containing library calls for floating-point.
+浮動小数点のライブラリ呼び出しを含むコードを生成する。
 
-@option{-msoft-float} changes the calling convention in the output file;
-therefore, it is only useful if you compile @emph{all} of a program with
-this option.  In particular, you need to compile @file{libgcc.a}, the
-library that comes with GCC, with @option{-msoft-float} in order for
-this to work.
+@option{-msoft-float}は、出力ファイルの呼び出し規約を変更する。 したがって、このオプションでプログラムの@emph{_すべて_}をコンパイルする場合にのみ有用である。 特に、GCCに付属のライブラリである@file{libgcc.a}を@option{-msoft-float}とコンパイルする必要がある。
 
 @item -mcpu=@var{cpu_type}
 @opindex mcpu
-Set the instruction set, register set, and instruction scheduling parameters
-for machine type @var{cpu_type}.  Supported values for @var{cpu_type} are
-@samp{mcm}, @samp{gr5} and @samp{gr6}.
+マシンタイプ@var{cpu_type}の命令セット、レジスタセット、および命令スケジューリングパラメータを設定する。 @var{cpu_type}にサポートされている値は@samp{mcm}、@samp{gr5}、@samp{gr6}である。
 
-@samp{mcm} is a synonym of @samp{gr5} present for backward compatibility.
+@samp{mcm}は、下位互換性のために存在する@samp{gr5}の同義語である。
 
-By default (unless configured otherwise), GCC generates code for the GR5
-variant of the Visium architecture.  
+既定では（別途設定されていない限り）、GCCはVisiumアーキテクチャのGR5バリアントのコードを生成する。
 
-With @option{-mcpu=gr6}, GCC generates code for the GR6 variant of the Visium
-architecture.  The only difference from GR5 code is that the compiler will
-generate block move instructions.
+@option{-mcpu=gr6}を指定すると、GCCはVisiumアーキテクチャのGR6バリアントのコードを生成する。 GR5コードとの唯一の違いは、コンパイラがブロック移動命令を生成することである。
 
 @item -mtune=@var{cpu_type}
 @opindex mtune
-Set the instruction scheduling parameters for machine type @var{cpu_type},
-but do not set the instruction set or register set that the option
-@option{-mcpu=@var{cpu_type}} would.
+マシンタイプ@var{cpu_type}の命令スケジューリングパラメータを設定するが、@option{-mcpu=@var{cpu_type}}オプションが設定する命令セットまたはレジスタセットは設定しない。
 
 @item -msv-mode
 @opindex msv-mode
-Generate code for the supervisor mode, where there are no restrictions on
-the access to general registers.  This is the default.
+汎用レジスタへのアクセスに制限のないスーパバイザ・モード用のコードを生成します。 これがデフォルトである。
 
 @item -muser-mode
 @opindex muser-mode
-Generate code for the user mode, where the access to some general registers
-is forbidden: on the GR5, registers r24 to r31 cannot be accessed in this
-mode; on the GR6, only registers r29 to r31 are affected.
+いくつかの汎用レジスタへのアクセスが禁止されているユーザモード用のコードを生成する。GR5では、このモードではレジスタr24〜r31にアクセスできまない。 GR6では、レジスタr29〜r31のみが影響を受ける。
 @end table
 
 @node VMS Options
