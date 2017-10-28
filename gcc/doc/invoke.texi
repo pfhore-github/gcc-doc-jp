@@ -18518,43 +18518,33 @@ D-フォーマットの代わりにG-フォーマット浮動小数点数のコ�
 @end table
 
 @node VxWorks Options
-@subsection VxWorks Options
+@subsection VxWorksオプション
 @cindex VxWorks Options
 
-The options in this section are defined for all VxWorks targets.
-Options specific to the target hardware are listed with the other
-options for that target.
+このセクションのオプションは、すべてのVxWorksターゲットで定義されている。ターゲットハードウェアに固有のオプションは、そのターゲットの他のオプションとともにリストされる。
 
 @table @gcctabopt
 @item -mrtp
 @opindex mrtp
-GCC can generate code for both VxWorks kernels and real time processes
-(RTPs).  This option switches from the former to the latter.  It also
-defines the preprocessor macro @code{__RTP__}.
+GCCは、VxWorksカーネルとリアルタイムプロセス（RTP）の両方のコードを生成できる。 このオプションは前者から後者に切り替える。 また、プリプロセッサマクロ@code {__RTP__}も定義する。
 
 @item -non-static
 @opindex non-static
-Link an RTP executable against shared libraries rather than static
-libraries.  The options @option{-static} and @option{-shared} can
-also be used for RTPs (@pxref{Link Options}); @option{-static}
-is the default.
+静的ライブラリではなく共有ライブラリに対してRTP実行可能ファイルをリンクする。 オプション@option{-static}と@option{-shared}はRTPにも使用できる（@pxref{Link Options}）。 @option{-static}がデフォルトである。
 
 @item -Bstatic
 @itemx -Bdynamic
 @opindex Bstatic
 @opindex Bdynamic
-These options are passed down to the linker.  They are defined for
-compatibility with Diab.
+これらのオプションはリンカに渡される。 それらはDiabとの互換性のために定義されている。
 
 @item -Xbind-lazy
 @opindex Xbind-lazy
-Enable lazy binding of function calls.  This option is equivalent to
-@option{-Wl,-z,now} and is defined for compatibility with Diab.
+関数呼び出しの遅延バインドを有効にする。 このオプションは@option{-Wl、-z、now}に相当し、Diabとの互換性のために定義されている。
 
 @item -Xbind-now
 @opindex Xbind-now
-Disable lazy binding of function calls.  This option is the default and
-is defined for compatibility with Diab.
+関数呼び出しの遅延バインディングを無効にする。 このオプションはデフォルトであり、Diabとの互換性のために定義されている。
 @end table
 
 @node x86 Options
