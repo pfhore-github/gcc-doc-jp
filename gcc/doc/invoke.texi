@@ -18563,13 +18563,13 @@ GCCは、VxWorksカーネルとリアルタイムプロセス（RTP）の両方�
 
 @table @samp
 @item native
-これにより、コンパイル時のコードを生成するCPUが選択され、コンパイルマシンのプロセッサタイプが決定される。@option{-march = native}を使用すると、ローカルマシンでサポートされているすべての命令サブセットが有効になる（したがって、結果は異なるマシンでは実行されない可能性がある）。@option{-mtune = native}を使用すると、選択した命令セットの制約の下でローカルマシン用に最適化されたコードが生成される。
+これにより、コンパイル時のコードを生成するCPUが選択され、コンパイルマシンのプロセッサタイプが決定される。@option{-march = native}を使用すると、ローカルマシンでサポートされているすべての命令サブセットが有効になる（したがって、結果は異なるマシンでは実行されない可能性がある。）@option{-mtune = native}を使用すると、選択した命令セットの制約の下でローカルマシン用に最適化されたコードが生成される。
 
 @item i386
 元々のi386CPU。
 
 @item i486
-Intel i486 CPU。 （このチップ用スケジューリングは実装されていない）。
+Intel i486 CPU。 （このチップ用スケジューリングは実装されていない。）
 
 @item i586
 @itemx pentium
@@ -18702,127 +18702,76 @@ x86-64命令セットサポートを持つAMD16世代コアに基づくCPU。（
 追加のMMXと3DNow!命令セットをサポートするi486と同じように処理される、IDT WinChip 2 CPU。
 
 @item c3
-MMXと3DNow!命令セットサポートを持つVIA C3 CPU。 （このチップ用スケジューリングは実装されていない）。
+MMXと3DNow!命令セットサポートを持つVIA C3 CPU。 （このチップ用スケジューリングは実装されていない。）
 
 @item c3-2
-MMXとSSE命令セットサポートを持つVIA C3-2 (Nehemiah/C5XL) CPU。（このチップ用スケジューリングは実装されていない）。
+MMXとSSE命令セットサポートを持つVIA C3-2 (Nehemiah/C5XL) CPU。（このチップ用スケジューリングは実装されていない。）
 
 @item c7
-MMX、SSE、SSE2、SSE3命令セットサポートを持つVIA C7 (Esther) CPU。（このチップ用スケジューリングは実装されていない）。
+MMX、SSE、SSE2、SSE3命令セットサポートを持つVIA C7 (Esther) CPU。（このチップ用スケジューリングは実装されていない。）
 
 @item samuel-2
-MMXと3DNow!命令セットサポートを持つVIA Eden Samuel 2 CPU。（このチップ用スケジューリングは実装されていない）。
+MMXと3DNow!命令セットサポートを持つVIA Eden Samuel 2 CPU。（このチップ用スケジューリングは実装されていない。）
 
 @item nehemiah
-VIA Eden Nehemiah CPU with MMX and SSE instruction set support.
-(No scheduling is implemented for this chip.)
+MMXとSSE命令セットサポートを持つVIA Eden Nehemiah CPU。（このチップ用スケジューリングは実装されていない。）
 
 @item esther
-VIA Eden Esther CPU with MMX, SSE, SSE2 and SSE3 instruction set support.
-(No scheduling is implemented for this chip.)
+MMX、SSE、SSE2、SSE3命令セットサポートを持つVIA Eden Esther CPU。（このチップ用スケジューリングは実装されていない。）
 
 @item eden-x2
-VIA Eden X2 CPU with x86-64, MMX, SSE, SSE2 and SSE3 instruction set support.
-(No scheduling is implemented for this chip.)
+x86-64、MMX、SSE、SSE2、SSE3命令セットサポートを持つVIA Eden X2 CPU。（このチップ用スケジューリングは実装されていない。）
 
 @item eden-x4
-VIA Eden X4 CPU with x86-64, MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2,
-AVX and AVX2 instruction set support.
-(No scheduling is implemented for this chip.)
+x86-64、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、AVX、AVX2命令セットサポートを持つVIA Eden X4 CPU。（このチップ用スケジューリングは実装されていない。）
 
 @item nano
-Generic VIA Nano CPU with x86-64, MMX, SSE, SSE2, SSE3 and SSSE3
-instruction set support.
-(No scheduling is implemented for this chip.)
+x86-64、MMX、SSE、SSE2、SSE3、SSSE3命令セットサポートを持つ汎用VIA Nano CPU。（このチップ用スケジューリングは実装されていない。）
 
 @item nano-1000
-VIA Nano 1xxx CPU with x86-64, MMX, SSE, SSE2, SSE3 and SSSE3
-instruction set support.
-(No scheduling is implemented for this chip.)
+x86-64、MMX、SSE、SSE2、SSE3、SSSE3命令セットサポートを持つVIA Nano 1xxx CPU。（このチップ用スケジューリングは実装されていない。）
 
 @item nano-2000
-VIA Nano 2xxx CPU with x86-64, MMX, SSE, SSE2, SSE3 and SSSE3
-instruction set support.
-(No scheduling is implemented for this chip.)
+x86-64、MMX、SSE、SSE2、SSE3、SSSE3命令セットサポートを持つVIA Nano 2xxx CPU。（このチップ用スケジューリングは実装されていない。）
 
 @item nano-3000
-VIA Nano 3xxx CPU with x86-64, MMX, SSE, SSE2, SSE3, SSSE3 and SSE4.1
-instruction set support.
-(No scheduling is implemented for this chip.)
+x86-64、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1命令セットサポートを持つVIA Nano 2xxx CPU。（このチップ用スケジューリングは実装されていない。）
 
 @item nano-x2
-VIA Nano Dual Core CPU with x86-64, MMX, SSE, SSE2, SSE3, SSSE3 and SSE4.1
-instruction set support.
-(No scheduling is implemented for this chip.)
+x86-64、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1命令セットサポートを持つVIA Nano Dual Core CPU。（このチップ用スケジューリングは実装されていない。）
 
 @item nano-x4
-VIA Nano Quad Core CPU with x86-64, MMX, SSE, SSE2, SSE3, SSSE3 and SSE4.1
-instruction set support.
-(No scheduling is implemented for this chip.)
+x86-64、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1命令セットサポートを持つVIA Nano Quadl Core CPU。（このチップ用スケジューリングは実装されていない。）
 
 @item geode
-AMD Geode embedded processor with MMX and 3DNow!@: instruction set support.
+MMXと3DNow!命令セットサポートを持つAMD Geode組み込みプロセッサ。
 @end table
 
 @item -mtune=@var{cpu-type}
 @opindex mtune
-Tune to @var{cpu-type} everything applicable about the generated code, except
-for the ABI and the set of available instructions.  
-While picking a specific @var{cpu-type} schedules things appropriately
-for that particular chip, the compiler does not generate any code that
-cannot run on the default machine type unless you use a
-@option{-march=@var{cpu-type}} option.
-For example, if GCC is configured for i686-pc-linux-gnu
-then @option{-mtune=pentium4} generates code that is tuned for Pentium 4
-but still runs on i686 machines.
+ABIと使用可能な命令のセットを除いて、生成されたコードに関するすべてのものを@var{cpu-type}に調整する。特定の@var{cpu-type}を選んでその特定のチップを適切にスケジューリングすると、@option{-march=@var{cpu-type}}オプションを使用しない限り、コンパイラはデフォルトのマシンタイプでは実行できないコードを生成しない。たとえば、GCCがi686-pc-linux-gnu用に設定されている場合、@option{-mtune=pentium4}はPentium 4用にチューニングされたコードを生成するが、i686マシン上で実行できる。
 
-The choices for @var{cpu-type} are the same as for @option{-march}.
-In addition, @option{-mtune} supports 2 extra choices for @var{cpu-type}:
+@var{cpu-type}の選択肢は、@option{-march}の選択肢と同じである。さらに、@option{-mtune}は、@var{cpu-type}に対して2つの追加の選択肢をサポートしている：
 
 @table @samp
 @item generic
-Produce code optimized for the most common IA32/@/AMD64/@/EM64T processors.
-If you know the CPU on which your code will run, then you should use
-the corresponding @option{-mtune} or @option{-march} option instead of
-@option{-mtune=generic}.  But, if you do not know exactly what CPU users
-of your application will have, then you should use this option.
+最も一般的なIA32・AMD64・EM64Tプロセッサ用に最適化されたコードを生成する。コードを実行するCPUが分かっている場合は、@option{-mtune = generic}ではなく、対応する@option{-mtune}または@option{-march}オプションを使用するべきである。しかし、アプリケーションのどのCPUユーザーが正確に何を持っているのかわからない場合は、このオプションを使用する必要がある。
 
-As new processors are deployed in the marketplace, the behavior of this
-option will change.  Therefore, if you upgrade to a newer version of
-GCC, code generation controlled by this option will change to reflect
-the processors
-that are most common at the time that version of GCC is released.
+新しいプロセッサが市場に展開されると、このオプションの動作が変わる。 したがって、新しいバージョンのGCCにアップグレードすると、このオプションで制御されるコード生成は、GCCのリリース時に最も一般的なプロセッサーを反映して変更される。
 
-There is no @option{-march=generic} option because @option{-march}
-indicates the instruction set the compiler can use, and there is no
-generic instruction set applicable to all processors.  In contrast,
-@option{-mtune} indicates the processor (or, in this case, collection of
-processors) for which the code is optimized.
+@option{-march}はコンパイラが使用できる命令セットを示し、すべてのプロセッサに適用可能な汎用命令セットがないため、@option{-march=generic}オプションはない。 対照的に、@option{-mtune}は、コードが最適化されているプロセッサ（または、この場合はプロセッサの集合）を示す。
 
 @item intel
-Produce code optimized for the most current Intel processors, which are
-Haswell and Silvermont for this version of GCC.  If you know the CPU
-on which your code will run, then you should use the corresponding
-@option{-mtune} or @option{-march} option instead of @option{-mtune=intel}.
-But, if you want your application performs better on both Haswell and
-Silvermont, then you should use this option.
+このバージョンのGCCでは、最新のIntelプロセッサ（HaswellとSilvermont）向けに最適化されたコードを生成する。コードが実行されるCPUを知っているなら、@option{-mtune=intel}の代わりに対応する@option{-mtune}または@option{-march}オプションを使うべきである。しかし、HaswellとSilvermontの両方でアプリケーションのパフォーマンスが向上したい場合は、このオプションを使用する必要がある。
 
-As new Intel processors are deployed in the marketplace, the behavior of
-this option will change.  Therefore, if you upgrade to a newer version of
-GCC, code generation controlled by this option will change to reflect
-the most current Intel processors at the time that version of GCC is
-released.
+新しいIntelプロセッサが市場に展開されると、このオプションの動作が変更される。 したがって、新しいバージョンのGCCにアップグレードすると、このオプションによって制御されるコード生成は、GCCのバージョンがリリースされた時点の最新のIntelプロセッサを反映して変更される。
 
-There is no @option{-march=intel} option because @option{-march} indicates
-the instruction set the compiler can use, and there is no common
-instruction set applicable to all processors.  In contrast,
-@option{-mtune} indicates the processor (or, in this case, collection of
-processors) for which the code is optimized.
+@option{-march}は、コンパイラが使用できる命令セットを示し、すべてのプロセッサに共通の命令セットがないため、@option{-march=intel}オプションはない。 対照的に、@option {-mtune}は、コードが最適化されているプロセッサ（または、この場合はプロセッサの集合）を示す。
 @end table
 
 @item -mcpu=@var{cpu-type}
 @opindex mcpu
-A deprecated synonym for @option{-mtune}.
+@option{-mtune}の非推奨シノニム。
 
 @item -mfpmath=@var{unit}
 @opindex mfpmath
