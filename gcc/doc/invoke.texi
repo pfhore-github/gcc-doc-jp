@@ -13356,7 +13356,7 @@ IEEE単精度および倍精度の代わりにVAX FおよびG浮動小数点演�
 
 @item -mcpu=@var{cpu_type}
 @opindex mcpu
-マシンタイプ@var{cpu_type}の命令セットと命令スケジューリングパラメータを設定する。 @samp{EV}スタイル名または対応するチップ番号を指定できる。 GCCは、EV4、EV5、EV6ファミリプロセッサのスケジューリングパラメータをサポートし、指定したプロセッサから命令セットのデフォルト値を選択する。 プロセッサタイプを指定しない場合、GCCのデフォルトはコンパイラが構築されたプロセッサである。
+機種@var{cpu_type}の命令セットと命令スケジューリングパラメータを設定する。 @samp{EV}スタイル名または対応するチップ番号を指定できる。 GCCは、EV4、EV5、EV6ファミリプロセッサのスケジューリングパラメータをサポートし、指定したプロセッサから命令セットのデフォルト値を選択する。 プロセッサタイプを指定しない場合、GCCのデフォルトはコンパイラが構築されたプロセッサである。
 
 @var {cpu_type}にサポートされている値は
 
@@ -13392,7 +13392,7 @@ EV6としてスケジュールし、BWX、CIX、FIX、およびMAX拡張をサ�
 
 @item -mtune=@var{cpu_type}
 @opindex mtune
-マシンタイプ@var{cpu_type}の命令スケジューリングパラメータのみを設定する。 命令セットは変更されない。
+機種@var{cpu_type}の命令スケジューリングパラメータのみを設定する。 命令セットは変更されない。
 
 ネイティブツールチェーンは、@samp {native}という値もサポートしている。これは、ホストプロセッサに最適なアーキテクチャオプションを選択する。 GCCがプロセッサを認識しない場合は、@option{-mtune = native}は効果がない。
 
@@ -13870,7 +13870,7 @@ GASだけが理解できるアセンブラディレクティブの使用を有�
 
 @item -mschedule=@var{cpu-type}
 @opindex mschedule
-マシンタイプ@var{cpu-type}の制約に従ってコードをスケジュールする。 @var{cpu-type}の選択肢は、@samp{700} @samp{7100}、@samp{7100LC}、@samp{7200}、@samp{7300}、@samp{8000}である。 使用のマシンに適したスケジューリング・オプションを判別するには、HP-UXシステムの@file{/usr/lib/sched.models}を参照せよ。 デフォルトのスケジューリングは@samp{8000}である。
+機種@var{cpu-type}の制約に従ってコードをスケジュールする。 @var{cpu-type}の選択肢は、@samp{700} @samp{7100}、@samp{7100LC}、@samp{7200}、@samp{7300}、@samp{8000}である。 使用のマシンに適したスケジューリング・オプションを判別するには、HP-UXシステムの@file{/usr/lib/sched.models}を参照せよ。 デフォルトのスケジューリングは@samp{8000}である。
 
 @item -mlinker-opt
 @opindex mlinker-opt
@@ -16498,7 +16498,7 @@ PICコードを生成するときは、PLTを使用できるようにする。 �
 
 @item -mcpu=@var{cpu_type}
 @opindex mcpu
-マシンタイプ@var{cpu_type}のアーキテクチャタイプ、レジスタ使用法、および命令スケジューリングパラメータを設定する。@var{cpu_type}のサポートされている値は@samp{401}, @samp{403},
+機種@var{cpu_type}のアーキテクチャタイプ、レジスタ使用法、および命令スケジューリングパラメータを設定する。@var{cpu_type}のサポートされている値は@samp{401}, @samp{403},
 @samp{405}, @samp{405fp}, @samp{440}, @samp{440fp}, @samp{464}, @samp{464fp},
 @samp{476}, @samp{476fp}, @samp{505}, @samp{601}, @samp{602}, @samp{603},
 @samp{603e}, @samp{604}, @samp{604e}, @samp{620}, @samp{630}, @samp{740},
@@ -16510,7 +16510,7 @@ PICコードを生成するときは、PLTを使用できるようにする。 �
 @samp{power6}, @samp{power6x}, @samp{power7}, @samp{power8},
 @samp{power9}, @samp{powerpc}, @samp{powerpc64}, @samp{powerpc64le}, @samp{rs64}である。
 
-@option{-mcpu=powerpc}, @option{-mcpu=powerpc64}, @option{-mcpu=powerpc64le}は純粋な32ビットPowerPC（エンディアン）、64ビットビッグエンディアンPowerPCおよび64ビットリトルエンディアンPowerPCアーキテクチャのマシンタイプを指定し、適切な汎用プロセッサモデルをスケジューリングの目的で使用する。 
+@option{-mcpu=powerpc}, @option{-mcpu=powerpc64}, @option{-mcpu=powerpc64le}は純粋な32ビットPowerPC（エンディアン）、64ビットビッグエンディアンPowerPCおよび64ビットリトルエンディアンPowerPCアーキテクチャの機種を指定し、適切な汎用プロセッサモデルをスケジューリングの目的で使用する。 
 
 他のオプションは、特定のプロセッサを指定する。 これらのオプションで生成されたコードは、そのプロセッサ上で最適に実行され、他のプロセッサ上ではまったく動作しない可能性がある。
 
@@ -16529,7 +16529,7 @@ AIXでは、@option{-maltivec}および@option{-mpowerpc64}オプションは、
 
 @item -mtune=@var{cpu_type}
 @opindex mtune
-マシンタイプ@var{cpu_type}の命令スケジューリングパラメータを設定するが、@option{-mcpu=@var{cpu_type}}のようにアーキテクチャタイプやレジスタの使用方法は設定しない。 @option{-mcpu}と同じ@var{cpu_type}の値が@option{-mtune}に使用される。 どちらも指定されていれば、@option{-mcpu}で設定されたアーキテクチャとレジスタが使用されるが、@option{-mtune}で設定されたスケジューリングパラメータが使用される。
+機種@var{cpu_type}の命令スケジューリングパラメータを設定するが、@option{-mcpu=@var{cpu_type}}のようにアーキテクチャタイプやレジスタの使用方法は設定しない。 @option{-mcpu}と同じ@var{cpu_type}の値が@option{-mtune}に使用される。 どちらも指定されていれば、@option{-mcpu}で設定されたアーキテクチャとレジスタが使用されるが、@option{-mtune}で設定されたスケジューリングパラメータが使用される。
 
 @item -mcmodel=small
 @opindex mcmodel=small
@@ -17906,7 +17906,7 @@ SPARC SVR4 ABIがアプリケーション用に予約するグローバルレジ
 
 @item -mcpu=@var{cpu_type}
 @opindex mcpu
-マシンタイプ@var {cpu_type}の命令セット、レジスタセット、および命令スケジューリングパラメータを設定する。 @var{cpu_type}のサポートされている値は@samp{v7}, @samp{cypress}, @samp{v8}, @samp{supersparc}, @samp{hypersparc}, @samp{leon}, @samp{leon3}, @samp{leon3v7}, @samp{sparclite}, @samp{f930}, @samp{f934}, @samp{sparclite86x}, @samp{sparclet}, @samp{tsc701}, @samp{v9}, @samp{ultrasparc}, @samp{ultrasparc3}, @samp{niagara}, @samp{niagara2}, @samp{niagara3}, @samp{niagara4}, @samp{niagara7}, @samp{m8}である。
+機種@var {cpu_type}の命令セット、レジスタセット、および命令スケジューリングパラメータを設定する。 @var{cpu_type}のサポートされている値は@samp{v7}, @samp{cypress}, @samp{v8}, @samp{supersparc}, @samp{hypersparc}, @samp{leon}, @samp{leon3}, @samp{leon3v7}, @samp{sparclite}, @samp{f930}, @samp{f934}, @samp{sparclite86x}, @samp{sparclet}, @samp{tsc701}, @samp{v9}, @samp{ultrasparc}, @samp{ultrasparc3}, @samp{niagara}, @samp{niagara2}, @samp{niagara3}, @samp{niagara4}, @samp{niagara7}, @samp{m8}である。
 
 ネイティブSolarisおよびGNU / Linuxツールチェーンは、@samp{native}という値もサポートしている。これは、ホストプロセッサに最適なアーキテクチャオプションを選択する。GCCがプロセッサを認識しない場合、@option{-mcpu=native}は効果がない。
 
@@ -17944,7 +17944,7 @@ niagara7, m8
 
 @item -mtune=@var{cpu_type}
 @opindex mtune
-マシンタイプ@var {cpu_type}の命令スケジューリングパラメータを設定するが、オプション@option{-mcpu=@var{cpu_type}}が実行する命令セットまたはレジスタセットは設定しない。
+機種@var {cpu_type}の命令スケジューリングパラメータを設定するが、オプション@option{-mcpu=@var{cpu_type}}が実行する命令セットまたはレジスタセットは設定しない。
 
 @option{-mcpu=@var{cpu_type}}と同じ値を@option{-mtune=@var{cpu_type}}に使用できるが、唯一有用な値は特定のCPU実装を選択する値であるす。それらは@samp{cypress}, @samp{supersparc}, @samp{hypersparc}, @samp{leon}, @samp{leon3}, @samp{leon3v7}, @samp{f930}, @samp{f934}, @samp{sparclite86x}, @samp{tsc701}, @samp{ultrasparc}, @samp{ultrasparc3}, @samp{niagara}, @samp{niagara2}, @samp{niagara3}, @samp{niagara4}, @samp{niagara7}, @samp{m8}である。 ネイティブのSolarisおよびGNU/Linuxツールチェーンでは、@samp{native}も使用できる。 
 
@@ -18473,7 +18473,7 @@ D-フォーマットの代わりにG-フォーマット浮動小数点数のコ�
 
 @item -mcpu=@var{cpu_type}
 @opindex mcpu
-マシンタイプ@var{cpu_type}の命令セット、レジスタセット、および命令スケジューリングパラメータを設定する。 @var{cpu_type}にサポートされている値は@samp{mcm}、@samp{gr5}、@samp{gr6}である。
+機種@var{cpu_type}の命令セット、レジスタセット、および命令スケジューリングパラメータを設定する。 @var{cpu_type}にサポートされている値は@samp{mcm}、@samp{gr5}、@samp{gr6}である。
 
 @samp{mcm}は、下位互換性のために存在する@samp{gr5}の同義語である。
 
@@ -18483,7 +18483,7 @@ D-フォーマットの代わりにG-フォーマット浮動小数点数のコ�
 
 @item -mtune=@var{cpu_type}
 @opindex mtune
-マシンタイプ@var{cpu_type}の命令スケジューリングパラメータを設定するが、@option{-mcpu=@var{cpu_type}}オプションが設定する命令セットまたはレジスタセットは設定しない。
+機種@var{cpu_type}の命令スケジューリングパラメータを設定するが、@option{-mcpu=@var{cpu_type}}オプションが設定する命令セットまたはレジスタセットは設定しない。
 
 @item -msv-mode
 @opindex msv-mode
@@ -18548,237 +18548,170 @@ GCCは、VxWorksカーネルとリアルタイムプロセス（RTP）の両方�
 @end table
 
 @node x86 Options
-@subsection x86 Options
+@subsection x86オプション
 @cindex x86 Options
 
-These @samp{-m} options are defined for the x86 family of computers.
+これらの@samp {-m}オプションは、x86ファミリのコンピュータで定義されている。
 
 @table @gcctabopt
 
 @item -march=@var{cpu-type}
 @opindex march
-Generate instructions for the machine type @var{cpu-type}.  In contrast to
-@option{-mtune=@var{cpu-type}}, which merely tunes the generated code 
-for the specified @var{cpu-type}, @option{-march=@var{cpu-type}} allows GCC
-to generate code that may not run at all on processors other than the one
-indicated.  Specifying @option{-march=@var{cpu-type}} implies 
-@option{-mtune=@var{cpu-type}}.
+機種@var{cpu-type}の命令を生成する。@option{-march=@var{cpu-type}}は、指定された@var{cpu-type}の生成コードをチューニングするだけで、@option{-march=@ var{cpu-type}}は、 示されているプロセッサ以外のプロセッサではまったく動作しないコードを生成するためにGCCを使用する。@option{-march=@var{cpu-type}}を指定すると、@option{-mtune=@var{cpu-type}}となる。
 
-The choices for @var{cpu-type} are:
+@var{cpu-type}の選択肢は次のとおりである。
 
 @table @samp
 @item native
-This selects the CPU to generate code for at compilation time by determining
-the processor type of the compiling machine.  Using @option{-march=native}
-enables all instruction subsets supported by the local machine (hence
-the result might not run on different machines).  Using @option{-mtune=native}
-produces code optimized for the local machine under the constraints
-of the selected instruction set.  
+これにより、コンパイル時のコードを生成するCPUが選択され、コンパイルマシンのプロセッサタイプが決定される。@option{-march = native}を使用すると、ローカルマシンでサポートされているすべての命令サブセットが有効になる（したがって、結果は異なるマシンでは実行されない可能性がある）。@option{-mtune = native}を使用すると、選択した命令セットの制約の下でローカルマシン用に最適化されたコードが生成される。
 
 @item i386
-Original Intel i386 CPU@.
+元々のi386CPU。
 
 @item i486
-Intel i486 CPU@.  (No scheduling is implemented for this chip.)
+Intel i486 CPU。 （このチップ用スケジューリングは実装されていない）。
 
 @item i586
 @itemx pentium
-Intel Pentium CPU with no MMX support.
+MMXサポートのないIntel Pentuim CPU。
 
 @item lakemont
-Intel Lakemont MCU, based on Intel Pentium CPU.
+Intel Pentium CPUに基づいたIntel Lakemont MCU。
 
 @item pentium-mmx
-Intel Pentium MMX CPU, based on Pentium core with MMX instruction set support.
+MMX命令セットサポートを持つPentuimコアに基づいたIntel Pentium MMX CPU。
 
 @item pentiumpro
-Intel Pentium Pro CPU@.
+Intel Pentium Pro CPU。
 
 @item i686
-When used with @option{-march}, the Pentium Pro
-instruction set is used, so the code runs on all i686 family chips.
-When used with @option{-mtune}, it has the same meaning as @samp{generic}.
+@option{-march}で使ったときは、Pentuim Pro命令セットが使われ、全i686ファミリチップ上で走るコードになる。@option{-mtune}で使ったときは、@samp{generic}と同じ意味である。
 
 @item pentium2
-Intel Pentium II CPU, based on Pentium Pro core with MMX instruction set
-support.
+MMX命令セットサポートを持つPentium Proコアに基づいたIntel Pentuim II CPU。
 
 @item pentium3
 @itemx pentium3m
-Intel Pentium III CPU, based on Pentium Pro core with MMX and SSE instruction
-set support.
+MMXとSSEの命令セットサポートを持つPentium Proコアに基づいたIntel Pentuim II CPU。
 
 @item pentium-m
-Intel Pentium M; low-power version of Intel Pentium III CPU
-with MMX, SSE and SSE2 instruction set support.  Used by Centrino notebooks.
+Intel Pentuim M。MMX、SSE、SSE2命令セットサポートを持つIntel Pentuim III CPUの低消費電力バージョン。Centrinoノートブックで使われた。
 
 @item pentium4
 @itemx pentium4m
-Intel Pentium 4 CPU with MMX, SSE and SSE2 instruction set support.
+MMX、SSE、SSE2命令セットサポートを持つIntel Pentuim 4 CPU。
 
 @item prescott
-Improved version of Intel Pentium 4 CPU with MMX, SSE, SSE2 and SSE3 instruction
-set support.
+MMX、SSE、SSE2、SSE3命令セットサポートを持つIntel Pentuim 4 CPUの改良バージョン。
 
 @item nocona
-Improved version of Intel Pentium 4 CPU with 64-bit extensions, MMX, SSE,
-SSE2 and SSE3 instruction set support.
+64ビット拡張、MMX、SSE、SSE2、SSE3命令セットサポートを持つIntel Pentium 4 CPUの改良バージョン。
 
 @item core2
-Intel Core 2 CPU with 64-bit extensions, MMX, SSE, SSE2, SSE3 and SSSE3
-instruction set support.
+64ビット拡張、MMX、SSE、SSE2、SSE3、SSSE3命令セットサポートを持つIntel Core 2 CPU。
 
 @item nehalem
-Intel Nehalem CPU with 64-bit extensions, MMX, SSE, SSE2, SSE3, SSSE3,
-SSE4.1, SSE4.2 and POPCNT instruction set support.
+64ビット拡張、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT命令セットサポートを持つIntel Nehalem CPU。
 
 @item westmere
-Intel Westmere CPU with 64-bit extensions, MMX, SSE, SSE2, SSE3, SSSE3,
-SSE4.1, SSE4.2, POPCNT, AES and PCLMUL instruction set support.
+64ビット拡張、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、AES、PCLMUL命令セットサポートを持つIntel Westmere CPU。
 
 @item sandybridge
-Intel Sandy Bridge CPU with 64-bit extensions, MMX, SSE, SSE2, SSE3, SSSE3,
-SSE4.1, SSE4.2, POPCNT, AVX, AES and PCLMUL instruction set support.
+64ビット拡張、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、AVX、AES、PCLMUL命令セットサポートを持つIntel Sandy Bridge CPU。
 
 @item ivybridge
-Intel Ivy Bridge CPU with 64-bit extensions, MMX, SSE, SSE2, SSE3, SSSE3,
-SSE4.1, SSE4.2, POPCNT, AVX, AES, PCLMUL, FSGSBASE, RDRND and F16C
-instruction set support.
+64ビット拡張、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、AVX、AES、PCLMUL、FSGSBASE、RDRND、F16C命令セットサポートを持つIntel Sandy Bridge CPU。
 
 @item haswell
-Intel Haswell CPU with 64-bit extensions, MOVBE, MMX, SSE, SSE2, SSE3, SSSE3,
-SSE4.1, SSE4.2, POPCNT, AVX, AVX2, AES, PCLMUL, FSGSBASE, RDRND, FMA,
-BMI, BMI2 and F16C instruction set support.
+64ビット拡張、MOVBE、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、AVX、AVX2、AES、PCLMUL、FSGSBASE、RDRND、FMA、BMI、BMI2、F16C命令セットサポートを持つIntel Haswell CPU。
 
 @item broadwell
-Intel Broadwell CPU with 64-bit extensions, MOVBE, MMX, SSE, SSE2, SSE3, SSSE3,
-SSE4.1, SSE4.2, POPCNT, AVX, AVX2, AES, PCLMUL, FSGSBASE, RDRND, FMA,
-BMI, BMI2, F16C, RDSEED, ADCX and PREFETCHW instruction set support.
+64ビット拡張、MOVBE、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、AVX、AVX2、AES、PCLMUL、FSGSBASE、RDRND、FMA、BMI、BMI2、F16C、RDSEED、ADCX、PREFETCHW命令セットサポートを持つIntel Broadwell CPU。
 
 @item skylake
-Intel Skylake CPU with 64-bit extensions, MOVBE, MMX, SSE, SSE2, SSE3, SSSE3,
-SSE4.1, SSE4.2, POPCNT, AVX, AVX2, AES, PCLMUL, FSGSBASE, RDRND, FMA,
-BMI, BMI2, F16C, RDSEED, ADCX, PREFETCHW, CLFLUSHOPT, XSAVEC and
-XSAVES instruction set support.
+64ビット拡張、MOVBE、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、AVX、AVX2、AES、PCLMUL、FSGSBASE、RDRND、FMA、BMI、BMI2、F16C、RDSEED、ADCX、PREFETCHW、CLFLUSHOPT、XSAVEC、XSAVES命令セットサポートを持つIntel Skylake CPU。
 
 @item bonnell
-Intel Bonnell CPU with 64-bit extensions, MOVBE, MMX, SSE, SSE2, SSE3 and SSSE3
-instruction set support.
+64ビット拡張、MOVBE、MMX、SSE、SSE2、SSE3、SSSE3命令セットサポート持つIntel Bonnell CPU。
 
 @item silvermont
-Intel Silvermont CPU with 64-bit extensions, MOVBE, MMX, SSE, SSE2, SSE3, SSSE3,
-SSE4.1, SSE4.2, POPCNT, AES, PCLMUL and RDRND instruction set support.
+64ビット拡張、MOVBE、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、AES、PCLMUL、RDRND命令セットサポートを持つIntel Slivermont CPU。
 
 @item knl
-Intel Knight's Landing CPU with 64-bit extensions, MOVBE, MMX, SSE, SSE2, SSE3,
-SSSE3, SSE4.1, SSE4.2, POPCNT, AVX, AVX2, AES, PCLMUL, FSGSBASE, RDRND, FMA,
-BMI, BMI2, F16C, RDSEED, ADCX, PREFETCHW, AVX512F, AVX512PF, AVX512ER and
-AVX512CD instruction set support.
+64ビット拡張、MOVBE、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、AVX、AVX2、AES、PCLMUL、FSGSBASE、RDRND、MFA、BMI、BMI2、F16C、RDSEED、ADCX、PREFETCHW、AVX512F、AVX512PF、AVX512ER、AVX512CD命令セットサポート持つIntel Knight's Landing CPU。
 
 @item skylake-avx512
-Intel Skylake Server CPU with 64-bit extensions, MOVBE, MMX, SSE, SSE2, SSE3,
-SSSE3, SSE4.1, SSE4.2, POPCNT, PKU, AVX, AVX2, AES, PCLMUL, FSGSBASE, RDRND, FMA,
-BMI, BMI2, F16C, RDSEED, ADCX, PREFETCHW, CLFLUSHOPT, XSAVEC, XSAVES, AVX512F,
-AVX512VL, AVX512BW, AVX512DQ and AVX512CD instruction set support.
+64ビット拡張、MOVBE、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、PKU、AVX、AVX2、AES、PCLMUL、FSGSBASE、RDRND、MFA、BMI、BMI2、F16C、RDSEED、ADCX、PREFETCHW、CLFLUSHOPT、XSAVEC、XSAVES、AVX512F、AVX512VL、AVX512BW、AVX512DQ、AVX512CD命令セットサポートを持つIntel SkylakeサーバーCPU。
 
 @item k6
-AMD K6 CPU with MMX instruction set support.
+MMX命令セットサポートを持つAMD K6 CPU。
 
 @item k6-2
 @itemx k6-3
-Improved versions of AMD K6 CPU with MMX and 3DNow!@: instruction set support.
+MMXと3DNow!命令セットサポートを持つAMD K6の改良されたバージョン。
 
 @item athlon
 @itemx athlon-tbird
-AMD Athlon CPU with MMX, 3dNOW!, enhanced 3DNow!@: and SSE prefetch instructions
-support.
+MMX、3dNOW!、enhanced 3DNow!、SSEプリフェッチ命令サポートを持つAMD Athlon CPU。
 
 @item athlon-4
 @itemx athlon-xp
 @itemx athlon-mp
-Improved AMD Athlon CPU with MMX, 3DNow!, enhanced 3DNow!@: and full SSE
-instruction set support.
+MMX、3DNow!、enhanced 3DNow!、完全SSE命令セットサポートを持つ改良されたAMD Athlon CPU。
 
 @item k8
 @itemx opteron
 @itemx athlon64
 @itemx athlon-fx
-Processors based on the AMD K8 core with x86-64 instruction set support,
-including the AMD Opteron, Athlon 64, and Athlon 64 FX processors.
-(This supersets MMX, SSE, SSE2, 3DNow!, enhanced 3DNow!@: and 64-bit
-instruction set extensions.)
+AMD Opteron、Athlong 64、Athlon 64 FXプロセッサを含む、x86-64命令セットサポートを持つAMD K8コアに基づくプロセッサ。（これは、MMX、SSE、SSE2、3DNow!、enhanced 3DNow!、64ビット命令セット拡張を含む。）
 
 @item k8-sse3
 @itemx opteron-sse3
 @itemx athlon64-sse3
-Improved versions of AMD K8 cores with SSE3 instruction set support.
+SSE3命令セットサポートを含むAMD K8コアの改良されたバージョン。
 
 @item amdfam10
 @itemx barcelona
-CPUs based on AMD Family 10h cores with x86-64 instruction set support.  (This
-supersets MMX, SSE, SSE2, SSE3, SSE4A, 3DNow!, enhanced 3DNow!, ABM and 64-bit
-instruction set extensions.)
+x86-64命令セットサポートを持つAMD10世代コアに基づくCPU。（これはMMX、SSE、SSE2、SSE3、SSE4A、3DNow!、enhaned 3DNow!、ABM、64ビット命令セット拡張を含む。）
 
 @item bdver1
-CPUs based on AMD Family 15h cores with x86-64 instruction set support.  (This
-supersets FMA4, AVX, XOP, LWP, AES, PCL_MUL, CX16, MMX, SSE, SSE2, SSE3, SSE4A,
-SSSE3, SSE4.1, SSE4.2, ABM and 64-bit instruction set extensions.)
+x86-64命令セットサポートを持つAMD15世代コアに基づくCPU。（これはFMA4、AVX、XOP、LWP、AES、PCL_MUL、CX16、MMX、SSE、SSE2、SSE3、SSE4A、SSSE3、SSE4.1、SSE4.2、ABM、64ビット命令セット拡張を含む。）
+
 @item bdver2
-AMD Family 15h core based CPUs with x86-64 instruction set support.  (This
-supersets BMI, TBM, F16C, FMA, FMA4, AVX, XOP, LWP, AES, PCL_MUL, CX16, MMX,
-SSE, SSE2, SSE3, SSE4A, SSSE3, SSE4.1, SSE4.2, ABM and 64-bit instruction set 
-extensions.)
+x86-64命令セットサポートを持つAMD15世代コアに基づくCPU。（これはBMI、TBM、F16C、FMA、FMA4、XOP、LWP、AES、PCL_MUL、CX16、MMX、SSE、SSE2、SSE3、SSE4A、SSSE3、SSE4.1、SSE4.2、ABM、64ビット命令セット拡張を含む。）
+
 @item bdver3
-AMD Family 15h core based CPUs with x86-64 instruction set support.  (This
-supersets BMI, TBM, F16C, FMA, FMA4, FSGSBASE, AVX, XOP, LWP, AES, 
-PCL_MUL, CX16, MMX, SSE, SSE2, SSE3, SSE4A, SSSE3, SSE4.1, SSE4.2, ABM and 
-64-bit instruction set extensions.
+x86-64命令セットサポートを持つAMD15世代コアに基づくCPU。（これはBMI、TBM、F16C、FMA、FMA4、FSGSBASE、AVX、XOP、LWP、AES、PCL_MUL、CX16、MMX、SSE、SSE2、SSE3、SSE4A、SSSE3、SSE4.1、SSE4.2、ABM、64ビット命令セット拡張を含む。）
+
 @item bdver4
-AMD Family 15h core based CPUs with x86-64 instruction set support.  (This
-supersets BMI, BMI2, TBM, F16C, FMA, FMA4, FSGSBASE, AVX, AVX2, XOP, LWP, 
-AES, PCL_MUL, CX16, MOVBE, MMX, SSE, SSE2, SSE3, SSE4A, SSSE3, SSE4.1, 
-SSE4.2, ABM and 64-bit instruction set extensions.
+x86-64命令セットサポートを持つAMD15世代コアに基づくCPU。（これはBMI、BMI2、TBM、F16C、FMA、FMA4、FSGSBASE、AVX、AVX2、XOP、LWP、AES、PCL_MUL、CX16、MOVBE、MMX、SSE、SSE2、SSE3、SSE4A、SSSE3、SSE4.1、SSE4.2、ABM、64ビット命令セット拡張を含む。）
 
 @item znver1
-AMD Family 17h core based CPUs with x86-64 instruction set support.  (This
-supersets BMI, BMI2, F16C, FMA, FSGSBASE, AVX, AVX2, ADCX, RDSEED, MWAITX,
-SHA, CLZERO, AES, PCL_MUL, CX16, MOVBE, MMX, SSE, SSE2, SSE3, SSE4A, SSSE3,
-SSE4.1, SSE4.2, ABM, XSAVEC, XSAVES, CLFLUSHOPT, POPCNT, and 64-bit
-instruction set extensions.
+x86-64命令セットサポートを持つAMD17世代コアに基づくCPU。（これはBMI、BMI2、F16C、FMA、FSGSBASE、AVX、AVX2、ADCX、RDSEED、MWAITX、SHA、CLZERO、AES、、PCL_MUL、CX16、MOVBE、MMX、SSE、SSE2、SSE3、SSE4A、SSSE3、SSE4.1、SSE4.2、ABM、XSAVES、CLFULSHOPT、POPCNT、64ビット命令セット拡張を含む。）
 
 @item btver1
-CPUs based on AMD Family 14h cores with x86-64 instruction set support.  (This
-supersets MMX, SSE, SSE2, SSE3, SSSE3, SSE4A, CX16, ABM and 64-bit
-instruction set extensions.)
+x86-64命令セットサポートを持つAMD14世代コアに基づくCPU。（これはMMX、SSE、SSE2、SSE3、SSE4A、CX16、ABM、64ビット命令セット拡張を含む。）
 
 @item btver2
-CPUs based on AMD Family 16h cores with x86-64 instruction set support. This
-includes MOVBE, F16C, BMI, AVX, PCL_MUL, AES, SSE4.2, SSE4.1, CX16, ABM,
-SSE4A, SSSE3, SSE3, SSE2, SSE, MMX and 64-bit instruction set extensions.
+x86-64命令セットサポートを持つAMD16世代コアに基づくCPU。（これはMOVBE、F16C、BMI、AVX、PCL_MUL、AES、SSE4.2、SSE4.1、CX16、ABM、SSE4A、SSSE3、SSE3、SSE2、SSE、MMX、64ビット命令セット拡張を含む。）
 
 @item winchip-c6
-IDT WinChip C6 CPU, dealt in same way as i486 with additional MMX instruction
-set support.
+追加のMMX命令セットをサポートするi486と同じように処理される、IDT WinChip C6 CPU。
 
 @item winchip2
-IDT WinChip 2 CPU, dealt in same way as i486 with additional MMX and 3DNow!@:
-instruction set support.
+追加のMMXと3DNow!命令セットをサポートするi486と同じように処理される、IDT WinChip 2 CPU。
 
 @item c3
-VIA C3 CPU with MMX and 3DNow!@: instruction set support.
-(No scheduling is implemented for this chip.)
+MMXと3DNow!命令セットサポートを持つVIA C3 CPU。 （このチップ用スケジューリングは実装されていない）。
 
 @item c3-2
-VIA C3-2 (Nehemiah/C5XL) CPU with MMX and SSE instruction set support.
-(No scheduling is implemented for this chip.)
+MMXとSSE命令セットサポートを持つVIA C3-2 (Nehemiah/C5XL) CPU。（このチップ用スケジューリングは実装されていない）。
 
 @item c7
-VIA C7 (Esther) CPU with MMX, SSE, SSE2 and SSE3 instruction set support.
-(No scheduling is implemented for this chip.)
+MMX、SSE、SSE2、SSE3命令セットサポートを持つVIA C7 (Esther) CPU。（このチップ用スケジューリングは実装されていない）。
 
 @item samuel-2
-VIA Eden Samuel 2 CPU with MMX and 3DNow!@: instruction set support.
-(No scheduling is implemented for this chip.)
+MMXと3DNow!命令セットサポートを持つVIA Eden Samuel 2 CPU。（このチップ用スケジューリングは実装されていない）。
 
 @item nehemiah
 VIA Eden Nehemiah CPU with MMX and SSE instruction set support.
