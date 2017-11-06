@@ -18775,157 +18775,90 @@ ABIと使用可能な命令のセットを除いて、生成されたコード�
 
 @item -mfpmath=@var{unit}
 @opindex mfpmath
-Generate floating-point arithmetic for selected unit @var{unit}.  The choices
-for @var{unit} are:
+選択したユニット@var{unit}の浮動小数点演算を生成する。 @var{unit}の選択肢は次のとおりである。
 
 @table @samp
 @item 387
-Use the standard 387 floating-point coprocessor present on the majority of chips and
-emulated otherwise.  Code compiled with this option runs almost everywhere.
-The temporary results are computed in 80-bit precision instead of the precision
-specified by the type, resulting in slightly different results compared to most
-of other chips.  See @option{-ffloat-store} for more detailed description.
+大多数のチップに存在する標準の387浮動小数点コプロセッサを使用し、それ以外の場合はエミュレートする。 このオプションでコンパイルされたコードは、ほぼすべての場所で実行できる。一時的な結果は、型によって指定された精度の代わりに80ビットの精度で計算され、他のほとんどのチップと比較してわずかに異なる結果になる。 より詳しい説明は@option{-ffloat-store}を参照せよ。
 
-This is the default choice for non-Darwin x86-32 targets.
+これは非Dawrinのx86-32ターゲットのデフォルトの選択肢である。
 
 @item sse
-Use scalar floating-point instructions present in the SSE instruction set.
-This instruction set is supported by Pentium III and newer chips,
-and in the AMD line
-by Athlon-4, Athlon XP and Athlon MP chips.  The earlier version of the SSE
-instruction set supports only single-precision arithmetic, thus the double and
-extended-precision arithmetic are still done using 387.  A later version, present
-only in Pentium 4 and AMD x86-64 chips, supports double-precision
-arithmetic too.
+SSE命令セットに存在するスカラー浮動小数点命令を使用する。この命令セットは、Pentium III以上のチップ、Athlon-4、Athlon XP、Athlon MPチップによるAMDラインでサポートされている。 SSE命令セットの以前のバージョンは単精度算術のみをサポートしているため、387を使用して倍精度および拡張精度算術演算が行われる。Pentium 4およびAMD x86-64チップにのみ存在する後のバージョンでは、倍精度算術もある。
 
-For the x86-32 compiler, you must use @option{-march=@var{cpu-type}}, @option{-msse}
-or @option{-msse2} switches to enable SSE extensions and make this option
-effective.  For the x86-64 compiler, these extensions are enabled by default.
+x86-32コンパイラでは、SSE拡張を有効にしてこのオプションを有効にするには、@option{-march=@var{cpu-type}}、@option{-msse}または@option{-msse2}スイッチを使用する必要がある。 x86-64コンパイラの場合、これらの拡張機能はデフォルトで有効になっている。
 
-The resulting code should be considerably faster in the majority of cases and avoid
-the numerical instability problems of 387 code, but may break some existing
-code that expects temporaries to be 80 bits.
+結果のコードは、大部分のケースでかなり速く、387コードの数値的な不安定性の問題を回避するはずであるが、一時的なものが80ビットであることを期待する既存のコードがいくつか破壊される可能性がある。
 
-This is the default choice for the x86-64 compiler, Darwin x86-32 targets,
-and the default choice for x86-32 targets with the SSE2 instruction set
-when @option{-ffast-math} is enabled.
+これは、x86-64コンパイラ、Darwin x86-32ターゲット、および@option{-ffast-math}が有効な場合にSSE2命令セットを持つx86-32ターゲットのデフォルト選択のデフォルト選択である。
 
 @item sse,387
 @itemx sse+387
 @itemx both
-Attempt to utilize both instruction sets at once.  This effectively doubles the
-amount of available registers, and on chips with separate execution units for
-387 and SSE the execution resources too.  Use this option with care, as it is
-still experimental, because the GCC register allocator does not model separate
-functional units well, resulting in unstable performance.
+両方の命令セットを同時に使用しようとする。 これにより、使用可能なレジスタの量が効果的に倍増し、387用とSSE用で別々の実行単位を持つチップでは実行リソースも別々になる。 GCCレジスタアロケータは別々の関数ユニットをうまくモデル化せず、結果として不安定なパフォーマンスになるために、まだ実験的なので注意してこのオプションを使用すること。
 @end table
 
 @item -masm=@var{dialect}
 @opindex masm=@var{dialect}
-Output assembly instructions using selected @var{dialect}.  Also affects
-which dialect is used for basic @code{asm} (@pxref{Basic Asm}) and
-extended @code{asm} (@pxref{Extended Asm}). Supported choices (in dialect
-order) are @samp{att} or @samp{intel}. The default is @samp{att}. Darwin does
-not support @samp{intel}.
+選択された@var{dialect}を使用してアセンブリ命令を出力する。 基本的な@code{asm}（@pxref{Basic Asm}）と拡張された@code{asm}（@pxref{Extended Asm}）に使われる変種にも影響する。 サポートされている選択肢（ダイアレクト順）は@samp{att}または@samp{intel}である。 デフォルトは@samp{att}である。 Darwinは@samp{intel}をサポートしていない。
 
 @item -mieee-fp
 @itemx -mno-ieee-fp
 @opindex mieee-fp
 @opindex mno-ieee-fp
-Control whether or not the compiler uses IEEE floating-point
-comparisons.  These correctly handle the case where the result of a
-comparison is unordered.
+コンパイラがIEEE浮動小数点比較を使用するかどうかを制御する。 これらは、比較の結果が順序付けられていない場合を正しく処理する。
 
 @item -m80387
 @item -mhard-float
 @opindex 80387
 @opindex mhard-float
-Generate output containing 80387 instructions for floating point.
+浮動小数点用に80387命令を含む出力を生成する。
 
 @item -mno-80387
 @item -msoft-float
 @opindex no-80387
 @opindex msoft-float
-Generate output containing library calls for floating point.
+浮動小数点のライブラリ呼び出しを含む出力を生成する。
 
-@strong{Warning:} the requisite libraries are not part of GCC@.
-Normally the facilities of the machine's usual C compiler are used, but
-this cannot be done directly in cross-compilation.  You must make your
-own arrangements to provide suitable library functions for
-cross-compilation.
+@strong{警告：}必要なライブラリはGCCの一部ではない。通常、マシンの通常のCコンパイラの機能が使用されるが、これはクロスコンパイルで直接行うことはできない。 クロスコンパイルに適したライブラリ機能を提供するために、独自の手配をしなければならない。
 
-On machines where a function returns floating-point results in the 80387
-register stack, some floating-point opcodes may be emitted even if
-@option{-msoft-float} is used.
+関数が80387レジスタスタックの浮動小数点結果を返すマシンでは、@option{-msoft-float}が使用されていても、一部の浮動小数点オペコードが発行されることがある。
 
 @item -mno-fp-ret-in-387
 @opindex mno-fp-ret-in-387
-Do not use the FPU registers for return values of functions.
+関数の戻り値にFPUレジスタを使用しない。
 
-The usual calling convention has functions return values of types
-@code{float} and @code{double} in an FPU register, even if there
-is no FPU@.  The idea is that the operating system should emulate
-an FPU@.
+通常の呼び出し規約では、FPUがない場合でも、関数が@code{float}型と@code{double}型の値をFPUレジスタで返すようになっている。 考え方は、オペレーティングシステムがFPUをエミュレートする必要があるということである。
 
-The option @option{-mno-fp-ret-in-387} causes such values to be returned
-in ordinary CPU registers instead.
+オプション@option{-mno-fp-ret-in-387}は、そのような値が通常のCPUレジスタに返されるようにする。
 
 @item -mno-fancy-math-387
 @opindex mno-fancy-math-387
-Some 387 emulators do not support the @code{sin}, @code{cos} and
-@code{sqrt} instructions for the 387.  Specify this option to avoid
-generating those instructions.  This option is the default on
-OpenBSD and NetBSD@.  This option is overridden when @option{-march}
-indicates that the target CPU always has an FPU and so the
-instruction does not need emulation.  These
-instructions are not generated unless you also use the
-@option{-funsafe-math-optimizations} switch.
+一部の387エミュレータは、387の@code {sin}、@code {cos}および@code {sqrt}命令をサポートしていない。これらの命令の生成を避けるには、このオプションを指定する。このオプションはOpenBSDとNetBSDのデフォルトである。  このオプションは、@option{-march}がターゲットCPUが常にFPUを持っていることを示し、命令がエミュレーションを必要としないときには無効になる。@option{-funsafe-math-optimizations}スイッチも使用しない限り、これらの命令は生成されない。
 
 @item -malign-double
 @itemx -mno-align-double
 @opindex malign-double
 @opindex mno-align-double
-Control whether GCC aligns @code{double}, @code{long double}, and
-@code{long long} variables on a two-word boundary or a one-word
-boundary.  Aligning @code{double} variables on a two-word boundary
-produces code that runs somewhat faster on a Pentium at the
-expense of more memory.
+GCCが@code{double}、@code{long double}、@code{long long}の変数を2ワード境界か1ワード境界に揃えるかどうかを制御する。 2ワード境界で@code{double}変数を調整すると、Pentium上でより高速に動作するコードが生成され、より多くのメモリが消費される。
 
-On x86-64, @option{-malign-double} is enabled by default.
+x86-64では、デフォルトで@option{-malign-double}が有効になっている。
 
-@strong{Warning:} if you use the @option{-malign-double} switch,
-structures containing the above types are aligned differently than
-the published application binary interface specifications for the x86-32
-and are not binary compatible with structures in code compiled
-without that switch.
+@strong{警告:} @option{-malign-double}スイッチを使用すると、上記の型を含む構造体は公開されているx86-32のバイナリインタフェース仕様とは異なった位置に配置され、そのスイッチなしでコンパイルされたコード内の構造体とバイナリ互換性はない。
 
 @item -m96bit-long-double
 @itemx -m128bit-long-double
 @opindex m96bit-long-double
 @opindex m128bit-long-double
-These switches control the size of @code{long double} type.  The x86-32
-application binary interface specifies the size to be 96 bits,
-so @option{-m96bit-long-double} is the default in 32-bit mode.
+これらのスイッチは、@code{long double}型のサイズを制御する。x86-32アプリケーションのバイナリインタフェースでは、サイズを96ビットに指定しているため、32ビットモードではデフォルトで@option{-m96bit-long-double}が使用される。
 
-Modern architectures (Pentium and newer) prefer @code{long double}
-to be aligned to an 8- or 16-byte boundary.  In arrays or structures
-conforming to the ABI, this is not possible.  So specifying
-@option{-m128bit-long-double} aligns @code{long double}
-to a 16-byte boundary by padding the @code{long double} with an additional
-32-bit zero.
+最近のアーキテクチャー（Pentium以上）は、@code{long double}が8バイト境界または16バイト境界に整列させることを好む。ABIに準拠した配列や構造では、これは不可能である。したがって、@option {-m128bit-long-double}を指定すると、@code{long double}に追加の32ビットのゼロを埋め込むことで、@code{long double}を16バイト境界に揃える。
 
-In the x86-64 compiler, @option{-m128bit-long-double} is the default choice as
-its ABI specifies that @code{long double} is aligned on 16-byte boundary.
+x86-64コンパイラでは、ABIが@code{long double}が16バイトの境界に揃うように指定するので、@option{-m128bit-long-double}がデフォルトの選択肢である。
 
-Notice that neither of these options enable any extra precision over the x87
-standard of 80 bits for a @code{long double}.
+これらのオプションのいずれも、@code{long double}の80ビットのx87標準に対する余分な精度を有効にしないことに注意せよ。
 
-@strong{Warning:} if you override the default value for your target ABI, this
-changes the size of 
-structures and arrays containing @code{long double} variables,
-as well as modifying the function calling convention for functions taking
-@code{long double}.  Hence they are not binary-compatible
-with code compiled without that switch.
+@strong{警告:} ターゲットABIのデフォルト値をオーバーライドすると、@code{long double}変数を含む構造体と配列のサイズが変更され、@code{long double}を持つ関数の関数呼び出し規約が変更される。 したがって、スイッチなしでコンパイルされたコードとバイナリ互換性はない。
 
 @item -mlong-double-64
 @itemx -mlong-double-80
@@ -18933,92 +18866,45 @@ with code compiled without that switch.
 @opindex mlong-double-64
 @opindex mlong-double-80
 @opindex mlong-double-128
-These switches control the size of @code{long double} type. A size
-of 64 bits makes the @code{long double} type equivalent to the @code{double}
-type. This is the default for 32-bit Bionic C library.  A size
-of 128 bits makes the @code{long double} type equivalent to the
-@code{__float128} type. This is the default for 64-bit Bionic C library.
+これらのスイッチは、@code{long double}型のサイズを制御する。 64ビットのサイズは、@code{long double}型を@code{double}型と等価にする。 これは、32ビットのBionic Cライブラリのデフォルトである。 128ビットのサイズは@code{long double}型を@code{__ float128}型と同等にする。 これは、64ビットのBionic Cライブラリのデフォルトである。
 
-@strong{Warning:} if you override the default value for your target ABI, this
-changes the size of
-structures and arrays containing @code{long double} variables,
-as well as modifying the function calling convention for functions taking
-@code{long double}.  Hence they are not binary-compatible
-with code compiled without that switch.
+@strong{警告:} ターゲットABIのデフォルト値をオーバーライドすると、@code{long double}変数を含む構造体と配列のサイズが変更され、@code{long double}を持つ関数の関数呼び出し規約が変更される。 したがって、スイッチなしでコンパイルされたコードとバイナリ互換性はない。
 
 @item -malign-data=@var{type}
 @opindex malign-data
-Control how GCC aligns variables.  Supported values for @var{type} are
-@samp{compat} uses increased alignment value compatible uses GCC 4.8
-and earlier, @samp{abi} uses alignment value as specified by the
-psABI, and @samp{cacheline} uses increased alignment value to match
-the cache line size.  @samp{compat} is the default.
+GCCがどのように変数を整列させるかを制御する。@var{type}のサポートされた値は、GCC 4.8以前で使用されている増加したアラインメント値互換性を使用さうる@samp{compat}、psABIで指定されたアライメント値を使用する@samp{abi}、キャッシュラインのサイズと一致するように増加したアラインメント値を使用する@samp{cacheline}である。@samp{compat}がデフォルトである。
 
 @item -mlarge-data-threshold=@var{threshold}
 @opindex mlarge-data-threshold
-When @option{-mcmodel=medium} is specified, data objects larger than
-@var{threshold} are placed in the large data section.  This value must be the
-same across all objects linked into the binary, and defaults to 65535.
+@option{-mcmodel=medium}を指定すると、@var{threshold}より大きいデータオブジェクトが大きなデータセクションに配置される。 この値は、バイナリにリンクされているすべてのオブジェクトで同じでなければならず、デフォルトは65535である。
 
 @item -mrtd
 @opindex mrtd
-Use a different function-calling convention, in which functions that
-take a fixed number of arguments return with the @code{ret @var{num}}
-instruction, which pops their arguments while returning.  This saves one
-instruction in the caller since there is no need to pop the arguments
-there.
+引数の数が固定されている関数が@code{ret @var {num}}命令で返される別の関数呼び出し規約を使用する。 これにより、引数をポップする必要がないため、呼び出し元に1つの命令が節約される。
 
-You can specify that an individual function is called with this calling
-sequence with the function attribute @code{stdcall}.  You can also
-override the @option{-mrtd} option by using the function attribute
-@code{cdecl}.  @xref{Function Attributes}.
+関数の属性@code{stdcall}を使用して、この呼び出しシーケンスで個々の関数が呼び出されるように指定することができる。 また、関数属性@code{cdecl}を使用して@option{-mrtd}オプションを上書きすることもできる。 @xref{Function Attributes}.
 
-@strong{Warning:} this calling convention is incompatible with the one
-normally used on Unix, so you cannot use it if you need to call
-libraries compiled with the Unix compiler.
+@strong{警告:} この呼び出し規約はUnixで通常使用されているものと互換性がないため、Unixコンパイラでコンパイルされたライブラリを呼び出す必要がある場合は使用できない。
 
-Also, you must provide function prototypes for all functions that
-take variable numbers of arguments (including @code{printf});
-otherwise incorrect code is generated for calls to those
-functions.
+また、可変数の引数（@code{printf}を含む）をとるすべての関数の関数プロトタイプを提供する必要がある。 それ以外の場合は、それらの関数への呼び出しに対して誤ったコードが生成される。
 
-In addition, seriously incorrect code results if you call a
-function with too many arguments.  (Normally, extra arguments are
-harmlessly ignored.)
+さらに、あまりにも多くの引数を指定して関数を呼び出すと、コードが深刻に不正確になる。 （通常、余分な引数は無害に無視される。）
 
 @item -mregparm=@var{num}
 @opindex mregparm
-Control how many registers are used to pass integer arguments.  By
-default, no registers are used to pass arguments, and at most 3
-registers can be used.  You can control this behavior for a specific
-function by using the function attribute @code{regparm}.
-@xref{Function Attributes}.
+整数引数を渡すために使用されるレジスタの数を制御する。 デフォルトでは、引数を渡すためにレジスタは使用されず、最大で3つのレジスタを使用できる。 関数の属性@code{regparm}を使用すると、特定の関数のこの動作を制御できる。@xref{Function Attributes}.
 
-@strong{Warning:} if you use this switch, and
-@var{num} is nonzero, then you must build all modules with the same
-value, including any libraries.  This includes the system libraries and
-startup modules.
+@strong{警告:} このスイッチを使用し、@var{num}がゼロ以外の場合は、ライブラリを含めて同じ値を持つすべてのモジュールを構築する必要がある。 これには、システムライブラリと起動モジュールが含まれる。
 
 @item -msseregparm
 @opindex msseregparm
-Use SSE register passing conventions for float and double arguments
-and return values.  You can control this behavior for a specific
-function by using the function attribute @code{sseregparm}.
-@xref{Function Attributes}.
+floatとdoubleの引数と戻り値には、SSEのレジスタ渡し規則を使用する。 関数の属性@code{sseregparm}を使用すると、特定の関数のこの動作を制御できる。@xref{Function Attributes}.
 
-@strong{Warning:} if you use this switch then you must build all
-modules with the same value, including any libraries.  This includes
-the system libraries and startup modules.
+@strong{警告:} このスイッチを使用する場合は、ライブラリを含め、同じ値を持つモジュールをすべてビルドする必要がある。 これには、システムライブラリと起動モジュールが含まれる。
 
 @item -mvect8-ret-in-mem
 @opindex mvect8-ret-in-mem
-Return 8-byte vectors in memory instead of MMX registers.  This is the
-default on Solaris@tie{}8 and 9 and VxWorks to match the ABI of the Sun
-Studio compilers until version 12.  Later compiler versions (starting
-with Studio 12 Update@tie{}1) follow the ABI used by other x86 targets, which
-is the default on Solaris@tie{}10 and later.  @emph{Only} use this option if
-you need to remain compatible with existing code produced by those
-previous compiler versions or older versions of GCC@.
+MMXレジスタの代わりに8バイトのベクトルをメモリに返します。 これは、Solaris@tie{}8および9とVxWorksでは、バージョン12まではSun StudioコンパイラのABIと一致するようにデフォルト設定されている。後のコンパイラバージョン（Studio 12 Update@tie{}1以降）は、他のx86ターゲットで使用されているABIに従う。これはSolaris 10以降のデフォルトである。以前のコンパイラバージョンまたは古いバージョンのGCCで作成された既存のコードとの互換性を保つ必要がある場合に@emph{_のみ_}、このオプションを使用すること。
 
 @item -mpc32
 @itemx -mpc64
@@ -19027,52 +18913,19 @@ previous compiler versions or older versions of GCC@.
 @opindex mpc64
 @opindex mpc80
 
-Set 80387 floating-point precision to 32, 64 or 80 bits.  When @option{-mpc32}
-is specified, the significands of results of floating-point operations are
-rounded to 24 bits (single precision); @option{-mpc64} rounds the
-significands of results of floating-point operations to 53 bits (double
-precision) and @option{-mpc80} rounds the significands of results of
-floating-point operations to 64 bits (extended double precision), which is
-the default.  When this option is used, floating-point operations in higher
-precisions are not available to the programmer without setting the FPU
-control word explicitly.
+80387浮動小数点精度を32,64、または80ビットに設定する。@option{-mpc32}を指定すると、浮動小数点演算の結果の有効数字は24ビット（単精度）に丸められる。@option{-mpc64}は、浮動小数点演算の結果の有効数字を53ビット（倍精度）に丸め、@option{-mpc80}は浮動小数点演算の結果の有効数字を64ビット（拡張倍精度）に丸め、それがデフォルトである。このオプションを使用すると、FPU制御ワードを明示的に設定せずに、より高い精度での浮動小数点演算をプログラマが使用できなくなる。
 
-Setting the rounding of floating-point operations to less than the default
-80 bits can speed some programs by 2% or more.  Note that some mathematical
-libraries assume that extended-precision (80-bit) floating-point operations
-are enabled by default; routines in such libraries could suffer significant
-loss of accuracy, typically through so-called ``catastrophic cancellation'',
-when this option is used to set the precision to less than extended precision.
+浮動小数点演算の丸めをデフォルトの80ビット未満に設定すると、プログラムによっては2％以上の速度が得られることがある。いくつかの数学ライブラリは、拡張精度（80ビット）浮動小数点演算がデフォルトで有効になっていると仮定している。 このオプションを使用して精度を拡張精度以下に設定すると、このようなライブラリのルーチンは、通常、いわゆる「致命的な取り消し」を介して、精度の大幅な低下を被る可能性がある。
 
 @item -mstackrealign
 @opindex mstackrealign
-Realign the stack at entry.  On the x86, the @option{-mstackrealign}
-option generates an alternate prologue and epilogue that realigns the
-run-time stack if necessary.  This supports mixing legacy codes that keep
-4-byte stack alignment with modern codes that keep 16-byte stack alignment for
-SSE compatibility.  See also the attribute @code{force_align_arg_pointer},
-applicable to individual functions.
+入力時にスタックを再調整する。 x86では、@option{-mstackrealign}オプションは、必要に応じてランタイムスタックを再調整する代替のプロローグとエピローグを生成する。 これにより、SSE互換性のために16バイトのスタックアライメントを維持する最新のコードと4バイトのスタックアライメントを維持するレガシーコードの混在がサポートされる。 個々の関数に適用可能な属性@code{force_align_arg_pointer}も参照せよ。
 
 @item -mpreferred-stack-boundary=@var{num}
 @opindex mpreferred-stack-boundary
-Attempt to keep the stack boundary aligned to a 2 raised to @var{num}
-byte boundary.  If @option{-mpreferred-stack-boundary} is not specified,
-the default is 4 (16 bytes or 128 bits).
+スタックの境界線を2の@var{num}乗バイト境界に合わせて整列させようとする。@option{-mpreferred-stack-boundary}が指定されていない場合、デフォルトは4（16バイトまたは128ビット）である。
 
-@strong{Warning:} When generating code for the x86-64 architecture with
-SSE extensions disabled, @option{-mpreferred-stack-boundary=3} can be
-used to keep the stack boundary aligned to 8 byte boundary.  Since
-x86-64 ABI require 16 byte stack alignment, this is ABI incompatible and
-intended to be used in controlled environment where stack space is
-important limitation.  This option leads to wrong code when functions
-compiled with 16 byte stack alignment (such as functions from a standard
-library) are called with misaligned stack.  In this case, SSE
-instructions may lead to misaligned memory access traps.  In addition,
-variable arguments are handled incorrectly for 16 byte aligned
-objects (including x87 long double and __int128), leading to wrong
-results.  You must build all modules with
-@option{-mpreferred-stack-boundary=3}, including any libraries.  This
-includes the system libraries and startup modules.
+@strong{警告:} SSE拡張機能を無効にしてx86-64アーキテクチャー用のコードを生成する場合、@option{-mpreferred-stack-boundary=3}を使用して、スタック境界を8バイト境界に揃えることができる。 x86-64 ABIは16バイトのスタックアライメントを必要とするため、ABIは互換性がなく、スタック領域が重要な制限である制御された環境で使用することを意図している このオプションは、16バイトのスタックアライメント（標準ライブラリの関数など）でコンパイルされた関数が、整列されていないスタックで呼び出されると、間違ったコードになる。 この場合、SSE命令は、不整合なメモリアクセストラップにつながる可能性がある。さらに、可変長引数は、16バイトの整列したオブジェクト（x87 long doubleと__int128を含む）に対して正しく処理されず、結果が正しくない。@option{-mpreferred-stack-boundary=3}（すべてのライブラリを含む）ですべてのモジュールをビルドする必要がある。 これには、システムライブラリと起動モジュールが含まれる。
 
 @item -mincoming-stack-boundary=@var{num}
 @opindex mincoming-stack-boundary
