@@ -19137,168 +19137,98 @@ PentiumとPentium Proでは、@code{double}と@code{long double}の値は8バイ
 
 @item -mrecip
 @opindex mrecip
-このオプションは、@code{DIVSS}の代わりに、精度を高めるために追加のNewton-Raphsonステップのある@code{RCPSS}命令と@code {RSQRTSS}命令（およびそのベクトル化された変形@code{RCPPS}と@code{RSQRTPS} }と@code{SQRTSS}（およびそれらのベクトル化されたバリアント）を使用する。 これらの命令は、@option{-funsafe-math-optimizations}が@option{-ffinite-math-only}と@option{-fno-trapping-math}とともに有効になっている場合にのみ生成される。シーケンスのスループットは、非相反命令のスループットよりも高いが、シーケンスの精度は2 ulpまで減少することある（すなわち、1.0の逆数は0.99999994に等しい）ことに注意すること。
+このオプションは、@code{DIVSS}の代わりに、精度を高めるために追加のNewton-Raphsonステップのある@code{RCPSS}命令と@code{RSQRTSS}命令（およびそのベクトル化された変形@code{RCPPS}と@code{RSQRTPS}と@code{SQRTSS}（およびそれらのベクトル化されたバリアント）を使用する。 これらの命令は、@option{-funsafe-math-optimizations}が@option{-ffinite-math-only}と@option{-fno-trapping-math}とともに有効になっている場合にのみ生成される。シーケンスのスループットは、非相反命令のスループットよりも高いが、シーケンスの精度は2 ulpまで減少することある（すなわち、1.0の逆数は0.99999994に等しい）ことに注意すること。
 
 GCCは@option{-fast-math}ではすでに@code{RSQRTSS}（または@code{RSQRTPS}）の観点から@code {1.0f/sqrtf(@var{x})}を実装しているので、@option{-mrecip}は必要ないことに注意すること。
 
-また、GCCは、既に@option{-ffast-math}（または上のオプション君合わせ）ではベクトル化された単精度浮動小数点数除算とベクトル化された@code{sqrtf(@var{x})}に対する追加のNewton-Raphsonステップ付きの上の列を生成するので、@option{-mrecip}は必要ないことに注意すること。で上記のシーケンスを出力することにも注意してください ）、@option {-mrecip}は必要ありません。
+また、GCCは、既に@option{-ffast-math}（または上のオプションの組み合わせ）ではベクトル化された単精度浮動小数点数除算とベクトル化された@code{sqrtf(@var{x})}に対する追加のNewton-Raphsonステップ付きの上の列を生成するので、@option{-mrecip}は必要ないことに注意すること。
 
 @item -mrecip=@var{opt}
 @opindex mrecip=opt
-This option controls which reciprocal estimate instructions
-may be used.  @var{opt} is a comma-separated list of options, which may
-be preceded by a @samp{!} to invert the option:
+このオプションは、どの逆数見積り命令を使用するかを制御する。 @var{opt}はコンマで区切られたオプションのリストである。オプションの前に@samp {!}を付けてオプションを反転することができる。
 
 @table @samp
 @item all
-Enable all estimate instructions.
+全推測命令を有効にする。
 
 @item default
-Enable the default instructions, equivalent to @option{-mrecip}.
+デフォルトの命令を有効にし、@option{-mrecip}と等価である。
 
 @item none
-Disable all estimate instructions, equivalent to @option{-mno-recip}.
+全推測命令を無効にし、@option{-mno-recip}と等価である。
 
 @item div
-Enable the approximation for scalar division.
+スカラー除算の近似を有効にする。
 
 @item vec-div
-Enable the approximation for vectorized division.
+ベクトル化除算の近似を有効にする。
 
 @item sqrt
-Enable the approximation for scalar square root.
+スカラー平方根の近似を有効にする。
 
 @item vec-sqrt
-Enable the approximation for vectorized square root.
+ベクトル化平方根の近似を有効にする。
 @end table
-
-So, for example, @option{-mrecip=all,!sqrt} enables
-all of the reciprocal approximations, except for square root.
+たとえば、@option{-mrecip=all, !sqrt}は、平方根を除き、すべての逆数近似を有効にする。
 
 @item -mveclibabi=@var{type}
 @opindex mveclibabi
-Specifies the ABI type to use for vectorizing intrinsics using an
-external library.  Supported values for @var{type} are @samp{svml} 
-for the Intel short
-vector math library and @samp{acml} for the AMD math core library.
-To use this option, both @option{-ftree-vectorize} and
-@option{-funsafe-math-optimizations} have to be enabled, and an SVML or ACML 
-ABI-compatible library must be specified at link time.
+外部ライブラリを使用して組み込み関数をベクトル化するために使用するABIタイプを指定する。 @var{type}にサポートされている値は、インテルの短いベクトル演算ライブラリの場合は@samp{svml}、AMD演算コアライブラリの場合は@samp{acml}である。このオプションを使用するには、@option{-ftree-vectorize}と@option{-funsafe-math-optimizations}の両方を有効にし、リンク時にSVMLまたはACML ABI互換ライブラリを指定する必要がある。
 
-GCC currently emits calls to @code{vmldExp2},
-@code{vmldLn2}, @code{vmldLog102}, @code{vmldLog102}, @code{vmldPow2},
-@code{vmldTanh2}, @code{vmldTan2}, @code{vmldAtan2}, @code{vmldAtanh2},
-@code{vmldCbrt2}, @code{vmldSinh2}, @code{vmldSin2}, @code{vmldAsinh2},
-@code{vmldAsin2}, @code{vmldCosh2}, @code{vmldCos2}, @code{vmldAcosh2},
-@code{vmldAcos2}, @code{vmlsExp4}, @code{vmlsLn4}, @code{vmlsLog104},
-@code{vmlsLog104}, @code{vmlsPow4}, @code{vmlsTanh4}, @code{vmlsTan4},
-@code{vmlsAtan4}, @code{vmlsAtanh4}, @code{vmlsCbrt4}, @code{vmlsSinh4},
-@code{vmlsSin4}, @code{vmlsAsinh4}, @code{vmlsAsin4}, @code{vmlsCosh4},
-@code{vmlsCos4}, @code{vmlsAcosh4} and @code{vmlsAcos4} for corresponding
-function type when @option{-mveclibabi=svml} is used, and @code{__vrd2_sin},
-@code{__vrd2_cos}, @code{__vrd2_exp}, @code{__vrd2_log}, @code{__vrd2_log2},
-@code{__vrd2_log10}, @code{__vrs4_sinf}, @code{__vrs4_cosf},
-@code{__vrs4_expf}, @code{__vrs4_logf}, @code{__vrs4_log2f},
-@code{__vrs4_log10f} and @code{__vrs4_powf} for the corresponding function type
-when @option{-mveclibabi=acml} is used.  
+GCCは現在、@option {-mveclibabi = svml}が使用されているときは対応する関数型用の@code{vmldExp2}, @code{vmldLn2}, @code{vmldLog102}, @code{vmldLog102}, @code{vmldPow2}, @code{vmldTanh2}, @code{vmldTan2}, @code{vmldAtan2}, @code{vmldAtanh2}, @code{vmldCbrt2}, @code{vmldSinh2}, @code{vmldSin2}, @code{vmldAsinh2}, @code{vmldAsin2}, @code{vmldCosh2}, @code{vmldCos2}, @code{vmldAcosh2}, @code{vmldAcos2}, @code{vmlsExp4}, @code{vmlsLn4}, @code{vmlsLog104}, @code{vmlsLog104}, @code{vmlsPow4}, @code{vmlsTanh4}, @code{vmlsTan4}, @code{vmlsAtan4}, @code{vmlsAtanh4}, @code{vmlsCbrt4}, @code{vmlsSinh4}, @code{vmlsSin4}, @code{vmlsAsinh4}, @code{vmlsAsin4}, @code{vmlsCosh4}, @code{vmlsCos4}, @code{vmlsAcosh4}, @code{vmlsAcos4}への呼び出しを@option{-mveclibabi=svml}が使われたときに使い、@code{__vrd2_sin}, @code{__vrd2_cos}, @code{__vrd2_exp}, @code{__vrd2_log}, @code{__vrd2_log2},
+@code{__vrd2_log10}, @code{__vrs4_sinf}, @code{__vrs4_cosf}, @code{__vrs4_expf}, @code{__vrs4_logf}, @code{__vrs4_log2f}, @code{__vrs4_log10f}, @code{__vrs4_powf}への対応する関数型用の呼び出しを、@option{-mveclibabi=acml}が使われたときに生成する。
 
 @item -mabi=@var{name}
 @opindex mabi
-Generate code for the specified calling convention.  Permissible values
-are @samp{sysv} for the ABI used on GNU/Linux and other systems, and
-@samp{ms} for the Microsoft ABI.  The default is to use the Microsoft
-ABI when targeting Microsoft Windows and the SysV ABI on all other systems.
-You can control this behavior for specific functions by
-using the function attributes @code{ms_abi} and @code{sysv_abi}.
-@xref{Function Attributes}.
+指定された呼び出し規約のコードを生成する。 GNU / Linuxなどのシステムで使用されるABIでは@samp{sysv}、Microsoft ABIでは@samp{ms}が許容値である。 デフォルトでは、Microsoft WindowsターゲットではMicrosoft ABIを使用し、他のすべてのシステムではSysV ABIを使う。関数の属性@code{ms_abi}と@code{sysv_abi}を使用すると、特定の関数のこの動作を制御できる。@xref{Function Attributes}.
 
 @item -mtls-dialect=@var{type}
 @opindex mtls-dialect
-Generate code to access thread-local storage using the @samp{gnu} or
-@samp{gnu2} conventions.  @samp{gnu} is the conservative default;
-@samp{gnu2} is more efficient, but it may add compile- and run-time
-requirements that cannot be satisfied on all systems.
+@samp{gnu}または@samp{gnu2}の規則を使用してスレッドローカルストレージにアクセスするコードを生成する。 @samp{gnu}は控えめなデフォルトである。 @samp{gnu2}はより効率的だが、すべてのシステムで満たすことができないコンパイルおよび実行時の要件が追加される可能性がある。
 
 @item -mpush-args
 @itemx -mno-push-args
 @opindex mpush-args
 @opindex mno-push-args
-Use PUSH operations to store outgoing parameters.  This method is shorter
-and usually equally fast as method using SUB/MOV operations and is enabled
-by default.  In some cases disabling it may improve performance because of
-improved scheduling and reduced dependencies.
+PUSH操作を使用して、送信パラメータを格納する。 この方法は、SUB / MOV操作を使用するメソッドよりも短く、通常は同等に高速で、既定で有効になっている。 ある場合にはこれを向こうにすることでスケジューリングが改善され、依存関係が減少するため、パフォーマンスを向上させる場合がある。
 
 @item -maccumulate-outgoing-args
 @opindex maccumulate-outgoing-args
-If enabled, the maximum amount of space required for outgoing arguments is
-computed in the function prologue.  This is faster on most modern CPUs
-because of reduced dependencies, improved scheduling and reduced stack usage
-when the preferred stack boundary is not equal to 2.  The drawback is a notable
-increase in code size.  This switch implies @option{-mno-push-args}.
+有効な場合、発信引数に必要な最大容量が関数プロローグで計算される。 これは、望まれるスタック境界が2に等しくない場合、依存性の減少、スケジューリングの改善、およびスタック使用率の低下のために、最新のCPUでは高速である。欠点はコードサイズが著しく増加することである。 このスイッチは、@option{-mno-push-args}を含む。
 
 @item -mthreads
 @opindex mthreads
-Support thread-safe exception handling on MinGW.  Programs that rely
-on thread-safe exception handling must compile and link all code with the
-@option{-mthreads} option.  When compiling, @option{-mthreads} defines
-@option{-D_MT}; when linking, it links in a special thread helper library
-@option{-lmingwthrd} which cleans up per-thread exception-handling data.
+MinGWでスレッドセーフな例外処理をサポートする。 スレッドセーフな例外処理に依存するプログラムは、すべてのコードをコンパイルし、@option{-mthreads}オプションでリンクする必要がある。 コンパイル時に、@option{-mthreads}は@option{-D_MT}を定義する。 リンクすると、スレッドごとの例外処理データをクリーンアップする特別なスレッドヘルパーライブラリ@option{-lmingwthrd}にリンクする。
 
 @item -mms-bitfields
 @itemx -mno-ms-bitfields
 @opindex mms-bitfields
 @opindex mno-ms-bitfields
 
-Enable/disable bit-field layout compatible with the native Microsoft
-Windows compiler.  
+ネイティブMicrosoft Windowsコンパイラと互換性のあるビットフィールドレイアウトを有効/無効にする。
 
-If @code{packed} is used on a structure, or if bit-fields are used,
-it may be that the Microsoft ABI lays out the structure differently
-than the way GCC normally does.  Particularly when moving packed
-data between functions compiled with GCC and the native Microsoft compiler
-(either via function call or as data in a file), it may be necessary to access
-either format.
+構造体で@code{packed}が使用されている場合、またはビットフィールドが使用されている場合は、Microsoft ABIがGCCの通常の方法とは異なる構造をレイアウトしている可能性がある。 特に、GCCでコンパイルされた関数とネイティブのMicrosoftコンパイラ（関数呼び出しまたはファイル内のデータ）の間でパックされたデータを移動する場合は、どちらの形式にもアクセスする必要がある。
 
-This option is enabled by default for Microsoft Windows
-targets.  This behavior can also be controlled locally by use of variable
-or type attributes.  For more information, see @ref{x86 Variable Attributes}
-and @ref{x86 Type Attributes}.
+このオプションは、Microsoft Windowsターゲットではデフォルトで有効になっている。 この動作は、変数または型の属性を使用してローカルで制御することもできる。さらなる情報は、@ref{x86 Variable Attributes}と@ref{x86 Type Attributes}.
 
-The Microsoft structure layout algorithm is fairly simple with the exception
-of the bit-field packing.  
-The padding and alignment of members of structures and whether a bit-field 
-can straddle a storage-unit boundary are determine by these rules:
+Microsoftの構造レイアウトアルゴリズムは、ビットフィールドパッキングを除いてかなり簡単である。構造体のメンバーのパディングとアライメント、およびビットフィールドがストレージユニットの境界をまたぐことができるかどうかは、次の規則によって決定される。
 
 @enumerate
-@item Structure members are stored sequentially in the order in which they are
-declared: the first member has the lowest memory address and the last member
-the highest.
+@item 構造体のメンバーは宣言された順番で順番に格納される。最初のメンバは最低のメモリアドレスを持ち、最後のメンバは最高のものを持つ。
 
-@item Every data object has an alignment requirement.  The alignment requirement
-for all data except structures, unions, and arrays is either the size of the
-object or the current packing size (specified with either the
-@code{aligned} attribute or the @code{pack} pragma),
-whichever is less.  For structures, unions, and arrays,
-the alignment requirement is the largest alignment requirement of its members.
-Every object is allocated an offset so that:
+@item すべてのデータオブジェクトにアラインメント要件がある。 構造体、共用体、および配列を除くすべてのデータの配置要件は、オブジェクトのサイズか、現在のパッキングサイズ（@code{aligned}属性または@code{pack}プラグマで指定）のいずれか小さい方である。 構造体、共用体、および配列の場合、配置要件は、そのメンバーの最大の配置要件である。すべてのオブジェクトには次のようにオフセットが割り当てられる。
 
 @smallexample
 offset % alignment_requirement == 0
 @end smallexample
 
-@item Adjacent bit-fields are packed into the same 1-, 2-, or 4-byte allocation
-unit if the integral types are the same size and if the next bit-field fits
-into the current allocation unit without crossing the boundary imposed by the
-common alignment requirements of the bit-fields.
+@item 整数型が同じサイズで、次のビットフィールドがビットフィールドの共通アラインメント要件によって課せられた境界を横切ることなく現在の割り当て単位に適合するならば、隣接するビットフィールドは同じ1バイト、2バイト、または4バイトの割り当て単位にパックされる 。
 @end enumerate
 
-MSVC interprets zero-length bit-fields in the following ways:
+MSVCは、次のようにゼロ長のビットフィールドを解釈する。
 
 @enumerate
-@item If a zero-length bit-field is inserted between two bit-fields that
-are normally coalesced, the bit-fields are not coalesced.
-
-For example:
+@item 通常合体された2つのビットフィールドの間に長さゼロのビットフィールドが挿入されている場合、ビットフィールドは結合されない。例えば：
 
 @smallexample
 struct
@@ -19310,8 +19240,7 @@ struct
 @end smallexample
 
 @noindent
-The size of @code{t1} is 8 bytes with the zero-length bit-field.  If the
-zero-length bit-field were removed, @code{t1}'s size would be 4 bytes.
+@code{t1}のサイズは、長さ0のビットフィールドを持つ8バイトである。 長さゼロのビットフィールドが削除された場合、@code{t1}のサイズは4バイトになる。
 
 @item If a zero-length bit-field is inserted after a bit-field, @code{foo}, and the
 alignment of the zero-length bit-field is greater than the member that follows it,
@@ -19336,21 +19265,14 @@ struct
 @end smallexample
 
 @noindent
-For @code{t2}, @code{bar} is placed at offset 2, rather than offset 1.
-Accordingly, the size of @code{t2} is 4.  For @code{t3}, the zero-length
-bit-field does not affect the alignment of @code{bar} or, as a result, the size
-of the structure.
+@code{t2}では、@code{bar}はオフセット1ではなくオフセット2に配置される。したがって、@code{t2}のサイズは4である。@code{t3}では、長さゼロのビットフィールドは@code{bar}のアライメントや構造体のサイズに影響しない。
 
-Taking this into account, it is important to note the following:
+これを考慮すると、次の点に注意することが重要である。
 
 @enumerate
-@item If a zero-length bit-field follows a normal bit-field, the type of the
-zero-length bit-field may affect the alignment of the structure as whole. For
-example, @code{t2} has a size of 4 bytes, since the zero-length bit-field follows a
-normal bit-field, and is of type short.
+@item ゼロ長のビットフィールドが通常のビットフィールドの後に続く場合、ゼロ長のビットフィールドのタイプは構造全体のアライメントに影響を与える可能性がある。 たとえば、@code{t2}は4バイトのサイズを持つ。なぜなら、長さゼロのビットフィールドは通常のビットフィールドの後ろにあり、short型であるからである。
 
-@item Even if a zero-length bit-field is not followed by a normal bit-field, it may
-still affect the alignment of the structure:
+@item 長さ0のビットフィールドの後に通常のビットフィールドが続くことがない場合でも、構造の配置にはまだ影響を与える可能性がある：
 
 @smallexample
 struct
@@ -19361,10 +19283,10 @@ struct
 @end smallexample
 
 @noindent
-Here, @code{t4} takes up 4 bytes.
+ここで、@code {t4}は4バイトを占める。
 @end enumerate
 
-@item Zero-length bit-fields following non-bit-field members are ignored:
+@item 非ビットフィールドメンバに続くゼロ長ビットフィールドは無視される。
 
 @smallexample
 struct
@@ -19376,48 +19298,39 @@ struct
 @end smallexample
 
 @noindent
-Here, @code{t5} takes up 2 bytes.
+ここで、@code {t5}は2バイトを占める。
 @end enumerate
 
 
 @item -mno-align-stringops
 @opindex mno-align-stringops
-Do not align the destination of inlined string operations.  This switch reduces
-code size and improves performance in case the destination is already aligned,
-but GCC doesn't know about it.
+インライン文字列操作の宛先を揃えない。 このスイッチは、宛先が既に整列されている場合にコードサイズを減らし、パフォーマンスを向上させるが、GCCはそれを知らない。
 
 @item -minline-all-stringops
 @opindex minline-all-stringops
-By default GCC inlines string operations only when the destination is 
-known to be aligned to least a 4-byte boundary.  
-This enables more inlining and increases code
-size, but may improve performance of code that depends on fast
-@code{memcpy}, @code{strlen},
-and @code{memset} for short lengths.
+デフォルトでは、GCCは、宛先が少なくとも4バイトの境界に位置合わせされていることがわかっている場合にのみ文字列操作をインライン化する。これにより、より多くのインライン化が可能になり、コードサイズは増加するが、短縮された長さの@code{memcpy}、@code{strlen}、@code{memset}に依存するコードのパフォーマンスが向上する可能性がある。
 
 @item -minline-stringops-dynamically
 @opindex minline-stringops-dynamically
-For string operations of unknown size, use run-time checks with
-inline code for small blocks and a library call for large blocks.
+不明なサイズの文字列操作では、小さなブロックのインラインコードと大きなブロックのライブラリ呼び出しを含む実行時検査を使用する。
 
 @item -mstringop-strategy=@var{alg}
 @opindex mstringop-strategy=@var{alg}
-Override the internal decision heuristic for the particular algorithm to use
-for inlining string operations.  The allowed values for @var{alg} are:
+文字列操作のインライン化に使用する特定のアルゴリズムの内部決定ヒューリスティックをオーバーライドする。 @var{alg}に許される値は次のとおりである：
 
 @table @samp
 @item rep_byte
 @itemx rep_4byte
 @itemx rep_8byte
-Expand using i386 @code{rep} prefix of the specified size.
+指定したサイズのi386接頭辞@code {rep}を使用して展開する。
 
 @item byte_loop
 @itemx loop
 @itemx unrolled_loop
-Expand into an inline loop.
+インラインループに展開する。
 
 @item libcall
-Always use a library call.
+常にライブラリ呼び出しを使用する。
 @end table
 
 @item -mmemcpy-strategy=@var{strategy}
