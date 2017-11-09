@@ -19509,15 +19509,15 @@ x86-64コードで、いわゆる「レッドゾーン」を使用しない。�
 標準オプションについては、@ref {x86 Options}も参照せよ。
 
 @node Xstormy16 Options
-@subsection Xstormy16 Options
+@subsection Xstormy16オプション
 @cindex Xstormy16 Options
 
-These options are defined for Xstormy16:
+これらのオプションはXstormy16で定義されている：
 
 @table @gcctabopt
 @item -msim
 @opindex msim
-Choose startup files and linker script suitable for the simulator.
+シミュレータに適した起動ファイルとリンカスクリプトを選択する。
 @end table
 
 @node Xtensa Options
