@@ -19335,122 +19335,77 @@ struct
 
 @item -mmemcpy-strategy=@var{strategy}
 @opindex mmemcpy-strategy=@var{strategy}
-Override the internal decision heuristic to decide if @code{__builtin_memcpy}
-should be inlined and what inline algorithm to use when the expected size
-of the copy operation is known. @var{strategy} 
-is a comma-separated list of @var{alg}:@var{max_size}:@var{dest_align} triplets. 
-@var{alg} is specified in @option{-mstringop-strategy}, @var{max_size} specifies
-the max byte size with which inline algorithm @var{alg} is allowed.  For the last
-triplet, the @var{max_size} must be @code{-1}. The @var{max_size} of the triplets
-in the list must be specified in increasing order.  The minimal byte size for 
-@var{alg} is @code{0} for the first triplet and @code{@var{max_size} + 1} of the 
-preceding range.
+@code{__ builtin_memcpy}をインライン化するかどうかを、コピー操作の予想されるサイズがわかっているときに使用するインラインアルゴリズムを決定するための、内部決定のヒューリスティックをオーバーライドする。 @var{strategy}は@var{alg}:@var{max_size}:@var{dest_align}の三つ組のコンマで区切られたリストである。@var{alg}は@option{-mstringop-strategy}で指定され、@var{max_size}はインラインアルゴリズム@var{alg}が許可される最大バイトサイズを指定する。 最後のトリプレットの場合、@var{max_size}は@code{-1}でなければならない。 リスト内のトリプレットの@var{max_size}は、昇順で指定する必要がある。 @var{alg}の最小バイトサイズは、最初のトリプレットの場合は@code{0}、前の範囲の@code{@var{max_size}+1}である。
 
 @item -mmemset-strategy=@var{strategy}
 @opindex mmemset-strategy=@var{strategy}
-The option is similar to @option{-mmemcpy-strategy=} except that it is to control
-@code{__builtin_memset} expansion.
+このオプションは@code{__ builtin_memset}拡張を制御する以外は@option{-mmemcpy-strategy=}と似ている。
 
 @item -momit-leaf-frame-pointer
 @opindex momit-leaf-frame-pointer
-Don't keep the frame pointer in a register for leaf functions.  This
-avoids the instructions to save, set up, and restore frame pointers and
-makes an extra register available in leaf functions.  The option
-@option{-fomit-leaf-frame-pointer} removes the frame pointer for leaf functions,
-which might make debugging harder.
+リーフ機能用のレジスタにフレームポインタを保持しない。 これにより、命令がフレームポインタのセーブ、セットアップ、および復元を回避し、リーフ機能で余分なレジスタを利用できるようになる。 オプション@option{-fomit-leaf-frame-pointer}は、リーフ関数のフレームポインタを削除する。これにより、デバッグが難しくなる可能性がある。
 
 @item -mtls-direct-seg-refs
 @itemx -mno-tls-direct-seg-refs
 @opindex mtls-direct-seg-refs
-Controls whether TLS variables may be accessed with offsets from the
-TLS segment register (@code{%gs} for 32-bit, @code{%fs} for 64-bit),
-or whether the thread base pointer must be added.  Whether or not this
-is valid depends on the operating system, and whether it maps the
-segment to cover the entire TLS area.
+TLSセグメントレジスタ（32ビットの場合は@code{％gs}、64ビットの場合は@code{％fs}）からのオフセットを使用してTLS変数にアクセスできるかどうか、スレッドベースポインタを追加する必要があるかどうかを制御する。 これが有効かどうかは、オペレーティングシステムによって異なり、TLSエリア全体をカバーするようにセグメントをマップするかどうかによって異なる。
 
-For systems that use the GNU C Library, the default is on.
+GNU Cライブラリを使用するシステムの場合、デフォルトはオンである。
 
 @item -msse2avx
 @itemx -mno-sse2avx
 @opindex msse2avx
-Specify that the assembler should encode SSE instructions with VEX
-prefix.  The option @option{-mavx} turns this on by default.
+アセンブラがVEX接頭辞付きSSE命令をエンコードするように指定する。 @option{-mavx}オプションは、デフォルトでこれを有効にする。
 
 @item -mfentry
 @itemx -mno-fentry
 @opindex mfentry
-If profiling is active (@option{-pg}), put the profiling
-counter call before the prologue.
-Note: On x86 architectures the attribute @code{ms_hook_prologue}
-isn't possible at the moment for @option{-mfentry} and @option{-pg}.
+プロファイリングがアクティブな場合（@option{-pg}）、プロファイリングカウンタの呼び出しをプロローグの前に置く。
+注：x86アーキテクチャでは、@option{-mfentry}と@option{-pg}の属性@code {ms_hook_prologue}は現時点では不可能である。
 
 @item -mrecord-mcount
 @itemx -mno-record-mcount
 @opindex mrecord-mcount
-If profiling is active (@option{-pg}), generate a __mcount_loc section
-that contains pointers to each profiling call. This is useful for
-automatically patching and out calls.
+プロファイリングがアクティブな場合（@option{-pg}）、各プロファイリングコールへのポインタを含む__mcount_locセクションを生成する。 これは、自動的にパッチを当てたり、呼び出しを外したりする場合に便利である。
 
 @item -mnop-mcount
 @itemx -mno-nop-mcount
 @opindex mnop-mcount
-If profiling is active (@option{-pg}), generate the calls to
-the profiling functions as NOPs. This is useful when they
-should be patched in later dynamically. This is likely only
-useful together with @option{-mrecord-mcount}.
+プロファイリングがアクティブな場合（@option{-pg}）、プロファイリング関数への呼び出しをNOPとして生成する。 これは、あとで動的にパッチを適用する必要がある場合に便利である。 これはおそらく@option{-mrecord-mcount}と一緒に使うと便利である。
 
 @item -mskip-rax-setup
 @itemx -mno-skip-rax-setup
 @opindex mskip-rax-setup
-When generating code for the x86-64 architecture with SSE extensions
-disabled, @option{-mskip-rax-setup} can be used to skip setting up RAX
-register when there are no variable arguments passed in vector registers.
+SSE拡張機能を無効にしてx86-64アーキテクチャ用のコードを生成するとき、可変引数がベクタレジスタに渡されていないときは、@option{-mskip-rax-setup}を使用してRAXレジスタの設定をスキップできる。
 
-@strong{Warning:} Since RAX register is used to avoid unnecessarily
-saving vector registers on stack when passing variable arguments, the
-impacts of this option are callees may waste some stack space,
-misbehave or jump to a random location.  GCC 4.4 or newer don't have
-those issues, regardless the RAX register value.
+@strong{警告:} RAXレジスタは、可変引数を渡すときにスタック上のベクトルレジスタを不必要に節約するのを避けるために使用されるため、呼び出し先がスタックスペースを無駄にしたり、ランダムな場所にジャンプしたりする可能性がある。 GCC 4.4以降には、RAXレジスタの値に関係なく、これらの問題はない。
 
 @item -m8bit-idiv
 @itemx -mno-8bit-idiv
 @opindex m8bit-idiv
-On some processors, like Intel Atom, 8-bit unsigned integer divide is
-much faster than 32-bit/64-bit integer divide.  This option generates a
-run-time check.  If both dividend and divisor are within range of 0
-to 255, 8-bit unsigned integer divide is used instead of
-32-bit/64-bit integer divide.
+Intel Atomのような一部のプロセッサでは、8ビット符号なし整数除算は32ビット/ 64ビット整数除算よりもはるかに高速である。 このオプションは、実行時チェックを生成する。 被除数と除数の両方が0〜255の範囲内にある場合、32ビット/ 64ビット整数除算の代わりに8ビット符号なし整数除算が使用される。
 
 @item -mavx256-split-unaligned-load
 @itemx -mavx256-split-unaligned-store
 @opindex mavx256-split-unaligned-load
 @opindex mavx256-split-unaligned-store
-Split 32-byte AVX unaligned load and store.
+32バイトのAVXのアラインメントされていないロードとストアを分割する。
 
 @item -mstack-protector-guard=@var{guard}
 @opindex mstack-protector-guard=@var{guard}
-Generate stack protection code using canary at @var{guard}.  Supported
-locations are @samp{global} for global canary or @samp{tls} for per-thread
-canary in the TLS block (the default).  This option has effect only when
-@option{-fstack-protector} or @option{-fstack-protector-all} is specified.
+@var{guard}にカナリアを使用してスタック保護コードを生成する。サポートされている場所は、グローバルカナリアンの@samp{global}およびTLSブロック内のスレッドカナリアン（デフォルト）の@samp{tls}である。このオプションは、@option{-fstack-protector}または@option{-fstack-protector-all}が指定されている場合にのみ有効である。
 
 @item -mmitigate-rop
 @opindex mmitigate-rop
-Try to avoid generating code sequences that contain unintended return
-opcodes, to mitigate against certain forms of attack. At the moment,
-this option is limited in what it can do and should not be relied
-on to provide serious protection.
+意図しないリターンオペコードを含むコードシーケンスを生成しないようにして、特定の攻撃の形態を緩和する。 現時点では、このオプションはできることで制限されていて、重大な保護を提供するためには信頼されるべきではない。
 
 @item -mgeneral-regs-only
 @opindex mgeneral-regs-only
-Generate code that uses only the general-purpose registers.  This
-prevents the compiler from using floating-point, vector, mask and bound
-registers.
+汎用レジスタのみを使用するコードを生成する。 これにより、コンパイラは浮動小数点、ベクトル、マスク、およびバウンドレジスタを使用できなくなる。
 
 @end table
 
-These @samp{-m} switches are supported in addition to the above
-on x86-64 processors in 64-bit environments.
+上記に加えて、これらの@samp {-m}スイッチは、64ビット環境のx86-64プロセッサ上でサポートされている。
 
 @table @gcctabopt
 @item -m32
@@ -19463,72 +19418,43 @@ on x86-64 processors in 64-bit environments.
 @opindex mx32
 @opindex m16
 @opindex miamcu
-Generate code for a 16-bit, 32-bit or 64-bit environment.
-The @option{-m32} option sets @code{int}, @code{long}, and pointer types
-to 32 bits, and
-generates code that runs on any i386 system.
+16ビット、32ビット、または64ビット環境用のコードを生成する。@option{-m32}オプションは、@code {int}、@code{long}、およびポインタ型を32ビットに設定し、任意のi386システムで実行されるコードを生成する。
 
-The @option{-m64} option sets @code{int} to 32 bits and @code{long} and pointer
-types to 64 bits, and generates code for the x86-64 architecture.
-For Darwin only the @option{-m64} option also turns off the @option{-fno-pic}
-and @option{-mdynamic-no-pic} options.
+@option{-m64}オプションは、@code{int}を32ビットに、@code{long}とポインタ型を64ビットに設定し、x86-64アーキテクチャ用のコードを生成する。Darwinの場合、@option{-m64}オプションは@option{-fno-pic}と@option{-mdynamic-no-pic}オプションも無効にする。
 
-The @option{-mx32} option sets @code{int}, @code{long}, and pointer types
-to 32 bits, and
-generates code for the x86-64 architecture.
+@option{-mx32}オプションは、@code{int}、@code{long}、ポインタ型を32ビットに設定し、x86-64アーキテクチャ用のコードを生成する。
 
-The @option{-m16} option is the same as @option{-m32}, except for that
-it outputs the @code{.code16gcc} assembly directive at the beginning of
-the assembly output so that the binary can run in 16-bit mode.
+@option{-m16}オプションは@option{-m32}と同じだが、アセンブリ出力の先頭に@code{.code16gcc}アセンブリディレクティブを出力し、バイナリを16ビットモードで実行できるようにする 。
 
-The @option{-miamcu} option generates code which conforms to Intel MCU
-psABI.  It requires the @option{-m32} option to be turned on.
+@option{-miamcu}オプションはIntel MCU psABIに準拠したコードを生成する。 @option{-m32}オプションをオンにする必要がある。
 
 @item -mno-red-zone
 @opindex mno-red-zone
-Do not use a so-called ``red zone'' for x86-64 code.  The red zone is mandated
-by the x86-64 ABI; it is a 128-byte area beyond the location of the
-stack pointer that is not modified by signal or interrupt handlers
-and therefore can be used for temporary data without adjusting the stack
-pointer.  The flag @option{-mno-red-zone} disables this red zone.
+x86-64コードで、いわゆる「レッドゾーン」を使用しない。レッドゾーンは、x86-64 ABIによって必須であり、シグナルによって変更されないスタックポインタの場所を超える128バイトの領域である。@option{-mno-red-zone}フラグは、このレッドゾーンを無効にする。
 
 @item -mcmodel=small
 @opindex mcmodel=small
-Generate code for the small code model: the program and its symbols must
-be linked in the lower 2 GB of the address space.  Pointers are 64 bits.
-Programs can be statically or dynamically linked.  This is the default
-code model.
+小さなコードモデル用のコードを生成する：プログラムとそのシンボルは、アドレス空間の下位2 GBにリンクされている必要がある。 ポインタは64ビットである。プログラムは静的または動的にリンクできる。 これがデフォルトコードモデルである。
 
 @item -mcmodel=kernel
 @opindex mcmodel=kernel
-Generate code for the kernel code model.  The kernel runs in the
-negative 2 GB of the address space.
-This model has to be used for Linux kernel code.
+カーネルコードモデル用のコードを生成する。 カーネルは負の2 GBのアドレス空間で動作する。 このモデルは、Linuxのカーネルコードで使用する必要がある。
 
 @item -mcmodel=medium
 @opindex mcmodel=medium
-Generate code for the medium model: the program is linked in the lower 2
-GB of the address space.  Small symbols are also placed there.  Symbols
-with sizes larger than @option{-mlarge-data-threshold} are put into
-large data or BSS sections and can be located above 2GB.  Programs can
-be statically or dynamically linked.
+中間モデル用のコードを生成する。プログラムはアドレス空間の下位2GBにリンクされる。 小さなシンボルもそこに配置される。 @option{-mlarge-data-threshold}より大きいサイズのシンボルは、大量のデータまたはBSSセクションに格納され、2GBを超える場所に配置できる。 プログラムは静的または動的にリンクできる。
 
 @item -mcmodel=large
 @opindex mcmodel=large
-Generate code for the large model.  This model makes no assumptions
-about addresses and sizes of sections.
+大型モデル用のコードを生成する。 このモデルでは、セクションのアドレスとサイズについて前提はない。
 
 @item -maddress-mode=long
 @opindex maddress-mode=long
-Generate code for long address mode.  This is only supported for 64-bit
-and x32 environments.  It is the default address mode for 64-bit
-environments.
+ロングアドレスモード用のコードを生成する。 これは、64ビットおよびx32環境でのみサポートされている。 これは、64ビット環境のデフォルトアドレスモードである。
 
 @item -maddress-mode=short
 @opindex maddress-mode=short
-Generate code for short address mode.  This is only supported for 32-bit
-and x32 environments.  It is the default address mode for 32-bit and
-x32 environments.
+ショートアドレスモード用のコードを生成する。 これは、32ビットおよびx32環境でのみサポートされている。 これは、32ビットおよびx32環境のデフォルトアドレスモードである。
 @end table
 
 @node x86 Windows Options
