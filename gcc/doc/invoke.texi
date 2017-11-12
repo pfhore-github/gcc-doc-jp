@@ -19575,10 +19575,10 @@ GNU/Linuxのようなターゲット用に、すべてのユーザモードXtens
 @end table
 
 @node zSeries Options
-@subsection zSeries Options
+@subsection zSeriesオプション
 @cindex zSeries options
 
-These are listed under @xref{S/390 and zSeries Options}.
+@xref{S/390 and zSeries Options}でリストされている。
 
 
 @c man end
