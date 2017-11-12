@@ -19521,117 +19521,57 @@ x86-64コードで、いわゆる「レッドゾーン」を使用しない。�
 @end table
 
 @node Xtensa Options
-@subsection Xtensa Options
+@subsection Xtensaオプション
 @cindex Xtensa Options
 
-These options are supported for Xtensa targets:
+これらのオプションは、Xtensaターゲットでサポートされている。
 
 @table @gcctabopt
 @item -mconst16
 @itemx -mno-const16
 @opindex mconst16
 @opindex mno-const16
-Enable or disable use of @code{CONST16} instructions for loading
-constant values.  The @code{CONST16} instruction is currently not a
-standard option from Tensilica.  When enabled, @code{CONST16}
-instructions are always used in place of the standard @code{L32R}
-instructions.  The use of @code{CONST16} is enabled by default only if
-the @code{L32R} instruction is not available.
+定数値をロードするための@code{CONST16}命令の使用を有効または無効にする。 @code{CONST16}命令は現在、Tensilicaの標準オプションではない。 有効にすると、標準の@code{L32R}命令の代わりに@code{CONST16}命令が常に使用される。 @code{L32R}命令が利用できない場合に限り、@code{CONST16}の使用はデフォルトで有効になる。
 
 @item -mfused-madd
 @itemx -mno-fused-madd
 @opindex mfused-madd
 @opindex mno-fused-madd
-Enable or disable use of fused multiply/add and multiply/subtract
-instructions in the floating-point option.  This has no effect if the
-floating-point option is not also enabled.  Disabling fused multiply/add
-and multiply/subtract instructions forces the compiler to use separate
-instructions for the multiply and add/subtract operations.  This may be
-desirable in some cases where strict IEEE 754-compliant results are
-required: the fused multiply add/subtract instructions do not round the
-intermediate result, thereby producing results with @emph{more} bits of
-precision than specified by the IEEE standard.  Disabling fused multiply
-add/subtract instructions also ensures that the program output is not
-sensitive to the compiler's ability to combine multiply and add/subtract
-operations.
+浮動小数点オプションで、融合乗算/加算および乗算/減算命令の使用を有効または無効にする。 浮動小数点オプションも有効になっていない場合は、これは無効である。 融合乗算/加算および乗算/減算命令を無効にすると、コンパイラは乗算演算および加算/減算演算に別々の命令を使用する。これは、厳密なIEEE 754準拠の結果が必要な場合に望ましい場合がある。融合乗算加算/減算命令は中間結果を丸めないため、IEEE標準で指定された精度よりも@emph{_多い_}ビットの精度で結果を生成する。また、積和加算/減算命令を無効にすることで、プログラムの出力が、乗算と加算/減算の演算を組み合わせるコンパイラの能力に影響されないことが保証される。
 
 @item -mserialize-volatile
 @itemx -mno-serialize-volatile
 @opindex mserialize-volatile
 @opindex mno-serialize-volatile
-When this option is enabled, GCC inserts @code{MEMW} instructions before
-@code{volatile} memory references to guarantee sequential consistency.
-The default is @option{-mserialize-volatile}.  Use
-@option{-mno-serialize-volatile} to omit the @code{MEMW} instructions.
+このオプションを有効にすると、GCCはシーケンシャル一貫性を保証するために@code{MEMW}命令を@code{volatile}メモリ参照の前に挿入する。デフォルトは@option{-mserialize-volatile}である。@code{MEMW}命令を省略するには、@option{-mno-serialize-volatile}を使用する。
 
 @item -mforce-no-pic
 @opindex mforce-no-pic
-For targets, like GNU/Linux, where all user-mode Xtensa code must be
-position-independent code (PIC), this option disables PIC for compiling
-kernel code.
+GNU/Linuxのようなターゲット用に、すべてのユーザモードXtensaコードが位置独立コード（PIC）でなければならない場合、このオプションはカーネルコードをコンパイルするためにPICを無効にする。
 
 @item -mtext-section-literals
 @itemx -mno-text-section-literals
 @opindex mtext-section-literals
 @opindex mno-text-section-literals
-These options control the treatment of literal pools.  The default is
-@option{-mno-text-section-literals}, which places literals in a separate
-section in the output file.  This allows the literal pool to be placed
-in a data RAM/ROM, and it also allows the linker to combine literal
-pools from separate object files to remove redundant literals and
-improve code size.  With @option{-mtext-section-literals}, the literals
-are interspersed in the text section in order to keep them as close as
-possible to their references.  This may be necessary for large assembly
-files.  Literals for each function are placed right before that function.
+これらのオプションは、リテラルプールの処理を制御する。 デフォルトは@option{-mno-text-section-literals}で、リテラルは出力ファイルの別のセクションに配置される。 これにより、リテラルプールをデータRAM/ROMに配置することができる。また、リンカーは別々のオブジェクトファイルからのリテラルプールを結合してリテラルを削除し、コードサイズを改善することもできる。 @option{-mtext-section-literals}では、リテラルはテキストセクションに散在して、できるだけそれらの参照にできるだけ近づける。 これは、大規模なアセンブリファイルに必要な場合がある。 各関数のリテラルは、その関数の直前に配置される。
 
 @item -mauto-litpools
 @itemx -mno-auto-litpools
 @opindex mauto-litpools
 @opindex mno-auto-litpools
-These options control the treatment of literal pools.  The default is
-@option{-mno-auto-litpools}, which places literals in a separate
-section in the output file unless @option{-mtext-section-literals} is
-used.  With @option{-mauto-litpools} the literals are interspersed in
-the text section by the assembler.  Compiler does not produce explicit
-@code{.literal} directives and loads literals into registers with
-@code{MOVI} instructions instead of @code{L32R} to let the assembler
-do relaxation and place literals as necessary.  This option allows
-assembler to create several literal pools per function and assemble
-very big functions, which may not be possible with
-@option{-mtext-section-literals}.
+これらのオプションは、リテラルプールの処理を制御する。デフォルトは@option{-mno-auto-litpools}で、@option{-mtext-section-literals}が使われていない限り、リテラルを出力ファイルの別のセクションに置く。 @option{-mauto-litpools}を使用すると、リテラルはアセンブラによってテキストセクションに散在する。コンパイラは明示的な@code {.literal}指令を生成せず、アセンブラが緩和を行い、必要に応じてリテラルを置くために@code{L32R}ではなく@code{MOVI}命令でレジスタにリテラルをロードする。このオプションを使用すると、アセンブラは関数ごとに複数のリテラルプールを作成し、@option{-mtext-section-literals}では不可能な非常に大きな関数をアセンブルすることができる。
 
 @item -mtarget-align
 @itemx -mno-target-align
 @opindex mtarget-align
 @opindex mno-target-align
-When this option is enabled, GCC instructs the assembler to
-automatically align instructions to reduce branch penalties at the
-expense of some code density.  The assembler attempts to widen density
-instructions to align branch targets and the instructions following call
-instructions.  If there are not enough preceding safe density
-instructions to align a target, no widening is performed.  The
-default is @option{-mtarget-align}.  These options do not affect the
-treatment of auto-aligned instructions like @code{LOOP}, which the
-assembler always aligns, either by widening density instructions or
-by inserting NOP instructions.
+このオプションを有効にすると、GCCはコード密度を犠牲にして分岐ペナルティを減らすために命令を自動的に整列させるようにアセンブラに指示する。アセンブラは、分岐命令と呼び出し命令に続く命令を整列させるために密度命令を拡張しようとする。 ターゲットを整列させるのに先行する安全密度命令が十分でない場合、拡幅は行われない。デフォルトは@option{-mtarget-align}である。 これらのオプションは、@code{LOOP}のようなオートアライメントされた命令の処理には影響しない。アセンブラは、密度命令を広げたり、NOP命令を挿入したりして、常に整列する。
 
 @item -mlongcalls
 @itemx -mno-longcalls
 @opindex mlongcalls
 @opindex mno-longcalls
-When this option is enabled, GCC instructs the assembler to translate
-direct calls to indirect calls unless it can determine that the target
-of a direct call is in the range allowed by the call instruction.  This
-translation typically occurs for calls to functions in other source
-files.  Specifically, the assembler translates a direct @code{CALL}
-instruction into an @code{L32R} followed by a @code{CALLX} instruction.
-The default is @option{-mno-longcalls}.  This option should be used in
-programs where the call target can potentially be out of range.  This
-option is implemented in the assembler, not the compiler, so the
-assembly code generated by GCC still shows direct call
-instructions---look at the disassembled object code to see the actual
-instructions.  Note that the assembler uses an indirect call for
-every cross-file call, not just those that really are out of range.
+このオプションを有効にすると、GCCはダイレクトコールのターゲットがコール命令で許可された範囲内にあると判断できない限り、ダイレクトコールを間接呼び出しに変換するようにアセンブラに指示する。この変換は、通常、他のソースファイル内の関数への呼び出しで発生する。 具体的には、アセンブラは直接@code{CALL}命令を@code{L32R}と@code{CALLX}命令に変換する。デフォルトは@option{-mno-longcalls}である。このオプションは、コールターゲットが潜在的に範囲外になる可能性のあるプログラムで使用する必要がある。このオプションはコンパイラではなくアセンブラで実装されているので、GCCによって生成されたアセンブリコードはダイレクトコール命令を表示する。実際の命令を見るために逆アセンブルされたオブジェクトコードを見ること。アセンブラは、本当に範囲外のものだけでなく、クロスファイルコールごとに間接呼び出しを使用することに注意せよ。
 @end table
 
 @node zSeries Options
