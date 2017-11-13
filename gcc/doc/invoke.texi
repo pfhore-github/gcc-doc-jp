@@ -19584,128 +19584,89 @@ GNU/Linuxのようなターゲット用に、すべてのユーザモードXtens
 @c man end
 
 @node Spec Files
-@section Specifying Subprocesses and the Switches to Pass to Them
+@section サブプロセスとスイッチを指定してそれらに渡す
 @cindex Spec Files
 
-@command{gcc} is a driver program.  It performs its job by invoking a
-sequence of other programs to do the work of compiling, assembling and
-linking.  GCC interprets its command-line parameters and uses these to
-deduce which programs it should invoke, and which command-line options
-it ought to place on their command lines.  This behavior is controlled
-by @dfn{spec strings}.  In most cases there is one spec string for each
-program that GCC can invoke, but a few programs have multiple spec
-strings to control their behavior.  The spec strings built into GCC can
-be overridden by using the @option{-specs=} command-line switch to specify
-a spec file.
+@command{gcc}はドライバプログラムである。 コンパイル、アセンブル、およびリンクの作業を行うために、他のプログラムのシーケンスを呼び出すことによって、そのジョブを実行する。 GCCはコマンドラインパラメータを解釈し、どのプログラムを呼び出すべきか、そしてコマンドラインにどのコマンドラインオプションを置くべきかを推測するためにこれらのパラメータを使用する。この動作は@dfn{spec strings}（仕様文字列）によって制御される。 ほとんどの場合、GCCが呼び出すことができるプログラムごとに1つの仕様文字列があるが、いくつかのプログラムでは、その動作を制御する複数の仕様文字列がありる。 GCCに組み込まれている仕様文字列は、@option{-specs=}コマンドラインスイッチを使用して仕様ファイルを指定することで上書きすることができる。
 
-@dfn{Spec files} are plain-text files that are used to construct spec
-strings.  They consist of a sequence of directives separated by blank
-lines.  The type of directive is determined by the first non-whitespace
-character on the line, which can be one of the following:
+@dfn{Spec files}（仕様ファイル）は、仕様文字列の作成に使用されるプレーンテキストファイルである。それらは空白行で区切られた一連のディレクティブで構成されている。  ディレクティブのタイプは、行の最初の非空白文字によって決まる。次のいずれかになる。
 
 @table @code
 @item %@var{command}
-Issues a @var{command} to the spec file processor.  The commands that can
-appear here are:
+@var{command}を仕様ファイル・プロセッサーに発行する。 ここに表示されるコマンドは次のとおりである。
 
 @table @code
 @item %include <@var{file}>
 @cindex @code{%include}
-Search for @var{file} and insert its text at the current point in the
-specs file.
+@var{file}を検索し、仕様ファイルの現在の点にテキストを挿入します。
 
 @item %include_noerr <@var{file}>
 @cindex @code{%include_noerr}
-Just like @samp{%include}, but do not generate an error message if the include
-file cannot be found.
+@samp{％include}と似ていますが、インクルードファイルが見つからない場合はエラーメッセージを生成しない。
 
 @item %rename @var{old_name} @var{new_name}
 @cindex @code{%rename}
-Rename the spec string @var{old_name} to @var{new_name}.
+@var{old_name}を@var{new_name}に変更する。
 
 @end table
 
 @item *[@var{spec_name}]:
-This tells the compiler to create, override or delete the named spec
-string.  All lines after this directive up to the next directive or
-blank line are considered to be the text for the spec string.  If this
-results in an empty string then the spec is deleted.  (Or, if the
-spec did not exist, then nothing happens.)  Otherwise, if the spec
-does not currently exist a new spec is created.  If the spec does
-exist then its contents are overridden by the text of this
-directive, unless the first character of that text is the @samp{+}
-character, in which case the text is appended to the spec.
+これは、指定されたspec文字列を作成、上書き、または削除するようにコンパイラに指示する。このディレクティブの次のディレクティブまたは空白行までのすべての行は、仕様文字列のテキストとみなされる。この結果が空の文字列の場合、仕様は削除される。 （または、仕様が存在しない場合、何も起こらない。）それ以外の場合、仕様が現在存在しない場合は、新しい仕様が作成される。仕様が存在する場合、その内容は、このテキストの最初の文字が@samp{+}文字でない限り、このディレクティブのテキストによって上書きされる。この場合、テキストは仕様に追加される。
 
 @item [@var{suffix}]:
-Creates a new @samp{[@var{suffix}] spec} pair.  All lines after this directive
-and up to the next directive or blank line are considered to make up the
-spec string for the indicated suffix.  When the compiler encounters an
-input file with the named suffix, it processes the spec string in
-order to work out how to compile that file.  For example:
+新しい@samp{[@var{suffix}] spec}のペアを作成する。このディレクティブの後の次のディレクティブまたは空白行までのすべての行は、指定されたサフィックスの仕様文字列を構成すると見なされる。コンパイラが名前付きサフィックスを持つ入力ファイルを検出すると、そのファイルをコンパイルする方法を理解するために仕様文字列を処理する。 例えば：
 
 @smallexample
 .ZZ:
 z-compile -input %i
 @end smallexample
 
-This says that any input file whose name ends in @samp{.ZZ} should be
-passed to the program @samp{z-compile}, which should be invoked with the
-command-line switch @option{-input} and with the result of performing the
-@samp{%i} substitution.  (See below.)
+これは、名前が@samp{.ZZ}で終わる入力ファイルは@samp{z-compile}プログラムに渡されなければならず、これはコマンドラインスイッチ@option{-input}と結果@samp {％i}置換を実行する。 （下記参照。）
 
-As an alternative to providing a spec string, the text following a
-suffix directive can be one of the following:
+仕様文字列を提供する代わりに、接尾辞ディレクティブに続くテキストは、次のいずれかになる。
 
 @table @code
 @item @@@var{language}
-This says that the suffix is an alias for a known @var{language}.  This is
-similar to using the @option{-x} command-line switch to GCC to specify a
-language explicitly.  For example:
+これは、接尾辞が既知の@var{language}のエイリアスであることを示している。 これは、GCCへの@option{-x}コマンドラインスイッチを使用して明示的に言語を指定するのと同様である。 例えば：
 
 @smallexample
 .ZZ:
 @@c++
 @end smallexample
 
-Says that .ZZ files are, in fact, C++ source files.
+ZZファイルは実際にはC ++ソースファイルだと言う。
 
 @item #@var{name}
-This causes an error messages saying:
+これにより、次のようなエラーメッセージが表示される。
 
 @smallexample
 @var{name} compiler not installed on this system.
 @end smallexample
 @end table
 
-GCC already has an extensive list of suffixes built into it.
-This directive adds an entry to the end of the list of suffixes, but
-since the list is searched from the end backwards, it is effectively
-possible to override earlier entries using this technique.
+GCCは既にそれに組み込まれているサフィックスの広範なリストを持っている。このディレクティブは、接尾辞のリストの最後にエントリを追加するが、リストは末尾から検索されるため、この手法を使用して以前のエントリをオーバーライドすることは事実上可能である。
 
 @end table
 
-GCC has the following spec strings built into it.  Spec files can
-override these strings or create their own.  Note that individual
-targets can also add their own spec strings to this list.
+GCCには、以下の仕様文字列が組み込まれている。 仕様ファイルはこれらの文字列を無効にするか、独自のファイルを作成できる。 個々のターゲットは、独自の仕様文字列をこのリストに追加することもできる。
 
 @smallexample
-asm          Options to pass to the assembler
-asm_final    Options to pass to the assembler post-processor
-cpp          Options to pass to the C preprocessor
-cc1          Options to pass to the C compiler
-cc1plus      Options to pass to the C++ compiler
-endfile      Object files to include at the end of the link
-link         Options to pass to the linker
-lib          Libraries to include on the command line to the linker
-libgcc       Decides which GCC support library to pass to the linker
-linker       Sets the name of the linker
-predefines   Defines to be passed to the C preprocessor
-signed_char  Defines to pass to CPP to say whether @code{char} is signed
-             by default
-startfile    Object files to include at the start of the link
+asm          アセンブラに渡されるオプション
+asm_final    アセンブラの後処理に渡されるオプション
+cpp          Cプリプロセッサに渡されるオプション
+cc1          Cコンパイラに渡されるオプション
+cc1plus      C++コンパイラに渡されるオプション
+endfile      リンクの終わりで入れるオブジェクトファイル
+link         ランカに渡されるオプション
+lib          リンカにコマンドラインで入れるライブラリ
+libgcc       リンカに渡すGCCサポートライブラリを決定する
+linker       リンカの名前を設定する
+predefines   Cプリプロセッサへ渡すために定義される
+signed_char  CPPにデフォルトで@code{char}が符号付きかどうかを決定するために渡すために定義する
+startfile    リンクの初めで入れるオブジェクトファイル
 @end smallexample
 
-Here is a small example of a spec file:
+ここに仕様ファイルの小さい例がある。
 
 @smallexample
 %rename lib                 old_lib
@@ -19714,60 +19675,33 @@ Here is a small example of a spec file:
 --start-group -lgcc -lc -leval1 --end-group %(old_lib)
 @end smallexample
 
-This example renames the spec called @samp{lib} to @samp{old_lib} and
-then overrides the previous definition of @samp{lib} with a new one.
-The new definition adds in some extra command-line options before
-including the text of the old definition.
+この例では、@samp{lib}という名前を@samp{old_lib}という名前に変更し、以前の@samp{lib}の定義を新しいもので上書きする。新しい定義では、古い定義のテキストを含める前にいくつかの余分なコマンドラインオプションが追加されている。
 
-@dfn{Spec strings} are a list of command-line options to be passed to their
-corresponding program.  In addition, the spec strings can contain
-@samp{%}-prefixed sequences to substitute variable text or to
-conditionally insert text into the command line.  Using these constructs
-it is possible to generate quite complex command lines.
+@dfn{Spec strings}（仕様文字列）は、対応するプログラムに渡すコマンドラインオプションのリストである。  さらに、仕様文字列には、可変テキストを置換するため、または条件付きでテキストをコマンドラインに挿入するための@samp{％}-接頭辞付きのシーケンスを含めることができる。 これらの構文を使用すると、非常に複雑なコマンドラインを生成することができる。
 
-Here is a table of all defined @samp{%}-sequences for spec
-strings.  Note that spaces are not generated automatically around the
-results of expanding these sequences.  Therefore you can concatenate them
-together or combine them with constant text in a single argument.
+ここに仕様文字列のすべての定義済みの@samp{％}-シーケンスのテーブルがある。これらのシーケンスを展開した結果の周りにスペースは自動的に生成されないことに注意せよ。したがって、それらを連結したり、単一の引数で定数テキストと組み合わせることができる。
 
 @table @code
 @item %%
-Substitute one @samp{%} into the program name or argument.
+@samp{％}をプログラム名または引数に置き換える。
 
 @item %i
-Substitute the name of the input file being processed.
+処理中の入力ファイルの名前に置き換える。
 
 @item %b
-Substitute the basename of the input file being processed.
-This is the substring up to (and not including) the last period
-and not including the directory.
+処理中の入力ファイルの基本名を置き換える。これは、最後のピリオドまで（ディレクトリは含まず）の部分文字列である。
 
 @item %B
-This is the same as @samp{%b}, but include the file suffix (text after
-the last period).
+これは@samp{％b}と同じだが、ファイルサフィックス（最後の後のテキスト）を含む。
 
 @item %d
-Marks the argument containing or following the @samp{%d} as a
-temporary file name, so that that file is deleted if GCC exits
-successfully.  Unlike @samp{%g}, this contributes no text to the
-argument.
+@samp{％d}を含むかそれに続く引数を一時ファイル名としてマークし、GCCが正常に終了するとそのファイルが削除されるようにする。 @samp{％g}とは異なり、これは引数にテキストを与えない。
 
 @item %g@var{suffix}
-Substitute a file name that has suffix @var{suffix} and is chosen
-once per compilation, and mark the argument in the same way as
-@samp{%d}.  To reduce exposure to denial-of-service attacks, the file
-name is now chosen in a way that is hard to predict even when previously
-chosen file names are known.  For example, @samp{%g.s @dots{} %g.o @dots{} %g.s}
-might turn into @samp{ccUVUUAU.s ccXYAXZ12.o ccUVUUAU.s}.  @var{suffix} matches
-the regexp @samp{[.A-Za-z]*} or the special string @samp{%O}, which is
-treated exactly as if @samp{%O} had been preprocessed.  Previously, @samp{%g}
-was simply substituted with a file name chosen once per compilation,
-without regard to any appended suffix (which was therefore treated
-just like ordinary text), making such attacks more likely to succeed.
+@var{接尾辞}という接尾辞を持ち、コンパイルごとに一度選択されるファイル名に置き換え、@samp{％d}と同じ方法で引数に印を付ける。サービス拒否攻撃に対する被害を軽減するため、以前に選択したファイル名が判明しても予測が困難な方法でファイル名が選択されるようになった。 たとえば、@samp{％g.s @dots{}％g.o @dots{}％g.s} @samp {ccUVUUAU.s ccXYAXZ12.o ccUVUUAU.s}に変わる可能性がある。 @var{suffix}は正規表現@samp{[.A-Za-z]*}や特殊文字列@samp{％O}にマッチする。これは@samp{％O}が前処理されたのとまったく同じように扱われる。以前は@samp{％g}は、コンパイルごとに一度選択されたファイル名で置き換えられていた。そのため、通常のテキストと同様に処理されていたため、そのような攻撃は成功する可能性が高くなっていた。
 
 @item %u@var{suffix}
-Like @samp{%g}, but generates a new temporary file name
-each time it appears instead of once per compilation.
+@samp{％g}に似ているが、コンパイルごとに1回ではなく、現れるごとに毎回新しい一時ファイル名が生成される。
 
 @item %U@var{suffix}
 Substitutes the last file name generated with @samp{%u@var{suffix}}, generating a
