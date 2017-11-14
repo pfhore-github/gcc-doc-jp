@@ -19242,9 +19242,7 @@ struct
 @noindent
 @code{t1}のサイズは、長さ0のビットフィールドを持つ8バイトである。 長さゼロのビットフィールドが削除された場合、@code{t1}のサイズは4バイトになる。
 
-@item If a zero-length bit-field is inserted after a bit-field, @code{foo}, and the
-alignment of the zero-length bit-field is greater than the member that follows it,
-@code{bar}, @code{bar} is aligned as the type of the zero-length bit-field.
+@item ビットフィールド@code{foo}の後に長さゼロのビットフィールドが挿入され、長さがゼロのビットフィールドの配置がそれに続くメンバーより大きい場合、@code{bar}、@code{bar}は、長さゼロのビットフィールドのタイプとして整列される。
 
 For example:
 
@@ -19704,99 +19702,50 @@ startfile    リンクの初めで入れるオブジェクトファイル
 @samp{％g}に似ているが、コンパイルごとに1回ではなく、現れるごとに毎回新しい一時ファイル名が生成される。
 
 @item %U@var{suffix}
-Substitutes the last file name generated with @samp{%u@var{suffix}}, generating a
-new one if there is no such last file name.  In the absence of any
-@samp{%u@var{suffix}}, this is just like @samp{%g@var{suffix}}, except they don't share
-the same suffix @emph{space}, so @samp{%g.s @dots{} %U.s @dots{} %g.s @dots{} %U.s}
-involves the generation of two distinct file names, one
-for each @samp{%g.s} and another for each @samp{%U.s}.  Previously, @samp{%U} was
-simply substituted with a file name chosen for the previous @samp{%u},
-without regard to any appended suffix.
+@samp{％u@var{suffix}}で生成された最後のファイル名を置き換える。最後のファイル名がない場合は新しいファイル名を生成する。@samp{％u@var{suffix}}がない場合、これは@samp{％g@var{suffix}}と似ているが、それらは同じサフィックス@emph{space}を共有しないので、@samp{%g.s @dots{} %U.s @dots{} %g.s @dots{} %U.s}は、@samp{％g.s}ごとに1つずつ、@samp{％U.s}ごとに1つずつ、2つの異なるファイル名を生成する。以前は、@samp{％U}は直前の@samp{％u}に対して選択されたファイル名で置き換えられていた。
 
 @item %j@var{suffix}
-Substitutes the name of the @code{HOST_BIT_BUCKET}, if any, and if it is
-writable, and if @option{-save-temps} is not used; 
-otherwise, substitute the name
-of a temporary file, just like @samp{%u}.  This temporary file is not
-meant for communication between processes, but rather as a junk
-disposal mechanism.
+もし存在し、書き込み可能で、@option{-save-temps}が使用されていない場合は、@code{HOST_BIT_BUCKET}の名前を置き換える。 それ以外の場合は、@samp{％u}のように一時ファイルの名前を置き換える。この一時ファイルは、プロセス間の通信ではなく、ジャンク処理メカニズムとして使用される。
 
 @item %|@var{suffix}
 @itemx %m@var{suffix}
-Like @samp{%g}, except if @option{-pipe} is in effect.  In that case
-@samp{%|} substitutes a single dash and @samp{%m} substitutes nothing at
-all.  These are the two most common ways to instruct a program that it
-should read from standard input or write to standard output.  If you
-need something more elaborate you can use an @samp{%@{pipe:@code{X}@}}
-construct: see for example @file{f/lang-specs.h}.
+@option{-pipe}が有効な場合を除いて、@samp{％g}と似ている。その場合、@samp{%|}は単一のダッシュを置き換え、@samp {％m}は何も置き換えない。これらは、プログラムに標準入力から読み込むか標準出力に書き込むかを指示する2つの最も一般的な方法である。もっと精巧なものが必要な場合は、@samp{％@{pipe:@code{X}@}}構文を使用することができる。例については@file{f/lang-specs.h}を参照せよ。
 
 @item %.@var{SUFFIX}
-Substitutes @var{.SUFFIX} for the suffixes of a matched switch's args
-when it is subsequently output with @samp{%*}.  @var{SUFFIX} is
-terminated by the next space or %.
+後で@samp{％*}で出力されるときに、一致するスイッチのargsの接尾辞を@var{.SUFFIX}に置き換える。@var{SUFFIX}は次のスペースまたは％で終了する。
 
 @item %w
-Marks the argument containing or following the @samp{%w} as the
-designated output file of this compilation.  This puts the argument
-into the sequence of arguments that @samp{%o} substitutes.
+このコンパイルの指定された出力ファイルとして@samp{％w}を含むかそれに続く引数をマークする。 これは、@samp{％o}が代入する引数のシーケンスに引数を置く。
 
 @item %o
-Substitutes the names of all the output files, with spaces
-automatically placed around them.  You should write spaces
-around the @samp{%o} as well or the results are undefined.
-@samp{%o} is for use in the specs for running the linker.
-Input files whose names have no recognized suffix are not compiled
-at all, but they are included among the output files, so they are
-linked.
+すべての出力ファイルの名前を、それらの周囲に自動的にスペースを入れて置き換える。 @samp{％o}の前後にスペースを入れるべきである。そうしないと、結果は未定義である。@samp{％o}は、リンカを実行するための仕様で使用される。名前に接尾辞が付いていない入力ファイルは、コンパイルされないが、出力ファイルには含まれているため、リンクされる。
 
 @item %O
-Substitutes the suffix for object files.  Note that this is
-handled specially when it immediately follows @samp{%g, %u, or %U},
-because of the need for those to form complete file names.  The
-handling is such that @samp{%O} is treated exactly as if it had already
-been substituted, except that @samp{%g, %u, and %U} do not currently
-support additional @var{suffix} characters following @samp{%O} as they do
-following, for example, @samp{.o}.
+オブジェクトファイルの接尾辞を置き換える。完全なファイル名を作成する必要があるため、これは@samp{％g, ％u, ％U}の直後にあるときに特別に処理されることに注意せよ。@samp {％g、％u、％U}が現在、例えば@samp{.o}が続くような、@samp{%O}が続く追加の@var{suffix}文字をサポートしていないことを除いて、@samp {％O}は既に置換されているかのように扱われる
 
 @item %p
-Substitutes the standard macro predefinitions for the
-current target machine.  Use this when running @command{cpp}.
+現在のターゲットマシンの標準マクロ定義を置き換える。 @command {cpp}の実行時にこれを使用します。
 
 @item %P
-Like @samp{%p}, but puts @samp{__} before and after the name of each
-predefined macro, except for macros that start with @samp{__} or with
-@samp{_@var{L}}, where @var{L} is an uppercase letter.  This is for ISO
-C@.
+@samp{%p}と同じだが、@samp{__}で始まるマクロや@samp{_@var{L}}を除いて、各定義済みマクロの名前の前後に@samp {__}を置く。 @var{L}は大文字である。これはISO C向けである。
 
 @item %I
-Substitute any of @option{-iprefix} (made from @env{GCC_EXEC_PREFIX}),
-@option{-isysroot} (made from @env{TARGET_SYSTEM_ROOT}),
-@option{-isystem} (made from @env{COMPILER_PATH} and @option{-B} options)
-and @option{-imultilib} as necessary.
+@env{GCC_EXEC_PREFIX}からの@option{-iprefix}、@env{TARGET_SYSTEM_ROOT}からの@option{-isysroot}、@env{COMPILER_PATH}からの@option{-isystem} @option{-B}オプション）と@option{-imultilib}を使用する。
 
 @item %s
-Current argument is the name of a library or startup file of some sort.
-Search for that file in a standard list of directories and substitute
-the full name found.  The current working directory is included in the
-list of directories scanned.
+現在の引数は、ある種のライブラリまたはスタートアップファイルの名前である。ディレクトリの標準リストでそのファイルを検索し、見つかったフルネームで置き換える。現在の作業ディレクトリは、スキャンされたディレクトリのリストに含まれている。
 
 @item %T
-Current argument is the name of a linker script.  Search for that file
-in the current list of directories to scan for libraries. If the file
-is located insert a @option{--script} option into the command line
-followed by the full path name found.  If the file is not found then
-generate an error message.  Note: the current working directory is not
-searched.
+現在の引数は、リンカースクリプトの名前である。 現在のディレクトリのリストでそのファイルを検索し、ライブラリをスキャンする。 ファイルが見つかった場合は、@option{-script}オプションをコマンド行に挿入し、その後に完全なパス名を入力する。 ファイルが見つからない場合は、エラーメッセージを生成する。 注：現在の作業ディレクトリは検索されない。
 
 @item %e@var{str}
-Print @var{str} as an error message.  @var{str} is terminated by a newline.
-Use this when inconsistent options are detected.
+@var{str}をエラーメッセージとして出力する。 @var{str}は改行で終了する。一貫性のないオプションが検出された場合に使用する。
 
 @item %(@var{name})
-Substitute the contents of spec string @var{name} at this point.
+この時点で、spec文字列@var{name}の内容を置き換える。
 
 @item %x@{@var{option}@}
-Accumulate an option for @samp{%X}.
+@samp {％X}のオプションを累積する。
 
 @item %X
 Output the accumulated linker options specified by @option{-Wl} or a @samp{%x}
