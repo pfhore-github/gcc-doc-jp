@@ -19748,101 +19748,70 @@ startfile    リンクの初めで入れるオブジェクトファイル
 @samp {％X}のオプションを累積する。
 
 @item %X
-Output the accumulated linker options specified by @option{-Wl} or a @samp{%x}
-spec string.
+@option{-Wl}または@samp{％x}指定文字列によって指定された蓄積されたリンカオプションを出力する。
 
 @item %Y
-Output the accumulated assembler options specified by @option{-Wa}.
+@option{-Wa}で指定した累積アセンブラオプションを出力する。
 
 @item %Z
-Output the accumulated preprocessor options specified by @option{-Wp}.
+@option {-Wp}で指定された累積プリプロセッサオプションを出力する。
 
 @item %a
-Process the @code{asm} spec.  This is used to compute the
-switches to be passed to the assembler.
+@code{asm}仕様を処理する。 これは、アセンブラに渡されるスイッチを計算するために使用される。
 
 @item %A
-Process the @code{asm_final} spec.  This is a spec string for
-passing switches to an assembler post-processor, if such a program is
-needed.
+@code{asm_final}仕様を処理する。 これは、このようなプログラムが必要な場合に、スイッチをアセンブラポストプロセッサに渡すための仕様文字列である。
 
 @item %l
-Process the @code{link} spec.  This is the spec for computing the
-command line passed to the linker.  Typically it makes use of the
-@samp{%L %G %S %D and %E} sequences.
+@code{link}仕様を処理する。 これは、リンカーに渡されたコマンドラインを計算するための仕様である。 通常、@samp{％L％G％S％Dと％E}シーケンスを使用する。
 
 @item %D
-Dump out a @option{-L} option for each directory that GCC believes might
-contain startup files.  If the target supports multilibs then the
-current multilib directory is prepended to each of these paths.
+GCCがスタートアップファイルを含んでいる可能性のあるディレクトリごとに@option{-L}オプションをダンプする。 ターゲットがマルチブロックをサポートしている場合、現在のmultilibディレクトリがこれらのパスのそれぞれに付加される。
 
 @item %L
-Process the @code{lib} spec.  This is a spec string for deciding which
-libraries are included on the command line to the linker.
+@code {lib}仕様を処理する。 これは、どのライブラリがリンカーへのコマンドラインに含まれるかを決めるための仕様文字列である。
 
 @item %G
-Process the @code{libgcc} spec.  This is a spec string for deciding
-which GCC support library is included on the command line to the linker.
+@code {libgcc}仕様を処理する。 これは、どのGCCサポートライブラリがリンカのコマンドラインに含まれているかを決定するための仕様文字列である。
 
 @item %S
-Process the @code{startfile} spec.  This is a spec for deciding which
-object files are the first ones passed to the linker.  Typically
-this might be a file named @file{crt0.o}.
+@code{startfile}仕様を処理する。 これは、どのオブジェクトファイルが最初にリンカに渡されるかを決定するための仕様である。通常、これは@file{crt0.o}という名前のファイルである。
 
 @item %E
-Process the @code{endfile} spec.  This is a spec string that specifies
-the last object files that are passed to the linker.
+@code{endfile}仕様を処理する。 これは、リンカに渡された最後のオブジェクトファイルを指定する仕様文字列である。
 
 @item %C
-Process the @code{cpp} spec.  This is used to construct the arguments
-to be passed to the C preprocessor.
+@code{cpp}仕様を処理する。 これは、Cプリプロセッサに渡す引数を作成するために使用される。
 
 @item %1
-Process the @code{cc1} spec.  This is used to construct the options to be
-passed to the actual C compiler (@command{cc1}).
+@code{cc1}仕様を処理する。 これは、実際のCコンパイラ（@command{cc1}）に渡すオプションを構築するために使用される。
 
 @item %2
-Process the @code{cc1plus} spec.  This is used to construct the options to be
-passed to the actual C++ compiler (@command{cc1plus}).
+@code{cc1plus}仕様を処理する。 これは、実際のC++コンパイラ（@command{cc1plus}）に渡すオプションを構築するために使用される。
 
 @item %*
-Substitute the variable part of a matched option.  See below.
-Note that each comma in the substituted string is replaced by
-a single space.
+一致するオプションの可変部分を代入する。 下記参照。置換文字列の各カンマは単一のスペースで置き換えられることに注意せよ。
 
 @item %<@code{S}
-Remove all occurrences of @code{-S} from the command line.  Note---this
-command is position dependent.  @samp{%} commands in the spec string
-before this one see @code{-S}, @samp{%} commands in the spec string
-after this one do not.
+コマンドラインから@code{-S}をすべて削除する。 注---このコマンドは位置によって異なる。これより前の@samp{%}コマンドは@code{-S}を見て、これよりあとの@samp{%}コマンドは見ない。
 
 @item %:@var{function}(@var{args})
-Call the named function @var{function}, passing it @var{args}.
-@var{args} is first processed as a nested spec string, then split
-into an argument vector in the usual fashion.  The function returns
-a string which is processed as if it had appeared literally as part
-of the current spec.
+名前付き関数@var{function}を呼び出し、@var{args}を渡す。 @var{args}はネストされた仕様文字列として最初に処理され、通常の方法で引数ベクトルに分割される。 関数は現在の仕様の一部として文字通り現れたかのように処理される文字列を返す。
 
-The following built-in spec functions are provided:
+以下のビルトイン仕様関数が用意されている。
 
 @table @code
 @item @code{getenv}
-The @code{getenv} spec function takes two arguments: an environment
-variable name and a string.  If the environment variable is not
-defined, a fatal error is issued.  Otherwise, the return value is the
-value of the environment variable concatenated with the string.  For
-example, if @env{TOPDIR} is defined as @file{/path/to/top}, then:
+@code{getenv}仕様関数は、環境変数名と文字列という2つの引数をとる。 環境変数が定義されていない場合、致命的なエラーが発行される。それ以外の場合、戻り値は文字列と連結された環境変数の値である。たとえば、@env{TOPDIR}が@file{/path/to/top}として定義されている場合、次のようになる。
 
 @smallexample
 %:getenv(TOPDIR /include)
 @end smallexample
 
-expands to @file{/path/to/top/include}.
+は@file{/path/to/top/include}へと展開される。
 
 @item @code{if-exists}
-The @code{if-exists} spec function takes one argument, an absolute
-pathname to a file.  If the file exists, @code{if-exists} returns the
-pathname.  Here is a small example of its usage:
+@code{if-exists}仕様関数は1つの引数、ファイルへの絶対パス名をとる。 ファイルが存在する場合、@code{if-exists}はパス名を返す。 その使い方の小さな例がある：
 
 @smallexample
 *startfile:
@@ -19850,12 +19819,7 @@ crt0%O%s %:if-exists(crti%O%s) crtbegin%O%s
 @end smallexample
 
 @item @code{if-exists-else}
-The @code{if-exists-else} spec function is similar to the @code{if-exists}
-spec function, except that it takes two arguments.  The first argument is
-an absolute pathname to a file.  If the file exists, @code{if-exists-else}
-returns the pathname.  If it does not exist, it returns the second argument.
-This way, @code{if-exists-else} can be used to select one file or another,
-based on the existence of the first.  Here is a small example of its usage:
+@code{if-exists-else}仕様関数は、2つの引数を取る点を除いて、@code{if-exists}仕様関数と似ている。最初の引数は、ファイルへの絶対パス名である。ファイルが存在する場合、@code{if-exists-else}はパス名を返す。存在しない場合は、2番目の引数を返す。このようにして、@code{if-exists-else}を使用して、最初のファイルの存在に基づいて1つのファイルまたは別のファイルを選択することができる。その使い方の小さな例があります：
 
 @smallexample
 *startfile:
@@ -19864,38 +19828,28 @@ crt0%O%s %:if-exists(crti%O%s) \
 @end smallexample
 
 @item @code{replace-outfile}
-The @code{replace-outfile} spec function takes two arguments.  It looks for the
-first argument in the outfiles array and replaces it with the second argument.  Here
-is a small example of its usage:
+@code{replace-outfile}仕様関数は2つの引数をとる。これは、outfiles配列の最初の引数を探し、それを2番目の引数に置き換える。 その使い方の小さな例がある：
 
 @smallexample
 %@{fgnu-runtime:%:replace-outfile(-lobjc -lobjc-gnu)@}
 @end smallexample
 
 @item @code{remove-outfile}
-The @code{remove-outfile} spec function takes one argument.  It looks for the
-first argument in the outfiles array and removes it.  Here is a small example
-its usage:
+@code{remove-outfile}仕様関数は1つの引数をとる。 これは、outfiles配列の最初の引数を探し、それを削除する。 その使用例を以下に示す。
 
 @smallexample
 %:remove-outfile(-lm)
 @end smallexample
 
 @item @code{pass-through-libs}
-The @code{pass-through-libs} spec function takes any number of arguments.  It
-finds any @option{-l} options and any non-options ending in @file{.a} (which it
-assumes are the names of linker input library archive files) and returns a
-result containing all the found arguments each prepended by
-@option{-plugin-opt=-pass-through=} and joined by spaces.  This list is
-intended to be passed to the LTO linker plugin.
+@code{pass-through-libs}仕様関数は任意の数の引数をとる。任意の@option{-l}オプションと@file{.a}（リンカ入力ライブラリアーカイブファイルの名前であると仮定する）で終わるオプション以外を見つけ出し、それぞれの先頭に@option{-plugin-opt=-pass-through=}を入力し、スペースで結合する。このリストは、LTOリンカー・プラグインに渡されることを意図している。
 
 @smallexample
 %:pass-through-libs(%G %L %G)
 @end smallexample
 
 @item @code{print-asm-header}
-The @code{print-asm-header} function takes no arguments and simply
-prints a banner like:
+@code{print-asm-header}関数は引数をとらず、単純に次のようなバナーを出力する：
 
 @smallexample
 Assembler options
@@ -19904,96 +19858,66 @@ Assembler options
 Use "-Wa,OPTION" to pass "OPTION" to the assembler.
 @end smallexample
 
-It is used to separate compiler options from assembler options
-in the @option{--target-help} output.
+@option{-target-help}出力のアセンブラオプションからコンパイラオプションを分離するために使用される。
 @end table
 
 @item %@{@code{S}@}
-Substitutes the @code{-S} switch, if that switch is given to GCC@.
-If that switch is not specified, this substitutes nothing.  Note that
-the leading dash is omitted when specifying this option, and it is
-automatically inserted if the substitution is performed.  Thus the spec
-string @samp{%@{foo@}} matches the command-line option @option{-foo}
-and outputs the command-line option @option{-foo}.
+スイッチがGCCに与えられている場合は、@code{-S}スイッチに置き換える。そのスイッチが指定されていない場合、これは何も置き換えない。先頭のダッシュはこのオプションを指定するときは省略され、置換が実行されると自動的に挿入されることに注意せよ。したがって、仕様文字列@samp{％@{foo@}}は、コマンドラインオプション@option{-foo}と一致し、コマンドラインオプション@option{-foo}を出力する。
 
 @item %W@{@code{S}@}
-Like %@{@code{S}@} but mark last argument supplied within as a file to be
-deleted on failure.
+％@{@code{S}@}と似ているが、失敗したときに削除するファイルとして指定された最後の引数をマークする。
 
 @item %@{@code{S}*@}
-Substitutes all the switches specified to GCC whose names start
-with @code{-S}, but which also take an argument.  This is used for
-switches like @option{-o}, @option{-D}, @option{-I}, etc.
-GCC considers @option{-o foo} as being
-one switch whose name starts with @samp{o}.  %@{o*@} substitutes this
-text, including the space.  Thus two arguments are generated.
+指定されたすべてのスイッチをGCCに代入する。名前は@code{-S}で始まるだけでなく、引数もとる。これは、@option{-o}、@option{-D}、@option{-I}などのスイッチに使用される。GCCは@option{-o foo}を@samp{o}で始まる1つのスイッチとみなす。 ％@{o*@}はスペースを含めてこのテキストを置き換えるます。 したがって、2つの引数が生成される。
 
 @item %@{@code{S}*&@code{T}*@}
-Like %@{@code{S}*@}, but preserve order of @code{S} and @code{T} options
-(the order of @code{S} and @code{T} in the spec is not significant).
-There can be any number of ampersand-separated variables; for each the
-wild card is optional.  Useful for CPP as @samp{%@{D*&U*&A*@}}.
+％@{@code{S}*@}と似ているが、@code{S}と@code {T}オプションの順序を保持する（仕様の@code{S}と@code{T}の順序は重要ではない）。アンパサンドで区切られた変数はいくつでもよい。 ワイルドカードはそれぞれオプションである。@samp{％@{D*＆U*＆A*@}}としてCPPに役立つ。
 
 @item %@{@code{S}:@code{X}@}
-Substitutes @code{X}, if the @option{-S} switch is given to GCC@.
+@option{-S}スイッチがGCCに与えられている場合、@code {X}に置き換えられる。
 
 @item %@{!@code{S}:@code{X}@}
-Substitutes @code{X}, if the @option{-S} switch is @emph{not} given to GCC@.
+@option{-S}スイッチがGCCに対して与えられて@emph{_いない_}場合、@code {X}に置き換えられる。
 
 @item %@{@code{S}*:@code{X}@}
-Substitutes @code{X} if one or more switches whose names start with
-@code{-S} are specified to GCC@.  Normally @code{X} is substituted only
-once, no matter how many such switches appeared.  However, if @code{%*}
-appears somewhere in @code{X}, then @code{X} is substituted once
-for each matching switch, with the @code{%*} replaced by the part of
-that switch matching the @code{*}.
+名前が@code{-S}で始まるスイッチがGCCに指定されている場合は、@code {X}に置き換える。通常、@code{X}はスイッチの数にかかわらず一度だけ置換される。しかし、@code{％*}が@code{X}のどこかに現れた場合、@code {X}は、一致するスイッチごとに1回置き換えられ、@code {%*}は@code {*}に一致するスイッチの一部で置き換えられる。
 
-If @code{%*} appears as the last part of a spec sequence then a space
-is added after the end of the last substitution.  If there is more
-text in the sequence, however, then a space is not generated.  This
-allows the @code{%*} substitution to be used as part of a larger
-string.  For example, a spec string like this:
+@code{％*}が仕様列の最後の部分として現れた場合、最後の置換の終了後にスペースが追加される。ただし、列内にテキストがさらに存在する場合は、スペースは生成されない。 これにより、より大きな文字列の一部として@code{％*}置換を使用することができる。たとえば、次のような列文字列があると：
 
 @smallexample
 %@{mcu=*:--script=%*/memory.ld@}
 @end smallexample
 
 @noindent
-when matching an option like @option{-mcu=newchip} produces:
+@option{-mcu = newchip}のようなオプションをマッチさせると次のようになる：
 
 @smallexample
 --script=newchip/memory.ld
 @end smallexample
 
 @item %@{.@code{S}:@code{X}@}
-Substitutes @code{X}, if processing a file with suffix @code{S}.
+接尾辞@code{S}を持つファイルを処理する場合は、@code{X}に置き換える。
 
 @item %@{!.@code{S}:@code{X}@}
-Substitutes @code{X}, if @emph{not} processing a file with suffix @code{S}.
+接尾辞@code{S}を持つファイルを処理@emph{_しない_}場合は、@code{X}に置き換える。
 
 @item %@{,@code{S}:@code{X}@}
-Substitutes @code{X}, if processing a file for language @code{S}.
+言語@code{S}のファイルを処理する場合は、@code {X}に置き換える。
 
 @item %@{!,@code{S}:@code{X}@}
-Substitutes @code{X}, if not processing a file for language @code{S}.
+言語@code{S}のファイルを処理していない場合は、@code{X}に置き換える。
 
 @item %@{@code{S}|@code{P}:@code{X}@}
-Substitutes @code{X} if either @code{-S} or @code{-P} is given to
-GCC@.  This may be combined with @samp{!}, @samp{.}, @samp{,}, and
-@code{*} sequences as well, although they have a stronger binding than
-the @samp{|}.  If @code{%*} appears in @code{X}, all of the
-alternatives must be starred, and only the first matching alternative
-is substituted.
+@code{-S}か@code{-P}のどちらかがGCCに与えられた場合、@code{X}に置き換える。これは@samp{!}、@samp{.}、@samp{,}、@code {*}シーケンスと組み合わせても問題ないが、結合は@samp{|}よりも強くなる。 @code{X*}に@code{％*}が含まれている場合は、すべての選択肢に星印を付ける必要があり、最初の一致する選択肢のみが置換される。
 
-For example, a spec string like this:
+たとえば、次のような仕様文字列があると、
 
 @smallexample
 %@{.c:-foo@} %@{!.c:-bar@} %@{.c|d:-baz@} %@{!.c|d:-boggle@}
 @end smallexample
 
 @noindent
-outputs the following command-line options from the following input
-command-line options:
+次の入力コマンドラインオプションから次のコマンドラインオプションを出力する。
 
 @smallexample
 fred.c        -foo -baz
@@ -20003,44 +19927,19 @@ jim.d         -bar -boggle
 @end smallexample
 
 @item %@{S:X; T:Y; :D@}
-
-If @code{S} is given to GCC, substitutes @code{X}; else if @code{T} is
-given to GCC, substitutes @code{Y}; else substitutes @code{D}.  There can
-be as many clauses as you need.  This may be combined with @code{.},
-@code{,}, @code{!}, @code{|}, and @code{*} as needed.
-
+GCCに@code{S}が与えられていれば、@code{X}に置き換えられる。 そうでなければ、GCCに@code{T}が与えられていれば、@code{Y}に置き換える。さもなければ@code{D}を代入する。必要だけ多くの節をできる。 これは、必要に応じて@code{.}、@code{,}、@code{!}、@code{|}、@code{*}と組み合わせることができる。
 
 @end table
 
-The conditional text @code{X} in a %@{@code{S}:@code{X}@} or similar
-construct may contain other nested @samp{%} constructs or spaces, or
-even newlines.  They are processed as usual, as described above.
-Trailing white space in @code{X} is ignored.  White space may also
-appear anywhere on the left side of the colon in these constructs,
-except between @code{.} or @code{*} and the corresponding word.
+%@{@code{S}:@code{X}@}内の条件付きテキスト@code{X}や他の同様の構文には、他のネストされた@samp{％}構造体やスペース、あるいは改行文字が含まれている。 これらは上記のように通常通り処理される。@code{X}の末尾の空白は無視される。 空白は、@code{.}や@code {*}とそれに対応する単語を除いて、これらの構造体のコロンの左側の任意の場所に表示されることもある。
 
-The @option{-O}, @option{-f}, @option{-m}, and @option{-W} switches are
-handled specifically in these constructs.  If another value of
-@option{-O} or the negated form of a @option{-f}, @option{-m}, or
-@option{-W} switch is found later in the command line, the earlier
-switch value is ignored, except with @{@code{S}*@} where @code{S} is
-just one letter, which passes all matching options.
+@option{-O}、@option{-f}、@option{-m}、および@option{-W}スイッチは、これらの構造体で特に処理される。@option{-O}の別の値または@option{-f}、@option{-m}、または@option{-W}スイッチの否定された形式がコマンドラインの後のほうにある場合、以前のスイッチ値@{@code{S}*@}を除いて無視される。ここで@code {S}はすべての一致するオプションを渡す単一文字である。
 
-The character @samp{|} at the beginning of the predicate text is used to
-indicate that a command should be piped to the following command, but
-only if @option{-pipe} is specified.
+述語テキストの先頭にある文字@samp{|}は、コマンドが次のコマンドにパイプされるべきであることを示すために使用されるが、それは@option{-pipe}が指定されている場合のみである。
 
-It is built into GCC which switches take arguments and which do not.
-(You might think it would be useful to generalize this to allow each
-compiler's spec to say which switches take arguments.  But this cannot
-be done in a consistent fashion.  GCC cannot even decide which input
-files have been specified without knowing which switches take arguments,
-and it must know which input files to compile in order to tell which
-compilers to run).
+それはどのスイッチが引数を取ってどれが取らないかがGCCに組み込まれている。（各コンパイラの仕様によって、どのスイッチが引数を取るかを言うために、これを一般化することが有用であると考えるかもしれない。  しかし、これは一貫した方法で行うことはできない。  GCCはどのスイッチが引数を取るかを知らずにどの入力ファイルが指定されたのかを判断することもできず、実行するコンパイラを知らせるためにどの入力ファイルをコンパイルするのかを知る必要がある。）
 
-GCC also knows implicitly that arguments starting in @option{-l} are to be
-treated as compiler output files, and passed to the linker in their
-proper position among the other output files.
+GCCはまた、@option{-l}で始まる引数がコンパイラの出力ファイルとして扱われ、他の出力ファイルの中の適切な位置にリンカに渡されることを暗黙のうちに知っている。
 
 @node Environment Variables
 @section Environment Variables Affecting GCC
