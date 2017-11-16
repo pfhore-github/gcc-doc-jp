@@ -19942,20 +19942,13 @@ GCCに@code{S}が与えられていれば、@code{X}に置き換えられる。 
 GCCはまた、@option{-l}で始まる引数がコンパイラの出力ファイルとして扱われ、他の出力ファイルの中の適切な位置にリンカに渡されることを暗黙のうちに知っている。
 
 @node Environment Variables
-@section Environment Variables Affecting GCC
+@section GCCに影響を与える環境変数
 @cindex environment variables
 
 @c man begin ENVIRONMENT
-This section describes several environment variables that affect how GCC
-operates.  Some of them work by specifying directories or prefixes to use
-when searching for various kinds of files.  Some are used to specify other
-aspects of the compilation environment.
+このセクションでは、GCCの動作に影響を与えるいくつかの環境変数について説明する。それらの中には、さまざまな種類のファイルを検索するときに使用するディレクトリや接頭辞を指定するものもある。 いくつかは、コンパイル環境の他の側面を指定するために使用される。
 
-Note that you can also specify places to search using options such as
-@option{-B}, @option{-I} and @option{-L} (@pxref{Directory Options}).  These
-take precedence over places specified using environment variables, which
-in turn take precedence over those specified by the configuration of GCC@.
-@xref{Driver,, Controlling the Compilation Driver @file{gcc}, gccint,
+@option {-B}、@option {-I}、@option {-L}などのオプションを使用して検索する場所を指定することもできる。 (@pxref{Directory Options})。 これらは環境変数を使用して指定された場所よりも優先される。環境変数はGCCの設定で指定された場所よりも優先される。@xref{Driver,, Controlling the Compilation Driver @file{gcc}, gccint,
 GNU Compiler Collection (GCC) Internals}.
 
 @table @env
@@ -19976,121 +19969,65 @@ GNU Compiler Collection (GCC) Internals}.
 @c @findex LC_TIME
 @findex LC_ALL
 @cindex locale
-These environment variables control the way that GCC uses
-localization information which allows GCC to work with different
-national conventions.  GCC inspects the locale categories
-@env{LC_CTYPE} and @env{LC_MESSAGES} if it has been configured to do
-so.  These locale categories can be set to any value supported by your
-installation.  A typical value is @samp{en_GB.UTF-8} for English in the United
-Kingdom encoded in UTF-8.
+これらの環境変数は、GCCがローカリゼーション情報を使用する方法を制御する。これにより、GCCはさまざまな国の慣習に従って動作することができる。 GCCはロケールカテゴリ@env{LC_CTYPE}と@env{LC_MESSAGES}が設定されているかどうかを調べる。これらのロケールカテゴリは、インストールでサポートされている任意の値に設定できる。典型的な値は、UTF-8でエンコードされた英国の英語の@samp{en_GB.UTF-8}である。
 
-The @env{LC_CTYPE} environment variable specifies character
-classification.  GCC uses it to determine the character boundaries in
-a string; this is needed for some multibyte encodings that contain quote
-and escape characters that are otherwise interpreted as a string
-end or escape.
+@env{LC_CTYPE}環境変数は、文字の分類を指定する。 GCCはそれを使用して文字列内の文字境界を判断する。 これは、引用符とエスケープ文字を含むマルチバイトエンコーディングの場合に必要である。これは、文字列の終わりまたはエスケープとして解釈される。
 
-The @env{LC_MESSAGES} environment variable specifies the language to
-use in diagnostic messages.
+@env{LC_MESSAGES}環境変数は、診断メッセージに使用する言語を指定する。
 
-If the @env{LC_ALL} environment variable is set, it overrides the value
-of @env{LC_CTYPE} and @env{LC_MESSAGES}; otherwise, @env{LC_CTYPE}
-and @env{LC_MESSAGES} default to the value of the @env{LANG}
-environment variable.  If none of these variables are set, GCC
-defaults to traditional C English behavior.
+@env{LC_ALL}環境変数が設定されている場合、@env{LC_CTYPE}と@env{LC_MESSAGES}の値が上書きされる。 そうでない場合、@env{LC_CTYPE}と@env{LC_MESSAGES}はデフォルトで@env{LANG}環境変数の値になる。 これらの変数のいずれも設定されていない場合、GCCのデフォルトは従来のC言語の動作になる。
 
 @item TMPDIR
 @findex TMPDIR
-If @env{TMPDIR} is set, it specifies the directory to use for temporary
-files.  GCC uses temporary files to hold the output of one stage of
-compilation which is to be used as input to the next stage: for example,
-the output of the preprocessor, which is the input to the compiler
-proper.
+@env{TMPDIR}が設定されている場合は、一時ファイルに使用するディレクトリを指定する。 GCCは一時ファイルを使用して、次の段階への入力として使用されるコンパイルの1段階の出力を保持する。たとえば、コンパイラの適切な入力であるプリプロセッサの出力である。
 
 @item GCC_COMPARE_DEBUG
 @findex GCC_COMPARE_DEBUG
-Setting @env{GCC_COMPARE_DEBUG} is nearly equivalent to passing
-@option{-fcompare-debug} to the compiler driver.  See the documentation
-of this option for more details.
+@env{GCC_COMPARE_DEBUG}を設定することは、@option{-fcompare-debug}をコンパイラドライバに渡すこととほぼ同じである。 詳細については、このオプションのドキュメントを参照せよ。
 
 @item GCC_EXEC_PREFIX
 @findex GCC_EXEC_PREFIX
-If @env{GCC_EXEC_PREFIX} is set, it specifies a prefix to use in the
-names of the subprograms executed by the compiler.  No slash is added
-when this prefix is combined with the name of a subprogram, but you can
-specify a prefix that ends with a slash if you wish.
+@env{GCC_EXEC_PREFIX}が設定されている場合、コンパイラによって実行されるサブプログラムの名前に使用する接頭辞を指定する。 このプレフィックスとサブプログラムの名前を組み合わせた場合、スラッシュは追加されないが、必要に応じてスラッシュで終わる接頭辞を指定できる。
 
-If @env{GCC_EXEC_PREFIX} is not set, GCC attempts to figure out
-an appropriate prefix to use based on the pathname it is invoked with.
+@env{GCC_EXEC_PREFIX}が設定されていない場合、GCCは呼び出されたパス名に基づいて適切な接頭辞を探し出す。
 
-If GCC cannot find the subprogram using the specified prefix, it
-tries looking in the usual places for the subprogram.
+GCCが指定された接頭辞を使用してサブプログラムを見つけることができない場合、GCCは通常の場所でサブプログラムを探す。
 
-The default value of @env{GCC_EXEC_PREFIX} is
-@file{@var{prefix}/lib/gcc/} where @var{prefix} is the prefix to
-the installed compiler. In many cases @var{prefix} is the value
-of @code{prefix} when you ran the @file{configure} script.
+@env{GCC_EXEC_PREFIX}のデフォルト値は@file{@var {prefix}/lib/gcc/}である。ここで、@var{prefix}はインストールされたコンパイラの接頭辞である。 多くの場合、@var{prefix}は、@file{configure}スクリプトを実行したときの@code{prefix}の値である。
 
-Other prefixes specified with @option{-B} take precedence over this prefix.
+@option{-B}で指定された他の接頭辞は、この接頭辞よりも優先される。
 
-This prefix is also used for finding files such as @file{crt0.o} that are
-used for linking.
+この接頭辞は、リンクに使用される@file{crt0.o}のようなファイルを見つけるためにも使用される。
 
-In addition, the prefix is used in an unusual way in finding the
-directories to search for header files.  For each of the standard
-directories whose name normally begins with @samp{/usr/local/lib/gcc}
-(more precisely, with the value of @env{GCC_INCLUDE_DIR}), GCC tries
-replacing that beginning with the specified prefix to produce an
-alternate directory name.  Thus, with @option{-Bfoo/}, GCC searches
-@file{foo/bar} just before it searches the standard directory 
-@file{/usr/local/lib/bar}.
-If a standard directory begins with the configured
-@var{prefix} then the value of @var{prefix} is replaced by
-@env{GCC_EXEC_PREFIX} when looking for header files.
+さらに、接頭辞は、ヘッダーファイルを検索するディレクトリを見つける際に通常とは異なる方法で使用される。名前が通常@samp{/usr/local/lib/gcc}で始まる標準ディレクトリ（より正確には@env{GCC_INCLUDE_DIR}の値）ごとに、GCCは代替ディレクトリ名を生成するために指定された接頭辞で始まるものを置き換えようとする。 したがって、@option{-Bfoo /}で、GCCは標準ディレクトリ@file {/usr/local/lib/bar}を検索する直前に@file{foo/bar}を検索する。標準ディレクトリが設定された@var{prefix}で始まる場合、@var{prefix}の値はヘッダファイルを探すときに@env {GCC_EXEC_PREFIX}に置き換えらる。
 
 @item COMPILER_PATH
 @findex COMPILER_PATH
-The value of @env{COMPILER_PATH} is a colon-separated list of
-directories, much like @env{PATH}.  GCC tries the directories thus
-specified when searching for subprograms, if it cannot find the
-subprograms using @env{GCC_EXEC_PREFIX}.
+@env{COMPILER_PATH}の値は、@env{PATH}と同様に、コロンで区切られたディレクトリのリストである。 @env{GCC_EXEC_PREFIX}を使用してサブプログラムが見つからない場合、GCCはサブプログラムを検索するときにこのように指定されたディレクトリを試す。
 
 @item LIBRARY_PATH
 @findex LIBRARY_PATH
-The value of @env{LIBRARY_PATH} is a colon-separated list of
-directories, much like @env{PATH}.  When configured as a native compiler,
-GCC tries the directories thus specified when searching for special
-linker files, if it cannot find them using @env{GCC_EXEC_PREFIX}.  Linking
-using GCC also uses these directories when searching for ordinary
-libraries for the @option{-l} option (but directories specified with
-@option{-L} come first).
+@env{LIBRARY_PATH}の値は、@env{PATH}と同様に、コロンで区切られたディレクトリのリストである。ネイティブコンパイラとして設定された場合、GCCは@env{GCC_EXEC_PREFIX}を使用してそれらを見つけることができない場合、特別なリンカファイルを検索するときに指定されたディレクトリを試す。GCCを使用してリンクすると、@option{-l}オプションの通常のライブラリを検索する際にもこれらのディレクトリが使用される（しかし、@option {-L}で指定されたディレクトリが最初に来る）。
 
 @item LANG
 @findex LANG
 @cindex locale definition
-This variable is used to pass locale information to the compiler.  One way in
-which this information is used is to determine the character set to be used
-when character literals, string literals and comments are parsed in C and C++.
-When the compiler is configured to allow multibyte characters,
-the following values for @env{LANG} are recognized:
+この変数は、ロケール情報をコンパイラに渡すために使用される。この情報が使用される1つの方法は、文字リテラル、文字列リテラルおよびコメントがCおよびC++で解析されるときに使用される文字セットを決定することである。コンパイラがマルチバイト文字を許可するように設定されている場合、次の@env{LANG}の値が認識されます。
 
 @table @samp
 @item C-JIS
-Recognize JIS characters.
+JIS文字を認識する。
 @item C-SJIS
-Recognize SJIS characters.
+SJIS文字を認識する。
 @item C-EUCJP
-Recognize EUCJP characters.
+EUCJP文字を認識する。
 @end table
 
-If @env{LANG} is not defined, or if it has some other value, then the
-compiler uses @code{mblen} and @code{mbtowc} as defined by the default locale to
-recognize and translate multibyte characters.
+@env{LANG}が定義されていない場合、または他の値がある場合、コンパイラはデフォルトロケールで定義されている@code{mblen}と@code{mbtowc}を使用して、マルチバイト文字を認識して変換する。
 @end table
 
 @noindent
-Some additional environment variables affect the behavior of the
-preprocessor.
+いくつかの追加の環境変数は、プリプロセッサの動作に影響する。
 
 @include cppenv.texi
 

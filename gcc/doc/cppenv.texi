@@ -16,27 +16,13 @@
 @itemx OBJC_INCLUDE_PATH
 @c Commented out until ObjC++ is part of GCC:
 @c @itemx OBJCPLUS_INCLUDE_PATH
-Each variable's value is a list of directories separated by a special
-character, much like @env{PATH}, in which to look for header files.
-The special character, @code{PATH_SEPARATOR}, is target-dependent and
-determined at GCC build time.  For Microsoft Windows-based targets it is a
-semicolon, and for almost all other targets it is a colon.
+各変数の値は、ヘッダファイルを探すための@env {PATH}と同様に、特殊文字で区切られたディレクトリのリストである。特殊文字@code{PATH_SEPARATOR}は、ターゲットに依存し、GCCビルド時に決定される。 Microsoft Windowsベースのターゲットの場合はセミコロンで、他のほとんどのターゲットの場合はコロンである。
 
-@env{CPATH} specifies a list of directories to be searched as if
-specified with @option{-I}, but after any paths given with @option{-I}
-options on the command line.  This environment variable is used
-regardless of which language is being preprocessed.
+@env{CPATH}は、@option{-I}で指定されたように検索されるディレクトリのリストを指定するが、コマンドラインで@option{-I}オプションで与えられたパスの後に指定する。 この環境変数は、どの言語が前処理されているかにかかわらず使用される。
 
-The remaining environment variables apply only when preprocessing the
-particular language indicated.  Each specifies a list of directories
-to be searched as if specified with @option{-isystem}, but after any
-paths given with @option{-isystem} options on the command line.
+残りの環境変数は、特定の言語を前処理する場合にのみ適用される。 それぞれは、@option{-isystem}で指定されたように検索されるディレクトリのリストを指定するが、コマンドラインで@option{-isystem}オプションを指定したパスの後に指定する。
 
-In all these variables, an empty element instructs the compiler to
-search its current working directory.  Empty elements can appear at the
-beginning or end of a path.  For instance, if the value of
-@env{CPATH} is @code{:/special/include}, that has the same
-effect as @samp{@w{-I. -I/special/include}}.
+これらのすべての変数では、空の要素は現在の作業ディレクトリを検索するようにコンパイラに指示する。 空の要素は、パスの先頭または末尾に表示される。たとえば、@env{CPATH}の値が@code{:/special/include}の場合、@samp{@w{-I. -I/special/include}}と同じ効果がある。
 
 @c man end
 @ifset cppmanual
@@ -46,33 +32,22 @@ See also @ref{Search Path}.
 
 @item DEPENDENCIES_OUTPUT
 @cindex dependencies for make as output
-If this variable is set, its value specifies how to output
-dependencies for Make based on the non-system header files processed
-by the compiler.  System header files are ignored in the dependency
-output.
+この変数が設定されている場合、その値は、コンパイラーによって処理される非システムヘッダーファイルに基づいて、Makeの依存関係を出力する方法を指定する。 依存関係の出力ではシステムヘッダファイルは無視される。
 
-The value of @env{DEPENDENCIES_OUTPUT} can be just a file name, in
-which case the Make rules are written to that file, guessing the target
-name from the source file name.  Or the value can have the form
-@samp{@var{file} @var{target}}, in which case the rules are written to
-file @var{file} using @var{target} as the target name.
+@env{DEPENDENCIES_OUTPUT}の値は単なるファイル名にすることができる。その場合、Makeルールはそのファイルに書き込まれ、ソースファイル名からターゲット名を推測する。 または、値は@samp{@var{file} @var{target}}の形式にすることができる。この場合、ルールはターゲット名として@var{target}を使用してファイル@var{file}に書き込まれる。
 
-In other words, this environment variable is equivalent to combining
-the options @option{-MM} and @option{-MF}
+つまり、この環境変数は、オプション@option {-MM}と@option {-MF}
 @ifset cppmanual
 (@pxref{Invocation}),
 @end ifset
 @ifclear cppmanual
 (@pxref{Preprocessor Options}),
 @end ifclear
-with an optional @option{-MT} switch too.
+と、さらに任意の@option{-MT}を組み合わせることと等価である。
 
 @item SUNPRO_DEPENDENCIES
 @cindex dependencies for make as output
-This variable is the same as @env{DEPENDENCIES_OUTPUT} (see above),
-except that system header files are not ignored, so it implies
-@option{-M} rather than @option{-MM}.  However, the dependence on the
-main input file is omitted.
+この変数は、@env{DEPENDENCIES_OUTPUT}（上記参照）と同じだが、システムヘッダファイルは無視されないので、@option{-MM}ではなく、@option{-M}を意味する。 ただし、メイン入力ファイルへの依存は省略されている。
 @ifset cppmanual
 @xref{Invocation}.
 @end ifset
@@ -81,19 +56,10 @@ main input file is omitted.
 @end ifclear
 
 @item SOURCE_DATE_EPOCH
-If this variable is set, its value specifies a UNIX timestamp to be
-used in replacement of the current date and time in the @code{__DATE__}
-and @code{__TIME__} macros, so that the embedded timestamps become
-reproducible.
+この変数が設定されている場合、その値は@code{__ DATE__}マクロと@code{__ TIME__}マクロで現在の日付と時刻を置き換えるために使用されるUNIXタイムスタンプを指定し、埋め込みタイムスタンプが再現可能になる。
 
-The value of @env{SOURCE_DATE_EPOCH} must be a UNIX timestamp,
-defined as the number of seconds (excluding leap seconds) since
-01 Jan 1970 00:00:00 represented in ASCII; identical to the output of
-@samp{@command{date +%s}} on GNU/Linux and other systems that support the
-@code{%s} extension in the @code{date} command.
+@env{SOURCE_DATE_EPOCH}の値はUNIXのタイムスタンプでなければならず、ASCIIで表される1970年1月1日00:00:00以降の閏秒を除いた秒数として定義される。 @code {date}コマンドの@code{％s}拡張をサポートするGNU/Linuxやその他のシステム上の@samp{@command{date +％s}}の出力と同じである。
 
-The value should be a known timestamp such as the last modification
-time of the source or package and it should be set by the build
-process.
+値は、ソースまたはパッケージの最終変更時刻などの既知のタイムスタンプでなければならず、ビルドプロセスによって設定する必要がある。
 
 @end vtable
