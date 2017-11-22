@@ -17,9 +17,9 @@ ISO Cの適合する実装は、「実装定義」と呼ばれる各分野にお
 * 識別子実装::
 * 文字実装::
 * 整数実装::
-* Floating point implementation::
-* Arrays and pointers implementation::
-* Hints implementation::
+* 浮動小数点実装::
+* 配列とポインタの実装::
+* ヒントの実装::
 * Structures unions enumerations and bit-fields implementation::
 * Qualifiers implementation::
 * Declarators implementation::
@@ -35,16 +35,15 @@ ISO Cの適合する実装は、「実装定義」と呼ばれる各分野にお
 
 @itemize @bullet
 @item
-@cite{診断の特定方法 (C90 3.7, C99 and C11 3.10, C90,
-C99 and C11 5.1.1.3).}
+@cite{診断の特定方法 (C90 3.7, C99 と C11 3.10, C90, C99 と C11 5.1.1.3)。}
 
 診断は、GCCによってすべてstderrに送信された出力で構成される。
 
 @item
-@cite{改行以外の空白以外の空白文字列が、翻訳フェーズ3で1つの空白文字で保持されているか置き換えられているかどうか (C90, C99 and C11 5.1.1.2).}
+@cite{改行以外の空白以外の空白文字列が、翻訳フェーズ3で1つの空白文字で保持されているか置き換えられているかどうか (C90, C99 と C11 5.1.1.2)。}
 
 @xref{Implementation-defined behavior, , Implementation-defined
-behavior, cpp, The C Preprocessor}.
+behavior, cpp, The C Preprocessor}
 
 @end itemize
 
@@ -55,10 +54,10 @@ behavior, cpp, The C Preprocessor}.
 
 @itemize @bullet
 @item
-@cite{翻訳フェーズ1で物理ソースファイルのマルチバイト文字とソースキャラクタセットとの間のマッピング (C90, C99 and C11 5.1.1.2).}
+@cite{翻訳フェーズ1で物理ソースファイルのマルチバイト文字とソースキャラクタセットとの間のマッピング (C90, C99 と C11 5.1.1.2).}
 
 @xref{Implementation-defined behavior, , Implementation-defined
-behavior, cpp, The C Preprocessor}.
+behavior, cpp, The C Preprocessor}
 
 @end itemize
 
@@ -67,14 +66,14 @@ behavior, cpp, The C Preprocessor}.
 
 @itemize @bullet
 @item
-@cite{どの追加のマルチバイト文字が識別子に現れ、ユニバーサル文字名に対応するか (C99 and C11 6.4.2).}
+@cite{どの追加のマルチバイト文字が識別子に現れ、ユニバーサル文字名に対応するか (C99 と C11 6.4.2)。}
 
 @xref{Implementation-defined behavior, , Implementation-defined
-behavior, cpp, The C Preprocessor}.
+behavior, cpp, The C Preprocessor}
 
 @item
 @cite{識別子の有効な初期文字の数
-(C90 6.1.2, C90, C99 and C11 5.2.4.1, C99 and C11 6.4.2).}
+(C90 6.1.2, C90, C99 と C11 5.2.4.1, C99 と C11 6.4.2)。}
 
 内部名の場合、すべての文字が有効である。 外部名の場合、重要な文字の数はリンカーによって定義される。 ほぼすべてのターゲットで、すべての文字が有効である。
 
@@ -90,71 +89,70 @@ behavior, cpp, The C Preprocessor}.
 
 @itemize @bullet
 @item
-@cite{バイトのビット数 (C90 3.4, C99 and C11 3.6).}
+@cite{バイトのビット数 (C90 3.4, C99 と C11 3.6)。}
 
 ABIによって決定される。
 
 @item
-@cite{実行文字集合のメンバの数 (C90, C99 and C11 5.2.1).}
+@cite{実行文字集合のメンバの数 (C90, C99 と C11 5.2.1)。}
 
 ABIによって決定される。
 
 @item
-@cite{各標準アルファベットエスケープシーケンスに対して生成された実行文字セットのメンバの一意の値。 (C90, C99 and C11 5.2.2).}
+@cite{各標準アルファベットエスケープシーケンスに対して生成された実行文字セットのメンバの一意の値。 (C90, C99 と C11 5.2.2).}
 
 ABIによって決定される。
 
 @item
 @cite{基本実行文字セットのメンバー以外の文字が格納されている@code {char}オブジェクトの値
-(C90 6.1.2.5, C99 and C11 6.2.5).}
+(C90 6.1.2.5, C99 と C11 6.2.5。}
 
 ABIによって決定される。
 
 @item
-@cite{@code {signed char}または@code {unsigned char}のどちらが「素の」@code{char}と同じ範囲、表現、動作を持つか(C90 6.1.2.5, C90 6.2.1.1, C99 and C11 6.2.5, C99 and C11 6.3.1.1).}
+@cite{@code {signed char}または@code {unsigned char}のどちらが「素の」@code{char}と同じ範囲、表現、動作を持つか(C90 6.1.2.5, C90 6.2.1.1, C99 と C11 6.2.5, C99 と C11 6.3.1.1)。}
 
 @opindex fsigned-char
 @opindex funsigned-char
-ABIによって決定される。 オプション@option {-funsigned-char}と@option {-fsigned-char}はデフォルトを変更する。 @xref{C Dialect Options, ,Options Controlling C Dialect}.
+ABIによって決定される。 オプション@option {-funsigned-char}と@option {-fsigned-char}はデフォルトを変更する。 @xref{C Dialect Options, ,Options Controlling C Dialect}
 
 @item
-@cite{ソース文字セット（文字定数と文字列リテラル）のメンバーの実行文字セットのメンバーへのマッピング
-set (C90 6.1.3.4, C99 and C11 6.4.4.4, C90, C99 and C11 5.1.1.2).}
+@cite{ソース文字セット（文字定数と文字列リテラル）のメンバーの実行文字セットのメンバーへのマッピング (C90 6.1.3.4, C99 と C11 6.4.4.4, C90, C99 と C11 5.1.1.2)。}
 
 ABIによって決定される。
 
 @item
-@cite{複数の文字を含む、またはシングルバイトの実行文字にマップされない文字またはエスケープシーケンスを含む整数文字定数の値 (C90 6.1.3.4, C99 and C11 6.4.4.4).}
+@cite{複数の文字を含む、またはシングルバイトの実行文字にマップされない文字またはエスケープシーケンスを含む整数文字定数の値 (C90 6.1.3.4, C99 と C11 6.4.4.4)。}
 
-@xref{Implementation-defined behavior, , Implementation-defined behavior, cpp, The C Preprocessor}.
-
-@item
-@cite{複数のマルチバイト文字を含むワイド文字定数、または拡張実行文字セットの複数のメンバーにマップする単一マルチバイト文字、または拡張実行文字セットで表されていないマルチバイト文字またはエスケープシーケンスを含むワイド文字定数の値 (C90 6.1.3.4, C99 and C11 6.4.4.4).}
-
-@xref{Implementation-defined behavior, , Implementation-defined behavior, cpp, The C Preprocessor}.
+@xref{Implementation-defined behavior, , Implementation-defined behavior, cpp, The C Preprocessor}
 
 @item
-@cite{拡張実行文字セットのメンバーにマップされる単一のマルチバイト文字からなるワイド文字定数を対応するワイド文字コードに変換するために使用される現在のロケール (C90 6.1.3.4, C99 and C11 6.4.4.4).}
+@cite{複数のマルチバイト文字を含むワイド文字定数、または拡張実行文字セットの複数のメンバーにマップする単一マルチバイト文字、または拡張実行文字セットで表されていないマルチバイト文字またはエスケープシーケンスを含むワイド文字定数の値 (C90 6.1.3.4, C99 と C11 6.4.4.4)。}
+
+@xref{Implementation-defined behavior, , Implementation-defined behavior, cpp, The C Preprocessor}
+
+@item
+@cite{拡張実行文字セットのメンバーにマップされる単一のマルチバイト文字からなるワイド文字定数を対応するワイド文字コードに変換するために使用される現在のロケール (C90 6.1.3.4, C99 と C11 6.4.4.4).}
 
 @xref{Implementation-defined behavior, , Implementation-defined
-behavior, cpp, The C Preprocessor}.
+behavior, cpp, The C Preprocessor}
 
 @item
-@cite{異なる接頭辞のワイド文字列リテラルトークンを連結することができるかどうか、もしそうであれば、結果として生じるマルチバイト文字シーケンスの処理 (C11 6.4.5).}
+@cite{異なる接頭辞のワイド文字列リテラルトークンを連結することができるかどうか、もしそうであれば、結果として生じるマルチバイト文字シーケンスの処理 (C11 6.4.5)。}
 
 そのようなトークンは連結することはできない。
 
 @item
-@cite{ワイド文字列リテラルを対応するワイド文字コードに変換するために使用される現在のロケール (C90 6.1.4, C99 and C11 6.4.5).}
+@cite{ワイド文字列リテラルを対応するワイド文字コードに変換するために使用される現在のロケール (C90 6.1.4, C99 と C11 6.4.5)。}
 
 @xref{Implementation-defined behavior, , Implementation-defined
 behavior, cpp, The C Preprocessor}.
 
 @item
-@cite{実行文字セットで表されていないマルチバイト文字またはエスケープシーケンスを含む文字列リテラルの値 (C90 6.1.4, C99 and C11 6.4.5).}
+@cite{実行文字セットで表されていないマルチバイト文字またはエスケープシーケンスを含む文字列リテラルの値 (C90 6.1.4, C99 と C11 6.4.5)。}
 
 @xref{Implementation-defined behavior, , Implementation-defined
-behavior, cpp, The C Preprocessor}.
+behavior, cpp, The C Preprocessor}
 
 @item
 @cite{対応する標準エンコーディングマクロ(@code{__STDC_ISO_10646__}, @code{__STDC_UTF_16__}, or
@@ -169,10 +167,9 @@ behavior, cpp, The C Preprocessor}.
 
 @itemize @bullet
 @item
-@cite{Any extended integer types that exist in the implementation (C99
-and C11 6.2.5).}
+@cite{実装に存在するすべての拡張整数型 (C99とC11 6.2.5)。}
 
-GCC does not support any extended integer types.
+GCCは拡張整数型をサポートしていない。
 @c The __mode__ attribute might create types of precisions not
 @c otherwise supported, but the syntax isn't right for use everywhere
 @c the standard type names might be used.  Predefined typedefs should
@@ -181,224 +178,152 @@ GCC does not support any extended integer types.
 @c as they are generally longer than the ABI-specified intmax_t.
 
 @item
-@cite{Whether signed integer types are represented using sign and magnitude,
-two's complement, or one's complement, and whether the extraordinary value
-is a trap representation or an ordinary value (C99 and C11 6.2.6.2).}
+@cite{符号付き整数型が符号と大きさで表現されるのか、2の補数なのか、または1の補数を使用して表現されるかどうか、および異常値がトラップ表現か通常値かどうか。 (C99 と C11 6.2.6.2)。}
 
-GCC supports only two's complement integer types, and all bit patterns
-are ordinary values.
+GCCは2の補数の整数型のみをサポートし、すべてのビットパターンは通常の値である。
 
 @item
-@cite{The rank of any extended integer type relative to another extended
-integer type with the same precision (C99 and C11 6.3.1.1).}
+@cite{同じ精度を持つ別の拡張整数型に関連する拡張整数型のランク (C99 と C11 6.3.1.1)。}
 
-GCC does not support any extended integer types.
+GCCは拡張整数型をサポートしていない。
 @c If it did, there would only be one of each precision and signedness.
 
 @item
-@cite{The result of, or the signal raised by, converting an integer to a
-signed integer type when the value cannot be represented in an object of
-that type (C90 6.2.1.2, C99 and C11 6.3.1.3).}
+@cite{その型のオブジェクトで値を表現できないときに、整数を符号付き整数型に変換した結果、またはそれによって生成されたシグナル (C90 6.2.1.2, C99 と C11 6.3.1.3)。}
 
-For conversion to a type of width @math{N}, the value is reduced
-modulo @math{2^N} to be within range of the type; no signal is raised.
+幅@math{N}の型に変換する場合、値は@math{2^N}で割ったあまりである。 シグナルは発生しない。
 
 @item
-@cite{The results of some bitwise operations on signed integers (C90
-6.3, C99 and C11 6.5).}
+@cite{符号付き整数のビット演算の結果 (C90 6.3, C99 と C11 6.5)。}
 
-Bitwise operators act on the representation of the value including
-both the sign and value bits, where the sign bit is considered
-immediately above the highest-value value bit.  Signed @samp{>>} acts
-on negative numbers by sign extension.
+ビット演算子は、符号ビットと値ビットの両方を含む値の表現に作用する。符号ビットは、最大値のビットのすぐ上にあるとみなされる。 符号付き@samp{>>}は符号拡張で負の数に作用する。
 
-As an extension to the C language, GCC does not use the latitude given in
-C99 and C11 only to treat certain aspects of signed @samp{<<} as undefined.
-However, @option{-fsanitize=shift} (and @option{-fsanitize=undefined}) will
-diagnose such cases.  They are also diagnosed where constant
-expressions are required.
+C言語への拡張として、GCCはC99とC11で与えられた自由度を使用して、符号付き@samp{<<}の特定の側面を未定義として扱わない。しかし、@option{-fsanitize=shift}（および@option{-fsanitize=undefined}）は、このようなケースを診断する。 定数値が必要な場合も診断される。
 
 @item
-@cite{The sign of the remainder on integer division (C90 6.3.5).}
+@cite{整数除算の余りの符号 (C90 6.3.5)。}
 
-GCC always follows the C99 and C11 requirement that the result of division is
-truncated towards zero.
+GCCは、除算の結果がゼロに向かって切り捨てられるというC99とC11の要件に常に従う。
 
 @end itemize
 
-@node Floating point implementation
-@section Floating Point
+@node 浮動小数点実装
+@section 浮動小数点
 
 @itemize @bullet
 @item
-@cite{The accuracy of the floating-point operations and of the library
-functions in @code{<math.h>} and @code{<complex.h>} that return floating-point
-results (C90, C99 and C11 5.2.4.2.2).}
+@cite{浮動小数点演算と、浮動小数点結果を返す@code{<math.h>}および@code{<complex.h>}のライブラリ関数の精度 (C90, C99 と C11 5.2.4.2.2)。}
 
-The accuracy is unknown.
+精度は不明である。
 
 @item
-@cite{The rounding behaviors characterized by non-standard values
-of @code{FLT_ROUNDS} @gol
-(C90, C99 and C11 5.2.4.2.2).}
+@cite{@code{FLT_ROUNDS}の非標準値によって特徴付けられる丸め動作(C90, C99 と C11 5.2.4.2.2)。}
 
-GCC does not use such values.
+GCCにはそのような値はない。
 
 @item
-@cite{The evaluation methods characterized by non-standard negative
-values of @code{FLT_EVAL_METHOD} (C99 and C11 5.2.4.2.2).}
+@cite{@code{FLT_EVAL_METHOD}の非標準の負の値によって特徴付けられる評価方法 (C99 と C11 5.2.4.2.2)。}
 
-GCC does not use such values.
-
-@item
-@cite{The direction of rounding when an integer is converted to a
-floating-point number that cannot exactly represent the original
-value (C90 6.2.1.3, C99 and C11 6.3.1.4).}
-
-C99 Annex F is followed.
+GCCにはそのような値はない。
 
 @item
-@cite{The direction of rounding when a floating-point number is
-converted to a narrower floating-point number (C90 6.2.1.4, C99 and C11
-6.3.1.5).}
+@cite{整数が、元の値を正確に表現できない浮動小数点数に変換された場合の丸めの方向 (C90 6.2.1.3, C99 と C11 6.3.1.4)。}
 
-C99 Annex F is followed.
+C99付録Fに従う。
 
 @item
-@cite{How the nearest representable value or the larger or smaller
-representable value immediately adjacent to the nearest representable
-value is chosen for certain floating constants (C90 6.1.3.1, C99 and C11
-6.4.4.2).}
+@cite{浮動小数点数をより小さい浮動小数点数に変換する場合の丸めの方向 (C90 6.2.1.4, C99 と C11 6.3.1.5)。}
 
-C99 Annex F is followed.
+C99付録Fに従う。
 
 @item
-@cite{Whether and how floating expressions are contracted when not
-disallowed by the @code{FP_CONTRACT} pragma (C99 and C11 6.5).}
+@cite{最も近い表現可能な値、または最も近い表現可能な値に直に隣接するより大きなまたはより小さな表現可能な値が、ある浮動定数に対してどのように選択されるか (C90 6.1.3.1, C99 と C11 6.4.4.2)。}
 
-Expressions are currently only contracted if @option{-ffp-contract=fast},
-@option{-funsafe-math-optimizations} or @option{-ffast-math} are used.
-This is subject to change.
+C99付録Fに従う。
 
 @item
-@cite{The default state for the @code{FENV_ACCESS} pragma (C99 and C11
-7.6.1).}
+@cite{@code {FP_CONTRACT}プラグマで許可されていない浮動式が収縮するかどうか (C99 と C11 6.5)。}
 
-This pragma is not implemented, but the default is to ``off'' unless
-@option{-frounding-math} is used in which case it is ``on''.
+式は、@option{-ffp-contract=fast}、@option{-funsafe-math-optimizations}または@option{-ffast-math}が使用されている場合にのみ、現在のところ収縮する。これは変更されることがある。
 
 @item
-@cite{Additional floating-point exceptions, rounding modes, environments,
-and classifications, and their macro names (C99 and C11 7.6, C99 and
-C11 7.12).}
+@cite{@code {FENV_ACCESS}プラグマのデフォルトの状態 (C99 と C11 7.6.1)。}
 
-This is dependent on the implementation of the C library, and is not
-defined by GCC itself.
+このプラグマは実装されていないが、デフォルトは@option{-frounding-math}が使われていない限りは「オフ」であり、使われている場合は「オン」である。
 
 @item
-@cite{The default state for the @code{FP_CONTRACT} pragma (C99 and C11
-7.12.2).}
+@cite{追加の浮動小数点例外、丸めモード、環境、および分類、およびそれらのマクロ名(C99 と C11 7.6, C99 と C11 7.12)。}
 
-This pragma is not implemented.  Expressions are currently only
-contracted if @option{-ffp-contract=fast},
-@option{-funsafe-math-optimizations} or @option{-ffast-math} are used.
-This is subject to change.
+これはCライブラリの実装に依存し、GCC自体では定義されていない。
 
 @item
-@cite{Whether the ``inexact'' floating-point exception can be raised
-when the rounded result actually does equal the mathematical result
-in an IEC 60559 conformant implementation (C99 F.9).}
+@cite{@code{FP_CONTRACT}プラグマのデフォルトの状態 (C99 と C11 7.12.2)。}
 
-This is dependent on the implementation of the C library, and is not
-defined by GCC itself.
+このプラグマは実装されていない。 式は、@option{-ffp-contract = fast}、@option{-funsafe-math-optimizations}または@option{-ffast-math}が使用されている場合にのみ、現在のところ収縮する。これは変更されることがある。
 
 @item
-@cite{Whether the ``underflow'' (and ``inexact'') floating-point
-exception can be raised when a result is tiny but not inexact in an
-IEC 60559 conformant implementation (C99 F.9).}
+@cite{丸められた結果が実際にIEC 60559準拠の実装における数学的結果と等しい場合に、「不正確な」浮動小数点例外を発生させることができるかどうか (C99 F.9)。}
 
-This is dependent on the implementation of the C library, and is not
-defined by GCC itself.
+これはCライブラリの実装に依存し、GCC自体では定義されていない。
+
+@item
+@cite{結果が小さいが、IEC 60559準拠の実装では不正確ではない場合に、「アンダーフロー」（および「不正確」）浮動小数点例外を発生させることができるかどうか (C99 F.9)。}
+
+これはCライブラリの実装に依存し、GCC自体では定義されていない。
 
 @end itemize
 
-@node Arrays and pointers implementation
-@section Arrays and Pointers
+@node 配列とポインタの実装
+@section 配列とポインタ
 
 @itemize @bullet
 @item
-@cite{The result of converting a pointer to an integer or
-vice versa (C90 6.3.4, C99 and C11 6.3.2.3).}
+@cite{ポインタを整数に変換した結果、またはその逆の結果 (C90 6.3.4, C99 と C11 6.3.2.3)。}
 
-A cast from pointer to integer discards most-significant bits if the
-pointer representation is larger than the integer type,
-sign-extends@footnote{Future versions of GCC may zero-extend, or use
-a target-defined @code{ptr_extend} pattern.  Do not rely on sign extension.}
-if the pointer representation is smaller than the integer type, otherwise
-the bits are unchanged.
+ポインタ表現が整数型より大きい場合、ポインタから整数へのキャストは最上位ビットを破棄し、ポインタ表現が整数型よりも小さい場合は符号拡張し@footnote{GCCの将来のバージョンは、ゼロ拡張するか、ターゲット定義の@code{ptr_extend}パターンを使用するかもしれない。 符号拡張に頼ってはならない。}、そうでない場合はビットは変更されない。
+
 @c ??? We've always claimed that pointers were unsigned entities.
 @c Shouldn't we therefore be doing zero-extension?  If so, the bug
 @c is in convert_to_integer, where we call type_for_size and request
 @c a signed integral type.  On the other hand, it might be most useful
 @c for the target if we extend according to POINTERS_EXTEND_UNSIGNED.
 
-A cast from integer to pointer discards most-significant bits if the
-pointer representation is smaller than the integer type, extends according
-to the signedness of the integer type if the pointer representation
-is larger than the integer type, otherwise the bits are unchanged.
+整数からポインタへのキャストは、ポインタ表現が整数型よりも小さい場合は最上位ビットを破棄し、ポインタ表現が整数型より大きい場合は整数型の符号長に従って拡張する。そうでなければビットは変更されない。
 
-When casting from pointer to integer and back again, the resulting
-pointer must reference the same object as the original pointer, otherwise
-the behavior is undefined.  That is, one may not use integer arithmetic to
-avoid the undefined behavior of pointer arithmetic as proscribed in
-C99 and C11 6.5.6/8.
+ポインタから整数へのキャストと再び戻るとき、結果のポインタは元のポインタと同じオブジェクトを参照する必要がある。そうでない場合、動作は未定義である。 つまり、C99とC11 6.5.6/8で宣言されているポインタ算術の未定義の振る舞いを避けるために、整数算術を使用することはできない。
 
 @item
-@cite{The size of the result of subtracting two pointers to elements
-of the same array (C90 6.3.6, C99 and C11 6.5.6).}
+@cite{同じ配列の要素への2つのポインタを減算した結果のサイズ (C90 6.3.6, C99 と C11 6.5.6)。}
 
-The value is as specified in the standard and the type is determined
-by the ABI@.
+値は標準で指定されているとおりであり、型はABIによって決定されます。
 
 @end itemize
 
-@node Hints implementation
-@section Hints
+@node ヒントの実装
+@section ヒント
 
 @itemize @bullet
 @item
-@cite{The extent to which suggestions made by using the @code{register}
-storage-class specifier are effective (C90 6.5.1, C99 and C11 6.7.1).}
+@cite{@code{register}ストレージクラス指定子を使用して提案された提案が有効である範囲 (C90 6.5.1, C99 と C11 6.7.1)。}
 
-The @code{register} specifier affects code generation only in these ways:
+@code {register}指定子は、以下の方法でのみコード生成に影響する。
 
 @itemize @bullet
 @item
-When used as part of the register variable extension, see
-@ref{Explicit Register Variables}.
+レジスタ変数拡張の一部として使用する場合、@ref{Explicit Register Variables}参照。
 
 @item
-When @option{-O0} is in use, the compiler allocates distinct stack
-memory for all variables that do not have the @code{register}
-storage-class specifier; if @code{register} is specified, the variable
-may have a shorter lifespan than the code would indicate and may never
-be placed in memory.
+@option{-O0}を使用すると、コンパイラは@code{register}ストレージクラス指定子を持たないすべての変数に別個のスタックメモリを割り当てる。 @code{register}が指定されている場合、変数はコードが示すよりも寿命が短く、決してメモリに置かれないことがある。
 
 @item
-On some rare x86 targets, @code{setjmp} doesn't save the registers in
-all circumstances.  In those cases, GCC doesn't allocate any variables
-in registers unless they are marked @code{register}.
+あるまれなx86ターゲットでは、@code{setjmp}はすべての状況でレジスタを保存しない。 そのような場合、GCCは@code{register}と表示されていない限り、レジスタに変数を割り当てない。
 
 @end itemize
 
 @item
-@cite{The extent to which suggestions made by using the inline function
-specifier are effective (C99 and C11 6.7.4).}
+@cite{インライン関数指定子を使用した提案の有効範囲(C99 と C11 6.7.4).}
 
-GCC will not inline any functions if the @option{-fno-inline} option is
-used or if @option{-O0} is used.  Otherwise, GCC may still be unable to
-inline a function for many reasons; the @option{-Winline} option may be
-used to determine if a function has not been inlined and why not.
+@option{-fno-inline}オプションが使用されている場合や、@option{-O0}が使用されている場合、GCCは関数をインライン化しない。 そうしないと、GCCはいろいろな理由で関数をインライン化できないことがある。 @option{-Winline}オプションを使用して、関数がインライン化されていないかどうかとその理由を判断できる。
 
 @end itemize
 
