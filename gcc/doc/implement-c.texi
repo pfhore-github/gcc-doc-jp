@@ -20,14 +20,14 @@ ISO Cの適合する実装は、「実装定義」と呼ばれる各分野にお
 * 浮動小数点実装::
 * 配列とポインタの実装::
 * ヒントの実装::
-* Structures unions enumerations and bit-fields implementation::
-* Qualifiers implementation::
-* Declarators implementation::
-* Statements implementation::
-* Preprocessing directives implementation::
-* Library functions implementation::
-* Architecture implementation::
-* Locale-specific behavior implementation::
+* 構造体、共用体、列挙、ビットフィールド実装::
+* 限定子実装::
+* 宣言子実装::
+* 文実装::
+* プリプロセスディレクティブ実装::
+* ライブラリ関数の実装::
+* アーキテクチャ実装::
+* ロケール固有の振る舞いの実装::
 @end menu
 
 @node 翻訳実装
@@ -54,7 +54,7 @@ behavior, cpp, The C Preprocessor}
 
 @itemize @bullet
 @item
-@cite{翻訳フェーズ1で物理ソースファイルのマルチバイト文字とソースキャラクタセットとの間のマッピング (C90, C99 と C11 5.1.1.2).}
+@cite{翻訳フェーズ1で物理ソースファイルのマルチバイト文字とソースキャラクタセットとの間のマッピング (C90, C99 と C11 5.1.1.2)。}
 
 @xref{Implementation-defined behavior, , Implementation-defined
 behavior, cpp, The C Preprocessor}
@@ -78,7 +78,7 @@ behavior, cpp, The C Preprocessor}
 内部名の場合、すべての文字が有効である。 外部名の場合、重要な文字の数はリンカーによって定義される。 ほぼすべてのターゲットで、すべての文字が有効である。
 
 @item
-@cite{外部リンケージを持つ識別子で大文字と小文字の区別が有効であるかどうか (C90 6.1.2).}
+@cite{外部リンケージを持つ識別子で大文字と小文字の区別が有効であるかどうか (C90 6.1.2)。}
 
 これはリンカーのプロパティである。 C99とC11では、外部リンクを持つ識別子で大文字と小文字の区別が常に有効であり、このプロパティのないシステムはGCCではサポートされていない。
 
@@ -99,7 +99,7 @@ ABIによって決定される。
 ABIによって決定される。
 
 @item
-@cite{各標準アルファベットエスケープシーケンスに対して生成された実行文字セットのメンバの一意の値。 (C90, C99 と C11 5.2.2).}
+@cite{各標準アルファベットエスケープシーケンスに対して生成された実行文字セットのメンバの一意の値。 (C90, C99 と C11 5.2.2)。}
 
 ABIによって決定される。
 
@@ -132,7 +132,7 @@ ABIによって決定される。
 @xref{Implementation-defined behavior, , Implementation-defined behavior, cpp, The C Preprocessor}
 
 @item
-@cite{拡張実行文字セットのメンバーにマップされる単一のマルチバイト文字からなるワイド文字定数を対応するワイド文字コードに変換するために使用される現在のロケール (C90 6.1.3.4, C99 と C11 6.4.4.4).}
+@cite{拡張実行文字セットのメンバーにマップされる単一のマルチバイト文字からなるワイド文字定数を対応するワイド文字コードに変換するために使用される現在のロケール (C90 6.1.3.4, C99 と C11 6.4.4.4)。}
 
 @xref{Implementation-defined behavior, , Implementation-defined
 behavior, cpp, The C Preprocessor}
@@ -156,7 +156,7 @@ behavior, cpp, The C Preprocessor}
 
 @item
 @cite{対応する標準エンコーディングマクロ(@code{__STDC_ISO_10646__}, @code{__STDC_UTF_16__}, or
-@code{__STDC_UTF_32__})が定義されていないときの@code{wchar_t}、@code{char16_t}、および@code{char32_t}のいずれかのエンコーディング (C11 6.10.8.2).}
+@code{__STDC_UTF_32__})が定義されていないときの@code{wchar_t}、@code{char16_t}、および@code{char32_t}のいずれかのエンコーディング (C11 6.10.8.2)。}
 
 @xref{Implementation-defined behavior, , Implementation-defined behavior, cpp, The C Preprocessor}.  @code {char16_t}と@code {char32_t}リテラルは、それぞれ常にUTF-16とUTF-32でエンコードされる。
 
@@ -321,75 +321,57 @@ C99付録Fに従う。
 @end itemize
 
 @item
-@cite{インライン関数指定子を使用した提案の有効範囲(C99 と C11 6.7.4).}
+@cite{インライン関数指定子を使用した提案の有効範囲(C99 と C11 6.7.4)。}
 
 @option{-fno-inline}オプションが使用されている場合や、@option{-O0}が使用されている場合、GCCは関数をインライン化しない。 そうしないと、GCCはいろいろな理由で関数をインライン化できないことがある。 @option{-Winline}オプションを使用して、関数がインライン化されていないかどうかとその理由を判断できる。
 
 @end itemize
 
-@node Structures unions enumerations and bit-fields implementation
-@section Structures, Unions, Enumerations, and Bit-Fields
+@node 構造体、共用体、列挙、ビットフィールド実装
+@section 構造体、共用体、列挙、ビットフィールド
 
 @itemize @bullet
 @item
-@cite{A member of a union object is accessed using a member of a
-different type (C90 6.3.2.3).}
+@cite{異なる型のメンバを使ってアクセスされる共用体のメンバ (C90 6.3.2.3)。}
 
-The relevant bytes of the representation of the object are treated as
-an object of the type used for the access.  @xref{Type-punning}.  This
-may be a trap representation.
+オブジェクトの表現の関連するバイトは、アクセスに使用されるタイプのオブジェクトとして扱われる。 @xref{Type-punning}.  これはトラップ表現である可能性がある。
 
 @item
-@cite{Whether a ``plain'' @code{int} bit-field is treated as a
-@code{signed int} bit-field or as an @code{unsigned int} bit-field
-(C90 6.5.2, C90 6.5.2.1, C99 and C11 6.7.2, C99 and C11 6.7.2.1).}
+@cite{「普通の」@code{int}ビットフィールドが@code{signed int}ビットフィールドとして扱われるか、@code{unsigned int}ビットフィールドとして扱われるか(C90 6.5.2, C90 6.5.2.1, C99 と C11 6.7.2, C99 と C11 6.7.2.1)。}
 
 @opindex funsigned-bitfields
-By default it is treated as @code{signed int} but this may be changed
-by the @option{-funsigned-bitfields} option.
+デフォルトでは、@code{signed int}と扱われるが、これは@option{-funsigned-bitfields}オプションによって変更される可能性がある。
 
 @item
-@cite{Allowable bit-field types other than @code{_Bool}, @code{signed int},
-and @code{unsigned int} (C99 and C11 6.7.2.1).}
+@cite{@code{_Bool}、@code{signed int}、および@code{unsigned int}以外の許容されるビットフィールド型 (C99 と C11 6.7.2.1)。}
 
-Other integer types, such as @code{long int}, and enumerated types are
-permitted even in strictly conforming mode.
+厳密に準拠しているモードであっても、@code{long int}や列挙型などの他の整数型は許可される。
 
 @item
-@cite{Whether atomic types are permitted for bit-fields (C11 6.7.2.1).}
+@cite{ビットフィールドにアトミック型が許可されるかどうか (C11 6.7.2.1)。}
 
-Atomic types are not permitted for bit-fields.
-
-@item
-@cite{Whether a bit-field can straddle a storage-unit boundary (C90
-6.5.2.1, C99 and C11 6.7.2.1).}
-
-Determined by ABI@.
+ビットフィールドにはアトミック型は許されません。
 
 @item
-@cite{The order of allocation of bit-fields within a unit (C90
-6.5.2.1, C99 and C11 6.7.2.1).}
+@cite{ビットフィールドが記憶装置の境界をまたぐことができるかどうか (C90 6.5.2.1, C99 と C11 6.7.2.1)。}
 
-Determined by ABI@.
-
-@item
-@cite{The alignment of non-bit-field members of structures (C90
-6.5.2.1, C99 and C11 6.7.2.1).}
-
-Determined by ABI@.
+ABIによって決定される。
 
 @item
-@cite{The integer type compatible with each enumerated type (C90
-6.5.2.2, C99 and C11 6.7.2.2).}
+@cite{ユニット内のビットフィールドの割り当て順序 (C90 6.5.2.1, C99 と C11 6.7.2.1)。}
+
+ABIによって決定される。
+
+@item
+@cite{構造体の非ビットフィールドメンバの配置 (C90 6.5.2.1, C99 と C11 6.7.2.1)。}
+
+ABIによって決定される。
+
+@item
+@cite{各列挙型と互換性のある整数型 (C90 6.5.2.2, C99 と C11 6.7.2.2)。}
 
 @opindex fshort-enums
-Normally, the type is @code{unsigned int} if there are no negative
-values in the enumeration, otherwise @code{int}.  If
-@option{-fshort-enums} is specified, then if there are negative values
-it is the first of @code{signed char}, @code{short} and @code{int}
-that can represent all the values, otherwise it is the first of
-@code{unsigned char}, @code{unsigned short} and @code{unsigned int}
-that can represent all the values.
+通常、型は、列挙に負の値がない場合は@code{unsigned int}、そうでない場合は@code{int}である。@option{-fshort-enums}が指定されている場合、負の値がある場合、それはすべての値を表すことができる@code{signed char}、@code{short}と@code{int}の最初のものである。さもなければ、 すべての値を表すことができる@code{unsigned char}、@code{unsigned short}、@code{unsigned int}の最初である。
 @c On a few unusual targets with 64-bit int, this doesn't agree with
 @c the code and one of the types accessed via mode attributes (which
 @c are not currently considered extended integer types) may be used.
@@ -397,22 +379,18 @@ that can represent all the values.
 @c the case that -fshort-enums stops the implementation from
 @c conforming to C90 on those targets.
 
-On some targets, @option{-fshort-enums} is the default; this is
-determined by the ABI@.
+いくつかのターゲットでは、@option{-fshort-enums}がデフォルトである。 これはABIによって決定される。
 
 @end itemize
 
-@node Qualifiers implementation
-@section Qualifiers
+@node 限定子実装
+@section 限定子
 
 @itemize @bullet
 @item
-@cite{What constitutes an access to an object that has volatile-qualified
-type (C90 6.5.3, C99 and C11 6.7.3).}
+@cite{volatile修飾された型を持つオブジェクトへのアクセスを構成するもの (C90 6.5.3, C99 と C11 6.7.3)。}
 
-Such an object is normally accessed by pointers and used for accessing
-hardware.  In most expressions, it is intuitively obvious what is a read
-and what is a write.  For example
+そのようなオブジェクトは、通常、ポインタによってアクセスされ、ハードウェアへのアクセスに使用される。ほとんどの表現では、それは直感的には何が読まれ、何が書かれているかが明らかである。 例えば
 
 @smallexample
 volatile int *dst = @var{somevalue};
@@ -421,191 +399,137 @@ volatile int *src = @var{someothervalue};
 @end smallexample
 
 @noindent
-will cause a read of the volatile object pointed to by @var{src} and store the
-value into the volatile object pointed to by @var{dst}.  There is no
-guarantee that these reads and writes are atomic, especially for objects
-larger than @code{int}.
+は、@var{src}が指し示す揮発性オブジェクトの読み込みを引き起こし、@var{dst}が指す揮発性オブジェクトに値を設定する。特に@code{int}より大きいオブジェクトの場合、これらの読み取りと書き込みがアトミックであるという保証はない。
 
-However, if the volatile storage is not being modified, and the value of
-the volatile storage is not used, then the situation is less obvious.
-For example
+しかし、揮発性ストレージが変更されておらず、揮発性ストレージの値が使用されていない場合、その状況はあまり明らかではない。例えば
 
 @smallexample
 volatile int *src = @var{somevalue};
 *src;
 @end smallexample
 
-According to the C standard, such an expression is an rvalue whose type
-is the unqualified version of its original type, i.e. @code{int}.  Whether
-GCC interprets this as a read of the volatile object being pointed to or
-only as a request to evaluate the expression for its side-effects depends
-on this type.
+Cの標準によれば、このような式は、その型が元の型の非修飾バージョン、すなわち@code{int}である右辺値である。GCCがこれを揮発性オブジェクトの読み込みとして解釈するかどうか、またはその副作用のための式を評価する要求としてのみ解釈するかは、この型に依存する。
 
-If it is a scalar type, or on most targets an aggregate type whose only
-member object is of a scalar type, or a union type whose member objects
-are of scalar types, the expression is interpreted by GCC as a read of
-the volatile object; in the other cases, the expression is only evaluated
-for its side-effects.
+スカラー型である場合、またはほとんどのターゲットで、その唯一のメンバーオブジェクトがスカラ型である集約型、またはメンバーオブジェクトがスカラー型である共用体型の場合、式はGCCによって揮発性オブジェクトの読み込みと解釈される。 他のケースでは、式はその副作用についてのみ評価される。
 
 @end itemize
 
-@node Declarators implementation
-@section Declarators
+@node 宣言子実装
+@section 宣言子
 
 @itemize @bullet
 @item
-@cite{The maximum number of declarators that may modify an arithmetic,
-structure or union type (C90 6.5.4).}
+@cite{算術、構造体または共用体型を変更する可能性がある宣言子の最大数 (C90 6.5.4)。}
 
-GCC is only limited by available memory.
+GCCは利用可能なメモリによってのみ制限される。
 
 @end itemize
 
-@node Statements implementation
-@section Statements
+@node 文実装
+@section 文
 
 @itemize @bullet
 @item
-@cite{The maximum number of @code{case} values in a @code{switch}
-statement (C90 6.6.4.2).}
+@cite{@code {switch}ステートメント内の@code {case}値の最大数 (C90 6.6.4.2)。}
 
-GCC is only limited by available memory.
+GCCは利用可能なメモリによってのみ制限される。
 
 @end itemize
 
-@node Preprocessing directives implementation
-@section Preprocessing Directives
+@node プリプロセスディレクティブ実装
+@section プリプロセスディレクティブ
 
-@xref{Implementation-defined behavior, , Implementation-defined
-behavior, cpp, The C Preprocessor}, for details of these aspects of
-implementation-defined behavior.
+実装定義の動作のこれらの側面の詳細については、@xref{Implementation-defined behavior, , Implementation-defined
+behavior, cpp, The C Preprocessor}。
 
 @itemize @bullet
 @item
-@cite{The locations within @code{#pragma} directives where header name
-preprocessing tokens are recognized (C11 6.4, C11 6.4.7).}
+@cite{@code{#pragma}ディレクティブ内でヘッダ名のプリプロセストークンが認識される場所 (C11 6.4, C11 6.4.7)。}
 
 @item
-@cite{How sequences in both forms of header names are mapped to headers
-or external source file names (C90 6.1.7, C99 and C11 6.4.7).}
+@cite{ヘッダー名の両方の形式のシーケンスがヘッダーまたは外部ソースファイル名にどのようにマップされるか (C90 6.1.7, C99 と C11 6.4.7)。}
 
 @item
-@cite{Whether the value of a character constant in a constant expression
-that controls conditional inclusion matches the value of the same character
-constant in the execution character set (C90 6.8.1, C99 and C11 6.10.1).}
+@cite{条件付きインクルードを制御する定数式の文字定数の値が、実行文字セットの同じ文字定数の値と一致するかどうか (C90 6.8.1, C99 と C11 6.10.1)。}
 
 @item
-@cite{Whether the value of a single-character character constant in a
-constant expression that controls conditional inclusion may have a
-negative value (C90 6.8.1, C99 and C11 6.10.1).}
+@cite{条件付きインクルードを制御する定数式の1文字の文字定数の値が負の値を持つかどうか (C90 6.8.1, C99 と C11 6.10.1)。}
 
 @item
-@cite{The places that are searched for an included @samp{<>} delimited
-header, and how the places are specified or the header is
-identified (C90 6.8.2, C99 and C11 6.10.2).}
+@cite{インクルードされた@samp{<>}で区切られたヘッダーが検索される場所、および場所の指定方法やヘッダーの識別方法 (C90 6.8.2, C99 と C11 6.10.2)。}
 
 @item
-@cite{How the named source file is searched for in an included @samp{""}
-delimited header (C90 6.8.2, C99 and C11 6.10.2).}
+@cite{指定された@samp{""}で区切られたヘッダ内で名前付きソースファイルがどのように検索されるか (C90 6.8.2, C99 と C11 6.10.2)。}
 
 @item
-@cite{The method by which preprocessing tokens (possibly resulting from
-macro expansion) in a @code{#include} directive are combined into a header
-name (C90 6.8.2, C99 and C11 6.10.2).}
+@cite{@code{#include}ディレクティブのプリプロセストークン（マクロ展開の可能性がある）をヘッダ名に組み合わせる方法 (C90 6.8.2, C99 と C11 6.10.2)。}
 
 @item
-@cite{The nesting limit for @code{#include} processing (C90 6.8.2, C99
-and C11 6.10.2).}
+@cite{@code{#include}処理のネスト制限 (C90 6.8.2, C99と C11 6.10.2)。}
 
 @item
-@cite{Whether the @samp{#} operator inserts a @samp{\} character before
-the @samp{\} character that begins a universal character name in a
-character constant or string literal (C99 and C11 6.10.3.2).}
+@cite{@samp{#}演算子が、文字定数または文字列リテラルの汎用文字名を始める@samp{\}文字の前に@samp{\}文字を挿入するかどうか (C99 と C11 6.10.3.2)。}
 
 @item
-@cite{The behavior on each recognized non-@code{STDC #pragma}
-directive (C90 6.8.6, C99 and C11 6.10.6).}
+@cite{認識された@code{STDC #pragma}指令の動作 (C90 6.8.6, C99 と C11 6.10.6)。}
 
-@xref{Pragmas, , Pragmas, cpp, The C Preprocessor}, for details of
-pragmas accepted by GCC on all targets.  @xref{Pragmas, , Pragmas
-Accepted by GCC}, for details of target-specific pragmas.
+すべてのターゲットでGCCが受け入れたプラグマの詳細は@xref{Pragmas, , Pragmas, cpp, The C Preprocessor}。ターゲット指定のプラグマは@xref{Pragmas, , Pragmas Accepted by GCC}。
 
 @item
-@cite{The definitions for @code{__DATE__} and @code{__TIME__} when
-respectively, the date and time of translation are not available (C90
-6.8.8, C99 6.10.8, C11 6.10.8.1).}
+@cite{それぞれ翻訳の日付と時刻が利用できない場合の@code {__ DATE__}と@code {__ TIME__}の定義 (C90 6.8.8, C99 6.10.8, C11 6.10.8.1)。}
 
 @end itemize
 
-@node Library functions implementation
-@section Library Functions
+@node ライブラリ関数の実装
+@section ライブラリ関数
 
-The behavior of most of these points are dependent on the implementation
-of the C library, and are not defined by GCC itself.
+これらの点のほとんどの動作は、Cライブラリの実装に依存しており、GCC自体では定義されていない。
 
 @itemize @bullet
 @item
-@cite{The null pointer constant to which the macro @code{NULL} expands
-(C90 7.1.6, C99 7.17, C11 7.19).}
+@cite{マクロ@code {NULL}が展開するNULLポインタ定数 (C90 7.1.6, C99 7.17, C11 7.19)。}
 
-In @code{<stddef.h>}, @code{NULL} expands to @code{((void *)0)}.  GCC
-does not provide the other headers which define @code{NULL} and some
-library implementations may use other definitions in those headers.
+@code{<stddef.h>}では、@code{NULL}は@code{((void *)0)}に展開される。 GCCは@code{NULL}を定義する他のヘッダを提供せず、いくつかのライブラリ実装はそれらのヘッダに他の定義を使用するかもしれない。
 
 @end itemize
 
-@node Architecture implementation
-@section Architecture
+@node アーキテクチャ実装
+@section アーキテクチャ
 
 @itemize @bullet
 @item
-@cite{The values or expressions assigned to the macros specified in the
-headers @code{<float.h>}, @code{<limits.h>}, and @code{<stdint.h>}
-(C90, C99 and C11 5.2.4.2, C99 7.18.2, C99 7.18.3, C11 7.20.2, C11 7.20.3).}
+@cite{@code{<float.h>}、@code{<limits.h>}、および@code{<stdint.h>}ヘッダーで指定されたマクロに割り当てられた値または式}(C90, C99 と C11 5.2.4.2, C99 7.18.2, C99 7.18.3, C11 7.20.2, C11 7.20.3)。}
 
-Determined by ABI@.
+ABIで決定される。
 
 @item
-@cite{The result of attempting to indirectly access an object with
-automatic or thread storage duration from a thread other than the one
-with which it is associated (C11 6.2.4).}
+@cite{関連付けられているスレッド以外のスレッドから自動またはスレッド記憶期間を持つオブジェクトに間接的にアクセスしようとした結果 (C11 6.2.4)。}
 
-Such accesses are supported, subject to the same requirements for
-synchronization for concurrent accesses as for concurrent accesses to
-any object.
+このようなアクセスは、任意のオブジェクトへの同時アクセスの場合と同様に、同時アクセスの同期要件と同じ要件に従う。
 
 @item
-@cite{The number, order, and encoding of bytes in any object
-(when not explicitly specified in this International Standard) (C99
-and C11 6.2.6.1).}
+@cite{任意のオブジェクトのバイト数、順序、およびエンコーディング（この国際標準で明示的に指定されていない場合） (C99とC11 6.2.6.1)。}
 
-Determined by ABI@.
+ABIで決定される。
 
 @item
-@cite{Whether any extended alignments are supported and the contexts
-in which they are supported (C11 6.2.8).}
+@cite{拡張アライメントがサポートされているかどうかと、サポートされているコンテキスト (C11 6.2.8)。}
 
-Extended alignments up to @math{2^{28}} (bytes) are supported for
-objects of automatic storage duration.  Alignments supported for
-objects of static and thread storage duration are determined by the
-ABI.
+@math{2 ^ {28}}（バイト）までの拡張配列は、自動保存期間のオブジェクトでサポートされている。 静的およびスレッド記憶期間のオブジェクトに対してサポートされているアライメントは、ABIによって決定される。
 
 @item
-@cite{Valid alignment values other than those returned by an _Alignof
-expression for fundamental types, if any (C11 6.2.8).}
+@cite{基本型の_Alignof式によって返されたもの以外の有効な整列値（存在する場合） (C11 6.2.8)。}
 
-Valid alignments are powers of 2 up to and including @math{2^{28}}.
+有効なアラインメントは、2のべき乗から@math{2^{28}}までである。
 
 @item
-@cite{The value of the result of the @code{sizeof} and @code{_Alignof}
-operators (C90 6.3.3.4, C99 and C11 6.5.3.4).}
+@cite{@code {sizeof}演算子と@code {_Alignof}演算子の結果の値 (C90 6.3.3.4, C99 と C11 6.5.3.4)。}
 
-Determined by ABI@.
+ABIで決定される。
 
 @end itemize
 
-@node Locale-specific behavior implementation
-@section Locale-Specific Behavior
+@node ロケール固有の振る舞いの実装
+@section ロケール固有の振る舞い
 
-The behavior of these points are dependent on the implementation
-of the C library, and are not defined by GCC itself.
+これらの点の動作はCライブラリの実装に依存し、GCC自体では定義されない。
