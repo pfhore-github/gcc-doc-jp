@@ -3,24 +3,38 @@
 @c For copying conditions, see the file gcc.texi.
 
 @node C++ Implementation
+@chapter C++ 実装依存の振る舞い
 @cindex implementation-defined behavior, C++ language
 
+ISO C++の準拠した実装は、「実装定義」と呼ばれる領域のそれぞれの動作の選択を文書化する必要がある。ISO/IEC 14882：1998およびISO/IEC 14882：2003規格のセクション番号とともに、このようなすべての領域を以下に示す。 一部の領域は、標準の1つのバージョンでのみ実装定義されている。
 
+いくつかの選択肢は、GCCが従うプラットフォーム（標準の文字エンコーディングを含む）のために外部で決定されたABIに依存します。 これらは、以下に「ABIによって決定される」と記載されている。 @xref{Compatibility, , Binary Compatibility}と、@uref {http://gcc.gnu.org/readings.html}。いくつかの選択肢は、プリプロセッサのマニュアルに記載されている。@xref{Implementation-defined behavior, , Implementation-defined behavior, cpp, The C Preprocessor}。いくつかの選択肢は、対応するC言語の文書に記載されている。@xref{C Implementation}.  ライブラリとオペレーティングシステム（または自立環境用にコンパイルするときは他の環境）によって選択されるものもある。 詳細については、そのドキュメントを参照せよ。
 
 @menu
+* 条件付きでサポートされた振る舞い::
+* 例外の扱い::
 @end menu
 
+@node 条件付きでサポートされた振る舞い
+@section 条件付きでサポートされた振る舞い
 
+@cite{各実装には、サポートされていない条件付きでサポートされているすべての構文を識別するドキュメントが含まれる (C++0x 1.4)。}
 
 @itemize @bullet
 @item
+@cite{非自明なコピーコンストラクタまたはデストラクタを持つクラス型の引数を...に渡すことができるかどうか  (C++0x 5.2.2)。}
 
+このような引数の引き渡しは、そのような型の通常の関数引き数に使用されているものと同じ非可視参照方式を使用してサポートされている。
 
 @end itemize
 
+@node 例外の扱い
+@section 例外の扱い
 
 @itemize @bullet
 @item
+@cite{一致するハンドラが見つからない状況では、std::terminate()が呼び出される前にスタックが巻き戻されるかどうかは実装定義されている (C++98 15.5.1)。}
 
+スタックは、std::terminateが呼び出される前に巻き戻されない。
 
 @end itemize
