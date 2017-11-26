@@ -1879,8 +1879,7 @@ GCCの将来のバージョンでインターフェースが変更されるか�
 すべてのアーキテクチャでサポートされているわけではないことに気をつけてください。
 
 トランザクションメモリーのGCCのサポートの情報は
-@xref{Enabling libitm,,The GNU Transactional Memory Library,libitm,GNU
-Transactional Memory Library}.
+@xref{Enabling libitm,,GNUトランザクショナルメモリ・ライブラリ,libitm,GNU Transactional Memory Library}.
 
 トランザクションメモリーの機能は非呼び出し例外(@option{-fnon-call-exceptions}ありではサポートされない
 ことに注意。

@@ -8,7 +8,7 @@
 
 ISO C++の準拠した実装は、「実装定義」と呼ばれる領域のそれぞれの動作の選択を文書化する必要がある。ISO/IEC 14882：1998およびISO/IEC 14882：2003規格のセクション番号とともに、このようなすべての領域を以下に示す。 一部の領域は、標準の1つのバージョンでのみ実装定義されている。
 
-いくつかの選択肢は、GCCが従うプラットフォーム（標準の文字エンコーディングを含む）のために外部で決定されたABIに依存します。 これらは、以下に「ABIによって決定される」と記載されている。 @xref{Compatibility, , Binary Compatibility}と、@uref {http://gcc.gnu.org/readings.html}。いくつかの選択肢は、プリプロセッサのマニュアルに記載されている。@xref{Implementation-defined behavior, , Implementation-defined behavior, cpp, The C Preprocessor}。いくつかの選択肢は、対応するC言語の文書に記載されている。@xref{C Implementation}.  ライブラリとオペレーティングシステム（または自立環境用にコンパイルするときは他の環境）によって選択されるものもある。 詳細については、そのドキュメントを参照せよ。
+いくつかの選択肢は、GCCが従うプラットフォーム（標準の文字エンコーディングを含む）のために外部で決定されたABIに依存します。 これらは、以下に「ABIによって決定される」と記載されている。 @xref{Compatibility, , バイナリ互換性}と、@uref {http://gcc.gnu.org/readings.html}。いくつかの選択肢は、プリプロセッサのマニュアルに記載されている。@xref{Implementation-defined behavior, , 実装依存の振る舞い, cpp, The C Preprocessor}。いくつかの選択肢は、対応するC言語の文書に記載されている。@xref{C Implementation}.  ライブラリとオペレーティングシステム（または自立環境用にコンパイルするときは他の環境）によって選択されるものもある。 詳細については、そのドキュメントを参照せよ。
 
 @menu
 * 条件付きでサポートされた振る舞い::
