@@ -4,99 +4,87 @@
 @c For copying conditions, see the file gcc.texi.
 
 @node C Extensions
-@chapter Extensions to the C Language Family
+@chapter C言語族への拡張
 @cindex extensions, C language
 @cindex C language extensions
 
 @opindex pedantic
-GNU C provides several language features not found in ISO standard C@.
-(The @option{-pedantic} option directs GCC to print a warning message if
-any of these features is used.)  To test for the availability of these
-features in conditional compilation, check for a predefined macro
-@code{__GNUC__}, which is always defined under GCC@.
+GNU Cは、ISO標準Cにはないいくつかの言語機能を提供している。（これらの機能のいずれかが使用されている場合、@ option{-pedantic}オプションはGCCに警告メッセージを出力するように指示する）。条件付きコンパイルでこれらの機能が利用できるかどうかをテストするために、あらかじめ定義されたマクロ@code{__ GNUC__}が常にGCCの下で定義されている。
 
-These extensions are available in C and Objective-C@.  Most of them are
-also available in C++.  @xref{C++ Extensions,,Extensions to the
-C++ Language}, for extensions that apply @emph{only} to C++.
+これらの拡張は、CとObjective-Cで利用できる。 それらのほとんどはC ++でも利用可能である。C++に@emph{_のみ_}適用する拡張機能は、@xref{C++ Extensions,,C ++言語の拡張機能}。
 
-Some features that are in ISO C99 but not C90 or C++ are also, as
-extensions, accepted by GCC in C90 mode and in C++.
+ISO C99にはあるがC90やC ++にはない機能のいくつかは、拡張機能として、C90モードとC ++でGCCで受理される。
 
 @menu
-* Statement Exprs::     Putting statements and declarations inside expressions.
-* Local Labels::        Labels local to a block.
-* Labels as Values::    Getting pointers to labels, and computed gotos.
-* Nested Functions::    As in Algol and Pascal, lexical scoping of functions.
-* Constructing Calls::  Dispatching a call to another function.
-* Typeof::              @code{typeof}: referring to the type of an expression.
-* Conditionals::        Omitting the middle operand of a @samp{?:} expression.
-* __int128::		128-bit integers---@code{__int128}.
-* Long Long::           Double-word integers---@code{long long int}.
-* Complex::             Data types for complex numbers.
-* Floating Types::      Additional Floating Types.
-* Half-Precision::      Half-Precision Floating Point.
-* Decimal Float::       Decimal Floating Types.
-* Hex Floats::          Hexadecimal floating-point constants.
-* Fixed-Point::         Fixed-Point Types.
-* Named Address Spaces::Named address spaces.
-* Zero Length::         Zero-length arrays.
-* Empty Structures::    Structures with no members.
-* Variable Length::     Arrays whose length is computed at run time.
-* Variadic Macros::     Macros with a variable number of arguments.
-* Escaped Newlines::    Slightly looser rules for escaped newlines.
-* Subscripting::        Any array can be subscripted, even if not an lvalue.
-* Pointer Arith::       Arithmetic on @code{void}-pointers and function pointers.
-* Pointers to Arrays::  Pointers to arrays with qualifiers work as expected.
-* Initializers::        Non-constant initializers.
-* Compound Literals::   Compound literals give structures, unions
-                        or arrays as values.
-* Designated Inits::    Labeling elements of initializers.
-* Case Ranges::         `case 1 ... 9' and such.
-* Cast to Union::       Casting to union type from any member of the union.
-* Mixed Declarations::  Mixing declarations and code.
-* Function Attributes:: Declaring that functions have no side effects,
-                        or that they can never return.
-* Variable Attributes:: Specifying attributes of variables.
-* Type Attributes::     Specifying attributes of types.
-* Label Attributes::    Specifying attributes on labels.
-* Enumerator Attributes:: Specifying attributes on enumerators.
-* Statement Attributes:: Specifying attributes on statements.
-* Attribute Syntax::    Formal syntax for attributes.
-* Function Prototypes:: Prototype declarations and old-style definitions.
-* C++ Comments::        C++ comments are recognized.
-* Dollar Signs::        Dollar sign is allowed in identifiers.
-* Character Escapes::   @samp{\e} stands for the character @key{ESC}.
-* Alignment::           Inquiring about the alignment of a type or variable.
-* Inline::              Defining inline functions (as fast as macros).
-* Volatiles::           What constitutes an access to a volatile object.
-* Using Assembly Language with C:: Instructions and extensions for interfacing C with assembler.
-* Alternate Keywords::  @code{__const__}, @code{__asm__}, etc., for header files.
-* Incomplete Enums::    @code{enum foo;}, with details to follow.
-* Function Names::      Printable strings which are the name of the current
-                        function.
-* Return Address::      Getting the return or frame address of a function.
-* Vector Extensions::   Using vector instructions through built-in functions.
-* Offsetof::            Special syntax for implementing @code{offsetof}.
-* __sync Builtins::     Legacy built-in functions for atomic memory access.
-* __atomic Builtins::   Atomic built-in functions with memory model.
-* Integer Overflow Builtins:: Built-in functions to perform arithmetics and
-                        arithmetic overflow checking.
-* x86 specific memory model extensions for transactional memory:: x86 memory models.
-* Object Size Checking:: Built-in functions for limited buffer overflow
-                        checking.
-* Pointer Bounds Checker builtins:: Built-in functions for Pointer Bounds Checker.
-* Cilk Plus Builtins::  Built-in functions for the Cilk Plus language extension.
-* Other Builtins::      Other built-in functions.
-* Target Builtins::     Built-in functions specific to particular targets.
-* Target Format Checks:: Format checks specific to particular targets.
-* Pragmas::             Pragmas accepted by GCC.
-* Unnamed Fields::      Unnamed struct/union fields within structs/unions.
-* Thread-Local::        Per-thread variables.
-* Binary constants::    Binary constants using the @samp{0b} prefix.
+* Statement Exprs::     文と宣言を式の中に置く。
+* Local Labels::        ブロックにローカルなラベル。
+* Labels as Values::    ラベルへのポインタの取得と計算goto。
+* Nested Functions::    AlgolとPascalのような、関数のレキシカルスコープ。
+* Constructing Calls::  他の関数の呼び出しの派遣
+* Typeof::              @code{typeof}: 式の型の参照。
+* Conditionals::        @samp{?:}の第２引数の省略。
+* __int128::            128ビット整数---@code{__int128}。
+* Long Long::           ２ワード整数---@code{long long int}。
+* Complex::             複素数のデータ型。
+* Floating Types::      追加の浮動小数点型。
+* Half-Precision::      半精度浮動小数点型。
+* Decimal Float::       10進浮動小数点型。
+* Hex Floats::         16進浮動小数点定数。
+* Fixed-Point::         固定小数点型。
+* Named Address Spaces:: 名前付きアドレス空間。
+* Zero Length::         ゼロ長配列。
+* Empty Structures::    メンバなしの構造体。
+* Variable Length::     実行時に長さが計算される配列。
+* Variadic Macros::     引数の数が可変のマクロ。
+* Escaped Newlines::    エスケープされた改行のためのやや緩い規則。
+* Subscripting::        配列は非左辺値でも添字を取ることができる。
+* Pointer Arith::       @code{void}ポインタと関数ポインタでの算術。
+* Pointers to Arrays::  修飾子付きの配列へのポインタは期待通りに機能する。
+* Initializers::        非定数初期化子。
+* Compound Literals::   値として構造体・共用体・配列を与える複合定数。
+* Designated Inits::    初期化子の要素にラベルを与える。
+* Case Ranges::         `case 1 ... 9'のようなもの。
+* Cast to Union::       共用体の任意のメンバから共用体型へのキャスト。
+* Mixed Declarations::  宣言とコードの混在。
+* Function Attributes:: 関数が、副作用なし、並びに決して戻らないことを宣言する。
+* Variable Attributes:: 変数の属性を指定する。
+* Type Attributes::     型の属性を指定する。
+* Label Attributes::    ラベルの属性を指定する。
+* Enumerator Attributes:: 列挙の属性を指定する。
+* Statement Attributes:: 文の属性を指定する。
+* Attribute Syntax::    属性の正式な構文。
+* Function Prototypes:: プロトタイプ宣言と旧式の定義。
+* C++ Comments::        C++コメントは認識される。
+* Dollar Signs::        ドル記号は識別子に許容される。
+* Character Escapes::   @samp{\e}は@key{ESC}文字を表す。
+* Alignment::           型または変数のアラインメントの照会。
+* Inline::              （マクロと同等に速い）インライン関数の定義。
+* Volatiles::           volatileオブジェクトへのアクセスを構成するもの。
+* Using Assembly Language with C:: アセンブラとCのインタフェースをとるための命令と拡張。
+* Alternate Keywords::  ヘッダファイル用の@code{__const__}, @code{__asm__}など。
+* Incomplete Enums::    詳細を下に書く@code{enum foo;}。
+* Function Names::      現在の関数の名前である印字可能な文字列。
+* Return Address::      関数の戻り値またはフレームアドレスの取得。
+* Vector Extensions::   組み込み関数によるベクトル命令の使用。
+* Offsetof::            @code{offsetof}を実装する特別な構文。
+* __sync Builtins::     アトミックメモリアクセス用の旧式の組み込み関数。
+* __atomic Builtins::   メモリモデル付きのアトミック組み込み関数。
+* Integer Overflow Builtins:: 算術と算術オーバーフローチェックを行う組み込み関数。
+* x86 specific memory model extensions for transactional memory:: x86メモリモデル。
+* Object Size Checking:: 制限されたバッファオーバーフローチェック用の組み込み関数。
+* Pointer Bounds Checker builtins:: ポインタ範囲チェッカ用の組み込み関数。
+* Cilk Plus Builtins::  Cilk Plus言語拡張用の組み込み関数。
+* Other Builtins::      他の組み込み関数。
+* Target Builtins::     特定のターゲットに固有の組み込み関数。
+* Target Format Checks:: 特定のターゲットに固有のフォーマットチェック。
+* Pragmas::             GCCによって受理されるプラグマ。
+* Unnamed Fields::      構造体・共用体内の名無し構造体・共用体
+* Thread-Local::        スレッドごとの変数。
+* Binary constants::    @samp{0b}接頭辞を使った2進定数。
 @end menu
 
 @node Statement Exprs
-@section Statements and Declarations in Expressions
+@section 式内の文と宣言
 @cindex statements inside expressions
 @cindex declarations inside expressions
 @cindex expressions containing statements
@@ -104,13 +92,9 @@ extensions, accepted by GCC in C90 mode and in C++.
 
 @c the above section title wrapped and causes an underfull hbox.. i
 @c changed it from "within" to "in". --mew 4feb93
-A compound statement enclosed in parentheses may appear as an expression
-in GNU C@.  This allows you to use loops, switches, and local variables
-within an expression.
+括弧で囲まれた複合文は、GNU Cの式として現れてもよい。これにより、式内でループ、スイッチ、およびローカル変数を使用できる。
 
-Recall that a compound statement is a sequence of statements surrounded
-by braces; in this construct, parentheses go around the braces.  For
-example:
+複合文は中括弧で囲まれた一連の文であることを思い出すこと。 この構造体では、かっこが中括弧の周りにある。 例えば：
 
 @smallexample
 (@{ int y = foo (); int z;
@@ -120,19 +104,11 @@ example:
 @end smallexample
 
 @noindent
-is a valid (though slightly more complex than necessary) expression
-for the absolute value of @code{foo ()}.
+は、@code{foo()}の絶対値のための（必要以上に複雑な）有効な式である。
 
-The last thing in the compound statement should be an expression
-followed by a semicolon; the value of this subexpression serves as the
-value of the entire construct.  (If you use some other kind of statement
-last within the braces, the construct has type @code{void}, and thus
-effectively no value.)
+複合文の最後のものは、式の後ろにセミコロンを続ける必要がある。 この部分式の値は構造全体の値として機能する。（丸かっこ内で他の種類の文を最後に使用した場合、構造は@code{void}型であり、実質的に値はない。）
 
-This feature is especially useful in making macro definitions ``safe'' (so
-that they evaluate each operand exactly once).  For example, the
-``maximum'' function is commonly defined as a macro in standard C as
-follows:
+この機能は、マクロ定義を「安全」にするために特に便利である（各オペランドを正確に1回評価するために）。 例えば、「最大」関数は、一般に、標準Cのマクロとして次のように定義される。
 
 @smallexample
 #define max(a,b) ((a) > (b) ? (a) : (b))
@@ -140,26 +116,18 @@ follows:
 
 @noindent
 @cindex side effects, macro argument
-But this definition computes either @var{a} or @var{b} twice, with bad
-results if the operand has side effects.  In GNU C, if you know the
-type of the operands (here taken as @code{int}), you can define
-the macro safely as follows:
+しかし、この定義は@var{a}か@var{b}のどちらかを2回計算する。オペランドに副作用があると悪い結果が出る。 GNU Cでは、オペランド（ここでは@code{int}とする）の型を知っていれば、マクロを次のように安全に定義することができる：
 
 @smallexample
 #define maxint(a,b) \
   (@{int _a = (a), _b = (b); _a > _b ? _a : _b; @})
 @end smallexample
 
-Embedded statements are not allowed in constant expressions, such as
-the value of an enumeration constant, the width of a bit-field, or
-the initial value of a static variable.
+列挙定数の値、ビットフィールドの幅、または静的変数の初期値などの定数式では、埋め込み文は使用できない。
 
-If you don't know the type of the operand, you can still do this, but you
-must use @code{typeof} or @code{__auto_type} (@pxref{Typeof}).
+オペランドの型がわからない場合でもこれを行うことができるが、@code{typeof}や@code{__ auto_type}（@pxref{Typeof}）を使用する必要がある。
 
-In G++, the result value of a statement expression undergoes array and
-function pointer decay, and is returned by value to the enclosing
-expression.  For instance, if @code{A} is a class, then
+G++では、文式の結果値は配列と関数ポインタの格下げを受け、その値を囲む式に返される。 たとえば、@code{A}がクラスの場合、
 
 @smallexample
         A a;
@@ -168,18 +136,9 @@ expression.  For instance, if @code{A} is a class, then
 @end smallexample
 
 @noindent
-constructs a temporary @code{A} object to hold the result of the
-statement expression, and that is used to invoke @code{Foo}.
-Therefore the @code{this} pointer observed by @code{Foo} is not the
-address of @code{a}.
+は文の式の結果を保持する一時的な@code{A}オブジェクトを構築する。これは@code{Foo}を呼び出すために使用される。したがって、@code{Foo}によって観測される@code{this}ポインタは@code{a}のアドレスではない。
 
-In a statement expression, any temporaries created within a statement
-are destroyed at that statement's end.  This makes statement
-expressions inside macros slightly different from function calls.  In
-the latter case temporaries introduced during argument evaluation are
-destroyed at the end of the statement that includes the function
-call.  In the statement expression case they are destroyed during
-the statement expression.  For instance,
+文の式では、文内で作成された一時変数は、その文の最後で破棄される。 これにより、マクロ内の文式は関数呼び出しとは少し異なる。 後者の場合、引数の評価中に導入された一時変数は、関数呼び出しを含む文の最後で破棄される。 文式の場合、それらは文式中に破棄される。 例えば、
 
 @smallexample
 #define macro(a)  (@{__typeof__(a) b = (a); b + 3; @})
@@ -193,39 +152,18 @@ void foo ()
 @end smallexample
 
 @noindent
-has different places where temporaries are destroyed.  For the
-@code{macro} case, the temporary @code{X} is destroyed just after
-the initialization of @code{b}.  In the @code{function} case that
-temporary is destroyed when the function returns.
+は一時的なものが破壊される場所は異なる。 @code{macro}の場合、一時的な@code{X}は@code {b}の初期化直後に破棄される。 @code{function}の場合、関数が返ってきたら一時値は破壊される。
 
-These considerations mean that it is probably a bad idea to use
-statement expressions of this form in header files that are designed to
-work with C++.  (Note that some versions of the GNU C Library contained
-header files using statement expressions that lead to precisely this
-bug.)
+これらの考慮事項は、C++で動作するように設計されたヘッダーファイルでこの形式の式式を使用することは、おそらく悪い考えであることを意味する。 （一部のバージョンのGNU Cライブラリには、正確にこのバグにつながる文式を使ったヘッダファイルが含まれていた）。
 
-Jumping into a statement expression with @code{goto} or using a
-@code{switch} statement outside the statement expression with a
-@code{case} or @code{default} label inside the statement expression is
-not permitted.  Jumping into a statement expression with a computed
-@code{goto} (@pxref{Labels as Values}) has undefined behavior.
-Jumping out of a statement expression is permitted, but if the
-statement expression is part of a larger expression then it is
-unspecified which other subexpressions of that expression have been
-evaluated except where the language definition requires certain
-subexpressions to be evaluated before or after the statement
-expression.  In any case, as with a function call, the evaluation of a
-statement expression is not interleaved with the evaluation of other
-parts of the containing expression.  For example,
+@code{goto}を使うか、式文の中の@code{case}または@code{default}ラベルのある@code{switch}文を使って式文の中にジャンプすることはできない。計算@code{goto}（@pxref{Labels as Values}）で文式にジャンプすると、未定義の動作が発生する。式文からの飛び越しは許可されるが、式文がより大きい式の一部である場合、文の式の前後で評価する特定の部分式が必要な場合を除き、その式の他の部分式が評価されない 。 いずれにしても、関数呼び出しと同様に、文の式の評価は、その包含する式の他の部分の評価とインタリーブされない。 例えば、
 
 @smallexample
   foo (), ((@{ bar1 (); goto a; 0; @}) + bar2 ()), baz();
 @end smallexample
 
 @noindent
-calls @code{foo} and @code{bar1} and does not call @code{baz} but
-may or may not call @code{bar2}.  If @code{bar2} is called, it is
-called after @code{foo} and before @code{bar1}.
+は@code{foo}と@code{bar1}を呼び出し、@code{baz}を呼び出さずに@code{bar2}を呼び出すかもしれない。 @code{bar2}が呼び出されると、@code{foo}の後で@code{bar1}の前に呼び出される。
 
 @node Local Labels
 @section Locally Declared Labels
