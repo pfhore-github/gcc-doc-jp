@@ -166,41 +166,30 @@ void foo ()
 は@code{foo}と@code{bar1}を呼び出し、@code{baz}を呼び出さずに@code{bar2}を呼び出すかもしれない。 @code{bar2}が呼び出されると、@code{foo}の後で@code{bar1}の前に呼び出される。
 
 @node Local Labels
-@section Locally Declared Labels
+@section 局所的に宣言されたラベル
 @cindex local labels
 @cindex macros, local labels
 
-GCC allows you to declare @dfn{local labels} in any nested block
-scope.  A local label is just like an ordinary label, but you can
-only reference it (with a @code{goto} statement, or by taking its
-address) within the block in which it is declared.
+GCCでは、ネストされたブロックスコープの@dfn{local labels}（ローカルラベル）を宣言できる。 ローカルラベルは通常のラベルと同じだが、宣言されている（@code{goto}文、あるいはそのアドレスを取ることで）ブロック内でのみ参照できる。
 
-A local label declaration looks like this:
+ローカルラベル宣言は次のようになる。
 
 @smallexample
 __label__ @var{label};
 @end smallexample
 
 @noindent
-or
+または、
 
 @smallexample
 __label__ @var{label1}, @var{label2}, /* @r{@dots{}} */;
 @end smallexample
 
-Local label declarations must come at the beginning of the block,
-before any ordinary declarations or statements.
+ローカルラベルの宣言は、ブロックの先頭、通常の宣言または文の前に来なければならない。
 
-The label declaration defines the label @emph{name}, but does not define
-the label itself.  You must do this in the usual way, with
-@code{@var{label}:}, within the statements of the statement expression.
+ラベル宣言はラベル@emph{_名_}を定義するが、ラベル自体は定義しない。 @code{@var{label}:}は、文の式の中で通常の方法で行う必要がある。
 
-The local label feature is useful for complex macros.  If a macro
-contains nested loops, a @code{goto} can be useful for breaking out of
-them.  However, an ordinary label whose scope is the whole function
-cannot be used: if the macro can be expanded several times in one
-function, the label is multiply defined in that function.  A
-local label avoids this problem.  For example:
+ローカルラベル機能は、複雑なマクロに便利である。 マクロにネストされたループが含まれている場合、@code{goto}はそれらのループを中断するのに便利である。 ただし、関数全体をスコープとする通常のラベルは使用できない。マクロを1つの関数で複数回展開できる場合、ラベルはその関数で複数定義される。 ローカルラベルはこの問題を回避する。 例えば：
 
 @smallexample
 #define SEARCH(value, array, target)              \
@@ -219,7 +208,7 @@ do @{                                              \
 @} while (0)
 @end smallexample
 
-This could also be written using a statement expression:
+これは文式を使って書くこともできる：
 
 @smallexample
 #define SEARCH(array, target)                     \
@@ -239,20 +228,16 @@ This could also be written using a statement expression:
 @})
 @end smallexample
 
-Local label declarations also make the labels they declare visible to
-nested functions, if there are any.  @xref{Nested Functions}, for details.
+ローカルラベル宣言では、ネストされた関数が存在する場合には、それらがネストされた関数に可視であると宣言するラベルを作成する。  詳細は@xref{Nested Functions}。
 
 @node Labels as Values
-@section Labels as Values
+@section 値としてのラベル
 @cindex labels as values
 @cindex computed gotos
 @cindex goto with computed label
 @cindex address of a label
 
-You can get the address of a label defined in the current function
-(or a containing function) with the unary operator @samp{&&}.  The
-value has type @code{void *}.  This value is a constant and can be used
-wherever a constant of that type is valid.  For example:
+単項演算子@samp {&&}を使用して、現在の関数（または含む関数）で定義されているラベルのアドレスを取得できる。 値は型@code{void*}を持つ。 この値は定数であり、その型の定数が有効な場合はいつでも使用できる。 例えば：
 
 @smallexample
 void *ptr;
@@ -260,52 +245,38 @@ void *ptr;
 ptr = &&foo;
 @end smallexample
 
-To use these values, you need to be able to jump to one.  This is done
-with the computed goto statement@footnote{The analogous feature in
-Fortran is called an assigned goto, but that name seems inappropriate in
-C, where one can do more than simply store label addresses in label
-variables.}, @code{goto *@var{exp};}.  For example,
+これらの値を使用するには、1つにジャンプする必要がある。 これは計算されたgoto文、@code{goto *@var{exp};}で行われる。@footnote{Fortranの類似機能は代入gotoと呼ばれるが、C言語では、単にローカル変数にラベルのアドレスを代入する以上のことを行うため、不適切である。}。例えば、
 
 @smallexample
 goto *ptr;
 @end smallexample
 
 @noindent
-Any expression of type @code{void *} is allowed.
+@code {void *}型の式はすべて使用できる。
 
-One way of using these constants is in initializing a static array that
-serves as a jump table:
+これらの定数を使用する1つの方法は、ジャンプテーブルとして機能する静的配列を初期化することである。
 
 @smallexample
 static void *array[] = @{ &&foo, &&bar, &&hack @};
 @end smallexample
 
 @noindent
-Then you can select a label with indexing, like this:
+次に、次のように索引付けするラベルを選択できる。
 
 @smallexample
 goto *array[i];
 @end smallexample
 
 @noindent
-Note that this does not check whether the subscript is in bounds---array
-indexing in C never does that.
+これは、下付き文字が範囲内にあるかどうかをチェックしないことに注意せよ。Cでの配列のインデックス付けはそれを決して行わない。
 
-Such an array of label values serves a purpose much like that of the
-@code{switch} statement.  The @code{switch} statement is cleaner, so
-use that rather than an array unless the problem does not fit a
-@code{switch} statement very well.
+このようなラベル値の配列は、@code{switch}文のような目的を果たす。 @code{switch}文はより洗練されているので、問題が@code{switch}文によく合わない場合を除き、配列ではなくその文を使用すること。
 
-Another use of label values is in an interpreter for threaded code.
-The labels within the interpreter function can be stored in the
-threaded code for super-fast dispatching.
+ラベル値の別の使用法は、スレッド化されたコードのインタプリタにある。インタプリタ関数内のラベルは、超高速ディスパッチのためにスレッドコードに格納することができる。
 
-You may not use this mechanism to jump to code in a different function.
-If you do that, totally unpredictable things happen.  The best way to
-avoid this is to store the label address only in automatic variables and
-never pass it as an argument.
+この機能を使用して、別の機能のコードにジャンプすることはできない。 そうすれば、全く予測できないことが起こる。 これを避ける最善の方法は、自動変数にのみラベルアドレスを格納し、それを引数として渡さないことである。
 
-An alternate way to write the above example is
+上記の例を書く別の方法は次のとおりです。
 
 @smallexample
 static const int array[] = @{ &&foo - &&foo, &&bar - &&foo,
@@ -314,32 +285,19 @@ goto *(&&foo + array[i]);
 @end smallexample
 
 @noindent
-This is more friendly to code living in shared libraries, as it reduces
-the number of dynamic relocations that are needed, and by consequence,
-allows the data to be read-only.
-This alternative with label differences is not supported for the AVR target,
-please use the first approach for AVR programs.
+これは、必要な動的再配置の数を減らし、結果としてデータを読み取り専用にすることができるようになり、共有ライブラリでのコードにより適している。AVRターゲットでは、このラベルの差の代替方法はサポートされていない。AVRプログラムの最初の方法を使用すること。
 
-The @code{&&foo} expressions for the same label might have different
-values if the containing function is inlined or cloned.  If a program
-relies on them being always the same,
-@code{__attribute__((__noinline__,__noclone__))} should be used to
-prevent inlining and cloning.  If @code{&&foo} is used in a static
-variable initializer, inlining and cloning is forbidden.
+同じラベルの@code{&& foo}式は、インクルードされた関数がインライン化またはクローン化されている場合、異なる値を持つことがある。 プログラムがそれらが常に同じであることに依存する場合、インライン化とクローン化を防ぐために@code{__attribute__((__noinline__,__noclone__))}を使用する必要がある。 @code{&& foo}を静的変数初期化子で使用すると、インライン化とクローン化は禁止される。
 
 @node Nested Functions
-@section Nested Functions
+@section 入れ子関数
 @cindex nested functions
 @cindex downward funargs
 @cindex thunks
 
-A @dfn{nested function} is a function defined inside another function.
-Nested functions are supported as an extension in GNU C, but are not
-supported by GNU C++.
+@dfn{nested function}（入れ子関数）は、別の関数の中で定義された関数である。入れ子関数は、GNU Cの拡張としてサポートされているが、GNU C++ではサポートされていない。
 
-The nested function's name is local to the block where it is defined.
-For example, here we define a nested function named @code{square}, and
-call it twice:
+入れ子関数の名前は、それが定義されているブロックのローカルである。例えば、ここでは、@code{square}という入れ子関数を定義し、それを2回呼び出している。
 
 @smallexample
 @group
@@ -352,10 +310,7 @@ foo (double a, double b)
 @end group
 @end smallexample
 
-The nested function can access all the variables of the containing
-function that are visible at the point of its definition.  This is
-called @dfn{lexical scoping}.  For example, here we show a nested
-function which uses an inherited variable named @code{offset}:
+入れ子関数は、その定義時点で表示されている包含関数のすべての変数にアクセスできる。 これは@dfn{lexical scoping}（レキシカルスコープ）と呼ばれる。 例えば、ここでは、継承された@code{offset}という名前の変数を使用する入れ子関数を示る。
 
 @smallexample
 @group
@@ -371,12 +326,9 @@ bar (int *array, int offset, int size)
 @end group
 @end smallexample
 
-Nested function definitions are permitted within functions in the places
-where variable definitions are allowed; that is, in any block, mixed
-with the other declarations and statements in the block.
+入れ子関数定義は、変数定義が許可されている場所の関数内で使用できる。 つまり、ブロック内の他の宣言とステートメントと混ぜることができる。
 
-It is possible to call the nested function from outside the scope of its
-name by storing its address or passing the address to another function:
+その入れ子関数をその名前の範囲外から呼び出すことは、そのアドレスを格納したり、そのアドレスを別の関数に渡したりすることで可能である。
 
 @smallexample
 hack (int *array, int size)
@@ -388,30 +340,13 @@ hack (int *array, int size)
 @}
 @end smallexample
 
-Here, the function @code{intermediate} receives the address of
-@code{store} as an argument.  If @code{intermediate} calls @code{store},
-the arguments given to @code{store} are used to store into @code{array}.
-But this technique works only so long as the containing function
-(@code{hack}, in this example) does not exit.
+ここで、関数@code{intermediate}は引数として@code{store}のアドレスを受け取る。 @code{intermediate}が@code{store}を呼び出す場合、@code{store}に与えられた引数は@code{array}に格納される。 しかし、このテクニックは、包含する関数（この例では@code{hack}）が終了しない限り動作する。
 
-If you try to call the nested function through its address after the
-containing function exits, all hell breaks loose.  If you try
-to call it after a containing scope level exits, and if it refers
-to some of the variables that are no longer in scope, you may be lucky,
-but it's not wise to take the risk.  If, however, the nested function
-does not refer to anything that has gone out of scope, you should be
-safe.
+包含する関数が終了した後にネストされた関数をそのアドレスで呼び出そうとすると、すべての地獄が解放される。 スコープ・レベルが終了した後にコールしようとすると、スコープ・レベルがもはや存在しない変数の一部を参照している場合、幸運だったとしても、リスクを取るのは賢明ではない。 ただし、入れ子関数が範囲を外れたものを参照しない場合は、安全であるはずである。
 
-GCC implements taking the address of a nested function using a technique
-called @dfn{trampolines}.  This technique was described in
-@cite{Lexical Closures for C++} (Thomas M. Breuel, USENIX
-C++ Conference Proceedings, October 17-21, 1988).
+GCCは、@dfn{trampolines}（トランポリン）と呼ばれる手法を使って入れ子関数のアドレスを取得する。 このテクニックは@cite{Lexical Closures for C ++}（Thomas M. Breuel、USENIX C ++ Conference Proceedings、1988年10月17-21日）に記述されている。
 
-A nested function can jump to a label inherited from a containing
-function, provided the label is explicitly declared in the containing
-function (@pxref{Local Labels}).  Such a jump returns instantly to the
-containing function, exiting the nested function that did the
-@code{goto} and any intermediate functions as well.  Here is an example:
+入れ子関数は、ラベルを含んでいる関数から継承したラベルにジャンプすることができる（ただし、ラベルは、その関数内で明示的に宣言されていなければならない@pxref {Local Labels}）。 このようなジャンプは、@code{goto}と中間関数を行ったネストされた関数を終了して、すぐに包含関数に戻る。 次に例を示す。
 
 @smallexample
 @group
@@ -439,10 +374,7 @@ bar (int *array, int offset, int size)
 @end group
 @end smallexample
 
-A nested function always has no linkage.  Declaring one with
-@code{extern} or @code{static} is erroneous.  If you need to declare the nested function
-before its definition, use @code{auto} (which is otherwise meaningless
-for function declarations).
+入れ子関数には常にリンケージはない。 @code{extern}または@code{static}で宣言するのは誤りである。 入れ子関数を定義する前に宣言する必要がある場合は、@code{auto}を使用する（関数宣言では意味がない）。
 
 @smallexample
 bar (int *array, int offset, int size)
