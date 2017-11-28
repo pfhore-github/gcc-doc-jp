@@ -393,71 +393,38 @@ bar (int *array, int offset, int size)
 @end smallexample
 
 @node Constructing Calls
-@section Constructing Function Calls
+@section 関数呼び出しの構築
 @cindex constructing calls
 @cindex forwarding calls
 
-Using the built-in functions described below, you can record
-the arguments a function received, and call another function
-with the same arguments, without knowing the number or types
-of the arguments.
+以下に説明する組み込み関数を使用すると、関数が受け取った引数を記録し、引数の数や型を知らなくても、同じ引数を持つ別の関数を呼び出すことができる。
 
-You can also record the return value of that function call,
-and later return that value, without knowing what data type
-the function tried to return (as long as your caller expects
-that data type).
+その関数呼び出しの戻り値を記録し、関数が返そうとしたデータ型がわからなくても（呼び出し元がそのデータ型を予期している限り）、後でその値を返すことができる。
 
-However, these built-in functions may interact badly with some
-sophisticated features or other extensions of the language.  It
-is, therefore, not recommended to use them outside very simple
-functions acting as mere forwarders for their arguments.
+しかし、これらの組み込み関数は、洗練された機能やその他の言語の拡張機能とうまく対話できないことがある。 したがって、単純なフォワーダとして機能する非常に単純な関数の外でそれらを使用することは推奨されない。
 
 @deftypefn {Built-in Function} {void *} __builtin_apply_args ()
-This built-in function returns a pointer to data
-describing how to perform a call with the same arguments as are passed
-to the current function.
+この組み込み関数は、現在の関数に渡されたのと同じ引数を使用して呼び出しを実行する方法を記述するデータへのポインターを返す。
 
-The function saves the arg pointer register, structure value address,
-and all registers that might be used to pass arguments to a function
-into a block of memory allocated on the stack.  Then it returns the
-address of that block.
+この関数は、argポインタレジスタ、構造体値アドレス、および関数への引数をスタックに割り当てられたメモリブロックに渡すために使用されるすべてのレジスタを保存する。 次に、そのブロックのアドレスを返す。
 @end deftypefn
 
 @deftypefn {Built-in Function} {void *} __builtin_apply (void (*@var{function})(), void *@var{arguments}, size_t @var{size})
-This built-in function invokes @var{function}
-with a copy of the parameters described by @var{arguments}
-and @var{size}.
+この組み込み関数は、@var{arguments}と@var{size}で記述されたパラメータのコピーで@var{function}を呼び出す。
 
-The value of @var{arguments} should be the value returned by
-@code{__builtin_apply_args}.  The argument @var{size} specifies the size
-of the stack argument data, in bytes.
+@var{arguments}の値は@code{__ builtin_apply_args}によって返された値でなければならない。 引数@var{size}はスタック引数データのサイズをバイト単位で指定する。
 
-This function returns a pointer to data describing
-how to return whatever value is returned by @var{function}.  The data
-is saved in a block of memory allocated on the stack.
+この関数は、@var{function}が返す値を返す方法を記述するデータへのポインタを返す。 データはスタックに割り当てられたメモリブロックに保存される。
 
-It is not always simple to compute the proper value for @var{size}.  The
-value is used by @code{__builtin_apply} to compute the amount of data
-that should be pushed on the stack and copied from the incoming argument
-area.
+@var{size}に適切な値を計算することは必ずしも簡単ではない。 この値は@code{__ builtin_apply}によってスタック上にプッシュされ、入ってくる引数領域からコピーされるべきデータの量を計算するために使われる。
 @end deftypefn
 
 @deftypefn {Built-in Function} {void} __builtin_return (void *@var{result})
-This built-in function returns the value described by @var{result} from
-the containing function.  You should specify, for @var{result}, a value
-returned by @code{__builtin_apply}.
+この組み込み関数は、@var{result}で記述された値を含む関数から返された値を返す。 @code{__ builtin_apply}で返された値を@var{result}に指定する必要がある。
 @end deftypefn
 
 @deftypefn {Built-in Function} {} __builtin_va_arg_pack ()
-This built-in function represents all anonymous arguments of an inline
-function.  It can be used only in inline functions that are always
-inlined, never compiled as a separate function, such as those using
-@code{__attribute__ ((__always_inline__))} or
-@code{__attribute__ ((__gnu_inline__))} extern inline functions.
-It must be only passed as last argument to some other function
-with variable arguments.  This is useful for writing small wrapper
-inlines for variable argument functions, when using preprocessor
-macros is undesirable.  For example:
+この組み込み関数は、インライン関数のすべての無名引数を表す。@code{__attribute__((__always_inline__))}や@code{__attribute__((__gnu_inline__))}の外部インライン関数を使用するような、常にインライン関数でコンパイルされたインライン関数でのみ使用できる。可変引数を持つ他の関数の最後の引数として渡されなければならない。 これは、プリプロセッサマクロを使用することが望ましくない場合に、可変引数関数用の小さなラッパーインラインを記述するのに便利である。 例えば：
 @smallexample
 extern int myprintf (FILE *f, const char *format, ...);
 extern inline __attribute__ ((__gnu_inline__)) int
@@ -475,13 +442,7 @@ myprintf (FILE *f, const char *format, ...)
 @end deftypefn
 
 @deftypefn {Built-in Function} {size_t} __builtin_va_arg_pack_len ()
-This built-in function returns the number of anonymous arguments of
-an inline function.  It can be used only in inline functions that
-are always inlined, never compiled as a separate function, such
-as those using @code{__attribute__ ((__always_inline__))} or
-@code{__attribute__ ((__gnu_inline__))} extern inline functions.
-For example following does link- or run-time checking of open
-arguments for optimized code:
+この組み込み関数は、インライン関数の無名引数の数を返す。@code{__attribute__((__always_inline__))}や@code{__attribute__((__gnu_inline__))}の外部インライン関数を使用するような、常にインライン関数でコンパイルされたインライン関数でのみ使用できる。 たとえば、最適化されたコードのopen引数のリンクまたは実行時のチェックは次のようになる。
 @smallexample
 #ifdef __OPTIMIZE__
 extern inline __attribute__((__gnu_inline__)) int
