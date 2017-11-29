@@ -471,52 +471,39 @@ myopen (const char *path, int oflag, ...)
 @end deftypefn
 
 @node Typeof
-@section Referring to a Type with @code{typeof}
+@section @code{typeof}で型へ参照する
 @findex typeof
 @findex sizeof
 @cindex macros, types of arguments
 
-Another way to refer to the type of an expression is with @code{typeof}.
-The syntax of using of this keyword looks like @code{sizeof}, but the
-construct acts semantically like a type name defined with @code{typedef}.
+式の型を参照する別の方法は@code {typeof}である。このキーワードを使用する構文は@code{sizeof}のように見えるが、構文は意味的に@code{typedef}で定義された型名のように機能する。
 
-There are two ways of writing the argument to @code{typeof}: with an
-expression or with a type.  Here is an example with an expression:
+引数を@code{typeof}に書くには、式を使うか型を書くかの2つの方法がある。 次の式を使用した例を示す。
 
 @smallexample
 typeof (x[0](1))
 @end smallexample
 
 @noindent
-This assumes that @code{x} is an array of pointers to functions;
-the type described is that of the values of the functions.
+これは、@code{x}が関数へのポインタの配列であることを前提としている。記述されている型は関数の値の型である。
 
-Here is an example with a typename as the argument:
+引数としてtypenameを使用した例を次に示す。
 
 @smallexample
 typeof (int *)
 @end smallexample
 
 @noindent
-Here the type described is that of pointers to @code{int}.
+ここで説明する型は@code{int}へのポインタの型である。
 
-If you are writing a header file that must work when included in ISO C
-programs, write @code{__typeof__} instead of @code{typeof}.
+ISO Cプログラムに含まれているときに動作する必要があるヘッダファイルを作成する場合は、@code{typeof}の代わりに@code{__ typeof__}を記述する。
 @xref{Alternate Keywords}.
 
-A @code{typeof} construct can be used anywhere a typedef name can be
-used.  For example, you can use it in a declaration, in a cast, or inside
-of @code{sizeof} or @code{typeof}.
+@code{typeof}構文は、typedef名を使うことができるところならどこでも使うことができる。 たとえば、宣言、キャスト、または@code{sizeof}や@code {typeof}の内部で使用できる。
 
-The operand of @code{typeof} is evaluated for its side effects if and
-only if it is an expression of variably modified type or the name of
-such a type.
+@code{typeof}のオペランドは、可変的に変更された型の式またはそのような型の名前である場合にのみ、その副作用を評価される。
 
-@code{typeof} is often useful in conjunction with
-statement expressions (@pxref{Statement Exprs}).
-Here is how the two together can
-be used to define a safe ``maximum'' macro which operates on any
-arithmetic type and evaluates each of its arguments exactly once:
+@code{typeof}は、式文（@pxref {Statement Exprs}）と併用すると便利である。ここで2つの方法を組み合わせて、どの算術型でも動作し、それぞれの引数を正確に1回評価する安全な 「最大」'マクロを定義する方法を示す：
 
 @smallexample
 #define max(a,b) \
@@ -531,47 +518,41 @@ arithmetic type and evaluates each of its arguments exactly once:
 @cindex variables, local, in macros
 @cindex macros, local variables in
 
-The reason for using names that start with underscores for the local
-variables is to avoid conflicts with variable names that occur within the
-expressions that are substituted for @code{a} and @code{b}.  Eventually we
-hope to design a new form of declaration syntax that allows you to declare
-variables whose scopes start only after their initializers; this will be a
-more reliable way to prevent such conflicts.
+ローカル変数に対してアンダースコアで始まる名前を使用する理由は、@code {a}と@code {b}の代わりに使用される式内で発生する変数名との競合を避けるためである。 最終的には、スコープが初期化子の後にのみ始まる変数を宣言できる新しい宣言構文を設計したいと考えている。 このような競合を防ぐより確実な方法になりだろう。
 
 @noindent
-Some more examples of the use of @code{typeof}:
+@code {typeof}の使用に関するいくつかの例：
 
 @itemize @bullet
 @item
-This declares @code{y} with the type of what @code{x} points to.
+これは、@code{y}を@code{x}が指しているものの型で宣言する。
 
 @smallexample
 typeof (*x) y;
 @end smallexample
 
 @item
-This declares @code{y} as an array of such values.
+これは、そのような値の配列として@code{y}を宣言する。
 
 @smallexample
 typeof (*x) y[4];
 @end smallexample
 
 @item
-This declares @code{y} as an array of pointers to characters:
+これは、文字へのポインタの配列として@code{y}を宣言する。
 
 @smallexample
 typeof (typeof (char *)[4]) y;
 @end smallexample
 
 @noindent
-It is equivalent to the following traditional C declaration:
+これは、以下の従来のC宣言と同じである。
 
 @smallexample
 char *y[4];
 @end smallexample
 
-To see the meaning of the declaration using @code{typeof}, and why it
-might be a useful way to write, rewrite it with these macros:
+@code{typeof}を使用して宣言の意味を理解し、それがなぜ有用な方法であるのかを確認するには、次のマクロで書き直す。
 
 @smallexample
 #define pointer(T)  typeof(T *)
@@ -579,25 +560,17 @@ might be a useful way to write, rewrite it with these macros:
 @end smallexample
 
 @noindent
-Now the declaration can be rewritten this way:
+これで宣言は次のように書き換えられる。
 
 @smallexample
 array (pointer (char), 4) y;
 @end smallexample
 
 @noindent
-Thus, @code{array (pointer (char), 4)} is the type of arrays of 4
-pointers to @code{char}.
+したがって、@code{array (pointer (char), 4)}は@code {char}への4つのポインタの配列の型である。
 @end itemize
 
-In GNU C, but not GNU C++, you may also declare the type of a variable
-as @code{__auto_type}.  In that case, the declaration must declare
-only one variable, whose declarator must just be an identifier, the
-declaration must be initialized, and the type of the variable is
-determined by the initializer; the name of the variable is not in
-scope until after the initializer.  (In C++, you should use C++11
-@code{auto} for this purpose.)  Using @code{__auto_type}, the
-``maximum'' macro above could be written as:
+GNU C++ではなく、GNU Cでは、変数の型を@code{__auto_type}として宣言することもできる。 その場合、宣言はただ1つの変数を宣言しなければならない。宣言子は識別子でなければならず、宣言は初期化されなければならず、変数の型はイニシャライザによって決定される。 変数の名前は、イニシャライザの後までスコープ内にない。 （C++では、この目的のためにC++11 @code{auto}を使うべきである。）@code{__auto_type}を使うと、上の 「最大」マクロは以下のように書くことができる：
 
 @smallexample
 #define max(a,b) \
@@ -606,42 +579,34 @@ scope until after the initializer.  (In C++, you should use C++11
     _a > _b ? _a : _b; @})
 @end smallexample
 
-Using @code{__auto_type} instead of @code{typeof} has two advantages:
+@code{typeof}の代わりに@code{__auto_type}を使うことには2つの利点がある：
 
 @itemize @bullet
-@item Each argument to the macro appears only once in the expansion of
-the macro.  This prevents the size of the macro expansion growing
-exponentially when calls to such macros are nested inside arguments of
-such macros.
+@item マクロへの各引数は、マクロの展開で一度だけ表示される。 これにより、そのようなマクロへの呼び出しがそのようなマクロの引数の中に入れ子になったときに、マクロ展開のサイズが指数関数的に増加するのを防ぐ。
 
-@item If the argument to the macro has variably modified type, it is
-evaluated only once when using @code{__auto_type}, but twice if
-@code{typeof} is used.
+@item マクロへの引数が可変的に変更された型の場合、@code{__auto_type}を使用する場合は1回だけ評価されるが、@code{typeof}を使用する場合は2回評価される。
 @end itemize
 
 @node Conditionals
-@section Conditionals with Omitted Operands
+@section 省略されたオペランドのある条件式
 @cindex conditional expressions, extensions
 @cindex omitted middle-operands
 @cindex middle-operands, omitted
 @cindex extensions, @code{?:}
 @cindex @code{?:} extensions
 
-The middle operand in a conditional expression may be omitted.  Then
-if the first operand is nonzero, its value is the value of the conditional
-expression.
+条件式の中間のオペランドは省略することができる。 その時、第1オペランドがゼロ以外の場合、その値は条件式の値になる。
 
-Therefore, the expression
+したがって、式
 
 @smallexample
 x ? : y
 @end smallexample
 
 @noindent
-has the value of @code{x} if that is nonzero; otherwise, the value of
-@code{y}.
+ゼロ以外の場合は、@code {x}の値を持つ。 それ以外の場合は、@code {y}の値となる。
 
-This example is perfectly equivalent to
+この例は、以下と完全に等価である。
 
 @smallexample
 x ? x : y
@@ -650,55 +615,27 @@ x ? x : y
 @cindex side effect in @code{?:}
 @cindex @code{?:} side effect
 @noindent
-In this simple case, the ability to omit the middle operand is not
-especially useful.  When it becomes useful is when the first operand does,
-or may (if it is a macro argument), contain a side effect.  Then repeating
-the operand in the middle would perform the side effect twice.  Omitting
-the middle operand uses the value already computed without the undesirable
-effects of recomputing it.
+この単純なケースでは、中間のオペランドを省略することは特に有用ではない。 それが有用になるのは、最初のオペランドが副作用を持つ、または持つかもしれないときである。 その時、中間でオペランドを繰り返すと副作用が2回発生する。 中間のオペランドを省略すると、すでに計算された値が再計算の望ましくない影響なしに使用される。
 
 @node __int128
-@section 128-bit Integers
+@section 128ビット整数
 @cindex @code{__int128} data types
 
-As an extension the integer scalar type @code{__int128} is supported for
-targets which have an integer mode wide enough to hold 128 bits.
-Simply write @code{__int128} for a signed 128-bit integer, or
-@code{unsigned __int128} for an unsigned 128-bit integer.  There is no
-support in GCC for expressing an integer constant of type @code{__int128}
-for targets with @code{long long} integer less than 128 bits wide.
+拡張として、整数スカラー型@code {__int128}は、128ビットを保持するのに十分な整数モードを持つターゲットに対してサポートされている。符号なし128ビット整数の場合は@code{__ int128}、符号なし128ビット整数の場合は@code{unsigned __int128}と書くだけである。 GCCでは、@code{long long}整数が128ビット幅未満のターゲットに対して@code{__int128}型の整数定数を表現するためのサポートはない。
 
 @node Long Long
-@section Double-Word Integers
+@section 倍長整数
 @cindex @code{long long} data types
 @cindex double-word arithmetic
 @cindex multiprecision arithmetic
 @cindex @code{LL} integer suffix
 @cindex @code{ULL} integer suffix
 
-ISO C99 supports data types for integers that are at least 64 bits wide,
-and as an extension GCC supports them in C90 mode and in C++.
-Simply write @code{long long int} for a signed integer, or
-@code{unsigned long long int} for an unsigned integer.  To make an
-integer constant of type @code{long long int}, add the suffix @samp{LL}
-to the integer.  To make an integer constant of type @code{unsigned long
-long int}, add the suffix @samp{ULL} to the integer.
+ISO C99は、少なくとも64ビット幅の整数のデータ型をサポートしている。拡張としてGCCはC90モードとC++でそれらをサポートしている。符号付き整数の場合は@code{long long int}、符号なし整数の場合は@code{unsigned long long int}と書くだけである。 @code{long long int}型の整数定数を作成するには、接尾辞@samp{LL}を整数に追加する。 @code{unsigned long long int}型の整数定数を作るには、接尾辞@samp{ULL}を整数に加える。
 
-You can use these types in arithmetic like any other integer types.
-Addition, subtraction, and bitwise boolean operations on these types
-are open-coded on all types of machines.  Multiplication is open-coded
-if the machine supports a fullword-to-doubleword widening multiply
-instruction.  Division and shifts are open-coded only on machines that
-provide special support.  The operations that are not open-coded use
-special library routines that come with GCC@.
+これらの型は、他の整数型のように算術演算で使用できる。これらの型に対する加算、減算、およびビット単位の論理演算は、すべてのタイプのマシンでオープンコード化されている。 マシンがフルワードからダブルワードへの拡大乗算命令をサポートしている場合、乗算はオープンコーディングされている。 除算とシフトは特別なサポートを提供するマシンでのみ開かれている。 オープンコーディングされていない操作では、GCCに付属する特別なライブラリルーチンが使用される。
 
-There may be pitfalls when you use @code{long long} types for function
-arguments without function prototypes.  If a function
-expects type @code{int} for its argument, and you pass a value of type
-@code{long long int}, confusion results because the caller and the
-subroutine disagree about the number of bytes for the argument.
-Likewise, if the function expects @code{long long int} and you pass
-@code{int}.  The best way to avoid such problems is to use prototypes.
+関数のプロトタイプなしで関数の引数に@code{long long}型を使用すると、落とし穴が生じることがある。 関数がその引数に@code{int}型を期待していて、@code{long long int}型の値を渡すと、呼び出し元とサブルーチンが引数のバイト数について不一致になるので混乱が生じる。 同様に、関数が@code{long long int}を期待し、@ code{int}を渡してもである。 このような問題を避ける最善の方法は、プロトタイプを使用することである。
 
 @node Complex
 @section Complex Numbers
