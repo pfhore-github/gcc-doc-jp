@@ -758,34 +758,22 @@ GCCは、@file{math.h}、@file{fenv.h}、@file{stdio.h}、@file{stdlib.h}、お�
 タイプ@code{_Decimal32}、@code{_Decimal64}、@code{_Decimal128}は、DWARFデバッグ情報フォーマットでサポートされている。
 
 @node Hex Floats
-@section Hex Floats
+@section 16進浮動小数点数
 @cindex hex floats
 
-ISO C99 supports floating-point numbers written not only in the usual
-decimal notation, such as @code{1.55e1}, but also numbers such as
-@code{0x1.fp3} written in hexadecimal format.  As a GNU extension, GCC
-supports this in C90 mode (except in some cases when strictly
-conforming) and in C++.  In that format the
-@samp{0x} hex introducer and the @samp{p} or @samp{P} exponent field are
-mandatory.  The exponent is a decimal number that indicates the power of
-2 by which the significant part is multiplied.  Thus @samp{0x1.f} is
+ISO C99は、@code{1.55e1}のような通常の10進表記だけでなく、16進形式で書かれた@code{0x1.fp3}のような数字で書いた浮動小数点数もサポートしている。 GNU拡張として、GCCはこれをC90モード（厳密に準拠している場合を除く）とC++でサポートしている。 そのフォーマットでは、@samp{0x}16進数導入子と@samp{p}または@samp{P}指数フィールドは必須である。 指数は、有意な部分が乗算される2の累乗を示す10進数である。従って@samp {0x1.f}は
 @tex
 $1 {15\over16}$,
 @end tex
 @ifnottex
 1 15/16,
 @end ifnottex
-@samp{p3} multiplies it by 8, and the value of @code{0x1.fp3}
-is the same as @code{1.55e1}.
+@samp {p3}は8を乗じ、@code{0x1.fp3}の値は@code {1.55e1}と同じである。
 
-Unlike for floating-point numbers in the decimal notation the exponent
-is always required in the hexadecimal notation.  Otherwise the compiler
-would not be able to resolve the ambiguity of, e.g., @code{0x1.f}.  This
-could mean @code{1.0f} or @code{1.9375} since @samp{f} is also the
-extension for floating-point constants of type @code{float}.
+10進表記の浮動小数点数とは異なり、指数は常に16進表記で必要である。 さもなければ、コンパイラは、例えば@code{0x1.f}のあいまい性を解決することができない。@samp{f}は@code{float}型の浮動小数点定数の拡張でもあるので、これは@code{1.0f}または@code{1.9375}を意味する。
 
 @node Fixed-Point
-@section Fixed-Point Types
+@section 固定小数点型
 @cindex fixed-point types
 @cindex @code{_Fract} data type
 @cindex @code{_Accum} data type
@@ -823,13 +811,9 @@ extension for floating-point constants of type @code{float}.
 @cindex @code{ULK} fixed-suffix
 @cindex @code{ULLK} fixed-suffix
 
-As an extension, GNU C supports fixed-point types as
-defined in the N1169 draft of ISO/IEC DTR 18037.  Support for fixed-point
-types in GCC will evolve as the draft technical report changes.
-Calling conventions for any target might also change.  Not all targets
-support fixed-point types.
+GNU Cは、ISO/IEC DTR 18037のN1169草案で定義されている固定小数点型をサポートしている。GCCの固定小数点型のサポートは、技術報告書のドラフトが変更されるにつれて進化する。 ターゲットの呼び出し規則も変更される可能性がある。 すべてのターゲットが固定小数点タイプをサポートするわけではない。
 
-The fixed-point types are
+固定小数点型は
 @code{short _Fract},
 @code{_Fract},
 @code{long _Fract},
@@ -861,111 +845,78 @@ The fixed-point types are
 @code{_Sat unsigned short _Accum},
 @code{_Sat unsigned _Accum},
 @code{_Sat unsigned long _Accum},
-@code{_Sat unsigned long long _Accum}.
+@code{_Sat unsigned long long _Accum}である。
 
-Fixed-point data values contain fractional and optional integral parts.
-The format of fixed-point data varies and depends on the target machine.
+固定小数点データ値には、小数部分とオプションの整数部分が含まれる。固定小数点データのフォーマットは、ターゲットマシンによって異なる。
 
-Support for fixed-point types includes:
+固定小数点型のサポートはいかを含む。
 @itemize @bullet
 @item
-prefix and postfix increment and decrement operators (@code{++}, @code{--})
+前置と後置のインクリメント・デクリメント演算子 (@code{++}, @code{--})
 @item
-unary arithmetic operators (@code{+}, @code{-}, @code{!})
+単項算術演算子 (@code{+}, @code{-}, @code{!})
 @item
-binary arithmetic operators (@code{+}, @code{-}, @code{*}, @code{/})
+二項算術演算子 (@code{+}, @code{-}, @code{*}, @code{/})
 @item
-binary shift operators (@code{<<}, @code{>>})
+2進シフト演算子 (@code{<<}, @code{>>})
 @item
-relational operators (@code{<}, @code{<=}, @code{>=}, @code{>})
+関係演算子 (@code{<}, @code{<=}, @code{>=}, @code{>})
 @item
-equality operators (@code{==}, @code{!=})
+等価演算子 (@code{==}, @code{!=})
 @item
-assignment operators (@code{+=}, @code{-=}, @code{*=}, @code{/=},
-@code{<<=}, @code{>>=})
+代入演算子 (@code{+=}, @code{-=}, @code{*=}, @code{/=}, @code{<<=}, @code{>>=})
 @item
-conversions to and from integer, floating-point, or fixed-point types
+整数・浮動小数点数・固定小数点の相互変換
 @end itemize
 
-Use a suffix in a fixed-point literal constant:
+固定小数点リテラル定数の接尾辞には以下を使う。
 @itemize
-@item @samp{hr} or @samp{HR} for @code{short _Fract} and
-@code{_Sat short _Fract}
-@item @samp{r} or @samp{R} for @code{_Fract} and @code{_Sat _Fract}
-@item @samp{lr} or @samp{LR} for @code{long _Fract} and
-@code{_Sat long _Fract}
-@item @samp{llr} or @samp{LLR} for @code{long long _Fract} and
-@code{_Sat long long _Fract}
-@item @samp{uhr} or @samp{UHR} for @code{unsigned short _Fract} and
-@code{_Sat unsigned short _Fract}
-@item @samp{ur} or @samp{UR} for @code{unsigned _Fract} and
-@code{_Sat unsigned _Fract}
-@item @samp{ulr} or @samp{ULR} for @code{unsigned long _Fract} and
-@code{_Sat unsigned long _Fract}
-@item @samp{ullr} or @samp{ULLR} for @code{unsigned long long _Fract}
-and @code{_Sat unsigned long long _Fract}
-@item @samp{hk} or @samp{HK} for @code{short _Accum} and
-@code{_Sat short _Accum}
-@item @samp{k} or @samp{K} for @code{_Accum} and @code{_Sat _Accum}
-@item @samp{lk} or @samp{LK} for @code{long _Accum} and
-@code{_Sat long _Accum}
-@item @samp{llk} or @samp{LLK} for @code{long long _Accum} and
-@code{_Sat long long _Accum}
-@item @samp{uhk} or @samp{UHK} for @code{unsigned short _Accum} and
-@code{_Sat unsigned short _Accum}
-@item @samp{uk} or @samp{UK} for @code{unsigned _Accum} and
-@code{_Sat unsigned _Accum}
-@item @samp{ulk} or @samp{ULK} for @code{unsigned long _Accum} and
-@code{_Sat unsigned long _Accum}
-@item @samp{ullk} or @samp{ULLK} for @code{unsigned long long _Accum}
-and @code{_Sat unsigned long long _Accum}
+@item @code{short _Fract}と@code{_Sat short _Fract}には@samp{hr}または@samp{HR}
+@item @code{_Fract}と@code{_Sat _Fract}には@samp{r}または@samp{R}
+@item @code{long _Fract}と@code{_Sat long _Fract}には@samp{lr}または@samp{LR}
+@item @code{long long _Fract}と@code{_Sat long long _Fract}には@samp{llr}または@samp{LLR}
+@item @code{unsigned short _Fract}と@code{_Sat unsigned short _Fract}には@samp{uhr}または@samp{UHR}
+@item @code{unsigned _Fract}と@code{_Sat unsigned _Fract}には@samp{ur}または@samp{UR}
+@item @code{unsigned long _Fract}と@code{_Sat unsigned long _Fract}には@samp{ulr}または@samp{ULR}
+@item @code{unsigned long long _Fract}と@code{_Sat unsigned long long _Fract}には@samp{ullr}または@samp{ULLR}
+@item @code{short _Accum}と@code{_Sat short _Accum}には@samp{hk}または@samp{HK}
+@item @code{_Accum}と@code{_Sat _Accum}には@samp{k}または@samp{K}
+@item @code{long _Accum}と@code{_Sat long _Accum}には@samp{lk}または@samp{LK}
+@item @code{long long _Accum}と@code{_Sat long long _Accum}には@samp{llk}または@samp{LLK}
+@item @code{unsigned short _Accum}と@code{_Sat unsigned short _Accum}には@samp{uhk}または@samp{UHK}
+@item @code{unsigned _Accum}と@code{_Sat unsigned _Accum}には@samp{uk}または@samp{UK}
+@item @code{unsigned long _Accum}と@code{_Sat unsigned long _Accum}には@samp{ulk}または@samp{ULK}
+@item @code{unsigned long long _Accum}と@code{_Sat unsigned long long _Accum}には@samp{ullk}または@samp{ULLK}
 @end itemize
 
-GCC support of fixed-point types as specified by the draft technical report
-is incomplete:
+テクニカルレポート草案で指定された固定小数点型のGCCサポートは不完全である：
 
 @itemize @bullet
 @item
-Pragmas to control overflow and rounding behaviors are not implemented.
+オーバーフローや丸めの動作を制御するプラグマは実装されていない。
 @end itemize
 
-Fixed-point types are supported by the DWARF debug information format.
+固定小数点タイプは、DWARFデバッグ情報フォーマットでサポートされている。
 
 @node Named Address Spaces
-@section Named Address Spaces
+@section 名前付きアドレス空間
 @cindex Named Address Spaces
 
-As an extension, GNU C supports named address spaces as
-defined in the N1275 draft of ISO/IEC DTR 18037.  Support for named
-address spaces in GCC will evolve as the draft technical report
-changes.  Calling conventions for any target might also change.  At
-present, only the AVR, SPU, M32C, RL78, and x86 targets support
-address spaces other than the generic address space.
+拡張として、GNU Cは、ISO/IEC DTR 18037のN1275ドラフトで定義されている名前付きアドレス空間をサポートしている。GCCの名前付きアドレス空間のサポートは、テクニカルレポート草案の変更に伴い進化する。 ターゲットの呼び出し規則も変更される可能性がある。 現在、AVR、SPU、M32C、RL78、およびx86ターゲットのみが汎用アドレス空間以外のアドレス空間をサポートしている。
 
-Address space identifiers may be used exactly like any other C type
-qualifier (e.g., @code{const} or @code{volatile}).  See the N1275
-document for more details.
+アドレス空間識別子は、他のC型修飾子（例えば、@code{const}や@code{volatile}など）と全く同じように使用できる。 詳細については、N1275のマニュアルを参照せよ。
 
 @anchor{AVR Named Address Spaces}
-@subsection AVR Named Address Spaces
+@subsection AVR名前付きアドレス空間
 
-On the AVR target, there are several address spaces that can be used
-in order to put read-only data into the flash memory and access that
-data by means of the special instructions @code{LPM} or @code{ELPM}
-needed to read from flash.
+AVRターゲットには、読み込み専用のデータをフラッシュメモリに格納し、そのフラッシュから読み込みに必要な特別な命令@code{LPM}または@code{ELPM}を使用してそのデータにアクセスするために使用できるいくつかのアドレス空間がある 。
 
-Per default, any data including read-only data is located in RAM
-(the generic address space) so that non-generic address spaces are
-needed to locate read-only data in flash memory
-@emph{and} to generate the right instructions to access this data
-without using (inline) assembler code.
+デフォルトでは、読み出し専用データを含むデータはすべてRAM（汎用アドレス空間）に配置され、フラッシュメモリ内の読み出し専用データを検索し、@emph{_かつ_}アセンブラコードを使用せずにこのデータにアクセスするための正しい命令を生成するために非汎用アドレス空間が必要である。
 
 @table @code
 @item __flash
 @cindex @code{__flash} AVR Named Address Spaces
-The @code{__flash} qualifier locates data in the
-@code{.progmem.data} section. Data is read using the @code{LPM}
-instruction. Pointers to this address space are 16 bits wide.
+@code{__ flash}修飾子は、データを@code{.progmem.data}セクションに配置する。 データは@code{LPM}命令を使用して読み込まれる。 このアドレス空間へのポインタは16ビット幅である。
 
 @item __flash1
 @itemx __flash2
@@ -977,54 +928,42 @@ instruction. Pointers to this address space are 16 bits wide.
 @cindex @code{__flash3} AVR Named Address Spaces
 @cindex @code{__flash4} AVR Named Address Spaces
 @cindex @code{__flash5} AVR Named Address Spaces
-These are 16-bit address spaces locating data in section
-@code{.progmem@var{N}.data} where @var{N} refers to
-address space @code{__flash@var{N}}.
-The compiler sets the @code{RAMPZ} segment register appropriately 
-before reading data by means of the @code{ELPM} instruction.
+これらは、@code{.progmem@var{N}.data}セクションのデータを検索する16ビットのアドレス空間である。ここで、@var{N}はアドレス空間@code {__flash@var{N}}を指す。コンパイラは、@code{ELPM}命令でデータを読み取る前に、@code{RAMPZ}セグメントレジスタを適切に設定する。
 
 @item __memx
 @cindex @code{__memx} AVR Named Address Spaces
-This is a 24-bit address space that linearizes flash and RAM:
-If the high bit of the address is set, data is read from
-RAM using the lower two bytes as RAM address.
-If the high bit of the address is clear, data is read from flash
-with @code{RAMPZ} set according to the high byte of the address.
+これは、フラッシュとRAMを線形化する24ビットのアドレス空間である。アドレスの上位ビットがセットされると、下位2バイトをRAMアドレスとしてRAMからデータが読み出される。アドレスの上位ビットがクリアされている場合、アドレスの上位バイトに従って@code{RAMPZ}がセットされた状態でフラッシュからデータが読み出される。
 @xref{AVR Built-in Functions,,@code{__builtin_avr_flash_segment}}.
 
-Objects in this address space are located in @code{.progmemx.data}.
+このアドレス空間のオブジェクトは@code{.progmemx.data}にある。
 @end table
 
-@b{Example}
+@b{例}
 
 @smallexample
 char my_read (const __flash char ** p)
 @{
-    /* p is a pointer to RAM that points to a pointer to flash.
-       The first indirection of p reads that flash pointer
-       from RAM and the second indirection reads a char from this
-       flash address.  */
+    /* pはフラッシュへのポインタを指すRAMへのポインタである。
+        pの最初の間接指定はRAMからのフラッシュポインタを読み込み、
+        2番目の間接指定はこのフラッシュアドレスからcharを読み込む。 */
 
     return **p;
 @}
 
-/* Locate array[] in flash memory */
+/* フラッシュメモリにarray[]を配置する */
 const __flash int array[] = @{ 3, 5, 7, 11, 13, 17, 19 @};
 
 int i = 1;
 
 int main (void)
 @{
-   /* Return 17 by reading from flash memory */
+   /* フラッシュメモリから読んで17を返す */
    return array[array[i]];
 @}
 @end smallexample
 
 @noindent
-For each named address space supported by avr-gcc there is an equally
-named but uppercase built-in macro defined. 
-The purpose is to facilitate testing if respective address space
-support is available or not:
+avr-gccでサポートされている名前付きアドレス空間ごとに、同じ名前の大文字の組み込みマクロが定義されている。目的は、それぞれのアドレス空間のサポートが利用可能かどうかをテストすることである：
 
 @smallexample
 #ifdef __FLASH
@@ -1047,129 +986,84 @@ int read_var (void)
 @end smallexample
 
 @noindent
-Notice that attribute @ref{AVR Variable Attributes,,@code{progmem}}
-locates data in flash but
-accesses to these data read from generic address space, i.e.@:
-from RAM,
-so that you need special accessors like @code{pgm_read_byte}
-from @w{@uref{http://nongnu.org/avr-libc/user-manual/,AVR-LibC}}
-together with attribute @code{progmem}.
+属性@ref{AVR Variable Attributes,,@code{progmem}}はデータをフラッシュに配置するが、汎用アドレス空間（RAMなど）から読み込んだデータにアクセスするため、@w{@uref{http://nongnu.org/avr-libc/user-manual/,AVR-LibC}}の@code{pgm_read_byte}などの特別なアクセサが属性@code {progmem}とともに必要になる。
 
 @noindent
-@b{Limitations and caveats}
+@b{制限と警告}
 
 @itemize
 @item
-Reading across the 64@tie{}KiB section boundary of
-the @code{__flash} or @code{__flash@var{N}} address spaces
-shows undefined behavior. The only address space that
-supports reading across the 64@tie{}KiB flash segment boundaries is
-@code{__memx}.
+@code{__flash}または@code{__flash@var{N}}アドレス空間の64KiBセクション境界を読み取ることは、未定義の動作を示す。 64KiBフラッシュセグメントの境界を越えた読取りをサポートする唯一のアドレス空間は@code{__memx}である。
 
 @item
-If you use one of the @code{__flash@var{N}} address spaces
-you must arrange your linker script to locate the
-@code{.progmem@var{N}.data} sections according to your needs.
+@code{__flash@var{N}}アドレス空間の1つを使用する場合は、必要に応じて@code{.progmem@var{N}.data}セクションを見つけるためにリンカースクリプトを配置する必要がある。
 
 @item
-Any data or pointers to the non-generic address spaces must
-be qualified as @code{const}, i.e.@: as read-only data.
-This still applies if the data in one of these address
-spaces like software version number or calibration lookup table are intended to
-be changed after load time by, say, a boot loader. In this case
-the right qualification is @code{const} @code{volatile} so that the compiler
-must not optimize away known values or insert them
-as immediates into operands of instructions.
+非汎用アドレス空間へのデータまたはポインタは、すべて@code{const}、すなわち読み取り専用データとしてとして修飾する必要がある。これは、ソフトウェアのバージョン番号やキャリブレーションルックアップテーブルのようなアドレス空間のいずれかのデータが、ブートローダなどのロード時間の後に変更されることが意図されている場合にも適用される。 この場合、正しい修飾は@code {const} @code{volatile}であるため、コンパイラは既知の値を最適化したり、命令のオペランドに即値として挿入したりしてはならない。
 
 @item
-The following code initializes a variable @code{pfoo}
-located in static storage with a 24-bit address:
+次のコードは、静的ストレージにある変数@code{pfoo}を24ビットアドレスで初期化する。
 @smallexample
 extern const __memx char foo;
 const __memx void *pfoo = &foo;
 @end smallexample
 
 @noindent
-Such code requires at least binutils 2.23, see
-@w{@uref{https://sourceware.org/PR13503,PR13503}}.
+このようなコードには少なくともbinutils 2.23が必要である。@w{@uref{https://sourceware.org/PR13503,PR13503}}参照。
 
 @item
-On the reduced Tiny devices like ATtiny40, no address spaces are supported.
-Data can be put into and read from flash memory by means of
-attribute @code{progmem}, see @ref{AVR Variable Attributes}.
+ATtiny40のような縮小されたTinyデバイスでは、アドレススペースはサポートされていない。
+属性@code{progmem}属性を使ってフラッシュメモリにデータを読み書きすることができる。@ref{AVR Variable Attributes}参照。
 
 @end itemize
 
-@subsection M32C Named Address Spaces
+@subsection M32C名前付きアドレス空間
 @cindex @code{__far} M32C Named Address Spaces
 
-On the M32C target, with the R8C and M16C CPU variants, variables
-qualified with @code{__far} are accessed using 32-bit addresses in
-order to access memory beyond the first 64@tie{}Ki bytes.  If
-@code{__far} is used with the M32CM or M32C CPU variants, it has no
-effect.
+M32Cターゲットでは、R8CおよびM16C CPUのバリエーションでは、最初の64Kバイトを超えるメモリにアクセスするために、32ビットアドレスを使用して@code{__far}で修飾された変数にアクセスする。 @code{__far}をM32CMまたはM32C CPUのバリアントとともに使用すると、効果はない。
 
-@subsection RL78 Named Address Spaces
+@subsection RL78名前付きアドレス空間
 @cindex @code{__far} RL78 Named Address Spaces
 
-On the RL78 target, variables qualified with @code{__far} are accessed
-with 32-bit pointers (20-bit addresses) rather than the default 16-bit
-addresses.  Non-far variables are assumed to appear in the topmost
-64@tie{}KiB of the address space.
+RL78ターゲットでは、@code{__far}で修飾された変数は、デフォルトの16ビットアドレスではなく32ビットポインタ（20ビットアドレス）でアクセスされる。 非遠隔変数は、アドレス空間の最上位64KiBに現れると仮定する。
 
-@subsection SPU Named Address Spaces
+@subsection SPU名前付きアドレス空間
 @cindex @code{__ea} SPU Named Address Spaces
 
-On the SPU target variables may be declared as
-belonging to another address space by qualifying the type with the
-@code{__ea} address space identifier:
+SPUのターゲット変数は、タイプを@code{__ea}アドレス空間識別子で修飾することによって、別のアドレス空間に属するものとして宣言することができる。
 
 @smallexample
 extern int __ea i;
 @end smallexample
 
 @noindent 
-The compiler generates special code to access the variable @code{i}.
-It may use runtime library
-support, or generate special machine instructions to access that address
-space.
+コンパイラは変数@code{i}にアクセスするための特別なコードを生成する。ランタイムライブラリのサポートを使用したり、そのアドレス空間にアクセスするための特別なマシン命令を生成することができる。
 
-@subsection x86 Named Address Spaces
+@subsection x86名前付きアドレス空間
 @cindex x86 named address spaces
 
-On the x86 target, variables may be declared as being relative
-to the @code{%fs} or @code{%gs} segments.
+x86ターゲットでは、変数は@code{％fs}または@code{％gs}セグメントとの相対的なものとして宣言できる。
 
 @table @code
 @item __seg_fs
 @itemx __seg_gs
 @cindex @code{__seg_fs} x86 named address space
 @cindex @code{__seg_gs} x86 named address space
-The object is accessed with the respective segment override prefix.
+オブジェクトは、それぞれのセグメントオーバーライド接頭辞でアクセスされる。
 
-The respective segment base must be set via some method specific to
-the operating system.  Rather than require an expensive system call
-to retrieve the segment base, these address spaces are not considered
-to be subspaces of the generic (flat) address space.  This means that
-explicit casts are required to convert pointers between these address
-spaces and the generic address space.  In practice the application
-should cast to @code{uintptr_t} and apply the segment base offset
-that it installed previously.
+それぞれのセグメントベースは、オペレーティングシステム固有のいくつかの方法で設定する必要がある。 セグメントベースを検索するために高価なシステムコールを必要とするのではなく、これらのアドレス空間は汎用（フラット）アドレス空間の部分空間であるとはみなされない。これは、これらのアドレス空間と汎用アドレス空間の間のポインタを変換するために明示的なキャストが必要であることを意味する。実際には、アプリケーションは@code{uintptr_t}にキャストし、以前にインストールしたセグメントベースオフセットを適用する必要がある。
 
-The preprocessor symbols @code{__SEG_FS} and @code{__SEG_GS} are
-defined when these address spaces are supported.
+プリプロセッサシンボル@code{__ SEG_FS}と@code{__ SEG_GS}は、これらのアドレス空間がサポートされているときに定義される。
 @end table
 
 @node Zero Length
-@section Arrays of Length Zero
+@section 長さゼロの配列
 @cindex arrays of length zero
 @cindex zero-length arrays
 @cindex length-zero arrays
 @cindex flexible array members
 
-Zero-length arrays are allowed in GNU C@.  They are very useful as the
-last element of a structure that is really a header for a variable-length
-object:
+長さがゼロの配列はGNU Cでは許されている。実際には可変長オブジェクトのヘッダである構造体の最後の要素として非常に便利である。
 
 @smallexample
 struct line @{
@@ -1182,44 +1076,27 @@ struct line *thisline = (struct line *)
 thisline->length = this_length;
 @end smallexample
 
-In ISO C90, you would have to give @code{contents} a length of 1, which
-means either you waste space or complicate the argument to @code{malloc}.
+ISO C90では、@code{contents}の長さを1にする必要がある。つまり、スペースを浪費したり、@code{malloc}の引数を複雑にすることになる。
 
-In ISO C99, you would use a @dfn{flexible array member}, which is
-slightly different in syntax and semantics:
+ISO C99では、@dfn{flexible array member}（可変長配列メンバ）を使用する。これは構文とセマンティクスが少し異なる。
 
 @itemize @bullet
 @item
-Flexible array members are written as @code{contents[]} without
-the @code{0}.
+可変長配列メンバは@code{contents []}と、@code {0}なしで書かれている。
 
 @item
-Flexible array members have incomplete type, and so the @code{sizeof}
-operator may not be applied.  As a quirk of the original implementation
-of zero-length arrays, @code{sizeof} evaluates to zero.
+可変長配列メンバは型が不完全なため、@code{sizeof}演算子は適用されてはならない。 ゼロ長配列の元々の実装では、@code {sizeof}はゼロに評価される。
 
 @item
-Flexible array members may only appear as the last member of a
-@code{struct} that is otherwise non-empty.
+可変長配列メンバは@code {struct}の最後のメンバとして表示され、それ以外の場合は非空でなければならない。
 
 @item
-A structure containing a flexible array member, or a union containing
-such a structure (possibly recursively), may not be a member of a
-structure or an element of an array.  (However, these uses are
-permitted by GCC as extensions.)
+可変長配列メンバを含む構造体またはそのような構造体を含む共用体（おそらく再帰的に）は、配列の構造体または要素のメンバであってはならない。 （ただし、これらの用途はGCCによって拡張機能として許可される）。
 @end itemize
 
-Non-empty initialization of zero-length
-arrays is treated like any case where there are more initializer
-elements than the array holds, in that a suitable warning about ``excess
-elements in array'' is given, and the excess elements (all of them, in
-this case) are ignored.
+ゼロ長配列の空でない初期化は、配列よりも多くの初期化要素がある場合と同様に扱われる。「配列の余分な要素」に関する適切な警告が与えられ、余分な要素（この場合すべて ）は無視される。
 
-GCC allows static initialization of flexible array members.
-This is equivalent to defining a new structure containing the original
-structure followed by an array of sufficient size to contain the data.
-E.g.@: in the following, @code{f1} is constructed as if it were declared
-like @code{f2}.
+GCCでは、可変長配列メンバの静的初期化が可能である。これは、元の構造体を含む新しい構造体を定義し、続いてデータを格納するのに十分な大きさの配列を定義することと同じである。たとえば以下のように、@code{f1}は@code{f2}のように宣言されているかのように構築される。
 
 @smallexample
 struct f1 @{
@@ -1232,18 +1109,11 @@ struct f2 @{
 @end smallexample
 
 @noindent
-The convenience of this extension is that @code{f1} has the desired
-type, eliminating the need to consistently refer to @code{f2.f1}.
+この拡張の利便性は、@code{f1}が望ましい型を持っているので、一貫して@code{f2.f1}を参照する必要がなくなる。
 
-This has symmetry with normal static arrays, in that an array of
-unknown size is also written with @code{[]}.
+これは、未知のサイズの配列も@code{[]}で書かれている点で、通常の静的配列と対称的である。
 
-Of course, this extension only makes sense if the extra data comes at
-the end of a top-level object, as otherwise we would be overwriting
-data at subsequent offsets.  To avoid undue complication and confusion
-with initialization of deeply nested arrays, we simply disallow any
-non-empty initialization except when the structure is the top-level
-object.  For example:
+もちろん、この拡張は、トップレベルのオブジェクトの最後に余分なデータがある場合にのみ意味を持つ。それ以外の場合は、後続のオフセットでデータを上書きする。 過度のネストされた配列の初期化による過度の複雑化と混乱を避けるために、構造体がトップレベルオブジェクトである場合を除いて、空ではない初期化を単に許可しない。 例えば：
 
 @smallexample
 struct foo @{ int x; int y[]; @};
@@ -1256,20 +1126,18 @@ struct foo d[1] = @{ @{ 1, @{ 2, 3, 4 @} @} @};  // @r{Invalid.}
 @end smallexample
 
 @node Empty Structures
-@section Structures with No Members
+@section メンバなしの構造体
 @cindex empty structures
 @cindex zero-size structures
 
-GCC permits a C structure to have no members:
+GCCでは、C構造体にメンバを持たせないことができる：
 
 @smallexample
 struct empty @{
 @};
 @end smallexample
 
-The structure has size zero.  In C++, empty structures are part
-of the language.  G++ treats empty structures as if they had a single
-member of type @code{char}.
+構造体のサイズはゼロである。 C++では、空の構造が言語の一部である。 G++は、空の構造体が@code{char}型の単一のメンバーを持つかのように扱う。
 
 @node Variable Length
 @section Arrays of Variable Length
