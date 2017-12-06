@@ -1140,18 +1140,12 @@ struct empty @{
 構造体のサイズはゼロである。 C++では、空の構造が言語の一部である。 G++は、空の構造体が@code{char}型の単一のメンバーを持つかのように扱う。
 
 @node Variable Length
-@section Arrays of Variable Length
+@section 可変長の配列
 @cindex variable-length arrays
 @cindex arrays of variable length
 @cindex VLAs
 
-Variable-length automatic arrays are allowed in ISO C99, and as an
-extension GCC accepts them in C90 mode and in C++.  These arrays are
-declared like any other automatic arrays, but with a length that is not
-a constant expression.  The storage is allocated at the point of
-declaration and deallocated when the block scope containing the declaration
-exits.  For
-example:
+ISO C99では可変長の自動配列が許可されていて、GCCはC90モードとC++でそれらを受け入れる。 これらの配列は他の自動配列と同様に宣言されるが、長さは定数式ではない。 記憶域は宣言のポイントに割り当てられ、宣言を含むブロックスコープが終了すると割り当てが解除される。 例えば：
 
 @smallexample
 FILE *
@@ -1167,13 +1161,10 @@ concat_fopen (char *s1, char *s2, char *mode)
 @cindex scope of a variable length array
 @cindex variable-length array scope
 @cindex deallocating variable length arrays
-Jumping or breaking out of the scope of the array name deallocates the
-storage.  Jumping into the scope is not allowed; you get an error
-message for it.
+配列名の範囲を飛び越したり抜けたりすると、記憶域の割り当てが解放される。 スコープにジャンプすることはできない。 そのためのエラーメッセージが表示される。
 
 @cindex variable-length array in a structure
-As an extension, GCC accepts variable-length arrays as a member of
-a structure or a union.  For example:
+拡張として、GCCは可変長配列を構造体または共用体のメンバーとして受け入れる。 例えば：
 
 @smallexample
 void
@@ -1184,17 +1175,11 @@ foo (int n)
 @end smallexample
 
 @cindex @code{alloca} vs variable-length arrays
-You can use the function @code{alloca} to get an effect much like
-variable-length arrays.  The function @code{alloca} is available in
-many other C implementations (but not in all).  On the other hand,
-variable-length arrays are more elegant.
+可変長配列によく似た効果を得るには、関数@code{alloca}を使うことができる。 関数@code{alloca}は他の多くのC実装で利用可能である（ただし、すべてではない）。 一方、可変長配列はよりエレガントである。
 
-There are other differences between these two methods.  Space allocated
-with @code{alloca} exists until the containing @emph{function} returns.
-The space for a variable-length array is deallocated as soon as the array
-name's scope ends, unless you also use @code{alloca} in this scope.
+これらの2つの方法には他にも違いがある。 @code{alloca}で割り当てられたスペースは、それを含む@emph{_関数_}が返るまで存在する。可変長配列の空間は、このスコープで@code{alloca}も使用しない限り、配列名のスコープが終了するとすぐに割り当てから解放される。
 
-You can also use variable-length arrays as arguments to functions:
+関数の引数として可変長配列を使うこともできる：
 
 @smallexample
 struct entry
@@ -1204,12 +1189,9 @@ tester (int len, char data[len][len])
 @}
 @end smallexample
 
-The length of an array is computed once when the storage is allocated
-and is remembered for the scope of the array in case you access it with
-@code{sizeof}.
+配列の長さは、記憶域が割り当てられたときに1回計算され、@code{sizeof}でアクセスする場合には配列のスコープのために記憶される。
 
-If you want to pass the array first and the length afterward, you can
-use a forward declaration in the parameter list---another GNU extension.
+最初に配列を渡し、後に長さを渡す場合は、パラメータリストの前方宣言---別のGNU拡張を使用できる。
 
 @smallexample
 struct entry
@@ -1220,114 +1202,68 @@ tester (int len; char data[len][len], int len)
 @end smallexample
 
 @cindex parameter forward declaration
-The @samp{int len} before the semicolon is a @dfn{parameter forward
-declaration}, and it serves the purpose of making the name @code{len}
-known when the declaration of @code{data} is parsed.
+セミコロンの前の@samp{int len}は@dfn{parameter forward declaration}（パラメータの前方宣言）であり、@code {data}の宣言が解析されるときに、@code{len}という名前を知らせる目的に役立つ。
 
-You can write any number of such parameter forward declarations in the
-parameter list.  They can be separated by commas or semicolons, but the
-last one must end with a semicolon, which is followed by the ``real''
-parameter declarations.  Each forward declaration must match a ``real''
-declaration in parameter name and data type.  ISO C99 does not support
-parameter forward declarations.
+このようなパラメータの前方宣言は、パラメータリストに任意の数書くことができる。 それらはカンマまたはセミコロンで区切ることができるが、最後のものはセミコロンで終わらなければならない。その後に「実」パラメータ宣言が続く。 各前方宣言は、パラメータ名とデータ型の「実際の」宣言と一致しなければならない。 ISO C99では、パラメータの前方宣言はサポートされていない。
 
 @node Variadic Macros
-@section Macros with a Variable Number of Arguments.
+@section 可変長の引数を持つマクロ
 @cindex variable number of arguments
 @cindex macro with variable arguments
 @cindex rest argument (in macro)
 @cindex variadic macros
 
-In the ISO C standard of 1999, a macro can be declared to accept a
-variable number of arguments much as a function can.  The syntax for
-defining the macro is similar to that of a function.  Here is an
-example:
+1999年のISO C標準では、マクロが関数のできる限り多くの引数を受け入れると宣言することができる。 マクロを定義する構文は、関数の構文に似ている。 次に例を示す。
 
 @smallexample
 #define debug(format, ...) fprintf (stderr, format, __VA_ARGS__)
 @end smallexample
 
 @noindent
-Here @samp{@dots{}} is a @dfn{variable argument}.  In the invocation of
-such a macro, it represents the zero or more tokens until the closing
-parenthesis that ends the invocation, including any commas.  This set of
-tokens replaces the identifier @code{__VA_ARGS__} in the macro body
-wherever it appears.  See the CPP manual for more information.
+@samp{@dots{}}は@dfn{variable argument}（可変引数）である。 このようなマクロの呼び出しでは、カンマを含めて呼び出しを終了する閉じ括弧まで0個以上のトークンを表す。 このトークンのセットは、マクロ本体の識別子@code{__ VA_ARGS__}を置き換える。 詳細については、CPPマニュアルを参照せよ。
 
-GCC has long supported variadic macros, and used a different syntax that
-allowed you to give a name to the variable arguments just like any other
-argument.  Here is an example:
+GCCは可変長マクロを長い間サポートしていて、他の引数と同じように可変引数に名前を付けることを可能にする別の構文を使用していた。 次に例を示す。
 
 @smallexample
 #define debug(format, args...) fprintf (stderr, format, args)
 @end smallexample
 
 @noindent
-This is in all ways equivalent to the ISO C example above, but arguably
-more readable and descriptive.
+これは、上記のISO Cの例とすべての点で同じだが、おそらく読みやすく記述的である。
 
-GNU CPP has two further variadic macro extensions, and permits them to
-be used with either of the above forms of macro definition.
+GNU CPPにはさらに2つの可変長マクロ拡張があり、上記のマクロ定義のいずれかで使用することができる。
 
-In standard C, you are not allowed to leave the variable argument out
-entirely; but you are allowed to pass an empty argument.  For example,
-this invocation is invalid in ISO C, because there is no comma after
-the string:
+標準Cでは、可変引数を完全に除外することはできない。 空の引数を渡すことは許されている。 たとえば、この呼び出しはISO Cでは無効である。文字列の後にカンマがないためである。
 
 @smallexample
 debug ("A message")
 @end smallexample
 
-GNU CPP permits you to completely omit the variable arguments in this
-way.  In the above examples, the compiler would complain, though since
-the expansion of the macro still has the extra comma after the format
-string.
+GNU CPPでは、このように可変引数を完全に省略することができる。 上記の例では、マクロの展開にフォーマット文字列の後に余分なカンマが残っているため、コンパイラは不平を言う。
 
-To help solve this problem, CPP behaves specially for variable arguments
-used with the token paste operator, @samp{##}.  If instead you write
+この問題を解決するために、CPPはトークンペースト演算子@samp {##}で使用される可変引数に対して特別に動作する。 代わりにこう書く場合
 
 @smallexample
 #define debug(format, ...) fprintf (stderr, format, ## __VA_ARGS__)
 @end smallexample
 
 @noindent
-and if the variable arguments are omitted or empty, the @samp{##}
-operator causes the preprocessor to remove the comma before it.  If you
-do provide some variable arguments in your macro invocation, GNU CPP
-does not complain about the paste operation and instead places the
-variable arguments after the comma.  Just like any other pasted macro
-argument, these arguments are not macro expanded.
+そして可変引数が省略または空の場合、@samp{##}演算子はプリプロセッサに前のコンマを削除させる。 マクロ呼び出しでいくつかの可変引数を指定した場合、GNU CPPは貼り付け操作について不平を言わず、可変引数をカンマの後ろに置く。 貼り付けられた他のマクロ引数と同じように、これらの引数はマクロ展開されない。
 
 @node Escaped Newlines
-@section Slightly Looser Rules for Escaped Newlines
+@section エスケープされた改行のためのややゆるい規則
 @cindex escaped newlines
 @cindex newlines (escaped)
 
-The preprocessor treatment of escaped newlines is more relaxed 
-than that specified by the C90 standard, which requires the newline
-to immediately follow a backslash.  
-GCC's implementation allows whitespace in the form
-of spaces, horizontal and vertical tabs, and form feeds between the
-backslash and the subsequent newline.  The preprocessor issues a
-warning, but treats it as a valid escaped newline and combines the two
-lines to form a single logical line.  This works within comments and
-tokens, as well as between tokens.  Comments are @emph{not} treated as
-whitespace for the purposes of this relaxation, since they have not
-yet been replaced with spaces.
+エスケープされた改行のプリプロセッサ処理は、改行がバックスラッシュの直後に続くことを必要とするC90標準で指定されているものよりも緩やかである。GCCの実装では、空白、水平および垂直のタブ、およびバックスラッシュとそれに続く改行の間の書式フィードの形で空白を使用できる。 プリプロセッサは警告を出すが、有効なエスケープされた改行として扱い、2行を結合して1つの論理行を形成する。 これは、コメントとトークン、およびトークン間で機能する。 コメントはこのリラクゼーションの目的のために空白として扱われ@emph{_ない_}。なぜならそれらはまだスペースで置き換えられていないからである。
 
 @node Subscripting
-@section Non-Lvalue Arrays May Have Subscripts
+@section 非左辺値配列には添え字が付くことができる
 @cindex subscripting
 @cindex arrays, non-lvalue
 
 @cindex subscripting and function values
-In ISO C99, arrays that are not lvalues still decay to pointers, and
-may be subscripted, although they may not be modified or used after
-the next sequence point and the unary @samp{&} operator may not be
-applied to them.  As an extension, GNU C allows such arrays to be
-subscripted in C90 mode, though otherwise they do not decay to
-pointers outside C99 mode.  For example,
-this is valid in GNU C though not valid in C90:
+ISO C99では、左辺値ではない配列はポインタに成り下がり、添え字付きになることができるが、変更、次のシーケンスポイントの後での使用、単項@samp{＆}演算子への適用は許されていない。 拡張として、GNU Cはそのような配列をC90モードで添え字にすることができるが、それ以外の場合はC99モード以外のポインタには成り下がらない。 例えば、これはGNU Cでは有効だが、C90では有効ではない：
 
 @smallexample
 @group
@@ -1343,34 +1279,25 @@ bar (int index)
 @end smallexample
 
 @node Pointer Arith
-@section Arithmetic on @code{void}- and Function-Pointers
+@section @code{void}と関数ポインタの算術
 @cindex void pointers, arithmetic
 @cindex void, size of pointer to
 @cindex function pointers, arithmetic
 @cindex function, size of pointer to
 
-In GNU C, addition and subtraction operations are supported on pointers to
-@code{void} and on pointers to functions.  This is done by treating the
-size of a @code{void} or of a function as 1.
+GNU Cでは、@code{void}へのポインタと関数へのポインタについて、加算と減算の操作がサポートされている。 これは、@code{void}や関数のサイズを1として扱うことによって行われる。
 
-A consequence of this is that @code{sizeof} is also allowed on @code{void}
-and on function types, and returns 1.
+その結果、@code{sizeof}は@code{void}と関数型でも許され、1を返す。
 
 @opindex Wpointer-arith
-The option @option{-Wpointer-arith} requests a warning if these extensions
-are used.
+@option {-Wpointer-arith}オプションは、これらの拡張が使用されている場合に警告を要求する。
 
 @node Pointers to Arrays
-@section Pointers to Arrays with Qualifiers Work as Expected
+@section 修飾子付き配列へのポインタは期待どおりに動作する
 @cindex pointers to arrays
 @cindex const qualifier
 
-In GNU C, pointers to arrays with qualifiers work similar to pointers
-to other qualified types. For example, a value of type @code{int (*)[5]}
-can be used to initialize a variable of type @code{const int (*)[5]}.
-These types are incompatible in ISO C because the @code{const} qualifier
-is formally attached to the element type of the array and not the
-array itself.
+GNU Cでは、修飾子を持つ配列へのポインタは、他の修飾された型へのポインタと同様の働きをする。 たとえば、@code{int(*)[5]}型の変数を使用して、@code{const int(*)[5]}型の変数を初期化することができる。これらの型はISO Cでは互換性がない。@code{const}修飾子は配列自体ではなく配列の要素型に正式に付けられているからである。
 
 @smallexample
 extern void
@@ -1382,13 +1309,11 @@ transpose(3, 2, y, x);
 @end smallexample
 
 @node Initializers
-@section Non-Constant Initializers
+@section 非定数初期化子
 @cindex initializers, non-constant
 @cindex non-constant initializers
 
-As in standard C++ and ISO C99, the elements of an aggregate initializer for an
-automatic variable are not required to be constant expressions in GNU C@.
-Here is an example of an initializer with run-time varying elements:
+標準C++やISO C99のように、自動変数の集約イニシャライザの要素は、GNU Cでは定数式である必要はない。実行時に変化する要素を持つイニシャライザの例を次に示す。
 
 @smallexample
 foo (float f, float g)
@@ -1399,7 +1324,7 @@ foo (float f, float g)
 @end smallexample
 
 @node Compound Literals
-@section Compound Literals
+@section 複合リテラル
 @cindex constructor expressions
 @cindex initializations in expressions
 @cindex structures, constructor expression
@@ -1407,30 +1332,23 @@ foo (float f, float g)
 @cindex compound literals
 @c The GNU C name for what C99 calls compound literals was "constructor expressions".
 
-A compound literal looks like a cast of a brace-enclosed aggregate
-initializer list.  Its value is an object of the type specified in
-the cast, containing the elements specified in the initializer.
-Unlike the result of a cast, a compound literal is an lvalue.  ISO
-C99 and later support compound literals.  As an extension, GCC
-supports compound literals also in C90 mode and in C++, although
-as explained below, the C++ semantics are somewhat different.
+複合リテラルは、中括弧で囲まれた集約初期化子リストのキャストのように見える。 その値は、初期化子で指定された要素を含むキャストで指定された型のオブジェクトである。キャストの結果とは異なり、複合リテラルは左辺値である。 ISO C99以降では複合リテラルをサポートしている。 拡張として、GCCはC90モードとC++でも複合リテラルをサポートしているが、後述するようにC++のセマンティクスは多少異なる。
 
-Usually, the specified type of a compound literal is a structure.  Assume
-that @code{struct foo} and @code{structure} are declared as shown:
+通常、複合リテラルの指定された型は構造体である。 以下のように@code{struct foo}と@code{structure}が宣言されているとする。
 
 @smallexample
 struct foo @{int a; char b[2];@} structure;
 @end smallexample
 
 @noindent
-Here is an example of constructing a @code{struct foo} with a compound literal:
+複合リテラルで@code{struct foo}を構築する例を次に示す。
 
 @smallexample
 structure = ((struct foo) @{x + y, 'a', 0@});
 @end smallexample
 
 @noindent
-This is equivalent to writing the following:
+これは、次の記述と同じである。
 
 @smallexample
 @{
@@ -1439,34 +1357,19 @@ This is equivalent to writing the following:
 @}
 @end smallexample
 
-You can also construct an array, though this is dangerous in C++, as
-explained below.  If all the elements of the compound literal are
-(made up of) simple constant expressions suitable for use in
-initializers of objects of static storage duration, then the compound
-literal can be coerced to a pointer to its first element and used in
-such an initializer, as shown here:
+以下で説明するように、C++では危険だが、配列を作成することもできる。 複合リテラルのすべての要素が、静的記憶期間のオブジェクトのイニシャライザでの使用に適した簡単な定数式であれば、複合リテラルはその最初の要素へのポインタに強制され、そのようなイニシャライザで使用される。 ここに示すように：
 
 @smallexample
 char **foo = (char *[]) @{ "x", "y", "z" @};
 @end smallexample
 
-Compound literals for scalar types and union types are also allowed.  In
-the following example the variable @code{i} is initialized to the value
-@code{2}, the result of incrementing the unnamed object created by
-the compound literal.
+スカラ型と共用体型の複合リテラルも使用できる。 以下の例では、変数@code{i}は、複合リテラルによって作成された名前のないオブジェクトをインクリメントした結果、値@code{2}に初期化される。
 
 @smallexample
 int i = ++(int) @{ 1 @};
 @end smallexample
 
-As a GNU extension, GCC allows initialization of objects with static storage
-duration by compound literals (which is not possible in ISO C99 because
-the initializer is not a constant).
-It is handled as if the object were initialized only with the brace-enclosed
-list if the types of the compound literal and the object match.
-The elements of the compound literal must be constant.
-If the object being initialized has array type of unknown size, the size is
-determined by the size of the compound literal.
+GNUの拡張として、GCCはコンパイルリテラルによる静的な格納期間を持つオブジェクトの初期化を可能にする（初期化子は定数ではないためISO C99では不可能である）。 複合リテラルとオブジェクトの型が一致する場合は、中括弧で囲まれたリストでオブジェクトが初期化されたかのように扱われる。複合リテラルの要素は定数でなければならない。初期化されるオブジェクトの配列型が未知のサイズの場合、サイズは複合リテラルのサイズによって決まる。
 
 @smallexample
 static struct foo x = (struct foo) @{1, 'a', 'b'@};
@@ -1475,30 +1378,16 @@ static int z[] = (int [3]) @{1@};
 @end smallexample
 
 @noindent
-The above lines are equivalent to the following:
+上記の行は、次の行に相当する。
 @smallexample
 static struct foo x = @{1, 'a', 'b'@};
 static int y[] = @{1, 2, 3@};
 static int z[] = @{1, 0, 0@};
 @end smallexample
 
-In C, a compound literal designates an unnamed object with static or
-automatic storage duration.  In C++, a compound literal designates a
-temporary object that only lives until the end of its full-expression.
-As a result, well-defined C code that takes the address of a subobject
-of a compound literal can be undefined in C++, so G++ rejects
-the conversion of a temporary array to a pointer.  For instance, if
-the array compound literal example above appeared inside a function,
-any subsequent use of @code{foo} in C++ would have undefined behavior
-because the lifetime of the array ends after the declaration of @code{foo}.
+Cでは、複合リテラルは、静的または自動記憶期間を持つ名前のないオブジェクトを指定する。 C++では、複合リテラルは、完全表現の終わりまで存続する一時オブジェクトを指定する。その結果、複合リテラルのサブオブジェクトのアドレスを取得する明確に定義されたCコードは、C++では未定義となるため、G++は一時配列のポインタへの変換を拒否する。たとえば、上記の配列の複合リテラルの例が関数内に現れた場合、C++で@code{foo}を使用すると、配列の寿命が@code{foo}の宣言の後で終わるため、未定義の動作になる。
 
-As an optimization, G++ sometimes gives array compound literals longer
-lifetimes: when the array either appears outside a function or has
-a @code{const}-qualified type.  If @code{foo} and its initializer had
-elements of type @code{char *const} rather than @code{char *}, or if
-@code{foo} were a global variable, the array would have static storage
-duration.  But it is probably safest just to avoid the use of array
-compound literals in C++ code.
+最適化として、G++は、配列の複合リテラルの寿命を長くすることがある：配列が関数の外に出現するか、@ code{const}修飾型を持つ場合である。 @code{foo}とその初期化子が@code{char *}ではなく@code{char * const}型の要素を持っていた場合、または@code{foo}がグローバル変数であった場合、配列は静的な記憶期間を持つ。 しかし、おそらくC++コードで配列複合リテラルを使用しないようにするのが最も安全である。
 
 @node Designated Inits
 @section Designated Initializers
