@@ -1390,96 +1390,76 @@ Cでは、複合リテラルは、静的または自動記憶期間を持つ名�
 最適化として、G++は、配列の複合リテラルの寿命を長くすることがある：配列が関数の外に出現するか、@ code{const}修飾型を持つ場合である。 @code{foo}とその初期化子が@code{char *}ではなく@code{char * const}型の要素を持っていた場合、または@code{foo}がグローバル変数であった場合、配列は静的な記憶期間を持つ。 しかし、おそらくC++コードで配列複合リテラルを使用しないようにするのが最も安全である。
 
 @node Designated Inits
-@section Designated Initializers
+@section 指示付きの初期化子
 @cindex initializers with labeled elements
 @cindex labeled elements in initializers
 @cindex case labels in initializers
 @cindex designated initializers
 
-Standard C90 requires the elements of an initializer to appear in a fixed
-order, the same as the order of the elements in the array or structure
-being initialized.
+標準C90では、イニシャライザの要素は、初期化される配列または構造体の要素の順序と同じ、固定された順序で表示する必要がある。
 
-In ISO C99 you can give the elements in any order, specifying the array
-indices or structure field names they apply to, and GNU C allows this as
-an extension in C90 mode as well.  This extension is not
-implemented in GNU C++.
+ISO C99では、配列のインデックスや構造体フィールド名を指定して任意の順序で要素を与えることができ、GNU CではこれをC90モードの拡張としても許可する。 この拡張はGNU C ++では実装されていない。
 
-To specify an array index, write
-@samp{[@var{index}] =} before the element value.  For example,
+配列インデックスを指定するには、要素値の前に@samp{[@var{index}]=}を記述する。 例えば、
 
 @smallexample
 int a[6] = @{ [4] = 29, [2] = 15 @};
 @end smallexample
 
 @noindent
-is equivalent to
+は以下と等価である。
 
 @smallexample
 int a[6] = @{ 0, 0, 15, 0, 29, 0 @};
 @end smallexample
 
 @noindent
-The index values must be constant expressions, even if the array being
-initialized is automatic.
+初期化される配列が自動であっても、インデックス値は定数式でなければならない。
 
-An alternative syntax for this that has been obsolete since GCC 2.5 but
-GCC still accepts is to write @samp{[@var{index}]} before the element
-value, with no @samp{=}.
+GCC 2.5以降では時代遅れとなったが、GCCがまだ受け入れている代替構文は、エレメント値の前に@samp{[@var{index}]}を書くことである。@samp{=}はない。
 
-To initialize a range of elements to the same value, write
-@samp{[@var{first} ... @var{last}] = @var{value}}.  This is a GNU
-extension.  For example,
+要素の範囲を同じ値に初期化するには、@samp{[@var{first}...@var{last}]=@var{value}}と記述する。 これはGNU拡張である。 例えば、
 
 @smallexample
 int widths[] = @{ [0 ... 9] = 1, [10 ... 99] = 2, [100] = 3 @};
 @end smallexample
 
 @noindent
-If the value in it has side-effects, the side-effects happen only once,
-not for each initialized field by the range initializer.
+その値に副作用がある場合、副作用は、初期化されたフィールドごとにではなく、範囲初期化子によって1回だけ発生する。
 
 @noindent
-Note that the length of the array is the highest value specified
-plus one.
+配列の長さは指定された最大値+1であることに注意せよ。
 
-In a structure initializer, specify the name of a field to initialize
-with @samp{.@var{fieldname} =} before the element value.  For example,
-given the following structure,
+構造体初期化子で、要素値の前に@samp {.@var{fieldname}=}で初期化するフィールドの名前を指定する。 例えば、以下の構造が与えられると、
 
 @smallexample
 struct point @{ int x, y; @};
 @end smallexample
 
 @noindent
-the following initialization
+以下の初期化子は
 
 @smallexample
 struct point p = @{ .y = yvalue, .x = xvalue @};
 @end smallexample
 
 @noindent
-is equivalent to
+以下と等価である。
 
 @smallexample
 struct point p = @{ xvalue, yvalue @};
 @end smallexample
 
-Another syntax that has the same meaning, obsolete since GCC 2.5, is
-@samp{@var{fieldname}:}, as shown here:
+同じ意味を持ち、GCC 2.5から廃止された別の構文@samp{@var{fieldname}:}では、ここに示すように：
 
 @smallexample
 struct point p = @{ y: yvalue, x: xvalue @};
 @end smallexample
 
-Omitted field members are implicitly initialized the same as objects
-that have static storage duration.
+省略されたフィールドメンバは、静的格納期間を持つオブジェクトと同じように暗黙的に初期化される。
 
 @cindex designators
-The @samp{[@var{index}]} or @samp{.@var{fieldname}} is known as a
-@dfn{designator}.  You can also use a designator (or the obsolete colon
-syntax) when initializing a union, to specify which element of the union
-should be used.  For example,
+@samp{[@var{index}]}や@samp{.@ var{fieldname}}は@dfn{designator}（指定子）として知られている。 また、共用体を初期化するときに、指定子（または廃止されたコロン構文）を使用して、共用体のどの要素を使用するかを指定することもできる。 例えば、
 
 @smallexample
 union foo @{ int i; double d; @};
@@ -1488,30 +1468,22 @@ union foo f = @{ .d = 4 @};
 @end smallexample
 
 @noindent
-converts 4 to a @code{double} to store it in the union using
-the second element.  By contrast, casting 4 to type @code{union foo}
-stores it into the union as the integer @code{i}, since it is
-an integer.  @xref{Cast to Union}.
+2番目の要素を使用して4を@code{double}に変換して共用体に格納する。 対照的に、4を型@code{union foo}にキャストすると、それは整数なので整数@code{i}として共用体に格納される。@xref{Cast to Union}.
 
-You can combine this technique of naming elements with ordinary C
-initialization of successive elements.  Each initializer element that
-does not have a designator applies to the next consecutive element of the
-array or structure.  For example,
+要素を命名するこの手法を、連続する要素の通常のC初期化と組み合わせることができる。 指定子を持たない各初期化子要素は、配列または構造体の次の連続する要素に適用される。 例えば、
 
 @smallexample
 int a[6] = @{ [1] = v1, v2, [4] = v4 @};
 @end smallexample
 
 @noindent
-is equivalent to
+は以下と等価である。
 
 @smallexample
 int a[6] = @{ 0, v1, v2, 0, v4, 0 @};
 @end smallexample
 
-Labeling the elements of an array initializer is especially useful
-when the indices are characters or belong to an @code{enum} type.
-For example:
+配列の初期化子の要素にラベルを付けることは、インデックスが文字であるか、@code{enum}型に属している場合に特に便利である。例えば：
 
 @smallexample
 int whitespace[256]
@@ -1520,73 +1492,56 @@ int whitespace[256]
 @end smallexample
 
 @cindex designator lists
-You can also write a series of @samp{.@var{fieldname}} and
-@samp{[@var{index}]} designators before an @samp{=} to specify a
-nested subobject to initialize; the list is taken relative to the
-subobject corresponding to the closest surrounding brace pair.  For
-example, with the @samp{struct point} declaration above:
+@samp{@}の前に一連の@samp{.@var{fieldname}}と@samp{[@var{index}]}を書くことで、ネストされたサブオブジェクトを指定して初期化することもできる。 そのリストは、最も近い周囲の中括弧対に対応するサブオブジェクトに関連して取られる。 たとえば、上記の@samp{struct point}宣言を使用すると、次のようになる。
 
 @smallexample
 struct point ptarray[10] = @{ [2].y = yv2, [2].x = xv2, [0].x = xv0 @};
 @end smallexample
 
 @noindent
-If the same field is initialized multiple times, it has the value from
-the last initialization.  If any such overridden initialization has
-side-effect, it is unspecified whether the side-effect happens or not.
-Currently, GCC discards them and issues a warning.
+同じフィールドが複数回初期化されている場合、最後の初期化の値を持つ。 そのような上書きされた初期化が副作用を持つ場合、副作用が発生するかどうかは不明である。 現在、GCCはそれらを破棄して警告を出す。
 
 @node Case Ranges
-@section Case Ranges
+@section Case範囲
 @cindex case ranges
 @cindex ranges in case statements
 
-You can specify a range of consecutive values in a single @code{case} label,
-like this:
+以下のように、単一の@code {case}ラベルに連続した値の範囲を指定することができる。
 
 @smallexample
 case @var{low} ... @var{high}:
 @end smallexample
 
 @noindent
-This has the same effect as the proper number of individual @code{case}
-labels, one for each integer value from @var{low} to @var{high}, inclusive.
+これは@var {low}から@var {high}までの整数値ごとに1つずつ、個々の@code {case}ラベルの適切な数と同じ効果を持つ。
 
-This feature is especially useful for ranges of ASCII character codes:
+この機能は、ASCII文字コードの範囲で特に便利である。
 
 @smallexample
 case 'A' ... 'Z':
 @end smallexample
 
-@strong{Be careful:} Write spaces around the @code{...}, for otherwise
-it may be parsed wrong when you use it with integer values.  For example,
-write this:
+@strong{注意:} @code {...}の周囲にスペースを入れること。そうしないと、整数値を使うときに間違って解釈される可能性がある。 たとえば、次のように記述する。
 
 @smallexample
 case 1 ... 5:
 @end smallexample
 
 @noindent
-rather than this:
+こうではなく：
 
 @smallexample
 case 1...5:
 @end smallexample
 
 @node Cast to Union
-@section Cast to a Union Type
+@section 共用体型へのキャスト
 @cindex cast to a union
 @cindex union, casting to a
 
-A cast to union type looks similar to other casts, except that the type
-specified is a union type.  You can specify the type either with the
-@code{union} keyword or with a @code{typedef} name that refers to
-a union.  A cast to a union actually creates a compound literal and
-yields an lvalue, not an rvalue like true casts do.
-@xref{Compound Literals}.
+共用体型へのキャストは、指定された型が共用体型であることを除いて、他のキャストと似ている。 型を@code{union}キーワードか、共用体を参照する@code {typedef}名で指定することができる。 共用体へのキャストは実際に複合リテラルを作成し、真のキャストのような右辺値ではなく左辺値を生成する。@xref{Compound Literals}.
 
-The types that may be cast to the union type are those of the members
-of the union.  Thus, given the following union and variables:
+共用体型にキャストされる型は、共用体のメンバーの型である。 したがって、以下の結合と変数が与えられているとすると
 
 @smallexample
 union foo @{ int i; double d; @};
@@ -1595,10 +1550,9 @@ double y;
 @end smallexample
 
 @noindent
-both @code{x} and @code{y} can be cast to type @code{union foo}.
+@code{x}と@code{y}の両方を@code{union foo}へキャストすることができる。
 
-Using the cast as the right-hand side of an assignment to a variable of
-union type is equivalent to storing in a member of the union:
+共用体型の変数への代入の右辺としてのキャストを使用することは、共用体型のメンバーに格納することと同じである。
 
 @smallexample
 union foo u;
@@ -1607,7 +1561,7 @@ u = (union foo) x  @equiv{}  u.i = x
 u = (union foo) y  @equiv{}  u.d = y
 @end smallexample
 
-You can also use the union cast as a function argument:
+関数の引数としてユニオンキャストを使うこともできる：
 
 @smallexample
 void hack (union foo);
@@ -1616,14 +1570,12 @@ hack ((union foo) x);
 @end smallexample
 
 @node Mixed Declarations
-@section Mixed Declarations and Code
+@section 宣言とコードの混在
 @cindex mixed declarations and code
 @cindex declarations, mixed with code
 @cindex code, mixed with declarations
 
-ISO C99 and ISO C++ allow declarations and code to be freely mixed
-within compound statements.  As an extension, GNU C also allows this in
-C90 mode.  For example, you could do:
+ISO C99およびISO C++では、複合宣言内で宣言とコードを自由に混在させることができる。 拡張として、GNU CではC90モードも可能である。 たとえば、次のようにすることができる。
 
 @smallexample
 int i;
@@ -1632,54 +1584,26 @@ i++;
 int j = i + 2;
 @end smallexample
 
-Each identifier is visible from where it is declared until the end of
-the enclosing block.
+各識別子は、それが囲まれたブロックの終わりまで宣言されているところから見ることができる。
 
 @node Function Attributes
-@section Declaring Attributes of Functions
+@section 関数属性の宣言
 @cindex function attributes
 @cindex declaring attributes of functions
 @cindex @code{volatile} applied to function
 @cindex @code{const} applied to function
 
-In GNU C, you can use function attributes to declare certain things
-about functions called in your program which help the compiler
-optimize calls and check your code more carefully.  For example, you
-can use attributes to declare that a function never returns
-(@code{noreturn}), returns a value depending only on its arguments
-(@code{pure}), or has @code{printf}-style arguments (@code{format}).
+GNU Cでは、関数属性を使用して、プログラムで呼び出される関数について特定のものを宣言することができる。これは、コンパイラが呼び出しを最適化し、コードをより慎重にチェックするのに役立つ。 たとえば、属性を使用して関数が決して返されない（@code{noreturn}）、引数だけに依存する値を返す（@code{pure}）、または@code{printf}スタイルの引数@code{format}）。
 
-You can also use attributes to control memory placement, code
-generation options or call/return conventions within the function
-being annotated.  Many of these attributes are target-specific.  For
-example, many targets support attributes for defining interrupt
-handler functions, which typically must follow special register usage
-and return conventions.
+また、属性を使用して、注釈を付ける関数内のメモリ配置、コード生成オプション、またはコール/リターン規則を制御することもできる。 これらの属性の多くはターゲット固有である。 たとえば、多くのターゲットでは、割り込みハンドラ関数を定義するための属性がサポートされている。これらの関数は、通常、特殊なレジスタの使用法とリターン規則に従わなければならない。
 
-Function attributes are introduced by the @code{__attribute__} keyword
-on a declaration, followed by an attribute specification inside double
-parentheses.  You can specify multiple attributes in a declaration by
-separating them by commas within the double parentheses or by
-immediately following an attribute declaration with another attribute
-declaration.  @xref{Attribute Syntax}, for the exact rules on
-attribute syntax and placement.
+関数の属性は宣言の@code{__attribute__}キーワードによって導入され、その後に二重括弧で囲まれた属性指定が続く。 宣言で複数の属性を指定するには、ダブルカッコ内でコンマで区切るか、別の属性宣言で属性宣言の直後に記述する。 属性の構文と配置に関する正確な規則については、@xref{Attribute Syntax}を参照せよ。
 
-GCC also supports attributes on
-variable declarations (@pxref{Variable Attributes}),
-labels (@pxref{Label Attributes}),
-enumerators (@pxref{Enumerator Attributes}),
-statements (@pxref{Statement Attributes}),
-and types (@pxref{Type Attributes}).
+GCCは変数宣言（@pxref{Variable Attributes}）、ラベル（@pxref{Label Attributes}）、列挙子（@pxref{Enumerator Attributes}）、文（@pxref{Statement Attributes}）、型（@pxref{Type Attributes}）の属性もサポートしている。
 
-There is some overlap between the purposes of attributes and pragmas
-(@pxref{Pragmas,,Pragmas Accepted by GCC}).  It has been
-found convenient to use @code{__attribute__} to achieve a natural
-attachment of attributes to their corresponding declarations, whereas
-@code{#pragma} is of use for compatibility with other compilers
-or constructs that do not naturally form part of the grammar.
+属性とプラグマの目的にはいくつかの重複がある（@pxref{Pragmas,,GCCで受け入れられるプラグマ}）。 @code {#pragma}は自然に文法の一部を形成しない他のコンパイラや構文との互換性のために使用されるが、@code{__attribute__}を使用して対応する宣言に属性を自然に付加することが便利であることがわかった。
 
-In addition to the attributes documented here,
-GCC plugins may provide their own attributes.
+ここに記述されている属性に加えて、GCCプラグインは独自の属性を提供することがある。
 
 @menu
 * Common Function Attributes::
