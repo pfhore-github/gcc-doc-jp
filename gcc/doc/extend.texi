@@ -1642,17 +1642,16 @@ GCCは変数宣言（@pxref{Variable Attributes}）、ラベル（@pxref{Label A
 @end menu
 
 @node Common Function Attributes
-@subsection Common Function Attributes
+@subsection 共通関数属性
 
-The following attributes are supported on most targets.
+次の属性は、ほとんどのターゲットでサポートされている。
 
 @table @code
 @c Keep this table alphabetized by attribute name.  Treat _ as space.
 
 @item alias ("@var{target}")
 @cindex @code{alias} function attribute
-The @code{alias} attribute causes the declaration to be emitted as an
-alias for another symbol, which must be specified.  For instance,
+@code{alias}属性は宣言を他のシンボルのエイリアスとして出力し、指定する必要がある。 例えば、
 
 @smallexample
 void __f () @{ /* @r{Do something.} */; @}
@@ -1660,69 +1659,42 @@ void f () __attribute__ ((weak, alias ("__f")));
 @end smallexample
 
 @noindent
-defines @samp{f} to be a weak alias for @samp{__f}.  In C++, the
-mangled name for the target must be used.  It is an error if @samp{__f}
-is not defined in the same translation unit.
+は、@samp{f}が@samp{__f}の弱いエイリアスであると定義している。 C++では、ターゲットの変更された名前を使用する必要がある。 @samp{__f}が同じ翻訳単位で定義されていないと、エラーになる。
 
-This attribute requires assembler and object file support,
-and may not be available on all targets.
+この属性には、アセンブラとオブジェクトファイルのサポートが必要である。また、すべてのターゲットで使用できるわけではない。
 
 @item aligned (@var{alignment})
 @cindex @code{aligned} function attribute
-This attribute specifies a minimum alignment for the function,
-measured in bytes.
+この属性は、関数の最小アラインメントをバイト単位で指定する。
 
-You cannot use this attribute to decrease the alignment of a function,
-only to increase it.  However, when you explicitly specify a function
-alignment this overrides the effect of the
-@option{-falign-functions} (@pxref{Optimize Options}) option for this
-function.
+この属性を使用して関数のアラインメントを減らすことはできない。 しかし、関数の配置を明示的に指定すると、この関数の@option{-falign-functions}（@pxref{Optimize Options}）オプションの効果が上書きされる。
 
-Note that the effectiveness of @code{aligned} attributes may be
-limited by inherent limitations in your linker.  On many systems, the
-linker is only able to arrange for functions to be aligned up to a
-certain maximum alignment.  (For some linkers, the maximum supported
-alignment may be very very small.)  See your linker documentation for
-further information.
+@code{aligned}属性の有効性は、リンカの固有の制限によって制限されることに注意せよ。 多くのシステムでは、リンカは関数が特定の最大アラインメントまで整列するようにのみ調整することができる。 （一部のリンカでは、サポートされている最大のアラインメントは非常に小さいかもしれない）。詳細については、リンカのマニュアルを参照せよ。
 
-The @code{aligned} attribute can also be used for variables and fields
-(@pxref{Variable Attributes}.)
+@code{aligned}属性は、変数やフィールドにも使用できる（@pxref {Variable Attributes}。）
 
 @item alloc_align
 @cindex @code{alloc_align} function attribute
-The @code{alloc_align} attribute is used to tell the compiler that the
-function return value points to memory, where the returned pointer minimum
-alignment is given by one of the functions parameters.  GCC uses this
-information to improve pointer alignment analysis.
+@code{alloc_align}属性は、関数の戻り値がメモリを指していることをコンパイラに知らせるために使用される。返されるポインタの最小アラインメントは、関数のパラメータの1つによって与えられる。 GCCは、この情報を使用してポインタのアラインメント解析を改善する。
 
-The function parameter denoting the allocated alignment is specified by
-one integer argument, whose number is the argument of the attribute.
-Argument numbering starts at one.
+割り当てられたアラインメントを示す関数パラメータは、整数の引数で指定される。その数は属性の引数である。引数の番号付けは1から始まる。
 
-For instance,
+例えば、
 
 @smallexample
 void* my_memalign(size_t, size_t) __attribute__((alloc_align(1)))
 @end smallexample
 
 @noindent
-declares that @code{my_memalign} returns memory with minimum alignment
-given by parameter 1.
+@code {my_memalign}はパラメータ1によって与えられた最小整列でメモリを返すと宣言する。
 
 @item alloc_size
 @cindex @code{alloc_size} function attribute
-The @code{alloc_size} attribute is used to tell the compiler that the
-function return value points to memory, where the size is given by
-one or two of the functions parameters.  GCC uses this
-information to improve the correctness of @code{__builtin_object_size}.
+@code{alloc_size}属性は、関数の戻り値がメモリを指していることをコンパイラに知らせるために使用される。サイズは関数のパラメータの1つまたは2つで与えられる。 GCCはこの情報を使って@code{__ builtin_object_size}の正しさを向上させる。
 
-The function parameter(s) denoting the allocated size are specified by
-one or two integer arguments supplied to the attribute.  The allocated size
-is either the value of the single function argument specified or the product
-of the two function arguments specified.  Argument numbering starts at
-one.
+割り当てられたサイズを示す関数パラメータは、属性に供給される1つまたは2つの整数引数によって指定される。 割り当てられたサイズは、指定された単一の関数引数の値か、指定された2つの関数引数の積のいずれかである。 引数の番号付けは1から始まる。
 
-For instance,
+例えば、
 
 @smallexample
 void* my_calloc(size_t, size_t) __attribute__((alloc_size(1,2)))
@@ -1730,36 +1702,21 @@ void* my_realloc(void*, size_t) __attribute__((alloc_size(2)))
 @end smallexample
 
 @noindent
-declares that @code{my_calloc} returns memory of the size given by
-the product of parameter 1 and 2 and that @code{my_realloc} returns memory
-of the size given by parameter 2.
+@code{my_calloc}はパラメータ1と2の積によって与えられたサイズのメモリを返し、@code{my_realloc}はパラメータ2で与えられたサイズのメモリを返すと宣言する。
 
 @item always_inline
 @cindex @code{always_inline} function attribute
-Generally, functions are not inlined unless optimization is specified.
-For functions declared inline, this attribute inlines the function
-independent of any restrictions that otherwise apply to inlining.
-Failure to inline such a function is diagnosed as an error.
-Note that if such a function is called indirectly the compiler may
-or may not inline it depending on optimization level and a failure
-to inline an indirect call may or may not be diagnosed.
+一般に、最適化が指定されない限り、関数はインライン化されない。インラインで宣言された関数の場合、この属性はインライン展開に適用される制限とは関係なく関数をインライン化する。このような機能をインライン化できない場合は、エラーと診断される。このような関数が間接的に呼び出された場合、コンパイラは最適化レベルに応じてインライン展開することも、インライン展開しないこともあり、間接呼び出しをインライン化できないかどうかは診断されることもない。
 
 @item artificial
 @cindex @code{artificial} function attribute
-This attribute is useful for small inline wrappers that if possible
-should appear during debugging as a unit.  Depending on the debug
-info format it either means marking the function as artificial
-or using the caller location for all instructions within the inlined
-body.
+この属性は、可能であればデバッグ中にユニットとして表示されるべき小さなインラインラッパーに役立つ。 デバッグ情報のフォーマットに応じて、関数を人為的なものとしてマークするか、インラインボディ内のすべての命令に対して呼び出し元の位置を使用することを意味する。
 
 @item assume_aligned
 @cindex @code{assume_aligned} function attribute
-The @code{assume_aligned} attribute is used to tell the compiler that the
-function return value points to memory, where the returned pointer minimum
-alignment is given by the first argument.
-If the attribute has two arguments, the second argument is misalignment offset.
+@code{assume_aligned}属性は、関数の戻り値がメモリを指すことをコンパイラに伝えるために使用される。返されるポインタの最小アラインメントは最初の引数によって与えらる。 属性に2つの引数がある場合、2番目の引数は位置ずれオフセットである。
 
-For instance
+例えば、
 
 @smallexample
 void* my_alloc1(size_t) __attribute__((assume_aligned(16)))
@@ -1767,52 +1724,30 @@ void* my_alloc2(size_t) __attribute__((assume_aligned(32, 8)))
 @end smallexample
 
 @noindent
-declares that @code{my_alloc1} returns 16-byte aligned pointer and
-that @code{my_alloc2} returns a pointer whose value modulo 32 is equal
-to 8.
+は、@code{my_alloc1}が16バイトにアラインメントされたポインタを返し、@code{my_alloc2}は32を法とする値が8に等しいポインタを返すと宣言する。
 
 @item bnd_instrument
 @cindex @code{bnd_instrument} function attribute
-The @code{bnd_instrument} attribute on functions is used to inform the
-compiler that the function should be instrumented when compiled
-with the @option{-fchkp-instrument-marked-only} option.
+関数の@code{bnd_instrument}属性は、コンパイラに@option{-fchkp-instrument-marked-only}オプションを指定してコンパイルしたときに、関数を計装する必要があることをコンパイラに通知するために使用される。
 
 @item bnd_legacy
 @cindex @code{bnd_legacy} function attribute
 @cindex Pointer Bounds Checker attributes
-The @code{bnd_legacy} attribute on functions is used to inform the
-compiler that the function should not be instrumented when compiled
-with the @option{-fcheck-pointer-bounds} option.
+関数の@code{bnd_legacy}属性は、コンパイラに@option{-fcheck-pointer-bounds}オプションを指定してコンパイルしたときに、関数を計装してはならないことをコンパイラに通知するために使用される。
 
 @item cold
 @cindex @code{cold} function attribute
-The @code{cold} attribute on functions is used to inform the compiler that
-the function is unlikely to be executed.  The function is optimized for
-size rather than speed and on many targets it is placed into a special
-subsection of the text section so all cold functions appear close together,
-improving code locality of non-cold parts of program.  The paths leading
-to calls of cold functions within code are marked as unlikely by the branch
-prediction mechanism.  It is thus useful to mark functions used to handle
-unlikely conditions, such as @code{perror}, as cold to improve optimization
-of hot functions that do call marked functions in rare occasions.
+関数の@code{cold}属性は、関数が実行される可能性が低いことをコンパイラに通知するために使用される。関数はスピードではなくサイズに最適化される。多くのターゲットでは、テキストセクションの特別なサブセクションに配置されるため、すべてのコールド関数が近くに出力され、プログラムの非コールドパートのコードローカリティが向上する。コード内のコールド関数の呼び出しにつながるパスは、分岐予測メカニズムによってはそうでないとマークされる。したがって、@code{perror}のような、考えられない状況を処理するために使用される関数をcoldとしてマークして、まれにマーク関数を呼び出すホット関数の最適化を改善すると便利である。
 
-When profile feedback is available, via @option{-fprofile-use}, cold functions
-are automatically detected and this attribute is ignored.
+@option{-fprofile-use}を介してプロファイルのフィードバックが利用可能になると、コールド関数が自動的に検出され、この属性は無視される。
 
 @item const
 @cindex @code{const} function attribute
 @cindex functions that have no side effects
-Many functions do not examine any values except their arguments, and
-have no effects except the return value.  Basically this is just slightly
-more strict class than the @code{pure} attribute below, since function is not
-allowed to read global memory.
+多くの関数は引数以外の値を調べず、戻り値以外の効果はない。 関数はグローバルメモリを読み込むことができないので、基本的にこれは下の@code{pure}属性よりもわずかに厳密なクラスである。
 
 @cindex pointer arguments
-Note that a function that has pointer arguments and examines the data
-pointed to must @emph{not} be declared @code{const}.  Likewise, a
-function that calls a non-@code{const} function usually must not be
-@code{const}.  It does not make sense for a @code{const} function to
-return @code{void}.
+ポインタ引数を持ち、指されるデータを調べる関数は、@code{const}と宣言されては@emph{_ならない_}ことに注意せよ。 同様に、非@code{const}関数を呼び出す関数は、通常は@code{const}であってはならない。 @code{const}関数が@code{void}を返すのは意味がない。
 
 @item constructor
 @itemx destructor
@@ -1820,38 +1755,14 @@ return @code{void}.
 @itemx destructor (@var{priority})
 @cindex @code{constructor} function attribute
 @cindex @code{destructor} function attribute
-The @code{constructor} attribute causes the function to be called
-automatically before execution enters @code{main ()}.  Similarly, the
-@code{destructor} attribute causes the function to be called
-automatically after @code{main ()} completes or @code{exit ()} is
-called.  Functions with these attributes are useful for
-initializing data that is used implicitly during the execution of
-the program.
+@code{constructor}属性は、実行が自動的に@code{main()}に入る前に呼び出される。 同様に、@code{destructor}属性は、@code{main()}が完了した後、または@code {exit()}が呼び出された後に関数が自動的に呼び出されるようにする。 これらの属性を持つ関数は、プログラムの実行中に暗黙的に使用されるデータを初期化するのに便利である。
 
-You may provide an optional integer priority to control the order in
-which constructor and destructor functions are run.  A constructor
-with a smaller priority number runs before a constructor with a larger
-priority number; the opposite relationship holds for destructors.  So,
-if you have a constructor that allocates a resource and a destructor
-that deallocates the same resource, both functions typically have the
-same priority.  The priorities for constructor and destructor
-functions are the same as those specified for namespace-scope C++
-objects (@pxref{C++ Attributes}).  However, at present, the order in which
-constructors for C++ objects with static storage duration and functions
-decorated with attribute @code{constructor} are invoked is unspecified.
-In mixed declarations, attribute @code{init_priority} can be used to
-impose a specific ordering.
+オプションの整数優先順位を指定して、コンストラクタ関数とデストラクタ関数の実行順序を制御できる。より小さい優先順位番号を持つコンストラクタは、より大きな優先順位番号を持つコンストラクタの前で実行される。 反対の関係はデストラクタにも当てはまる。したがって、リソースを割り当てるコンストラクタと同じリソースを割り当て解除するデストラクタがある場合、通常は両方の関数の優先度が同じになる。コンストラクタとデストラクタ関数の優先順位は、名前空間スコープのC++オブジェクト（@pxref{C++ Attributes}）で指定されたものと同じである。しかし、現時点では、静的な記憶期間と属性@code{constructor}で装飾された関数を持つC++オブジェクトのコンストラクタが呼び出される順序は不定である。混合宣言では、属性@code{init_priority}を使用して特定の順序付けを行うことができる。
 
 @item deprecated
 @itemx deprecated (@var{msg})
 @cindex @code{deprecated} function attribute
-The @code{deprecated} attribute results in a warning if the function
-is used anywhere in the source file.  This is useful when identifying
-functions that are expected to be removed in a future version of a
-program.  The warning also includes the location of the declaration
-of the deprecated function, to enable users to easily find further
-information about why the function is deprecated, or what they should
-do instead.  Note that the warnings only occurs for uses:
+関数がソースファイルのどこでも使用されている場合、@code{deprecated}属性は警告を出す。 これは、将来のバージョンのプログラムで削除される予定の機能を識別する場合に便利である。 この警告には、非推奨機能の宣言の場所も含まれている。これにより、ユーザーは、その機能が廃止された理由、またはその代わりに何をすべきかに関する情報を簡単に見つけることができる。 警告は使用時にのみ発生することに注意せよ。
 
 @smallexample
 int old_fn () __attribute__ ((deprecated));
@@ -1860,63 +1771,33 @@ int (*fn_ptr)() = old_fn;
 @end smallexample
 
 @noindent
-results in a warning on line 3 but not line 2.  The optional @var{msg}
-argument, which must be a string, is printed in the warning if
-present.
+3行目では警告が出ますが、2行目では表示されない。文字列でなければならないオプションの@var{msg}引数は、警告があれば出力される。
 
-The @code{deprecated} attribute can also be used for variables and
-types (@pxref{Variable Attributes}, @pxref{Type Attributes}.)
+@code{deprecated}属性は、変数と型（@pxref{Variable Attributes}、@ pxref{Type Attributes}）にも使用できる。
 
 @item error ("@var{message}")
 @itemx warning ("@var{message}")
 @cindex @code{error} function attribute
 @cindex @code{warning} function attribute
-If the @code{error} or @code{warning} attribute 
-is used on a function declaration and a call to such a function
-is not eliminated through dead code elimination or other optimizations, 
-an error or warning (respectively) that includes @var{message} is diagnosed.  
-This is useful
-for compile-time checking, especially together with @code{__builtin_constant_p}
-and inline functions where checking the inline function arguments is not
-possible through @code{extern char [(condition) ? 1 : -1];} tricks.
+@code{error}属性や@code {warning}属性が関数宣言で使用され、そのような関数の呼び出しがデッドコードの削除やその他の最適化によって排除されない場合、@var{message}を含むエラー及び警告が診断される。これはコンパイル時のチェック、特に@code{__builtin_constant_p}およびインライン関数の引数のチェックがトリック@code{extern char [(condition) ? 1 : -1];}では不可能なインライン関数に便利である。
 
-While it is possible to leave the function undefined and thus invoke
-a link failure (to define the function with
-a message in @code{.gnu.warning*} section),
-when using these attributes the problem is diagnosed
-earlier and with exact location of the call even in presence of inline
-functions or when not emitting debugging information.
+関数を未定義のままにしてリンクエラーを引き起こすことは可能だが（@code {.gnu.warning *}セクションのメッセージで関数を定義する）、これらの属性を使用すると、インライン関数が存在する場合でも、デバッグ情報を出力しない場合でも、問題が早期に診断され、呼び出しの正確な位置で診断される。
 
 @item externally_visible
 @cindex @code{externally_visible} function attribute
-This attribute, attached to a global variable or function, nullifies
-the effect of the @option{-fwhole-program} command-line option, so the
-object remains visible outside the current compilation unit.
+グローバル変数または関数に付加されたこの属性は、@option{-fwhole-program}コマンドラインオプションの効果を無効にして、オブジェクトは現在のコンパイル単位の外側に表示されたままになる。
 
-If @option{-fwhole-program} is used together with @option{-flto} and 
-@command{gold} is used as the linker plugin, 
-@code{externally_visible} attributes are automatically added to functions 
-(not variable yet due to a current @command{gold} issue) 
-that are accessed outside of LTO objects according to resolution file
-produced by @command{gold}.
-For other linkers that cannot generate resolution file,
-explicit @code{externally_visible} attributes are still necessary.
+@option{-fwhole-program}を@option{-flto}と一緒に使用し、@command{gold}をリンカプラグインとして使用すると、@code{externally_visible}属性が関数に自動的に追加される。 @command{gold}によって生成された解決ファイルに従って、LTOオブジェクトの外部からアクセスされる。解決ファイルを生成できない他のリンカーに対しては、明示的な@code{externally_visible}属性が必要である。
 
 @item flatten
 @cindex @code{flatten} function attribute
-Generally, inlining into a function is limited.  For a function marked with
-this attribute, every call inside this function is inlined, if possible.
-Whether the function itself is considered for inlining depends on its size and
-the current inlining parameters.
+一般に、関数へのインライン展開は限られている。 この属性でマークされた関数の場合、可能であれば、この関数内のすべての呼び出しがインライン展開される。関数自体がインライン展開の対象かどうかは、そのサイズと現在のインライン化パラメータによって異なる。
 
 @item format (@var{archetype}, @var{string-index}, @var{first-to-check})
 @cindex @code{format} function attribute
 @cindex functions with @code{printf}, @code{scanf}, @code{strftime} or @code{strfmon} style arguments
 @opindex Wformat
-The @code{format} attribute specifies that a function takes @code{printf},
-@code{scanf}, @code{strftime} or @code{strfmon} style arguments that
-should be type-checked against a format string.  For example, the
-declaration:
+@code{format}属性は、関数がフォーマット文字列に対して型チェックされるべき@code{printf}、@code{scanf}、@code{strftime}または@code{strfmon}スタイルの引数をとることを指定する。 たとえば、次のような宣言があると、
 
 @smallexample
 extern int
@@ -1925,9 +1806,7 @@ my_printf (void *my_object, const char *my_format, ...)
 @end smallexample
 
 @noindent
-causes the compiler to check the arguments in calls to @code{my_printf}
-for consistency with the @code{printf} style format string argument
-@code{my_format}.
+コンパイラは@code{printf}形式の書式文字列引数@code{my_format}と一貫性を保つために@code{my_printf}への呼び出しで引数をチェックする。
 
 The parameter @var{archetype} determines how the format string is
 interpreted, and should be @code{printf}, @code{scanf}, @code{strftime},
