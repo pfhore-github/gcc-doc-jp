@@ -1913,111 +1913,70 @@ void *memcpy (void *, const void *, size_t)
 @item malloc
 @cindex @code{malloc} function attribute
 @cindex functions that behave like malloc
-This tells the compiler that a function is @code{malloc}-like, i.e.,
-that the pointer @var{P} returned by the function cannot alias any
-other pointer valid when the function returns, and moreover no
-pointers to valid objects occur in any storage addressed by @var{P}.
+これは、関数が@code {malloc}のようなものであることをコンパイラに伝える。すなわち、関数によって返されたポインタ@var{P}は、関数が返ったときに有効な他のポインタをエイリアスできず、 正当なオブジェクトへのどんなポインタも@var{P}で扱われる任意の記憶域を占めることはない。
 
-Using this attribute can improve optimization.  Functions like
-@code{malloc} and @code{calloc} have this property because they return
-a pointer to uninitialized or zeroed-out storage.  However, functions
-like @code{realloc} do not have this property, as they can return a
-pointer to storage containing pointers.
+この属性を使用すると、最適化が向上する。 @code{malloc}や@code{calloc}のような関数は、初期化されていない、またはゼロアウトしたストレージへのポインタを返すので、このプロパティを持っている。 しかし、@ code{realloc}のような関数は、ポインタを含む記憶域へのポインタを返すことができるので、このプロパティを持たない。
 
 @item no_icf
 @cindex @code{no_icf} function attribute
-This function attribute prevents a functions from being merged with another
-semantically equivalent function.
+この関数属性は、関数が他の意味的に同等の関数とマージされることを防ぐ。
 
 @item no_instrument_function
 @cindex @code{no_instrument_function} function attribute
 @opindex finstrument-functions
-If @option{-finstrument-functions} is given, profiling function calls are
-generated at entry and exit of most user-compiled functions.
-Functions with this attribute are not so instrumented.
+@option{-finstrument-functions}を指定すると、ユーザがコンパイルしたほとんどの関数の入口と出口でプロファイリング関数呼び出しが生成される。この属性を持つ関数は計装されない。
 
 @item no_profile_instrument_function
 @cindex @code{no_profile_instrument_function} function attribute
-The @code{no_profile_instrument_function} attribute on functions is used
-to inform the compiler that it should not process any profile feedback based
-optimization code instrumentation.
+関数の@code{no_profile_instrument_function}属性は、プロファイルフィードバックに基づく最適化コード計測を処理すべきでないことをコンパイラーに通知するために使用される。
 
 @item no_reorder
 @cindex @code{no_reorder} function attribute
-Do not reorder functions or variables marked @code{no_reorder}
-against each other or top level assembler statements the executable.
-The actual order in the program will depend on the linker command
-line. Static variables marked like this are also not removed.
-This has a similar effect
-as the @option{-fno-toplevel-reorder} option, but only applies to the
-marked symbols.
+@code{no_reorder}とマークされた関数や変数を互いに並べ替えたり、トップレベルのアセンブラ文を実行可能ファイルと並べ替えたりしない。プログラムの実際の順序は、リンカーのコマンドラインによって異なる。 このようにマークされた静的変数も削除されない。これは@option{-fno-toplevel-reorder}オプションと同様の効果を持つが、マークされたシンボルにのみ適用される。
 
 @item no_sanitize_address
 @itemx no_address_safety_analysis
 @cindex @code{no_sanitize_address} function attribute
-The @code{no_sanitize_address} attribute on functions is used
-to inform the compiler that it should not instrument memory accesses
-in the function when compiling with the @option{-fsanitize=address} option.
-The @code{no_address_safety_analysis} is a deprecated alias of the
-@code{no_sanitize_address} attribute, new code should use
-@code{no_sanitize_address}.
+関数の@code {no_sanitize_address}属性は、@option{-fsanitize=address}オプションを指定してコンパイルするときに関数内でメモリアクセスを計測しないようにコンパイラに通知するために使用される。@code{no_address_safety_analysis}は非推奨の@code{no_sanitize_address}属性のエイリアスである。新しいコードでは@code{no_sanitize_address}を使用するべきである。
 
 @item no_sanitize_thread
 @cindex @code{no_sanitize_thread} function attribute
-The @code{no_sanitize_thread} attribute on functions is used
-to inform the compiler that it should not instrument memory accesses
-in the function when compiling with the @option{-fsanitize=thread} option.
+関数の@code{no_sanitize_thread}属性は、コンパイラに@option{-fsanitize = thread}オプションを指定してコンパイルするときに関数内でメモリアクセスを計測すべきでないことをコンパイラに通知するために使用される。
 
 @item no_sanitize_undefined
 @cindex @code{no_sanitize_undefined} function attribute
-The @code{no_sanitize_undefined} attribute on functions is used
-to inform the compiler that it should not check for undefined behavior
-in the function when compiling with the @option{-fsanitize=undefined} option.
+関数の@code{no_sanitize_undefined}属性は、コンパイラが@option{-fsanitize=undefined}オプションを使用してコンパイルするときに、関数内の未定義の動作をチェックしないことをコンパイラに通知するために使用される。
 
 @item no_split_stack
 @cindex @code{no_split_stack} function attribute
 @opindex fsplit-stack
-If @option{-fsplit-stack} is given, functions have a small
-prologue which decides whether to split the stack.  Functions with the
-@code{no_split_stack} attribute do not have that prologue, and thus
-may run with only a small amount of stack space available.
+@option{-fsplit-stack}を指定した場合、関数はスタックを分割するかどうかを決定する小さなプロローグを持つ。 @code{no_split_stack}属性を持つ関数は、そのプロローグを持たないため、使用可能なスタックスペースがわずかしかなくても実行できる。
 
 @item no_stack_limit
 @cindex @code{no_stack_limit} function attribute
-This attribute locally overrides the @option{-fstack-limit-register}
-and @option{-fstack-limit-symbol} command-line options; it has the effect
-of disabling stack limit checking in the function it applies to.
+この属性は、@option{-fstack-limit-register}および@option{-fstack-limit-symbol}のコマンドラインオプションを局所的に上書きする。 それに適用される関数でスタック制限チェックを無効にするという効果がある。
 
 @item noclone
 @cindex @code{noclone} function attribute
-This function attribute prevents a function from being considered for
-cloning---a mechanism that produces specialized copies of functions
-and which is (currently) performed by interprocedural constant
-propagation.
+この関数属性は、関数の特殊なコピーを生成し、手続き間の定数伝搬によって（現在）実行されている機構である、クローニングのために関数が考慮されないようにする。
 
 @item noinline
 @cindex @code{noinline} function attribute
-This function attribute prevents a function from being considered for
-inlining.
+この関数属性は、関数がインライン展開のために考慮されないようにする。
 @c Don't enumerate the optimizations by name here; we try to be
 @c future-compatible with this mechanism.
-If the function does not have side-effects, there are optimizations
-other than inlining that cause function calls to be optimized away,
-although the function call is live.  To keep such calls from being
-optimized away, put
+関数が副作用を持たない場合は、インライン化以外の最適化があり、関数呼び出しがライブであるにもかかわらず、最適化された関数呼び出しを引き起こす。 そのような呼び出しが最適化されないようにするには、以下を置く。
 @smallexample
 asm ("");
 @end smallexample
 
 @noindent
-(@pxref{Extended Asm}) in the called function, to serve as a special
-side-effect.
+(@pxref{Extended Asm})は特別な副作用として機能するために、呼び出された関数内で使用される。
 
 @item nonnull (@var{arg-index}, @dots{})
 @cindex @code{nonnull} function attribute
 @cindex functions with non-null pointer arguments
-The @code{nonnull} attribute specifies that some function parameters should
-be non-null pointers.  For instance, the declaration:
+@code{nonnull}属性は、いくつかの関数のパラメータがnull以外のポインタであることを指定する。 例えば、宣言は：
 
 @smallexample
 extern void *
@@ -2026,16 +1985,9 @@ my_memcpy (void *dest, const void *src, size_t len)
 @end smallexample
 
 @noindent
-causes the compiler to check that, in calls to @code{my_memcpy},
-arguments @var{dest} and @var{src} are non-null.  If the compiler
-determines that a null pointer is passed in an argument slot marked
-as non-null, and the @option{-Wnonnull} option is enabled, a warning
-is issued.  The compiler may also choose to make optimizations based
-on the knowledge that certain function arguments will never be null.
+は、コンパイラが@code{my_memcpy}への呼び出しで引数@var{dest}と@var{src}がnullでないことをチェックさせる。 コンパイラーが、ヌルポインターが非ヌルとしてマークされた引数スロットに渡され、@option{-Wnonnull}オプションが有効であると判断すると、警告が発行される。 コンパイラは、特定の関数の引数が決してnullにならないという知識に基づいて最適化を行うこともできる。
 
-If no argument index list is given to the @code{nonnull} attribute,
-all pointer arguments are marked as non-null.  To illustrate, the
-following declaration is equivalent to the previous example:
+引数インデックスリストが@code{nonnull}属性に与えられない場合、すべてのポインタ引数はnull以外としてマークされる。 例として、次の宣言は前の例と同じである。
 
 @smallexample
 extern void *
@@ -2045,9 +1997,7 @@ my_memcpy (void *dest, const void *src, size_t len)
 
 @item noplt
 @cindex @code{noplt} function attribute
-The @code{noplt} attribute is the counterpart to option @option{-fno-plt}.
-Calls to functions marked with this attribute in position-independent code
-do not use the PLT.
+@code{noplt}属性は、オプション@option{-fno-plt}に対応している。位置に依存しないコードでこの属性でマークされた関数を呼び出すと、PLTは使用されない。
 
 @smallexample
 @group
@@ -2064,22 +2014,14 @@ main (/* @r{@dots{}} */)
 @end group
 @end smallexample
 
-The @code{noplt} attribute on function @code{foo}
-tells the compiler to assume that
-the function @code{foo} is externally defined and that the call to
-@code{foo} must avoid the PLT
-in position-independent code.
+関数@code{foo}の@code{noplt}属性は、コンパイラに関数@code{foo}が外部的に定義されていると仮定し、@code{foo}への呼び出しは位置に依存しないコードでPLTを避けなければならないと伝える。
 
-In position-dependent code, a few targets also convert calls to
-functions that are marked to not use the PLT to use the GOT instead.
+位置依存コードでは、いくつかのターゲットは、GOTを代わりに使用するためにPLTを使用しないようにマークされた関数に呼び出しを変換する。
 
 @item noreturn
 @cindex @code{noreturn} function attribute
 @cindex functions that never return
-A few standard library functions, such as @code{abort} and @code{exit},
-cannot return.  GCC knows this automatically.  Some programs define
-their own functions that never return.  You can declare them
-@code{noreturn} to tell the compiler this fact.  For example,
+@code{abort}や@code {exit}のようないくつかの標準ライブラリ関数は返らない。 GCCはこれを自動的に認識する。 一部のプログラムは、決して戻ってこない独自の関数を定義している。 コンパイラにこの事実を伝えるために@code{noreturn}を宣言することができる。 例えば、
 
 @smallexample
 @group
@@ -2094,73 +2036,41 @@ fatal (/* @r{@dots{}} */)
 @end group
 @end smallexample
 
-The @code{noreturn} keyword tells the compiler to assume that
-@code{fatal} cannot return.  It can then optimize without regard to what
-would happen if @code{fatal} ever did return.  This makes slightly
-better code.  More importantly, it helps avoid spurious warnings of
-uninitialized variables.
+@code{noreturn}キーワードは、@code{fatal}が返ることができないとコンパイラに指示する。 @code{fatal}が復帰した場合に起こることに関係なく最適化することができる。 これは少し良いコードを作成する。 さらに重要なことは、初期化されていない変数の偽の警告を避けることである。
 
-The @code{noreturn} keyword does not affect the exceptional path when that
-applies: a @code{noreturn}-marked function may still return to the caller
-by throwing an exception or calling @code{longjmp}.
+@code{noreturn}キーワードは、それが適用される例外的なパスには影響しない：@code{noreturn}マークされた関数は、例外を投げたり@code{longjmp}を呼び出すことによっても呼び出し元に戻ることができる。
 
-Do not assume that registers saved by the calling function are
-restored before calling the @code{noreturn} function.
+@code{noreturn}関数を呼び出す前に、呼び出し関数によって保存されたレジスタが復元されたと仮定しないこと。
 
-It does not make sense for a @code{noreturn} function to have a return
-type other than @code{void}.
+@code{noreturn}関数が@code {void}以外の戻り値の型を持つことは意味がない。
 
 @item nothrow
 @cindex @code{nothrow} function attribute
-The @code{nothrow} attribute is used to inform the compiler that a
-function cannot throw an exception.  For example, most functions in
-the standard C library can be guaranteed not to throw an exception
-with the notable exceptions of @code{qsort} and @code{bsearch} that
-take function pointer arguments.
+@code{nothrow}属性は、関数が例外をスローできないことをコンパイラに通知するために使用される。 例えば、標準Cライブラリのほとんどの関数は、関数ポインタの引数を取る@code{qsort}と@code{bsearch}を例外として、例外を投げないことを保証することができる。
 
 @item optimize
 @cindex @code{optimize} function attribute
-The @code{optimize} attribute is used to specify that a function is to
-be compiled with different optimization options than specified on the
-command line.  Arguments can either be numbers or strings.  Numbers
-are assumed to be an optimization level.  Strings that begin with
-@code{O} are assumed to be an optimization option, while other options
-are assumed to be used with a @code{-f} prefix.  You can also use the
-@samp{#pragma GCC optimize} pragma to set the optimization options
-that affect more than one function.
-@xref{Function Specific Option Pragmas}, for details about the
-@samp{#pragma GCC optimize} pragma.
+@code{optimize}属性は、関数がコマンドラインで指定されたものとは異なる最適化オプションでコンパイルされることを指定するために使用される。 引数は数値または文字列のいずれかである。 数値は最適化レベルとみなされる。@code{O}で始まる文字列は最適化オプションとみなされ、他のオプションは@code {-f}の接頭辞とともに使用されるものとみなされる。 @samp{#pragma GCC optimize}プラグマを使用して、複数の関数に影響を与える最適化オプションを設定することもできる。@samp{#pragma GCC optimize}プラグマの詳細は@xref{Function Specific Option Pragmas}。
 
-This attribute should be used for debugging purposes only.  It is not
-suitable in production code.
+この属性は、デバッグ目的でのみ使用するべきである。 プロダクションコードには適していない。
 
 @item pure
 @cindex @code{pure} function attribute
 @cindex functions that have no side effects
-Many functions have no effects except the return value and their
-return value depends only on the parameters and/or global variables.
-Such a function can be subject
-to common subexpression elimination and loop optimization just as an
-arithmetic operator would be.  These functions should be declared
-with the attribute @code{pure}.  For example,
+多くの関数は戻り値以外の効果を持たず、戻り値はパラメータかつ/またはグローバル変数のみに依存する。このような関数は、算術演算子と同じように共通の部分式消去とループ最適化の対象となることができる。 これらの関数は@code{pure}属性で宣言する必要がある。 例えば、
 
 @smallexample
 int square (int) __attribute__ ((pure));
 @end smallexample
 
 @noindent
-says that the hypothetical function @code{square} is safe to call
-fewer times than the program says.
+仮説的な関数@code {square}は、プログラムが言うよりも少ない回数だけ呼び出すのが安全だと言う。
 
-Some common examples of pure functions are @code{strlen} or @code{memcmp}.
-Interesting non-pure functions are functions with infinite loops or those
-depending on volatile memory or other system resource, that may change between
-two consecutive calls (such as @code{feof} in a multithreading environment).
+純粋な関数の一般的な例としては、@code {strlen}や@code {memcmp}がある。興味深い非純粋な関数は、無限ループを持つ関数、または揮発性メモリや他のシステムリソースに依存する関数で、2回の連続した呼び出し（マルチスレッド環境の@code{feof}など）の間で変更される可能性がある。
 
 @item returns_nonnull
 @cindex @code{returns_nonnull} function attribute
-The @code{returns_nonnull} attribute specifies that the function
-return value should be a non-null pointer.  For instance, the declaration:
+@code{returns_nonnull}属性は、関数の戻り値がNULLでないポインタでなければならないことを指定する。 例えば、宣言は：
 
 @smallexample
 extern void *
@@ -2168,40 +2078,26 @@ mymalloc (size_t len) __attribute__((returns_nonnull));
 @end smallexample
 
 @noindent
-lets the compiler optimize callers based on the knowledge
-that the return value will never be null.
+コンパイラは戻り値が決してnullにならないという知識に基づいて呼び出し元を最適化する。
 
 @item returns_twice
 @cindex @code{returns_twice} function attribute
 @cindex functions that return more than once
-The @code{returns_twice} attribute tells the compiler that a function may
-return more than one time.  The compiler ensures that all registers
-are dead before calling such a function and emits a warning about
-the variables that may be clobbered after the second return from the
-function.  Examples of such functions are @code{setjmp} and @code{vfork}.
-The @code{longjmp}-like counterpart of such function, if any, might need
-to be marked with the @code{noreturn} attribute.
+@code{returns_twice}属性は、関数が複数回返す可能性があることをコンパイラに知らせる。 コンパイラは、そのような関数を呼び出す前にすべてのレジスタが停止していることを確認し、関数からの2回目の復帰後に矛盾する可能性のある変数についての警告を発する。 このような関数の例は@code{setjmp}と@code {vfork}である。そのような関数の@code{longjmp}のような対応物は、@code{noreturn}属性でマークする必要があるかもしれない。
 
 @item section ("@var{section-name}")
 @cindex @code{section} function attribute
 @cindex functions in arbitrary sections
-Normally, the compiler places the code it generates in the @code{text} section.
-Sometimes, however, you need additional sections, or you need certain
-particular functions to appear in special sections.  The @code{section}
-attribute specifies that a function lives in a particular section.
-For example, the declaration:
+通常、コンパイラは生成するコードを@code{text}セクションに配置する。しかし、場合によっては追加セクションが必要な場合や、特別なセクションに表示する特定の機能が必要な場合もある。 @code{section}属性は、関数が特定のセクションに存在することを指定する。たとえば、次のような宣言があると、
 
 @smallexample
 extern void foobar (void) __attribute__ ((section ("bar")));
 @end smallexample
 
 @noindent
-puts the function @code{foobar} in the @code{bar} section.
+関数@code{foobar}を@code{bar}セクションに置く。
 
-Some file formats do not support arbitrary sections so the @code{section}
-attribute is not available on all platforms.
-If you need to map the entire contents of a module to a particular
-section, consider using the facilities of the linker instead.
+一部のファイル形式では任意のセクションはサポートされないため、@code{section}属性はすべてのプラットフォームで使用できるわけではない。 モジュールの内容全体を特定のセクションにマップする必要がある場合は、代わりにリンカーの機能を使用することを検討せよ。
 
 @item sentinel
 @cindex @code{sentinel} function attribute
