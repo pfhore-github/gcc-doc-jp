@@ -1459,7 +1459,7 @@ struct point p = @{ y: yvalue, x: xvalue @};
 省略されたフィールドメンバは、静的格納期間を持つオブジェクトと同じように暗黙的に初期化される。
 
 @cindex designators
-@samp{[@var{index}]}や@samp{.@ var{fieldname}}は@dfn{designator}（指定子）として知られている。 また、共用体を初期化するときに、指定子（または廃止されたコロン構文）を使用して、共用体のどの要素を使用するかを指定することもできる。 例えば、
+@samp{[@var{index}]}や@samp{.@var{fieldname}}は@dfn{designator}（指定子）として知られている。 また、共用体を初期化するときに、指定子（または廃止されたコロン構文）を使用して、共用体のどの要素を使用するかを指定することもできる。 例えば、
 
 @smallexample
 union foo @{ int i; double d; @};
@@ -1492,7 +1492,7 @@ int whitespace[256]
 @end smallexample
 
 @cindex designator lists
-@samp{@}の前に一連の@samp{.@var{fieldname}}と@samp{[@var{index}]}を書くことで、ネストされたサブオブジェクトを指定して初期化することもできる。 そのリストは、最も近い周囲の中括弧対に対応するサブオブジェクトに関連して取られる。 たとえば、上記の@samp{struct point}宣言を使用すると、次のようになる。
+@samp{=}の前に一連の@samp{.@var{fieldname}}と@samp{[@var{index}]}を書くことで、ネストされたサブオブジェクトを指定して初期化することもできる。 そのリストは、最も近い周囲の中括弧対に対応するサブオブジェクトに関連して取られる。 たとえば、上記の@samp{struct point}宣言を使用すると、次のようになる。
 
 @smallexample
 struct point ptarray[10] = @{ [2].y = yv2, [2].x = xv2, [0].x = xv0 @};
@@ -2101,127 +2101,65 @@ extern void foobar (void) __attribute__ ((section ("bar")));
 
 @item sentinel
 @cindex @code{sentinel} function attribute
-This function attribute ensures that a parameter in a function call is
-an explicit @code{NULL}.  The attribute is only valid on variadic
-functions.  By default, the sentinel is located at position zero, the
-last parameter of the function call.  If an optional integer position
-argument P is supplied to the attribute, the sentinel must be located at
-position P counting backwards from the end of the argument list.
+この関数属性は、関数呼び出しのパラメータが明示的な@code{NULL}であることを保証する。 属性は可変長関数でのみ有効である。 デフォルトでは、センチネルは、関数呼び出しの最後のパラメータである位置0にある。 オプションの整数位置引数Pが属性に与えられた場合、センチネルは、引数リストの最後から逆方向に数えて位置Pになければならない。
 
 @smallexample
 __attribute__ ((sentinel))
-is equivalent to
+は以下と等価である。
 __attribute__ ((sentinel(0)))
 @end smallexample
 
-The attribute is automatically set with a position of 0 for the built-in
-functions @code{execl} and @code{execlp}.  The built-in function
-@code{execle} has the attribute set with a position of 1.
+属性は組み込み関数@code{execl}と@code{execlp}の位置が0になるように自動的に設定される。 組み込み関数@code{execle}の属性の位置は1である。
 
-A valid @code{NULL} in this context is defined as zero with any pointer
-type.  If your system defines the @code{NULL} macro with an integer type
-then you need to add an explicit cast.  GCC replaces @code{stddef.h}
-with a copy that redefines NULL appropriately.
+この文脈で有効な@code{NULL}は、ポインタ型を持つゼロとして定義されている。 あなたのシステムが@code {NULL}マクロを整数型で定義している場合、明示的なキャストを追加する必要がある。 GCCは@code{stddef.h}を、NULLを適切に再定義するコピーに置き換える。
 
-The warnings for missing or incorrect sentinels are enabled with
-@option{-Wformat}.
+@option{-Wformat}を指定すると、不正義または間違っている警告の警告が有効になる。
 
 @item simd
 @itemx simd("@var{mask}")
 @cindex @code{simd} function attribute
-This attribute enables creation of one or more function versions that
-can process multiple arguments using SIMD instructions from a
-single invocation.  Specifying this attribute allows compiler to
-assume that such versions are available at link time (provided
-in the same or another translation unit).  Generated versions are
-target-dependent and described in the corresponding Vector ABI document.  For
-x86_64 target this document can be found
-@w{@uref{https://sourceware.org/glibc/wiki/libmvec?action=AttachFile&do=view&target=VectorABI.txt,here}}.
+この属性を使用すると、1回の呼び出しでSIMD命令を使用して複数の引数を処理できる1つ以上の関数バージョンを作成できる。 この属性を指定すると、コンパイラは、そのようなバージョンがリンク時に利用可能であると想定することができる（同じ翻訳単位または別の翻訳単位で提供される）。 生成されたバージョンはターゲットに依存し、対応するVector ABIドキュメントに記述されている。 x86_64ターゲットの場合、この文書は@w{@uref{https://sourceware.org/glibc/wiki/libmvec?action=AttachFile&do=view&target=VectorABI.txt,here}}で見つけることができる。
 
-The optional argument @var{mask} may have the value
-@code{notinbranch} or @code{inbranch},
-and instructs the compiler to generate non-masked or masked
-clones correspondingly. By default, all clones are generated.
+オプションの引数@var{mask}は、値@code{notinbranch}または@code{inbranch}を持つことができ、それに対応してマスクされていないクローンまたはマスクされたクローンを生成するようにコンパイラに指示する。 デフォルトでは、すべてのクローンが生成される。
 
-The attribute should not be used together with Cilk Plus @code{vector}
-attribute on the same function.
+この属性は、同じ関数のCilk Plus @code{vector}属性と一緒に使用するべきではない。
 
-If the attribute is specified and @code{#pragma omp declare simd} is
-present on a declaration and the @option{-fopenmp} or @option{-fopenmp-simd}
-switch is specified, then the attribute is ignored.
+属性が指定され、@code{#pragma omp declare simd}が宣言にあり、@option{-fopenmp}または@option{-fopenmp-simd}スイッチが指定されている場合、属性は無視される。
 
 @item stack_protect
 @cindex @code{stack_protect} function attribute
-This attribute adds stack protection code to the function if 
-flags @option{-fstack-protector}, @option{-fstack-protector-strong}
-or @option{-fstack-protector-explicit} are set.
+この属性は、フラグ@option{-fstack-protector}、@option{-fstack-protector-strong}または@option{-fstack-protector-explicit}が設定されている場合にスタック保護コードを関数に追加する。
 
 @item target (@var{options})
 @cindex @code{target} function attribute
-Multiple target back ends implement the @code{target} attribute
-to specify that a function is to
-be compiled with different target options than specified on the
-command line.  This can be used for instance to have functions
-compiled with a different ISA (instruction set architecture) than the
-default.  You can also use the @samp{#pragma GCC target} pragma to set
-more than one function to be compiled with specific target options.
-@xref{Function Specific Option Pragmas}, for details about the
-@samp{#pragma GCC target} pragma.
+複数のターゲットバックエンドは@code{target}属性を実装して、コマンドラインで指定されたものとは異なるターゲットオプションで関数をコンパイルすることを指定する。これは、例えば、デフォルトとは異なるISA（命令セットアーキテクチャ）でコンパイルされた関数を持つために使用できる。@samp{#pragma GCC target}プラグマを使用して、複数の関数を特定のターゲットオプションでコンパイルするように設定することもできる。@samp{#pragma GCC target}プラグマの詳細については、@xref{Function Specific Option Pragmas}を参照せよ。
 
-For instance, on an x86, you could declare one function with the
-@code{target("sse4.1,arch=core2")} attribute and another with
-@code{target("sse4a,arch=amdfam10")}.  This is equivalent to
-compiling the first function with @option{-msse4.1} and
-@option{-march=core2} options, and the second function with
-@option{-msse4a} and @option{-march=amdfam10} options.  It is up to you
-to make sure that a function is only invoked on a machine that
-supports the particular ISA it is compiled for (for example by using
-@code{cpuid} on x86 to determine what feature bits and architecture
-family are used).
+たとえば、x86では、@code{target( "sse4.1,arch=core2")}属性を持つ関数と@code{target( "sse4a,arch=amdfam10")}関数を宣言できる。 これは、@option{-msse4.1}と@option{-march = core2}オプションで最初の関数をコンパイルし、@option{-msse4a}と@option{-march = amdfam10}オプションで2番目の関数をコンパイルするのと同じである。 関数がコンパイルされた特定のISAをサポートしているマシンでのみ呼び出されるようにすることは、あなたが任されている（たとえば、x86上で@code {cpuid}を使ってどの機能ビットとアーキテクチャファミリが使用されているかを判断する）。
 
 @smallexample
 int core2_func (void) __attribute__ ((__target__ ("arch=core2")));
 int sse3_func (void) __attribute__ ((__target__ ("sse3")));
 @end smallexample
 
-You can either use multiple
-strings separated by commas to specify multiple options,
-or separate the options with a comma (@samp{,}) within a single string.
+コンマで区切られた複数の文字列を使用して、複数のオプションを指定するか、単一の文字列内でコンマ（@samp {,}）でオプションを区切ることができる。
 
-The options supported are specific to each target; refer to @ref{x86
-Function Attributes}, @ref{PowerPC Function Attributes},
-@ref{ARM Function Attributes},and @ref{Nios II Function Attributes},
-for details.
+サポートされるオプションは、各ターゲットに固有です。詳細は@ref{x86 Function Attributes}、@ref{PowerPC Function Attributes}、 @ref{ARM Function Attributes}、 @ref{Nios II Function Attributes}を参照。
 
 @item target_clones (@var{options})
 @cindex @code{target_clones} function attribute
-The @code{target_clones} attribute is used to specify that a function
-be cloned into multiple versions compiled with different target options
-than specified on the command line.  The supported options and restrictions
-are the same as for @code{target} attribute.
+@code{target_clones}属性は、関数がコマンドラインで指定されたものとは異なるターゲットオプションでコンパイルされた複数のバージョンに複製されることを指定するために使用される。 サポートされるオプションと制限は、@ code{target}属性と同じである。
 
-For instance, on an x86, you could compile a function with
-@code{target_clones("sse4.1,avx")}.  GCC creates two function clones,
-one compiled with @option{-msse4.1} and another with @option{-mavx}.
-It also creates a resolver function (see the @code{ifunc} attribute
-above) that dynamically selects a clone suitable for current architecture.
+たとえば、x86では、@code{target_clones( "sse4.1,avx")}で関数をコンパイルできる。 GCCは、@option{-msse4.1}と@option{-mavx}でコンパイルされた2つのファンクションクローンを作成する。また、現在のアーキテクチャに適したクローンを動的に選択するリゾルバ関数（上記の@code{ifunc}属性を参照）を作成する。
 
 @item unused
 @cindex @code{unused} function attribute
-This attribute, attached to a function, means that the function is meant
-to be possibly unused.  GCC does not produce a warning for this
-function.
+関数に付随するこの属性は、関数が未使用である可能性があることを意味します。 GCCはこの関数に対して警告を出さない。
 
 @item used
 @cindex @code{used} function attribute
-This attribute, attached to a function, means that code must be emitted
-for the function even if it appears that the function is not referenced.
-This is useful, for example, when the function is referenced only in
-inline assembly.
+関数に付随するこの属性は、その関数が参照されていないように見えても、関数に対してコードを発行する必要があることを意味する。 これは、関数がインラインアセンブリでのみ参照される場合などに便利である。
 
-When applied to a member function of a C++ class template, the
-attribute also means that the function is instantiated if the
-class itself is instantiated.
+C++クラステンプレートのメンバ関数に適用すると、クラス自体がインスタンス化されている場合、その関数がインスタンス化されることも意味する。
 
 @item visibility ("@var{visibility_type}")
 @cindex @code{visibility} function attribute
