@@ -2163,12 +2163,9 @@ C++クラステンプレートのメンバ関数に適用すると、クラス�
 
 @item visibility ("@var{visibility_type}")
 @cindex @code{visibility} function attribute
-This attribute affects the linkage of the declaration to which it is attached.
-It can be applied to variables (@pxref{Common Variable Attributes}) and types
-(@pxref{Common Type Attributes}) as well as functions.
+この属性は、それがアタッチされている宣言のリンケージに影響する。関数だけでなく、変数（@pxref{Common Variable Attributes}）や型（@pxref{Common Type Attributes}）にも適用できる。
 
-There are four supported @var{visibility_type} values: default,
-hidden, protected or internal visibility.
+サポートされる4つの@var{visibility_type}値があります：default, hidden, protected, internal可視性。
 
 @smallexample
 void __attribute__ ((visibility ("protected")))
@@ -2176,103 +2173,54 @@ f () @{ /* @r{Do something.} */; @}
 int i __attribute__ ((visibility ("hidden")));
 @end smallexample
 
-The possible values of @var{visibility_type} correspond to the
-visibility settings in the ELF gABI.
+@var{visibility_type}の値は、ELF gABIの可視性設定に対応している。
 
 @table @code
 @c keep this list of visibilities in alphabetical order.
 
 @item default
-Default visibility is the normal case for the object file format.
-This value is available for the visibility attribute to override other
-options that may change the assumed visibility of entities.
+default(デフォルト)の可視性は、オブジェクトファイル形式の通常の場合である。この値は、visibility属性で使用可能で、エンティティの想定される可視性を変更する可能性のある他のオプションをオーバーライドする。
 
-On ELF, default visibility means that the declaration is visible to other
-modules and, in shared libraries, means that the declared entity may be
-overridden.
+ELFでは、default可視性は、宣言が他のモジュールに見えることを意味し、共有ライブラリでは、宣言されたエンティティがオーバーライドされる可能性があることを意味する。
 
-On Darwin, default visibility means that the declaration is visible to
-other modules.
+Darwinでは、default可視性は、その宣言が他のモジュールから見えることを意味する。
 
-Default visibility corresponds to ``external linkage'' in the language.
+default可視性は、言語の「外部リンケージ」に対応する。
 
 @item hidden
-Hidden visibility indicates that the entity declared has a new
-form of linkage, which we call ``hidden linkage''.  Two
-declarations of an object with hidden linkage refer to the same object
-if they are in the same shared object.
+hidden(非表示)の可視性は、宣言されたエンティティが新しい形式のリンケージを持っていることを示している。これを「隠れリンケージ」と呼ぶ。 隠れたリンケージを持つオブジェクトの2つの宣言は、同じ共有オブジェクトにある場合、同じオブジェクトを参照する。
 
 @item internal
-Internal visibility is like hidden visibility, but with additional
-processor specific semantics.  Unless otherwise specified by the
-psABI, GCC defines internal visibility to mean that a function is
-@emph{never} called from another module.  Compare this with hidden
-functions which, while they cannot be referenced directly by other
-modules, can be referenced indirectly via function pointers.  By
-indicating that a function cannot be called from outside the module,
-GCC may for instance omit the load of a PIC register since it is known
-that the calling function loaded the correct value.
+internal(内部)可視性はhidden可視性と似ているが、追加のプロセッサ固有の意味がある。 psABIで別途指定されていない限り、GCCはinternal可視性を、関数が@emph{_決して_}他のモジュールから呼び出されることはないと定義する。 これを他のモジュールが直接参照することはできないが、関数ポインタを介して間接的に参照できる隠し関数と比較する。 関数がモジュールの外部から呼び出せないことを示すことによって、GCCは、呼び出し元関数が正しい値をロードしたことが分かっているため、例えばPICレジスタのロードを省略することができる。
 
 @item protected
-Protected visibility is like default visibility except that it
-indicates that references within the defining module bind to the
-definition in that module.  That is, the declared entity cannot be
-overridden by another module.
+protected(保護された)可視性は、定義モジュール内の参照がそのモジュールの定義にバインドされていることを示している点を除き、default可視性と似ている。 つまり、宣言されたエンティティを別のモジュールで上書きすることはできない。
 
 @end table
+すべての可視性は、ELFターゲットの多くで（しかしすべてではなく）サポートされている（アセンブラが@samp{.visibility}疑似オペレーションをサポートするときにサポートされる）。default可視性はどこでもサポートされている。 hidden可視性はDarwinターゲットでサポートされている。
 
-All visibilities are supported on many, but not all, ELF targets
-(supported when the assembler supports the @samp{.visibility}
-pseudo-op).  Default visibility is supported everywhere.  Hidden
-visibility is supported on Darwin targets.
+visibility属性は、それ以外の場合は外部リンクを持つ宣言にのみ適用する必要がある。 属性は一貫して適用する必要がある。そのため、同じエンティティを属性の異なる設定で宣言することはできない。
 
-The visibility attribute should be applied only to declarations that
-would otherwise have external linkage.  The attribute should be applied
-consistently, so that the same entity should not be declared with
-different settings of the attribute.
+C++では、visibility属性は型や関数、オブジェクトに適用される。なぜならC++型ではリンケージがあるからである。 クラスは非静的なデータメンバの型や基底よりも大きな可視性を持ってはならず、クラスメンバはそのクラスの可視性をdefaultにする。 また、明示的な可視性のない宣言は、その型の可視性に限定される。
 
-In C++, the visibility attribute applies to types as well as functions
-and objects, because in C++ types have linkage.  A class must not have
-greater visibility than its non-static data member types and bases,
-and class members default to the visibility of their class.  Also, a
-declaration without explicit visibility is limited to the visibility
-of its type.
+C++では、クラスのメンバ関数と静的メンバ変数をvisibility属性でマークすることができる。 これは、特定のメソッドまたは静的メンバー変数が1つの共有オブジェクトからのみ使用されることがわかっている場合に便利である。 クラスの残りの部分がdefault可視性を持っている一方、それをhiddenにすることができる。 1つの定義ルールを破らないように注意する必要がある。 例えば、クラス全体をhiddenにすることなく、インラインメソッドをhiddenとしてマークすることは、通常、有用ではない。
 
-In C++, you can mark member functions and static member variables of a
-class with the visibility attribute.  This is useful if you know a
-particular method or static member variable should only be used from
-one shared object; then you can mark it hidden while the rest of the
-class has default visibility.  Care must be taken to avoid breaking
-the One Definition Rule; for example, it is usually not useful to mark
-an inline method as hidden without marking the whole class as hidden.
-
-A C++ namespace declaration can also have the visibility attribute.
+C++の名前空間宣言にも、visibility属性を含めることができる。
 
 @smallexample
 namespace nspace1 __attribute__ ((visibility ("protected")))
 @{ /* @r{Do something.} */; @}
 @end smallexample
 
-This attribute applies only to the particular namespace body, not to
-other definitions of the same namespace; it is equivalent to using
-@samp{#pragma GCC visibility} before and after the namespace
-definition (@pxref{Visibility Pragmas}).
+この属性は特定の名前空間本体にのみ適用され、同じ名前空間の他の定義には適用されない。 @samp{#pragma GCC visibility}を名前空間の定義の前後に使用すること（@pxref{Visibility Pragmas}）と同じである。
 
-In C++, if a template argument has limited visibility, this
-restriction is implicitly propagated to the template instantiation.
-Otherwise, template instantiations and specializations default to the
-visibility of their template.
+C++では、テンプレート引数の可視性が制限されている場合、この制限はテンプレートのインスタンス化に暗黙的に伝播される。それ以外の場合は、テンプレートの実体化と特殊化は、デフォルトでテンプレートの可視性になる。
 
-If both the template and enclosing class have explicit visibility, the
-visibility from the template is used.
+テンプレートクラスと囲みクラスの両方に明示的な可視性がある場合、テンプレートからの可視性が使用される。
 
 @item warn_unused_result
 @cindex @code{warn_unused_result} function attribute
-The @code{warn_unused_result} attribute causes a warning to be emitted
-if a caller of the function with this attribute does not use its
-return value.  This is useful for functions where not checking
-the result is either a security problem or always a bug, such as
-@code{realloc}.
+この属性を持つ関数の呼び出し側が戻り値を使用しない場合、@code{warn_unused_result}属性は警告を発行する。 これは、@code{realloc}のように、結果をチェックしないとセキュリティ上の問題であるか、常にバグである関数に役立つ。
 
 @smallexample
 int fn () __attribute__ ((warn_unused_result));
@@ -2285,27 +2233,16 @@ int foo ()
 @end smallexample
 
 @noindent
-results in warning on line 5.
+5行目に警告が表示される。
 
 @item weak
 @cindex @code{weak} function attribute
-The @code{weak} attribute causes the declaration to be emitted as a weak
-symbol rather than a global.  This is primarily useful in defining
-library functions that can be overridden in user code, though it can
-also be used with non-function declarations.  Weak symbols are supported
-for ELF targets, and also for a.out targets when using the GNU assembler
-and linker.
+@code{weak}属性は、宣言がグローバルではなく弱いシンボルとして出力されるようにする。 これは主に、ユーザーコードでオーバーライドできるライブラリ関数を定義するのに便利であるが、関数以外の宣言でも使用できる。 弱いシンボルは、ELFターゲット、およびGNUアセンブラとリンカを使用するときのa.outターゲットでサポートされている。
 
 @item weakref
 @itemx weakref ("@var{target}")
 @cindex @code{weakref} function attribute
-The @code{weakref} attribute marks a declaration as a weak reference.
-Without arguments, it should be accompanied by an @code{alias} attribute
-naming the target symbol.  Optionally, the @var{target} may be given as
-an argument to @code{weakref} itself.  In either case, @code{weakref}
-implicitly marks the declaration as @code{weak}.  Without a
-@var{target}, given as an argument to @code{weakref} or to @code{alias},
-@code{weakref} is equivalent to @code{weak}.
+@code{weakref}属性は、宣言を弱い参照としてマークする。引数がなければ、それは@code{alias}属性にターゲットシンボルの名前を付ける必要がある。 オプションで、@code{weakref}自体の引数として@var{target}を与えることができる。 どちらの場合でも、@code{weakref}は宣言を暗黙的に@code{weak}とマークする。 @code{weakref}や@code{alias}の引数として与えられた@var{target}がなければ、@code{weakref}は@code {weak}と同等である。
 
 @smallexample
 static int x() __attribute__ ((weakref ("y")));
@@ -2316,20 +2253,11 @@ static int x() __attribute__ ((weakref));
 static int x() __attribute__ ((alias ("y")));
 @end smallexample
 
-A weak reference is an alias that does not by itself require a
-definition to be given for the target symbol.  If the target symbol is
-only referenced through weak references, then it becomes a @code{weak}
-undefined symbol.  If it is directly referenced, however, then such
-strong references prevail, and a definition is required for the
-symbol, not necessarily in the same translation unit.
+弱参照は、それ自身ではターゲットシンボルに対して定義を与える必要がないエイリアスである。 ターゲットシンボルが弱参照によってのみ参照される場合、それは@code{weak}未定義シンボルになる。 ただし、直接参照されている場合は、そのような強力な参照が優先され、シンボルには定義が必要である。必ずしも同じ翻訳単位である必要はない。
 
-The effect is equivalent to moving all references to the alias to a
-separate translation unit, renaming the alias to the aliased symbol,
-declaring it as weak, compiling the two separate translation units and
-performing a reloadable link on them.
+この効果は、エイリアスへのすべての参照を別の翻訳単位に移動し、エイリアスをエイリアスシンボルの名前に変更し、弱いと宣言し、2つの別々の翻訳単位をコンパイルし、再読み込み可能なリンクを実行することと同じである。
 
-At present, a declaration to which @code{weakref} is attached can
-only be @code{static}.
+現在のところ、@code{weakref}が付加されている宣言は@code{static}にしかできない。
 
 
 @end table
