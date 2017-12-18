@@ -2265,83 +2265,54 @@ static int x() __attribute__ ((alias ("y")));
 @c This is the end of the target-independent attribute table
 
 @node AArch64 Function Attributes
-@subsection AArch64 Function Attributes
+@subsection AArch64関数属性
 
-The following target-specific function attributes are available for the
-AArch64 target.  For the most part, these options mirror the behavior of
-similar command-line options (@pxref{AArch64 Options}), but on a
-per-function basis.
+AArch64ターゲットでは、次のターゲット固有の関数属性を使用できる。 ほとんどの場合、これらのオプションは、同様のコマンドラインオプション（@pxref{AArch64 Options}）の動作をミラーリングするが、関数ごとに反映される。
 
 @table @code
 @item general-regs-only
 @cindex @code{general-regs-only} function attribute, AArch64
-Indicates that no floating-point or Advanced SIMD registers should be
-used when generating code for this function.  If the function explicitly
-uses floating-point code, then the compiler gives an error.  This is
-the same behavior as that of the command-line option
-@option{-mgeneral-regs-only}.
+この関数のコードを生成するときに、浮動小数点またはアドバンストSIMDレジスタを使用しないことを示す。 関数が明示的に浮動小数点コードを使用する場合、コンパイラはエラーを返す。 これは、コマンド行オプション@option{-mgeneral-regs-only}と同じ動作である。
 
 @item fix-cortex-a53-835769
 @cindex @code{fix-cortex-a53-835769} function attribute, AArch64
-Indicates that the workaround for the Cortex-A53 erratum 835769 should be
-applied to this function.  To explicitly disable the workaround for this
-function specify the negated form: @code{no-fix-cortex-a53-835769}.
-This corresponds to the behavior of the command line options
-@option{-mfix-cortex-a53-835769} and @option{-mno-fix-cortex-a53-835769}.
+この関数にCortex-A53 erratum 835769の回避策を適用する必要があることを示す。 この関数の回避策を明示的に無効にするには、無効な形式を指定する：@code{no-fix-cortex-a53-835769}。 これは、コマンド行オプション@option{-mfix-cortex-a53-835769}と@option{-mno-fix-cortex-a53-835769}の動作に対応する。
 
 @item cmodel=
 @cindex @code{cmodel=} function attribute, AArch64
-Indicates that code should be generated for a particular code model for
-this function.  The behavior and permissible arguments are the same as
-for the command line option @option{-mcmodel=}.
+この関数の特定のコードモデルに対してコードを生成する必要があることを示す。 動作と許容される引数は、コマンドラインオプション@option{-mcmodel=}と同じである。
 
 @item strict-align
 @cindex @code{strict-align} function attribute, AArch64
-Indicates that the compiler should not assume that unaligned memory references
-are handled by the system.  The behavior is the same as for the command-line
-option @option{-mstrict-align}.
+コンパイラーは、境界整列されていないメモリー参照がシステムによって処理されると想定してはならないことを示す。 動作は、コマンドラインオプション@option{-mstrict-align}と同じである。
 
 @item omit-leaf-frame-pointer
 @cindex @code{omit-leaf-frame-pointer} function attribute, AArch64
-Indicates that the frame pointer should be omitted for a leaf function call.
-To keep the frame pointer, the inverse attribute
-@code{no-omit-leaf-frame-pointer} can be specified.  These attributes have
-the same behavior as the command-line options @option{-momit-leaf-frame-pointer}
-and @option{-mno-omit-leaf-frame-pointer}.
+リーフ関数呼び出しのためにフレームポインタを省略するべきであることを示す。フレームポインタを保持するために、逆属性@code{no-omit-leaf-frame-pointer}を指定することができる。 これらの属性は、コマンド行オプション@option{-momit-leaf-frame-pointer}および@option{-mno-omit-leaf-frame-pointer}と同じ動作をする。
 
 @item tls-dialect=
 @cindex @code{tls-dialect=} function attribute, AArch64
-Specifies the TLS dialect to use for this function.  The behavior and
-permissible arguments are the same as for the command-line option
-@option{-mtls-dialect=}.
+この関数に使用するTLS方言を指定する。 動作と許容される引数は、コマンドラインオプション@option{-mtls-dialect=}と同じである。
 
 @item arch=
 @cindex @code{arch=} function attribute, AArch64
-Specifies the architecture version and architectural extensions to use
-for this function.  The behavior and permissible arguments are the same as
-for the @option{-march=} command-line option.
+この機能に使用するアーキテクチャーのバージョンとアーキテクチャー拡張を指定する。 動作と許容される引数は、@option{-march=}コマンドラインオプションと同じである。
 
 @item tune=
 @cindex @code{tune=} function attribute, AArch64
-Specifies the core for which to tune the performance of this function.
-The behavior and permissible arguments are the same as for the @option{-mtune=}
-command-line option.
+この機能のパフォーマンスをチューニングするコアを指定する。動作と許容可能な引数は、@option{-mtune=}コマンドラインオプションと同じである。
 
 @item cpu=
 @cindex @code{cpu=} function attribute, AArch64
-Specifies the core for which to tune the performance of this function and also
-whose architectural features to use.  The behavior and valid arguments are the
-same as for the @option{-mcpu=} command-line option.
+この機能のパフォーマンスをチューニングするコアと、使用するアーキテクチャ上の機能を指定する。 動作と有効な引数は、@option{-mcpu=}コマンドラインオプションと同じである。
 
 @item sign-return-address
 @cindex @code{sign-return-address} function attribute, AArch64
-Select the function scope on which return address signing will be applied.  The
-behavior and permissible arguments are the same as for the command-line option
-@option{-msign-return-address=}.  The default value is @code{none}.
+戻りアドレスの署名が適用される関数スコープを選択する。 動作と許容される引数は、コマンドラインオプションの@option{-msign-return-address=}と同じである。 デフォルト値は@code{none}である。
 
 @end table
 
-The above target attributes can be specified as follows:
+上記のターゲット属性は、次のように指定できる。
 
 @smallexample
 __attribute__((target("@var{attr-string}")))
@@ -2352,11 +2323,9 @@ f (int a)
 @}
 @end smallexample
 
-where @code{@var{attr-string}} is one of the attribute strings specified above.
+ここで@code{@var{attr-string}}は、上記で指定した属性文字列の1つである。
 
-Additionally, the architectural extension string may be specified on its
-own.  This can be used to turn on and off particular architectural extensions
-without having to specify a particular architecture version or core.  Example:
+さらに、アーキテクチャ拡張文字列は単独で指定することもできる。 これは、特定のアーキテクチャーのバージョンまたはコアを指定することなく、特定のアーキテクチャー拡張をオンまたはオフにするために使用できる。 例：
 
 @smallexample
 __attribute__((target("+crc+nocrypto")))
@@ -2367,12 +2336,9 @@ foo (int a)
 @}
 @end smallexample
 
-In this example @code{target("+crc+nocrypto")} enables the @code{crc}
-extension and disables the @code{crypto} extension for the function @code{foo}
-without modifying an existing @option{-march=} or @option{-mcpu} option.
+この例では、@code{target("+crc+nocrypto")}は@code{crc}拡張を有効にし、既存の@option{-march=}または@option{-mcpu}オプションを変更せずに@code{foo}関数の@code{crypto}拡張を無効にする。
 
-Multiple target function attributes can be specified by separating them with
-a comma.  For example:
+カンマで区切って複数のターゲット関数属性を指定することができる。 例えば：
 @smallexample
 __attribute__((target("arch=armv8-a+crc+crypto,tune=cortex-a53")))
 int
@@ -2382,33 +2348,16 @@ foo (int a)
 @}
 @end smallexample
 
-is valid and compiles function @code{foo} for ARMv8-A with @code{crc}
-and @code{crypto} extensions and tunes it for @code{cortex-a53}.
+は有効で、ARMv8-Aの関数@code{foo}を@code{crc}と@code{crypto}拡張でコンパイルし、@code{cortex-a53}のために調整する。
 
-@subsubsection Inlining rules
-Specifying target attributes on individual functions or performing link-time
-optimization across translation units compiled with different target options
-can affect function inlining rules:
+@subsubsection インライン規則
+異なるターゲットオプションを使用してコンパイルされた翻訳ユニット間で、個々の関数のターゲット属性を指定したり、リンク時の最適化を実行すると、関数のインライン化ルールに影響がでる。
 
-In particular, a caller function can inline a callee function only if the
-architectural features available to the callee are a subset of the features
-available to the caller.
-For example: A function @code{foo} compiled with @option{-march=armv8-a+crc},
-or tagged with the equivalent @code{arch=armv8-a+crc} attribute,
-can inline a function @code{bar} compiled with @option{-march=armv8-a+nocrc}
-because the all the architectural features that function @code{bar} requires
-are available to function @code{foo}.  Conversely, function @code{bar} cannot
-inline function @code{foo}.
+特に、呼び出し元関数は、呼び出し先が利用可能なアーキテクチャ上の機能が呼び出し元が使用できる機能のサブセットである場合にのみ、呼び出し先関数をインライン化できる。例：@option{-march=armv8-a+crc}でコンパイルされた、または同等の@code {arch = armv8-a + crc}属性でタグ付けされた関数@code{foo}は、関数をインラインで@code{@code{bar}}は@option{-march=armv8-a+nocrc}でコンパイルされている。なぜなら、@code {bar}が必要とするすべてのアーキテクチャ機能が@code{foo}を機能させるためである。 逆に関数@code {bar}は関数@code{foo}をインライン化できない。
 
-Additionally inlining a function compiled with @option{-mstrict-align} into a
-function compiled without @code{-mstrict-align} is not allowed.
-However, inlining a function compiled without @option{-mstrict-align} into a
-function compiled with @option{-mstrict-align} is allowed.
+さらに@option{-mstrict-align}でコンパイルされた関数を@code{-mstrict-align}なしでコンパイルされた関数にインライン展開することはできない。ただし、@option{-mstrict-align}を指定せずにコンパイルされた関数を、@option{-mstrict-align}でコンパイルされた関数にインライン展開することはできる。
 
-Note that CPU tuning options and attributes such as the @option{-mcpu=},
-@option{-mtune=} do not inhibit inlining unless the CPU specified by the
-@option{-mcpu=} option or the @code{cpu=} attribute conflicts with the
-architectural feature rules specified above.
+@option{-mcpu=}、@option{-mtune=}のようなCPUチューニングオプションと属性は、@option{-mcpu=}オプションまたは@code{cpu=}属性は、上記で指定したアーキテクチャ機能ルールと競合する。
 
 @node ARC Function Attributes
 @subsection ARC Function Attributes
