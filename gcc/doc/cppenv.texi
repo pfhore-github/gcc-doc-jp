@@ -16,7 +16,7 @@
 @itemx OBJC_INCLUDE_PATH
 @c Commented out until ObjC++ is part of GCC:
 @c @itemx OBJCPLUS_INCLUDE_PATH
-各変数の値は、ヘッダファイルを探すための@env {PATH}と同様に、特殊文字で区切られたディレクトリのリストである。特殊文字@code{PATH_SEPARATOR}は、ターゲットに依存し、GCCビルド時に決定される。 Microsoft Windowsベースのターゲットの場合はセミコロンで、他のほとんどのターゲットの場合はコロンである。
+各変数の値は、ヘッダファイルを探すための@env{PATH}と同様に、特殊文字で区切られたディレクトリのリストである。特殊文字@code{PATH_SEPARATOR}は、ターゲットに依存し、GCCビルド時に決定される。 Microsoft Windowsベースのターゲットの場合はセミコロンで、他のほとんどのターゲットの場合はコロンである。
 
 @env{CPATH}は、@option{-I}で指定されたように検索されるディレクトリのリストを指定するが、コマンドラインで@option{-I}オプションで与えられたパスの後に指定する。 この環境変数は、どの言語が前処理されているかにかかわらず使用される。
 
