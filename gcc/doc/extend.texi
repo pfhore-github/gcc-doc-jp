@@ -2360,27 +2360,22 @@ foo (int a)
 @option{-mcpu=}、@option{-mtune=}のようなCPUチューニングオプションと属性は、@option{-mcpu=}オプションまたは@code{cpu=}属性は、上記で指定したアーキテクチャ機能ルールと競合する。
 
 @node ARC Function Attributes
-@subsection ARC Function Attributes
+@subsection ARC関数属性
 
-These function attributes are supported by the ARC back end:
+これらの関数属性は、ARCバックエンドによってサポートされている。
 
 @table @code
 @item interrupt
 @cindex @code{interrupt} function attribute, ARC
-Use this attribute to indicate
-that the specified function is an interrupt handler.  The compiler generates
-function entry and exit sequences suitable for use in an interrupt handler
-when this attribute is present.
+この属性を使用して、指定された関数が割り込みハンドラであることを示す。 コンパイラは、この属性が存在するときに、割り込みハンドラで使用するのに適した関数入力および終了シーケンスを生成する。
 
-On the ARC, you must specify the kind of interrupt to be handled
-in a parameter to the interrupt attribute like this:
+ARCでは、次のように割り込み属性のパラメータで処理される割り込みの種類を指定する必要がある。
 
 @smallexample
 void f () __attribute__ ((interrupt ("ilink1")));
 @end smallexample
 
-Permissible values for this parameter are: @w{@code{ilink1}} and
-@w{@code{ilink2}}.
+このパラメータの許容値は次のとおりである： @w{@code{ilink1}}と@w{@code{ilink2}}.
 
 @item long_call
 @itemx medium_call
@@ -2389,21 +2384,9 @@ Permissible values for this parameter are: @w{@code{ilink1}} and
 @cindex @code{medium_call} function attribute, ARC
 @cindex @code{short_call} function attribute, ARC
 @cindex indirect calls, ARC
-These attributes specify how a particular function is called.
-These attributes override the
-@option{-mlong-calls} and @option{-mmedium-calls} (@pxref{ARC Options})
-command-line switches and @code{#pragma long_calls} settings.
+これらの属性は、特定の関数の呼び出し方法を指定する。これらの属性は、@option{-mlong-calls}と@option{-mmedium-calls}（@pxref{ARC Options}）コマンドラインスイッチと@code{#pragma long_calls}設定よりも優先される。
 
-For ARC, a function marked with the @code{long_call} attribute is
-always called using register-indirect jump-and-link instructions,
-thereby enabling the called function to be placed anywhere within the
-32-bit address space.  A function marked with the @code{medium_call}
-attribute will always be close enough to be called with an unconditional
-branch-and-link instruction, which has a 25-bit offset from
-the call site.  A function marked with the @code{short_call}
-attribute will always be close enough to be called with a conditional
-branch-and-link instruction, which has a 21-bit offset from
-the call site.
+ARCでは、@code{long_call}属性でマークされた関数は常にレジスタ間接jump-and-link命令を使用して呼び出され、呼び出された関数を32ビットアドレス空間のどこにでも配置できるようにする。 @code{medium_call}属性でマークされた関数は、コールサイトから25ビットのオフセットを持つ無条件の分岐およびリンク命令で呼び出すことができるくらい近くにある。 @code{short_call}属性でマークされた関数は、コールサイトから21ビットのオフセットを持つ条件付き分岐/リンク命令で呼び出すのに十分に近い状態になる。
 @end table
 
 @node ARM Function Attributes
