@@ -2507,81 +2507,55 @@ AVRハードウェアは、割り込みが実行されたときに割り込み�
 @end table
 
 @node Blackfin Function Attributes
-@subsection Blackfin Function Attributes
+@subsection Blackfin関数属性
 
-These function attributes are supported by the Blackfin back end:
+これらの関数属性は、Blackfinバックエンドによってサポートされている。
 
 @table @code
 
 @item exception_handler
 @cindex @code{exception_handler} function attribute
 @cindex exception handler functions, Blackfin
-Use this attribute on the Blackfin to indicate that the specified function
-is an exception handler.  The compiler generates function entry and
-exit sequences suitable for use in an exception handler when this
-attribute is present.
+Blackfinでこの属性を使用すると、指定された関数が例外ハンドラであることを示す。 コンパイラは、この属性が存在する場合、例外ハンドラでの使用に適した関数の入力および終了シーケンスを生成する。
 
 @item interrupt_handler
 @cindex @code{interrupt_handler} function attribute, Blackfin
-Use this attribute to
-indicate that the specified function is an interrupt handler.  The compiler
-generates function entry and exit sequences suitable for use in an
-interrupt handler when this attribute is present.
+この属性を使用して、指定された関数が割り込みハンドラであることを示す。 コンパイラは、この属性が存在するときに、割り込みハンドラで使用するのに適した関数入力および終了シーケンスを生成する。
 
 @item kspisusp
 @cindex @code{kspisusp} function attribute, Blackfin
 @cindex User stack pointer in interrupts on the Blackfin
-When used together with @code{interrupt_handler}, @code{exception_handler}
-or @code{nmi_handler}, code is generated to load the stack pointer
-from the USP register in the function prologue.
+@code{interrupt_handler}、@code{exception_handler}または@code{nmi_handler}とともに使用すると、関数プロローグのUSPレジスタからスタックポインタをロードするコードが生成される。
 
 @item l1_text
 @cindex @code{l1_text} function attribute, Blackfin
-This attribute specifies a function to be placed into L1 Instruction
-SRAM@. The function is put into a specific section named @code{.l1.text}.
-With @option{-mfdpic}, function calls with a such function as the callee
-or caller uses inlined PLT.
+この属性は、L1命令SRAMに配置される関数を指定する。関数は@code {.l1.text}という特定のセクションに置かれる。@option{-mfdpic}では、呼び出し先や呼び出し元がインラインPLTを使用するような関数呼び出しを伴う関数呼び出しである。
 
 @item l2
 @cindex @code{l2} function attribute, Blackfin
-This attribute specifies a function to be placed into L2
-SRAM. The function is put into a specific section named
-@code{.l2.text}. With @option{-mfdpic}, callers of such functions use
-an inlined PLT.
+この属性は、L2 SRAMに配置される関数を指定する。 この関数は@code{.l2.text}という名前の特定のセクションに置かれる。 @option{-mfdpic}では、このような関数の呼び出し側はインラインPLTを使用する。
 
 @item longcall
 @itemx shortcall
 @cindex indirect calls, Blackfin
 @cindex @code{longcall} function attribute, Blackfin
 @cindex @code{shortcall} function attribute, Blackfin
-The @code{longcall} attribute
-indicates that the function might be far away from the call site and
-require a different (more expensive) calling sequence.  The
-@code{shortcall} attribute indicates that the function is always close
-enough for the shorter calling sequence to be used.  These attributes
-override the @option{-mlongcall} switch.
+@code{longcall}属性は、関数がコールサイトから離れていて、別の（より高価な）呼び出しシーケンスを必要とする可能性があることを示す。 @code{shortcall}属性は、短い呼び出しシーケンスを使用するために関数が常に十分に近いことを示す。これらの属性は、@option{-mlongcall}スイッチよりも優先される。
 
 @item nesting
 @cindex @code{nesting} function attribute, Blackfin
 @cindex Allow nesting in an interrupt handler on the Blackfin processor
-Use this attribute together with @code{interrupt_handler},
-@code{exception_handler} or @code{nmi_handler} to indicate that the function
-entry code should enable nested interrupts or exceptions.
+この属性を@code{interrupt_handler}、@code{exception_handler}または@code{nmi_handler}とともに使用して、関数エントリコードがネストされた割り込みまたは例外を有効にする必要があることを示す。
 
 @item nmi_handler
 @cindex @code{nmi_handler} function attribute, Blackfin
 @cindex NMI handler functions on the Blackfin processor
-Use this attribute on the Blackfin to indicate that the specified function
-is an NMI handler.  The compiler generates function entry and
-exit sequences suitable for use in an NMI handler when this
-attribute is present.
+指定された機能がNMIハンドラであることを示すには、この属性をBlackfinで使用する。 コンパイラは、この属性が存在する場合、NMIハンドラでの使用に適した関数の入力および終了シーケンスを生成する。
 
 @item saveall
 @cindex @code{saveall} function attribute, Blackfin
 @cindex save all registers on the Blackfin
-Use this attribute to indicate that
-all registers except the stack pointer should be saved in the prologue
-regardless of whether they are used or not.
+スタックポインタを使用するかどうかにかかわらず、スタックポインタを除くすべてのレジスタをプロローグに保存する必要があることを示すには、この属性を使用する。
 @end table
 
 @node CR16 Function Attributes
