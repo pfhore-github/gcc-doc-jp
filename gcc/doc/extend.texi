@@ -2620,33 +2620,23 @@ void __attribute__ ((interrupt ("dma0, dma1"),
 
 
 @node H8/300 Function Attributes
-@subsection H8/300 Function Attributes
+@subsection H8/300関数属性
 
-These function attributes are available for H8/300 targets:
+これらの関数属性は、H8 / 300ターゲットで使用できる。
 
 @table @code
 @item function_vector
 @cindex @code{function_vector} function attribute, H8/300
-Use this attribute on the H8/300, H8/300H, and H8S to indicate 
-that the specified function should be called through the function vector.
-Calling a function through the function vector reduces code size; however,
-the function vector has a limited size (maximum 128 entries on the H8/300
-and 64 entries on the H8/300H and H8S)
-and shares space with the interrupt vector.
+H8 / 300、H8 / 300H、H8Sでは、この属性を使用して、指定した関数を関数ベクタで呼び出す必要があることを示す。関数ベクトルを介して関数を呼び出すと、コードサイズが小さくなる。 関数ベクトルのサイズは制限されていて（H8 / 300では最大128エントリ、H8 / 300HおよびH8Sでは64エントリ）、割り込みベクタと空間を共有する。
 
 @item interrupt_handler
 @cindex @code{interrupt_handler} function attribute, H8/300
-Use this attribute on the H8/300, H8/300H, and H8S to
-indicate that the specified function is an interrupt handler.  The compiler
-generates function entry and exit sequences suitable for use in an
-interrupt handler when this attribute is present.
+H8/300、H8/300H、H8Sでこの属性を使用して、指定された関数が割り込みハンドラであることを示す。 コンパイラは、この属性が存在するときに、割り込みハンドラで使用するのに適した関数入力および終了シーケンスを生成する。
 
 @item saveall
 @cindex @code{saveall} function attribute, H8/300
 @cindex save all registers on the H8/300, H8/300H, and H8S
-Use this attribute on the H8/300, H8/300H, and H8S to indicate that
-all registers except the stack pointer should be saved in the prologue
-regardless of whether they are used or not.
+H8/300、H8/300H、H8Sではスタックポインタを除くすべてのレジスタを使用するかどうかにかかわらずプロローグに退避する必要があることを示すために使用する。
 @end table
 
 @node IA-64 Function Attributes
