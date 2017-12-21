@@ -2559,17 +2559,14 @@ Blackfinでこの属性を使用すると、指定された関数が例外ハン
 @end table
 
 @node CR16 Function Attributes
-@subsection CR16 Function Attributes
+@subsection CR16関数属性
 
-These function attributes are supported by the CR16 back end:
+これらの関数属性は、CR16のバックエンドによってサポートされている。
 
 @table @code
 @item interrupt
 @cindex @code{interrupt} function attribute, CR16
-Use this attribute to indicate
-that the specified function is an interrupt handler.  The compiler generates
-function entry and exit sequences suitable for use in an interrupt handler
-when this attribute is present.
+この属性を使用して、指定された関数が割り込みハンドラであることを示す。コンパイラは、この属性が存在するときに、割り込みハンドラで使用するのに適した関数入力および終了シーケンスを生成する。
 @end table
 
 @node Epiphany Function Attributes
