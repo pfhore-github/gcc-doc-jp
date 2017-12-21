@@ -2570,54 +2570,34 @@ Blackfinでこの属性を使用すると、指定された関数が例外ハン
 @end table
 
 @node Epiphany Function Attributes
-@subsection Epiphany Function Attributes
+@subsection Epiphany関数属性
 
-These function attributes are supported by the Epiphany back end:
+これらの関数属性はEpiphanyバックエンドによってサポートされている：
 
 @table @code
 @item disinterrupt
 @cindex @code{disinterrupt} function attribute, Epiphany
-This attribute causes the compiler to emit
-instructions to disable interrupts for the duration of the given
-function.
+この属性により、コンパイラは指定された関数の実行中に割り込みを無効にする命令を発行する。
 
 @item forwarder_section
 @cindex @code{forwarder_section} function attribute, Epiphany
-This attribute modifies the behavior of an interrupt handler.
-The interrupt handler may be in external memory which cannot be
-reached by a branch instruction, so generate a local memory trampoline
-to transfer control.  The single parameter identifies the section where
-the trampoline is placed.
+この属性は、割り込みハンドラの動作を変更する。割り込みハンドラは、分岐命令では到達できない外部メモリにある可能性があるため、制御を転送するためにローカルメモリのトランポリンを生成する。 単一のパラメータは、トランポリンが配置されているセクションを識別する。
 
 @item interrupt
 @cindex @code{interrupt} function attribute, Epiphany
-Use this attribute to indicate
-that the specified function is an interrupt handler.  The compiler generates
-function entry and exit sequences suitable for use in an interrupt handler
-when this attribute is present.  It may also generate
-a special section with code to initialize the interrupt vector table.
+この属性を使用して、指定された関数が割り込みハンドラであることを示す。 コンパイラは、この属性が存在するときに、割り込みハンドラで使用するのに適した関数入力および終了シーケンスを生成する。 また、割り込みベクタテーブルを初期化するためのコードを含む特別なセクションを生成することもある。
 
-On Epiphany targets one or more optional parameters can be added like this:
+Epiphanyターゲットでは、次のように1つ以上のオプションパラメータを追加できる。
 
 @smallexample
 void __attribute__ ((interrupt ("dma0, dma1"))) universal_dma_handler ();
 @end smallexample
 
-Permissible values for these parameters are: @w{@code{reset}},
-@w{@code{software_exception}}, @w{@code{page_miss}},
-@w{@code{timer0}}, @w{@code{timer1}}, @w{@code{message}},
-@w{@code{dma0}}, @w{@code{dma1}}, @w{@code{wand}} and @w{@code{swi}}.
-Multiple parameters indicate that multiple entries in the interrupt
-vector table should be initialized for this function, i.e.@: for each
-parameter @w{@var{name}}, a jump to the function is emitted in
-the section @w{ivt_entry_@var{name}}.  The parameter(s) may be omitted
-entirely, in which case no interrupt vector table entry is provided.
+これらのパラメータの可能な値は： @w{@code{reset}}、@w{@code{software_exception}}、 @w{@code{page_miss}}、@w{@code{timer0}}、 @w{@code{timer1}}、 @w{@code{message}}、@w{@code{dma0}}、 @w{@code{dma1}}、 @w{@code{wand}}、@w{@code{swi}}である。複数のパラメータは、割り込みベクタテーブル内の複数のエントリをこの関数に対して初期化する必要があることを示す。各パラメータ@w{@var{name}}に対して、関数へのジャンプはセクション@w{ivt_entry_@var{name}}に生成される。 パラメータは完全に省略されてもよく、この場合、割り込みベクタテーブルエントリは提供されない。
 
-Note that interrupts are enabled inside the function
-unless the @code{disinterrupt} attribute is also specified.
+@code{disinterrupt}属性も指定されていない限り、関数内で割り込みが有効になることに注意せよ。
 
-The following examples are all valid uses of these attributes on
-Epiphany targets:
+次の例は、Epiphanyターゲットでこれらの属性をすべて有効に使用する例である。
 @smallexample
 void __attribute__ ((interrupt)) universal_handler ();
 void __attribute__ ((interrupt ("dma1"))) dma1_handler ();
@@ -2635,10 +2615,7 @@ void __attribute__ ((interrupt ("dma0, dma1"),
 @cindex @code{long_call} function attribute, Epiphany
 @cindex @code{short_call} function attribute, Epiphany
 @cindex indirect calls, Epiphany
-These attributes specify how a particular function is called.
-These attributes override the
-@option{-mlong-calls} (@pxref{Adapteva Epiphany Options})
-command-line switch and @code{#pragma long_calls} settings.
+これらの属性は、特定の関数の呼び出し方法を指定する。これらの属性は、@option{-mlong-calls}（@pxref{Adapteva Epiphany Options}）コマンドラインスイッチと@code{#pragma long_calls}設定を上書きする。
 @end table
 
 
