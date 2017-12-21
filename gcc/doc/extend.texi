@@ -2640,32 +2640,25 @@ H8/300、H8/300H、H8Sではスタックポインタを除くすべてのレジ�
 @end table
 
 @node IA-64 Function Attributes
-@subsection IA-64 Function Attributes
+@subsection IA-64関数属性
 
-These function attributes are supported on IA-64 targets:
+これらの関数属性は、IA-64ターゲットでサポートされている。
 
 @table @code
 @item syscall_linkage
 @cindex @code{syscall_linkage} function attribute, IA-64
-This attribute is used to modify the IA-64 calling convention by marking
-all input registers as live at all function exits.  This makes it possible
-to restart a system call after an interrupt without having to save/restore
-the input registers.  This also prevents kernel data from leaking into
-application code.
+この属性は、すべての入力レジスタをすべての関数終了でライブとしてマークすることによって、IA-64呼び出し規約を変更するために使用される。 これにより、入力レジスタを退避/復帰させることなく割り込み後にシステムコールを再開することができる。 これにより、カーネルデータがアプリケーションコードに漏洩することも防止される。
 
 @item version_id
 @cindex @code{version_id} function attribute, IA-64
-This IA-64 HP-UX attribute, attached to a global variable or function, renames a
-symbol to contain a version string, thus allowing for function level
-versioning.  HP-UX system header files may use function level versioning
-for some system calls.
+グローバル変数または関数にアタッチされたこのIA-64 HP-UXアトリビュートは、シンボルの名前を変更してバージョン文字列を含むため、ファンクションレベルのバージョニングが可能である。 HP-UXシステムのヘッダーファイルは、一部のシステムコールで機能レベルのバージョニングを使用することがある。
 
 @smallexample
 extern int foo () __attribute__((version_id ("20040821")));
 @end smallexample
 
 @noindent
-Calls to @code{foo} are mapped to calls to @code{foo@{20040821@}}.
+@code{foo}の呼び出しは@code{foo@{20040821@}}の呼び出しにマップされる。
 @end table
 
 @node M32C Function Attributes
