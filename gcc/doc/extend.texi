@@ -2703,39 +2703,25 @@ void bar (void)
 @end table
 
 @node M32R/D Function Attributes
-@subsection M32R/D Function Attributes
+@subsection M32R/D関数属性
 
-These function attributes are supported by the M32R/D back end:
+これらの関数属性は、M32R / Dバックエンドによってサポートされている。
 
 @table @code
 @item interrupt
 @cindex @code{interrupt} function attribute, M32R/D
-Use this attribute to indicate
-that the specified function is an interrupt handler.  The compiler generates
-function entry and exit sequences suitable for use in an interrupt handler
-when this attribute is present.
+この属性を使用して、指定された関数が割り込みハンドラであることを示す。 コンパイラは、この属性が存在するときに、割り込みハンドラで使用するのに適した関数入力および終了シーケンスを生成する。
 
 @item model (@var{model-name})
 @cindex @code{model} function attribute, M32R/D
 @cindex function addressability on the M32R/D
+M32R/Dでは、この属性を使用してオブジェクトのアドレス可能性を設定し、関数用に生成されたコードを設定する。 識別子@var{model-name}は、各コードモデルを表す@code{small}、@code{medium}、または@code{large}のいずれかである。
 
-On the M32R/D, use this attribute to set the addressability of an
-object, and of the code generated for a function.  The identifier
-@var{model-name} is one of @code{small}, @code{medium}, or
-@code{large}, representing each of the code models.
+smallモデルオブジェクトは、メモリの下位16MBにあり（そのアドレスに@code{ld24}命令でロードできるように）、@code{bl}命令で呼び出し可能である。
 
-Small model objects live in the lower 16MB of memory (so that their
-addresses can be loaded with the @code{ld24} instruction), and are
-callable with the @code{bl} instruction.
+mediumモデルオブジェクトは32ビットアドレス空間のどこにでも存在することができる（コンパイラはアドレスをロードするための@code{seth/add3}命令を生成する）。@code{bl}命令で呼び出し可能である。
 
-Medium model objects may live anywhere in the 32-bit address space (the
-compiler generates @code{seth/add3} instructions to load their addresses),
-and are callable with the @code{bl} instruction.
-
-Large model objects may live anywhere in the 32-bit address space (the
-compiler generates @code{seth/add3} instructions to load their addresses),
-and may not be reachable with the @code{bl} instruction (the compiler
-generates the much slower @code{seth/add3/jl} instruction sequence).
+kargeモデルオブジェクトは、32ビットアドレス空間のどこにでも置くことができ、（コンパイラはアドレスをロードするために@code{seth/add3}命令を生成する）@code {bl}命令では到達できないかもしれない（コンパイラはずっと遅い@code{seth/add3/jl}命令シーケンスを生成する）
 @end table
 
 @node m68k Function Attributes
