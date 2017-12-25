@@ -2787,20 +2787,12 @@ MePターゲットでは、コンパイラは呼び出された関数が組み�
 @table @code
 @item save_volatiles
 @cindex @code{save_volatiles} function attribute, MicroBlaze
-Use this attribute to indicate that the function is
-an interrupt handler.  All volatile registers (in addition to non-volatile
-registers) are saved in the function prologue.  If the function is a leaf
-function, only volatiles used by the function are saved.  A normal function
-return is generated instead of a return from interrupt.
+この属性を使用して、関数が割り込みハンドラであることを示す。 （不揮発性レジスタに加えて）すべての揮発性レジスタは、関数プロローグに保存される。 関数がリーフ関数の場合、関数が使用する揮発性物質のみが保存される。 割り込みからの復帰ではなく、通常の関数戻りが生成される。
 
 @item break_handler
 @cindex @code{break_handler} function attribute, MicroBlaze
 @cindex break handler functions
-Use this attribute to indicate that
-the specified function is a break handler.  The compiler generates function
-entry and exit sequences suitable for use in an break handler when this
-attribute is present. The return from @code{break_handler} is done through
-the @code{rtbd} instead of @code{rtsd}.
+この属性を使用して、指定された関数がブレークハンドラであることを示す。 コンパイラーは、この属性が存在する場合にブレーク・ハンドラーでの使用に適した関数入力および出口シーケンスを生成する。 @code{break_handler}からの復帰は@code{rtsd}ではなく@code{rtbd}によって行われる。
 
 @smallexample
 void f () __attribute__ ((break_handler));
@@ -2810,12 +2802,7 @@ void f () __attribute__ ((break_handler));
 @itemx fast_interrupt 
 @cindex @code{interrupt_handler} function attribute, MicroBlaze
 @cindex @code{fast_interrupt} function attribute, MicroBlaze
-These attributes indicate that the specified function is an interrupt
-handler.  Use the @code{fast_interrupt} attribute to indicate handlers
-used in low-latency interrupt mode, and @code{interrupt_handler} for
-interrupts that do not use low-latency handlers.  In both cases, GCC
-emits appropriate prologue code and generates a return from the handler
-using @code{rtid} instead of @code{rtsd}.
+これらの属性は、指定された関数が割り込みハンドラであることを示す。 低レイテンシの割り込みモードで使用されるハンドラを示すには@code{fast_interrupt}属性を使用し、低レイテンシハンドラを使用しない割り込みには@code{interrupt_handler}を使用する。 どちらの場合も、GCCは適切なプロローグコードを生成し、@code {rtsd}の代わりに@code{rtid}を使用してハンドラからのリターンを生成する。
 @end table
 
 @node Microsoft Windows Function Attributes
