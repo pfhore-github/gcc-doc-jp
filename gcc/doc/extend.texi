@@ -2806,101 +2806,46 @@ void f () __attribute__ ((break_handler));
 @end table
 
 @node Microsoft Windows Function Attributes
-@subsection Microsoft Windows Function Attributes
+@subsection Microsoft Windows関数属性
 
-The following attributes are available on Microsoft Windows and Symbian OS
-targets.
+次の属性は、Microsoft WindowsおよびSymbian OSターゲットで使用できる。
 
 @table @code
 @item dllexport
 @cindex @code{dllexport} function attribute
 @cindex @code{__declspec(dllexport)}
-On Microsoft Windows targets and Symbian OS targets the
-@code{dllexport} attribute causes the compiler to provide a global
-pointer to a pointer in a DLL, so that it can be referenced with the
-@code{dllimport} attribute.  On Microsoft Windows targets, the pointer
-name is formed by combining @code{_imp__} and the function or variable
-name.
+Microsoft WindowsターゲットとSymbian OSターゲットでは、@code{dllexport}属性を使用すると、コンパイラーはDLLのポインターへのグローバルポインターを提供し、@code{dllimport}属性で参照できるようになる。 Microsoft Windowsターゲットでは、@code{_imp__}と関数名または変数名を組み合わせてポインタ名を作成する。
 
-You can use @code{__declspec(dllexport)} as a synonym for
-@code{__attribute__ ((dllexport))} for compatibility with other
-compilers.
+他のコンパイラとの互換性のため、@code{__declspec(dllexport)}を@code{__attribute__((dllexport))}と同義語として使うことができる。
 
-On systems that support the @code{visibility} attribute, this
-attribute also implies ``default'' visibility.  It is an error to
-explicitly specify any other visibility.
+@code{visibility}属性をサポートするシステムでは、この属性は「default」の可視性も意味する。 他の可視性を明示的に指定するのは誤りである。
 
-GCC's default behavior is to emit all inline functions with the
-@code{dllexport} attribute.  Since this can cause object file-size bloat,
-you can use @option{-fno-keep-inline-dllexport}, which tells GCC to
-ignore the attribute for inlined functions unless the 
-@option{-fkeep-inline-functions} flag is used instead.
+GCCのデフォルトの動作は、@code{dllexport}属性を持つすべてのインライン関数を出力することである。 これはオブジェクトファイルサイズの膨張を引き起こす可能性があるので、@option{-fkeep-inline-functions}フラグが代わりに使用されない限り、GCCにインライン関数の属性を無視するように指示する@option{-fno-keep-inline-dllexport}を使用できる。
 
-The attribute is ignored for undefined symbols.
+定義されていないシンボルの場合、属性は無視される。
 
-When applied to C++ classes, the attribute marks defined non-inlined
-member functions and static data members as exports.  Static consts
-initialized in-class are not marked unless they are also defined
-out-of-class.
+C++クラスに適用すると、属性は非インラインメンバー関数と静的データメンバーをエクスポートとして定義する。 クラス内で初期化された静的constは、クラス外でも定義されていない限り、マークされない。
 
-For Microsoft Windows targets there are alternative methods for
-including the symbol in the DLL's export table such as using a
-@file{.def} file with an @code{EXPORTS} section or, with GNU ld, using
-the @option{--export-all} linker flag.
+Microsoft Windowsターゲットでは、@code{EXPORTS}セクションで@file{.def}ファイルを使用するか、@option{--export-all}リンカーフラグを使用してGNU ldでシンボルをDLLのエクスポートテーブルに組み込む方法がある。
 
 @item dllimport
 @cindex @code{dllimport} function attribute
 @cindex @code{__declspec(dllimport)}
-On Microsoft Windows and Symbian OS targets, the @code{dllimport}
-attribute causes the compiler to reference a function or variable via
-a global pointer to a pointer that is set up by the DLL exporting the
-symbol.  The attribute implies @code{extern}.  On Microsoft Windows
-targets, the pointer name is formed by combining @code{_imp__} and the
-function or variable name.
+Microsoft WindowsおよびSymbian OSターゲットでは、@code{dllimport}属性により、コンパイラはシンボルをエクスポートするDLLによって設定されたポインタへのグローバルポインタを介して関数または変数を参照する。 この属性は@code{extern}を意味する。 Microsoft Windowsターゲットでは、@code{_imp__}と関数名または変数名を組み合わせてポインタ名を作成する。
 
-You can use @code{__declspec(dllimport)} as a synonym for
-@code{__attribute__ ((dllimport))} for compatibility with other
-compilers.
+他のコンパイラとの互換性のため、@code{__declspec(dllimport)}を@code {__attribute__((dllimport))}の同義語として使うことができる。
 
-On systems that support the @code{visibility} attribute, this
-attribute also implies ``default'' visibility.  It is an error to
-explicitly specify any other visibility.
+@code{visibility}属性をサポートするシステムでは、この属性は「default」の可視性も意味する。 他の可視性を明示的に指定するのは誤りである。
 
-Currently, the attribute is ignored for inlined functions.  If the
-attribute is applied to a symbol @emph{definition}, an error is reported.
-If a symbol previously declared @code{dllimport} is later defined, the
-attribute is ignored in subsequent references, and a warning is emitted.
-The attribute is also overridden by a subsequent declaration as
-@code{dllexport}.
+現在、インライン関数の場合、属性は無視される。属性がシンボル@emph{_定義_}に適用されると、エラーが報告される。以前に@code{dllimport}と宣言されたシンボルが後で定義された場合、その属性は後続の参照では無視され、警告が発行される。この属性は、以降の@code{dllexport}の宣言によっても上書きされる。
 
-When applied to C++ classes, the attribute marks non-inlined
-member functions and static data members as imports.  However, the
-attribute is ignored for virtual methods to allow creation of vtables
-using thunks.
+C++クラスに適用すると、属性はインラインでないメンバ関数と静的データメンバをインポートとしてマークする。 ただし、サンクを使用してvtableを作成できるようにする仮想メソッドでは、属性は無視される。
 
-On the SH Symbian OS target the @code{dllimport} attribute also has
-another affect---it can cause the vtable and run-time type information
-for a class to be exported.  This happens when the class has a
-dllimported constructor or a non-inline, non-pure virtual function
-and, for either of those two conditions, the class also has an inline
-constructor or destructor and has a key function that is defined in
-the current translation unit.
+SH Symbian OSターゲットでは、@code{dllimport}属性には別の影響もある。クラスのvtableおよび実行時の型情報がエクスポートされる可能性がある。これは、クラスにdllimportされたコンストラクタまたは非インラインで純粋でない仮想関数があり、（これらの2つの条件のいずれかに対して）クラスにインラインコンストラクタまたはデストラクタがあり、現在の翻訳単位で定義されているキー関数を持っている場合に発生する。
 
-For Microsoft Windows targets the use of the @code{dllimport}
-attribute on functions is not necessary, but provides a small
-performance benefit by eliminating a thunk in the DLL@.  The use of the
-@code{dllimport} attribute on imported variables can be avoided by passing the
-@option{--enable-auto-import} switch to the GNU linker.  As with
-functions, using the attribute for a variable eliminates a thunk in
-the DLL@.
+Microsoft Windowsターゲットでは、関数に@code{dllimport}属性を使用する必要はないが、DLL内のサンクを除去することでパフォーマンスが少し向上する。@option{-enable-auto-import}スイッチをGNUリンカーに渡すことで、インポートされた変数に@code{dllimport}属性を使用することを避けることができる。 関数と同様に、変数の属性を使用すると、DLL内のサンクがなくなる。
 
-One drawback to using this attribute is that a pointer to a
-@emph{variable} marked as @code{dllimport} cannot be used as a constant
-address. However, a pointer to a @emph{function} with the
-@code{dllimport} attribute can be used as a constant initializer; in
-this case, the address of a stub function in the import lib is
-referenced.  On Microsoft Windows targets, the attribute can be disabled
-for functions by setting the @option{-mnop-fun-dllimport} flag.
+この属性を使用することの1つの欠点は、@code{dllimport}とマークされた@emph{_変数_}へのポインタを定数アドレスとして使用できないことである。 しかし、@code{dllimport}属性を持つ@emph{_関数_}へのポインタは定数初期化子として使用できる。 この場合、インポートlib内のスタブ関数のアドレスが参照される。 Microsoft Windowsターゲットでは、@option{-mnop-fun-dllimport}フラグを設定することで、関数の属性を無効にすることができる。
 @end table
 
 @node MIPS Function Attributes
