@@ -2849,48 +2849,31 @@ Microsoft Windowsターゲットでは、関数に@code{dllimport}属性を使�
 @end table
 
 @node MIPS Function Attributes
-@subsection MIPS Function Attributes
+@subsection MIPS関数属性
 
-These function attributes are supported by the MIPS back end:
+これらの関数属性は、MIPSバックエンドによってサポートされている。
 
 @table @code
 @item interrupt
 @cindex @code{interrupt} function attribute, MIPS
-Use this attribute to indicate that the specified function is an interrupt
-handler.  The compiler generates function entry and exit sequences suitable
-for use in an interrupt handler when this attribute is present.
-An optional argument is supported for the interrupt attribute which allows
-the interrupt mode to be described.  By default GCC assumes the external
-interrupt controller (EIC) mode is in use, this can be explicitly set using
-@code{eic}.  When interrupts are non-masked then the requested Interrupt
-Priority Level (IPL) is copied to the current IPL which has the effect of only
-enabling higher priority interrupts.  To use vectored interrupt mode use
-the argument @code{vector=[sw0|sw1|hw0|hw1|hw2|hw3|hw4|hw5]}, this will change
-the behavior of the non-masked interrupt support and GCC will arrange to mask
-all interrupts from sw0 up to and including the specified interrupt vector.
+この属性を使用して、指定された関数が割り込みハンドラであることを示す。コンパイラは、この属性が存在するときに割り込みハンドラでの使用に適した関数の入力および終了シーケンスを生成する。割込みモードを記述できるようにするために、オプションの引数が割込み属性に対してサポートされている。 デフォルトでは、GCCは外部割り込みコントローラ（EIC）モードが使用されていることを前提としている。これは、@ code{eic}を使って明示的に設定できる。割込みがマスクされていない場合、要求された割込み優先レベル（IPL）が現在のIPLにコピーされ、優先順位の高い割込みのみを有効にする効果がある。ベクタ割り込みモードを使用するには、引数@code{vector=[sw0|sw1|hw0|hw1|hw2|hw3|hw4|hw5}}を使用する。これはマスクされていない割り込みサポートの動作を変更し、GCCはsw0から指定された割り込みベクタまでのすべての割り込みをマスクするように手配する。
 
-You can use the following attributes to modify the behavior
-of an interrupt handler:
+次の属性を使用して、割り込みハンドラの動作を変更できる。
 @table @code
 @item use_shadow_register_set
 @cindex @code{use_shadow_register_set} function attribute, MIPS
-Assume that the handler uses a shadow register set, instead of
-the main general-purpose registers.  An optional argument @code{intstack} is
-supported to indicate that the shadow register set contains a valid stack
-pointer.
+ハンドラが主な汎用レジスタの代わりにシャドウレジスタセットを使用すると仮定する。 オプションの引数@code{intstack}は、シャドウレジスタセットに有効なスタックポインタが含まれていることを示すためにサポートされている。
 
 @item keep_interrupts_masked
 @cindex @code{keep_interrupts_masked} function attribute, MIPS
-Keep interrupts masked for the whole function.  Without this attribute,
-GCC tries to reenable interrupts for as much of the function as it can.
+関数全体に対して割り込みをマスクしておく。 この属性がなければ、GCCは可能な限り多くの関数に対して割り込みを再び有効にしようとする。
 
 @item use_debug_exception_return
 @cindex @code{use_debug_exception_return} function attribute, MIPS
-Return using the @code{deret} instruction.  Interrupt handlers that don't
-have this attribute return using @code{eret} instead.
+@code{deret}命令を使用して復帰する。 この属性を持たない割り込みハンドラは、代わりに@code{eret}を使用して復帰する。
 @end table
 
-You can use any combination of these attributes, as shown below:
+以下に示すように、これらの属性の任意の組み合わせを使用できる。
 @smallexample
 void __attribute__ ((interrupt)) v0 ();
 void __attribute__ ((interrupt, use_shadow_register_set)) v1 ();
@@ -2916,60 +2899,27 @@ void __attribute__ ((interrupt("vector=hw3"))) v9 ();
 @cindex @code{long_call} function attribute, MIPS
 @cindex @code{near} function attribute, MIPS
 @cindex @code{far} function attribute, MIPS
-These attributes specify how a particular function is called on MIPS@.
-The attributes override the @option{-mlong-calls} (@pxref{MIPS Options})
-command-line switch.  The @code{long_call} and @code{far} attributes are
-synonyms, and cause the compiler to always call
-the function by first loading its address into a register, and then using
-the contents of that register.  The @code{near} attribute has the opposite
-effect; it specifies that non-PIC calls should be made using the more
-efficient @code{jal} instruction.
+これらの属性は、特定の関数がMIPSでどのように呼び出されるかを指定する。属性は@option{-mlong-calls}（@pxref{MIPS Options}）コマンドラインスイッチよりも優先される。 @code{long_call}属性と@code{far}属性は同義語であり、コンパイラは最初にそのアドレスをレジスタにロードし、次にそのレジスタの内容を使用して関数を呼び出すようにする。@code{near}属性は逆の効果を持つ。 より効率的な@code{jal}命令を使用して非PIC呼び出しを行う必要があることを指定する。
 
 @item mips16
 @itemx nomips16
 @cindex @code{mips16} function attribute, MIPS
 @cindex @code{nomips16} function attribute, MIPS
+MIPSターゲットでは、@code{mips16}および@code{nomips16}関数属性を使用して、MIPS16コード生成を局所的に選択または無効にすることができる。@code{mips16}属性を持つ関数はMIPS16コードとして出力される一方、MIPS16コード生成は@code{nomips16}属性を持つ関数では無効になる。 これらの属性は、コマンド行の@option{-mips16}オプションと@option{-mno-mips16}オプションをオーバーライドする(@pxref{MIPS Options})。
 
-On MIPS targets, you can use the @code{mips16} and @code{nomips16}
-function attributes to locally select or turn off MIPS16 code generation.
-A function with the @code{mips16} attribute is emitted as MIPS16 code,
-while MIPS16 code generation is disabled for functions with the
-@code{nomips16} attribute.  These attributes override the
-@option{-mips16} and @option{-mno-mips16} options on the command line
-(@pxref{MIPS Options}).
-
-When compiling files containing mixed MIPS16 and non-MIPS16 code, the
-preprocessor symbol @code{__mips16} reflects the setting on the command line,
-not that within individual functions.  Mixed MIPS16 and non-MIPS16 code
-may interact badly with some GCC extensions such as @code{__builtin_apply}
-(@pxref{Constructing Calls}).
+MIPS16とMIPS16の混在したコードを含むファイルをコンパイルするとき、プリプロセッサシンボル@code{__ mips16}は個々の関数内の設定ではなく、コマンドラインでの設定を反映する。MIPS16と非MIPS16コードの混合は、@code{__ builtin_apply}のようないくつかのGCC拡張とうまくやりとりできない。(@pxref{Constructing Calls}).
 
 @item micromips, MIPS
 @itemx nomicromips, MIPS
 @cindex @code{micromips} function attribute
 @cindex @code{nomicromips} function attribute
+MIPSターゲットでは、@code{micromips}および@code{nomicromips}関数属性を使用して、microMIPSコード生成を局所的に選択またはオフにすることができる。@code{micromips}属性を持つ関数は、microMIPSコードとして出力される一方、microMIPSコード生成は、@code{nomicromips}属性を持つ関数に対しては無効である。これらの属性は、コマンド行の@option{-mmicromips}オプションと@option{-mno-micromips}オプションよりも優先される(@pxref{MIPS Options})。
 
-On MIPS targets, you can use the @code{micromips} and @code{nomicromips}
-function attributes to locally select or turn off microMIPS code generation.
-A function with the @code{micromips} attribute is emitted as microMIPS code,
-while microMIPS code generation is disabled for functions with the
-@code{nomicromips} attribute.  These attributes override the
-@option{-mmicromips} and @option{-mno-micromips} options on the command line
-(@pxref{MIPS Options}).
-
-When compiling files containing mixed microMIPS and non-microMIPS code, the
-preprocessor symbol @code{__mips_micromips} reflects the setting on the
-command line,
-not that within individual functions.  Mixed microMIPS and non-microMIPS code
-may interact badly with some GCC extensions such as @code{__builtin_apply}
-(@pxref{Constructing Calls}).
+microMIPSとnon-microMIPSの混在したファイルをコンパイルする場合、プリプロセッサシンボル@code{__mips_micromips}は個々の関数内の設定ではなく、コマンドラインの設定を反映する。 混合microMIPSと非microMIPSコードは、@code{__ builtin_apply}のようないくつかのGCC拡張とうまくやりとりできない。(@pxref{Constructing Calls})。
 
 @item nocompression
 @cindex @code{nocompression} function attribute, MIPS
-On MIPS targets, you can use the @code{nocompression} function attribute
-to locally turn off MIPS16 and microMIPS code generation.  This attribute
-overrides the @option{-mips16} and @option{-mmicromips} options on the
-command line (@pxref{MIPS Options}).
+MIPSターゲットでは、@code{nocompression}関数属性を使用して、MIPS16およびmicroMIPSコードの生成を局所的にオフにすることができる。 この属性は、コマンド行の@option{-mips16}オプションと@option{-mmicromips}オプションをオーバーライドする。(@pxref{MIPS Options}).
 @end table
 
 @node MSP430 Function Attributes
