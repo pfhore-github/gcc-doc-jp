@@ -3013,38 +3013,27 @@ NMI例外を処理するユーザー定義関数を提供する。
 @end table
 
 @node Nios II Function Attributes
-@subsection Nios II Function Attributes
+@subsection Nios II関数属性
 
-These function attributes are supported by the Nios II back end:
+これらの関数属性は、Nios IIバックエンドでサポートされている。
 
 @table @code
 @item target (@var{options})
 @cindex @code{target} function attribute
-As discussed in @ref{Common Function Attributes}, this attribute 
-allows specification of target-specific compilation options.
+@ref{Common Function Attributes}で説明したように、この属性ではターゲット固有のコンパイルオプションを指定できる。
 
-When compiling for Nios II, the following options are allowed:
+Nios II用にコンパイルする場合は、次のオプションを使用できる。
 
 @table @samp
 @item custom-@var{insn}=@var{N}
 @itemx no-custom-@var{insn}
 @cindex @code{target("custom-@var{insn}=@var{N}")} function attribute, Nios II
 @cindex @code{target("no-custom-@var{insn}")} function attribute, Nios II
-Each @samp{custom-@var{insn}=@var{N}} attribute locally enables use of a
-custom instruction with encoding @var{N} when generating code that uses 
-@var{insn}.  Similarly, @samp{no-custom-@var{insn}} locally inhibits use of
-the custom instruction @var{insn}.
-These target attributes correspond to the
-@option{-mcustom-@var{insn}=@var{N}} and @option{-mno-custom-@var{insn}}
-command-line options, and support the same set of @var{insn} keywords.
-@xref{Nios II Options}, for more information.
+各@samp{custom-@var{insn}=@var{N}}属性は、@var{insn}を使用するコードを生成するときに@var{N}をエンコードしてカスタム命令をローカルで使用できるようにする。 同様に、@samp{no-custom-@var{insn}}はカスタム命令@var{insn}の使用をローカルで禁止する。これらのターゲット属性は、@option{-mcustom-@var{insn}=@var{N}}および@option{-mno-custom-@var{insn}}コマンドラインオプションに対応し、 @var{insn}キーワードと同じセットをサポートする。詳細は@xref{Nios II Options}を参照せよ。
 
 @item custom-fpu-cfg=@var{name}
 @cindex @code{target("custom-fpu-cfg=@var{name}")} function attribute, Nios II
-This attribute corresponds to the @option{-mcustom-fpu-cfg=@var{name}}
-command-line option, to select a predefined set of custom instructions
-named @var{name}.
-@xref{Nios II Options}, for more information.
+この属性は@option{-mcustom-fpu-cfg=@var{name}}コマンドラインオプションに対応し、@var{name}というカスタム命令の定義済みセットを選択する。さらなる情報は@xref{Nios II Options}。
 @end table
 @end table
 
