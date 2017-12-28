@@ -2856,7 +2856,7 @@ Microsoft Windowsターゲットでは、関数に@code{dllimport}属性を使�
 @table @code
 @item interrupt
 @cindex @code{interrupt} function attribute, MIPS
-この属性を使用して、指定された関数が割り込みハンドラであることを示す。コンパイラは、この属性が存在するときに割り込みハンドラでの使用に適した関数の入力および終了シーケンスを生成する。割込みモードを記述できるようにするために、オプションの引数が割込み属性に対してサポートされている。 デフォルトでは、GCCは外部割り込みコントローラ（EIC）モードが使用されていることを前提としている。これは、@ code{eic}を使って明示的に設定できる。割込みがマスクされていない場合、要求された割込み優先レベル（IPL）が現在のIPLにコピーされ、優先順位の高い割込みのみを有効にする効果がある。ベクタ割り込みモードを使用するには、引数@code{vector=[sw0|sw1|hw0|hw1|hw2|hw3|hw4|hw5}}を使用する。これはマスクされていない割り込みサポートの動作を変更し、GCCはsw0から指定された割り込みベクタまでのすべての割り込みをマスクするように手配する。
+この属性を使用して、指定された関数が割り込みハンドラであることを示す。コンパイラは、この属性が存在するときに割り込みハンドラでの使用に適した関数の入力および終了シーケンスを生成する。割込みモードを記述できるようにするために、オプションの引数が割込み属性に対してサポートされている。 デフォルトでは、GCCは外部割り込みコントローラ（EIC）モードが使用されていることを前提としている。これは、@ code{eic}を使って明示的に設定できる。割込みがマスクされていない場合、要求された割込み優先レベル（IPL）が現在のIPLにコピーされ、優先順位の高い割込みのみを有効にする効果がある。ベクタ割り込みモードを使用するには、引数@code{vector=[sw0|sw1|hw0|hw1|hw2|hw3|hw4|hw5}を使用する。これはマスクされていない割り込みサポートの動作を変更し、GCCはsw0から指定された割り込みベクタまでのすべての割り込みをマスクするように手配する。
 
 次の属性を使用して、割り込みハンドラの動作を変更できる。
 @table @code
@@ -2963,71 +2963,52 @@ MSP430ターゲットでは、これらの属性を使用して、関数また�
 @end table
 
 @node NDS32 Function Attributes
-@subsection NDS32 Function Attributes
+@subsection NDS32関数属性
 
-These function attributes are supported by the NDS32 back end:
+これらの関数属性は、NDS32バックエンドによってサポートされている。
 
 @table @code
 @item exception
 @cindex @code{exception} function attribute
 @cindex exception handler functions, NDS32
-Use this attribute on the NDS32 target to indicate that the specified function
-is an exception handler.  The compiler will generate corresponding sections
-for use in an exception handler.
+指定された関数が例外ハンドラであることを示すには、NDS32ターゲットでこの属性を使用する。 コンパイラは、対応するセクションを生成して例外ハンドラで使用する。
 
 @item interrupt
 @cindex @code{interrupt} function attribute, NDS32
-On NDS32 target, this attribute indicates that the specified function
-is an interrupt handler.  The compiler generates corresponding sections
-for use in an interrupt handler.  You can use the following attributes
-to modify the behavior:
+NDS32ターゲットでは、この属性は指定された関数が割り込みハンドラであることを示す。 コンパイラは、対応するセクションを生成して割り込みハンドラで使用する。 次の属性を使用して動作を変更できる。
 @table @code
 @item nested
 @cindex @code{nested} function attribute, NDS32
-This interrupt service routine is interruptible.
+この割り込みサービスルーチンは割り込み可能である。
 @item not_nested
 @cindex @code{not_nested} function attribute, NDS32
-This interrupt service routine is not interruptible.
+この割り込みサービスルーチンは中断できない。
 @item nested_ready
 @cindex @code{nested_ready} function attribute, NDS32
-This interrupt service routine is interruptible after @code{PSW.GIE}
-(global interrupt enable) is set.  This allows interrupt service routine to
-finish some short critical code before enabling interrupts.
+この割り込みサービスルーチンは、@code{PSW.GIE}（グローバル割り込み許可）がセットされた後に割り込み可能である。 これにより、割り込みサービスルーチンは、割り込みを有効にする前に、いくつかの重要な短いコードを終了することができる。
 @item save_all
 @cindex @code{save_all} function attribute, NDS32
-The system will help save all registers into stack before entering
-interrupt handler.
+システムは、割り込みハンドラに入る前にすべてのレジスタをスタックに保存するのを助ける。
 @item partial_save
 @cindex @code{partial_save} function attribute, NDS32
-The system will help save caller registers into stack before entering
-interrupt handler.
+システムは、割り込みハンドラに入る前に呼び出し元レジスタをスタックに保存するのを助ける。
 @end table
 
 @item naked
 @cindex @code{naked} function attribute, NDS32
-This attribute allows the compiler to construct the
-requisite function declaration, while allowing the body of the
-function to be assembly code. The specified function will not have
-prologue/epilogue sequences generated by the compiler. Only basic
-@code{asm} statements can safely be included in naked functions
-(@pxref{Basic Asm}). While using extended @code{asm} or a mixture of
-basic @code{asm} and C code may appear to work, they cannot be
-depended upon to work reliably and are not supported.
+この属性により、コンパイラは関数の本体をアセンブリコードにしながら、必要な関数宣言を構築することができる。 指定された関数は、コンパイラによって生成されたプロローグ/エピローグシーケンスを持たない。基本@code{asm}文だけが安全にnaked関数（@pxref{Basic Asm}）に含まれることができる。 拡張@code{asm}または基本@code{asm}とCコードの混在を使用すると動作するように見えていても、信頼できる動作に依存することはできず、サポートされていない。
 
 @item reset
 @cindex @code{reset} function attribute, NDS32
 @cindex reset handler functions
-Use this attribute on the NDS32 target to indicate that the specified function
-is a reset handler.  The compiler will generate corresponding sections
-for use in a reset handler.  You can use the following attributes
-to provide extra exception handling:
+指定された関数がリセットハンドラであることを示すには、NDS32ターゲットでこの属性を使用する。 コンパイラは対応するセクションを生成し、リセットハンドラで使用する。 追加の例外処理を提供するには、次の属性を使用できる。
 @table @code
 @item nmi
 @cindex @code{nmi} function attribute, NDS32
-Provide a user-defined function to handle NMI exception.
+NMI例外を処理するユーザー定義関数を提供する。
 @item warm
 @cindex @code{warm} function attribute, NDS32
-Provide a user-defined function to handle warm reset exception.
+ウォームリセット例外を処理するためのユーザー定義関数を提供する。
 @end table
 @end table
 
