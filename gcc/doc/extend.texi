@@ -3038,19 +3038,16 @@ Nios II用にコンパイルする場合は、次のオプションを使用で�
 @end table
 
 @node Nvidia PTX Function Attributes
-@subsection Nvidia PTX Function Attributes
+@subsection Nvidia PTX関数属性
 
-These function attributes are supported by the Nvidia PTX back end:
+これらの関数属性は、Nvidia PTXバックエンドによってサポートされている。
 
 @table @code
 @item kernel
 @cindex @code{kernel} attribute, Nvidia PTX
-This attribute indicates that the corresponding function should be compiled
-as a kernel function, which can be invoked from the host via the CUDA RT 
-library.
-By default functions are only callable only from other PTX functions.
+この属性は、対応する関数をCUDA RTライブラリ経由でホストから呼び出すことができるカーネル関数としてコンパイルする必要があることを示す。デフォルトでは、関数は他のPTX関数からのみ呼び出すことができる。
 
-Kernel functions must have @code{void} return type.
+カーネル関数は@code {void}戻り型を持たなければならない。
 @end table
 
 @node PowerPC Function Attributes
