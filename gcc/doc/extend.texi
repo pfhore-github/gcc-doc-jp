@@ -3368,8 +3368,7 @@ SHターゲットでは、この関数属性は@code{interrupt_handler}と似て
 @node Symbian OS Function Attributes
 @subsection Symbian OS関数属性
 
-@xref{Microsoft Windows Function Attributes}, for discussion of the
-@code{dllexport} and @code{dllimport} attributes.
+@code {dllexport}属性と@code {dllimport}属性の議論には、@xref{Microsoft Windows Function Attributes}。
 
 @node V850 Function Attributes
 @subsection V850 Function Attributes
