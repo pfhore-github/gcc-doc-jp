@@ -3305,68 +3305,39 @@ S/390では、以下のオプションがサポートされています。
 @end table
 
 @node SH Function Attributes
-@subsection SH Function Attributes
+@subsection SH関数属性
 
-These function attributes are supported on the SH family of processors:
+これらの関数属性は、SHファミリのプロセッサでサポートされている。
 
 @table @code
 @item function_vector
 @cindex @code{function_vector} function attribute, SH
 @cindex calling functions through the function vector on SH2A
-On SH2A targets, this attribute declares a function to be called using the
-TBR relative addressing mode.  The argument to this attribute is the entry
-number of the same function in a vector table containing all the TBR
-relative addressable functions.  For correct operation the TBR must be setup
-accordingly to point to the start of the vector table before any functions with
-this attribute are invoked.  Usually a good place to do the initialization is
-the startup routine.  The TBR relative vector table can have at max 256 function
-entries.  The jumps to these functions are generated using a SH2A specific,
-non delayed branch instruction JSR/N @@(disp8,TBR).  You must use GAS and GLD
-from GNU binutils version 2.7 or later for this attribute to work correctly.
+SH2Aターゲットでは、この属性はTBR相対アドレッシングモードを使用して呼び出される関数を宣言する。 この属性の引数は、すべてのTBR相対アドレス可能関数を含むベクトルテーブル内の同じ関数のエントリ番号である。 正しい動作のためには、この属性を持つ関数が呼び出される前に、ベクタテーブルの開始点を指すようにTBRを設定する必要がある。 通常、初期化を行うには、スタートアップルーチンが適している。 TBR相対ベクトルテーブルは最大256の機能エントリを有することができる。 これらの関数へのジャンプは、SH2A固有の遅延なし分岐命令JSR/N @@(disp8, TBR)を使用して生成される。 この属性が正しく機能するには、GNU binutilsバージョン2.7以降のGASおよびGLDを使用する必要がある。
 
-In an application, for a function being called once, this attribute
-saves at least 8 bytes of code; and if other successive calls are being
-made to the same function, it saves 2 bytes of code per each of these
-calls.
+アプリケーションでは、一度呼び出される関数の場合、この属性は少なくとも8バイトのコードを保存する。 同じ関数に対して他の連続した呼び出しが行われている場合は、これらの呼び出しごとに2バイトのコードが保存される。
 
 @item interrupt_handler
 @cindex @code{interrupt_handler} function attribute, SH
-Use this attribute to
-indicate that the specified function is an interrupt handler.  The compiler
-generates function entry and exit sequences suitable for use in an
-interrupt handler when this attribute is present.
+この属性を使用して、指定された関数が割り込みハンドラであることを示す。 コンパイラは、この属性が存在するときに割り込みハンドラでの使用に適した関数の入力および終了シーケンスを生成する。
 
 @item nosave_low_regs
 @cindex @code{nosave_low_regs} function attribute, SH
-Use this attribute on SH targets to indicate that an @code{interrupt_handler}
-function should not save and restore registers R0..R7.  This can be used on SH3*
-and SH4* targets that have a second R0..R7 register bank for non-reentrant
-interrupt handlers.
+@code{interrupt_handler}関数がレジスタR0..R7を保存して復元してはならないことを示すには、SHターゲットでこの属性を使用する。 これは、リエントラントでない割り込みハンドラに対して2番目のR0..R7レジスタバンクを持つSH3*およびSH4*ターゲットで使用できる。
 
 @item renesas
 @cindex @code{renesas} function attribute, SH
-On SH targets this attribute specifies that the function or struct follows the
-Renesas ABI.
+SHターゲットでは、この属性はルネサスABIの後に関数または構造体が続くことを指定する。
 
 @item resbank
 @cindex @code{resbank} function attribute, SH
-On the SH2A target, this attribute enables the high-speed register
-saving and restoration using a register bank for @code{interrupt_handler}
-routines.  Saving to the bank is performed automatically after the CPU
-accepts an interrupt that uses a register bank.
+SH2Aターゲットでは、@code{interrupt_handler}ルーチン用のレジスタバンクを使用して高速レジスタの保存と復元が可能である。 バンクへのセーブは、CPUがレジスタバンクを使用する割り込みを受け付けた後に自動的に実行される。
 
-The nineteen 32-bit registers comprising general register R0 to R14,
-control register GBR, and system registers MACH, MACL, and PR and the
-vector table address offset are saved into a register bank.  Register
-banks are stacked in first-in last-out (FILO) sequence.  Restoration
-from the bank is executed by issuing a RESBANK instruction.
+汎用レジスタR0〜R14、制御レジスタGBR、およびシステム・レジスタMACH、MACL、PRおよびベクタ・テーブル・アドレス・オフセットを含む19の32ビット・レジスタは、レジスタ・バンクに保存される。 レジスタバンクはファーストイン・ラスト・アウト（FILO）シーケンスでスタックされている。 RESBANK命令を発行することにより、バンクからの復元が実行される。
 
 @item sp_switch
 @cindex @code{sp_switch} function attribute, SH
-Use this attribute on the SH to indicate an @code{interrupt_handler}
-function should switch to an alternate stack.  It expects a string
-argument that names a global variable holding the address of the
-alternate stack.
+この属性をSHで使用すると、@code{interrupt_handler}関数を代替スタックに切り替える必要がある。 代替スタックのアドレスを保持するグローバル変数に名前を付ける文字列引数が必要である。
 
 @smallexample
 void *alt_stack;
@@ -3376,14 +3347,11 @@ void f () __attribute__ ((interrupt_handler,
 
 @item trap_exit
 @cindex @code{trap_exit} function attribute, SH
-Use this attribute on the SH for an @code{interrupt_handler} to return using
-@code{trapa} instead of @code{rte}.  This attribute expects an integer
-argument specifying the trap number to be used.
+@code{interrupt_handler}が@code {trap}の代わりに@code {rte}を使用して戻るには、SHのこの属性を使用する。 この属性には、使用されるトラップ番号を指定する整数引数が必要である。
 
 @item trapa_handler
 @cindex @code{trapa_handler} function attribute, SH
-On SH targets this function attribute is similar to @code{interrupt_handler}
-but it does not save and restore all registers.
+SHターゲットでは、この関数属性は@code{interrupt_handler}と似ているが、すべてのレジスタを保存して復元するわけではない。
 @end table
 
 @node SPU Function Attributes
