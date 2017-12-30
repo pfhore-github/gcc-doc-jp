@@ -3250,31 +3250,23 @@ void __attribute__ ((interrupt (RXD1_VECT,RXD2_VECT,"dct","$default")))
 @end table
 
 @node S/390 Function Attributes
-@subsection S/390 Function Attributes
+@subsection S/390関数属性
 
-These function attributes are supported on the S/390:
+これらの関数属性は、S/390でサポートされている。
 
 @table @code
 @item hotpatch (@var{halfwords-before-function-label},@var{halfwords-after-function-label})
 @cindex @code{hotpatch} function attribute, S/390
 
-On S/390 System z targets, you can use this function attribute to
-make GCC generate a ``hot-patching'' function prologue.  If the
-@option{-mhotpatch=} command-line option is used at the same time,
-the @code{hotpatch} attribute takes precedence.  The first of the
-two arguments specifies the number of halfwords to be added before
-the function label.  A second argument can be used to specify the
-number of halfwords to be added after the function label.  For
-both arguments the maximum allowed value is 1000000.
+S/390 System zターゲットでは、この関数属性を使用して、GCCに「ホット・パッチ」機能のプロローグを生成させることができる。 @option{-mhotpatch =}コマンドラインオプションを同時に使用すると、@code{hotpatch}属性が優先される。 最初の2つの引数は、関数ラベルの前に追加するハーフワードの数を指定する。 2番目の引数を使用して、関数ラベルの後ろに追加するハーフワードの数を指定できる。 両方の引数について、最大許容値は1000000である。
 
-If both arguments are zero, hotpatching is disabled.
+両方の引数がゼロの場合、ホットパッチは無効になる。
 
 @item target (@var{options})
 @cindex @code{target} function attribute
-As discussed in @ref{Common Function Attributes}, this attribute
-allows specification of target-specific compilation options.
+@ref{Common Function Attributes}で説明したように、この属性ではターゲット固有のコンパイルオプションを指定できる。
 
-On S/390, the following options are supported:
+S/390では、以下のオプションがサポートされています。
 
 @table @samp
 @item arch=
@@ -3303,15 +3295,13 @@ On S/390, the following options are supported:
 @itemx no-warn-dynamicstack
 @end table
 
-The options work exactly like the S/390 specific command line
-options (without the prefix @option{-m}) except that they do not
-change any feature macros.  For example,
+これらのオプションは、S/390固有のコマンドラインオプション（@option {-m}のプレフィックスなし）とまったく同じように機能するが、機能マクロは変更されない。 例えば、
 
 @smallexample
 @code{target("no-vx")}
 @end smallexample
 
-does not undefine the @code{__VEC__} macro.
+は@code {__ VEC__}マクロを定義解除しない。
 @end table
 
 @node SH Function Attributes
