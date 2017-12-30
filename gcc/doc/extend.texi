@@ -3371,23 +3371,20 @@ SHターゲットでは、この関数属性は@code{interrupt_handler}と似て
 @code {dllexport}属性と@code {dllimport}属性の議論には、@xref{Microsoft Windows Function Attributes}。
 
 @node V850 Function Attributes
-@subsection V850 Function Attributes
+@subsection V850関数属性
 
-The V850 back end supports these function attributes:
+V850バックエンドは、次の関数属性をサポートしている。
 
 @table @code
 @item interrupt
 @itemx interrupt_handler
 @cindex @code{interrupt} function attribute, V850
 @cindex @code{interrupt_handler} function attribute, V850
-Use these attributes to indicate
-that the specified function is an interrupt handler.  The compiler generates
-function entry and exit sequences suitable for use in an interrupt handler
-when either attribute is present.
+これらの属性を使用して、指定された関数が割り込みハンドラであることを示す。 コンパイラは、どちらかの属性が存在する場合に割り込みハンドラで使用するのに適した関数の入力および終了シーケンスを生成する。
 @end table
 
 @node Visium Function Attributes
-@subsection Visium Function Attributes
+@subsection Visium関数属性
 
 These function attributes are supported by the Visium back end:
 
