@@ -3386,15 +3386,12 @@ V850バックエンドは、次の関数属性をサポートしている。
 @node Visium Function Attributes
 @subsection Visium関数属性
 
-These function attributes are supported by the Visium back end:
+これらの関数属性は、Visiumバックエンドによってサポートされている。
 
 @table @code
 @item interrupt
 @cindex @code{interrupt} function attribute, Visium
-Use this attribute to indicate
-that the specified function is an interrupt handler.  The compiler generates
-function entry and exit sequences suitable for use in an interrupt handler
-when this attribute is present.
+この属性を使用して、指定された関数が割り込みハンドラであることを示す。 コンパイラは、この属性が存在するときに割り込みハンドラでの使用に適した関数の入力および終了シーケンスを生成する。
 @end table
 
 @node x86 Function Attributes
