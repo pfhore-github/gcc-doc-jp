@@ -3638,21 +3638,18 @@ IEEE演算に依存する浮動小数点の生成を有効/無効にする。
 使用する浮動小数点ユニットを指定する。 コンマは異なるオプションを分離するため、@code{target( "fpmath=sse,387")}オプションは@code{target("fpmath=sse+387")}と指定する必要がある。
 @end table
 
-x86では、呼び出し側が呼び出し元のターゲットオプションのサブセットを持たない限り、インライナは呼び出し元とは異なるターゲットオプションを持つ関数をインライン化しない。 たとえば、@code{-msse3}は@code {-msse2}を意味するため、@code{target("sse3")}で宣言された関数は@code{target("sse2")}で関数をインライン化できる。
+x86では、呼び出し側が呼び出し元のターゲットオプションのサブセットを持たない限り、インライナは呼び出し元とは異なるターゲットオプションを持つ関数をインライン化しない。 たとえば、@code{-msse3}は@code{-msse2}を意味するため、@code{target("sse3")}で宣言された関数は@code{target("sse2")}で関数をインライン化できる。
 @end table
 
 @node Xstormy16 Function Attributes
-@subsection Xstormy16 Function Attributes
+@subsection Xstormy16関数属性
 
-These function attributes are supported by the Xstormy16 back end:
+これらの関数属性は、Xstormy16バックエンドによってサポートされている。
 
 @table @code
 @item interrupt
 @cindex @code{interrupt} function attribute, Xstormy16
-Use this attribute to indicate
-that the specified function is an interrupt handler.  The compiler generates
-function entry and exit sequences suitable for use in an interrupt handler
-when this attribute is present.
+この属性を使用して、指定された関数が割り込みハンドラであることを示す。 コンパイラは、この属性が存在するときに割り込みハンドラでの使用に適した関数の入力および終了シーケンスを生成する。
 @end table
 
 @node Variable Attributes
