@@ -3395,154 +3395,76 @@ V850バックエンドは、次の関数属性をサポートしている。
 @end table
 
 @node x86 Function Attributes
-@subsection x86 Function Attributes
+@subsection x86関数属性
 
-These function attributes are supported by the x86 back end:
+これらの関数属性は、x86バックエンドによってサポートされている。
 
 @table @code
 @item cdecl
 @cindex @code{cdecl} function attribute, x86-32
 @cindex functions that pop the argument stack on x86-32
 @opindex mrtd
-On the x86-32 targets, the @code{cdecl} attribute causes the compiler to
-assume that the calling function pops off the stack space used to
-pass arguments.  This is
-useful to override the effects of the @option{-mrtd} switch.
+x86-32ターゲットでは、@code{cdecl}属性により、コンパイラは呼び出し元の関数が引数を渡すために使用されたスタック領域をポップすると想定する。 これは、@option{-mrtd}スイッチの効果を無効にするのに便利である。
 
 @item fastcall
 @cindex @code{fastcall} function attribute, x86-32
 @cindex functions that pop the argument stack on x86-32
-On x86-32 targets, the @code{fastcall} attribute causes the compiler to
-pass the first argument (if of integral type) in the register ECX and
-the second argument (if of integral type) in the register EDX@.  Subsequent
-and other typed arguments are passed on the stack.  The called function
-pops the arguments off the stack.  If the number of arguments is variable all
-arguments are pushed on the stack.
+x86-32ターゲットでは、@code{fastcall}属性により、コンパイラはレジスタECXの最初の引数（整数型の場合）とレジスタEDXの2番目の引数（整数型の場合）を渡す。 後続およびその他の型付き引数がスタックに渡される。 呼び出された関数は引数をスタックからポップする。 引数の数が可変であれば、すべての引数がスタックにプッシュされる。
 
 @item thiscall
 @cindex @code{thiscall} function attribute, x86-32
 @cindex functions that pop the argument stack on x86-32
-On x86-32 targets, the @code{thiscall} attribute causes the compiler to
-pass the first argument (if of integral type) in the register ECX.
-Subsequent and other typed arguments are passed on the stack. The called
-function pops the arguments off the stack.
-If the number of arguments is variable all arguments are pushed on the
-stack.
-The @code{thiscall} attribute is intended for C++ non-static member functions.
-As a GCC extension, this calling convention can be used for C functions
-and for static member methods.
+x86-32ターゲットでは、@code{thiscall}属性はコンパイラにレジスタECXの最初の引数（整数型の場合）を渡させる。 後続およびその他の型付き引数がスタックに渡される。 呼び出された関数は引数をスタックからポップする。 引数の数が可変であれば、すべての引数がスタックにプッシュされる。@code{thiscall}属性は、C ++非静的メンバ関数を対象としている。GCCの拡張として、この呼び出し規約はC関数や静的メンバーメソッドに使用できる。
 
 @item ms_abi
 @itemx sysv_abi
 @cindex @code{ms_abi} function attribute, x86
 @cindex @code{sysv_abi} function attribute, x86
+32ビットおよび64ビットのx86ターゲットでは、ABI属性を使用して、関数に使用する呼び出し規則を指定できる。@code{ms_abi}属性は、Microsoft ABIを使用するようにコンパイラに指示する。@code {sysv_abi}属性は、GNU/Linuxなどのシステムで使用されるABIを使用するようコンパイラに指示する。 デフォルトでは、Windowsを対象とするときにMicrosoft ABIを使用する。 他のすべてのシステムでは、デフォルトはx86/AMD ABIである。
 
-On 32-bit and 64-bit x86 targets, you can use an ABI attribute
-to indicate which calling convention should be used for a function.  The
-@code{ms_abi} attribute tells the compiler to use the Microsoft ABI,
-while the @code{sysv_abi} attribute tells the compiler to use the ABI
-used on GNU/Linux and other systems.  The default is to use the Microsoft ABI
-when targeting Windows.  On all other systems, the default is the x86/AMD ABI.
-
-Note, the @code{ms_abi} attribute for Microsoft Windows 64-bit targets currently
-requires the @option{-maccumulate-outgoing-args} option.
+Microsoft Windowsの64ビットターゲットの@code{ms_abi}属性には、現在、@option{-maccumulate-outgoing-args}オプションが必要であることに注意せよ。
 
 @item callee_pop_aggregate_return (@var{number})
 @cindex @code{callee_pop_aggregate_return} function attribute, x86
+x86-32ターゲットでは、この属性を使用して、集約がメモリー内で返される方法を制御できる。 呼び出し側が非表示のポインタを残りの引数と一緒にポップする必要がある場合は、@var{number}をゼロと指定する。 呼び出し先が非表示のポインタをポップする場合は、@var{number}を1と指定する。
 
-On x86-32 targets, you can use this attribute to control how
-aggregates are returned in memory.  If the caller is responsible for
-popping the hidden pointer together with the rest of the arguments, specify
-@var{number} equal to zero.  If callee is responsible for popping the
-hidden pointer, specify @var{number} equal to one.  
-
-The default x86-32 ABI assumes that the callee pops the
-stack for hidden pointer.  However, on x86-32 Microsoft Windows targets,
-the compiler assumes that the
-caller pops the stack for hidden pointer.
+デフォルトのx86-32 ABIでは、呼び出し先が非表示のポインタのスタックをポップすることを前提としている。 ただし、x86-32 Microsoft Windowsターゲットでは、コンパイラは呼び出し元が非表示のポインタのスタックをポップすることを前提としている。
 
 @item ms_hook_prologue
 @cindex @code{ms_hook_prologue} function attribute, x86
-
-On 32-bit and 64-bit x86 targets, you can use
-this function attribute to make GCC generate the ``hot-patching'' function
-prologue used in Win32 API functions in Microsoft Windows XP Service Pack 2
-and newer.
+32ビットおよび64ビットx86ターゲットでは、この関数属性を使用して、Microsoft Windows XP Service Pack 2以降のWin32 API関数で使用される「ホットパッチ」関数プロローグをGCCに生成させることができる。
 
 @item regparm (@var{number})
 @cindex @code{regparm} function attribute, x86
 @cindex functions that are passed arguments in registers on x86-32
-On x86-32 targets, the @code{regparm} attribute causes the compiler to
-pass arguments number one to @var{number} if they are of integral type
-in registers EAX, EDX, and ECX instead of on the stack.  Functions that
-take a variable number of arguments continue to be passed all of their
-arguments on the stack.
+x86-32ターゲットで、@code{regparm}属性により、整数型である場合には、コンパイラは1個から@var{number}個までの引数をスタックの代わりにレジスタEAX、EDX、およびECXで渡す。可変数の引き数を取る関数は引き続きスタック上のすべての引数を渡す。
 
-Beware that on some ELF systems this attribute is unsuitable for
-global functions in shared libraries with lazy binding (which is the
-default).  Lazy binding sends the first call via resolving code in
-the loader, which might assume EAX, EDX and ECX can be clobbered, as
-per the standard calling conventions.  Solaris 8 is affected by this.
-Systems with the GNU C Library version 2.1 or higher
-and FreeBSD are believed to be
-safe since the loaders there save EAX, EDX and ECX.  (Lazy binding can be
-disabled with the linker or the loader if desired, to avoid the
-problem.)
+一部のELFシステムでは、この属性は、遅延バインディング（デフォルト）である共有ライブラリのグローバル関数には適していないことに注意せよ。遅延バインディングは、標準の呼び出し規約に従って、EAX、EDX、ECXが破壊できると仮定しているローダ内の解決コードを介して、最初の呼び出しを送信する。 Solaris 8はこの影響を受ける。 GNU Cライブラリバージョン2.1以上とFreeBSDを搭載したシステムは、そこにあるローダーがEAX、EDX、ECXを保存するので安全だと考えられている。 （問題が発生しないように、必要に応じて遅延バインディングをリンカまたはローダで無効にすることができる）。
 
 @item sseregparm
 @cindex @code{sseregparm} function attribute, x86
-On x86-32 targets with SSE support, the @code{sseregparm} attribute
-causes the compiler to pass up to 3 floating-point arguments in
-SSE registers instead of on the stack.  Functions that take a
-variable number of arguments continue to pass all of their
-floating-point arguments on the stack.
+SSEをサポートしているx86-32ターゲットでは、@code{sseregparm}属性により、コンパイラーはスタック上ではなくSSEレジスターで最大3つの浮動小数点引数を渡す。 可変数の引数をとる関数は、スタック上のすべての浮動小数点引数を引き続き渡す。
 
 @item force_align_arg_pointer
 @cindex @code{force_align_arg_pointer} function attribute, x86
-On x86 targets, the @code{force_align_arg_pointer} attribute may be
-applied to individual function definitions, generating an alternate
-prologue and epilogue that realigns the run-time stack if necessary.
-This supports mixing legacy codes that run with a 4-byte aligned stack
-with modern codes that keep a 16-byte stack for SSE compatibility.
+x86ターゲットでは、@code{force_align_arg_pointer}属性を個々の関数定義に適用して、必要に応じて実行時スタックを再調整する代替のプロローグとエピローグを生成することができる。 これは、SSEとの互換性のために16バイトのスタックを維持する最新のコードと4バイトの整列されたスタックで実行されるレガシーコードの混在をサポートする。
 
 @item stdcall
 @cindex @code{stdcall} function attribute, x86-32
 @cindex functions that pop the argument stack on x86-32
-On x86-32 targets, the @code{stdcall} attribute causes the compiler to
-assume that the called function pops off the stack space used to
-pass arguments, unless it takes a variable number of arguments.
+x86-32ターゲットでは、@code{stdcall}属性は、可変数の引数を取らない限り、引数を渡すために使用されるスタック領域から、呼び出された関数がポップすることをコンパイラが想定するようにする。
 
 @item no_caller_saved_registers
 @cindex @code{no_caller_saved_registers} function attribute, x86
-Use this attribute to indicate that the specified function has no
-caller-saved registers. That is, all registers are callee-saved. For
-example, this attribute can be used for a function called from an
-interrupt handler. The compiler generates proper function entry and
-exit sequences to save and restore any modified registers, except for
-the EFLAGS register.  Since GCC doesn't preserve MPX, SSE, MMX nor x87
-states, the GCC option @option{-mgeneral-regs-only} should be used to
-compile functions with @code{no_caller_saved_registers} attribute.
+指定された関数に呼び出し元保存レジスタがないことを示すには、この属性を使用する。 つまり、すべてのレジスタが呼び出し先保存される。 たとえば、この属性は割り込みハンドラから呼び出された関数に使用できる。 コンパイラは、EFLAGSレジスタを除いて、変更されたレジスタを保存および復元するために、適切な関数入力および終了シーケンスを生成する。 GCCはMPX、SSE、MMX、およびx87状態を保持しないので、@code{no_caller_saved_registers}属性を持つ関数をコンパイルするには、GCCオプションの@option{-mgeneral-regs-only}を使用する必要がある。
 
 @item interrupt
 @cindex @code{interrupt} function attribute, x86
-Use this attribute to indicate that the specified function is an
-interrupt handler or an exception handler (depending on parameters passed
-to the function, explained further).  The compiler generates function
-entry and exit sequences suitable for use in an interrupt handler when
-this attribute is present.  The @code{IRET} instruction, instead of the
-@code{RET} instruction, is used to return from interrupt handlers.  All
-registers, except for the EFLAGS register which is restored by the
-@code{IRET} instruction, are preserved by the compiler.  Since GCC
-doesn't preserve MPX, SSE, MMX nor x87 states, the GCC option
-@option{-mgeneral-regs-only} should be used to compile interrupt and
-exception handlers.
+この属性を使用して、指定された関数が割り込みハンドラまたは例外ハンドラであることを示す。（さらに説明されているように、関数に渡されるパラメータに応じて）。 コンパイラは、この属性が存在するときに割り込みハンドラでの使用に適した関数の入力および終了シーケンスを生成する。 @code{RET}命令の代わりに@code{IRET}命令が、割り込みハンドラから復帰するために使用される。 @code{IRET}命令で復元されるEFLAGSレジスタを除くすべてのレジスタは、コンパイラによって保持される。 GCCはMPX、SSE、MMX、およびx87の状態を保持しないので、GCCオプションの@option{-mgeneral-regs-only}を使用して割り込みハンドラと例外ハンドラをコンパイルする必要がある。
 
-Any interruptible-without-stack-switch code must be compiled with
-@option{-mno-red-zone} since interrupt handlers can and will, because
-of the hardware design, touch the red zone.
+スタック切り替えなしで割り込み可能なコードは、@option{-mno-red-zone}でコンパイルする必要がある。なぜなら、ハードウェア設計のために割り込みハンドラがレッド・ゾーンに触れることができるからである。
 
-An interrupt handler must be declared with a mandatory pointer
-argument:
+割り込みハンドラは、必須のポインタ引数で宣言する必要がある。
 
 @smallexample
 struct interrupt_frame;
@@ -3555,14 +3477,9 @@ f (struct interrupt_frame *frame)
 @end smallexample
 
 @noindent
-and you must define @code{struct interrupt_frame} as described in the
-processor's manual.
+プロセッサーのマニュアルで説明されているように、@code{struct interrupt_frame}を定義する必要がある。
 
-Exception handlers differ from interrupt handlers because the system
-pushes an error code on the stack.  An exception handler declaration is
-similar to that for an interrupt handler, but with a different mandatory
-function signature.  The compiler arranges to pop the error code off the
-stack before the @code{IRET} instruction.
+例外ハンドラは、スタック上にエラーコードをプッシュするため、割り込みハンドラとは異なる。 例外ハンドラの宣言は、割り込みハンドラの宣言と似ているが、必須の関数シグネチャは異なる。 コンパイラは@code{IRET}命令の前にスタックからエラーコードをポップするように手配する。
 
 @smallexample
 #ifdef __x86_64__
@@ -3581,163 +3498,147 @@ f (struct interrupt_frame *frame, uword_t error_code)
 @}
 @end smallexample
 
-Exception handlers should only be used for exceptions that push an error
-code; you should use an interrupt handler in other cases.  The system
-will crash if the wrong kind of handler is used.
+例外ハンドラは、エラーコードをプッシュする例外に対してのみ使用する必要がある。 それ以外の場合は割り込みハンドラを使用する必要がある。 間違った種類のハンドラが使用されると、システムがクラッシュする。
 
 @item target (@var{options})
 @cindex @code{target} function attribute
-As discussed in @ref{Common Function Attributes}, this attribute 
-allows specification of target-specific compilation options.
+@ref {Common Function Attributes}で説明したように、この属性ではターゲット固有のコンパイルオプションを指定できる。
 
-On the x86, the following options are allowed:
+x86では、次のオプションを使用できる。
 @table @samp
 @item abm
 @itemx no-abm
 @cindex @code{target("abm")} function attribute, x86
-Enable/disable the generation of the advanced bit instructions.
+拡張ビット命令の生成を有効/無効にする。
 
 @item aes
 @itemx no-aes
 @cindex @code{target("aes")} function attribute, x86
-Enable/disable the generation of the AES instructions.
+AES命令の生成を有効/無効にする。
 
 @item default
 @cindex @code{target("default")} function attribute, x86
-@xref{Function Multiversioning}, where it is used to specify the
-default function version.
+@xref{Function Multiversioning}デフォルトの関数バージョンを指定するために使用される。
 
 @item mmx
 @itemx no-mmx
 @cindex @code{target("mmx")} function attribute, x86
-Enable/disable the generation of the MMX instructions.
+MMX命令の生成を有効/無効にする。
 
 @item pclmul
 @itemx no-pclmul
 @cindex @code{target("pclmul")} function attribute, x86
-Enable/disable the generation of the PCLMUL instructions.
+PCLMUL命令の生成を有効/無効にする。
 
 @item popcnt
 @itemx no-popcnt
 @cindex @code{target("popcnt")} function attribute, x86
-Enable/disable the generation of the POPCNT instruction.
+POPCNT命令の生成を有効/無効にする。
 
 @item sse
 @itemx no-sse
 @cindex @code{target("sse")} function attribute, x86
-Enable/disable the generation of the SSE instructions.
+SSE命令の生成を有効/無効にする。
 
 @item sse2
 @itemx no-sse2
 @cindex @code{target("sse2")} function attribute, x86
-Enable/disable the generation of the SSE2 instructions.
+SSE2命令の生成を有効/無効にする。
 
 @item sse3
 @itemx no-sse3
 @cindex @code{target("sse3")} function attribute, x86
-Enable/disable the generation of the SSE3 instructions.
+SSE3命令の生成を有効/無効にする。
 
 @item sse4
 @itemx no-sse4
 @cindex @code{target("sse4")} function attribute, x86
-Enable/disable the generation of the SSE4 instructions (both SSE4.1
-and SSE4.2).
+SSE4命令の生成を有効/無効にする。（SSE4.1とSSE4.2の両方。）
 
 @item sse4.1
 @itemx no-sse4.1
 @cindex @code{target("sse4.1")} function attribute, x86
-Enable/disable the generation of the sse4.1 instructions.
+SSE4.1命令の生成を有効/無効にする。
 
 @item sse4.2
 @itemx no-sse4.2
 @cindex @code{target("sse4.2")} function attribute, x86
-Enable/disable the generation of the sse4.2 instructions.
+SSE4.2命令の生成を有効/無効にする。
 
 @item sse4a
 @itemx no-sse4a
 @cindex @code{target("sse4a")} function attribute, x86
-Enable/disable the generation of the SSE4A instructions.
+SSE4A命令の生成を有効/無効にする。
 
 @item fma4
 @itemx no-fma4
 @cindex @code{target("fma4")} function attribute, x86
-Enable/disable the generation of the FMA4 instructions.
+FMA4命令の生成を有効/無効にする。
 
 @item xop
 @itemx no-xop
 @cindex @code{target("xop")} function attribute, x86
-Enable/disable the generation of the XOP instructions.
+XOP命令の生成を有効/無効にする。
 
 @item lwp
 @itemx no-lwp
 @cindex @code{target("lwp")} function attribute, x86
-Enable/disable the generation of the LWP instructions.
+LWP命令の生成を有効/無効にする。
 
 @item ssse3
 @itemx no-ssse3
 @cindex @code{target("ssse3")} function attribute, x86
-Enable/disable the generation of the SSSE3 instructions.
+SSSE3命令の生成を有効/無効にする。
 
 @item cld
 @itemx no-cld
 @cindex @code{target("cld")} function attribute, x86
-Enable/disable the generation of the CLD before string moves.
+文字列が移動する前にCLDの生成を有効/無効にする。
 
 @item fancy-math-387
 @itemx no-fancy-math-387
 @cindex @code{target("fancy-math-387")} function attribute, x86
-Enable/disable the generation of the @code{sin}, @code{cos}, and
-@code{sqrt} instructions on the 387 floating-point unit.
+387浮動小数点ユニットの@code{sin}、@code{cos}、および@code{sqrt}命令の生成を有効/無効にする。
 
 @item ieee-fp
 @itemx no-ieee-fp
 @cindex @code{target("ieee-fp")} function attribute, x86
-Enable/disable the generation of floating point that depends on IEEE arithmetic.
+IEEE演算に依存する浮動小数点の生成を有効/無効にする。
 
 @item inline-all-stringops
 @itemx no-inline-all-stringops
 @cindex @code{target("inline-all-stringops")} function attribute, x86
-Enable/disable inlining of string operations.
+文字列操作のインライン展開を有効または無効にする。
 
 @item inline-stringops-dynamically
 @itemx no-inline-stringops-dynamically
 @cindex @code{target("inline-stringops-dynamically")} function attribute, x86
-Enable/disable the generation of the inline code to do small string
-operations and calling the library routines for large operations.
+小さな文字列操作を実行するためのインラインコードの生成と大きな操作のためにライブラリルーチンを呼び出しを有効または無効にする。
 
 @item align-stringops
 @itemx no-align-stringops
 @cindex @code{target("align-stringops")} function attribute, x86
-Do/do not align destination of inlined string operations.
+インラインストリング操作の宛先を揃える。
 
 @item recip
 @itemx no-recip
 @cindex @code{target("recip")} function attribute, x86
-Enable/disable the generation of RCPSS, RCPPS, RSQRTSS and RSQRTPS
-instructions followed an additional Newton-Raphson step instead of
-doing a floating-point division.
+浮動小数点除算の代わりに追加のNewton-Raphsonステップの実行が後に続くRCPSS、RCPPS、RSQRTSS、およびRSQRTPS命令の生成を有効/無効にする。
 
 @item arch=@var{ARCH}
 @cindex @code{target("arch=@var{ARCH}")} function attribute, x86
-Specify the architecture to generate code for in compiling the function.
+関数をコンパイルするためのコードを生成するアーキテクチャを指定する。
 
 @item tune=@var{TUNE}
 @cindex @code{target("tune=@var{TUNE}")} function attribute, x86
-Specify the architecture to tune for in compiling the function.
+関数のコンパイル時にチューニングするアーキテクチャを指定する。
 
 @item fpmath=@var{FPMATH}
 @cindex @code{target("fpmath=@var{FPMATH}")} function attribute, x86
-Specify which floating-point unit to use.  You must specify the
-@code{target("fpmath=sse,387")} option as
-@code{target("fpmath=sse+387")} because the comma would separate
-different options.
+使用する浮動小数点ユニットを指定する。 コンマは異なるオプションを分離するため、@code{target( "fpmath=sse,387")}オプションは@code{target("fpmath=sse+387")}と指定する必要がある。
 @end table
 
-On the x86, the inliner does not inline a
-function that has different target options than the caller, unless the
-callee has a subset of the target options of the caller.  For example
-a function declared with @code{target("sse3")} can inline a function
-with @code{target("sse2")}, since @code{-msse3} implies @code{-msse2}.
+x86では、呼び出し側が呼び出し元のターゲットオプションのサブセットを持たない限り、インライナは呼び出し元とは異なるターゲットオプションを持つ関数をインライン化しない。 たとえば、@code{-msse3}は@code {-msse2}を意味するため、@code{target("sse3")}で宣言された関数は@code{target("sse2")}で関数をインライン化できる。
 @end table
 
 @node Xstormy16 Function Attributes
