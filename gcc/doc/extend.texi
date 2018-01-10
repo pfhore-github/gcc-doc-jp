@@ -3653,24 +3653,14 @@ x86では、呼び出し側が呼び出し元のターゲットオプション�
 @end table
 
 @node Variable Attributes
-@section Specifying Attributes of Variables
+@section 変数の属性の実行指定
 @cindex attribute of variables
 @cindex variable attributes
 
-The keyword @code{__attribute__} allows you to specify special
-attributes of variables or structure fields.  This keyword is followed
-by an attribute specification inside double parentheses.  Some
-attributes are currently defined generically for variables.
-Other attributes are defined for variables on particular target
-systems.  Other attributes are available for functions
-(@pxref{Function Attributes}), labels (@pxref{Label Attributes}),
-enumerators (@pxref{Enumerator Attributes}), statements
-(@pxref{Statement Attributes}), and for types (@pxref{Type Attributes}).
-Other front ends might define more attributes
-(@pxref{C++ Extensions,,Extensions to the C++ Language}).
+キーワード@code {__ attribute__}を使用すると、変数や構造体フィールドの特別な属性を指定できる。このキーワードの後には、二重括弧内の属性指定が続く。いくつかの属性は現在、変数に対して一般的に定義されている。 他の属性は、特定のターゲットシステム上の変数に対して定義されている。他の属性は、関数(@pxref{Function Attributes})、ラベル(@pxref{Label Attributes})、列挙子(@pxref{Enumerator Attributes})、文(@pxref{Statement Attributes})、および型 (@pxref{Type Attributes})に対して定義されている。他のフロントエンドはより多くの属性を定義するかもしれない。
+(@pxref{C++ Extensions,,C++言語族に対する拡張}).
 
-@xref{Attribute Syntax}, for details of the exact syntax for using
-attributes.
+属性を使った正確な構文の詳細は@xref{Attribute Syntax}。
 
 @menu
 * Common Variable Attributes::
@@ -3692,95 +3682,52 @@ attributes.
 @end menu
 
 @node Common Variable Attributes
-@subsection Common Variable Attributes
+@subsection 共通変数属性
 
-The following attributes are supported on most targets.
+次の属性は、ほとんどのターゲットでサポートされている。
 
 @table @code
 @cindex @code{aligned} variable attribute
 @item aligned (@var{alignment})
-This attribute specifies a minimum alignment for the variable or
-structure field, measured in bytes.  For example, the declaration:
+この属性は、変数または構造体フィールドの最小整列をバイト単位で指定する。 たとえば、次のような宣言があると、
 
 @smallexample
 int x __attribute__ ((aligned (16))) = 0;
 @end smallexample
 
 @noindent
-causes the compiler to allocate the global variable @code{x} on a
-16-byte boundary.  On a 68040, this could be used in conjunction with
-an @code{asm} expression to access the @code{move16} instruction which
-requires 16-byte aligned operands.
+コンパイラはグローバル変数@code {x}を16バイトの境界に割り当てる。 68040では、これを@code{asm}式と共に使用して、16バイトのアライメントされたオペランドを必要とする@code{move16}命令にアクセスできる。
 
-You can also specify the alignment of structure fields.  For example, to
-create a double-word aligned @code{int} pair, you could write:
+構造体フィールドの配置を指定することもできる。 たとえば、ダブルワードアライメントの@code{int}ペアを作成するには、次のように記述する。
 
 @smallexample
 struct foo @{ int x[2] __attribute__ ((aligned (8))); @};
 @end smallexample
 
 @noindent
-This is an alternative to creating a union with a @code{double} member,
-which forces the union to be double-word aligned.
+これは、@code{double}メンバを使用して共用体を作成して、共用体を強制的にダブルワードアライメントすることに代わるものである。
 
-As in the preceding examples, you can explicitly specify the alignment
-(in bytes) that you wish the compiler to use for a given variable or
-structure field.  Alternatively, you can leave out the alignment factor
-and just ask the compiler to align a variable or field to the
-default alignment for the target architecture you are compiling for.
-The default alignment is sufficient for all scalar types, but may not be
-enough for all vector types on a target that supports vector operations.
-The default alignment is fixed for a particular target ABI.
+前述の例のように、コンパイラが指定した変数または構造体フィールドに対して使用する整列（バイト単位）を明示的に指定することができる。あるいは、アラインメント係数を省略して、変数またはフィールドを、コンパイル対象のターゲットアーキテクチャのデフォルトアライメントに合わせるようにコンパイラに依頼することもできる。デフォルトの配置はすべてのスカラー型で十分であるが、ベクトル操作をサポートするターゲット上のすべてのベクトル型では不十分な場合がある。デフォルトの配置は、特定のターゲットABIに対して固定されている。
 
-GCC also provides a target specific macro @code{__BIGGEST_ALIGNMENT__},
-which is the largest alignment ever used for any data type on the
-target machine you are compiling for.  For example, you could write:
+GCCは、コンパイル対象のマシン上の任意のデータ型に対してこれまで使用されていた最大の配列であるターゲット固有のマクロ@code{__BIGGEST_ALIGNMENT__}も提供する。 たとえば、次のように書くことができる。
 
 @smallexample
 short array[3] __attribute__ ((aligned (__BIGGEST_ALIGNMENT__)));
 @end smallexample
 
-The compiler automatically sets the alignment for the declared
-variable or field to @code{__BIGGEST_ALIGNMENT__}.  Doing this can
-often make copy operations more efficient, because the compiler can
-use whatever instructions copy the biggest chunks of memory when
-performing copies to or from the variables or fields that you have
-aligned this way.  Note that the value of @code{__BIGGEST_ALIGNMENT__}
-may change depending on command-line options.
+コンパイラは、宣言された変数またはフィールドの配置を自動的に@code{__BIGGEST_ALIGNMENT__}に設定する。この方法で整列された変数やフィールドとの間でコピーを実行するときに、コンパイラは最大のメモリチャンクをコピーするので、コピー操作をより効率的にすることができる。 @code{__BIGGEST_ALIGNMENT__}の値は、コマンドラインオプションによって変わる可能性があることに注意せよ。
 
-When used on a struct, or struct member, the @code{aligned} attribute can
-only increase the alignment; in order to decrease it, the @code{packed}
-attribute must be specified as well.  When used as part of a typedef, the
-@code{aligned} attribute can both increase and decrease alignment, and
-specifying the @code{packed} attribute generates a warning.
+構造体または構造体メンバで使用する場合、@code{aligned}属性はアライメントを増加させるだけである。 これを減らすために@code{packed}属性も指定する必要がある。 typedefの一部として使用する場合、@code{aligned}属性はアラインメントを増減できる。また、@code{packed}属性を指定すると警告が生成される。
 
-Note that the effectiveness of @code{aligned} attributes may be limited
-by inherent limitations in your linker.  On many systems, the linker is
-only able to arrange for variables to be aligned up to a certain maximum
-alignment.  (For some linkers, the maximum supported alignment may
-be very very small.)  If your linker is only able to align variables
-up to a maximum of 8-byte alignment, then specifying @code{aligned(16)}
-in an @code{__attribute__} still only provides you with 8-byte
-alignment.  See your linker documentation for further information.
+@code{aligned}属性の有効性は、リンカの固有の制限によって制限されることに注意せよ。 多くのシステムでは、リンカーは、変数が特定の最大整列まで整列するようにのみ調整することができる。 （リンカの中には、サポートされている最大のアライメントが非常に小さいものもある。）リンカが変数を最大8バイトのアラインメントまでしかアライメントできない場合、@code {aligned__(16)}を@code{__attribute__}に指定しても8バイトのアラインメントしか得られない。 詳細については、リンカーのマニュアルを参照せよ。
 
-The @code{aligned} attribute can also be used for functions
-(@pxref{Common Function Attributes}.)
+@code {aligned}属性は、関数にも使用できる。(@pxref{Common Function Attributes}.)
 
 @item cleanup (@var{cleanup_function})
 @cindex @code{cleanup} variable attribute
-The @code{cleanup} attribute runs a function when the variable goes
-out of scope.  This attribute can only be applied to auto function
-scope variables; it may not be applied to parameters or variables
-with static storage duration.  The function must take one parameter,
-a pointer to a type compatible with the variable.  The return value
-of the function (if any) is ignored.
+@code {cleanup}属性は、変数がスコープから外れると関数を実行する。 この属性は、自動関数スコープ変数にのみ適用できる。 静的記憶期間を有するパラメータまたは変数には適用できない。 関数は1つのパラメーター、変数と互換性のある型へのポインターを取る必要がある。 関数の戻り値（存在する場合）は無視される。
 
-If @option{-fexceptions} is enabled, then @var{cleanup_function}
-is run during the stack unwinding that happens during the
-processing of the exception.  Note that the @code{cleanup} attribute
-does not allow the exception to be caught, only to perform an action.
-It is undefined what happens if @var{cleanup_function} does not
-return normally.
+@option{-fexceptions}を有効にすると、例外の処理中に発生するスタックの巻き戻し中に@var{cleanup_function}が実行される。 @code{cleanup}属性は、例外を捕捉することを許可せず、アクションの実行のみを許可することに注意せよ。@var{cleanup_function}が正常に返されなかった場合の動作は未定義である。
 
 @item common
 @itemx nocommon
@@ -3788,23 +3735,14 @@ return normally.
 @cindex @code{nocommon} variable attribute
 @opindex fcommon
 @opindex fno-common
-The @code{common} attribute requests GCC to place a variable in
-``common'' storage.  The @code{nocommon} attribute requests the
-opposite---to allocate space for it directly.
+@code{common}属性は、GCCに変数を「共通」ストレージに配置するよう要求する。 @code{nocommon}属性は、反対である。直接に空間を割り当てることを要求する。
 
-These attributes override the default chosen by the
-@option{-fno-common} and @option{-fcommon} flags respectively.
+これらの属性は、それぞれ@option{-fno-common}フラグと@option{-fcommon}フラグによって選択されたデフォルトを上書きする。
 
 @item deprecated
 @itemx deprecated (@var{msg})
 @cindex @code{deprecated} variable attribute
-The @code{deprecated} attribute results in a warning if the variable
-is used anywhere in the source file.  This is useful when identifying
-variables that are expected to be removed in a future version of a
-program.  The warning also includes the location of the declaration
-of the deprecated variable, to enable users to easily find further
-information about why the variable is deprecated, or what they should
-do instead.  Note that the warning only occurs for uses:
+変数がソースファイルのどこでも使用されている場合、@code{deprecated}属性は警告を出す。 これは、将来のバージョンのプログラムで削除されると予想される変数を識別する場合に便利である。 この警告には、廃止予定の変数の宣言の場所も含まれている。なぜなら、ユーザーは、変数が廃止された理由、またはその代わりに何をすべきかに関する詳細情報を簡単に見つけることができるようにするためである。 この警告は、使用時にのみ発生することに注意せよ。
 
 @smallexample
 extern int old_var __attribute__ ((deprecated));
@@ -3813,36 +3751,21 @@ int new_fn () @{ return old_var; @}
 @end smallexample
 
 @noindent
-results in a warning on line 3 but not line 2.  The optional @var{msg}
-argument, which must be a string, is printed in the warning if
-present.
+は行3では警告が表示されるが、行2では表示されない。文字列でなければならないオプションの@var{msg}引数は、警告があれば出力される。
 
-The @code{deprecated} attribute can also be used for functions and
-types (@pxref{Common Function Attributes},
-@pxref{Common Type Attributes}).
+@code{deprecated}属性は、関数および型にも使用できる。 (@pxref{Common Function Attributes}, @pxref{Common Type Attributes}).
 
 @item mode (@var{mode})
 @cindex @code{mode} variable attribute
-This attribute specifies the data type for the declaration---whichever
-type corresponds to the mode @var{mode}.  This in effect lets you
-request an integer or floating-point type according to its width.
+この属性は、宣言のデータ型を指定する。どちらの型もモード@var{mode}に対応しする。 実際には、幅に応じて整数型または浮動小数点型を要求できる。
 
-@xref{Machine Modes,,, gccint, GNU Compiler Collection (GCC) Internals},
-for a list of the possible keywords for @var{mode}.
-You may also specify a mode of @code{byte} or @code{__byte__} to
-indicate the mode corresponding to a one-byte integer, @code{word} or
-@code{__word__} for the mode of a one-word integer, and @code{pointer}
-or @code{__pointer__} for the mode used to represent pointers.
+@xref{Machine Modes,,, gccint, GNU Compiler Collection (GCC) Internals}は、@var {mode}の可能なキーワードのリストを参照する。また、1バイトの整数に対応するモードを示すために、@code{byte}または@code{__byte__}のモードを、1ワード整数のモードの場合は@code {word}または@code{__word__}、ポインタの表現に使用されるモードの場合は@code {pointer}または@code {__ pointer__}を指定することもできる。
 
 @item packed
 @cindex @code{packed} variable attribute
-The @code{packed} attribute specifies that a variable or structure field
-should have the smallest possible alignment---one byte for a variable,
-and one bit for a field, unless you specify a larger value with the
-@code{aligned} attribute.
+@code{aligned}属性でより大きい値を指定しない限り、@code{packed}属性は、変数または構造体フィールドの配置が最小になるように指定する。変数には1バイト、フィールドには1ビットを指定する 。
 
-Here is a structure in which the field @code{x} is packed, so that it
-immediately follows @code{a}:
+ここで構造体のフィールド@code{x}がパックされているので、すぐに@code {a}に続く：
 
 @smallexample
 struct foo
@@ -3852,20 +3775,11 @@ struct foo
 @};
 @end smallexample
 
-@emph{Note:} The 4.1, 4.2 and 4.3 series of GCC ignore the
-@code{packed} attribute on bit-fields of type @code{char}.  This has
-been fixed in GCC 4.4 but the change can lead to differences in the
-structure layout.  See the documentation of
-@option{-Wpacked-bitfield-compat} for more information.
+@emph{_注意_:} GCCの4.1、4.2および4.3シリーズは、@code{char}型のビットフィールドの@code{packed}属性を無視する。 これはGCC 4.4で修正されているが、変更によって構造のレイアウトが異なる場合がある。 詳細については、@option{-Wpacked-bitfield-compat}のドキュメントを参照せよ。
 
 @item section ("@var{section-name}")
 @cindex @code{section} variable attribute
-Normally, the compiler places the objects it generates in sections like
-@code{data} and @code{bss}.  Sometimes, however, you need additional sections,
-or you need certain particular variables to appear in special sections,
-for example to map to special hardware.  The @code{section}
-attribute specifies that a variable (or function) lives in a particular
-section.  For example, this small program uses several specific section names:
+通常、コンパイラは生成するオブジェクトを@code{data}や@code{bss}のようなセクションに配置する。 ただし、特別なハードウェアにマップするなど、特別なセクションに表示するには、セクションを追加する必要がある。 @code{section}属性は、変数（または関数）が特定のセクションに存在することを指定する。 たとえば、この小さなプログラムでは、いくつかの特定のセクション名を使用する。
 
 @smallexample
 struct duart a __attribute__ ((section ("DUART_A"))) = @{ 0 @};
@@ -3888,72 +3802,42 @@ main()
 @end smallexample
 
 @noindent
-Use the @code{section} attribute with
-@emph{global} variables and not @emph{local} variables,
-as shown in the example.
+この例に示すように、@emph{_ローカル_}変数ではなく、@emph{_グローバル_}変数で@code{section}属性を使用すること。
 
-You may use the @code{section} attribute with initialized or
-uninitialized global variables but the linker requires
-each object be defined once, with the exception that uninitialized
-variables tentatively go in the @code{common} (or @code{bss}) section
-and can be multiply ``defined''.  Using the @code{section} attribute
-changes what section the variable goes into and may cause the
-linker to issue an error if an uninitialized variable has multiple
-definitions.  You can force a variable to be initialized with the
-@option{-fno-common} flag or the @code{nocommon} attribute.
+初期化されている、または初期化されていないグローバル変数で@code{section}属性を使うことができるが、リンカは各オブジェクトを一度定義する必要がある。例外は、初期化されていない変数は@code{common}（または@code{bss}）セクションに一時的に置かれ、複数回「定義」されることができることである。@code{section}属性を使用すると、変数に入るセクションが変更され、初期化されていない変数に複数の定義がある場合、リンカにエラーが発生する可能性がある。変数を@option{-fno-common}フラグまたは@code {nocommon}属性で強制的に初期化することができる。
 
-Some file formats do not support arbitrary sections so the @code{section}
-attribute is not available on all platforms.
-If you need to map the entire contents of a module to a particular
-section, consider using the facilities of the linker instead.
+一部のファイル形式では任意のセクションはサポートされないため、@code{section}属性はすべてのプラットフォームで使用できるわけではない。モジュールの内容全体を特定のセクションにマップする必要がある場合は、代わりにリンカの機能を使用することを検討せよ。
 
 @item tls_model ("@var{tls_model}")
 @cindex @code{tls_model} variable attribute
-The @code{tls_model} attribute sets thread-local storage model
-(@pxref{Thread-Local}) of a particular @code{__thread} variable,
-overriding @option{-ftls-model=} command-line switch on a per-variable
-basis.
-The @var{tls_model} argument should be one of @code{global-dynamic},
-@code{local-dynamic}, @code{initial-exec} or @code{local-exec}.
+@code{tls_model}属性は、特定の@code{__ thread}変数のスレッドローカルストレージモデル（@pxref{Thread-Local}）を設定し@option{-ftls-model =}コマンドラインスイッチを、 変動単位で上書きする。@var{tls_model}引数は@code{global-dynamic}、@code{local-dynamic}、@code{initial-exec}または@code {local-exec}のいずれかでなければならない。
 
-Not all targets support this attribute.
+すべてのターゲットがこの属性をサポートするわけではない。
 
 @item unused
 @cindex @code{unused} variable attribute
-This attribute, attached to a variable, means that the variable is meant
-to be possibly unused.  GCC does not produce a warning for this
-variable.
+変数に付けられたこの属性は、その変数が使用されていない可能性があることを意味する。 GCCはこの変数に対して警告を生成しない。
 
 @item used
 @cindex @code{used} variable attribute
-This attribute, attached to a variable with static storage, means that
-the variable must be emitted even if it appears that the variable is not
-referenced.
+この属性は、静的記憶域を持つ変数に添付されると、変数が参照されていないように見えても変数を発行する必要があることを意味する。
 
-When applied to a static data member of a C++ class template, the
-attribute also means that the member is instantiated if the
-class itself is instantiated.
+C++クラス・テンプレートの静的データ・メンバーに適用される場合、その属性は、クラス自体がインスタンス化された場合にメンバーがインスタンス化されることも意味する。
 
 @item vector_size (@var{bytes})
 @cindex @code{vector_size} variable attribute
-This attribute specifies the vector size for the variable, measured in
-bytes.  For example, the declaration:
+この属性は、変数のベクトルサイズをバイト単位で指定する。 たとえば、次のような宣言があると：
 
 @smallexample
 int foo __attribute__ ((vector_size (16)));
 @end smallexample
 
 @noindent
-causes the compiler to set the mode for @code{foo}, to be 16 bytes,
-divided into @code{int} sized units.  Assuming a 32-bit int (a vector of
-4 units of 4 bytes), the corresponding mode of @code{foo} is V4SI@.
+コンパイラは@code{foo}のモードを16バイトに設定し、@code{int}サイズ単位に分割する。 32ビット整数（4バイトの4単位のベクトル）を仮定すると、対応する@code{foo}のモードはV4SIである。
 
-This attribute is only applicable to integral and float scalars,
-although arrays, pointers, and function return values are allowed in
-conjunction with this construct.
+この属性は、整数、浮動小数点スカラーにのみ適用されるが、配列、ポインタ、および関数の戻り値は、この構造とともに使用できる。
 
-Aggregates with this attribute are invalid, even if they are of the same
-size as a corresponding scalar.  For example, the declaration:
+この属性を持つ集合知は、対応するスカラーと同じサイズであっても無効である。 たとえば、次のような宣言は、
 
 @smallexample
 struct S @{ int a; @};
@@ -3961,19 +3845,16 @@ struct S  __attribute__ ((vector_size (16))) foo;
 @end smallexample
 
 @noindent
-is invalid even if the size of the structure is the same as the size of
-the @code{int}.
+構造体のサイズが@code {int}のサイズと同じであっても無効である。
 
 @item visibility ("@var{visibility_type}")
 @cindex @code{visibility} variable attribute
-This attribute affects the linkage of the declaration to which it is attached.
-The @code{visibility} attribute is described in
-@ref{Common Function Attributes}.
+この属性は、それがアタッチされている宣言のリンケージに影響します。
+@code {visibility}属性については、@ref{Common Function Attributes}.
 
 @item weak
 @cindex @code{weak} variable attribute
-The @code{weak} attribute is described in
-@ref{Common Function Attributes}.
+@code {weak}属性については、@ref{Common Function Attributes}.
 
 @end table
 
