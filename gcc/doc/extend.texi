@@ -3859,25 +3859,18 @@ struct S  __attribute__ ((vector_size (16))) foo;
 @end table
 
 @node AVR Variable Attributes
-@subsection AVR Variable Attributes
+@subsection AVR変数属性
 
 @table @code
 @item progmem
 @cindex @code{progmem} variable attribute, AVR
-The @code{progmem} attribute is used on the AVR to place read-only
-data in the non-volatile program memory (flash). The @code{progmem}
-attribute accomplishes this by putting respective variables into a
-section whose name starts with @code{.progmem}.
+@code{progmem}属性は、AVRで読み取り専用データを不揮発性プログラムメモリ（フラッシュ）に配置するために使用される。 @code{progmem}属性は、それぞれの変数を@code{.progmem}で始まるセクションに入れることでこれを実現する。
 
-This attribute works similar to the @code{section} attribute
-but adds additional checking.
+この属性は@code {section}属性と同様の働きをするが、追加のチェックを追加する。
 
 @table @asis
-@item @bullet{}@tie{} Ordinary AVR cores with 32 general purpose registers:
-@code{progmem} affects the location
-of the data but not how this data is accessed.
-In order to read data located with the @code{progmem} attribute
-(inline) assembler must be used.
+@item @bullet{}@tie{} 32個の汎用レジスタを持つ通常のAVRコア：
+@code{progmem}はデータの場所に影響するが、このデータへのアクセス方法には影響しない。 @code{progmem}属性のデータを読み込むために（インライン）アセンブラを使用する必要がある。
 @smallexample
 /* Use custom macros from @w{@uref{http://nongnu.org/avr-libc/user-manual/,AVR-LibC}} */
 #include <avr/pgmspace.h> 
@@ -3892,21 +3885,14 @@ int read_var (int i)
 @}
 @end smallexample
 
-AVR is a Harvard architecture processor and data and read-only data
-normally resides in the data memory (RAM).
+AVRはハーバードアーキテクチャのプロセッサであり、データおよびリードオンリーデータは通常、データメモリ（RAM）に常駐する。
 
-See also the @ref{AVR Named Address Spaces} section for
-an alternate way to locate and access data in flash memory.
+フラッシュメモリ内のデータを検索してアクセスする別の方法については、@ref{AVR Named Address Spaces}セクションを参照せよ。
 
-@item @bullet{}@tie{}Reduced AVR Tiny cores like ATtiny40:
-The compiler adds @code{0x4000}
-to the addresses of objects and declarations in @code{progmem} and locates
-the objects in flash memory, namely in section @code{.progmem.data}.
-The offset is needed because the flash memory is visible in the RAM
-address space starting at address @code{0x4000}.
+@item @bullet{}@tie{}AVRの削減ATtiny40のような小型コア：
+コンパイラは、@code{0x4000}を@code {progmem}のオブジェクトと宣言のアドレスに追加し、オブジェクトをフラッシュメモリ、つまりセクション@code{.progmem.data}に配置する。フラッシュメモリがアドレス@code{0x4000}から始まるRAMアドレス空間に表示されるので、オフセットが必要である。
 
-Data in @code{progmem} can be accessed by means of ordinary C@tie{}code,
-no special functions or macros are needed.
+@code{progmem}のデータは、通常のCコードでアクセスすることができる。特殊な関数やマクロは必要ない。
 
 @smallexample
 /* var is located in flash memory */
@@ -3918,8 +3904,7 @@ int read_var (int i)
 @}
 @end smallexample
 
-Please notice that on these devices, there is no need for @code{progmem}
-at all.  Just use an appropriate linker description file like outlined below.
+これらのデバイスでは、@code{progmem}はまったく必要ないことに注意すること。 下記のような適切なリンカー記述ファイルを使用する。
 
 @smallexample
   .text :
@@ -3947,23 +3932,15 @@ at all.  Just use an appropriate linker description file like outlined below.
 @item io
 @itemx io (@var{addr})
 @cindex @code{io} variable attribute, AVR
-Variables with the @code{io} attribute are used to address
-memory-mapped peripherals in the io address range.
-If an address is specified, the variable
-is assigned that address, and the value is interpreted as an
-address in the data address space.
-Example:
+@code{io}属性を持つ変数は、ioアドレス範囲内のメモリマップされたペリフェラルに対処するために使用される。アドレスが指定されている場合、変数にはそのアドレスが割り当てられ、その値はデータアドレス空間のアドレスとして解釈される。例：
 
 @smallexample
 volatile int porta __attribute__((io (0x22)));
 @end smallexample
 
-The address specified in the address in the data address range.
+データアドレス範囲のアドレスに指定されたアドレス。
 
-Otherwise, the variable it is not assigned an address, but the
-compiler will still use in/out instructions where applicable,
-assuming some other module assigns an address in the io address range.
-Example:
+それ以外の場合、変数にはアドレスは割り当てられないが、コンパイラは適用可能な場合にイン/アウト命令を使用し、他の一部のモジュールがアドレス範囲内のアドレスを割り当てると仮定する。 例：
 
 @smallexample
 extern volatile int porta __attribute__((io));
@@ -3972,16 +3949,12 @@ extern volatile int porta __attribute__((io));
 @item io_low
 @itemx io_low (@var{addr})
 @cindex @code{io_low} variable attribute, AVR
-This is like the @code{io} attribute, but additionally it informs the
-compiler that the object lies in the lower half of the I/O area,
-allowing the use of @code{cbi}, @code{sbi}, @code{sbic} and @code{sbis}
-instructions.
+これは@code{io}属性と似ているが、オブジェクトがI/O領域の下半分にあることをコンパイラに通知し、@code {cbi}、@code{sbi}、@code{sbic}命令と@code {sbis}命令の使用を可能とする。
 
 @item address
 @itemx address (@var{addr})
 @cindex @code{address} variable attribute, AVR
-Variables with the @code{address} attribute are used to address
-memory-mapped peripherals that may lie outside the io address range.
+@code {address}属性を持つ変数は、ioアドレス範囲外にある可能性があるメモリマップされた周辺機器に対処するために使用される。
 
 @smallexample
 volatile int porta __attribute__((address (0x600)));
@@ -3989,32 +3962,24 @@ volatile int porta __attribute__((address (0x600)));
 
 @item absdata
 @cindex @code{absdata} variable attribute, AVR
-Variables in static storage and with the @code{absdata} attribute can
-be accessed by the @code{LDS} and @code{STS} instructions which take
-absolute addresses.
+静的記憶域の変数と@code{absdata}属性の変数は、絶対アドレスを取る@code{LDS}命令と@code{STS}命令でアクセスできる。
 
 @itemize @bullet
 @item
-This attribute is only supported for the reduced AVR Tiny core
-like ATtiny40.
+この属性は、ATtiny40のような縮小AVR Tinyコアでのみサポートされている。
 
 @item
-You must make sure that respective data is located in the
-address range @code{0x40}@dots{}@code{0xbf} accessible by
-@code{LDS} and @code{STS}.  One way to achieve this as an
-appropriate linker description file.
+それぞれのデータが、@code {0x40} @dots{} @code{0xbf}の@code{LDS}と@code{STS}のアドレス範囲にあることを確認する必要がある。これを実現する1つの方法は、適切なリンカー記述ファイルである。
 
 @item
-If the location does not fit the address range of @code{LDS}
-and @code{STS}, there is currently (Binutils 2.26) just an unspecific
-warning like
+場所が@code {LDS}と@code {STS}のアドレス範囲に合っていない場合、現在のところ（Binutils 2.26）以下のような不特定の警告がある。
 @quotation
 @code{module.c:(.text+0x1c): warning: internal error: out of range error}
 @end quotation
 
 @end itemize
 
-See also the @option{-mabsdata} @ref{AVR Options,command-line option}.
+@option{-mabsdata} @ref{AVR Options,command-line option}も参照。
 
 @end table
 
