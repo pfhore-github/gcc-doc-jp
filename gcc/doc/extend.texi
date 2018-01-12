@@ -4035,24 +4035,19 @@ IA-64では、この属性を使用してオブジェクトのアドレス可能
 @end table
 
 @node M32R/D Variable Attributes
-@subsection M32R/D Variable Attributes
+@subsection M32R/D変数属性
 
-One attribute is currently defined for the M32R/D@.
+1つの属性が現在M32R / Dに対して定義されている。
 
 @table @code
 @item model (@var{model-name})
 @cindex @code{model-name} variable attribute, M32R/D
 @cindex variable addressability on the M32R/D
-Use this attribute on the M32R/D to set the addressability of an object.
-The identifier @var{model-name} is one of @code{small}, @code{medium},
-or @code{large}, representing each of the code models.
+M32R/Dでオブジェクトのアドレス可能性を設定するには、この属性を使用する。識別子@var{model-name}は、各コードモデルを表す@code{small}、@ code{medium}、または@code{large}のいずれかである。
 
-Small model objects live in the lower 16MB of memory (so that their
-addresses can be loaded with the @code{ld24} instruction).
+小さなモデルオブジェクトは、メモリの下位16MBに存在する（そのため、アドレスは@code{ld24}命令でロードできる）。
 
-Medium and large model objects may live anywhere in the 32-bit address space
-(the compiler generates @code{seth/add3} instructions to load their
-addresses).
+中規模および大規模モデルオブジェクトは、32ビットアドレス空間のどこにでも置くことができる（コンパイラは、アドレスをロードするための@code{seth/add3}命令を生成する）。
 @end table
 
 @node MeP Variable Attributes
