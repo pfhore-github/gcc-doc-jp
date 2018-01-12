@@ -3984,9 +3984,9 @@ volatile int porta __attribute__((address (0x600)));
 @end table
 
 @node Blackfin Variable Attributes
-@subsection Blackfin Variable Attributes
+@subsection Blackfin変数属性
 
-Three attributes are currently defined for the Blackfin.
+現在、Blackfinには3つの属性が定義されている。
 
 @table @code
 @item l1_data
@@ -3995,17 +3995,11 @@ Three attributes are currently defined for the Blackfin.
 @cindex @code{l1_data} variable attribute, Blackfin
 @cindex @code{l1_data_A} variable attribute, Blackfin
 @cindex @code{l1_data_B} variable attribute, Blackfin
-Use these attributes on the Blackfin to place the variable into L1 Data SRAM.
-Variables with @code{l1_data} attribute are put into the specific section
-named @code{.l1.data}. Those with @code{l1_data_A} attribute are put into
-the specific section named @code{.l1.data.A}. Those with @code{l1_data_B}
-attribute are put into the specific section named @code{.l1.data.B}.
+これらの属性をBlackfinで使用して、変数をL1データSRAMに配置する。@code{l1_data}属性の変数は、@code{.l1.data}という特定のセクションに配置される。@code{l1_data_A}属性を持つものは、@code{.l1.data.A}という特定のセクションに置かれる。@code{l1_data_B}属性を持つものは、@code{.l1.data.B}という特定のセクションに置かれる。
 
 @item l2
 @cindex @code{l2} variable attribute, Blackfin
-Use this attribute on the Blackfin to place the variable into L2 SRAM.
-Variables with @code{l2} attribute are put into the specific section
-named @code{.l2.data}.
+この属性をBlackfinで使用して、変数をL2 SRAMに配置する。@code{l2}属性の変数は、@code{.l2.data}という特定のセクションに配置される。
 @end table
 
 @node H8/300 Variable Attributes
