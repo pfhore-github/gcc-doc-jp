@@ -4003,31 +4003,22 @@ volatile int porta __attribute__((address (0x600)));
 @end table
 
 @node H8/300 Variable Attributes
-@subsection H8/300 Variable Attributes
+@subsection H8/300変数属性
 
-These variable attributes are available for H8/300 targets:
+これらの変数属性は、H8 / 300ターゲットで使用できる。
 
 @table @code
 @item eightbit_data
 @cindex @code{eightbit_data} variable attribute, H8/300
 @cindex eight-bit data on the H8/300, H8/300H, and H8S
-Use this attribute on the H8/300, H8/300H, and H8S to indicate that the specified
-variable should be placed into the eight-bit data section.
-The compiler generates more efficient code for certain operations
-on data in the eight-bit data area.  Note the eight-bit data area is limited to
-256 bytes of data.
+H8/300、H8/300H、およびH8Sでこの属性を使用して、指定された変数を8ビットデータセクションに配置する必要があることを示す。コンパイラは、8ビットデータ領域内のデータに対する特定の操作に対してより効率的なコードを生成する。 8ビットのデータ領域は256バイトのデータに制限されていることに注意せよ。
 
-You must use GAS and GLD from GNU binutils version 2.7 or later for
-this attribute to work correctly.
+この属性が正しく機能するには、GNU binutilsバージョン2.7以降のGASおよびGLDを使用する必要がある。
 
 @item tiny_data
 @cindex @code{tiny_data} variable attribute, H8/300
 @cindex tiny data section on the H8/300H and H8S
-Use this attribute on the H8/300H and H8S to indicate that the specified
-variable should be placed into the tiny data section.
-The compiler generates more efficient code for loads and stores
-on data in the tiny data section.  Note the tiny data area is limited to
-slightly under 32KB of data.
+H8/300HおよびH8Sでは、この属性を使用して、指定された変数を小さなデータセクションに配置する必要があることを示す。コンパイラは、小さなデータセクションのデータの読み込みと格納のために、より効率的なコードを生成する。 小さなデータ領域はわずか32KB未満のデータに限定されている。
 
 @end table
 
