@@ -4158,17 +4158,14 @@ main()
 @end table
 
 @node Nvidia PTX Variable Attributes
-@subsection Nvidia PTX Variable Attributes
+@subsection Nvidia PTX変数属性
 
-These variable attributes are supported by the Nvidia PTX back end:
+これらの変数属性は、Nvidia PTXバックエンドによってサポートされている。
 
 @table @code
 @item shared
 @cindex @code{shared} attribute, Nvidia PTX
-Use this attribute to place a variable in the @code{.shared} memory space.
-This memory space is private to each cooperative thread array; only threads
-within one thread block refer to the same instance of the variable.
-The runtime does not initialize variables in this memory space.
+この属性を使用して変数を@code{.shared}メモリ空間に配置する。このメモリ空間は、協調スレッド配列ごとにプライベートである。 1つのスレッドブロック内のスレッドのみが変数の同じインスタンスを参照する。ランタイムは、このメモリ空間内の変数を初期化しない。
 @end table
 
 @node PowerPC Variable Attributes
