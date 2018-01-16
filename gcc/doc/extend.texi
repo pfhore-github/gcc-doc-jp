@@ -4094,48 +4094,28 @@ int cpu_clock __attribute__((cb(0x123)));
 @end table
 
 @node Microsoft Windows Variable Attributes
-@subsection Microsoft Windows Variable Attributes
+@subsection Microsoft Windows変数属性
 
-You can use these attributes on Microsoft Windows targets.
-@ref{x86 Variable Attributes} for additional Windows compatibility
-attributes available on all x86 targets.
+これらの属性をMicrosoft Windowsターゲットで使用できる。 @ref{x86 Variable Attributes}は、すべてのx86ターゲットで使用可能な追加のWindows互換性属性である。
 
 @table @code
 @item dllimport
 @itemx dllexport
 @cindex @code{dllimport} variable attribute
 @cindex @code{dllexport} variable attribute
-The @code{dllimport} and @code{dllexport} attributes are described in
-@ref{Microsoft Windows Function Attributes}.
+@code {dllimport}属性と@code {dllexport}属性については、@ref{Microsoft Windows Function Attributes}。
 
 @item selectany
 @cindex @code{selectany} variable attribute
-The @code{selectany} attribute causes an initialized global variable to
-have link-once semantics.  When multiple definitions of the variable are
-encountered by the linker, the first is selected and the remainder are
-discarded.  Following usage by the Microsoft compiler, the linker is told
-@emph{not} to warn about size or content differences of the multiple
-definitions.
+@code{selectany}属性は、初期化されたグローバル変数にリンク時セマンティクスを持たせる。 変数の複数の定義にリンカーが遭遇すると、最初のものが選択され、残りは破棄される。 Microsoftコンパイラによる使用に続いて、リンカは複数の定義のサイズや内容の違いについて警告@emph{_しない_}と伝える。
 
-Although the primary usage of this attribute is for POD types, the
-attribute can also be applied to global C++ objects that are initialized
-by a constructor.  In this case, the static initialization and destruction
-code for the object is emitted in each translation defining the object,
-but the calls to the constructor and destructor are protected by a
-link-once guard variable.
+この属性の主な用途はPOD型のためだが、属性はコンストラクタによって初期化されるグローバルC++オブジェクトにも適用できる。 この場合、オブジェクトの静的初期化コードおよび破棄コードがオブジェクトを定義する各変換で発行されるが、コンストラクタおよびデストラクタへの呼び出しはリンク時ガード変数によって保護される。
 
-The @code{selectany} attribute is only available on Microsoft Windows
-targets.  You can use @code{__declspec (selectany)} as a synonym for
-@code{__attribute__ ((selectany))} for compatibility with other
-compilers.
+@code{selectany}属性は、Microsoft Windowsターゲットでのみ使用できる。 他のコンパイラとの互換性のため、@code{__declspec(selectany)}を@code {__attribute__((selectany))}の同義語として使うことができる。
 
 @item shared
 @cindex @code{shared} variable attribute
-On Microsoft Windows, in addition to putting variable definitions in a named
-section, the section can also be shared among all running copies of an
-executable or DLL@.  For example, this small program defines shared data
-by putting it in a named section @code{shared} and marking the section
-shareable:
+Microsoft Windowsでは、名前付きセクションに変数定義を追加するだけでなく、実行可能ファイルまたはDLLのすべての実行中のコピーでセクションを共有することもできる。 たとえば、この小さなプログラムは、共有データを名前付きセクション@code{shared}に入れ、共有可能セクションにマークを付けることで定義する。
 
 @smallexample
 int foo __attribute__((section ("shared"), shared)) = 0;
@@ -4150,11 +4130,9 @@ main()
 @end smallexample
 
 @noindent
-You may only use the @code{shared} attribute along with @code{section}
-attribute with a fully-initialized global definition because of the way
-linkers work.  See @code{section} attribute for more information.
+@code{section}属性とともに@code{shared}属性と、完全に初期化されたグローバル定義のみを使うことができるのは、リンカの仕組みに由来する。 詳細については、@code{section}属性を参照せよ。
 
-The @code{shared} attribute is only available on Microsoft Windows@.
+@code{shared}属性はMicrosoft Windowsでのみ利用可能である。
 
 @end table
 
