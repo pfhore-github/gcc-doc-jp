@@ -4187,12 +4187,10 @@ PowerPC設定では、@code{altivec}、@code{ms_struct}、@code{gcc_struct}と�
 RL78バックエンドは@code{saddr}変数属性をサポートしている。 これは、対応する変数のSADDR領域への配置を指定する。これで、デフォルトのメモリ領域より効率的にアクセスできる。
 
 @node SPU Variable Attributes
-@subsection SPU Variable Attributes
+@subsection SPU変数属性
 
 @cindex @code{spu_vector} variable attribute, SPU
-The SPU supports the @code{spu_vector} attribute for variables.  For
-documentation of this attribute please see the documentation in
-@ref{SPU Type Attributes}.
+SPUは変数の@code {spu_vector}属性をサポートしている。 この属性のドキュメントについては、@ref{SPU Type Attributes}.
 
 @node V850 Variable Attributes
 @subsection V850 Variable Attributes
