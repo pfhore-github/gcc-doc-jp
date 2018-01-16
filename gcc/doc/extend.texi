@@ -4230,20 +4230,14 @@ SPUは変数の@code {spu_vector}属性をサポートしている。 この属�
 @end table
 
 @node Xstormy16 Variable Attributes
-@subsection Xstormy16 Variable Attributes
+@subsection Xstormy16変数属性
 
-One attribute is currently defined for xstormy16 configurations:
-@code{below100}.
+現在、xstormy16構成に対して1つの属性が定義されている。@code{below100}.
 
 @table @code
 @item below100
 @cindex @code{below100} variable attribute, Xstormy16
-
-If a variable has the @code{below100} attribute (@code{BELOW100} is
-allowed also), GCC places the variable in the first 0x100 bytes of
-memory and use special opcodes to access it.  Such variables are
-placed in either the @code{.bss_below100} section or the
-@code{.data_below100} section.
+変数に@code {below100}属性（@code{BELOW100}も許可されている）がある場合、GCCは変数を最初の0x100バイトのメモリに置き、特殊なオペコードを使用してアクセスする。 このような変数は、@code{.bss_below100}セクションまたは@code{.data_below100}セクションに置かれる。
 
 @end table
 
