@@ -4051,51 +4051,32 @@ M32R/Dでオブジェクトのアドレス可能性を設定するには、こ�
 @end table
 
 @node MeP Variable Attributes
-@subsection MeP Variable Attributes
+@subsection MeP変数属性
 
-The MeP target has a number of addressing modes and busses.  The
-@code{near} space spans the standard memory space's first 16 megabytes
-(24 bits).  The @code{far} space spans the entire 32-bit memory space.
-The @code{based} space is a 128-byte region in the memory space that
-is addressed relative to the @code{$tp} register.  The @code{tiny}
-space is a 65536-byte region relative to the @code{$gp} register.  In
-addition to these memory regions, the MeP target has a separate 16-bit
-control bus which is specified with @code{cb} attributes.
+MePターゲットにはいくつかのアドレッシングモードとバスがある。@code{near}空間は、標準メモリ空間の最初の16メガバイト（24ビット）に及んでいる。 @code{far}空間は32ビットメモリ空間全体に広がる。@code{based}空間は、メモリ空間の128バイトの領域で、@code{$tp}レジスタに相対してアドレス指定される。@code{tiny}空間は、@code{$gp}レジスタを基準にして65536バイトの領域である。これらのメモリ領域に加えて、MePターゲットには@code{cb}属性で指定された別個の16ビット制御バスがある。
 
 @table @code
 
 @item based
 @cindex @code{based} variable attribute, MeP
-Any variable with the @code{based} attribute is assigned to the
-@code{.based} section, and is accessed with relative to the
-@code{$tp} register.
+@code{based}属性を持つ変数は@code{.based}セクションに割り当てられ、@code{$tp}レジスタ相対でアクセスされる。
 
 @item tiny
 @cindex @code{tiny} variable attribute, MeP
-Likewise, the @code{tiny} attribute assigned variables to the
-@code{.tiny} section, relative to the @code{$gp} register.
+同様に、@code{tiny}属性は@code{.tiny}セクションに変数を割り当て、@code{$gp}レジスタ相対である。
 
 @item near
 @cindex @code{near} variable attribute, MeP
-Variables with the @code{near} attribute are assumed to have addresses
-that fit in a 24-bit addressing mode.  This is the default for large
-variables (@code{-mtiny=4} is the default) but this attribute can
-override @code{-mtiny=} for small variables, or override @code{-ml}.
+@code{near}属性を持つ変数は、24ビットアドレッシングモードに適合するアドレスを持つとみなされる。 これは大きな変数（@code{-mtiny=4}がデフォルト）のデフォルトだが、この属性は小さな変数の場合は@code{-mtiny=}を上書きするか、さもなくば@code{-ml}を上書きすることができる。
 
 @item far
 @cindex @code{far} variable attribute, MeP
-Variables with the @code{far} attribute are addressed using a full
-32-bit address.  Since this covers the entire memory space, this
-allows modules to make no assumptions about where variables might be
-stored.
+@code{far}属性を持つ変数は、完全な32ビットアドレスを使用してアドレス指定される。 これはメモリ空間全体をカバーするので、モジュールは変数がどこに格納されるかについて何の仮定もしない。
 
 @item io
 @cindex @code{io} variable attribute, MeP
 @itemx io (@var{addr})
-Variables with the @code{io} attribute are used to address
-memory-mapped peripherals.  If an address is specified, the variable
-is assigned that address, else it is not assigned an address (it is
-assumed some other module assigns an address).  Example:
+@code{io}属性の変数は、メモリマップされた周辺機器のアドレス指定に使用される。 アドレスが指定されていれば、変数はそのアドレスに割り当てられる。そうでなければ、アドレスに割り当てられない（他のモジュールがアドレスを割り当てると仮定する）。 例：
 
 @smallexample
 int timer_count __attribute__((io(0x123)));
@@ -4104,9 +4085,7 @@ int timer_count __attribute__((io(0x123)));
 @item cb
 @itemx cb (@var{addr})
 @cindex @code{cb} variable attribute, MeP
-Variables with the @code{cb} attribute are used to access the control
-bus, using special instructions.  @code{addr} indicates the control bus
-address.  Example:
+@code{cb}属性の変数は、特別な指示を使用してコントロールバスにアクセスするために使用される。 @code{addr}はコントロールバスのアドレスを示す。 例：
 
 @smallexample
 int cpu_clock __attribute__((cb(0x123)));
