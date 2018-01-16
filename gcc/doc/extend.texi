@@ -4193,26 +4193,23 @@ RL78バックエンドは@code{saddr}変数属性をサポートしている。 
 SPUは変数の@code {spu_vector}属性をサポートしている。 この属性のドキュメントについては、@ref{SPU Type Attributes}.
 
 @node V850 Variable Attributes
-@subsection V850 Variable Attributes
+@subsection V850変数属性
 
-These variable attributes are supported by the V850 back end:
+これらの可変属性は、V850バックエンドによってサポートされている。
 
 @table @code
 
 @item sda
 @cindex @code{sda} variable attribute, V850
-Use this attribute to explicitly place a variable in the small data area,
-which can hold up to 64 kilobytes.
+この属性を使用して、64 KBまで保持できる小さなデータ領域に明示的に変数を配置する。
 
 @item tda
 @cindex @code{tda} variable attribute, V850
-Use this attribute to explicitly place a variable in the tiny data area,
-which can hold up to 256 bytes in total.
+この属性を使用して、変数を明示的に非常に小さなデータ領域に配置する。これは合計で最大256バイトまで保持できる。
 
 @item zda
 @cindex @code{zda} variable attribute, V850
-Use this attribute to explicitly place a variable in the first 32 kilobytes
-of memory.
+この属性を使用して、最初の32キロバイトのメモリに変数を明示的に配置する。
 @end table
 
 @node x86 Variable Attributes
