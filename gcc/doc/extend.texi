@@ -4137,25 +4137,16 @@ main()
 @end table
 
 @node MSP430 Variable Attributes
-@subsection MSP430 Variable Attributes
+@subsection MSP430変数属性
 
 @table @code
 @item noinit
 @cindex @code{noinit} variable attribute, MSP430 
-Any data with the @code{noinit} attribute will not be initialised by
-the C runtime startup code, or the program loader.  Not initialising
-data in this way can reduce program startup times.
+@code{noinit}属性を持つデータは、Cランタイムスタートアップコードまたはプログラムローダーによって初期化されない。 このようにデータを初期化しないと、プログラムの起動時間を短縮できる。
 
 @item persistent
 @cindex @code{persistent} variable attribute, MSP430 
-Any variable with the @code{persistent} attribute will not be
-initialised by the C runtime startup code.  Instead its value will be
-set once, when the application is loaded, and then never initialised
-again, even if the processor is reset or the program restarts.
-Persistent data is intended to be placed into FLASH RAM, where its
-value will be retained across resets.  The linker script being used to
-create the application should ensure that persistent data is correctly
-placed.
+@code{persistent}属性を持つ変数は、Cランタイムスタートアップコードによって初期化されない。 代わりに、その値は、アプリケーションがロードされると一度設定され、プロセッサがリセットされたりプログラムが再起動しても、再び初期化されることはない。 永続的なデータはFLASH RAMに配置されることを意図しており、その値はリセット時に保持される。 アプリケーションを作成するために使用されるリンカースクリプトは、永続データが正しく配置されるようにする必要がある。
 
 @item lower
 @itemx upper
@@ -4163,9 +4154,7 @@ placed.
 @cindex @code{lower} variable attribute, MSP430 
 @cindex @code{upper} variable attribute, MSP430 
 @cindex @code{either} variable attribute, MSP430 
-These attributes are the same as the MSP430 function attributes of the
-same name (@pxref{MSP430 Function Attributes}).  
-These attributes can be applied to both functions and variables.
+これらの属性は、同じ名前のMSP430関数属性と同じである（@pxref{MSP430 Function Attributes}）。これらの属性は、関数と変数の両方に適用できる。
 @end table
 
 @node Nvidia PTX Variable Attributes
