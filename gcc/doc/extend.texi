@@ -4181,12 +4181,10 @@ PowerPC設定では、@code{altivec}、@code{ms_struct}、@code{gcc_struct}と�
 @code {altivec}属性のドキュメントについては、@ref{PowerPC Type Attributes}のドキュメントを参照せよ。
 
 @node RL78 Variable Attributes
-@subsection RL78 Variable Attributes
+@subsection RL78変数属性
 
 @cindex @code{saddr} variable attribute, RL78
-The RL78 back end supports the @code{saddr} variable attribute.  This
-specifies placement of the corresponding variable in the SADDR area,
-which can be accessed more efficiently than the default memory region.
+RL78バックエンドは@code{saddr}変数属性をサポートしている。 これは、対応する変数のSADDR領域への配置を指定する。これで、デフォルトのメモリ領域より効率的にアクセスできる。
 
 @node SPU Variable Attributes
 @subsection SPU Variable Attributes
