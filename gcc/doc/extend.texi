@@ -4242,31 +4242,17 @@ SPUは変数の@code {spu_vector}属性をサポートしている。 この属�
 @end table
 
 @node Type Attributes
-@section Specifying Attributes of Types
+@section 型の属性を指定する
 @cindex attribute of types
 @cindex type attributes
 
-The keyword @code{__attribute__} allows you to specify special
-attributes of types.  Some type attributes apply only to @code{struct}
-and @code{union} types, while others can apply to any type defined
-via a @code{typedef} declaration.  Other attributes are defined for
-functions (@pxref{Function Attributes}), labels (@pxref{Label 
-Attributes}), enumerators (@pxref{Enumerator Attributes}), 
-statements (@pxref{Statement Attributes}), and for
-variables (@pxref{Variable Attributes}).
+キーワード@code {__attribute__}を使用すると、型の特殊属性を指定できる。 ある型の属性は@code{struct}型と@code{union}型にのみ適用されるが、その他の型は@code{typedef}宣言で定義された型に適用できる。 他の属性は関数（@pxref{Function Attributes}）、ラベル（@pxref{Label Attributes}）、列挙子（@pxref{Enumerator Attributes}）、文（@pxref{Statement Attributes}）、変数@pxref{Variable Attributes}）に定義されている。
 
-The @code{__attribute__} keyword is followed by an attribute specification
-inside double parentheses.  
+@code{__ attribute__}キーワードの後ろには二重括弧で囲まれた属性指定が続く。
 
-You may specify type attributes in an enum, struct or union type
-declaration or definition by placing them immediately after the
-@code{struct}, @code{union} or @code{enum} keyword.  A less preferred
-syntax is to place them just past the closing curly brace of the
-definition.
+@code{struct}、@code{union}、@code{enum}キーワードの直後に置くことで、型属性をenum、struct、または共用体の型宣言または定義に指定することができる。 あまり推奨されない構文は、それらを定義の最後の中括弧の直前に置くことである。
 
-You can also include type attributes in a @code{typedef} declaration.
-@xref{Attribute Syntax}, for details of the exact syntax for using
-attributes.
+型属性を@code{typedef}宣言に含めることもできる。 属性を使用するための正確な構文の詳細については、@xref{Attribute Syntax}を参照せよ。
 
 @menu
 * Common Type Attributes::
@@ -4278,15 +4264,14 @@ attributes.
 @end menu
 
 @node Common Type Attributes
-@subsection Common Type Attributes
+@subsection 共通型属性
 
-The following type attributes are supported on most targets.
+ほとんどのターゲットでは、次のタイプ属性がサポートされている。
 
 @table @code
 @cindex @code{aligned} type attribute
 @item aligned (@var{alignment})
-This attribute specifies a minimum alignment (in bytes) for variables
-of the specified type.  For example, the declarations:
+この属性は、指定された型の変数の最小整列（バイト単位）を指定する。 たとえば、次の宣言があると。
 
 @smallexample
 struct S @{ short f[3]; @} __attribute__ ((aligned (8)));
@@ -4294,81 +4279,30 @@ typedef int more_aligned_int __attribute__ ((aligned (8)));
 @end smallexample
 
 @noindent
-force the compiler to ensure (as far as it can) that each variable whose
-type is @code{struct S} or @code{more_aligned_int} is allocated and
-aligned @emph{at least} on a 8-byte boundary.  On a SPARC, having all
-variables of type @code{struct S} aligned to 8-byte boundaries allows
-the compiler to use the @code{ldd} and @code{std} (doubleword load and
-store) instructions when copying one variable of type @code{struct S} to
-another, thus improving run-time efficiency.
+@code{struct S}または@code {more_aligned_int}の各変数が@emph{_少なくとも_}8バイト境界に割り当てられていることをコンパイラーに（可能な限り）保証させる。SPARCでは、@code{struct S}型の変数をすべて8バイトの境界に揃えておくと、 @code {struct S}型の変数を別のものにコピーするときに、コンパイラは@code {ldd}と@code{std}（ダブルワードのロードとストア）命令を使用して、実行時の効率が向上する。
 
-Note that the alignment of any given @code{struct} or @code{union} type
-is required by the ISO C standard to be at least a perfect multiple of
-the lowest common multiple of the alignments of all of the members of
-the @code{struct} or @code{union} in question.  This means that you @emph{can}
-effectively adjust the alignment of a @code{struct} or @code{union}
-type by attaching an @code{aligned} attribute to any one of the members
-of such a type, but the notation illustrated in the example above is a
-more obvious, intuitive, and readable way to request the compiler to
-adjust the alignment of an entire @code{struct} or @code{union} type.
+@code {struct}型や@code {union}型のアライメントは、ISO C標準では、少なくとも問題の@code{struct}または@code{union}のすべてのメンバーのアライメントの最低公倍数の完全な倍数であることが要求されることに注意せよ。つまり、@code{aligned}属性をそのような型のメンバのいずれかに付加することによって、@code {struct}型または@code{union}型の整列を効果的に調整することができるが、 上の例では、コンパイラに@code{struct}型または@code{union}型全体のアライメントを調整するように要求する、より明白で直感的で読みやすい方法を示している。
 
-As in the preceding example, you can explicitly specify the alignment
-(in bytes) that you wish the compiler to use for a given @code{struct}
-or @code{union} type.  Alternatively, you can leave out the alignment factor
-and just ask the compiler to align a type to the maximum
-useful alignment for the target machine you are compiling for.  For
-example, you could write:
+前の例と同様に、コンパイラが指定された@code{struct}型または@code{union}型に対して使用する整列（バイト単位）を明示的に指定することができる。 あるいは、アラインメント係数を省略して、コンパイルするターゲットマシンの最大の有効なアライメントにタイプを合わせるようにコンパイラーに依頼することもできる。 たとえば、次のように書くことができる。
 
 @smallexample
 struct S @{ short f[3]; @} __attribute__ ((aligned));
 @end smallexample
 
-Whenever you leave out the alignment factor in an @code{aligned}
-attribute specification, the compiler automatically sets the alignment
-for the type to the largest alignment that is ever used for any data
-type on the target machine you are compiling for.  Doing this can often
-make copy operations more efficient, because the compiler can use
-whatever instructions copy the biggest chunks of memory when performing
-copies to or from the variables that have types that you have aligned
-this way.
+アラインメント係数を@code{aligned}属性指定で除外すると、コンパイラは自動的にそのタイプのアライメントを、コンパイルするターゲットマシンの任意のデータ型に使用された最大のアライメントに設定する。コンパイラは、このように整列した型を持つ変数との間でコピーを実行するときに、最大のメモリチャンクをコピーする命令を使用できるため、コピー操作をより効率的にすることができる。
 
-In the example above, if the size of each @code{short} is 2 bytes, then
-the size of the entire @code{struct S} type is 6 bytes.  The smallest
-power of two that is greater than or equal to that is 8, so the
-compiler sets the alignment for the entire @code{struct S} type to 8
-bytes.
+上記の例では、各@code{short}のサイズが2バイトの場合、@code{struct S}タイプ全体のサイズは6バイトである。 2以上の最小の累乗は8以上であるため、コンパイラは@code{struct S}型全体のアラインメントを8バイトに設定する。
 
-Note that although you can ask the compiler to select a time-efficient
-alignment for a given type and then declare only individual stand-alone
-objects of that type, the compiler's ability to select a time-efficient
-alignment is primarily useful only when you plan to create arrays of
-variables having the relevant (efficiently aligned) type.  If you
-declare or use arrays of variables of an efficiently-aligned type, then
-it is likely that your program also does pointer arithmetic (or
-subscripting, which amounts to the same thing) on pointers to the
-relevant type, and the code that the compiler generates for these
-pointer arithmetic operations is often more efficient for
-efficiently-aligned types than for other types.
+特定の型に対して時間効率の良いアライメントを選択し、その型の個々のスタンドアロンオブジェクトのみを宣言するようにコンパイラに依頼することはできるが、コンパイラの時間効率的な配置を選択する機能は、関連する（効率的に配置された）タイプの変数の配列を作成する予定がある場合にのみ、主に有効である。効率的に整列された型の変数の配列を宣言または使用すると、プログラムは関連する型へのポインタに対してポインタ算術（または同じものになる添え字付け）も行うが、コンパイラがこれらのポインタ算術演算用に生成するコードは、他の型より効率的に配置された型の方が効率がよいことがよくある。
 
-Note that the effectiveness of @code{aligned} attributes may be limited
-by inherent limitations in your linker.  On many systems, the linker is
-only able to arrange for variables to be aligned up to a certain maximum
-alignment.  (For some linkers, the maximum supported alignment may
-be very very small.)  If your linker is only able to align variables
-up to a maximum of 8-byte alignment, then specifying @code{aligned(16)}
-in an @code{__attribute__} still only provides you with 8-byte
-alignment.  See your linker documentation for further information.
+@code{aligned}属性の有効性は、リンカの固有の制限によって制限されることに注意せよ。 多くのシステムでは、リンカは、変数が特定の最大整列まで整列するようにのみ調整することができる。 （一部のリンカでは、サポートされている最大のアラインメントは非常に小さいかもしれない）。リンカが変数を最大8バイトのアラインメントまでしかアライメントできない場合、@code{aligned(16)}を@code {__attribute__}に指定しても8バイトのアラインメントしか得られない。 詳細については、リンカのマニュアルを参照せよ。
 
-The @code{aligned} attribute can only increase alignment.  Alignment
-can be decreased by specifying the @code{packed} attribute.  See below.
+@code {aligned}属性はアラインメントを増加させるだけである。 @code {packed}属性を指定することで、アラインメントを減らすことができる。 下記参照。
 
 @item bnd_variable_size
 @cindex @code{bnd_variable_size} type attribute
 @cindex Pointer Bounds Checker attributes
-When applied to a structure field, this attribute tells Pointer
-Bounds Checker that the size of this field should not be computed
-using static type information.  It may be used to mark variably-sized
-static array fields placed at the end of a structure.
+構造体フィールドに適用されるとき、この属性はポインタの境界チェッカーに、このフィールドのサイズを静的型情報を使用して計算すべきではないことを伝える。 これは、構造体の終わりに配置された可変サイズの静的配列フィールドをマークするために使用される。
 
 @smallexample
 struct S
@@ -4381,8 +4315,7 @@ p->data[10] = 0; //Bounds violation
 @end smallexample
 
 @noindent
-By using an attribute for the field we may avoid unwanted bound
-violation checks:
+フィールドの属性を使用することにより、望ましくない拘束違反チェックを避けることができる：
 
 @smallexample
 struct S
@@ -4397,15 +4330,7 @@ p->data[10] = 0; //OK
 @item deprecated
 @itemx deprecated (@var{msg})
 @cindex @code{deprecated} type attribute
-The @code{deprecated} attribute results in a warning if the type
-is used anywhere in the source file.  This is useful when identifying
-types that are expected to be removed in a future version of a program.
-If possible, the warning also includes the location of the declaration
-of the deprecated type, to enable users to easily find further
-information about why the type is deprecated, or what they should do
-instead.  Note that the warnings only occur for uses and then only
-if the type is being applied to an identifier that itself is not being
-declared as deprecated.
+@code{deprecated}属性は、型がソースファイルのどこでも使用されている場合、警告を出す。 これは、将来のバージョンのプログラムで削除されることが予想される型を識別する場合に便利である。可能であれば、警告には非推奨型の宣言の場所も含まれているため、ユーザーはその型が推奨されない理由やその代わりに何をすべきかに関する情報を簡単に見つけることができる。警告は使用時にのみ発生し、その型自体が非推奨として宣言されていない識別子に適用されている場合に限り発生することに注意せよ。
 
 @smallexample
 typedef int T1 __attribute__ ((deprecated));
@@ -4417,44 +4342,23 @@ T3 z __attribute__ ((deprecated));
 @end smallexample
 
 @noindent
-results in a warning on line 2 and 3 but not lines 4, 5, or 6.  No
-warning is issued for line 4 because T2 is not explicitly
-deprecated.  Line 5 has no warning because T3 is explicitly
-deprecated.  Similarly for line 6.  The optional @var{msg}
-argument, which must be a string, is printed in the warning if
-present.
+2行目と3行目には警告が表示されるが、4行目、5行目、または6行目には警告は表示されない。T2は明示的に推奨されていないため、4行目には警告は発行されない。 T3は明示的に推奨されていないため、5行目に警告はない。６行目も同様である。 文字列でなければならないオプションの@var{msg}引数は、警告が表示されている場合に出力される。
 
-The @code{deprecated} attribute can also be used for functions and
-variables (@pxref{Function Attributes}, @pxref{Variable Attributes}.)
+@code {deprecated}属性は、関数や変数にも使用できる。 (@pxref{Function Attributes}, @pxref{Variable Attributes})
 
 @item designated_init
 @cindex @code{designated_init} type attribute
-This attribute may only be applied to structure types.  It indicates
-that any initialization of an object of this type must use designated
-initializers rather than positional initializers.  The intent of this
-attribute is to allow the programmer to indicate that a structure's
-layout may change, and that therefore relying on positional
-initialization will result in future breakage.
+この属性は構造体型にのみ適用できる。 このタイプのオブジェクトの初期化では、位置初期化子ではなく、指示子付き初期化子を使用する必要があることを示している。 この属性の目的は、構造体のレイアウトが変更される可能性があることを、したがって位置の初期化に依存すると将来の破損が生じる可能性があることをプログラマが示すことができるようにすることである。
 
-GCC emits warnings based on this attribute by default; use
-@option{-Wno-designated-init} to suppress them.
+GCCはデフォルトでこの属性に基づいて警告を出す。 @option{-Wno-designated-init}を使用してそれらを抑制できる。
 
 @item may_alias
 @cindex @code{may_alias} type attribute
-Accesses through pointers to types with this attribute are not subject
-to type-based alias analysis, but are instead assumed to be able to alias
-any other type of objects.
-In the context of section 6.5 paragraph 7 of the C99 standard,
-an lvalue expression
-dereferencing such a pointer is treated like having a character type.
-See @option{-fstrict-aliasing} for more information on aliasing issues.
-This extension exists to support some vector APIs, in which pointers to
-one vector type are permitted to alias pointers to a different vector type.
+この属性を持つ型へのポインタによるアクセスは、型に基づくエイリアス解析の対象ではないが、代わりに他の型のオブジェクトのエイリアスが可能であると想定される。 C99標準の第6.5節第7項の文脈では、そのようなポインタを逆参照する左辺式は、文字型のように扱われる。 エイリアスの問題の詳細については、@option{-fstrict-aliasing}を参照せよ。 この拡張は、あるベクトル型へのポインタが別のベクトル型へのポインタの別名付けを許可されているいくつかのベクトルAPIをサポートするために存在する。
 
-Note that an object of a type with this attribute does not have any
-special semantics.
+この属性を持つ型のオブジェクトは特別なセマンティクスを持たないことに注意せよ。
 
-Example of use:
+使用の例：
 
 @smallexample
 typedef short __attribute__((__may_alias__)) short_a;
@@ -4475,30 +4379,16 @@ main (void)
 @end smallexample
 
 @noindent
-If you replaced @code{short_a} with @code{short} in the variable
-declaration, the above program would abort when compiled with
-@option{-fstrict-aliasing}, which is on by default at @option{-O2} or
-above.
+変数宣言で@code{short_a}を@code{short}に置き換えた場合、@option{-O2}以上でデフォルトでオンになる@option{-fstrict-aliasing}でコンパイルすると、上記のプログラムは強制終了するだろう。
 
 @item packed
 @cindex @code{packed} type attribute
-This attribute, attached to @code{struct} or @code{union} type
-definition, specifies that each member (other than zero-width bit-fields)
-of the structure or union is placed to minimize the memory required.  When
-attached to an @code{enum} definition, it indicates that the smallest
-integral type should be used.
+@code{struct}型または@code {union}型定義に添付されているこの属性は、構造体または共用体の各メンバ（ゼロ幅のビットフィールド以外）が必要なメモリを最小限に抑えるように配置されることを指定する。 @code{enum}定義に付けると、最小の整数型を使用する必要があることを示す。
 
 @opindex fshort-enums
-Specifying the @code{packed} attribute for @code{struct} and @code{union}
-types is equivalent to specifying the @code{packed} attribute on each
-of the structure or union members.  Specifying the @option{-fshort-enums}
-flag on the command line is equivalent to specifying the @code{packed}
-attribute on all @code{enum} definitions.
+@code{struct}型と@code{union}型に@code{packed}属性を指定することは、構造体または共用体の各メンバで@code{packed}属性を指定するのと同じである。 コマンドラインで@option{-fshort-enums}フラグを指定することは、すべての@code{enum}定義で@code{packed}属性を指定するのと同じである。
 
-In the following example @code{struct my_packed_struct}'s members are
-packed closely together, but the internal layout of its @code{s} member
-is not packed---to do that, @code{struct my_unpacked_struct} needs to
-be packed too.
+次の例では、@code {struct my_packed_struct}のメンバーは密接にまとめられているが、@code{s}メンバーの内部レイアウトはパックされていない。そうするためには、@code{struct my_unpacked_struct}もパックする必要がある。
 
 @smallexample
 struct my_unpacked_struct
@@ -4515,81 +4405,36 @@ struct __attribute__ ((__packed__)) my_packed_struct
   @};
 @end smallexample
 
-You may only specify the @code{packed} attribute attribute on the definition
-of an @code{enum}, @code{struct} or @code{union}, not on a @code{typedef}
-that does not also define the enumerated type, structure or union.
+列挙型、構造体、共用体を定義していない@code {typedef}ではなく@code{enum}、@code {struct}または@code{union}の定義にのみ@code{packed}属性属性を指定することができる。
 
 @item scalar_storage_order ("@var{endianness}")
 @cindex @code{scalar_storage_order} type attribute
-When attached to a @code{union} or a @code{struct}, this attribute sets
-the storage order, aka endianness, of the scalar fields of the type, as
-well as the array fields whose component is scalar.  The supported
-endiannesses are @code{big-endian} and @code{little-endian}.  The attribute
-has no effects on fields which are themselves a @code{union}, a @code{struct}
-or an array whose component is a @code{union} or a @code{struct}, and it is
-possible for these fields to have a different scalar storage order than the
-enclosing type.
+@code{union}または@code {struct}にアタッチされている場合、この属性は型のスカラフィールド、およびコンポーネントがスカラーである配列フィールドの格納順序、つまりエンディアンを設定する。 サポートされるエンディアンは@code{big-endian}と@code{little-endian}である。この属性は、それ自身が@code{union}、@code{struct}、またはその構成要素が@code{union}または@code{struct}の配列であるフィールドには影響せず、これらのフィールドは囲むタイプとは異なるスカラー格納順序を持つことができる。
 
-This attribute is supported only for targets that use a uniform default
-scalar storage order (fortunately, most of them), i.e. targets that store
-the scalars either all in big-endian or all in little-endian.
+この属性は、揃ったデフォルトのスカラーストレージオーダーを使用するターゲット（幸運なことに、ほとんど）、つまりスカラーをすべてビッグエンディアンまたはリトルエンディアンに格納するターゲットでのみサポートされる。
 
-Additional restrictions are enforced for types with the reverse scalar
-storage order with regard to the scalar storage order of the target:
+ターゲットのスカラー格納順序とは逆のスカラ格納順序を持つ型に対しては、追加の制限が適用される。
 
 @itemize
-@item Taking the address of a scalar field of a @code{union} or a
-@code{struct} with reverse scalar storage order is not permitted and yields
-an error.
-@item Taking the address of an array field, whose component is scalar, of
-a @code{union} or a @code{struct} with reverse scalar storage order is
-permitted but yields a warning, unless @option{-Wno-scalar-storage-order}
-is specified.
-@item Taking the address of a @code{union} or a @code{struct} with reverse
-scalar storage order is permitted.
+@item 逆スカラー格納順序の@code{union}または@code {struct}のスカラーフィールドのアドレスを取ることは許されず、エラーが発生する。
+@item @option{-Wno-scalar-storage-name}が指定されていない限り、構成要素がスカラーである、配列フィールドのアドレスを逆スカラー格納順序の@code{union}または@code {struct}の配列フィールドのアドレスを取ることは許可されるが、警告が生成される。
+@item 逆スカラー格納順序の@code {union}または@code {struct}のアドレスを取ることは許可されている。
 @end itemize
 
-These restrictions exist because the storage order attribute is lost when
-the address of a scalar or the address of an array with scalar component is
-taken, so storing indirectly through this address generally does not work.
-The second case is nevertheless allowed to be able to perform a block copy
-from or to the array.
+これらの制約は、スカラーのアドレスまたはスカラーコンポーネントを持つ配列のアドレスが取られたときに記憶順序属性が失われるために存在する。したがって、このアドレスを介して間接的に格納するのは一般的に機能しない。それにもかかわらず、第2の場合は、配列との間でブロックコピーを実行することができる。
 
-Moreover, the use of type punning or aliasing to toggle the storage order
-is not supported; that is to say, a given scalar object cannot be accessed
-through distinct types that assign a different storage order to it.
+さらに、格納順序を切り替えるための型キャストやエイリアシングの使用はサポートされていない。 つまり、指定されたスカラーオブジェクトは、別の記憶順序を割り当てる別の型を通してアクセスすることはできない。
 
 @item transparent_union
 @cindex @code{transparent_union} type attribute
 
-This attribute, attached to a @code{union} type definition, indicates
-that any function parameter having that union type causes calls to that
-function to be treated in a special way.
+@code{union}型定義に添付されているこの属性は、その共用体型を持つ関数パラメータがその関数への呼び出しを特別な方法で扱うことを示す。
 
-First, the argument corresponding to a transparent union type can be of
-any type in the union; no cast is required.  Also, if the union contains
-a pointer type, the corresponding argument can be a null pointer
-constant or a void pointer expression; and if the union contains a void
-pointer type, the corresponding argument can be any pointer expression.
-If the union member type is a pointer, qualifiers like @code{const} on
-the referenced type must be respected, just as with normal pointer
-conversions.
+まず、透明な共用体型に対応する引数は、共用体内のどの型でもよい。 キャストは必要ない。 また、共用体にポインタ型が含まれている場合、対応する引数にはNULLポインタ定数またはvoidポインタ式を指定できる。 共用体にvoidポインタ型が含まれている場合、対応する引数は任意のポインタ式になる。 共用体メンバ型がポインタの場合、通常のポインタ変換と同様に、参照される型の@code{const}のような修飾子を尊重する必要がある。
 
-Second, the argument is passed to the function using the calling
-conventions of the first member of the transparent union, not the calling
-conventions of the union itself.  All members of the union must have the
-same machine representation; this is necessary for this argument passing
-to work properly.
+第2に、引数は、共用体自体の呼び出し規約ではなく、透明な共用体の最初のメンバーの呼び出し規約を使用して関数に渡される。 共用体のすべてのメンバーは、同じマシン表現を持たなければならない。 この引数が正しく動作するためには、これが必要である。
 
-Transparent unions are designed for library functions that have multiple
-interfaces for compatibility reasons.  For example, suppose the
-@code{wait} function must accept either a value of type @code{int *} to
-comply with POSIX, or a value of type @code{union wait *} to comply with
-the 4.1BSD interface.  If @code{wait}'s parameter were @code{void *},
-@code{wait} would accept both kinds of arguments, but it would also
-accept any other pointer type and this would make argument type checking
-less useful.  Instead, @code{<sys/wait.h>} might define the interface
-as follows:
+透明な共用体は、互換性の理由で複数のインタフェースを持つライブラリ関数用に設計されている。 たとえば、@code{wait}関数がPOSIXに準拠するために@code{int *}型の値を受け入れるか、4.1BSDインタフェースに準拠するために@code{union wait *}型の値を受け入れる必要があるとする。 @code{wait}のパラメータが@code{void *}の場合、@code{wait}は両方の種類の引数を受け入れるが、他のポインタ型も受け入れる。 代わりに、@code{<sys/wait.h>}は次のようにインタフェースを定義してもよい：
 
 @smallexample
 typedef union __attribute__ ((__transparent_union__))
@@ -4602,9 +4447,7 @@ pid_t wait (wait_status_ptr_t);
 @end smallexample
 
 @noindent
-This interface allows either @code{int *} or @code{union wait *}
-arguments to be passed, using the @code{int *} calling convention.
-The program can call @code{wait} with arguments of either type:
+このインタフェースでは、@code{int *}呼び出し規約を使用して、@code{int *}または@code{union wait *}引数を渡すことができる。 プログラムはどちらの型の引数でも@code{wait}を呼び出すことができる：
 
 @smallexample
 int w1 () @{ int w; return wait (&w); @}
@@ -4612,7 +4455,7 @@ int w2 () @{ union wait w; return wait (&w); @}
 @end smallexample
 
 @noindent
-With this interface, @code{wait}'s implementation might look like this:
+このインタフェースでは、@code{wait}の実装は次のようになる。
 
 @smallexample
 pid_t wait (wait_status_ptr_t p)
@@ -4623,33 +4466,17 @@ pid_t wait (wait_status_ptr_t p)
 
 @item unused
 @cindex @code{unused} type attribute
-When attached to a type (including a @code{union} or a @code{struct}),
-this attribute means that variables of that type are meant to appear
-possibly unused.  GCC does not produce a warning for any variables of
-that type, even if the variable appears to do nothing.  This is often
-the case with lock or thread classes, which are usually defined and then
-not referenced, but contain constructors and destructors that have
-nontrivial bookkeeping functions.
+型（@code{union}や@code{struct}を含む）に接続すると、この型の変数は使用されない可能性があることを意味する。 変数が何もしないように見えても、GCCはその型の変数について警告を出さない。 これは通常、定義されて参照されないが、自明ではない簿記機能を持つコンストラクタとデストラクタを含むロッククラスまたはスレッドクラスのケースである。
 
 @item visibility
 @cindex @code{visibility} type attribute
-In C++, attribute visibility (@pxref{Function Attributes}) can also be
-applied to class, struct, union and enum types.  Unlike other type
-attributes, the attribute must appear between the initial keyword and
-the name of the type; it cannot appear after the body of the type.
+C++では、属性の可視性（@pxref {Function Attributes}）はクラス、構造体、共用体、列挙型にも適用できる。 他の型の属性とは異なり、属性は初期キーワードと型の名前の間になければならない。 タイプのボディの後には出現できない。
 
-Note that the type visibility is applied to vague linkage entities
-associated with the class (vtable, typeinfo node, etc.).  In
-particular, if a class is thrown as an exception in one shared object
-and caught in another, the class must have default visibility.
-Otherwise the two shared objects are unable to use the same
-typeinfo node and exception handling will break.
+タイプの可視性は、クラス（vtable、typeinfoノードなど）に関連付けられた曖昧なリンケージエンティティに適用されることに注意せよ。 特に、あるクラスがある共有オブジェクト内で例外としてスローされ、別の共有オブジェクトで捕捉された場合、そのクラスはデフォルトの可視性を持たなければならない。 それ以外の場合は、2つの共有オブジェクトが同じtypeinfoノードを使用できず、例外処理が中断される。
 
 @end table
 
-To specify multiple attributes, separate them by commas within the
-double parentheses: for example, @samp{__attribute__ ((aligned (16),
-packed))}.
+複数の属性を指定するには、ダブルカッコ内でコンマで区切る。例えば、 @samp{__attribute__ ((aligned (16), packed))}.
 
 @node ARM Type Attributes
 @subsection ARM Type Attributes
