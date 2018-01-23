@@ -4528,13 +4528,10 @@ __attribute__((altivec(bool__))) unsigned
 これらの属性は主に、@code{__vector}、@code{__pixel}、@code{__bool}のAltiVecキーワードをサポートすることを意図している。
 
 @node SPU Type Attributes
-@subsection SPU Type Attributes
+@subsection SPU型属性
 
 @cindex @code{spu_vector} type attribute, SPU
-The SPU supports the @code{spu_vector} attribute for types.  This attribute
-allows one to declare vector data types supported by the Sony/Toshiba/IBM SPU
-Language Extensions Specification.  It is intended to support the
-@code{__vector} keyword.
+SPUは型の@code{spu_vector}属性をサポートしている。 この属性を使用すると、ソニー/東芝/IBM SPU言語拡張仕様でサポートされているベクトルデータ型を宣言できる。 @code{__ vector}キーワードをサポートすることを意図している。
 
 @node x86 Type Attributes
 @subsection x86 Type Attributes
