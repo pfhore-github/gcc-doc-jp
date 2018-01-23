@@ -4618,17 +4618,12 @@ fn (void)
 @end table
 
 @node Statement Attributes
-@section Statement Attributes
+@section 文属性
 @cindex Statement Attributes
 
-GCC allows attributes to be set on null statements.  @xref{Attribute Syntax},
-for details of the exact syntax for using attributes.  Other attributes are
-available for functions (@pxref{Function Attributes}), variables
-(@pxref{Variable Attributes}), labels (@pxref{Label Attributes}), enumerators
-(@pxref{Enumerator Attributes}), and for types (@pxref{Type Attributes}).
+GCCでは、属性を空文に設定できる。 属性を使用するための正確な構文の詳細については、@xref{Attribute Syntax}を参照せよ。他の属性は、関数(@pxref{Function Attributes})、変数(@pxref{Variable Attributes})、ラベル(@pxref{Label Attributes})、列挙(@pxref{Enumerator Attributes})、型(@pxref{Type Attributes})である。
 
-This example uses the @code{fallthrough} statement attribute to indicate that
-the @option{-Wimplicit-fallthrough} warning should not be emitted:
+この例では、@code{fallthrough}文属性を使用して、@option{-Wimplicit-fallthrough}警告を出力しないことを示している。
 
 @smallexample
 switch (cond)
@@ -4644,16 +4639,7 @@ switch (cond)
 @table @code
 @item fallthrough
 @cindex @code{fallthrough} statement attribute
-The @code{fallthrough} attribute with a null statement serves as a
-fallthrough statement.  It hints to the compiler that a statement
-that falls through to another case label, or user-defined label
-in a switch statement is intentional and thus the
-@option{-Wimplicit-fallthrough} warning must not trigger.  The
-fallthrough attribute may appear at most once in each attribute
-list, and may not be mixed with other attributes.  It can only
-be used in a switch statement (the compiler will issue an error
-otherwise), after a preceding statement and before a logically
-succeeding case label, or user-defined label.
+空文を持つ@code{fallthrough}属性はフォールスルー文として機能する。 switchステートメント内の別のcaseラベルまたはユーザー定義ラベルに渡すステートメントは意図的なものであるため、@option{-Wimplicit-fallthrough}警告はトリガーしてはならないことをコンパイラーに示唆している。 フォールスルー属性は、各属性リストに最大で1回しか表示されず、他の属性と混在することはできない。 switchステートメントでのみ使用できる（コンパイラーは別の方法でエラーを出します）。これは、直前の文の後で、論理的に後続するcaseラベルまたはユーザー定義ラベルの前である。
 
 @end table
 
