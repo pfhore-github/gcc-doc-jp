@@ -4499,16 +4499,13 @@ C::C() @{@}
 このコードでは、@code{C::C}は現在のDLLからエクスポートされるが、@code{C}の仮想テーブルはエクスポートされない。 必要に応じて@code{__ declspec}の代わりに@code{__attribute__}を使うことができるが、ほとんどのSymbian OSコードは@code{__declspec}を使用している）。
 
 @node MeP Type Attributes
-@subsection MeP Type Attributes
+@subsection MeP型属性
 
 @cindex @code{based} type attribute, MeP
 @cindex @code{tiny} type attribute, MeP
 @cindex @code{near} type attribute, MeP
 @cindex @code{far} type attribute, MeP
-Many of the MeP variable attributes may be applied to types as well.
-Specifically, the @code{based}, @code{tiny}, @code{near}, and
-@code{far} attributes may be applied to either.  The @code{io} and
-@code{cb} attributes may not be applied to types.
+MeP変数属性の多くは、型にも適用できる。具体的には、@code{based}、@code{tiny}、@code{near}、@code{far}のいずれかの属性を適用することができる。 @code{io}属性と@code{cb}属性は型には適用されない。
 
 @node PowerPC Type Attributes
 @subsection PowerPC Type Attributes
