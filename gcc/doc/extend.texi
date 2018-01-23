@@ -4534,10 +4534,9 @@ __attribute__((altivec(bool__))) unsigned
 SPUは型の@code{spu_vector}属性をサポートしている。 この属性を使用すると、ソニー/東芝/IBM SPU言語拡張仕様でサポートされているベクトルデータ型を宣言できる。 @code{__ vector}キーワードをサポートすることを意図している。
 
 @node x86 Type Attributes
-@subsection x86 Type Attributes
+@subsection x86型属性
 
-Two attributes are currently defined for x86 configurations:
-@code{ms_struct} and @code{gcc_struct}.
+現在のところ、x86構成では、@code{ms_struct}と@code{gcc_struct}という2つの属性が定義されている。
 
 @table @code
 
@@ -4546,19 +4545,9 @@ Two attributes are currently defined for x86 configurations:
 @cindex @code{ms_struct} type attribute, x86
 @cindex @code{gcc_struct} type attribute, x86
 
-If @code{packed} is used on a structure, or if bit-fields are used
-it may be that the Microsoft ABI packs them differently
-than GCC normally packs them.  Particularly when moving packed
-data between functions compiled with GCC and the native Microsoft compiler
-(either via function call or as data in a file), it may be necessary to access
-either format.
+構造体で@code{packed}が使用されている場合、またはビットフィールドが使用されている場合は、Microsoft ABIが通常GCCパックとは異なる方法でパックしている可能性がある。 特に、GCCでコンパイルされた関数とネイティブのMicrosoftコンパイラ（関数呼び出しまたはファイル内のデータ）の間でパックされたデータを移動する場合は、どちらの形式にもアクセスする必要がある。
 
-The @code{ms_struct} and @code{gcc_struct} attributes correspond
-to the @option{-mms-bitfields} and @option{-mno-ms-bitfields}
-command-line options, respectively;
-see @ref{x86 Options}, for details of how structure layout is affected.
-@xref{x86 Variable Attributes}, for information about the corresponding
-attributes on variables.
+@code{ms_struct}属性と@code{gcc_struct}属性は、それぞれコマンドラインオプション@option{-mms-bitfields}と@option{-mno-ms-bitfields}に対応する。 構造体レイアウトの影響の詳細については、@ref{x86 Options}を参照せよ。 変数の対応する属性については、@xref{x86 Variable Attributes}を参照せよ。
 
 @end table
 
