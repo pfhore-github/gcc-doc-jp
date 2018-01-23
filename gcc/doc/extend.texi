@@ -4590,17 +4590,12 @@ NoError:
 @end table
 
 @node Enumerator Attributes
-@section Enumerator Attributes
+@section 列挙属性
 @cindex Enumerator Attributes
 
-GCC allows attributes to be set on enumerators.  @xref{Attribute Syntax}, for
-details of the exact syntax for using attributes.  Other attributes are
-available for functions (@pxref{Function Attributes}), variables
-(@pxref{Variable Attributes}), labels (@pxref{Label Attributes}), statements
-(@pxref{Statement Attributes}), and for types (@pxref{Type Attributes}).
+GCCでは、属性を列挙に設定できる。 属性を使用するための正確な構文の詳細については、@xref{Attribute Syntax}を参照せよ。他の属性は、関数(@pxref{Function Attributes})、変数(@pxref{Variable Attributes})、ラベル(@pxref{Label Attributes})、文(@pxref{Statement Attributes})、型(@pxref{Type Attributes})である。
 
-This example uses the @code{deprecated} enumerator attribute to indicate the
-@code{oldval} enumerator is deprecated:
+この例では、@code{deprecated}列挙子属性を使用して、@code{oldval}列挙子が廃止予定であることを示している。
 
 @smallexample
 enum E @{
@@ -4618,13 +4613,7 @@ fn (void)
 @table @code
 @item deprecated
 @cindex @code{deprecated} enumerator attribute
-The @code{deprecated} attribute results in a warning if the enumerator
-is used anywhere in the source file.  This is useful when identifying
-enumerators that are expected to be removed in a future version of a
-program.  The warning also includes the location of the declaration
-of the deprecated enumerator, to enable users to easily find further
-information about why the enumerator is deprecated, or what they should
-do instead.  Note that the warnings only occurs for uses.
+列挙子がソースファイルのどこで使用されている場合でも、@code{deprecated}属性は警告を出す。 これは、将来のバージョンのプログラムで削除されると予想される列挙子を識別する場合に便利である。 この警告には、廃止された列挙子の宣言の場所も含まれているため、列挙子が廃止された理由やその代わりに何をすべきかに関する情報をユーザーが簡単に見つけることができる。 警告は、使用時にのみ発生することに注意せよ。
 
 @end table
 
