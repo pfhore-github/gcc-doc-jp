@@ -4508,22 +4508,16 @@ C::C() @{@}
 MeP変数属性の多くは、型にも適用できる。具体的には、@code{based}、@code{tiny}、@code{near}、@code{far}のいずれかの属性を適用することができる。 @code{io}属性と@code{cb}属性は型には適用されない。
 
 @node PowerPC Type Attributes
-@subsection PowerPC Type Attributes
+@subsection PowerPC型属性
 
-Three attributes currently are defined for PowerPC configurations:
-@code{altivec}, @code{ms_struct} and @code{gcc_struct}.
+PowerPCの設定では、@code{altivec}、@code{ms_struct}、@code{gcc_struct}という3つの属性が定義されている。
 
 @cindex @code{ms_struct} type attribute, PowerPC
 @cindex @code{gcc_struct} type attribute, PowerPC
-For full documentation of the @code{ms_struct} and @code{gcc_struct}
-attributes please see the documentation in @ref{x86 Type Attributes}.
+@code{ms_struct}属性と@code{gcc_struct}属性の詳細については、@ref{x86 Type Attributes}のドキュメントを参照せよ。
 
 @cindex @code{altivec} type attribute, PowerPC
-The @code{altivec} attribute allows one to declare AltiVec vector data
-types supported by the AltiVec Programming Interface Manual.  The
-attribute requires an argument to specify one of three vector types:
-@code{vector__}, @code{pixel__} (always followed by unsigned short),
-and @code{bool__} (always followed by unsigned).
+@code{altivec}属性は、AltiVec Programming Interface ManualでサポートされているAltiVecベクタデータ型を宣言することができる。 属性には、@code{vector__}、@code{pixel__}（常にunsigned short）、@code{bool__}（常に符号なし）の3種類のベクトル型のいずれかを指定する引数が必要である。
 
 @smallexample
 __attribute__((altivec(vector__)))
@@ -4531,8 +4525,7 @@ __attribute__((altivec(pixel__))) unsigned short
 __attribute__((altivec(bool__))) unsigned
 @end smallexample
 
-These attributes mainly are intended to support the @code{__vector},
-@code{__pixel}, and @code{__bool} AltiVec keywords.
+これらの属性は主に、@code{__vector}、@code{__pixel}、@code{__bool}のAltiVecキーワードをサポートすることを意図している。
 
 @node SPU Type Attributes
 @subsection SPU Type Attributes
