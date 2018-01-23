@@ -4479,13 +4479,10 @@ C++では、属性の可視性（@pxref {Function Attributes}）はクラス、�
 複数の属性を指定するには、ダブルカッコ内でコンマで区切る。例えば、 @samp{__attribute__ ((aligned (16), packed))}.
 
 @node ARM Type Attributes
-@subsection ARM Type Attributes
+@subsection ARM型属性
 
 @cindex @code{notshared} type attribute, ARM
-On those ARM targets that support @code{dllimport} (such as Symbian
-OS), you can use the @code{notshared} attribute to indicate that the
-virtual table and other similar data for a class should not be
-exported from a DLL@.  For example:
+@code{dllimport}（Symbian OSなど）をサポートするARMターゲットでは、@code{notshared}属性を使用して、クラスの仮想テーブルやその他の同様のデータをDLLからエクスポートしないことを指定できる。 例えば：
 
 @smallexample
 class __declspec(notshared) C @{
@@ -4499,10 +4496,7 @@ C::C() @{@}
 @end smallexample
 
 @noindent
-In this code, @code{C::C} is exported from the current DLL, but the
-virtual table for @code{C} is not exported.  (You can use
-@code{__attribute__} instead of @code{__declspec} if you prefer, but
-most Symbian OS code uses @code{__declspec}.)
+このコードでは、@code{C::C}は現在のDLLからエクスポートされるが、@code{C}の仮想テーブルはエクスポートされない。 必要に応じて@code{__ declspec}の代わりに@code{__attribute__}を使うことができるが、ほとんどのSymbian OSコードは@code{__declspec}を使用している）。
 
 @node MeP Type Attributes
 @subsection MeP Type Attributes
