@@ -4644,113 +4644,56 @@ switch (cond)
 @end table
 
 @node Attribute Syntax
-@section Attribute Syntax
+@section 属性構文
 @cindex attribute syntax
 
-This section describes the syntax with which @code{__attribute__} may be
-used, and the constructs to which attribute specifiers bind, for the C
-language.  Some details may vary for C++ and Objective-C@.  Because of
-infelicities in the grammar for attributes, some forms described here
-may not be successfully parsed in all cases.
+この節では、C言語の@code{__attribute__}が使用される構文と、属性指定子が結合される構文について説明する。 いくつかの詳細は、C++とObjective-Cで異なる場合がある。 属性の文法の情報が不十分であるため、ここに記載されている一部の書式はすべての場合に正常に解析されないことがある。
 
-There are some problems with the semantics of attributes in C++.  For
-example, there are no manglings for attributes, although they may affect
-code generation, so problems may arise when attributed types are used in
-conjunction with templates or overloading.  Similarly, @code{typeid}
-does not distinguish between types with different attributes.  Support
-for attributes in C++ may be restricted in future to attributes on
-declarations only, but not on nested declarators.
+C ++の属性のセマンティクスにはいくつかの問題がある。 たとえば、コードの生成に影響する可能性があるが、属性のマングリングはない。したがって、属性付きの型をテンプレートやオーバーロードとともに使用すると問題が発生する可能性がある。 同様に、@code{typeid}は属性の異なる型を区別しない。 C++での属性のサポートは、将来は宣言のみの属性に制限されるが、ネストされた宣言子では制限されない。
 
-@xref{Function Attributes}, for details of the semantics of attributes
-applying to functions.  @xref{Variable Attributes}, for details of the
-semantics of attributes applying to variables.  @xref{Type Attributes},
-for details of the semantics of attributes applying to structure, union
-and enumerated types.
-@xref{Label Attributes}, for details of the semantics of attributes 
-applying to labels.
-@xref{Enumerator Attributes}, for details of the semantics of attributes
-applying to enumerators.
-@xref{Statement Attributes}, for details of the semantics of attributes
-applying to statements.
+関数に適用する属性の意味の詳細は@xref{Function Attributes}。変数に適用される属性の意味の詳細は@xref{Variable Attributes}。構造体、共用体、列挙型に適用される属性の意味の詳細は@xref{Type Attributes}。ラベルに適用される属性の意味の詳細は@xref{Label Attributes}。列挙子に適用される属性の意味の詳細は@xref{Enumerator Attributes}。文に適用される属性の意味の詳細は@xref{Statement Attributes}
 
-An @dfn{attribute specifier} is of the form
-@code{__attribute__ ((@var{attribute-list}))}.  An @dfn{attribute list}
-is a possibly empty comma-separated sequence of @dfn{attributes}, where
-each attribute is one of the following:
+@dfn{attribute specifier}（属性指定子）は形式@code{__attribute__ ((@var{attribute-list}))}を持つ。@dfn{attribute list}（属性リスト）は@dfn{attributes}のコンマで区切られた空を許容する列であり、それぞれは以下の一つである。
 
 @itemize @bullet
 @item
-Empty.  Empty attributes are ignored.
+空。空属性は無視される。
 
 @item
-An attribute name
-(which may be an identifier such as @code{unused}, or a reserved
-word such as @code{const}).
+属性名。（@code{unused}のような識別子か、@code{const}のような予約後かもしれない）
 
 @item
-An attribute name followed by a parenthesized list of
-parameters for the attribute.
-These parameters take one of the following forms:
+属性名の後に、属性のパラメータのカッコで囲まれたリストが続く。 これらのパラメータは、次のいずれかの形式をとる。
 
 @itemize @bullet
 @item
-An identifier.  For example, @code{mode} attributes use this form.
+識別子。例えば、@code{mode}属性はこの形式を持つ。
 
 @item
-An identifier followed by a comma and a non-empty comma-separated list
-of expressions.  For example, @code{format} attributes use this form.
+識別子のあとに、式のコンマで区切られた空でないリストが続く。例えば、@code{format}属性はこの形式を使う。
 
 @item
-A possibly empty comma-separated list of expressions.  For example,
-@code{format_arg} attributes use this form with the list being a single
-integer constant expression, and @code{alias} attributes use this form
-with the list being a single string constant.
+式の空を許容するコンマ区切りのリスト。例えば、@code{format_arg}属性はこの形式を使用し、リストは単一の整数定数式であり、@code {alias}属性はこのフォームを使用し、リストは単一の文字列定数になる。
 @end itemize
 @end itemize
 
-An @dfn{attribute specifier list} is a sequence of one or more attribute
-specifiers, not separated by any other tokens.
+@dfn{attribute specifier list}（属性指定子リスト）は、他のトークンで区切られていない、1つ以上の属性指定子の列である。
 
-You may optionally specify attribute names with @samp{__}
-preceding and following the name.
-This allows you to use them in header files without
-being concerned about a possible macro of the same name.  For example,
-you may use the attribute name @code{__noreturn__} instead of @code{noreturn}.
+属性名の前に@samp{__}を付けて属性名を指定することもできる。 これにより、同じ名前の可能性のあるマクロを気にせずにヘッダファイルでそれらを使用することができる。 たとえば、@code {noreturn}ではなく@code{__ noreturn__}という属性名を使用できる。
 
+@subsubheading ラベル属性
 
-@subsubheading Label Attributes
+GNU Cでは、@code{case}や@code{default}ラベル以外のラベルの後にコロンの後に属性指定子リストが現れる。 GNU C++では、属性指定子の直後にセミコロンが続く場合（つまり、空文にラベルが適用される）、ラベルの属性のみが許可される。 セミコロンがない場合、C++のラベル属性はあいまいである。属性リストで始まる宣言がC++でラベル付けされる可能性があるためである。 宣言はC90またはC99ではラベル付けできないため、あいまいさはそこでは発生しない。
 
-In GNU C, an attribute specifier list may appear after the colon following a
-label, other than a @code{case} or @code{default} label.  GNU C++ only permits
-attributes on labels if the attribute specifier is immediately
-followed by a semicolon (i.e., the label applies to an empty
-statement).  If the semicolon is missing, C++ label attributes are
-ambiguous, as it is permissible for a declaration, which could begin
-with an attribute list, to be labelled in C++.  Declarations cannot be
-labelled in C90 or C99, so the ambiguity does not arise there.
+@subsubheading 列挙属性
 
-@subsubheading Enumerator Attributes
+GNU Cでは、属性指定子リストが列挙子の一部として現れるてもよい。属性は列挙定数の後、（存在する場合）@code{=}の前に置かれる。 列挙子のオプションの属性は、列挙定数に属す。 存在する場合、定数式の後に属性を配置することはできない。
 
-In GNU C, an attribute specifier list may appear as part of an enumerator.
-The attribute goes after the enumeration constant, before @code{=}, if
-present.  The optional attribute in the enumerator appertains to the
-enumeration constant.  It is not possible to place the attribute after
-the constant expression, if present.
+@subsubheading 文属性
+GNU Cでは、属性指定子リストが空文の一部として現れることができる。 属性はセミコロンの前に置かれる。
 
-@subsubheading Statement Attributes
-In GNU C, an attribute specifier list may appear as part of a null
-statement.  The attribute goes before the semicolon.
-
-@subsubheading Type Attributes
-
-An attribute specifier list may appear as part of a @code{struct},
-@code{union} or @code{enum} specifier.  It may go either immediately
-after the @code{struct}, @code{union} or @code{enum} keyword, or after
-the closing brace.  The former syntax is preferred.
-Where attribute specifiers follow the closing brace, they are considered
-to relate to the structure, union or enumerated type defined, not to any
-enclosing declaration the type specifier appears in, and the type
-defined is not complete until after the attribute specifiers.
+@subsubheading 型属性
+属性指定子リストは@code{struct}、@code{union}または@code{enum}指定子の一部として現れることができる。 @code{struct}、@code{union}、@code{enum}キーワードの直後、または閉じ括弧の後に置くことができる。 前者の構文が好ましい。属性指定子が閉じ括弧の後に続く場合、それらは構造体、共用体、または列挙型に関連しているとみなされ、型指定子が含まれる囲み宣言には関係せず、定義された型は属性指定子の後まで完全ではない。
 @c Otherwise, there would be the following problems: a shift/reduce
 @c conflict between attributes binding the struct/union/enum and
 @c binding to the list of specifiers/qualifiers; and "aligned"
@@ -4758,50 +4701,16 @@ defined is not complete until after the attribute specifiers.
 @c changed later by "packed" attributes.
 
 
-@subsubheading All other attributes
+@subsubheading 他のすべての属性
 
-Otherwise, an attribute specifier appears as part of a declaration,
-counting declarations of unnamed parameters and type names, and relates
-to that declaration (which may be nested in another declaration, for
-example in the case of a parameter declaration), or to a particular declarator
-within a declaration.  Where an
-attribute specifier is applied to a parameter declared as a function or
-an array, it should apply to the function or array rather than the
-pointer to which the parameter is implicitly converted, but this is not
-yet correctly implemented.
+それ以外の場合、属性指定子は宣言の一部として現れ、それは名前無しのパラメータと型名、そしてその宣言、及び宣言内の特定の宣言に関連するもの（例えば、パラメータ宣言の場合の用に、他の宣言内で入れ子になっているかもしれない）が含まれる。属性指定子が関数または配列として宣言されたパラメータに適用される場合、そのパラメータは暗黙的に変換されるポインタではなく関数または配列に適用されるが、これはまだ正しく実装されていない。
 
-Any list of specifiers and qualifiers at the start of a declaration may
-contain attribute specifiers, whether or not such a list may in that
-context contain storage class specifiers.  (Some attributes, however,
-are essentially in the nature of storage class specifiers, and only make
-sense where storage class specifiers may be used; for example,
-@code{section}.)  There is one necessary limitation to this syntax: the
-first old-style parameter declaration in a function definition cannot
-begin with an attribute specifier, because such an attribute applies to
-the function instead by syntax described below (which, however, is not
-yet implemented in this case).  In some other cases, attribute
-specifiers are permitted by this grammar but not yet supported by the
-compiler.  All attribute specifiers in this place relate to the
-declaration as a whole.  In the obsolescent usage where a type of
-@code{int} is implied by the absence of type specifiers, such a list of
-specifiers and qualifiers may be an attribute specifier list with no
-other specifiers or qualifiers.
+宣言の先頭にある指定子と修飾子のリストには、そのようなリストに格納クラス指定子が含まれているかどうかにかかわらず、属性指定子を含めることができる。 （ただし、一部の属性は本質的にストレージクラス指定子の性質を持ち、ストレージクラス指定子が使用される場所、たとえば、@code{section}などにのみ意味がある。）この構文には、必要な制限が1つある。関数定義の最初の旧式のパラメータ宣言は、属性指定子で始めることはできない。これは、後述の構文ではなく関数に適用されるためである。 （ただし、このケースはまだ実装されていない。）他の場合では、属性指定子はこの文法では許可されているが、コンパイラではまだサポートされていない。この場所のすべての属性指定子は、宣言全体に関連している。@code{int}の型が型指定子がないことによって暗示される時代遅れの使用法では、そのような指定子と修飾子のリストは、他の指定子や修飾子を持たない属性指定子リストである。
 
-At present, the first parameter in a function prototype must have some
-type specifier that is not an attribute specifier; this resolves an
-ambiguity in the interpretation of @code{void f(int
-(__attribute__((foo)) x))}, but is subject to change.  At present, if
-the parentheses of a function declarator contain only attributes then
-those attributes are ignored, rather than yielding an error or warning
-or implying a single parameter of type int, but this is subject to
-change.
+現在、関数プロトタイプの最初のパラメータには、属性指定子ではない型指定子が必要である。 これは@code{void f(int
+(__attribute__((foo)) x))}の解釈のあいまいさを解決するが、変更される可能性がある。 現時点では、関数宣言子の括弧に属性のみが含まれている場合、エラーや警告を出すのではなく、int型の単一のパラメータを指定するのでもなく、これらの属性は無視されるが、変更される可能性がある。
 
-An attribute specifier list may appear immediately before a declarator
-(other than the first) in a comma-separated list of declarators in a
-declaration of more than one identifier using a single list of
-specifiers and qualifiers.  Such attribute specifiers apply
-only to the identifier before whose declarator they appear.  For
-example, in
+属性指定子リストは、指定子と修飾子の単一のリストを使用する複数の識別子の宣言で、宣言子のコンマ区切りリスト内の宣言子（最初のものを除く）の直前に現れる。 そのような属性指定子は、その宣言子が出現する前の識別子にのみ適用される。 たとえば、
 
 @smallexample
 __attribute__((noreturn)) void d0 (void),
@@ -4810,95 +4719,39 @@ __attribute__((noreturn)) void d0 (void),
 @end smallexample
 
 @noindent
-the @code{noreturn} attribute applies to all the functions
-declared; the @code{format} attribute only applies to @code{d1}.
+@code{noreturn}属性は宣言されたすべての関数に適用される。 @code{format}属性は@code{d1}にのみ適用される。
 
-An attribute specifier list may appear immediately before the comma,
-@code{=} or semicolon terminating the declaration of an identifier other
-than a function definition.  Such attribute specifiers apply
-to the declared object or function.  Where an
-assembler name for an object or function is specified (@pxref{Asm
-Labels}), the attribute must follow the @code{asm}
-specification.
+属性指定子リストはカンマの直前に現れる。@code{=}またはセミコロンは、関数定義以外の識別子の宣言を終了する。 このような属性指定子は、宣言されたオブジェクトまたは関数に適用される。 オブジェクトまたは関数のアセンブラ名が指定されている場合（@pxref {Asm Labels}）、属性は@code {asm}の指定に従わなければならない。
 
-An attribute specifier list may, in future, be permitted to appear after
-the declarator in a function definition (before any old-style parameter
-declarations or the function body).
+属性指定子リストは、将来、（古いスタイルのパラメータ宣言または関数本体の前の）関数定義の宣言子の後に現れるようにすることができるかもしれない。
 
-Attribute specifiers may be mixed with type qualifiers appearing inside
-the @code{[]} of a parameter array declarator, in the C99 construct by
-which such qualifiers are applied to the pointer to which the array is
-implicitly converted.  Such attribute specifiers apply to the pointer,
-not to the array, but at present this is not implemented and they are
-ignored.
+属性指定子は、配列が暗黙的に変換されるポインタにそのような修飾子が適用されるC99構造のパラメータ配列宣言子の@code{[]}の中に現れる型修飾子と混在することができる。 そのような属性指定子は、配列ではなくポインタに適用されるが、現在実装されておらず、無視されている。
 
-An attribute specifier list may appear at the start of a nested
-declarator.  At present, there are some limitations in this usage: the
-attributes correctly apply to the declarator, but for most individual
-attributes the semantics this implies are not implemented.
-When attribute specifiers follow the @code{*} of a pointer
-declarator, they may be mixed with any type qualifiers present.
-The following describes the formal semantics of this syntax.  It makes the
-most sense if you are familiar with the formal specification of
-declarators in the ISO C standard.
+属性指定子リストは、ネストされた宣言子の先頭に現れることがある。 現在のところ、この使用法にはいくつかの制限がある。属性は宣言子に正しく適用されますが、ほとんどの個々の属性では、これが意味するセマンティクスは実装されていない。 属性指定子がポインタ宣言子の@code{*}の後にある場合、それらは任意のタイプの修飾子と混在することがある。 以下では、この構文の正式なセマンティクスについて説明する。 ISO C標準の宣言子の正式な仕様に精通している場合は、最も理にかなっている。
 
-Consider (as in C99 subclause 6.7.5 paragraph 4) a declaration @code{T
-D1}, where @code{T} contains declaration specifiers that specify a type
-@var{Type} (such as @code{int}) and @code{D1} is a declarator that
-contains an identifier @var{ident}.  The type specified for @var{ident}
-for derived declarators whose type does not include an attribute
-specifier is as in the ISO C standard.
+（C99の節6.7.5の4節のように）@code {T D1}という宣言があると仮定し、ここで@code{T}には、型@var{Type}（@code {int}など）を指定する宣言指定子が含まれていて、@code {D1}は識別子@var{ident}を含む宣言子である。 属性指定子を含まない派生宣言子の@var{ident}に指定された型は、ISO C標準の場合と同じである。
 
-If @code{D1} has the form @code{( @var{attribute-specifier-list} D )},
-and the declaration @code{T D} specifies the type
-``@var{derived-declarator-type-list} @var{Type}'' for @var{ident}, then
-@code{T D1} specifies the type ``@var{derived-declarator-type-list}
-@var{attribute-specifier-list} @var{Type}'' for @var{ident}.
+もし@code{D1}が形式@code{( @var{attribute-specifier-list} D )}を持ち、宣言@code{T D}が@var{idnet}の型「@var{derived-declarator-type-list} @var{Type}」を指定するならば、@code{T D1}は@var{ident}の型「@var{derived-declarator-type-list} @var{attribute-specifier-list} @var{Type}」を指定する。
 
-If @code{D1} has the form @code{*
-@var{type-qualifier-and-attribute-specifier-list} D}, and the
-declaration @code{T D} specifies the type
-``@var{derived-declarator-type-list} @var{Type}'' for @var{ident}, then
-@code{T D1} specifies the type ``@var{derived-declarator-type-list}
-@var{type-qualifier-and-attribute-specifier-list} pointer to @var{Type}'' for
-@var{ident}.
+もし@code{D1}が形式@code{* @var{type-qualifier-and-attribute-specifier-list} D}を持ち、宣言@code{T D}が@var{idnet}の型「@var{derived-declarator-type-list} @var{Type}」を指定するならば、@code{T D1} は@var{ident}の型「@var{Type}への@var{derived-declarator-type-list} @var{type-qualifier-and-attribute-specifier-list}ポインタ」型を指定する。
 
-For example,
+例えば、
 
 @smallexample
 void (__attribute__((noreturn)) ****f) (void);
 @end smallexample
 
 @noindent
-specifies the type ``pointer to pointer to pointer to pointer to
-non-returning function returning @code{void}''.  As another example,
+は「@code{void}を返す返らない関数へのインタへのポインタへのポインタへのポインタ」の型を指定する。別の例として、
 
 @smallexample
 char *__attribute__((aligned(8))) *f;
 @end smallexample
 
 @noindent
-specifies the type ``pointer to 8-byte-aligned pointer to @code{char}''.
-Note again that this does not work with most attributes; for example,
-the usage of @samp{aligned} and @samp{noreturn} attributes given above
-is not yet supported.
+は＠cpde{char}への8バイト境界のポインタへのポインタを指定する。これはほとんどの属性では機能しないことに再び注意すること。 たとえば、上記の@samp{aligned}属性と@samp{noreturn}属性の使用はまだサポートされていない。
 
-For compatibility with existing code written for compiler versions that
-did not implement attributes on nested declarators, some laxity is
-allowed in the placing of attributes.  If an attribute that only applies
-to types is applied to a declaration, it is treated as applying to
-the type of that declaration.  If an attribute that only applies to
-declarations is applied to the type of a declaration, it is treated
-as applying to that declaration; and, for compatibility with code
-placing the attributes immediately before the identifier declared, such
-an attribute applied to a function return type is treated as
-applying to the function type, and such an attribute applied to an array
-element type is treated as applying to the array type.  If an
-attribute that only applies to function types is applied to a
-pointer-to-function type, it is treated as applying to the pointer
-target type; if such an attribute is applied to a function return type
-that is not a pointer-to-function type, it is treated as applying
-to the function type.
+ネストされた宣言子の属性を実装していないコンパイラのバージョン用に書かれた既存のコードとの互換性のために、属性の配置にある程度の寛容さが許されている。型にのみ適用される属性が宣言に適用される場合、その宣言の型に適用されるものとして扱われる。宣言にのみ適用される属性が宣言の型に適用される場合、その宣言に適用するものとして扱われる。そして識別子が宣言される直前に属性を配置するコードとの互換性のために、関数の戻り型に適用されるこのような属性は、関数型に適用されるものとして扱われ、配列要素型に適用されるそのような属性は、配列型に適用されるものとして扱われる。関数型にのみ適用される属性が関数型へのポインタ型に適用される場合、それはポインタのターゲット型に適用されるものとして扱われる。そのような属性が関数へのポインタ型ではない関数戻り型に適用された場合、それは関数型に適用するものとして扱われる。
 
 @node Function Prototypes
 @section Prototypes and Old-Style Function Definitions
