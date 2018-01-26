@@ -4754,13 +4754,12 @@ char *__attribute__((aligned(8))) *f;
 ネストされた宣言子の属性を実装していないコンパイラのバージョン用に書かれた既存のコードとの互換性のために、属性の配置にある程度の寛容さが許されている。型にのみ適用される属性が宣言に適用される場合、その宣言の型に適用されるものとして扱われる。宣言にのみ適用される属性が宣言の型に適用される場合、その宣言に適用するものとして扱われる。そして識別子が宣言される直前に属性を配置するコードとの互換性のために、関数の戻り型に適用されるこのような属性は、関数型に適用されるものとして扱われ、配列要素型に適用されるそのような属性は、配列型に適用されるものとして扱われる。関数型にのみ適用される属性が関数型へのポインタ型に適用される場合、それはポインタのターゲット型に適用されるものとして扱われる。そのような属性が関数へのポインタ型ではない関数戻り型に適用された場合、それは関数型に適用するものとして扱われる。
 
 @node Function Prototypes
-@section Prototypes and Old-Style Function Definitions
+@section プロトタイプと旧式の関数宣言
 @cindex function prototype declarations
 @cindex old-style function definitions
 @cindex promotion of formal parameters
 
-GNU C extends ISO C to allow a function prototype to override a later
-old-style non-prototype definition.  Consider the following example:
+GNU Cは、ISO Cを拡張して、関数プロトタイプが後の古いスタイルの非プロトタイプ定義を上書きできるようにする。 次の例を考える。
 
 @smallexample
 /* @r{Use prototypes unless the compiler is old-fashioned.}  */
@@ -4782,21 +4781,9 @@ isroot (x)   /* @r{??? lossage here ???} */
 @}
 @end smallexample
 
-Suppose the type @code{uid_t} happens to be @code{short}.  ISO C does
-not allow this example, because subword arguments in old-style
-non-prototype definitions are promoted.  Therefore in this example the
-function definition's argument is really an @code{int}, which does not
-match the prototype argument type of @code{short}.
+@code {uid_t}型が@code {short}であるとする。 ISO Cでは、旧式の非プロトタイプ定義のサブワード引数が昇格されるため、この例は許可されない。 したがって、この例では、関数定義の引数は実際には@code{int}で、プロトタイプ引数の型@code{short}と一致しない。
 
-This restriction of ISO C makes it hard to write code that is portable
-to traditional C compilers, because the programmer does not know
-whether the @code{uid_t} type is @code{short}, @code{int}, or
-@code{long}.  Therefore, in cases like these GNU C allows a prototype
-to override a later old-style definition.  More precisely, in GNU C, a
-function prototype argument type overrides the argument type specified
-by a later old-style definition if the former type is the same as the
-latter type before promotion.  Thus in GNU C the above example is
-equivalent to the following:
+このISO Cの制限により、プログラマーは@code{uid_t}型が@code{short}、@code{int}、または@code{long}であるかどうかわからないため、従来のCコンパイラに移植可能なコードを書くのが難しくなる。 したがって、これらのような場合、これらのGNU Cではプロトタイプが古いスタイルの定義を上書きすることができる。 より正確には、GNU Cでは、関数プロトタイプの引数型は、前の型が宣言前の後者の型と同じ場合は、後の旧式の型定義で指定された引数の型を上書きする。 したがって、GNU Cでは、上記の例は次のようになる。
 
 @smallexample
 int isroot (uid_t);
@@ -4809,8 +4796,7 @@ isroot (uid_t x)
 @end smallexample
 
 @noindent
-GNU C++ does not support old-style function definitions, so this
-extension is irrelevant.
+GNU C ++は古いスタイルの関数定義をサポートしていないので、この拡張は無関係である。
 
 @node C++ Comments
 @section C++ Style Comments
