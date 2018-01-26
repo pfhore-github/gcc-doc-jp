@@ -4807,15 +4807,12 @@ GNU C ++は古いスタイルの関数定義をサポートしていないので
 GNU Cでは、C++スタイルのコメントを使うことができる。コメントは@samp {//}で始まり、行末まで続く。 他の多くのC実装では、このようなコメントが許可されており、1999 C標準に含まれている。 しかし、C99の前にISO Cのバージョンを指定する@option {-std}オプション、または@option{-ansi}（@option{-std = c90}と同等）を指定すると、C++スタイルのコメントは認識されない。
 
 @node Dollar Signs
-@section Dollar Signs in Identifier Names
+@section 識別子名でのドル記号
 @cindex $
 @cindex dollar signs in identifier names
 @cindex identifier names, dollar signs in
 
-In GNU C, you may normally use dollar signs in identifier names.
-This is because many traditional C implementations allow such identifiers.
-However, dollar signs in identifiers are not supported on a few target
-machines, typically because the target assembler does not allow them.
+GNU Cでは、通常、識別子名にドル記号を使用することができる。これは、多くの伝統的なC実装がそのような識別子を許可するためである。ただし、いくつかのターゲット・マシンでは、識別子のドル記号をターゲット・アセンブラーがそれらを許可しないため、サポートされない。
 
 @node Character Escapes
 @section The Character @key{ESC} in Constants
