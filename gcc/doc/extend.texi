@@ -4815,10 +4815,9 @@ GNU Cでは、C++スタイルのコメントを使うことができる。コメ
 GNU Cでは、通常、識別子名にドル記号を使用することができる。これは、多くの伝統的なC実装がそのような識別子を許可するためである。ただし、いくつかのターゲット・マシンでは、識別子のドル記号をターゲット・アセンブラーがそれらを許可しないため、サポートされない。
 
 @node Character Escapes
-@section The Character @key{ESC} in Constants
+@section 定数での@key{ESC}文字
 
-You can use the sequence @samp{\e} in a string or character constant to
-stand for the ASCII character @key{ESC}.
+文字列または文字定数で@samp{\e}というシーケンスを使用すると、ASCII文字@key{ESC}を表すことができる。
 
 @node Alignment
 @section Inquiring on Alignment of Types or Variables
