@@ -4799,17 +4799,12 @@ isroot (uid_t x)
 GNU C ++は古いスタイルの関数定義をサポートしていないので、この拡張は無関係である。
 
 @node C++ Comments
-@section C++ Style Comments
+@section C++形式のコメント
 @cindex @code{//}
 @cindex C++ comments
 @cindex comments, C++ style
 
-In GNU C, you may use C++ style comments, which start with @samp{//} and
-continue until the end of the line.  Many other C implementations allow
-such comments, and they are included in the 1999 C standard.  However,
-C++ style comments are not recognized if you specify an @option{-std}
-option specifying a version of ISO C before C99, or @option{-ansi}
-(equivalent to @option{-std=c90}).
+GNU Cでは、C++スタイルのコメントを使うことができる。コメントは@samp {//}で始まり、行末まで続く。 他の多くのC実装では、このようなコメントが許可されており、1999 C標準に含まれている。 しかし、C99の前にISO Cのバージョンを指定する@option {-std}オプション、または@option{-ansi}（@option{-std = c90}と同等）を指定すると、C++スタイルのコメントは認識されない。
 
 @node Dollar Signs
 @section Dollar Signs in Identifier Names
