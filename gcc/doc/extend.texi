@@ -4847,35 +4847,17 @@ struct foo @{ int x; char y; @} foo1;
 
 
 @node Inline
-@section An Inline Function is As Fast As a Macro
+@section マクロと同等に速いインライン関数
 @cindex inline functions
 @cindex integrating function code
 @cindex open coding
 @cindex macros, inline alternative
 
-By declaring a function inline, you can direct GCC to make
-calls to that function faster.  One way GCC can achieve this is to
-integrate that function's code into the code for its callers.  This
-makes execution faster by eliminating the function-call overhead; in
-addition, if any of the actual argument values are constant, their
-known values may permit simplifications at compile time so that not
-all of the inline function's code needs to be included.  The effect on
-code size is less predictable; object code may be larger or smaller
-with function inlining, depending on the particular case.  You can
-also direct GCC to try to integrate all ``simple enough'' functions
-into their callers with the option @option{-finline-functions}.
+関数をインラインで宣言することで、GCCにその関数の呼び出しをより高速にするように指示できる。 GCCがこれを達成できる1つの方法は、その関数のコードを呼び出し元のコードに統合することである。 これにより、関数呼び出しのオーバーヘッドを排除して実行を高速化する。 さらに、実際の引数の値のいずれかが定数である場合、それらの既知の値によって、コンパイル時の簡略化が可能になり、インライン関数のコードのすべてを含める必要はなくなる。 コードサイズへの影響はあまり予測できない。 特定の場合に応じて、関数インライン化によってオブジェクトコードが大きくても小さくなるかもしれない。 また、GCCに対して、@option{-finline-functions}オプションを使用して、すべての「単純な」関数を呼び出し元に統合しようとすることもできる。
 
-GCC implements three different semantics of declaring a function
-inline.  One is available with @option{-std=gnu89} or
-@option{-fgnu89-inline} or when @code{gnu_inline} attribute is present
-on all inline declarations, another when
-@option{-std=c99}, @option{-std=c11},
-@option{-std=gnu99} or @option{-std=gnu11}
-(without @option{-fgnu89-inline}), and the third
-is used when compiling C++.
+GCCは、関数をインラインで宣言するという3つの異なるセマンティクスを実装している。 1つは、@option{-std=gnu89}または@option{-fgnu89-inline}、または@code{gnu_inline}属性がすべてのインライン宣言に存在する場合、もう1つは@option{-fgnu89-inline}を指定せずに@option{-std=c99}、@option{-std=c11}、@option{-std=gnu99}または@option{-std=gnu11}を指定するとき、三番目はC++をコンパイルするときに使用される。
 
-To declare a function inline, use the @code{inline} keyword in its
-declaration, like this:
+関数をインラインで宣言するには、宣言に次のように@code{inline}キーワードを使用する。
 
 @smallexample
 static inline int
@@ -4885,14 +4867,9 @@ inc (int *a)
 @}
 @end smallexample
 
-If you are writing a header file to be included in ISO C90 programs, write
-@code{__inline__} instead of @code{inline}.  @xref{Alternate Keywords}.
+ISO C90プログラムにインクルードするヘッダーファイルを作成する場合は、@code{inline}ではなく@code{__inline__}を記述する。@xref{Alternate Keywords}.
 
-The three types of inlining behave similarly in two important cases:
-when the @code{inline} keyword is used on a @code{static} function,
-like the example above, and when a function is first declared without
-using the @code{inline} keyword and then is defined with
-@code{inline}, like this:
+3つのタイプのインライン展開は、2つの重要なケースで同様に動作する。上記の例のように@code{static}関数で@code{inline}キーワードを使用するとき、そして以下のように、関数が@code{inline}キーワードを使わずに宣言され、その後@code{inline}で定義されるとき。
 
 @smallexample
 extern int inc (int *a);
@@ -4903,72 +4880,37 @@ inc (int *a)
 @}
 @end smallexample
 
-In both of these common cases, the program behaves the same as if you
-had not used the @code{inline} keyword, except for its speed.
+これらの一般的な場合の両方で、プログラムは速度以外は@code{inline}キーワードを使用しなかった場合と同じように動作する。
 
 @cindex inline functions, omission of
 @opindex fkeep-inline-functions
-When a function is both inline and @code{static}, if all calls to the
-function are integrated into the caller, and the function's address is
-never used, then the function's own assembler code is never referenced.
-In this case, GCC does not actually output assembler code for the
-function, unless you specify the option @option{-fkeep-inline-functions}.
-If there is a nonintegrated call, then the function is compiled to
-assembler code as usual.  The function must also be compiled as usual if
-the program refers to its address, because that cannot be inlined.
+関数がインラインと@code{static}の両方の場合、関数へのすべての呼び出しが呼び出し側に統合され、関数のアドレスが決して使用されないと、関数自身のアセンブラコードは決して参照されない。この場合、オプション@option{-fkeep-inline-functions}を指定しない限り、GCCは関数のアセンブラコードを実際に出力しない。統合されていない呼び出しがある場合、関数はいつものようにアセンブラコードにコンパイルされる。 インライン化できないため、プログラムがそのアドレスを参照している場合は、通常どおりコンパイルする必要がある。
 
 @opindex Winline
-Note that certain usages in a function definition can make it unsuitable
-for inline substitution.  Among these usages are: variadic functions,
-use of @code{alloca}, use of computed goto (@pxref{Labels as Values}),
-use of nonlocal goto, use of nested functions, use of @code{setjmp}, use
-of @code{__builtin_longjmp} and use of @code{__builtin_return} or
-@code{__builtin_apply_args}.  Using @option{-Winline} warns when a
-function marked @code{inline} could not be substituted, and gives the
-reason for the failure.
+関数定義の特定の用途は、インライン置換には適していないことに注意せよ。 これらの使用法の中には、可変長引数関数、@code{alloca}の使用、計算gotoの使用（@pxref{Labels as Values}）、非局所的なgotoの使用、入れ子関数の使用、@code{setjmp}の使用、 @code{__ builtin_longjmp}と@code{__ builtin_return}または@code{__ builtin_apply_args}の使用。 @option{-Winline}を使用すると、@code{inline}とマークされた関数を代入できなかったときに警告が表示され、失敗の理由が示される。
 
 @cindex automatic @code{inline} for C++ member fns
 @cindex @code{inline} automatic for C++ member fns
 @cindex member fns, automatically @code{inline}
 @cindex C++ member fns, automatically @code{inline}
 @opindex fno-default-inline
-As required by ISO C++, GCC considers member functions defined within
-the body of a class to be marked inline even if they are
-not explicitly declared with the @code{inline} keyword.  You can
-override this with @option{-fno-default-inline}; @pxref{C++ Dialect
-Options,,Options Controlling C++ Dialect}.
+GCCは、ISO C++の必要条件として、クラスの本体内で定義されたメンバ関数が、@code{inline}キーワードで明示的に宣言されていなくてもインラインでマークされると見なる。 これを@option{-fno-default-inline}で上書きすることができる。 @pxref{C++ Dialect Options,,C++変種を制御するオプション}
 
-GCC does not inline any functions when not optimizing unless you specify
-the @samp{always_inline} attribute for the function, like this:
+GCCは、関数に@samp{always_inline}属性を指定しない限り、最適化していないときに関数をインライン化しない。
 
 @smallexample
 /* @r{Prototype.}  */
 inline void foo (const char) __attribute__((always_inline));
 @end smallexample
 
-The remainder of this section is specific to GNU C90 inlining.
+このセクションの残りの部分は、GNU C90のインライン展開に特有のものである。
 
 @cindex non-static inline function
-When an inline function is not @code{static}, then the compiler must assume
-that there may be calls from other source files; since a global symbol can
-be defined only once in any program, the function must not be defined in
-the other source files, so the calls therein cannot be integrated.
-Therefore, a non-@code{static} inline function is always compiled on its
-own in the usual fashion.
+インライン関数が@code{static}でない場合、コンパイラは他のソースファイルからの呼び出しがあると想定する必要がある。 グローバルシンボルはどのプログラムでも一度しか定義できないので、関数を他のソースファイルで定義してはいけないので、その中の呼び出しを統合することはできない。 したがって、非@code{static}インライン関数は常に通常の方法でそれ自身でコンパイルされる。
 
-If you specify both @code{inline} and @code{extern} in the function
-definition, then the definition is used only for inlining.  In no case
-is the function compiled on its own, not even if you refer to its
-address explicitly.  Such an address becomes an external reference, as
-if you had only declared the function, and had not defined it.
+関数定義で@code{inline}と@code{extern}の両方を指定すると、定義はインライン化にのみ使用される。 たとえあなたがそのアドレスを明示的に参照したとしても、関数はそれ自身でコンパイルされることはない。 このようなアドレスは、あたかも関数を宣言していて、定義していないかのように、外部参照になる。
 
-This combination of @code{inline} and @code{extern} has almost the
-effect of a macro.  The way to use it is to put a function definition in
-a header file with these keywords, and put another copy of the
-definition (lacking @code{inline} and @code{extern}) in a library file.
-The definition in the header file causes most calls to the function
-to be inlined.  If any uses of the function remain, they refer to
-the single copy in the library.
+この@code{inline}と@code{extern}の組み合わせは、ほとんどマクロの効果を持つ。 これを使う方法は、これらのキーワードを使ってヘッダファイルに関数定義を置き、ライブラリファイルに定義の別のコピー（@code{inline}と@code{extern}がない）を置くことである。 ヘッダーファイルの定義によって、関数へのほとんどの呼び出しがインライン化される。 関数の使用が残っている場合は、ライブラリ内の単一のコピーを参照する。
 
 @node Volatiles
 @section When is a Volatile Object Accessed?
