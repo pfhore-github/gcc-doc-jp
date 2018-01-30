@@ -4913,29 +4913,15 @@ inline void foo (const char) __attribute__((always_inline));
 この@code{inline}と@code{extern}の組み合わせは、ほとんどマクロの効果を持つ。 これを使う方法は、これらのキーワードを使ってヘッダファイルに関数定義を置き、ライブラリファイルに定義の別のコピー（@code{inline}と@code{extern}がない）を置くことである。 ヘッダーファイルの定義によって、関数へのほとんどの呼び出しがインライン化される。 関数の使用が残っている場合は、ライブラリ内の単一のコピーを参照する。
 
 @node Volatiles
-@section When is a Volatile Object Accessed?
+@section いつvolatileオブジェクトにアクセスするか
 @cindex accessing volatiles
 @cindex volatile read
 @cindex volatile write
 @cindex volatile access
 
-C has the concept of volatile objects.  These are normally accessed by
-pointers and used for accessing hardware or inter-thread
-communication.  The standard encourages compilers to refrain from
-optimizations concerning accesses to volatile objects, but leaves it
-implementation defined as to what constitutes a volatile access.  The
-minimum requirement is that at a sequence point all previous accesses
-to volatile objects have stabilized and no subsequent accesses have
-occurred.  Thus an implementation is free to reorder and combine
-volatile accesses that occur between sequence points, but cannot do
-so for accesses across a sequence point.  The use of volatile does
-not allow you to violate the restriction on updating objects multiple
-times between two sequence points.
+Cにはvolatileオブジェクトの概念がある。 これらは通常ポインターによってアクセスされ、ハードウェアまたはスレッド間通信にアクセスするために使用される。 この標準では、コンパイラがvolatileオブジェクトへのアクセスに関する最適化を控えるように勧めているが、何が揮発性のアクセスを構成するかについて実装定義のままとしている。 シーケンスポイントでは、volatileオブジェクトへの以前のすべてのアクセスが安定し、その後のアクセスは発生していないことが最低限必要である。 したがって、実装では、シーケンスポイント間で発生するvolatileアクセスを並べ替えて組み合わせることは自由であるが、シーケンスポイント間のアクセスでは実行できない。 volatileを使用すると、2つのシーケンスポイント間でオブジェクトを複数回更新する際の制限に違反することはできない。
 
-Accesses to non-volatile objects are not ordered with respect to
-volatile accesses.  You cannot use a volatile object as a memory
-barrier to order a sequence of writes to non-volatile memory.  For
-instance:
+不揮発性オブジェクトへのアクセスは、volatileアクセスに関しては順序付けられていない。 非volatileメモリへの一連の書き込みを順序付けるために、volatileオブジェクトをメモリバリアとして使用することはできない。 例えば：
 
 @smallexample
 int *ptr = @var{something};
@@ -4945,10 +4931,7 @@ vobj = 1;
 @end smallexample
 
 @noindent
-Unless @var{*ptr} and @var{vobj} can be aliased, it is not guaranteed
-that the write to @var{*ptr} occurs by the time the update
-of @var{vobj} happens.  If you need this guarantee, you must use
-a stronger memory barrier such as:
+@var{*ptr}と@var{vobj}にエイリアスを付けることができない限り、@var{*ptr}への書き込みは、@var{vobj}の更新が発生するまでに発生することは保証されない。 この保証が必要な場合は、次のような強力なメモリバリアを使用する必要がある。
 
 @smallexample
 int *ptr = @var{something};
@@ -4958,22 +4941,16 @@ asm volatile ("" : : : "memory");
 vobj = 1;
 @end smallexample
 
-A scalar volatile object is read when it is accessed in a void context:
+スカラー揮発性オブジェクトは、voidコンテキストでアクセスされると読み込まれる。
 
 @smallexample
 volatile int *src = @var{somevalue};
 *src;
 @end smallexample
 
-Such expressions are rvalues, and GCC implements this as a
-read of the volatile object being pointed to.
+このような式は右辺値であり、GCCはこれがvolatileオブジェクトの読み込みとして指し示すものとして実装する。
 
-Assignments are also expressions and have an rvalue.  However when
-assigning to a scalar volatile, the volatile object is not reread,
-regardless of whether the assignment expression's rvalue is used or
-not.  If the assignment's rvalue is used, the value is that assigned
-to the volatile object.  For instance, there is no read of @var{vobj}
-in all the following cases:
+代入は式でもあり、右辺値を持つ。 ただし、スカラー揮発性に割り当てるときは、代入式の右辺値が使用されているかどうかにかかわらず、volatileオブジェクトは再読み込みされない。 代入の右辺値が使用されている場合、その値はvolatileオブジェクトに割り当てられた値になる。 たとえば、次のすべての場合に@var{vobj}の読み込みはない。
 
 @smallexample
 int obj;
@@ -4984,16 +4961,9 @@ obj ? vobj = @var{onething} : vobj = @var{anotherthing};
 obj = (@var{something}, vobj = @var{anotherthing});
 @end smallexample
 
-If you need to read the volatile object after an assignment has
-occurred, you must use a separate expression with an intervening
-sequence point.
+代入が発生した後にvolatileオブジェクトを読み取る必要がある場合は、介在するシーケンスポイントを持つ別の式を使用する必要がある。
 
-As bit-fields are not individually addressable, volatile bit-fields may
-be implicitly read when written to, or when adjacent bit-fields are
-accessed.  Bit-field operations may be optimized such that adjacent
-bit-fields are only partially accessed, if they straddle a storage unit
-boundary.  For these reasons it is unwise to use volatile bit-fields to
-access hardware.
+ビットフィールドが個別にアドレス可能ではないので、volatileビットフィールドは、書き込まれるとき、または隣接するビットフィールドがアクセスされるときに暗黙的に読み取られ得る。 ビットフィールド動作は、隣接するビットフィールドが記憶装置の境界をまたぐ場合、部分的にのみアクセスされるように最適化することができる。 これらの理由から、volatileビットフィールドを使用してハードウェアにアクセスすることは賢明ではない。
 
 @node Using Assembly Language with C
 @section How to Use Inline Assembly Language in C Code
