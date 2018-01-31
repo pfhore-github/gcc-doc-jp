@@ -4966,153 +4966,86 @@ obj = (@var{something}, vobj = @var{anotherthing});
 ビットフィールドが個別にアドレス可能ではないので、volatileビットフィールドは、書き込まれるとき、または隣接するビットフィールドがアクセスされるときに暗黙的に読み取られ得る。 ビットフィールド動作は、隣接するビットフィールドが記憶装置の境界をまたぐ場合、部分的にのみアクセスされるように最適化することができる。 これらの理由から、volatileビットフィールドを使用してハードウェアにアクセスすることは賢明ではない。
 
 @node Using Assembly Language with C
-@section How to Use Inline Assembly Language in C Code
+@section Cコードでインラインアセンブリ言語を使う方法
 @cindex @code{asm} keyword
 @cindex assembly language in C
 @cindex inline assembly language
 @cindex mixing assembly language and C
 
-The @code{asm} keyword allows you to embed assembler instructions
-within C code.  GCC provides two forms of inline @code{asm}
-statements.  A @dfn{basic @code{asm}} statement is one with no
-operands (@pxref{Basic Asm}), while an @dfn{extended @code{asm}}
-statement (@pxref{Extended Asm}) includes one or more operands.  
-The extended form is preferred for mixing C and assembly language
-within a function, but to include assembly language at
-top level you must use basic @code{asm}.
+@code{asm}キーワードを使用すると、Cコード内にアセンブラ命令を埋め込むことができる。 GCCは2つの形式のインライン@code{asm}文を提供する。@dfn{basic @code{asm}}(基本 asm)文はオペランドを持たず (@pxref{Basic Asm})、一方@dfn{extended @code{asm}}(拡張asm)は一つ以上のオペランドを含む。拡張形式は、関数内でC言語とアセンブリ言語を混合する場合に好まれるが、アセンブリ言語を最上位レベルに組み込むには、基本@code{asm}を使用する必要がある。
 
-You can also use the @code{asm} keyword to override the assembler name
-for a C symbol, or to place a C variable in a specific register.
+@code{asm}キーワードを使用して、Cシンボルのアセンブラ名を上書きしたり、C変数を特定のレジスタに配置したりすることもできる。
 
 @menu
-* Basic Asm::          Inline assembler without operands.
-* Extended Asm::       Inline assembler with operands.
-* Constraints::        Constraints for @code{asm} operands
-* Asm Labels::         Specifying the assembler name to use for a C symbol.
-* Explicit Register Variables::  Defining variables residing in specified 
-                       registers.
-* Size of an asm::     How GCC calculates the size of an @code{asm} block.
+* Basic Asm::          オペランドなしのインラインアセンブラ
+* Extended Asm::       オペランドのあるインラインアセンブラ
+* Constraints::        @code{asm}オペランドの制約
+* Asm Labels::         Cシンボル用に使うためのアセンブラの名前を指定する
+* Explicit Register Variables::  指定されたレジスタに存在する変数の定義。
+* Size of an asm::     GCCが@code{asm}ブロックのサイズを計算する方法。
 @end menu
 
 @node Basic Asm
-@subsection Basic Asm --- Assembler Instructions Without Operands
+@subsection 基本Asm --- オペランドなしのアセンブラ命令
 @cindex basic @code{asm}
 @cindex assembly language in C, basic
 
-A basic @code{asm} statement has the following syntax:
+基本@code{asm}文は以下の構文を持つ。
 
 @example
 asm @r{[} volatile @r{]} ( @var{AssemblerInstructions} )
 @end example
 
-The @code{asm} keyword is a GNU extension.
-When writing code that can be compiled with @option{-ansi} and the
-various @option{-std} options, use @code{__asm__} instead of 
-@code{asm} (@pxref{Alternate Keywords}).
+@code{asm}キーワードはGNU拡張である。@option{-ansi}とさまざまな@option{-std}オプションでコンパイルできるコードを書くときは、@code{asm}の代わりに@code{__ asm__}（@pxref {Alternate Keywords}）を使用すること。
+(@pxref{Alternate Keywords}).
 
-@subsubheading Qualifiers
+@subsubheading 限定子
 @table @code
 @item volatile
-The optional @code{volatile} qualifier has no effect. 
-All basic @code{asm} blocks are implicitly volatile.
+オプションの@code{volatile}修飾子は効果がない。すべての基本的な@code{asm}ブロックは暗黙的に揮発性である。
 @end table
 
-@subsubheading Parameters
+@subsubheading パラメータ
 @table @var
 
-@item AssemblerInstructions
-This is a literal string that specifies the assembler code. The string can 
-contain any instructions recognized by the assembler, including directives. 
-GCC does not parse the assembler instructions themselves and 
-does not know what they mean or even whether they are valid assembler input. 
+@item AssemblerInstructions（アセンブラ命令）
+これは、アセンブラコードを指定するリテラル文字列である。 この文字列には、ディレクティブを含め、アセンブラで認識されるすべての命令を含めることができる。GCCはアセンブラ命令自体を解析せず、それらが何を意味するのか、またそれらが有効なアセンブラ入力であるかを知らない。
 
-You may place multiple assembler instructions together in a single @code{asm} 
-string, separated by the characters normally used in assembly code for the 
-system. A combination that works in most places is a newline to break the 
-line, plus a tab character (written as @samp{\n\t}).
-Some assemblers allow semicolons as a line separator. However, 
-note that some assembler dialects use semicolons to start a comment. 
+1つの@code {asm}文字列に、システムのアセンブリコードで通常使用される文字で区切られた、複数のアセンブラ命令を一緒に配置することができる。 ほとんどの場所で動作する組み合わせは、改行とタブ文字（@samp {\n\t}と書かれる）である。一部のアセンブラではセミコロンを行区切り記号として使用できる。 ただし、アセンブラの方言の中には、セミコロンを使用してコメントを開始するものがある。
 @end table
 
-@subsubheading Remarks
-Using extended @code{asm} (@pxref{Extended Asm}) typically produces
-smaller, safer, and more efficient code, and in most cases it is a
-better solution than basic @code{asm}.  However, there are two
-situations where only basic @code{asm} can be used:
+@subsubheading 注意
+拡張@code{asm}（@pxref{Extended Asm}）を使うと、通常、より小さく、より安全で、より効率的なコードが生成され、ほとんどの場合、基本@code{asm}より優れた解決策である。 しかし、基本@code {asm}だけが使用できる2つの状況がある：
 
 @itemize @bullet
 @item
-Extended @code{asm} statements have to be inside a C
-function, so to write inline assembly language at file scope (``top-level''),
-outside of C functions, you must use basic @code{asm}.
-You can use this technique to emit assembler directives,
-define assembly language macros that can be invoked elsewhere in the file,
-or write entire functions in assembly language.
+拡張@code{asm}文はC関数内になければならない。したがって、C関数の外部でファイルスコープ（ 「トップレベル 」）にインラインアセンブリ言語を書くには、基本@code{asm}を使用する必要がある。この手法を使用して、アセンブラディレクティブを発行したり、ファイル内の別の場所で呼び出せるアセンブリ言語マクロを定義したり、アセンブリ言語で関数全体を記述したりすることができる。
 
 @item
-Functions declared
-with the @code{naked} attribute also require basic @code{asm}
-(@pxref{Function Attributes}).
+@code {naked}属性で宣言された関数も、基本的な@code {asm}を必要とする。(@pxref{Function Attributes}).
 @end itemize
 
-Safely accessing C data and calling functions from basic @code{asm} is more 
-complex than it may appear. To access C data, it is better to use extended 
-@code{asm}.
+基本@code{asm}から安全にCデータにアクセスし、関数を呼び出すことは、見かけよりも複雑である。 Cデータにアクセスするには、拡張@code{asm}を使用する方が良い。
 
-Do not expect a sequence of @code{asm} statements to remain perfectly 
-consecutive after compilation. If certain instructions need to remain 
-consecutive in the output, put them in a single multi-instruction @code{asm}
-statement. Note that GCC's optimizers can move @code{asm} statements 
-relative to other code, including across jumps.
+コンパイル後に@code{asm}文のシーケンスが完全に連続しているとは思ってはならない。 特定の命令を連続して出力に残す必要がある場合は、それらを単一のマルチ命令@code{asm}文に入れる。 GCCのオプティマイザは、ジャンプを含めた他のコードと比較して@code{asm}文を移動できることに注意せよ。
 
-@code{asm} statements may not perform jumps into other @code{asm} statements. 
-GCC does not know about these jumps, and therefore cannot take 
-account of them when deciding how to optimize. Jumps from @code{asm} to C 
-labels are only supported in extended @code{asm}.
+@code{asm}文は他の@code {asm}文にジャンプしてはならない。GCCはこれらのジャンプについて知らないため、最適化の方法を決める際には考慮することができない。 @code{asm}からCラベルへのジャンプは、拡張@code{asm}でのみサポートされる。
 
-Under certain circumstances, GCC may duplicate (or remove duplicates of) your 
-assembly code when optimizing. This can lead to unexpected duplicate 
-symbol errors during compilation if your assembly code defines symbols or 
-labels.
+特定の状況下では、GCCは最適化するときにアセンブリコードを複製（または重複を取り除く）することがある。 アセンブラコードでシンボルまたはラベルが定義されていると、コンパイル時に予期しない重複シンボルエラーが発生する可能性がある。
 
-@strong{Warning:} The C standards do not specify semantics for @code{asm},
-making it a potential source of incompatibilities between compilers.  These
-incompatibilities may not produce compiler warnings/errors.
+@strong{警告:} Cの標準は@code{asm}のセマンティクスを指定していないので、コンパイラ間の非互換性の原因となる。 これらの非互換性によって、コンパイラの警告/エラーが発生することはない。
 
-GCC does not parse basic @code{asm}'s @var{AssemblerInstructions}, which
-means there is no way to communicate to the compiler what is happening
-inside them.  GCC has no visibility of symbols in the @code{asm} and may
-discard them as unreferenced.  It also does not know about side effects of
-the assembler code, such as modifications to memory or registers.  Unlike
-some compilers, GCC assumes that no changes to general purpose registers
-occur.  This assumption may change in a future release.
+GCCは基本@code{asm}の@var{AssemblerInstructions}を解析しない。つまり、内部で何が起こっているのかをコンパイラに伝える方法がない。 GCCは@code{asm}内のシンボルの可視性を持たず、参照されていないものとして破棄することがある。 また、メモリやレジスタの変更など、アセンブラコードの副作用についても認識しない。 いくつかのコンパイラとは異なり、GCCは汎用レジスタへの変更は起こらないと仮定している。 この仮定は、将来のリリースで変更される可能性がある。
 
-To avoid complications from future changes to the semantics and the
-compatibility issues between compilers, consider replacing basic @code{asm}
-with extended @code{asm}.  See
-@uref{https://gcc.gnu.org/wiki/ConvertBasicAsmToExtended, How to convert
-from basic asm to extended asm} for information about how to perform this
-conversion.
+将来のセマンティクスの変更やコンパイラ間の互換性の問題を避けるため、基本@code{asm}を拡張@code{asm}に置き換えることを検討せよ。 この変換の実行方法については、@uref{https://gcc.gnu.org/wiki/ConvertBasicAsmToExtended、基本asmから拡張asmへの変換方法}を参照すること。
 
-The compiler copies the assembler instructions in a basic @code{asm} 
-verbatim to the assembly language output file, without 
-processing dialects or any of the @samp{%} operators that are available with
-extended @code{asm}. This results in minor differences between basic 
-@code{asm} strings and extended @code{asm} templates. For example, to refer to 
-registers you might use @samp{%eax} in basic @code{asm} and
-@samp{%%eax} in extended @code{asm}.
+コンパイラは、拡張@code{asm}で使用可能な変種や@samp{％}演算子を処理せずに、基本的な@code{asm}のアセンブラ命令をアセンブリ言語出力ファイルにそのままコピーする。 これにより、基本@code{asm}文字列と拡張された@code{asm}テンプレートの間には小さな違いが生じる。 たとえば、レジスタを参照するには、基本@code{asm}では@samp {％eax}を、拡張@code{asm}では@samp{%%eax}を使用する。
 
-On targets such as x86 that support multiple assembler dialects,
-all basic @code{asm} blocks use the assembler dialect specified by the 
-@option{-masm} command-line option (@pxref{x86 Options}).  
-Basic @code{asm} provides no
-mechanism to provide different assembler strings for different dialects.
+複数のアセンブラ変種をサポートするx86などのターゲットでは、すべての基本@code{asm}ブロックが@option{-masm}コマンドラインオプション（@pxref {x86オプション}）で指定されたアセンブラ変種を使用する。基本@code{asm}は、異なる変種に対して異なるアセンブラ文字列を提供する仕組みを提供しない。
 
-For basic @code{asm} with non-empty assembler string GCC assumes
-the assembler block does not change any general purpose registers,
-but it may read or write any globally accessible variable.
+GCCは、アセンブラブロックが汎用レジスタを変更しないと仮定するが、グローバルにアクセス可能な変数を読み書きすることができる。
 
-Here is an example of basic @code{asm} for i386:
+i386の基本的な@code {asm}の例を次に示す。
 
 @example
 /* Note that this code will not compile with -masm=intel */
