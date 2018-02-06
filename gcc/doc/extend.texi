@@ -3636,6 +3636,25 @@ IEEE演算に依存する浮動小数点の生成を有効/無効にする。
 @item fpmath=@var{FPMATH}
 @cindex @code{target("fpmath=@var{FPMATH}")} function attribute, x86
 使用する浮動小数点ユニットを指定する。 コンマは異なるオプションを分離するため、@code{target( "fpmath=sse,387")}オプションは@code{target("fpmath=sse+387")}と指定する必要がある。
+
+@item indirect_branch("@var{choice}")
+@cindex @code{indirect_branch} function attribute, x86
+On x86 targets, the @code{indirect_branch} attribute causes the compiler
+to convert indirect call and jump with @var{choice}.  @samp{keep}
+keeps indirect call and jump unmodified.  @samp{thunk} converts indirect
+call and jump to call and return thunk.  @samp{thunk-inline} converts
+indirect call and jump to inlined call and return thunk.
+@samp{thunk-extern} converts indirect call and jump to external call
+and return thunk provided in a separate object file.
+
+@item function_return("@var{choice}")
+@cindex @code{function_return} function attribute, x86
+On x86 targets, the @code{function_return} attribute causes the compiler
+to convert function return with @var{choice}.  @samp{keep} keeps function
+return unmodified.  @samp{thunk} converts function return to call and
+return thunk.  @samp{thunk-inline} converts function return to inlined
+call and return thunk.  @samp{thunk-extern} converts function return to
+external call and return thunk provided in a separate object file.
 @end table
 
 x86では、呼び出し側が呼び出し元のターゲットオプションのサブセットを持たない限り、インライナは呼び出し元とは異なるターゲットオプションを持つ関数をインライン化しない。 たとえば、@code{-msse3}は@code{-msse2}を意味するため、@code{target("sse3")}で宣言された関数は@code{target("sse2")}で関数をインライン化できる。
@@ -4832,9 +4851,6 @@ GNU Cでは、通常、識別子名にドル記号を使用することができ
 一部のマシンでは実際にはアラインメントが必要ない。それらは、奇数アドレスであっても任意のデータ型への参照を可能にする。これらのマシンでは、@code{__alignof__}は、GCCがデータ型を与える最小のアライメントを報告する。通常、ターゲットABIが指定する。
 
 @code{__alignof__}のオペランドが型ではなく左辺値の場合、その値は、GCCの@code{__ attribute__}拡張子（@pxref{Variable Attributes}）で指定された最小整列を考慮して、その型の必要な整列である 。 たとえば、次の宣言の後に：
-一部のマシンでは実際にはアラインメントが必要ない それらは、奇数アドレスであっても任意のデータ型への参照を可能にする。 これらのマシンでは、@code {__ alignof__}は、GCCがデータ型を与える最小のアライメントを報告します。通常、ターゲットABIが指定します。
-
-@code {__ alignof__}のオペランドが型ではなく左辺値の場合、その値は、GCCの@code {__ attribute__}拡張子（@pxref{Variable Attributes}）で指定された最小整列を考慮して、その型の必要な整列である 。 たとえば、次の宣言の後に：
 
 @smallexample
 struct foo @{ int x; char y; @} foo1;
@@ -5015,7 +5031,7 @@ asm @r{[} volatile @r{]} ( @var{AssemblerInstructions} )
 @end table
 
 @subsubheading 注意
-拡張@code{asm}（@pxref{Extended Asm}）を使うと、通常、より小さく、より安全で、より効率的なコードが生成され、ほとんどの場合、基本@code{asm}より優れた解決策である。 しかし、基本@code {asm}だけが使用できる2つの状況がある：
+拡張@code{asm}（@pxref{Extended Asm}）を使うと、通常、より小さく、より安全で、より効率的なコードが生成され、ほとんどの場合、基本@code{asm}より優れた解決策である。 しかし、基本@code{asm}だけが使用できる2つの状況がある：
 
 @itemize @bullet
 @item
@@ -6003,6 +6019,9 @@ The table below shows the list of supported modifiers and their effects.
 @tab @code{2}
 @end multitable
 
+@code{V} is a special modifier which prints the name of the full integer
+register without @code{%}.
+
 @anchor{x86floatingpointasmoperands}
 @subsubsection x86 Floating-Point @code{asm} Operands
 
@@ -6717,6 +6736,7 @@ For mixed operations between a scalar @code{s} and a vector @code{v},
 @code{s && v} is equivalent to @code{s?v!=0:0} (the evaluation is
 short-circuit) and @code{v && s} is equivalent to @code{v!=0 & (s?-1:0)}.
 
+@findex __builtin_shuffle
 Vector shuffling is available using functions
 @code{__builtin_shuffle (vec, mask)} and
 @code{__builtin_shuffle (vec0, vec1, mask)}.
@@ -16720,8 +16740,11 @@ AMD Family 15h Bulldozer version 4.
 @item btver2
 AMD Family 16h CPU.
 
-@item znver1
+@item amdfam17h
 AMD Family 17h CPU.
+
+@item znver1
+AMD Family 17h Zen version 1.
 @end table
 
 Here is an example:
@@ -17879,7 +17902,7 @@ unsigned long long _pext_u64 (unsigned long long, unsigned long long)
 The following built-in functions are available when @option{-mlzcnt} is used.
 All of them generate the machine instruction that is part of the name.
 @smallexample
-unsigned short __builtin_ia32_lzcnt_16(unsigned short);
+unsigned short __builtin_ia32_lzcnt_u16(unsigned short);
 unsigned int __builtin_ia32_lzcnt_u32(unsigned int);
 unsigned long long __builtin_ia32_lzcnt_u64 (unsigned long long);
 @end smallexample
