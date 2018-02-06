@@ -946,7 +946,6 @@ See RS/6000 and PowerPC Options.
 
 @emph{RISC-V Options}
 @gccoptlist{-mbranch-cost=@var{N-instruction} 
--mmemcpy  -mno-memcpy 
 -mplt  -mno-plt 
 -mabi=@var{ABI-string} 
 -mfdiv  -mno-fdiv 
@@ -954,8 +953,8 @@ See RS/6000 and PowerPC Options.
 -march=@var{ISA-string} 
 -mtune=@var{processor-string} 
 -msmall-data-limit=@var{N-bytes} 
--msave-restore  -mno-save-restore 
--mcmodel=@var{code-model} 
+-mstrict-align -mno-strict-align
+-mcmodel=medlow -mcmodel=medany
 -mexplicit-relocs  -mno-explicit-relocs }
 
 @emph{RL78 Options}
@@ -1190,7 +1189,9 @@ See RS/6000 and PowerPC Options.
 -msse2avx  -mfentry  -mrecord-mcount  -mnop-mcount  -m8bit-idiv 
 -mavx256-split-unaligned-load  -mavx256-split-unaligned-store 
 -malign-data=@var{type}  -mstack-protector-guard=@var{guard} 
--mmitigate-rop  -mgeneral-regs-only}
+-mmitigate-rop  -mgeneral-regs-only
+-mindirect-branch=@var{choice} -mfunction-return==@var{choice}
+-mindirect-branch-register}
 
 @emph{x86 Windows Options}
 @gccoptlist{-mconsole  -mcygwin  -mno-cygwin  -mdll 
@@ -1879,7 +1880,8 @@ GCCの将来のバージョンでインターフェースが変更されるか�
 すべてのアーキテクチャでサポートされているわけではないことに気をつけてください。
 
 トランザクションメモリーのGCCのサポートの情報は
-@xref{Enabling libitm,,GNUトランザクショナルメモリ・ライブラリ,libitm,GNU Transactional Memory Library}.
+@xref{Enabling libitm,,The GNU Transactional Memory Library,libitm,GNU
+Transactional Memory Library}.
 
 トランザクションメモリーの機能は非呼び出し例外(@option{-fnon-call-exceptions}ありではサポートされない
 ことに注意。
@@ -8517,9 +8519,7 @@ libgompプラグインによってそれから読まれて、報告されるHSA�
 （後者は前者を含む）
 
 @item
-arcプロフィール情報を生成する代表的な作業負担の計画を実行する。これは任意回数繰り返されるかもしれない。
-あなたはあなたのプログラムの並列のインスタンスを走らせることができる、そして、ファイルシステムがロックすることをサポートするならば、
-データ・ファイルは正しく更新される。また、@code{fork}呼び出しは見つけられて、正しく取り扱われる（二重カウントは起こらない）。
+arcプロフィール情報を生成する代表的な作業負担の計画を実行する。これは任意回数繰り返されるかもしれない。プログラムの並列のインスタンスを走らせることができ、そして、ファイルシステムがロックすることをサポートするならば、データ・ファイルは正しく更新される。また、厳密なISO C変種が有効でない限り、@code{fork}呼び出しは見つけられて、二重カウントなしで正しく取り扱われる。
 
 @item
 プロファイル誘導最適化のためには、ソースファイルを再び同じ最適化とコード生成オプションに加えて@option{-fbranch-probabilities}
@@ -11213,19 +11213,15 @@ FP16拡張を有効にする、これは浮動小数点命令も有効にする�
 @table @gcctabopt
 @item -mhalf-reg-file
 @opindex mhalf-reg-file
-範囲@code{r32}@dots{}@code{r63}でレジスタを割り当てない。これはこれらのレジスタがないハードウェア変種で
-もコードが実行できるようにする。
+範囲@code{r32}@dots{}@code{r63}でレジスタを割り当てない。これはこれらのレジスタがないハードウェア変種でもコードが実行できるようにする。
 
 @item -mprefer-short-insn-regs
 @opindex mprefer-short-insn-regs
-優先して、短い命令生成を可能にするレジスタを割り当てる。これは命令数を増やし得るので、全体のコードサイズを
-減らすかもしれないし増やすかもしれない。
+優先して、短い命令生成を可能にするレジスタを割り当てる。これは命令数を増やし得るので、全体のコードサイズを減らすかもしれないし増やすかもしれない。
 
 @item -mbranch-cost=@var{num}
 @opindex mbranch-cost
-分岐のコストをだいたい@var{num}「単純」命令にセットする。
-このコストは反なるヒューリスティックでリリースをまたいで一貫した結果を生み出すことは
-保証されない。
+分岐のコストをだいたい@var{num}「単純」命令にセットする。このコストは反なるヒューリスティックでリリースをまたいで一貫した結果を生み出すことは保証されない。
 
 @item -mcmove
 @opindex mcmove
@@ -16322,30 +16318,27 @@ DECアセンブラ構文を使う。これはPDP-11が@samp{pdp11-*-bs}以外で
 @opindex mbranch-cost
 分岐のコストをおおよそ@var{n}命令に設定する。
 
-@item -mmemcpy
-@itemx -mno-memcpy
-@opindex mmemcpy
-ブロックのムーブを最適化しない。
-
 @item -mplt
 @itemx -mno-plt
 @opindex plt
-PICコードを生成するときは、PLTを使用できるようにする。 非PICの場合は無視される。
+PICコードを生成するときは、PLTを使用を許可・禁止する。非PICの場合は無視される。デフォルトは@option{-mplt}である。
 
 @item -mabi=@var{ABI-string}
 @opindex mabi
-整数と浮動小数点の呼び出し規約を指定する。 これはデフォルトの自然な呼び出し規約である。 例えば、RV64Iの場合はLP64、RV32Iの場合はILP32、RV64Gの場合はLP64Dである。
+整数と浮動小数点の呼び出し規約を指定する。 @var{ABI-string}は、整数型のサイズと浮動小数点型に使用されるレジスタの2つの部分を含んでいる。 たとえば、@samp{-march=rv64ifd -mabi=lp64d}は、@samp{long}とポインタが64ビット（暗黙的に@samp{int}を32ビットと定義している）を意味し、その浮動小数点値は64ビット幅がFレジスタで渡される。 これを@samp{-march=rv64ifd -mabi=lp64f}と比較すると、それではコンパイラはFとDの拡張機能を使用するコードを生成できる、最大32ビットの浮動小数点値のみをレジスタに渡すことができる。 もしくは、@samp{-march=rv64ifd -mabi=lp64}のとき、浮動小数点引数はレジスタに渡されない。
+
+この引数のデフォルトはシステムに依存するが、特定の呼び出し規約を使用するユーザーは明示的に指定する必要がある。 有効な呼び出し規約は、@samp{ilp32}、@samp{ilp32f}、@samp{ilp32d}、@samp{lp64}、@samp{lp64f}、@samp{lp64d}である。一部の呼び出し規約は一部のISAでは実装できない。例えば、@samp{-march=rv32if -mabi=ilp32d}は、 ABIでは64ビットの値をFレジスタに渡す必要があるが、Fレジスタは32ビット幅しかないためは無効である。
 
 @item -mfdiv
 @itemx -mno-fdiv
 @opindex mfdiv
-ハードウェア浮動小数点除算および平方根命令を使用する。 これには、浮動小数点レジスタのFまたはD拡張が必要である。
+ハードウェア浮動小数点除算および平方根命令は使用するかしない。これには、浮動小数点レジスタのFまたはD拡張が必要である。 デフォルトでは、指定されたアーキテクチャにこれらの命令がある場合は、それらを使用する。
 
 @item -mdiv
 @itemx -mno-div
 @opindex mdiv
-整数除算にはハードウェア命令を使用する。 これにはM拡張が必要である。
-
+整数除算にハードウェア命令を使用するかしない。これにはM拡張が必要である。 デフォルトでは、指定されたアーキテクチャにこれらの命令がある場合は、それらを使用する。
+   
 @item -march=@var{ISA-string}
 @opindex march
 与えられたRISC-V ISAのコードを生成する（@samp{rv64im}など）。 ISA文字列は小文字でなければならない。 例には、@samp{rv64i}、@samp{rv32g}、@samp{rv32imaf}がある。
@@ -16361,11 +16354,24 @@ PICコードを生成するときは、PLTを使用できるようにする。 �
 @item -msave-restore
 @itemx -mno-save-restore
 @opindex msave-restore
-小さいが遅いプロローグとエピローグのコードを使う。
+ライブラリー関数呼び出しを使用するより小さいがより遅いプロローグとエピローグのコードを使用するかしない。 デフォルトでは、高速インラインプロローグとエピローグを使用する。
 
-@item -mcmodel=@var{code-model}
-@opindex mcmodel
-コードモデルを指定する。
+@item -mstrict-align
+@itemx -mno-strict-align
+@opindex mstrict-align
+アラインされていないメモリアクセスを生成しないかする。 デフォルトは、最適化しているプロセッサが高速のアラインされていないアクセスをサポートしているかどうかによって設定される。
+ 
+@item -mcmodel=medlow
+@opindex mcmodel=medlow
+中低コードモデル用のコードを生成する。 プログラムとその静的に定義されたシンボルは、単一の2GiBアドレス範囲内になければならず、絶対アドレス@minus{}2 GiBと+2 GiBの間になければならない。 プログラムは静的または動的にリンクできる。 これがデフォルトコードモデルである。
+ 
+@item -mcmodel=medany
+@opindex mcmodel=medany
+medium-anyコードモデル用のコードを生成する。 プログラムとその静的に定義されたシンボルは、任意の単一の2GiBアドレス範囲内になければならない。 プログラムは静的または動的にリンクできる。
+
+@item -mexplicit-relocs
+@itemx -mno-exlicit-relocs
+シンボリックアドレスを扱うときは、アセンブラ再配置演算子を使用するか使用しない。 代わりにアセンブラマクロを使用することができる、最適化を制限することがある。
 
 @end table
 
@@ -19927,6 +19933,43 @@ jim.d         -bar -boggle
 
 @item %@{S:X; T:Y; :D@}
 GCCに@code{S}が与えられていれば、@code{X}に置き換えられる。 そうでなければ、GCCに@code{T}が与えられていれば、@code{Y}に置き換える。さもなければ@code{D}を代入する。必要だけ多くの節をできる。 これは、必要に応じて@code{.}、@code{,}、@code{!}、@code{|}、@code{*}と組み合わせることができる。
+
+@item -mindirect-branch=@var{choice}
+@opindex -mindirect-branch
+Convert indirect call and jump with @var{choice}.  The default is
+@samp{keep}, which keeps indirect call and jump unmodified.
+@samp{thunk} converts indirect call and jump to call and return thunk.
+@samp{thunk-inline} converts indirect call and jump to inlined call
+and return thunk.  @samp{thunk-extern} converts indirect call and jump
+to external call and return thunk provided in a separate object file.
+You can control this behavior for a specific function by using the
+function attribute @code{indirect_branch}.  @xref{Function Attributes}.
+
+Note that @option{-mcmodel=large} is incompatible with
+@option{-mindirect-branch=thunk} nor
+@option{-mindirect-branch=thunk-extern} since the thunk function may
+not be reachable in large code model.
+
+@item -mfunction-return=@var{choice}
+@opindex -mfunction-return
+Convert function return with @var{choice}.  The default is @samp{keep},
+which keeps function return unmodified.  @samp{thunk} converts function
+return to call and return thunk.  @samp{thunk-inline} converts function
+return to inlined call and return thunk.  @samp{thunk-extern} converts
+function return to external call and return thunk provided in a separate
+object file.  You can control this behavior for a specific function by
+using the function attribute @code{function_return}.
+@xref{Function Attributes}.
+
+Note that @option{-mcmodel=large} is incompatible with
+@option{-mfunction-return=thunk} nor
+@option{-mfunction-return=thunk-extern} since the thunk function may
+not be reachable in large code model.
+
+
+@item -mindirect-branch-register
+@opindex -mindirect-branch-register
+Force indirect call and jump via register.
 
 @end table
 
