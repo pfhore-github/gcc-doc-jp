@@ -19936,40 +19936,19 @@ GCCに@code{S}が与えられていれば、@code{X}に置き換えられる。 
 
 @item -mindirect-branch=@var{choice}
 @opindex -mindirect-branch
-Convert indirect call and jump with @var{choice}.  The default is
-@samp{keep}, which keeps indirect call and jump unmodified.
-@samp{thunk} converts indirect call and jump to call and return thunk.
-@samp{thunk-inline} converts indirect call and jump to inlined call
-and return thunk.  @samp{thunk-extern} converts indirect call and jump
-to external call and return thunk provided in a separate object file.
-You can control this behavior for a specific function by using the
-function attribute @code{indirect_branch}.  @xref{Function Attributes}.
+間接呼び出しとジャンプを@var{choice}を使って変換する。 デフォルトは@samp{keep}で、これは間接呼び出しとジャンプを保持する。@samp{thunk}は間接呼び出しとジャンプを、サンクの呼び出しと復帰に変換する。@samp{thunk-inline}は間接呼び出しとジャンプをインライン化されたサンクの呼び出しと復帰に変換する。@samp{thunk-extern}は間接呼び出しとジャンプを別のオブジェクトファイルで提供されたサンクへの外部呼び出しと復帰に変換する。関数属性@code{indirect_branch}を使用すると、特定の関数のこの動作を制御できる。 @xref{Function Attributes}
 
-Note that @option{-mcmodel=large} is incompatible with
-@option{-mindirect-branch=thunk} nor
-@option{-mindirect-branch=thunk-extern} since the thunk function may
-not be reachable in large code model.
+大きなコードモデルでは、サンク関数に到達できない可能性があるため、@option{-mcmodel=large}は@option{-mindirect-branch=thunk}や@option {-mindirect-branch=thunk-extern}と互換性がないことに注意せよ。
 
 @item -mfunction-return=@var{choice}
 @opindex -mfunction-return
-Convert function return with @var{choice}.  The default is @samp{keep},
-which keeps function return unmodified.  @samp{thunk} converts function
-return to call and return thunk.  @samp{thunk-inline} converts function
-return to inlined call and return thunk.  @samp{thunk-extern} converts
-function return to external call and return thunk provided in a separate
-object file.  You can control this behavior for a specific function by
-using the function attribute @code{function_return}.
-@xref{Function Attributes}.
+@var{choice}で関数復帰を変換する。 デフォルトは@samp{keep}で、関数復帰は変更されない。 @samp{thunk}は関数復帰をサンクの呼び出しと復帰に変換する。 @samp{thunk-inline}は、関数復帰をインライン化されたサンクの呼び出しと復帰に変換する。 @samp {thunk-extern}は、関数復帰を、別のオブジェクトファイルで提供されるサンクの呼び出しと復帰に変換する。 特定の関数に対してこの動作を制御するには、関数属性@code{function_return}を使用する。@xref{Function Attributes}.
 
-Note that @option{-mcmodel=large} is incompatible with
-@option{-mfunction-return=thunk} nor
-@option{-mfunction-return=thunk-extern} since the thunk function may
-not be reachable in large code model.
-
+大きなコードモデルでは、サンク関数に到達できない可能性があるため、@option{-mcmodel=large}は@option{-mfunction-return=thunk}や@option {-mfunction-return=thunk-extern}と互換性がないことに注意せよ。
 
 @item -mindirect-branch-register
 @opindex -mindirect-branch-register
-Force indirect call and jump via register.
+レジスタ経由の間接呼び出しとジャンプを強制する。
 
 @end table
 
@@ -20106,7 +20085,7 @@ EUCJP文字を認識する。
 最初のCトークンが見えると、プリコンパイルされたヘッダーは使用できない。 プリコンパイルされたヘッダの前にプリプロセッサディレクティブを置くことができる。 別のヘッダーの中からプリコンパイルされたヘッダーを含めることはできない。
 
 @item
-プリコンパイルされたヘッダーファイルは、現在のコンパイルと同じ言語で作成する必要がある。 C ++コンパイルにCプリコンパイル済みヘッダーを使用することはできない。
+プリコンパイルされたヘッダーファイルは、現在のコンパイルと同じ言語で作成する必要がある。 C++コンパイルにCプリコンパイル済みヘッダーを使用することはできない。
 
 @item
 プリコンパイルされたヘッダーファイルは、現在のコンパイルが使用しているのと同じコンパイラバイナリによって生成されている必要がある。

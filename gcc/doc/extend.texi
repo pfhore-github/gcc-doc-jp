@@ -3639,22 +3639,11 @@ IEEE演算に依存する浮動小数点の生成を有効/無効にする。
 
 @item indirect_branch("@var{choice}")
 @cindex @code{indirect_branch} function attribute, x86
-On x86 targets, the @code{indirect_branch} attribute causes the compiler
-to convert indirect call and jump with @var{choice}.  @samp{keep}
-keeps indirect call and jump unmodified.  @samp{thunk} converts indirect
-call and jump to call and return thunk.  @samp{thunk-inline} converts
-indirect call and jump to inlined call and return thunk.
-@samp{thunk-extern} converts indirect call and jump to external call
-and return thunk provided in a separate object file.
+x86ターゲットでは、@code{indirect_branch}属性で関数に間接呼び出しとジャンプを@var{choice}を使って変換するようにさせる。 @samp{keep}は間接呼び出しとジャンプを保持する。@samp{thunk}は間接呼び出しとジャンプを、サンクの呼び出しと復帰に変換する。@samp{thunk-inline}は間接呼び出しとジャンプをインライン化されたサンクの呼び出しと復帰に変換する。@samp{thunk-extern}は間接呼び出しとジャンプを別のオブジェクトファイルで提供されたサンクへの外部呼び出しと復帰に変換する。
 
 @item function_return("@var{choice}")
 @cindex @code{function_return} function attribute, x86
-On x86 targets, the @code{function_return} attribute causes the compiler
-to convert function return with @var{choice}.  @samp{keep} keeps function
-return unmodified.  @samp{thunk} converts function return to call and
-return thunk.  @samp{thunk-inline} converts function return to inlined
-call and return thunk.  @samp{thunk-extern} converts function return to
-external call and return thunk provided in a separate object file.
+x86ターゲットでは、@code{function_return}属性に@var{choice}で関数復帰を変換するようにさせる。@samp{keep}は、関数復帰は変更されない。 @samp{thunk}は関数復帰をサンクの呼び出しと復帰に変換する。 @samp{thunk-inline}は、関数復帰をインライン化されたサンクの呼び出しと復帰に変換する。 @samp {thunk-extern}は、関数復帰を、別のオブジェクトファイルで提供されるサンクの呼び出しと復帰に変換する。
 @end table
 
 x86では、呼び出し側が呼び出し元のターゲットオプションのサブセットを持たない限り、インライナは呼び出し元とは異なるターゲットオプションを持つ関数をインライン化しない。 たとえば、@code{-msse3}は@code{-msse2}を意味するため、@code{target("sse3")}で宣言された関数は@code{target("sse2")}で関数をインライン化できる。
