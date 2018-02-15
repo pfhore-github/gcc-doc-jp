@@ -5058,14 +5058,11 @@ i386の基本的な@code {asm}の例を次に示す。
 @end example
 
 @node Extended Asm
-@subsection Extended Asm - Assembler Instructions with C Expression Operands
+@subsection 拡張Asm - C式オペランドのあるアセンブラ命令
 @cindex extended @code{asm}
 @cindex assembly language in C, extended
 
-With extended @code{asm} you can read and write C variables from 
-assembler and perform jumps from assembler code to C labels.  
-Extended @code{asm} syntax uses colons (@samp{:}) to delimit
-the operand parameters after the assembler template:
+拡張@code{asm}を使用すると、アセンブラからC変数を読み書きし、アセンブラコードからCラベルにジャンプすることができる。拡張@code{asm}構文は、アセンブラテンプレートの後にオペランドパラメータを区切るためにコロン（@samp{:}）を使用する：
 
 @example
 asm @r{[}volatile@r{]} ( @var{AssemblerTemplate} 
@@ -5080,75 +5077,47 @@ asm @r{[}volatile@r{]} goto ( @var{AssemblerTemplate}
                       : @var{GotoLabels})
 @end example
 
-The @code{asm} keyword is a GNU extension.
-When writing code that can be compiled with @option{-ansi} and the
-various @option{-std} options, use @code{__asm__} instead of 
-@code{asm} (@pxref{Alternate Keywords}).
+@code{asm}キーワードはGNU拡張である。@option{-ansi}と様々な@option {-std}オプションでコンパイルできるコードを書くときは、@code{asm}の代わりに@code{__ asm__}を使う。 (@pxref{Alternate Keywords}).
 
-@subsubheading Qualifiers
+@subsubheading 限定子
 @table @code
 
 @item volatile
-The typical use of extended @code{asm} statements is to manipulate input 
-values to produce output values. However, your @code{asm} statements may 
-also produce side effects. If so, you may need to use the @code{volatile} 
-qualifier to disable certain optimizations. @xref{Volatile}.
+拡張@code{asm}文の典型的な使い方は、入力値を操作して出力値を生成することである。 しかし、@code{asm}文は、副作用も生じる。 その場合は、特定の最適化を無効にするために@code{volatile}修飾子を使用する必要がある。@xref{Volatile}.
 
 @item goto
-This qualifier informs the compiler that the @code{asm} statement may 
-perform a jump to one of the labels listed in the @var{GotoLabels}.
-@xref{GotoLabels}.
+この修飾子は、@code{asm}文が@var{GotoLabels}にリストされているラベルの1つにジャンプする可能性があることをコンパイラに通知する。@xref{GotoLabels}.
 @end table
 
-@subsubheading Parameters
+@subsubheading パラメータ
 @table @var
 @item AssemblerTemplate
-This is a literal string that is the template for the assembler code. It is a 
-combination of fixed text and tokens that refer to the input, output, 
-and goto parameters. @xref{AssemblerTemplate}.
+これは、アセンブラコードのテンプレートであるリテラル文字列である。 入力テキスト、出力テキスト、およびgotoパラメータを参照する固定テキストとトークンの組み合わせである。@xref{AssemblerTemplate}.
 
-@item OutputOperands
-A comma-separated list of the C variables modified by the instructions in the 
-@var{AssemblerTemplate}.  An empty list is permitted.  @xref{OutputOperands}.
+@item OutputOperands（出力オペランド）
+@var{AssemblerTemplate}の命令で変更されたC変数のカンマ区切りのリスト。 空のリストが許可される。@xref{OutputOperands}.
 
-@item InputOperands
-A comma-separated list of C expressions read by the instructions in the 
-@var{AssemblerTemplate}.  An empty list is permitted.  @xref{InputOperands}.
+@item InputOperands（入力オペランド）
+@var{AssemblerTemplate}の命令で読み取られるC式のカンマ区切りリスト。 空のリストが許可される。@xref{InputOperands}.
 
-@item Clobbers
-A comma-separated list of registers or other values changed by the 
-@var{AssemblerTemplate}, beyond those listed as outputs.
-An empty list is permitted.  @xref{Clobbers}.
+@item Clobbers（破壊子）
+出力としてリストされたものを覗いた、@var{AssemblerTemplate}によって変更されたレジスタまたはその他の値のコンマ区切りのリスト。空のリストが許可される。@xref{Clobbers}.
 
-@item GotoLabels
-When you are using the @code{goto} form of @code{asm}, this section contains 
-the list of all C labels to which the code in the 
-@var{AssemblerTemplate} may jump. 
+@item GotoLabels（Gotoラベル）
+@code{asm}の@code{goto}形式を使用している場合、このセクションには、@var{AssemblerTemplate}のコードがジャンプする可能性のあるすべてのCラベルのリストが含まれている。
 @xref{GotoLabels}.
 
-@code{asm} statements may not perform jumps into other @code{asm} statements,
-only to the listed @var{GotoLabels}.
-GCC's optimizers do not know about other jumps; therefore they cannot take 
-account of them when deciding how to optimize.
+@code{asm}文は、リストされた@var{GotoLabels}に対してのみジャンプすることができ、他の@code{asm}文にジャンプすることはできない。GCCのオプティマイザは他のジャンプについて知らない。したがって、どのように最適化するかを決めるときに、それらを考慮に入れることはできない。
 @end table
 
-The total number of input + output + goto operands is limited to 30.
+入力+出力+ gotoオペランドの合計数は30に制限されている。
 
-@subsubheading Remarks
-The @code{asm} statement allows you to include assembly instructions directly 
-within C code. This may help you to maximize performance in time-sensitive 
-code or to access assembly instructions that are not readily available to C 
-programs.
+@subsubheading 注意
+@code{asm}ステートメントを使用すると、Cコード内にアセンブリ命令を直接組み込むことができる。 これは、時間に敏感なコードのパフォーマンスを最大化したり、Cプログラムがすぐに利用できないアセンブリ命令にアクセスするのに役立つ。
 
-Note that extended @code{asm} statements must be inside a function. Only 
-basic @code{asm} may be outside functions (@pxref{Basic Asm}).
-Functions declared with the @code{naked} attribute also require basic 
-@code{asm} (@pxref{Function Attributes}).
+拡張@code {asm}文は関数内になければならないことに注意。基本@code{asm}だけが関数の外にあることができる（@pxref {Basic Asm}）。@code{naked}属性で宣言された関数も、基本@code{asm}を必要とする。 (@pxref{Function Attributes}).
 
-While the uses of @code{asm} are many and varied, it may help to think of an 
-@code{asm} statement as a series of low-level instructions that convert input 
-parameters to output parameters. So a simple (if not particularly useful) 
-example for i386 using @code{asm} might look like this:
+@code{asm}の使用方法は多種多様だが、入力パラメータを出力パラメータに変換する一連の低レベル命令として@code{asm}文を考えると役に立つ。なので、@code{asm}を使ったi386のシンプルな（特に有用ではないにしても）例は次のようになる：
 
 @example
 int src = 1;
@@ -5162,29 +5131,15 @@ asm ("mov %1, %0\n\t"
 printf("%d\n", dst);
 @end example
 
-This code copies @code{src} to @code{dst} and add 1 to @code{dst}.
+このコードは@code{src}を@code{dst}にコピーし、1を@code{dst}に追加する。
 
 @anchor{Volatile}
 @subsubsection Volatile
 @cindex volatile @code{asm}
 @cindex @code{asm} volatile
+GCCのオプティマイザは、出力変数の必要がないと判断した場合、@code {asm}文を破棄することがある。 また、オプティマイザは、コードが常に同じ結果を返すと考えられる場合（つまり、入力値のいずれも呼び出し間で変化しない場合）、コードをループから移動させる可能性がある。 @code{volatile}修飾子を使用すると、これらの最適化が無効になる。 @code{asm goto}文を含む出力オペランドを持たない@code{asm}文は暗黙的にvolatileである。
 
-GCC's optimizers sometimes discard @code{asm} statements if they determine 
-there is no need for the output variables. Also, the optimizers may move 
-code out of loops if they believe that the code will always return the same 
-result (i.e. none of its input values change between calls). Using the 
-@code{volatile} qualifier disables these optimizations. @code{asm} statements 
-that have no output operands, including @code{asm goto} statements, 
-are implicitly volatile.
-
-This i386 code demonstrates a case that does not use (or require) the 
-@code{volatile} qualifier. If it is performing assertion checking, this code 
-uses @code{asm} to perform the validation. Otherwise, @code{dwRes} is 
-unreferenced by any code. As a result, the optimizers can discard the 
-@code{asm} statement, which in turn removes the need for the entire 
-@code{DoCheck} routine. By omitting the @code{volatile} qualifier when it 
-isn't needed you allow the optimizers to produce the most efficient code 
-possible.
+このi386コードは、@code{volatile}修飾子を使用しない（または必要とする）ケースを示している。 アサーションチェックを実行している場合、このコードは@code{asm}を使用して検証を実行する。それ以外の場合、@code{dwRes}はどのコードでも参照されない。 結果として、オプティマイザは@code{asm}文を破棄することができ、@code{DoCheck}ルーチン全体が不要になる。@code{volatile}修飾子を省略すると、オプティマイザは可能な限り効率的なコードを生成できる。
 
 @example
 void DoCheck(uint32_t dwSomeValue)
@@ -5201,10 +5156,7 @@ void DoCheck(uint32_t dwSomeValue)
 @}
 @end example
 
-The next example shows a case where the optimizers can recognize that the input 
-(@code{dwSomeValue}) never changes during the execution of the function and can 
-therefore move the @code{asm} outside the loop to produce more efficient code. 
-Again, using @code{volatile} disables this type of optimization.
+次の例は、オプティマイザが関数の実行中に入力（@ code{dwSomeValue}）が決して変化しないことを認識できるので、より効率的なコードを生成するためにループの外側に@code{asm}を移動できる。ここでも、@code{volatile}を使用すると、このタイプの最適化が無効になる。
 
 @example
 void do_print(uint32_t dwSomeValue)
@@ -5224,12 +5176,7 @@ void do_print(uint32_t dwSomeValue)
 @}
 @end example
 
-The following example demonstrates a case where you need to use the 
-@code{volatile} qualifier. 
-It uses the x86 @code{rdtsc} instruction, which reads 
-the computer's time-stamp counter. Without the @code{volatile} qualifier, 
-the optimizers might assume that the @code{asm} block will always return the 
-same value and therefore optimize away the second call.
+次の例は、@code{volatile}修飾子を使用する必要がある場合を示している。x86の@code{rdtsc}命令を使用して、コンピュータのタイムスタンプカウンタを読み取る。 オプティマイザは、@code{volatile}修飾子を指定しないと、@code{asm}ブロックが常に同じ値を返すと仮定して、2番目の呼び出しを最適化する。
 
 @example
 uint64_t msr;
@@ -5256,94 +5203,53 @@ asm volatile ( "rdtsc\n\t"    // Returns the time in EDX:EAX.
 printf("msr: %llx\n", msr);
 @end example
 
-GCC's optimizers do not treat this code like the non-volatile code in the 
-earlier examples. They do not move it out of loops or omit it on the 
-assumption that the result from a previous call is still valid.
+GCCのオプティマイザは、以前の例ではこのコードを不揮発性コードのように扱っていない。 以前の呼び出しの結果が依然として有効であるという前提で、ループから移動したり、ループを省略することはない。
 
-Note that the compiler can move even volatile @code{asm} instructions relative 
-to other code, including across jump instructions. For example, on many 
-targets there is a system register that controls the rounding mode of 
-floating-point operations. Setting it with a volatile @code{asm}, as in the 
-following PowerPC example, does not work reliably.
+コンパイラはジャンプ命令全体を含む、他のコードと相対で揮発性の@code {asm}命令も移動させることができる。 たとえば、多くのターゲットでは、浮動小数点演算の丸めモードを制御するシステム・レジスタがある。 揮発性の@code{asm}で設定すると、次のPowerPCの例のように確実に動作しない。
 
 @example
 asm volatile("mtfsf 255, %0" : : "f" (fpenv));
 sum = x + y;
 @end example
 
-The compiler may move the addition back before the volatile @code{asm}. To 
-make it work as expected, add an artificial dependency to the @code{asm} by 
-referencing a variable in the subsequent code, for example: 
+コンパイラは、volatile @code{asm}の前に加算を動かすかもしれない。期待通りに動作させるには、後続のコードで変数を参照することで、@code{asm}に人為的な依存関係を追加する。例えば、
 
 @example
 asm volatile ("mtfsf 255,%1" : "=X" (sum) : "f" (fpenv));
 sum = x + y;
 @end example
 
-Under certain circumstances, GCC may duplicate (or remove duplicates of) your 
-assembly code when optimizing. This can lead to unexpected duplicate symbol 
-errors during compilation if your asm code defines symbols or labels. 
-Using @samp{%=} 
-(@pxref{AssemblerTemplate}) may help resolve this problem.
+特定の状況下では、GCCは最適化するときにアセンブリコードを複製（または重複を除去）することがある。 これにより、asmコードでシンボルまたはラベルが定義されていると、コンパイル時に予期しない重複シンボルエラーが発生する可能性がある。@samp{％=}（@pxref {AssemblerTemplate}）を使用すると、この問題を解決できる。
 
 @anchor{AssemblerTemplate}
-@subsubsection Assembler Template
+@subsubsection アセンブラテンプレート
 @cindex @code{asm} assembler template
 
-An assembler template is a literal string containing assembler instructions.
-The compiler replaces tokens in the template that refer 
-to inputs, outputs, and goto labels,
-and then outputs the resulting string to the assembler. The 
-string can contain any instructions recognized by the assembler, including 
-directives. GCC does not parse the assembler instructions 
-themselves and does not know what they mean or even whether they are valid 
-assembler input. However, it does count the statements 
-(@pxref{Size of an asm}).
+アセンブラテンプレートは、アセンブラ命令を含むリテラル文字列である。コンパイラは、入力、出力、およびgotoラベルを参照するテンプレート内のトークンを置き換え、結果の文字列をアセンブラに出力する。この文字列には、ディレクティブを含め、アセンブラで認識されるすべての命令を含めることができる。GCCはアセンブラ命令自体を解析せず、それらが何を意味するのか、またそれらが有効なアセンブラ入力であるかを知らないが、文は数える。(@pxref{Size of an asm}).
 
-You may place multiple assembler instructions together in a single @code{asm} 
-string, separated by the characters normally used in assembly code for the 
-system. A combination that works in most places is a newline to break the 
-line, plus a tab character to move to the instruction field (written as 
-@samp{\n\t}). 
-Some assemblers allow semicolons as a line separator. However, note 
-that some assembler dialects use semicolons to start a comment. 
+1つの@code{asm}文字列に、システムのアセンブリコードで通常使用される文字で区切られた、複数のアセンブラ命令を一緒に配置することができる。ほとんどの場所で動作する組み合わせは、行を改行する改行と、タブフィールド（@samp{\n \t}と書かれる）に移動するためのタブ文字である。一部のアセンブラではセミコロンを行区切り記号として使用できる。 ただし、アセンブラの方言の中には、セミコロンを使用してコメントを開始するものがある。
 
-Do not expect a sequence of @code{asm} statements to remain perfectly 
-consecutive after compilation, even when you are using the @code{volatile} 
-qualifier. If certain instructions need to remain consecutive in the output, 
-put them in a single multi-instruction asm statement.
+@code{volatile}修飾子を使用していても、コンパイル後に一連の@code{asm}文が完全に連続しているとは期待しないこと。特定の命令を連続して出力に残す必要がある場合は、それらを単一のマルチ命令asm文に入れる。
 
-Accessing data from C programs without using input/output operands (such as 
-by using global symbols directly from the assembler template) may not work as 
-expected. Similarly, calling functions directly from an assembler template 
-requires a detailed understanding of the target assembler and ABI.
+入力/出力オペランドを使用せずに（たとえば、アセンブラテンプレートからグローバルシンボルを使用して）Cプログラムからデータにアクセスすると、期待どおりに動作しないことがある。同様に、アセンブラテンプレートから関数を直接呼び出すには、ターゲットアセンブラとABIの詳細な理解が必要である。
 
-Since GCC does not parse the assembler template,
-it has no visibility of any 
-symbols it references. This may result in GCC discarding those symbols as 
-unreferenced unless they are also listed as input, output, or goto operands.
+GCCはアセンブラテンプレートを解析しないので、参照するシンボルの可視性はない。 これにより、GCCは、入力、出力、またはgotoオペランドとしてもリストされていない限り、これらのシンボルを参照されないものとして破棄することがある。
 
-@subsubheading Special format strings
+@subsubheading 特別なフォーマット文字列
 
-In addition to the tokens described by the input, output, and goto operands, 
-these tokens have special meanings in the assembler template:
+input、output、およびgotoオペランドで記述されたトークンに加えて、これらのトークンはアセンブラテンプレートに特別な意味を持つ。
 
 @table @samp
 @item %% 
-Outputs a single @samp{%} into the assembler code.
+単一の@samp {％}をアセンブラコードに出力する。
 
 @item %= 
-Outputs a number that is unique to each instance of the @code{asm} 
-statement in the entire compilation. This option is useful when creating local 
-labels and referring to them multiple times in a single template that 
-generates multiple assembler instructions. 
+コンパイル全体で@code{asm}文の各インスタンスに固有の番号を出力する。 このオプションは、ローカルラベルを作成し、複数のアセンブラ命令を生成する1つのテンプレートでそれらを複数回参照する場合に便利である。
 
 @item %@{
 @itemx %|
 @itemx %@}
-Outputs @samp{@{}, @samp{|}, and @samp{@}} characters (respectively)
-into the assembler code.  When unescaped, these characters have special
-meaning to indicate multiple assembler dialects, as described below.
+@samp{@{}、@samp{|}}、@samp{@}}文字をそれぞれアセンブラコードに出力する。 エスケープされていない場合、これらの文字は、以下に説明するように、複数のアセンブラ方言を示すために特別な意味を持つ。
 @end table
 
 @subsubheading Multiple assembler dialects in @code{asm} templates
