@@ -5249,76 +5249,58 @@ input、output、およびgotoオペランドで記述されたトークンに�
 @item %@{
 @itemx %|
 @itemx %@}
-@samp{@{}、@samp{|}}、@samp{@}}文字をそれぞれアセンブラコードに出力する。 エスケープされていない場合、これらの文字は、以下に説明するように、複数のアセンブラ方言を示すために特別な意味を持つ。
+@samp{@{}、@samp{|}、@samp{@}}文字をそれぞれアセンブラコードに出力する。 エスケープされていない場合、これらの文字は、以下に説明するように、複数のアセンブラ方言を示すために特別な意味を持つ。
 @end table
 
-@subsubheading Multiple assembler dialects in @code{asm} templates
+@subsubheading @code{asm}テンプレートでの複数のアセンブラ変種
 
-On targets such as x86, GCC supports multiple assembler dialects.
-The @option{-masm} option controls which dialect GCC uses as its 
-default for inline assembler. The target-specific documentation for the 
-@option{-masm} option contains the list of supported dialects, as well as the 
-default dialect if the option is not specified. This information may be 
-important to understand, since assembler code that works correctly when 
-compiled using one dialect will likely fail if compiled using another.
-@xref{x86 Options}.
+x86などのターゲットでは、GCCは複数のアセンブラ変種をサポートしている。@option{-masm}オプションは、GCCがインラインアセンブラのデフォルトとして使用するダイアレクトを制御する。 @option{-masm}オプションのターゲット固有のドキュメントには、サポートされている変種のリストと、オプションが指定されていない場合のデフォルトの変種が含まれている。ある方言を使ってコンパイルしたときに正しく動作するアセンブラコードは、別の方言を使ってコンパイルすると失敗する可能性があるため、この情報は理解するのに重要である。@xref{x86 Options}.
 
-If your code needs to support multiple assembler dialects (for example, if 
-you are writing public headers that need to support a variety of compilation 
-options), use constructs of this form:
+コードが複数のアセンブラ変種をサポートする必要がある場合（例えば、さまざまなコンパイルオプションをサポートする必要があるパブリックヘッダを書く場合）、このフォームの構文を使用する：
 
 @example
 @{ dialect0 | dialect1 | dialect2... @}
 @end example
 
-This construct outputs @code{dialect0} 
-when using dialect #0 to compile the code, 
-@code{dialect1} for dialect #1, etc. If there are fewer alternatives within the 
-braces than the number of dialects the compiler supports, the construct 
-outputs nothing.
+この構文は、変種＃0を使用してコードをコンパイルするときに@code{dialect0}、変種＃1に@code {dialect1}などを出力する。中括弧内の代替語句がコンパイラがサポートする変種の数より少ない場合、構文は何も出力しない。
 
-For example, if an x86 compiler supports two dialects
-(@samp{att}, @samp{intel}), an 
-assembler template such as this:
+たとえば、x86コンパイラが2つの変種（@samp{att}、@samp{intel}）をサポートしている場合、次のようなアセンブラテンプレートは：
 
 @example
 "bt@{l %[Offset],%[Base] | %[Base],%[Offset]@}; jc %l2"
 @end example
 
 @noindent
-is equivalent to one of
+以下の一つと等価である
 
 @example
 "btl %[Offset],%[Base] ; jc %l2"   @r{/* att dialect */}
 "bt %[Base],%[Offset]; jc %l2"     @r{/* intel dialect */}
 @end example
 
-Using that same compiler, this code:
+同じコンパイラを使用して、このコードは：
 
 @example
 "xchg@{l@}\t@{%%@}ebx, %1"
 @end example
 
 @noindent
-corresponds to either
+いずれかに対応する
 
 @example
 "xchgl\t%%ebx, %1"                 @r{/* att dialect */}
 "xchg\tebx, %1"                    @r{/* intel dialect */}
 @end example
 
-There is no support for nesting dialect alternatives.
+代替のネストをサポートしていない。
 
 @anchor{OutputOperands}
-@subsubsection Output Operands
+@subsubsection 出力オペランド
 @cindex @code{asm} output operands
 
-An @code{asm} statement has zero or more output operands indicating the names
-of C variables modified by the assembler code.
+@code{asm}文には、アセンブラコードによって変更されたC変数の名前を示す0個以上の出力オペランドがある。
 
-In this i386 example, @code{old} (referred to in the template string as 
-@code{%0}) and @code{*Base} (as @code{%1}) are outputs and @code{Offset} 
-(@code{%2}) is an input:
+このi386の例では、@code{old}（テンプレート文字列の@code{％0}として参照される）と@code{*Base}（@code{％1}）は出力であり、@code{Offset}（@code {％2}）は入力である：
 
 @example
 bool old;
@@ -5332,7 +5314,7 @@ __asm__ ("btsl %2,%1\n\t" // Turn on zero-based bit #Offset in Base.
 return old;
 @end example
 
-Operands are separated by commas.  Each operand has this format:
+オペランドはコンマで区切られます。 各オペランドは次の形式である。
 
 @example
 @r{[} [@var{asmSymbolicName}] @r{]} @var{constraint} (@var{cvariablename})
@@ -5340,69 +5322,28 @@ Operands are separated by commas.  Each operand has this format:
 
 @table @var
 @item asmSymbolicName
-Specifies a symbolic name for the operand.
-Reference the name in the assembler template 
-by enclosing it in square brackets 
-(i.e. @samp{%[Value]}). The scope of the name is the @code{asm} statement 
-that contains the definition. Any valid C variable name is acceptable, 
-including names already defined in the surrounding code. No two operands 
-within the same @code{asm} statement can use the same symbolic name.
+オペランドのシンボリック名を指定する。アセンブラテンプレートの名前は、角括弧（@samp{％[Value]}）で囲んで参照する。名前のスコープは、定義を含む@code{asm}ステートメントである。 周囲のコードにすでに定義されている名前を含め、任意の有効なC変数名を使用できる。同じ@code{asm}ステートメント内に2つのオペランドが同じシンボリック名を使用することはできない。
 
-When not using an @var{asmSymbolicName}, use the (zero-based) position
-of the operand 
-in the list of operands in the assembler template. For example if there are 
-three output operands, use @samp{%0} in the template to refer to the first, 
-@samp{%1} for the second, and @samp{%2} for the third. 
+@var{asmSymbolicName}を使用しないときは、アセンブラ・テンプレートのオペランドのリスト内のオペランドの（ゼロからの）位置を使用する。 たとえば、3つの出力オペランドがある場合は、最初のものをテンプレートの@samp{％0}で、2番目の@samp{％1}と3番目のものの@samp{％2}を使用して参照する。
 
 @item constraint
-A string constant specifying constraints on the placement of the operand; 
-@xref{Constraints}, for details.
+オペランドの配置に関する制約を指定する文字列定数。詳細は@xref{Constraints}を参照せよ。
 
-Output constraints must begin with either @samp{=} (a variable overwriting an 
-existing value) or @samp{+} (when reading and writing). When using 
-@samp{=}, do not assume the location contains the existing value
-on entry to the @code{asm}, except 
-when the operand is tied to an input; @pxref{InputOperands,,Input Operands}.
+出力制約は、@samp{=}（既存の値を上書きする変数）または@samp{+}（読み書き時）で始まる必要がある。 @samp{=}を使用する場合、オペランドが入力に接続されている場合を除いて、その場所に@code{asm}への入力時に既存の値が含まれていると仮定しないこと。@pxref{InputOperands,,Input Operands}.
 
-After the prefix, there must be one or more additional constraints 
-(@pxref{Constraints}) that describe where the value resides. Common 
-constraints include @samp{r} for register and @samp{m} for memory. 
-When you list more than one possible location (for example, @code{"=rm"}),
-the compiler chooses the most efficient one based on the current context. 
-If you list as many alternates as the @code{asm} statement allows, you permit 
-the optimizers to produce the best possible code. 
-If you must use a specific register, but your Machine Constraints do not
-provide sufficient control to select the specific register you want, 
-local register variables may provide a solution (@pxref{Local Register 
-Variables}).
+接頭辞の後には、値がどこにあるかを記述する1つ以上の追加の制約（@pxref{Constraints}）が必要である。一般的な制約には、レジスタの@samp{r}とメモリの@samp{m}がある。 可能な場所を複数指定すると（たとえば@code{"rm"}）、コンパイラは現在のコンテキストに基づいて最も効率的な場所を選択する。@code{asm}文で許される数だけアルファベットを指定すると、オプティマイザは可能な限り最良のコードを生成できる。特定のレジスタを使用する必要があるが、機種制約が必要な特定のレジスタを選択するのに十分な制御を提供していない場合、ローカルレジスタ変数が解決策を提供する（@pxref {Local Register Variables}）。
 
 @item cvariablename
-Specifies a C lvalue expression to hold the output, typically a variable name.
-The enclosing parentheses are a required part of the syntax.
+出力を保持するC言語の式（通常は変数名）を指定します。囲み括弧は構文の必須部分である。
 
 @end table
+コンパイラが出力オペランドを表すために使用するレジスタを選択すると、clobberedレジスタは使用されない。(@pxref{Clobbers})。
 
-When the compiler selects the registers to use to 
-represent the output operands, it does not use any of the clobbered registers 
-(@pxref{Clobbers}).
+出力オペランド式は左辺値でなければならない。 コンパイラは、オペランドが実行されている命令に合ったデータ型を持っているかどうかをチェックすることはできない。直接アドレス可能ではない出力式（たとえばビットフィールド）の場合、制約でレジスタを許可する必要がある。 その場合、GCCはレジスタを@code{asm}の出力として使用し、そのレジスタを出力に格納する。
 
-Output operand expressions must be lvalues. The compiler cannot check whether 
-the operands have data types that are reasonable for the instruction being 
-executed. For output expressions that are not directly addressable (for 
-example a bit-field), the constraint must allow a register. In that case, GCC 
-uses the register as the output of the @code{asm}, and then stores that 
-register into the output. 
+@samp{+}制約修飾子を使用するオペランドは、@code{asm}ステートメントごとに最大30個のオペランドまでの2つのオペランド（つまり、入力と出力の両方）としてカウントされる。
 
-Operands using the @samp{+} constraint modifier count as two operands 
-(that is, both as input and output) towards the total maximum of 30 operands
-per @code{asm} statement.
-
-Use the @samp{&} constraint modifier (@pxref{Modifiers}) on all output
-operands that must not overlap an input.  Otherwise, 
-GCC may allocate the output operand in the same register as an unrelated 
-input operand, on the assumption that the assembler code consumes its 
-inputs before producing outputs. This assumption may be false if the assembler 
-code actually consists of more than one instruction.
+@samp{&}制約修飾子（@pxref {Modifiers}）は、入力と重複してはならないすべての出力オペランドに対して使用する。 さもなければ、GCCは出力を生成する前にアセンブラコードがその入力を消費すると仮定して、無関係の入力オペランドと同じレジスタに出力オペランドを割り当てることができる。 アセンブラコードが実際に複数の命令で構成されている場合、この仮定は誤っている可能性がある。
 
 The same problem can occur if one output parameter (@var{a}) allows a register 
 constraint and another output parameter (@var{b}) allows a memory constraint.
