@@ -5396,61 +5396,46 @@ asm ("mov %[e], %[d]"
 @subsubsection フラグ出力オペランド
 @cindex @code{asm} flag output operands
 
-Some targets have a special register that holds the ``flags'' for the
-result of an operation or comparison.  Normally, the contents of that
-register are either unmodifed by the asm, or the asm is considered to
-clobber the contents.
+一部のターゲットには、操作または比較の結果の「フラグ」を保持する特別なレジスタがある。 通常、そのレジスタの内容はasmによって変更されないか、asmが内容を破壊するとみなされる。
 
-On some targets, a special form of output operand exists by which
-conditions in the flags register may be outputs of the asm.  The set of
-conditions supported are target specific, but the general rule is that
-the output variable must be a scalar integer, and the value is boolean.
-When supported, the target defines the preprocessor symbol
-@code{__GCC_ASM_FLAG_OUTPUTS__}.
+いくつかのターゲットでは、flagsレジスタの条件をasmの出力とすることができる特別な形式の出力オペランドが存在する。 サポートされる条件のセットはターゲット固有だが、一般的なルールは出力変数がスカラー整数で、値はブール値でなければならない。サポートされている場合、ターゲットはプリプロセッサシンボル@code{__ GCC_ASM_FLAG_OUTPUTS__}を定義する。
 
-Because of the special nature of the flag output operands, the constraint
-may not include alternatives.
+フラグ出力オペランドの特別な性質のため、制約には代替が含まれてはならない。
 
-Most often, the target has only one flags register, and thus is an implied
-operand of many instructions.  In this case, the operand should not be
-referenced within the assembler template via @code{%0} etc, as there's
-no corresponding text in the assembly language.
+ほとんどの場合、ターゲットにはフラグレジスタが1つしかないため、多くの命令の暗黙のオペランドになる。 この場合、アセンブリ言語に対応するテキストがないので、オペランドは@code{％0}などを介してアセンブラテンプレート内で参照されるべきではない。
 
 @table @asis
-@item x86 family
-The flag output constraints for the x86 family are of the form
-@samp{=@@cc@var{cond}} where @var{cond} is one of the standard
-conditions defined in the ISA manual for @code{j@var{cc}} or
-@code{set@var{cc}}.
+@item x86ファミリ
+x86ファミリのフラグ出力の制約は、@code {j@var{cond}}のISAマニュアルで定義されている標準条件の1つで、@var{cond}は@samp {=@@cc@var{cond}}または@code{set@var{cc}}を使用する。
 
 @table @code
 @item a
-``above'' or unsigned greater than
+「上(above)」、すなわち符号なしのより大きい
 @item ae
-``above or equal'' or unsigned greater than or equal
+「上(above)及び等しい(equal)」、すなわち、符号なしの以上
 @item b
-``below'' or unsigned less than
+「下(below)」すなわち符号なしの未満
 @item be
-``below or equal'' or unsigned less than or equal
+「下(below)及び等しい(equal)」、すなわち、符号なしの以下
 @item c
-carry flag set
+キャリーフラグセット
 @item e
 @itemx z
-``equal'' or zero flag set
+「等しい(equal)」、すなわちゼロフラグセット
 @item g
-signed greater than
+符号ありのより大きい
 @item ge
-signed greater than or equal
+符号ありの以上
 @item l
-signed less than
+符号ありの未満
 @item le
-signed less than or equal
+符号ありの以下
 @item o
-overflow flag set
+オーバーフローセット
 @item p
-parity flag set
+パリティフラグセット
 @item s
-sign flag set
+符号フラグセット
 @item na
 @itemx nae
 @itemx nb
@@ -5465,20 +5450,19 @@ sign flag set
 @itemx np
 @itemx ns
 @itemx nz
-``not'' @var{flag}, or inverted versions of those above
+@var{flag}「でない(not)」、すなわち、上の逆バージョン
 @end table
 
 @end table
 
 @anchor{InputOperands}
-@subsubsection Input Operands
+@subsubsection 入力オペランド
 @cindex @code{asm} input operands
 @cindex @code{asm} expressions
 
-Input operands make values from C variables and expressions available to the 
-assembly code.
+入力オペランドは、C変数および式から値をアセンブリコードで使用できるようにする。
 
-Operands are separated by commas.  Each operand has this format:
+オペランドはコンマで区切られる。 各オペランドは次の形式である。
 
 @example
 @r{[} [@var{asmSymbolicName}] @r{]} @var{constraint} (@var{cexpression})
@@ -5486,50 +5470,25 @@ Operands are separated by commas.  Each operand has this format:
 
 @table @var
 @item asmSymbolicName
-Specifies a symbolic name for the operand.
-Reference the name in the assembler template 
-by enclosing it in square brackets 
-(i.e. @samp{%[Value]}). The scope of the name is the @code{asm} statement 
-that contains the definition. Any valid C variable name is acceptable, 
-including names already defined in the surrounding code. No two operands 
-within the same @code{asm} statement can use the same symbolic name.
+オペランドのシンボリック名を指定する。アセンブラテンプレートの名前は、角括弧（@samp{％[Value]}）で囲んで参照する。名前のスコープは、定義を含む@code{asm}ステートメントである。 周囲のコードにすでに定義されている名前を含め、任意の有効なC変数名を使用できる。同じ@code{asm}ステートメント内に2つのオペランドが同じシンボリック名を使用することはできない。
 
-When not using an @var{asmSymbolicName}, use the (zero-based) position
-of the operand 
-in the list of operands in the assembler template. For example if there are
-two output operands and three inputs,
-use @samp{%2} in the template to refer to the first input operand,
-@samp{%3} for the second, and @samp{%4} for the third. 
+@var{asmSymbolicName}を使用しないときは、アセンブラ・テンプレートのオペランドのリスト内のオペランドの（ゼロからの）位置を使用する。たとえば、2つの出力オペランドと3つの入力がある場合は、テンプレートの@samp{％2}を使用して最初の入力オペランドを参照し、@samp{％3}で2番目、@samp{％4}で3番目となる。
 
 @item constraint
-A string constant specifying constraints on the placement of the operand; 
-@xref{Constraints}, for details.
+オペランドの配置に関する制約を指定する文字列定数。詳細は@xref{Constraints}を参照せよ。
 
-Input constraint strings may not begin with either @samp{=} or @samp{+}.
-When you list more than one possible location (for example, @samp{"irm"}), 
-the compiler chooses the most efficient one based on the current context.
-If you must use a specific register, but your Machine Constraints do not
-provide sufficient control to select the specific register you want, 
-local register variables may provide a solution (@pxref{Local Register 
-Variables}).
+入力制約文字列は、@samp{=}か@samp{+}で始まることはできない。可能な場所を複数指定すると（@samp{"irm"}など）、コンパイラは現在のコンテキストに基づいて最も効率的な場所を選択する。特定のレジスタを使用する必要があるにもかかわらず、Machine Constraintsが必要な特定のレジスタを選択するための十分な制御を提供しない場合、ローカルレジスタ変数が解決策を提供する。(@pxref{Local Register Variables}).
 
-Input constraints can also be digits (for example, @code{"0"}). This indicates 
-that the specified input must be in the same place as the output constraint 
-at the (zero-based) index in the output constraint list. 
-When using @var{asmSymbolicName} syntax for the output operands,
-you may use these names (enclosed in brackets @samp{[]}) instead of digits.
+入力制約は、数字（たとえば、@code{"0"}）にもできる。これは、指定された入力が、出力制約リストの（ゼロベースの）インデックスの出力制約と同じ場所になければならないことを示す。出力オペランドに@var{asmSymbolicName}構文を使用する場合、数字の代わりにこれらの名前（大括弧@samp{[]}に囲まれた）を使用できる。
 
 @item cexpression
-This is the C variable or expression being passed to the @code{asm} statement 
-as input.  The enclosing parentheses are a required part of the syntax.
+これは、入力として@code{asm}ステートメントに渡されるC変数または式である。 囲み括弧は構文の必須部分である。
 
 @end table
 
-When the compiler selects the registers to use to represent the input 
-operands, it does not use any of the clobbered registers (@pxref{Clobbers}).
+コンパイラが入力オペランドを表すために使用するレジスタを選択すると、clobberedレジスタ（@pxref{Clobbers}）は使用されない。
 
-If there are no output operands but there are input operands, place two 
-consecutive colons where the output operands would go:
+出力オペランドがないが入力オペランドがある場合は、出力オペランドが続くところに2つの連続するコロンを配置する。
 
 @example
 __asm__ ("some instructions"
@@ -5537,31 +5496,11 @@ __asm__ ("some instructions"
    : "r" (Offset / 8));
 @end example
 
-@strong{Warning:} Do @emph{not} modify the contents of input-only operands 
-(except for inputs tied to outputs). The compiler assumes that on exit from 
-the @code{asm} statement these operands contain the same values as they 
-had before executing the statement. 
-It is @emph{not} possible to use clobbers
-to inform the compiler that the values in these inputs are changing. One 
-common work-around is to tie the changing input variable to an output variable 
-that never gets used. Note, however, that if the code that follows the 
-@code{asm} statement makes no use of any of the output operands, the GCC 
-optimizers may discard the @code{asm} statement as unneeded 
-(see @ref{Volatile}).
+@strong{警告:} 入力専用オペランドの内容を変更しては@emph{_ならない_}（出力に接続された入力を除く）。コンパイラは、@code{asm}文を終了すると、これらのオペランドには文を実行する前と同じ値が含まれているとみなす。これらの入力値が変化していることをコンパイラーに知らせるためにクローバーを使用することはでき@emph{_ない_}。 1つの一般的な回避策は、変化する入力変数を決して使用されない出力変数に結びつけることである。 ただし、@code{asm}文に続くコードが出力オペランドを使用しない場合、GCCオプティマイザは@code{asm}ステートメントを不要として破棄することがある。(@ref{Volatile}を見よ。)
 
-@code{asm} supports operand modifiers on operands (for example @samp{%k2} 
-instead of simply @samp{%2}). Typically these qualifiers are hardware 
-dependent. The list of supported modifiers for x86 is found at 
-@ref{x86Operandmodifiers,x86 Operand modifiers}.
+@code{asm}はオペランドのオペランド修飾子をサポートしている（例えば@samp{％2}の代わりに@samp{％k2}）。 通常、これらの修飾子はハードウェアに依存する。 x86でサポートされている修飾子のリストは、@ref{x86Operandmodifiers,x86 Operand modifiers}にある。
 
-In this example using the fictitious @code{combine} instruction, the 
-constraint @code{"0"} for input operand 1 says that it must occupy the same 
-location as output operand 0. Only input operands may use numbers in 
-constraints, and they must each refer to an output operand. Only a number (or 
-the symbolic assembler name) in the constraint can guarantee that one operand 
-is in the same place as another. The mere fact that @code{foo} is the value of 
-both operands is not enough to guarantee that they are in the same place in 
-the generated assembler code.
+この例では、架空の@code{combine}命令を使用して、入力オペランド1の制約@code {"0"}は、出力オペランド0と同じ位置を占める必要があると示している。入力オペランドだけが制約内の数値を使用し、 それぞれが出力オペランドを参照する必要がある。 制約内の数字（またはシンボリックアセンブラ名）のみが、あるオペランドが別のオペランドと同じ場所にあることを保証できる。 @code{foo}が両方のオペランドの値であるという単なる事実は、それらが生成されたアセンブラコード内の同じ場所にあることを保証するには不十分である。
 
 @example
 asm ("combine %2, %0" 
@@ -5569,7 +5508,7 @@ asm ("combine %2, %0"
    : "0" (foo), "g" (bar));
 @end example
 
-Here is an example using symbolic names.
+シンボリック名を使用した例を次に示す。
 
 @example
 asm ("cmoveq %1, %2, %[result]" 
