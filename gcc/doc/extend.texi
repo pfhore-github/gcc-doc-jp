@@ -5517,33 +5517,16 @@ asm ("cmoveq %1, %2, %[result]"
 @end example
 
 @anchor{Clobbers}
-@subsubsection Clobbers
+@subsubsection Clobber
 @cindex @code{asm} clobbers
 
-While the compiler is aware of changes to entries listed in the output 
-operands, the inline @code{asm} code may modify more than just the outputs. For 
-example, calculations may require additional registers, or the processor may 
-overwrite a register as a side effect of a particular assembler instruction. 
-In order to inform the compiler of these changes, list them in the clobber 
-list. Clobber list items are either register names or the special clobbers 
-(listed below). Each clobber list item is a string constant 
-enclosed in double quotes and separated by commas.
+コンパイラは出力オペランドにリストされているエントリの変更を認識しているが、インラインの@code{asm}コードは出力以外を変更することがある。 たとえば、計算に追加のレジスタが必要な場合や、プロセッサが特定のアセンブラ命令の副作用としてレジスタを上書きする場合がある。コンパイラにこれらの変更を通知するには、それらをclobberリストに並べる。 clobberリスト項目は、レジスタ名または特殊Clobber（以下にリストされています）である。 各clobberリスト項目は、二重引用符で囲みコンマで区切られた文字列定数である。
 
-Clobber descriptions may not in any way overlap with an input or output 
-operand. For example, you may not have an operand describing a register class 
-with one member when listing that register in the clobber list. Variables 
-declared to live in specific registers (@pxref{Explicit Register 
-Variables}) and used 
-as @code{asm} input or output operands must have no part mentioned in the 
-clobber description. In particular, there is no way to specify that input 
-operands get modified without also specifying them as output operands.
+clobber記述は、入力オペランドまたは出力オペランドと重複してはならない。 たとえば、clobberリストにそのレジスタをリストするときに、1つのメンバを持つレジスタクラスを記述するオペランドを持つことはできない。 特定のレジスタに存在すると宣言された変数（@pxref {Explicit Register Variables}}）、@code{asm}の入力オペランドまたは出力オペランドとして使用する変数は、clobberの記述には何も記述することはできない。 特に、入力オペランドが出力オペランドとしても指定されていない状態では変更されるように指定する方法はない。
 
-When the compiler selects which registers to use to represent input and output 
-operands, it does not use any of the clobbered registers. As a result, 
-clobbered registers are available for any use in the assembler code.
+コンパイラは、入力および出力オペランドを表すために使用するレジスタを選択するとき、clobberedレジスタを使用しない。 その結果、アセンブラコード内での使用には、clobberedレジスタが使用できる。
 
-Here is a realistic example for the VAX showing the use of clobbered 
-registers: 
+VAXがclobberedレジスタの使用を示す現実的な例を次に示す。
 
 @example
 asm volatile ("movc3 %0, %1, %2"
@@ -5552,80 +5535,37 @@ asm volatile ("movc3 %0, %1, %2"
                    : "r0", "r1", "r2", "r3", "r4", "r5");
 @end example
 
-Also, there are two special clobber arguments:
+また、特別なclobber引数が2つある。
 
 @table @code
 @item "cc"
-The @code{"cc"} clobber indicates that the assembler code modifies the flags 
-register. On some machines, GCC represents the condition codes as a specific 
-hardware register; @code{"cc"} serves to name this register.
-On other machines, condition code handling is different, 
-and specifying @code{"cc"} has no effect. But 
-it is valid no matter what the target.
+@code{"cc"} clobberは、アセンブラコードがフラグレジスタを変更することを示す。 一部のマシンでは、GCCは条件コードを特定のハードウェアレジスタとして表す。 @code{"cc"}はこのレジスタの名前を指定する。他のマシンでは、条件コードの処理が異なり、@code{"cc"}を指定しても効果はない。 しかし、それはどんなターゲットであっても有効である。
 
 @item "memory"
-The @code{"memory"} clobber tells the compiler that the assembly code
-performs memory 
-reads or writes to items other than those listed in the input and output 
-operands (for example, accessing the memory pointed to by one of the input 
-parameters). To ensure memory contains correct values, GCC may need to flush 
-specific register values to memory before executing the @code{asm}. Further, 
-the compiler does not assume that any values read from memory before an 
-@code{asm} remain unchanged after that @code{asm}; it reloads them as 
-needed.  
-Using the @code{"memory"} clobber effectively forms a read/write
-memory barrier for the compiler.
+@code{"memory"} clobberは、アセンブラコードが入出力オペランドにリストされているもの以外のメモリ（例えば、入力パラメータの1つが指すメモリにアクセスする）への読み書きを実行することをコンパイラに伝える。メモリに正しい値が含まれていることを確認するために、GCCは@code{asm}を実行する前に特定のレジスタ値をメモリにフラッシュする必要がある。 さらに、コンパイラは、@code{asm}の前にメモリから読み込まれた値がその@code{asm}の後も変わらないと仮定しない。 必要に応じて再ロードする。@code{"memory"} clobberを使用すると、コンパイラの読み書き可能メモリバリアが効果的に形成される。
 
-Note that this clobber does not prevent the @emph{processor} from doing 
-speculative reads past the @code{asm} statement. To prevent that, you need 
-processor-specific fence instructions.
+このclobberは、@emph{_プロセッサ_}が@code {asm}ステートメントより先に投機的な読み込みを行うことを妨げないことに注意せよ。 これを防ぐには、プロセッサ固有のフェンス命令が必要である。
 
-Flushing registers to memory has performance implications and may be an issue 
-for time-sensitive code.  You can use a trick to avoid this if the size of 
-the memory being accessed is known at compile time. For example, if accessing 
-ten bytes of a string, use a memory input like: 
+メモリへのレジスタのフラッシュはパフォーマンスに影響を与え、時間に敏感なコードの問題となる可能性がある。 これを避けるためにトリックを使うことができる。 たとえば、文字列の10バイトにアクセスする場合は、次のようなメモリ入力を使用する。
 
 @code{@{"m"( (@{ struct @{ char x[10]; @} *p = (void *)ptr ; *p; @}) )@}}.
 
 @end table
 
 @anchor{GotoLabels}
-@subsubsection Goto Labels
+@subsubsection Gotoラベル
 @cindex @code{asm} goto labels
+@code{asm goto}はアセンブリコードを1つまたは複数のCラベルにジャンプさせることを可能にする。@code{asm goto}文の@var{GotoLabels}セクションには、アセンブラコードがジャンプするすべてのCラベルのコンマ区切りリストが含まれている。GCCは@code{asm}の実行が次の文に進むと仮定する（そうでない場合は、@code{__ builtin_unreachable}組み込み関数の使用を検討せよ）。@code{asm goto}の最適化は、@code{hot}と@code{cold}のラベル属性を使うことで改善されるかもしれない。(@pxref{Label Attributes}。)
 
-@code{asm goto} allows assembly code to jump to one or more C labels.  The
-@var{GotoLabels} section in an @code{asm goto} statement contains 
-a comma-separated 
-list of all C labels to which the assembler code may jump. GCC assumes that 
-@code{asm} execution falls through to the next statement (if this is not the 
-case, consider using the @code{__builtin_unreachable} intrinsic after the 
-@code{asm} statement). Optimization of @code{asm goto} may be improved by 
-using the @code{hot} and @code{cold} label attributes (@pxref{Label 
-Attributes}).
+@code{asm goto}文には出力がない。これは、コンパイラの内部制限によるものである。制御転送命令には出力がない。アセンブラコードが何かを変更する場合は、@code{"memory"} clobberを使用して、オプティマイザにすべてのレジスタ値をメモリにフラッシュさせ、必要に応じて@code{asm}文の後に再ロードする。
 
-An @code{asm goto} statement cannot have outputs.
-This is due to an internal restriction of 
-the compiler: control transfer instructions cannot have outputs. 
-If the assembler code does modify anything, use the @code{"memory"} clobber 
-to force the 
-optimizers to flush all register values to memory and reload them if 
-necessary after the @code{asm} statement.
+また、@code{asm goto}文は常に暗黙的にvolatileとみなされる。
 
-Also note that an @code{asm goto} statement is always implicitly
-considered volatile.
+アセンブラテンプレートのラベルを参照するには、@var{GotoLabels}に入力オペランドの数を加えた@samp{％l}（小文字@samp{L}）とその後ろに（ゼロベースの）位置を付ける。たとえば、@code{asm}に3つの入力があり、2つのラベルを参照する場合は、最初のラベルを@samp{％l3}、2番目のラベルを@samp{％l4}とする。
 
-To reference a label in the assembler template,
-prefix it with @samp{%l} (lowercase @samp{L}) followed 
-by its (zero-based) position in @var{GotoLabels} plus the number of input 
-operands.  For example, if the @code{asm} has three inputs and references two 
-labels, refer to the first label as @samp{%l3} and the second as @samp{%l4}).
+あるいは、カッコで囲まれた実際のCラベル名を使用してラベルを参照することもできる。 たとえば、@code{carry}という名前のラベルを参照するには、@samp{％l [carry]}を使用できる。 この方法を使用する場合でも、ラベルはまだ@var{GotoLabels}セクションにリストされていなければならない。
 
-Alternately, you can reference labels using the actual C label name enclosed
-in brackets.  For example, to reference a label named @code{carry}, you can
-use @samp{%l[carry]}.  The label must still be listed in the @var{GotoLabels}
-section when using this approach.
-
-Here is an example of @code{asm goto} for i386:
+i386の@code {asm goto}の例を次に示す。
 
 @example
 asm goto (
@@ -5642,7 +5582,7 @@ carry:
 return 1;
 @end example
 
-The following example shows an @code{asm goto} that uses a memory clobber.
+次の例は、メモリclobberを使用する@code {asm goto}を示している。
 
 @example
 int frob(int x)
@@ -5660,13 +5600,9 @@ error:
 @end example
 
 @anchor{x86Operandmodifiers}
-@subsubsection x86 Operand Modifiers
+@subsubsection x86オペランド修正子
 
-References to input, output, and goto operands in the assembler template
-of extended @code{asm} statements can use 
-modifiers to affect the way the operands are formatted in 
-the code output to the assembler. For example, the 
-following code uses the @samp{h} and @samp{b} modifiers for x86:
+拡張された@code{asm}ステートメントのアセンブラテンプレートのinput、output、およびgotoオペランドへの参照は、修飾子を使用して、オペランドがコード出力の中でアセンブラにフォーマットされる方法に影響を与えることができる。 たとえば、次のコードでは、x86の@samp{h}および@samp{b}修飾子を使用している。
 
 @example
 uint16_t  num;
@@ -5674,13 +5610,13 @@ asm volatile ("xchg %h0, %b0" : "+a" (num) );
 @end example
 
 @noindent
-These modifiers generate this assembler code:
+これらの修飾子は、このアセンブラコードを生成する。
 
 @example
 xchg %ah, %al
 @end example
 
-The rest of this discussion uses the following code for illustrative purposes.
+この説明の残りの部分では、説明の目的で次のコードを使用する。
 
 @example
 int main()
@@ -5697,8 +5633,7 @@ top:
 @}
 @end example
 
-With no modifiers, this is what the output from the operands would be for the 
-@samp{att} and @samp{intel} dialects of assembler:
+修飾子がない場合、アセンブラの@samp{att}と@samp{intel}の変種のオペランドからの出力は次のようになる。
 
 @multitable {Operand} {$.L2} {OFFSET FLAT:.L2}
 @headitem Operand @tab @samp{att} @tab @samp{intel}
@@ -5713,144 +5648,111 @@ With no modifiers, this is what the output from the operands would be for the
 @tab @code{OFFSET FLAT:.L2}
 @end multitable
 
-The table below shows the list of supported modifiers and their effects.
+下の表は、サポートされている修飾子のリストとその効果を示している。
 
 @multitable {Modifier} {Print the opcode suffix for the size of th} {Operand} {@samp{att}} {@samp{intel}}
-@headitem Modifier @tab Description @tab Operand @tab @samp{att} @tab @samp{intel}
+@headitem 修正子 @tab 説明 @tab Operand @tab @samp{att} @tab @samp{intel}
 @item @code{z}
-@tab Print the opcode suffix for the size of the current integer operand (one of @code{b}/@code{w}/@code{l}/@code{q}).
+@tab 現在の整数オペランドのサイズのオペコード接尾辞を出力する (@code{b}/@code{w}/@code{l}/@code{q}のどれか)。
 @tab @code{%z0}
 @tab @code{l}
 @tab 
 @item @code{b}
-@tab Print the QImode name of the register.
+@tab レジスタのQIモード名を出力する。
 @tab @code{%b0}
 @tab @code{%al}
 @tab @code{al}
 @item @code{h}
-@tab Print the QImode name for a ``high'' register.
+@tab 「上位」レジスタ用のQIモード名を出力する。.
 @tab @code{%h0}
 @tab @code{%ah}
 @tab @code{ah}
 @item @code{w}
-@tab Print the HImode name of the register.
+@tab レジスタのHIモード名を出力する
 @tab @code{%w0}
 @tab @code{%ax}
 @tab @code{ax}
 @item @code{k}
-@tab Print the SImode name of the register.
+@tab レジスタのSIモード名を出力する。
 @tab @code{%k0}
 @tab @code{%eax}
 @tab @code{eax}
 @item @code{q}
-@tab Print the DImode name of the register.
+@tab レジスタのDIモード名を出力する
 @tab @code{%q0}
 @tab @code{%rax}
 @tab @code{rax}
 @item @code{l}
-@tab Print the label name with no punctuation.
+@tab 句読点なしでラベル名を出力する。
 @tab @code{%l2}
 @tab @code{.L2}
 @tab @code{.L2}
 @item @code{c}
-@tab Require a constant operand and print the constant expression with no punctuation.
+@tab 定数オペランドを必要とし、定数式を句読点なしで出力する。
 @tab @code{%c1}
 @tab @code{2}
 @tab @code{2}
 @end multitable
 
-@code{V} is a special modifier which prints the name of the full integer
-register without @code{%}.
+@code{V}は、完全な整数レジスタの名前を@code{％}なしで出力する特別な修飾子である。
 
 @anchor{x86floatingpointasmoperands}
-@subsubsection x86 Floating-Point @code{asm} Operands
+@subsubsection x86浮動小数点@code{asm}オペランド
 
-On x86 targets, there are several rules on the usage of stack-like registers
-in the operands of an @code{asm}.  These rules apply only to the operands
-that are stack-like registers:
+x86ターゲットでは、@code{asm}のオペランドにスタック型レジスタの使用法に関するいくつかの規則がある。 これらの規則は、スタック状のレジスタであるオペランドにのみ適用される。
 
 @enumerate
 @item
-Given a set of input registers that die in an @code{asm}, it is
-necessary to know which are implicitly popped by the @code{asm}, and
-which must be explicitly popped by GCC@.
+@code{asm}で死に至る入力レジスタのセットが与えられると、どれが暗黙的に@code{asm}によってポップされ、どれがGCCによって明示的にポップされなければならないことを知る必要がある。
 
-An input register that is implicitly popped by the @code{asm} must be
-explicitly clobbered, unless it is constrained to match an
-output operand.
+@code{asm}によって暗黙的にポップされる入力レジスタは、出力オペランドと一致するように制約されない限り、明示的に破壊されなければならない。
 
 @item
-For any input register that is implicitly popped by an @code{asm}, it is
-necessary to know how to adjust the stack to compensate for the pop.
-If any non-popped input is closer to the top of the reg-stack than
-the implicitly popped register, it would not be possible to know what the
-stack looked like---it's not clear how the rest of the stack ``slides
-up''.
+暗黙的に@code{asm}でポップされる入力レジスタの場合、ポップを補うためにスタックを調整する方法を知る必要がある。ポップされていない入力が暗黙的にポップされたレジスタよりもreg-stackの先頭に近い場合、スタックの外観を知ることはできない。スタックの残りの部分がどのように「滑り落ちる」かは不明瞭である。
 
-All implicitly popped input registers must be closer to the top of
-the reg-stack than any input that is not implicitly popped.
+すべての暗黙的にポップされた入力レジスタは、暗黙的にポップされていない入力よりもregスタックの先頭に近い必要がある。
 
-It is possible that if an input dies in an @code{asm}, the compiler might
-use the input register for an output reload.  Consider this example:
+入力が@code{asm}で終了した場合、コンパイラは出力リロードに入力レジスタを使用する可能性がある。 この例を考える。
 
 @smallexample
 asm ("foo" : "=t" (a) : "f" (b));
 @end smallexample
 
 @noindent
-This code says that input @code{b} is not popped by the @code{asm}, and that
-the @code{asm} pushes a result onto the reg-stack, i.e., the stack is one
-deeper after the @code{asm} than it was before.  But, it is possible that
-reload may think that it can use the same register for both the input and
-the output.
+このコードは、入力@code{b}が@code{asm}によってポップされず、@code{asm}が結果をreg-stackにプッシュすると言う。つまり、スタックは@code{asm}以前のものよりも1段深くなっている。 しかし、リロードは入力と出力の両方に同じレジスタを使用できると考えることも可能である。
 
-To prevent this from happening,
-if any input operand uses the @samp{f} constraint, all output register
-constraints must use the @samp{&} early-clobber modifier.
+これを防ぐために、入力オペランドが@samp{f}制約を使用する場合、すべての出力レジスタ制約で@samp{&} early-clobber修飾子を使用する必要がある。
 
-The example above is correctly written as:
+上記の例は以下のように正しく記述される：
 
 @smallexample
 asm ("foo" : "=&t" (a) : "f" (b));
 @end smallexample
 
 @item
-Some operands need to be in particular places on the stack.  All
-output operands fall in this category---GCC has no other way to
-know which registers the outputs appear in unless you indicate
-this in the constraints.
+いくつかのオペランドはスタック上の特定の場所にある必要がある。すべての出力オペランドはこのカテゴリに属す。GCCは、制約内でこれを指定しない限り、出力がどのレジスタに現れるかを知る他の方法はない。
 
-Output operands must specifically indicate which register an output
-appears in after an @code{asm}.  @samp{=f} is not allowed: the operand
-constraints must select a class with a single register.
+出力オペランドは、出力が@code{asm}の後に現れるレジスタを具体的に示さなければならない。 @samp{= f}は許されない：オペランドの制約は、単一のレジスタを持つクラスを選択しなければならない。
 
 @item
-Output operands may not be ``inserted'' between existing stack registers.
-Since no 387 opcode uses a read/write operand, all output operands
-are dead before the @code{asm}, and are pushed by the @code{asm}.
-It makes no sense to push anywhere but the top of the reg-stack.
+出力オペランドは、既存のスタックレジスタ間に「挿入」されないことがある。387オペコードは読取り/書込みオペランドを使用しないので、すべての出力オペランドは@code{asm}より前に死に、@code{asm}によってプッシュされる。regスタックの最上部以外の場所にプッシュするのは意味がない。
 
-Output operands must start at the top of the reg-stack: output
-operands may not ``skip'' a register.
+出力オペランドはreg-stackの先頭で始まらなければならない。出力オペランドはレジスタを「スキップ」しない。
 
 @item
-Some @code{asm} statements may need extra stack space for internal
-calculations.  This can be guaranteed by clobbering stack registers
-unrelated to the inputs and outputs.
+@code{asm}文の中には、内部計算のために余分なスタック領域が必要なものがある。 これは、入力と出力に無関係なスタックレジスタを壊すことによって保証される。
 
 @end enumerate
 
-This @code{asm}
-takes one input, which is internally popped, and produces two outputs.
+この@code{asm}は内部的にポップされた1つの入力を受け取り、2つの出力を生成する。
 
 @smallexample
 asm ("fsincos" : "=t" (cos), "=u" (sin) : "0" (inp));
 @end smallexample
 
 @noindent
-This @code{asm} takes two inputs, which are popped by the @code{fyl2xp1} opcode,
-and replaces them with one output.  The @code{st(1)} clobber is necessary 
-for the compiler to know that @code{fyl2xp1} pops both inputs.
+この@code{asm}は2つの入力を受け取り、@code{fyl2xp1}オペコードでポップされ、1つの出力に置き換えらる。 コンパイラが@code{fyl2xp1}が両方の入力をポップすることを知るためには、@code{st(1)}clobberが必要である。
+
 
 @smallexample
 asm ("fyl2xp1" : "=t" (result) : "0" (x), "u" (y) : "st(1)");
