@@ -1059,23 +1059,14 @@ predicate.
 @end ifset
 @ifclear INTERNALS
 @node Constraints
-@section Constraints for @code{asm} Operands
+@section @code{asm}オペランドの制約
 @cindex operand constraints, @code{asm}
 @cindex constraints, @code{asm}
 @cindex @code{asm} constraints
 
-Here are specific details on what constraint letters you can use with
-@code{asm} operands.
+以下は、@ code {asm}オペランドで使用できる制約文字の詳細である。
 @end ifclear
-Constraints can say whether
-an operand may be in a register, and which kinds of register; whether the
-operand can be a memory reference, and which kinds of address; whether the
-operand may be an immediate constant, and which possible values it may
-have.  Constraints can also require two operands to match.
-Side-effects aren't allowed in operands of inline @code{asm}, unless
-@samp{<} or @samp{>} constraints are used, because there is no guarantee
-that the side-effects will happen exactly once in an instruction that can update
-the addressing register.
+制約は、オペランドがレジスタ内にあるかどうか、およびどの種類のレジスタであるかを示すことができる。 オペランドがメモリ参照であるかどうか、およびどの種類のアドレスであるか、 オペランドが直接的な定数であるかどうか、および可能性のある値によって決まる。 制約には、2つのオペランドが一致する必要がある。 @samp {<}または@samp {>}制約が使用されている場合を除いて、アドレッシングレジスタを更新できる命令で副作用が一度だけ発生するという保証はないため、インライン@code{asm}のオペランドには副作用が許可されない。 
 
 @ifset INTERNALS
 @menu
@@ -1092,95 +1083,59 @@ the addressing register.
 
 @ifclear INTERNALS
 @menu
-* Simple Constraints::  Basic use of constraints.
-* Multi-Alternative::   When an insn has two alternative constraint-patterns.
-* Modifiers::           More precise control over effects of constraints.
-* Machine Constraints:: Special constraints for some particular machines.
+* Simple Constraints::  制約の基本的な使い方
+* Multi-Alternative::   insnが2つの代替制約パターンを持つ時
+* Modifiers::           制約の効果より正確に制御する
+* Machine Constraints:: ある特定の機種用の特殊な制約
 @end menu
 @end ifclear
 
 @node Simple Constraints
-@subsection Simple Constraints
+@subsection 単純制約
 @cindex simple constraints
 
-The simplest kind of constraint is a string full of letters, each of
-which describes one kind of operand that is permitted.  Here are
-the letters that are allowed:
+最も簡単な制約は、文字列で構成された文字列である。各文字列は、許可される1種類のオペランドを記述する。 許可される文字は次のとおりである。
 
 @table @asis
 @item whitespace
-Whitespace characters are ignored and can be inserted at any position
-except the first.  This enables each alternative for different operands to
-be visually aligned in the machine description even if they have different
-number of constraints and modifiers.
+空白文字は無視され、最初の文字を除く任意の位置に挿入できる。 これにより、制約と修飾子の数が異なっていても、異なるオペランドのそれぞれの選択肢を機械記述に視覚的に揃えることができる。
 
 @cindex @samp{m} in constraint
 @cindex memory references in constraints
 @item @samp{m}
-A memory operand is allowed, with any kind of address that the machine
-supports in general.
-Note that the letter used for the general memory constraint can be
-re-defined by a back end using the @code{TARGET_MEM_CONSTRAINT} macro.
+メモリオペランドが許可され、マシンが一般的にサポートする任意の種類のアドレスが使用される。一般的なメモリ制約に使用される文字は、@code{TARGET_MEM_CONSTRAINT}マクロを使用してバックエンドによって再定義できる。
 
 @cindex offsettable address
 @cindex @samp{o} in constraint
 @item @samp{o}
-A memory operand is allowed, but only if the address is
-@dfn{offsettable}.  This means that adding a small integer (actually,
-the width in bytes of the operand, as determined by its machine mode)
-may be added to the address and the result is also a valid memory
-address.
+メモリオペランドは許されるが、アドレスが@dfn{offsettable}（オフセット可能）の場合に限る。 つまり、小さな整数（実際には、オペランドのバイト単位の幅（マシンモードで決まる））をアドレスに加算し、その結果も有効なメモリアドレスになる時。
 
 @cindex autoincrement/decrement addressing
-For example, an address which is constant is offsettable; so is an
-address that is the sum of a register and a constant (as long as a
-slightly larger constant is also within the range of address-offsets
-supported by the machine); but an autoincrement or autodecrement
-address is not offsettable.  More complicated indirect/indexed
-addresses may or may not be offsettable depending on the other
-addressing modes that the machine supports.
+たとえば、定数アドレスはオフセット可能である。 レジスタと定数の和であるアドレスも同じである（少し大きめの定数がマシンでサポートされているアドレスオフセットの範囲内にある限り）。 オートインクリメントまたは自動デクリメントアドレスはオフセット可能ではない。 より複雑な間接的/索引付けされたアドレスは、マシンがサポートする他のアドレッシングモードに応じてオフセット可能であるかもないかもしれない。
 
-Note that in an output operand which can be matched by another
-operand, the constraint letter @samp{o} is valid only when accompanied
-by both @samp{<} (if the target machine has predecrement addressing)
-and @samp{>} (if the target machine has preincrement addressing).
+他のオペランドと一致させることができる出力オペランドでは、制約文字@samp{o}は@samp{<}（ターゲットマシンにプレディクレーションアドレッシングがある場合）と@samp{>} ターゲットマシンがあらかじめアドレッシングしている場合）。
 
 @cindex @samp{V} in constraint
 @item @samp{V}
-A memory operand that is not offsettable.  In other words, anything that
-would fit the @samp{m} constraint but not the @samp{o} constraint.
+オフセット可能でないメモリオペランド。 言い換えれば、@samp{m}制約に適合するもので、@samp{o}制約には適合しないものはすべて。
 
 @cindex @samp{<} in constraint
 @item @samp{<}
-A memory operand with autodecrement addressing (either predecrement or
-postdecrement) is allowed.  In inline @code{asm} this constraint is only
-allowed if the operand is used exactly once in an instruction that can
-handle the side-effects.  Not using an operand with @samp{<} in constraint
-string in the inline @code{asm} pattern at all or using it in multiple
-instructions isn't valid, because the side-effects wouldn't be performed
-or would be performed more than once.  Furthermore, on some targets
-the operand with @samp{<} in constraint string must be accompanied by
-special instruction suffixes like @code{%U0} instruction suffix on PowerPC
-or @code{%P0} on IA-64.
+自動デクリメントアドレッシング（プリデクリメントまたはポストデクリメントのいずれか）を伴うメモリオペランドが許可される。 インライン@code{asm}では、この制約は、副作用を処理できる命令でオペランドが1回だけ使用されている場合にのみ許可される。 副作用が実行されないか、複数回実行されるため、インライン@code{asm}パターン内の制約文字列で@samp{<}を持つオペランドを使用しないか、複数の命令でそれを使用することは無効である。さらに、制約文字列中の@samp{<}を持つオペランドは、PowerPCの@code {％U0}命令サフィックスやIA-64の@code {％P0}のような特別な命令サフィックスを伴う。
 
 @cindex @samp{>} in constraint
 @item @samp{>}
-A memory operand with autoincrement addressing (either preincrement or
-postincrement) is allowed.  In inline @code{asm} the same restrictions
-as for @samp{<} apply.
+自動インクリメントアドレッシング（プリインクリメントまたはポストインクリメント）を伴うメモリオペランドが許可される。 インライン@code{asm}では、@samp{<}と同じ制限が適用される。
 
 @cindex @samp{r} in constraint
 @cindex registers in constraints
 @item @samp{r}
-A register operand is allowed provided that it is in a general
-register.
+レジスタ・オペランドは、汎用レジスタ内にあれば許可される。
 
 @cindex constants in constraints
 @cindex @samp{i} in constraint
 @item @samp{i}
-An immediate integer operand (one with constant value) is allowed.
-This includes symbolic constants whose values will be known only at
-assembly time or later.
+直値の整数オペランド（定数値を持つオペランド）が許可される。これには、アセンブリ時またはそれ以降にのみ値が分かる記号定数が含まれる。
 
 @cindex @samp{n} in constraint
 @item @samp{n}
