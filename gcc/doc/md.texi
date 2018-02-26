@@ -1139,60 +1139,36 @@ predicate.
 
 @cindex @samp{n} in constraint
 @item @samp{n}
-An immediate integer operand with a known numeric value is allowed.
-Many systems cannot support assembly-time constants for operands less
-than a word wide.  Constraints for these operands should use @samp{n}
-rather than @samp{i}.
+既知の数値を持つ即値の整数オペランドが許可される。多くのシステムでは、ワード幅以下のオペランドのアセンブリ時定数はサポートされていない。 これらのオペランドの制約は@samp{i}ではなく@samp{n}を使用する必要がある。
 
 @cindex @samp{I} in constraint
 @item @samp{I}, @samp{J}, @samp{K}, @dots{} @samp{P}
-Other letters in the range @samp{I} through @samp{P} may be defined in
-a machine-dependent fashion to permit immediate integer operands with
-explicit integer values in specified ranges.  For example, on the
-68000, @samp{I} is defined to stand for the range of values 1 to 8.
-This is the range permitted as a shift count in the shift
-instructions.
+@samp{I}から@samp {P}までの範囲の他の文字は、マシン依存の方法で、指定された範囲の明示的な整数値を持つ即値整数オペランドを許可するために定義されるかもしれない。 たとえば、68000では@samp{I}は1〜8の値の範囲を表すように定義されている。これはシフト命令のシフト数として許される範囲である。
 
 @cindex @samp{E} in constraint
 @item @samp{E}
-An immediate floating operand (expression code @code{const_double}) is
-allowed, but only if the target floating point format is the same as
-that of the host machine (on which the compiler is running).
+即値の浮動小数点オペランド（式コード@code{const_double}）が許可されるが、ターゲット浮動小数点形式が（コンパイラが実行されている）ホストマシンのものと同じ場合のみである。
 
 @cindex @samp{F} in constraint
 @item @samp{F}
-An immediate floating operand (expression code @code{const_double} or
-@code{const_vector}) is allowed.
+即値の浮動小数点オペランド（式コード@code{const_double}または@code{const_vector}）が許可される。
 
 @cindex @samp{G} in constraint
 @cindex @samp{H} in constraint
 @item @samp{G}, @samp{H}
-@samp{G} and @samp{H} may be defined in a machine-dependent fashion to
-permit immediate floating operands in particular ranges of values.
+@samp{G}と@samp {H}は、特定の範囲の値での即値浮動小数点オペランドを許可するような、マシン依存の方法で定義されているかもしれない。
 
 @cindex @samp{s} in constraint
 @item @samp{s}
-An immediate integer operand whose value is not an explicit integer is
-allowed.
+値が明示的な整数ではない即値の整数オペランドが許可される。
 
-This might appear strange; if an insn allows a constant operand with a
-value not known at compile time, it certainly must allow any known
-value.  So why use @samp{s} instead of @samp{i}?  Sometimes it allows
-better code to be generated.
+これは奇妙に見えるかもしれない。 もしinsnがコンパイル時に知られていない値を持つ定数オペランドを許すならば、確かに既知の値を許可しなければならない。 なぜ@samp{i}の代わりに@samp{s}を使うのか？ 場合によっては、より良いコードを生成することができるためである。
 
-For example, on the 68000 in a fullword instruction it is possible to
-use an immediate operand; but if the immediate value is between @minus{}128
-and 127, better code results from loading the value into a register and
-using the register.  This is because the load into the register can be
-done with a @samp{moveq} instruction.  We arrange for this to happen
-by defining the letter @samp{K} to mean ``any integer outside the
-range @minus{}128 to 127'', and then specifying @samp{Ks} in the operand
-constraints.
+たとえば、フルワード命令の68000では、即値オペランドを使用することができる。 しかしもし直接値が@minus{}128と127の間にある場合、値をレジスタにロードしてレジスタを使用した方が良い結果になる。これは、レジスタへのロードを@samp{moveq}命令で行うことができるからである。@samp{K}という文字を「@minus{}128〜127の範囲外の任意の整数」と定義し、オペランドの制約に@samp{Ks}を指定することで、これを実現する。
 
 @cindex @samp{g} in constraint
 @item @samp{g}
-Any register, memory or immediate integer operand is allowed, except for
-registers that are not general registers.
+汎用レジスタでないレジスタを除き、任意のレジスタ、メモリ、または即値の整数オペランドが許可される。
 
 @cindex @samp{X} in constraint
 @item @samp{X}
@@ -1203,47 +1179,35 @@ a @code{match_scratch} when certain alternatives will not actually
 require a scratch register.
 @end ifset
 @ifclear INTERNALS
-Any operand whatsoever is allowed.
+どのオペランドも許可される。
 @end ifclear
 
 @cindex @samp{0} in constraint
 @cindex digits in constraint
 @item @samp{0}, @samp{1}, @samp{2}, @dots{} @samp{9}
-An operand that matches the specified operand number is allowed.  If a
-digit is used together with letters within the same alternative, the
-digit should come last.
+指定されたオペランド番号と一致するオペランドが許可される。 同一の代替案内で文字と一緒に数字を使用する場合、その数字は最後に来るべきである。
 
-This number is allowed to be more than a single digit.  If multiple
-digits are encountered consecutively, they are interpreted as a single
-decimal integer.  There is scant chance for ambiguity, since to-date
-it has never been desirable that @samp{10} be interpreted as matching
-either operand 1 @emph{or} operand 0.  Should this be desired, one
-can use multiple alternatives instead.
+この数字は1桁以上にすることができる。 複数の数字が連続して出現する場合、それらは1つの10進整数として解釈される。 @samp{10}がオペランド1@emph{_または_}オペランド0と一致すると解釈されることは決して望まれないだろう。これが望ましいのであれば、代わりに複数の選択肢を使うことができる。
 
 @cindex matching constraint
 @cindex constraint, matching
+@ifset INTERNALS
 This is called a @dfn{matching constraint} and what it really means is
 that the assembler has only a single operand that fills two roles
-@ifset INTERNALS
 considered separate in the RTL insn.  For example, an add insn has two
 input operands and one output operand in the RTL, but on most CISC
-@end ifset
-@ifclear INTERNALS
-which @code{asm} distinguishes.  For example, an add instruction uses
-two input operands and an output operand, but on most CISC
-@end ifclear
 machines an add instruction really has only two operands, one of them an
 input-output operand:
+@end ifset
+@ifclear INTERNALS
+これは@dfn{matching constraint}（マッチング制約）と呼ばれ、アセンブラには@code{asm}が区別する2つの役割を満たす1つのオペランドしかないということである。たとえば、add命令は2つの入力オペランドと出力オペランドを使用するが、ほとんどのCISCマシンではadd命令は実際には2つのオペランドのみを持ち、そのうちの1つは入出力オペランドである。
+@end ifclear
 
 @smallexample
 addl #35,r12
 @end smallexample
 
-Matching constraints are used in these circumstances.
-More precisely, the two operands that match must include one input-only
-operand and one output-only operand.  Moreover, the digit must be a
-smaller number than the number of the operand that uses it in the
-constraint.
+これらの状況では、マッチング制約が使用される。より正確には、一致する2つのオペランドは、1つの入力専用オペランドと1つの出力専用オペランドを含む必要がある。 さらに、桁は制約内でそれを使用するオペランドの番号よりも小さい数字でなければならない。
 
 @ifset INTERNALS
 For operands to match in a particular case usually means that they
@@ -1259,22 +1223,15 @@ use the output-operand's number when printing the operand.
 @cindex address constraints
 @cindex @samp{p} in constraint
 @item @samp{p}
-An operand that is a valid memory address is allowed.  This is
-for ``load address'' and ``push address'' instructions.
+有効なメモリアドレスであるオペランドが許可される。 これは 「ロードアドレス」と 「プッシュアドレス」命令のためのものである。
 
 @findex address_operand
-@samp{p} in the constraint must be accompanied by @code{address_operand}
-as the predicate in the @code{match_operand}.  This predicate interprets
-the mode specified in the @code{match_operand} as the mode of the memory
-reference for which the address would be valid.
+制約の中の@samp{p}には、@code{match_operand}の述語として@code{address_operand}を付ける必要がある。 この述語は、@code{match_operand}で指定されたモードを、アドレスが有効であるメモリ参照のモードとして解釈する。
 
 @cindex other register constraints
 @cindex extensible constraints
 @item @var{other-letters}
-Other letters can be defined in machine-dependent fashion to stand for
-particular classes of registers or other arbitrary operand types.
-@samp{d}, @samp{a} and @samp{f} are defined on the 68000/68020 to stand
-for data, address and floating point registers.
+他の文字は、特定のクラスのレジスタまたは他の任意のオペランドタイプに対応するように、マシンに依存して定義されるかもしれない。@samp{d}、@samp{a}と@samp{f}は68000/68020でデータ、アドレス、浮動小数点レジスタを表すために定義されている。
 @end table
 
 @ifset INTERNALS
