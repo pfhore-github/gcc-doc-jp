@@ -1459,68 +1459,42 @@ classes are defined.  Then none of this complexity is relevant.
 @end ifset
 
 @node Modifiers
-@subsection Constraint Modifier Characters
+@subsection 制約修飾文字
 @cindex modifiers in constraints
 @cindex constraint modifier characters
 
 @c prevent bad page break with this line
-Here are constraint modifier characters.
+ここには、制約修飾文字がある。
 
 @table @samp
 @cindex @samp{=} in constraint
 @item =
-Means that this operand is written to by this instruction:
-the previous value is discarded and replaced by new data.
+この命令によってこのオペランドが書き込まれることを意味する：前の値は破棄され、新しいデータに置き換えられる。
 
 @cindex @samp{+} in constraint
 @item +
-Means that this operand is both read and written by the instruction.
+このオペランドは命令によって読み書きされることを意味する。
 
-When the compiler fixes up the operands to satisfy the constraints,
-it needs to know which operands are read by the instruction and
-which are written by it.  @samp{=} identifies an operand which is only
-written; @samp{+} identifies an operand that is both read and written; all
-other operands are assumed to only be read.
+コンパイラが制約を満たすためにオペランドを修正するとき、どのオペランドが命令によって読み込まれ、どのオペランドがそれによって書き込まれるかを知る必要がある。 @samp{=}は、書き込まれたオペランドを識別する。 @samp{+}は、読み書きされたオペランドを識別する。 他のすべてのオペランドは読み込みのみとみなされる。
 
-If you specify @samp{=} or @samp{+} in a constraint, you put it in the
-first character of the constraint string.
+制約に@samp{=}または@samp{+}を指定する場合、制約文字列の最初の文字に置く。
 
 @cindex @samp{&} in constraint
 @cindex earlyclobber operand
 @item &
-Means (in a particular alternative) that this operand is an
-@dfn{earlyclobber} operand, which is written before the instruction is
-finished using the input operands.  Therefore, this operand may not lie
-in a register that is read by the instruction or as part of any memory
-address.
+このオペランドは、@dfn{earlyclobber}（早期破壊）オペランドであり、入力オペランドを使用して命令が終了する前に書き込まれることを意味する。 したがって、このオペランドは、命令によって、またはメモリアドレスの一部として読み取られるレジスタ内に存在しない可能性がある。
 
-@samp{&} applies only to the alternative in which it is written.  In
-constraints with multiple alternatives, sometimes one alternative
-requires @samp{&} while others do not.  See, for example, the
-@samp{movdf} insn of the 68000.
+@samp{&}は書かれている選択肢にのみ適用される。 複数の選択肢の制約では、@samp{&}が必要な場合もあれば、そうでない場合もある。 たとえば、68000の@samp {movdf} insnを参照せよ。
 
-A operand which is read by the instruction can be tied to an earlyclobber
-operand if its only use as an input occurs before the early result is
-written.  Adding alternatives of this form often allows GCC to produce
-better code when only some of the read operands can be affected by the
-earlyclobber. See, for example, the @samp{mulsi3} insn of the ARM@.
+初期の結果が書き込まれる前に入力としての唯一の使用が発生した場合、命令によって読み取られるオペランドは初期破壊オペランドに結びつけることができる。 この形式の代替案を追加すると、読み取りオペランドの一部だけが初期マクロによって影響を受ける場合、GCCはより良いコードを生成することができる。 たとえば、ARMの@samp {mulsi3} insnを参照せよ。
 
-Furthermore, if the @dfn{earlyclobber} operand is also a read/write
-operand, then that operand is written only after it's used.
+さらに、@dfn{earlyclobber}オペランドが読取り/書込みオペランドでもある場合、そのオペランドは使用された後にのみ書き込まれる。
 
-@samp{&} does not obviate the need to write @samp{=} or @samp{+}.  As
-@dfn{earlyclobber} operands are always written, a read-only
-@dfn{earlyclobber} operand is ill-formed and will be rejected by the
-compiler.
+@samp{&}は@samp {=}や@samp {+}を書く必要をなくさない。@dfn{earlyclobber}オペランドは常に書き込まれるため、読み取り専用の@dfn{earlyclobber}オペランドは不正な形式であり、コンパイラによって拒否される。
 
 @cindex @samp{%} in constraint
 @item %
-Declares the instruction to be commutative for this operand and the
-following operand.  This means that the compiler may interchange the
-two operands if that is the cheapest way to make all operands fit the
-constraints.  @samp{%} applies to all alternatives and must appear as
-the first character in the constraint.  Only read-only operands can use
-@samp{%}.
+命令がこのオペランドと次のオペランドに対して可換であると宣言する。 つまり、すべてのオペランドを制約条件に適合させる最も安価な方法であれば、コンパイラは2つのオペランドを交換することができる。 @samp{％}はすべての選択肢に適用され、制約の最初の文字として指定する必要がある。 読み取り専用のオペランドだけが@samp{％}を使用できる。
 
 @ifset INTERNALS
 This is often used in patterns for addition instructions
@@ -1536,10 +1510,7 @@ instruction is defined:
   @dots{})
 @end smallexample
 @end ifset
-GCC can only handle one commutative pair in an asm; if you use more,
-the compiler may fail.  Note that you need not use the modifier if
-the two alternatives are strictly identical; this would only waste
-time in the reload pass.
+GCCはasm内の1つの可換対だけを扱うことができる。 それ以上使用すると、コンパイラが失敗することがある。 2つの選択肢が厳密に同じである場合は、修飾子を使用する必要はない。 これはリロードパスで時間を無駄にするだけである。
 @ifset INTERNALS
 The modifier is not operational after
 register allocation, so the result of @code{define_peephole2}
