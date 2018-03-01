@@ -1363,22 +1363,12 @@ to indicate the type of register that is required for the operand of the
 @end ifset
 
 @node Multi-Alternative
-@subsection Multiple Alternative Constraints
+@subsection 複数の代替制約
 @cindex multiple alternative constraints
 
-Sometimes a single instruction has multiple alternative sets of possible
-operands.  For example, on the 68000, a logical-or instruction can combine
-register or an immediate value into memory, or it can combine any kind of
-operand into a register; but it cannot combine one memory location into
-another.
+場合によっては、単一の命令に複数の代替可能なオペランドがある場合がある。 たとえば、68000では、論理和命令は、レジスタまたは即値とメモリを組み合わせることも、任意の種類のオペランドとレジスタを組み合わせることもできる。 1つのメモリ位置を別のメモリ位置と組み合わせることはできない。
 
-These constraints are represented as multiple alternatives.  An alternative
-can be described by a series of letters for each operand.  The overall
-constraint for an operand is made from the letters for this operand
-from the first alternative, a comma, the letters for this operand from
-the second alternative, a comma, and so on until the last alternative.
-All operands for a single instruction must have the same number of 
-alternatives.
+これらの制約は、複数の選択肢として表される。 選択肢は、各オペランドの一連の文字で記述することができる。 オペランドの全体的な制約は、このオペランドの文字から、最初の選択肢、コンマ、2番目の選択肢のこのオペランドの文字、コンマなどの文字から作成される。1つの命令のすべてのオペランドは、同じ数の選択肢を持つ必要がある。
 @ifset INTERNALS
 Here is how it is done for fullword logical-or on the 68000:
 
@@ -1442,18 +1432,9 @@ the first, 1 for the second alternative, etc.).  @xref{Output Statement}.
 @end ifset
 @ifclear INTERNALS
 
-So the first alternative for the 68000's logical-or could be written as 
-@code{"+m" (output) : "ir" (input)}.  The second could be @code{"+r" 
-(output): "irm" (input)}.  However, the fact that two memory locations 
-cannot be used in a single instruction prevents simply using @code{"+rm" 
-(output) : "irm" (input)}.  Using multi-alternatives, this might be 
-written as @code{"+m,r" (output) : "ir,irm" (input)}.  This describes
-all the available alternatives to the compiler, allowing it to choose 
-the most efficient one for the current conditions.
+したがって、論理和の68000の最初の選択肢は@code{"+m"(output) :  "ir"(input)}と書くことができる。2番目は@code{"+r" (output): "irm" (input)}である。しかし、2つのメモリ位置を1つの命令で使用できないという事実は、単純に@code{"+rm" (output) : "irm" (input)}を使用することを防ぐ。複数の代替を使うと、これは@code{"+m,r" (output) : "ir,irm" (input)}と書くことができる。これは、現在の条件に対して最も効率的なものを選択することを可能にする、コンパイラに対する利用可能なすべての選択肢を記述する。
 
-There is no way within the template to determine which alternative was 
-chosen.  However you may be able to wrap your @code{asm} statements with 
-builtins such as @code{__builtin_constant_p} to achieve the desired results.
+どの選択肢が選択されたかを判断する方法はテンプレート内にない。 しかし、@code{asm}ステートメントを@code{__ builtin_constant_p}のような組み込み関数でラップして、望ましい結果を得ることができるかもしれない。
 @end ifclear
 
 @ifset INTERNALS
