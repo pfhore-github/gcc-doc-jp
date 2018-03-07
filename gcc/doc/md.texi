@@ -1551,81 +1551,59 @@ register preferences.
 @end table
 
 @node Machine Constraints
-@subsection Constraints for Particular Machines
+@subsection 特定の機種用の制約
 @cindex machine specific constraints
 @cindex constraints, machine specific
 
-Whenever possible, you should use the general-purpose constraint letters
-in @code{asm} arguments, since they will convey meaning more readily to
-people reading your code.  Failing that, use the constraint letters
-that usually have very similar meanings across architectures.  The most
-commonly used constraints are @samp{m} and @samp{r} (for memory and
-general-purpose registers respectively; @pxref{Simple Constraints}), and
-@samp{I}, usually the letter indicating the most common
-immediate-constant format.
+できる限り、@code{asm}引数の汎用制約文字を使うべきである。なぜなら、それらはコードを読んでいる人々に意味をより容易に伝えるからである。それに失敗した場合は、アーキテクチャ全体で通常非常に似た意味を持つ制約文字を使用する。 最も一般的に使用される制約は、@samp{m}と@samp{r}（メモリと汎用レジスタの場合：@pxref{Simple Constraints}）と、通常最も一般的な即値定数形式を示す文字である@samp{I}である。
 
-Each architecture defines additional constraints.  These constraints
-are used by the compiler itself for instruction generation, as well as
-for @code{asm} statements; therefore, some of the constraints are not
-particularly useful for @code{asm}.  Here is a summary of some of the
-machine-dependent constraints available on some particular machines;
-it includes both constraints that are useful for @code{asm} and
-constraints that aren't.  The compiler source file mentioned in the
-table heading for each architecture is the definitive reference for
-the meanings of that architecture's constraints.
+各アーキテクチャは追加の制約を定義する。 これらの制約は、@code{asm}ステートメントと同様に、命令生成のためにコンパイラ自身によって使用される。 したがって、制約のいくつかは@code{asm}にとって特に有用ではない。 ここでは、特定のマシンで使用可能なマシン依存の制約の概要を示す。@code{asm}に有用な制約とそうでない制約の両方が含まれている。 各アーキテクチャの表の見出しに記載されているコンパイラソースファイルは、そのアーキテクチャの制約の意味についての明確な参照である。
 
 @c Please keep this table alphabetized by target!
 @table @emph
 @item AArch64 family---@file{config/aarch64/constraints.md}
 @table @code
 @item k
-The stack pointer register (@code{SP})
+スタックポインタレジスタ (@code{SP})
 
 @item w
-Floating point or SIMD vector register
+浮動小数点及びSIMDベクタレジスタ
 
 @item I
-Integer constant that is valid as an immediate operand in an @code{ADD}
-instruction
+@code {ADD}命令の即値オペランドとして有効な整数定数
 
 @item J
-Integer constant that is valid as an immediate operand in a @code{SUB}
-instruction (once negated)
+@code{SUB}命令の即値オペランドとして有効な整数定数（一度反転される）
 
 @item K
-Integer constant that can be used with a 32-bit logical instruction
+32ビット論理命令で使用できる整数定数
 
 @item L
-Integer constant that can be used with a 64-bit logical instruction
+64ビット論理命令で使用できる整数定数
 
 @item M
-Integer constant that is valid as an immediate operand in a 32-bit @code{MOV}
-pseudo instruction. The @code{MOV} may be assembled to one of several different
-machine instructions depending on the value
+32ビットの@code{MOV}疑似命令の即値オペランドとして有効な整数定数である。 @code{MOV}は値に応じていくつかの異なるマシン命令の1つにアセンブルされる
 
 @item N
-Integer constant that is valid as an immediate operand in a 64-bit @code{MOV}
-pseudo instruction
+64ビットの@code {MOV}疑似命令の即値オペランドとして有効な整数定数
 
 @item S
-An absolute symbolic address or a label reference
+絶対記号アドレスまたはラベル参照
 
 @item Y
-Floating point constant zero
+浮動小数点定数ゼロ
 
 @item Z
-Integer constant zero
+整数定数ゼロ
 
 @item Ush
-The high part (bits 12 and upwards) of the pc-relative address of a symbol
-within 4GB of the instruction
+命令の4GB以内のシンボルのPC相対アドレスの上位部分（ビット12以上）
 
 @item Q
-A memory address which uses a single base register with no offset
+オフセットのない単一のベースレジスタを使用するメモリアドレス
 
 @item Ump
-A memory address suitable for a load/store pair instruction in SI, DI, SF and
-DF modes
+SI / DI / SF / DFモードのロード/ストアペア命令に適したメモリアドレス
 
 @end table
 
@@ -1633,49 +1611,42 @@ DF modes
 @item ARC ---@file{config/arc/constraints.md}
 @table @code
 @item q
-Registers usable in ARCompact 16-bit instructions: @code{r0}-@code{r3},
-@code{r12}-@code{r15}.  This constraint can only match when the @option{-mq}
-option is in effect.
+ARCompact 16ビット命令で使用可能なレジスタ：@code{r0}-@code{r3}、@code{r12} - @code{r15}。 この制約は、@option{-mq}オプションが有効な場合にのみ一致する。
 
 @item e
-Registers usable as base-regs of memory addresses in ARCompact 16-bit memory
-instructions: @code{r0}-@code{r3}, @code{r12}-@code{r15}, @code{sp}.
-This constraint can only match when the @option{-mq}
-option is in effect.
+ARCompact 16ビットメモリ命令のメモリアドレスのベースレジスタとして使用できるレジスタ：@code{r0}-@code{r3}、@code{r12}-@code{r15}、@code{sp}。この制約は、@option{-mq}オプションが有効な場合にのみ一致する。
 @item D
-ARC FPX (dpfp) 64-bit registers. @code{D0}, @code{D1}.
+ARC FPX（dpfp）64ビットレジスタ。 @code{D0}、@code{D1}。
 
 @item I
-A signed 12-bit integer constant.
+符号付き12ビットの整数定数。
 
 @item Cal
-constant for arithmetic/logical operations.  This might be any constant
-that can be put into a long immediate by the assmbler or linker without
-involving a PIC relocation.
+算術/論理演算の定数。 これは、PICの再配置を必要とせずに、アセンブラまたはリンカによって置くことができる長い即値。
 
 @item K
-A 3-bit unsigned integer constant.
+3ビットの符号なし整数定数。
 
 @item L
-A 6-bit unsigned integer constant.
+6ビットの符号なし整数定数。
 
 @item CnL
-One's complement of a 6-bit unsigned integer constant.
+6ビット符号なし整数定数の1の補数。
 
 @item CmL
-Two's complement of a 6-bit unsigned integer constant.
+6ビットの符号なし整数定数の2の補数。
 
 @item M
-A 5-bit unsigned integer constant.
+5ビットの符号なし整数定数。
 
 @item O
-A 7-bit unsigned integer constant.
+7ビットの符号なし整数定数。
 
 @item P
-A 8-bit unsigned integer constant.
+8ビットの符号なし整数定数。
 
 @item H
-Any const_double value.
+任意のconst_double値。
 @end table
 
 @item ARM family---@file{config/arm/constraints.md}
