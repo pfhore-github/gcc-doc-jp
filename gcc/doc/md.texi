@@ -1653,250 +1653,242 @@ ARC FPX（dpfp）64ビットレジスタ。 @code{D0}、@code{D1}。
 @table @code
 
 @item h
-In Thumb state, the core registers @code{r8}-@code{r15}.
+Thumb状態で、コアレジスタ@code{r8} - @code{r15}。
 
 @item k
-The stack pointer register.
+スタックポインタレジスタ。
 
 @item l
-In Thumb State the core registers @code{r0}-@code{r7}.  In ARM state this
-is an alias for the @code{r} constraint.
+Thumb状態では、コアレジスタ@code{r0} - @code{r7}。 ARM状態では、これは@code{r}制約の別名。
 
 @item t
-VFP floating-point registers @code{s0}-@code{s31}.  Used for 32 bit values.
+VFP浮動小数点レジスタ@code{s0} - @code{s31}。 32ビット値に使用される。
 
 @item w
-VFP floating-point registers @code{d0}-@code{d31} and the appropriate
-subset @code{d0}-@code{d15} based on command line options.
-Used for 64 bit values only.  Not valid for Thumb1.
+コマンドラインオプションに基づいて、VFP浮動小数点レジスタ@code{d0} - @code{d31}と、適切なサブセット@code{d0} - @code{d15}。64ビット値にのみ使用される。 Thumb1には無効である。
 
 @item y
-The iWMMX co-processor registers.
+iWMMXコプロセッサレジスタ
 
 @item z
-The iWMMX GR registers.
+iWMMX GRレジスタ
 
 @item G
-The floating-point constant 0.0
+浮動小数点定数0.0
 
 @item I
-Integer that is valid as an immediate operand in a data processing
-instruction.  That is, an integer in the range 0 to 255 rotated by a
-multiple of 2
+データ処理命令の即値オペランドとして有効な整数。 つまり、2の倍数によって回転した0〜255の整数。
 
 @item J
-Integer in the range @minus{}4095 to 4095
+-4095から4095までの範囲の整数。
 
 @item K
-Integer that satisfies constraint @samp{I} when inverted (ones complement)
+（1の補数で）反転したときに制約@samp{I}を満たす整数
 
 @item L
-Integer that satisfies constraint @samp{I} when negated (twos complement)
+（２の補数で）反転したときに制約@samp{I}を満たす整数
 
 @item M
-Integer in the range 0 to 32
+0から32までの整数。
 
 @item Q
-A memory reference where the exact address is in a single register
-(`@samp{m}' is preferable for @code{asm} statements)
+正確なアドレスが単一レジスタ内にあるメモリ参照
+(@code{asm}文では`@samp{m}' が望ましい)
 
 @item R
-An item in the constant pool
+定数プール内のアイテム
 
 @item S
-A symbol in the text segment of the current file
+現在のファイルのテキストセグメント内のシンボル
 
 @item Uv
-A memory reference suitable for VFP load/store insns (reg+constant offset)
+VFPロード/ストアinsns（reg + constant offset）に適したメモリ参照
 
 @item Uy
-A memory reference suitable for iWMMXt load/store instructions.
+iWMMXtロード/ストア命令に適したメモリー参照。
 
 @item Uq
-A memory reference suitable for the ARMv4 ldrsb instruction.
+ARMv4のldrsb命令に適したメモリ参照。
+
 @end table
 
 @item AVR family---@file{config/avr/constraints.md}
 @table @code
 @item l
-Registers from r0 to r15
+r0〜r15のレジスタ
 
 @item a
-Registers from r16 to r23
+r16〜r23のレジスタ
 
 @item d
-Registers from r16 to r31
+r16〜r31のレジスタ
 
 @item w
-Registers from r24 to r31.  These registers can be used in @samp{adiw} command
+r24〜r31のレジスタ。 これらのレジスタは@samp {adiw}コマンドで使用できる。
 
 @item e
-Pointer register (r26--r31)
+ポインタレジスタ（r26〜r31）
 
 @item b
-Base pointer register (r28--r31)
+ベースポインタレジスタ（r28〜r31）
 
 @item q
-Stack pointer register (SPH:SPL)
+スタックポインタレジスタ (SPH:SPL)
 
 @item t
-Temporary register r0
+一時レジスタr0
 
 @item x
-Register pair X (r27:r26)
+レジスタペアX (r27:r26)
 
 @item y
-Register pair Y (r29:r28)
+レジスタペアY (r29:r28)
 
 @item z
-Register pair Z (r31:r30)
+レジスタペアZ (r31:r30)
 
 @item I
-Constant greater than @minus{}1, less than 64
+-1より大きく64未満の定数
 
 @item J
-Constant greater than @minus{}64, less than 1
+-64より大きく1未満の定数
 
 @item K
-Constant integer 2
+定数整数2
 
 @item L
-Constant integer 0
+定数整数0
 
 @item M
-Constant that fits in 8 bits
+8ビットに収まる定数
 
 @item N
-Constant integer @minus{}1
+定数整数-1
 
 @item O
-Constant integer 8, 16, or 24
+定数整数の8、16、及び24
 
 @item P
-Constant integer 1
+定数整数1
 
 @item G
-A floating point constant 0.0
+浮動小数点定数0.0
 
 @item Q
-A memory address based on Y or Z pointer with displacement.
+ディスプレースメント付きのYまたはZポインターに基づくメモリーアドレス。
 @end table
 
 @item Blackfin family---@file{config/bfin/constraints.md}
 @table @code
 @item a
-P register
+Pレジスタ
 
 @item d
-D register
+Dレジスタ
 
 @item z
-A call clobbered P register.
+呼び出しで破壊されるPレジスタ
 
 @item q@var{n}
-A single register.  If @var{n} is in the range 0 to 7, the corresponding D
-register.  If it is @code{A}, then the register P0.
+単一のレジスタ。もし@var{n}が0～7ならば、対応するDレジスタである。もし@code{A}ならば、レジスタP0である。
 
 @item D
-Even-numbered D register
+偶数番号のDレジスタ
 
 @item W
-Odd-numbered D register
+奇数番号のDレジスタ
 
 @item e
-Accumulator register.
+アキュムレータレジスタ
 
 @item A
-Even-numbered accumulator register.
+偶数番号のアキュムレータレジスタ
 
 @item B
-Odd-numbered accumulator register.
+奇数番号のアキュムレータレジスタ
 
 @item b
-I register
+Iレジスタ
 
 @item v
-B register
+Bレジスタ
 
 @item f
-M register
+Mレジスタ
 
 @item c
-Registers used for circular buffering, i.e. I, B, or L registers.
+循環バッファに使われるレジスタ、すなわち、I、B、Lレジスタ。
 
 @item C
-The CC register.
+CCレジスタ
 
 @item t
-LT0 or LT1.
+LT0及びLT1。
 
 @item k
-LC0 or LC1.
+LC0及びLC1
 
 @item u
 LB0 or LB1.
 
 @item x
-Any D, P, B, M, I or L register.
+D、P、B、M、I及びLT1レジスタのどれか
 
 @item y
-Additional registers typically used only in prologues and epilogues: RETS,
-RETN, RETI, RETX, RETE, ASTAT, SEQSTAT and USP.
+典型的にはプロローグとエピローグでのみ使われる追加のレジスタ。RETS、RETN、RETI、RETX、RETE、ASTAT、SEQSTAT、USP。
 
 @item w
-Any register except accumulators or CC.
+アキュムレータとCC以外の任意のレジスタ。
 
 @item Ksh
-Signed 16 bit integer (in the range @minus{}32768 to 32767)
+符号付き16ビット整数（範囲は-32768から32767まで）
 
 @item Kuh
-Unsigned 16 bit integer (in the range 0 to 65535)
+符号なし16ビット整数（範囲は0から65535）
 
 @item Ks7
-Signed 7 bit integer (in the range @minus{}64 to 63)
+符号あり7ビット整数（範囲は-64から63）
 
 @item Ku7
-Unsigned 7 bit integer (in the range 0 to 127)
+符号なし7ビット整数（範囲は0から127）
 
 @item Ku5
-Unsigned 5 bit integer (in the range 0 to 31)
+符号なし5ビット整数（範囲は0から31）
 
 @item Ks4
-Signed 4 bit integer (in the range @minus{}8 to 7)
+符号あり4ビット整数（範囲は-8から7）
 
 @item Ks3
-Signed 3 bit integer (in the range @minus{}3 to 4)
+符号あり3ビット整数（範囲は-3から4）
 
 @item Ku3
-Unsigned 3 bit integer (in the range 0 to 7)
+符号なし3ビット整数（範囲は0から7）
 
 @item P@var{n}
-Constant @var{n}, where @var{n} is a single-digit constant in the range 0 to 4.
+定数@var{n}で、@var{n}は0から4の単数字定数
 
 @item PA
-An integer equal to one of the MACFLAG_XXX constants that is suitable for
-use with either accumulator.
+いずれかのアキュムレータでの使用に適したMACFLAG_XXX定数の1つに等しい整数。
 
 @item PB
-An integer equal to one of the MACFLAG_XXX constants that is suitable for
-use only with accumulator A1.
+アキュムレータA1での使用のみに適したMACFLAG_XXX定数の1つに等しい整数。
 
 @item M1
-Constant 255.
+定数255
 
 @item M2
-Constant 65535.
+定数65535
 
 @item J
-An integer constant with exactly a single bit set.
+正確に1つのビットが設定された整数定数。
 
 @item L
-An integer constant with all bits set except exactly one.
+正確に1を除くすべてのビットが設定された整数定数。
 
 @item H
 
 @item Q
-Any SYMBOL_REF.
+任意のSYMBOL_REF.
 @end table
 
 @item CR16 Architecture---@file{config/cr16/cr16.h}
