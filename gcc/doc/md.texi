@@ -2067,43 +2067,43 @@ For byte, halfword, or word addressing.
 @item FT32---@file{config/ft32/constraints.md}
 @table @code
 @item A
-An absolute address
+絶対アドレス
 
 @item B
-An offset address
+オフセットアドレス
 
 @item W
-A register indirect memory operand
+レジスタ間接メモリオペランド
 
 @item e
-An offset address.
+オフセットアドレス
 
 @item f
-An offset address.
+オフセットアドレス
 
 @item O
-The constant zero or one
+定数の0か1
 
 @item I
-A 16-bit signed constant (@minus{}32768 @dots{} 32767)
+16ビット符号あり定数（-32768 @dots{} 32767)
 
 @item w
-A bitfield mask suitable for bext or bins
+bextかbinsに適したビットフィールドマスク
 
 @item x
-An inverted bitfield mask suitable for bext or bins
+bextかbinsに適した反転ビットフィールドマスク
 
 @item L
-A 16-bit unsigned constant, multiple of 4 (0 @dots{} 65532)
+4の倍数の16ビット符号なし定数。（0から65532）
 
 @item S
-A 20-bit signed constant (@minus{}524288 @dots{} 524287)
+20ビット符号あり定数（-524288から524287）
 
 @item b
-A constant for a bitfield width (1 @dots{} 16)
+ビットフィールド幅用の定数（1 @dots{} 16）
 
 @item KA
-A 10-bit signed constant (@minus{}512 @dots{} 511)
+10ビット符号あり定数（-512 @dots{} 511）
 
 @end table
 
