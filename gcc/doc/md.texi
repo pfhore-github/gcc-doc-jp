@@ -1985,93 +1985,82 @@ For byte, halfword, or word addressing.
 @item FRV---@file{config/frv/frv.h}
 @table @code
 @item a
-Register in the class @code{ACC_REGS} (@code{acc0} to @code{acc7}).
+クラス@code{ACC_REGS}内のレジスタ(@code{acc0}から@code{acc7})。
 
 @item b
-Register in the class @code{EVEN_ACC_REGS} (@code{acc0} to @code{acc7}).
+クラス@code{EVEN_ACC_REGS}内のレジスタ(@code{acc0}から@code{acc7})。
 
 @item c
-Register in the class @code{CC_REGS} (@code{fcc0} to @code{fcc3} and
-@code{icc0} to @code{icc3}).
+クラス@code{CC_REGS}内のレジスタ(@code{fcc0}から@code{fcc3}と@code{icc0}から@code{icc3})。
 
 @item d
-Register in the class @code{GPR_REGS} (@code{gr0} to @code{gr63}).
+クラス@code{GPR_REGS}内のレジスタ（@code{gr0}から[code{gr63}）。
 
 @item e
-Register in the class @code{EVEN_REGS} (@code{gr0} to @code{gr63}).
-Odd registers are excluded not in the class but through the use of a machine
-mode larger than 4 bytes.
+クラス@code{EVEN_REGS}内のレジスタ（@code{gr0}から@code{gr63}）。奇数レジスタは、クラス内ではなく、4バイトを超えるマシンモードの使用によって除外される。
 
 @item f
-Register in the class @code{FPR_REGS} (@code{fr0} to @code{fr63}).
+クラス@code{FPR_REGS}内のレジスタ。（@code{fr0}から@code{fr63}）。
 
 @item h
-Register in the class @code{FEVEN_REGS} (@code{fr0} to @code{fr63}).
-Odd registers are excluded not in the class but through the use of a machine
-mode larger than 4 bytes.
+クラス@code{FEVEN_REGS}のレジスタ。（@code{fr0}から@code{fr63}）。奇数レジスタは、クラス内ではないが、4バイトを超えるマシンモードの使用によって除外される。
 
 @item l
-Register in the class @code{LR_REG} (the @code{lr} register).
+クラス@code{LR_REG}内のレジスタ（@code{lr}レジスタ）。
 
 @item q
-Register in the class @code{QUAD_REGS} (@code{gr2} to @code{gr63}).
-Register numbers not divisible by 4 are excluded not in the class but through
-the use of a machine mode larger than 8 bytes.
+クラス@code{QUAD_REGS}内のレジスタ（@code{gr2}から@code{gr63}）。4で割り切れないレジスタ番号は、クラスではなく、8バイトを超えるマシン・モードの使用によって除外される。
 
 @item t
-Register in the class @code{ICC_REGS} (@code{icc0} to @code{icc3}).
+クラス@code{ICC_REGS}内のレジスタ。（@code{icc0}から@code{icc3}）。
 
 @item u
-Register in the class @code{FCC_REGS} (@code{fcc0} to @code{fcc3}).
+クラス@code{FCC_REGS}内のレジスタ。（@code{fcc0}から@code{fcc3}）。
 
 @item v
-Register in the class @code{ICR_REGS} (@code{cc4} to @code{cc7}).
+クラス@code{ICR_REGS}内のレジスタ。（@code{cc4}から@code{cc7}）。
 
 @item w
-Register in the class @code{FCR_REGS} (@code{cc0} to @code{cc3}).
+クラス@code{FCR_REGS}内のレジスタ。（@code{cc0}から@code{cc3}）。
 
 @item x
-Register in the class @code{QUAD_FPR_REGS} (@code{fr0} to @code{fr63}).
-Register numbers not divisible by 4 are excluded not in the class but through
-the use of a machine mode larger than 8 bytes.
+クラス@code{QUAD_FPR_REGS}内のレジスタ。（@code{fr0}から@code{fr63}）。4で割り切れないレジスタ番号は、クラスではなく、8バイトを超えるマシン・モードの使用によって除外される。
 
 @item z
-Register in the class @code{SPR_REGS} (@code{lcr} and @code{lr}).
+クラス@code{SPR_REGS}内のレジスタ。 （@code{lcr}と@code{lr}）。
 
 @item A
-Register in the class @code{QUAD_ACC_REGS} (@code{acc0} to @code{acc7}).
+クラス@code{QUAD_ACC_REGS}内のレジスタ。 （@code{acc0}から@code{acc7}）。
 
 @item B
-Register in the class @code{ACCG_REGS} (@code{accg0} to @code{accg7}).
+クラス@code{ACCG_REGS}内のレジスタ。 （@code{accg0}から@code{accg7}）。
 
 @item C
-Register in the class @code{CR_REGS} (@code{cc0} to @code{cc7}).
+クラス@code{CR_REGS}内のレジスタ。 （@code{cc0}から@code{cc7}）。
 
 @item G
-Floating point constant zero
+浮動小数点定数0
 
 @item I
-6-bit signed integer constant
+6ビット符号あり整数定数
 
 @item J
-10-bit signed integer constant
+10ビット符号あり整数定数
 
 @item L
-16-bit signed integer constant
+16ビット符号あり整数定数
 
 @item M
-16-bit unsigned integer constant
+16ビット符号なし整数定数
 
 @item N
-12-bit signed integer constant that is negative---i.e.@: in the
-range of @minus{}2048 to @minus{}1
+負である12ビット符号あり整数定数。すなわち、-2048から-1までの範囲
 
 @item O
-Constant zero
+定数0
 
 @item P
-12-bit signed integer constant that is greater than zero---i.e.@: in the
-range of 1 to 2047.
+0より大きい12ビット符号あり整数定数。すなわち、1から2047まで。
 
 @end table
 
