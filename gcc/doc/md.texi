@@ -2179,65 +2179,61 @@ bextかbinsに適した反転ビットフィールドマスク
 @item Intel IA-64---@file{config/ia64/ia64.h}
 @table @code
 @item a
-General register @code{r0} to @code{r3} for @code{addl} instruction
+@code{addl}命令用の汎用レジスタ@code{r0}から@code{r3}
 
 @item b
-Branch register
+分岐レジスタ
 
 @item c
-Predicate register (@samp{c} as in ``conditional'')
+手続きレジスタ（「条件」としての@samp{c}）
 
 @item d
-Application register residing in M-unit
+Mユニットに属するアプリケーションレジスタ
 
 @item e
-Application register residing in I-unit
+Iユニットに属するアプリケーションレジスタ
 
 @item f
-Floating-point register
+浮動小数点レジスタ
 
 @item m
-Memory operand.  If used together with @samp{<} or @samp{>},
-the operand can have postincrement and postdecrement which
-require printing with @samp{%Pn} on IA-64.
+メモリオペランド。もし@samp{<}および@samp{>}とともに使われるなら、オペランドはIA-64で@samp{%Pn}ともに出力する必要がある前インクリメントと後デクリメントを持つことができる。
 
 @item G
-Floating-point constant 0.0 or 1.0
+浮動小数点定数0.0もしくは1.0
 
 @item I
-14-bit signed integer constant
+14ビット符号あり整数定数
 
 @item J
-22-bit signed integer constant
+22ビット符号あり整数定数
 
 @item K
-8-bit signed integer constant for logical instructions
+論理命令用の8ビット符号あり整数定数
 
 @item L
-8-bit adjusted signed integer constant for compare pseudo-ops
+比較疑似命令用の8ビット調整済み符号あり整数定数
 
 @item M
-6-bit unsigned integer constant for shift counts
+シフトカウント用の6ビット符号なし整数定数
 
 @item N
-9-bit signed integer constant for load and store postincrements
+ロード・ストアの後インクリメント用の9ビット符号あり整数定数
 
 @item O
-The constant zero
+定数0
 
 @item P
-0 or @minus{}1 for @code{dep} instruction
+@code{dep}命令用の0および@minus{}1
 
 @item Q
-Non-volatile memory for floating-point loads and stores
+浮動小数点ロード・ストア用の非揮発性メモリ
 
 @item R
-Integer constant in the range 1 to 4 for @code{shladd} instruction
+@code{shladd}命令用の1から4までの整数定数
 
 @item S
-Memory operand except postincrement and postdecrement.  This is
-now roughly the same as @samp{m} when not used together with @samp{<}
-or @samp{>}.
+後インクリメントと後デクリメント以外のメモリオペランド。これは@samp{<}および＠smap{>}と一緒に使うことができない以外がほぼ@samp{m}と同じである。
 @end table
 
 @item M32C---@file{config/m32c/m32c.c}
