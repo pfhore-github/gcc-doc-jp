@@ -2110,72 +2110,70 @@ bextかbinsに適した反転ビットフィールドマスク
 @item Hewlett-Packard PA-RISC---@file{config/pa/pa.h}
 @table @code
 @item a
-General register 1
+汎用辞レスタ1
 
 @item f
-Floating point register
+浮動小数点レジスタ
 
 @item q
-Shift amount register
+シフト量レジスタ
 
 @item x
-Floating point register (deprecated)
+浮動小数点レジスタ（非推奨）
 
 @item y
-Upper floating point register (32-bit), floating point register (64-bit)
+上位浮動小数点レジスタ（32ビット）、浮動小数点レジスタ（64ビット）
 
 @item Z
-Any register
+任意のレジスタ
 
 @item I
-Signed 11-bit integer constant
+符号あり11ビット定数
 
 @item J
-Signed 14-bit integer constant
+符号あり14ビット定数
 
 @item K
-Integer constant that can be deposited with a @code{zdepi} instruction
+@code{zdepi}命令で置くことができる整数定数
 
 @item L
-Signed 5-bit integer constant
+符号あり5ビット定数
 
 @item M
-Integer constant 0
+整数定数0
 
 @item N
-Integer constant that can be loaded with a @code{ldil} instruction
+@code{ldil}命令で置くことができる整数定数
 
 @item O
-Integer constant whose value plus one is a power of 2
+値+1が2の冪である整数定数
 
 @item P
-Integer constant that can be used for @code{and} operations in @code{depi}
-and @code{extru} instructions
+@code{depi}と@code{extru}命令での@code{and}操作で使われる整数定数。
 
 @item S
-Integer constant 31
+整数定数31
 
 @item U
-Integer constant 63
+整数定数63
 
 @item G
-Floating-point constant 0.0
+浮動小数点定数0.0
 
 @item A
-A @code{lo_sum} data-linkage-table memory operand
+@code{lo_sum}データリンケージテーブルメモリーオペランド
 
 @item Q
-A memory operand that can be used as the destination operand of an
-integer store instruction
+整数ストア命令のデスティネーションオペランドとして使用できるメモリオペランド
 
 @item R
-A scaled or unscaled indexed memory operand
+スケールされたおよびされていないインデックス化されたメモリオペランド
 
 @item T
-A memory operand for floating-point loads and stores
+浮動小数点ロードとストア用のメモリオペランド
 
 @item W
-A register indirect memory operand
+レジスタ間接メモリオペランド
 @end table
 
 @item Intel IA-64---@file{config/ia64/ia64.h}
