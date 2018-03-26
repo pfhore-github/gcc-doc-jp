@@ -2374,77 +2374,67 @@ $r1h
 @item MIPS---@file{config/mips/constraints.md}
 @table @code
 @item d
-A general-purpose register.  This is equivalent to @code{r} unless
-generating MIPS16 code, in which case the MIPS16 register set is used.
+汎用目的レジスタ。これはMIPS16コードを生成する時は、MIPS16レジスタセットを使うことを意味し、それ以外は@code{r}と同じである。
 
 @item f
-A floating-point register (if available).
+（もし利用可能ならば）浮動小数点レジスタ。
 
 @item h
-Formerly the @code{hi} register.  This constraint is no longer supported.
+以前は@code{hi}レジスタであった。この制約はもはやサポートされない。
 
 @item l
-The @code{lo} register.  Use this register to store values that are
-no bigger than a word.
+@code{lo}レジスタ。このレジスタはワードよりも大きくない値を格納するために使う。
 
 @item x
-The concatenated @code{hi} and @code{lo} registers.  Use this register
-to store doubleword values.
+@code{hi}と@code{lo}レジスタの連結。このレジスタはダブルワード値を格納するために使う。
 
 @item c
-A register suitable for use in an indirect jump.  This will always be
-@code{$25} for @option{-mabicalls}.
+間接ジャンプで使うために適したレジスタ。これは@option{-mabicalls}では常に@code{$25}であろう。
 
 @item v
-Register @code{$3}.  Do not use this constraint in new code;
-it is retained only for compatibility with glibc.
+レジスタ@code{$3}。新しいコードではこの制約は使わないこと。これはglibcとの互換性を保持するためにのみ残っている。
 
 @item y
-Equivalent to @code{r}; retained for backwards compatibility.
+@code{r}と等価。後方互換性のために残っている。
 
 @item z
-A floating-point condition code register.
+浮動小数点状態コードレジスタ。
 
 @item I
-A signed 16-bit constant (for arithmetic instructions).
+符号付き16ビット定数（算術命令用）。
 
 @item J
-Integer zero.
+整数0。
 
 @item K
-An unsigned 16-bit constant (for logic instructions).
+符号なし16ビット定数（論理命令用）。
 
 @item L
-A signed 32-bit constant in which the lower 16 bits are zero.
-Such constants can be loaded using @code{lui}.
+下位16ビットが0である符号付き32ビット定数。そのような定数は@code{lui}を使ってロードされる。
 
 @item M
-A constant that cannot be loaded using @code{lui}, @code{addiu}
-or @code{ori}.
+@code{lui}、@code{addiu}、及び@code{ori}を使ってロードできない定数。
 
 @item N
-A constant in the range @minus{}65535 to @minus{}1 (inclusive).
+範囲@minus{}65535 to @minus{}1 (境界含む）内の定数。
 
 @item O
-A signed 15-bit constant.
+符号付き15ビット定数。
 
 @item P
-A constant in the range 1 to 65535 (inclusive).
+範囲1から65535（境界含む）までの定数。
 
 @item G
-Floating-point zero.
+浮動小数点0。
 
 @item R
-An address that can be used in a non-macro load or store.
+非マクロのロードとストアで使うことができるアドレス。
 
 @item ZC
-A memory operand whose address is formed by a base register and offset
-that is suitable for use in instructions with the same addressing mode
-as @code{ll} and @code{sc}.
+@code {ll}と@code{sc}と同じアドレッシングモードの命令で使用するのに適したベースレジスタとオフセットによってアドレスが形成されるメモリオペランド。
 
 @item ZD
-An address suitable for a @code{prefetch} instruction, or for any other
-instruction with the same addressing mode as @code{prefetch}.
+@code{prefetch}命令、または@code{prefetch}と同じアドレッシングモードを持つ他の命令に適したアドレス。
 @end table
 
 @item Motorola 680x0---@file{config/m68k/constraints.md}
