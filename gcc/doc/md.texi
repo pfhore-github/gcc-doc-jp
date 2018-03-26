@@ -2244,74 +2244,70 @@ Iユニットに属するアプリケーションレジスタ
 @samp{$sp}, @samp{$fb}, @samp{$sb}.
 
 @item Rcr
-Any control register, when they're 16 bits wide (nothing if control
-registers are 24 bits wide)
+16ビット幅のときの、任意の制御レジスタ（制御レジスタが24ビット幅のときはなし）
 
 @item Rcl
-Any control register, when they're 24 bits wide.
+24ビット幅のときの、任意の制御レジスタ。
 
 @item R0w
 @itemx R1w
 @itemx R2w
 @itemx R3w
-$r0, $r1, $r2, $r3.
+$r0、$r1、$r2、$r3。
 
 @item R02
-$r0 or $r2, or $r2r0 for 32 bit values.
+$r0、$r2、及び32ビットの値の$r2r0。
 
 @item R13
-$r1 or $r3, or $r3r1 for 32 bit values.
+$r1、$r3、及び32ビット値の$r3r1。
 
 @item Rdi
-A register that can hold a 64 bit value.
+64ビット値を持つことができるレジスタ。
 
 @item Rhl
-$r0 or $r1 (registers with addressable high/low bytes)
+$r0または$r1 (アドレス可能な上位・下位バイトのあるレジスタ）
 
 @item R23
-$r2 or $r3
+$r2または$r3
 
 @item Raa
-Address registers
+アドレスレジスタ
 
 @item Raw
-Address registers when they're 16 bits wide.
+16ビット幅のときのアドレスレジスタ
 
 @item Ral
-Address registers when they're 24 bits wide.
+24ビット幅のときのアドレスレジスタ
 
 @item Rqi
-Registers that can hold QI values.
+QI値を持つことができるレジスタ。
 
 @item Rad
-Registers that can be used with displacements ($a0, $a1, $sb).
+置換量($a0, $a1, $sb)とともに使うことができるレジスタ。
 
 @item Rsi
-Registers that can hold 32 bit values.
+32ビット値を持つことができるレジスタ。
 
 @item Rhi
-Registers that can hold 16 bit values.
+16ビット値を持つことができるレジスタ。
 
 @item Rhc
-Registers chat can hold 16 bit values, including all control
-registers.
+全制御レジスタを含む、16ビット値を持つことができるレジスタ。
 
 @item Rra
-$r0 through R1, plus $a0 and $a1.
+$r0からR1に加え、$a0と$a1。
 
 @item Rfl
-The flags register.
+フラグレジスタ。
 
 @item Rmm
-The memory-based pseudo-registers $mem0 through $mem15.
+$mem0から$mem15までのメモリに基づいた疑似レジスタ
 
 @item Rpi
-Registers that can hold pointers (16 bit registers for r8c, m16c; 24
-bit registers for m32cm, m32c).
+ポインタを持つことができるレジスタ（r8c、m16cでは16ビット、m32cmとm32cでは24ビットのレジスタ。）
 
 @item Rpa
-Matches multiple registers in a PARALLEL to form a larger register.
-Used to match function return values.
+大きいレジスタを作るための「平行な」複数のレジスタと一致する。値を返す関数に一致するために使われる。
 
 @item Is3
 @minus{}8 @dots{} 7
@@ -2338,28 +2334,28 @@ Used to match function return values.
 @minus{}65536 @dots{} @minus{}1
 
 @item Ilb
-An 8 bit value with exactly one bit set.
+正確に1ビットセットを持つ8ビット値。
 
 @item Ilw
-A 16 bit value with exactly one bit set.
+正確に1ビットセットを持つ16ビット値。
 
 @item Sd
-The common src/dest memory addressing modes.
+共通ソース・デスティネーションメモリアドレスモード。
 
 @item Sa
-Memory addressed using $a0 or $a1.
+$a0及び$a1を使ってアドレスを指定したメモリ。
 
 @item Si
-Memory addressed with immediate addresses.
+即値アドレスでアドレスを指定したメモリ。
 
 @item Ss
-Memory addressed using the stack pointer ($sp).
+スタックポインタ($sp)を使ってアドレスを指定したメモリ。
 
 @item Sf
-Memory addressed using the frame base register ($fb).
+フレームベースレジスタ($fb)を使ってアドレスを指定したメモリ。
 
 @item Ss
-Memory addressed using the small base register ($sb).
+小さいベースレジスタ($sb)を使ってアドレスを指定したメモリ。
 
 @item S1
 $r1h
