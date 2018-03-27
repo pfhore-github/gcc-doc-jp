@@ -2440,61 +2440,61 @@ $r1h
 @item Motorola 680x0---@file{config/m68k/constraints.md}
 @table @code
 @item a
-Address register
+アドレスレジスタ
 
 @item d
-Data register
+データレジスタ
 
 @item f
-68881 floating-point register, if available
+利用可能ならば、68881浮動小数点レjし歌
 
 @item I
-Integer in the range 1 to 8
+1から8までの整数
 
 @item J
-16-bit signed number
+16ビット符号あり整数
 
 @item K
-Signed number whose magnitude is greater than 0x80
+絶対値が0x80よりも大きい符号あり数
 
 @item L
-Integer in the range @minus{}8 to @minus{}1
+-8から-1までの範囲の整数
 
 @item M
-Signed number whose magnitude is greater than 0x100
+絶対値が0x100よりも大きい符号あり数
 
 @item N
-Range 24 to 31, rotatert:SI 8 to 1 expressed as rotate
+範囲24から31まで、rotateとして表現されるrotatert:SIが8から1まで
 
 @item O
-16 (for rotate using swap)
+swapを使ったrotateとしての16
 
 @item P
-Range 8 to 15, rotatert:HI 8 to 1 expressed as rotate
+範囲8から15まで、rotateとして表現されるrotatert:HIが8から1まで
 
 @item R
-Numbers that mov3q can handle
+mov3qが扱える数
 
 @item G
-Floating point constant that is not a 68881 constant
+68881定数でない浮動小数点定数
 
 @item S
-Operands that satisfy 'm' when -mpcrel is in effect
+-mpcrelが有効のとき'm'を満たすオペランド
 
 @item T
-Operands that satisfy 's' when -mpcrel is not in effect
+-mpcrelが有効でないとき's'を満たすオペランド
 
 @item Q
-Address register indirect addressing mode
+アドレスレジスタ間接アドレシングモード
 
 @item U
-Register offset addressing
+レジスタオフセットアドレシング
 
 @item W
 const_call_operand
 
 @item Cs
-symbol_ref or const
+symbol_ref及び定数
 
 @item Ci
 const_int
@@ -2503,25 +2503,25 @@ const_int
 const_int 0
 
 @item Cj
-Range of signed numbers that don't fit in 16 bits
+16ビットで収まらない範囲の符号あり数
 
 @item Cmvq
-Integers valid for mvq
+mvq用に有効な整数
 
 @item Capsw
-Integers valid for a moveq followed by a swap
+swapに続くmoveqに有効な整数
 
 @item Cmvz
-Integers valid for mvz
+mvqに有効な整数
 
 @item Cmvs
-Integers valid for mvs
+mvsに有効な整数
 
 @item Ap
 push_operand
 
 @item Ac
-Non-register operands allowed in clr
+clrで許される非レジスタオペランド
 
 @end table
 
