@@ -2528,19 +2528,19 @@ clrで許される非レジスタオペランド
 @item Moxie---@file{config/moxie/constraints.md}
 @table @code
 @item A
-An absolute address
+絶対アドレス
 
 @item B
-An offset address
+オフセットアドレス
 
 @item W
-A register indirect memory operand
+レジスタ間接メモリオペランド
 
 @item I
-A constant in the range of 0 to 255.
+0から255までの範囲の定数
 
 @item N
-A constant in the range of 0 to @minus{}255.
+0から-255までの範囲の定数
 
 @end table
 
