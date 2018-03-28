@@ -2548,28 +2548,28 @@ clrで許される非レジスタオペランド
 @table @code
 
 @item R12
-Register R12.
+レジスタR12
 
 @item R13
-Register R13.
+レジスタR13
 
 @item K
-Integer constant 1.
+整数定数１
 
 @item L
-Integer constant -1^20..1^19.
+整数定数-1^20から1^19
 
 @item M
-Integer constant 1-4.
+整数定数1-4
 
 @item Ya
-Memory references which do not require an extended MOVX instruction.
+拡張MOVX命令を必要としないメモリ参照。
 
 @item Yl
-Memory reference, labels only.
+メモリ参照、ラベルのみ
 
 @item Ys
-Memory reference, stack only.
+メモリ参照、スタックのみ
 
 @end table
 
