@@ -2576,82 +2576,81 @@ clrで許される非レジスタオペランド
 @item NDS32---@file{config/nds32/constraints.md}
 @table @code
 @item w
-LOW register class $r0 to $r7 constraint for V3/V3M ISA.
+V3/V3M ISAのLOWレジスタクラス$r0〜$ r7制約。
 @item l
-LOW register class $r0 to $r7.
+$r0から$r7までのLOWレジスタクラス。
 @item d
-MIDDLE register class $r0 to $r11, $r16 to $r19.
+$r0から$r1までと$r16から$r19までのMIDDLEレジスタクラス。
 @item h
-HIGH register class $r12 to $r14, $r20 to $r31.
+$r12から$r14までと$r20から$r31までのHIGHレジスタクラス。
 @item t
-Temporary assist register $ta (i.e.@: $r15).
+一時アシストレジスタ$ta(すなわち、$r15)。
 @item k
-Stack register $sp.
+スタックレジスタ$sp。
 @item Iu03
-Unsigned immediate 3-bit value.
+符号なし３ビット即値。
 @item In03
-Negative immediate 3-bit value in the range of @minus{}7--0.
+範囲が-7から0までの負の３ビット即値。
 @item Iu04
-Unsigned immediate 4-bit value.
+符号なし４ビット即値
 @item Is05
-Signed immediate 5-bit value.
+符号あり５ビット即値
 @item Iu05
-Unsigned immediate 5-bit value.
+符号なし５ビット即値
 @item In05
-Negative immediate 5-bit value in the range of @minus{}31--0.
+-31から0までの負の5ビット即値
 @item Ip05
-Unsigned immediate 5-bit value for movpi45 instruction with range 16--47.
+16から47までの範囲のmovpi45命令用の符号なし5ビット即値
 @item Iu06
-Unsigned immediate 6-bit value constraint for addri36.sp instruction.
+addri36.so命令用の符号なし6ビット即値制約
 @item Iu08
-Unsigned immediate 8-bit value.
+符号なし8ビット即値
 @item Iu09
-Unsigned immediate 9-bit value.
+符号なし9ビット即値
 @item Is10
-Signed immediate 10-bit value.
+符号あり10ビット即値
 @item Is11
-Signed immediate 11-bit value.
+符号あり11ビット即値
 @item Is15
-Signed immediate 15-bit value.
+符号あり15ビット即値
 @item Iu15
-Unsigned immediate 15-bit value.
+符号なし15ビット即値
 @item Ic15
-A constant which is not in the range of imm15u but ok for bclr instruction.
+imm15uの範囲でないがbclr命令に使える定数
 @item Ie15
-A constant which is not in the range of imm15u but ok for bset instruction.
+imm15uの範囲でないがbset命令に使える定数
 @item It15
-A constant which is not in the range of imm15u but ok for btgl instruction.
+imm15uの範囲でないがbtgl命令に使える定数
 @item Ii15
-A constant whose compliment value is in the range of imm15u
-and ok for bitci instruction.
+補数がimm15uの範囲でありbitci命令に使える定数
 @item Is16
-Signed immediate 16-bit value.
+符号あり16ビット即値
 @item Is17
-Signed immediate 17-bit value.
+符号あり17ビット即値
 @item Is19
-Signed immediate 19-bit value.
+符号あり19ビット即値
 @item Is20
-Signed immediate 20-bit value.
+符号あり20ビット即値
 @item Ihig
-The immediate value that can be simply set high 20-bit.
+簡単に上位20ビットに設定できる即値。
 @item Izeb
-The immediate value 0xff.
+即値0xff
 @item Izeh
-The immediate value 0xffff.
+即値0xffff
 @item Ixls
-The immediate value 0x01.
+即値0x01
 @item Ix11
-The immediate value 0x7ff.
+即値0x7ff
 @item Ibms
-The immediate value with power of 2.
+2のべきの即値
 @item Ifex
-The immediate value with power of 2 minus 1.
+2のべき-1の即値
 @item U33
-Memory constraint for 333 format.
+333フォーマットのメモリ制約
 @item U45
-Memory constraint for 45 format.
+45フォーマットのメモリ制約
 @item U37
-Memory constraint for 37 format.
+37フォーマットのメモリ制約
 @end table
 
 @item Nios II family---@file{config/nios2/constraints.md}
