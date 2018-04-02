@@ -2657,54 +2657,37 @@ imm15uの範囲でないがbtgl命令に使える定数
 @table @code
 
 @item I
-Integer that is valid as an immediate operand in an
-instruction taking a signed 16-bit number. Range
-@minus{}32768 to 32767.
+符号付き16ビット数を取る命令での即値オペランドとして有効な整数。範囲-32768から32767。
 
 @item J
-Integer that is valid as an immediate operand in an
-instruction taking an unsigned 16-bit number. Range
-0 to 65535.
+符号なし16ビット数を取る命令での即値オペランドとして有効な整数。範囲0から65535。
 
 @item K
-Integer that is valid as an immediate operand in an
-instruction taking only the upper 16-bits of a
-32-bit number. Range 32-bit numbers with the lower
-16-bits being 0.
+32ビット値の上位16ビットのみを取る命令での即値オペランドとして有効な整数。範囲下位16ビットが0である32ビット数。
 
 @item L
-Integer that is valid as an immediate operand for a 
-shift instruction. Range 0 to 31.
+シフト命令用の即値オペランドとして有効な整数。範囲0から31。
 
 @item M
-Integer that is valid as an immediate operand for
-only the value 0. Can be used in conjunction with
-the format modifier @code{z} to use @code{r0}
-instead of @code{0} in the assembly output.
+値0のみの即値オペランドとして有効な整数。書式指定子@code{z}と組み合わせてアセンブリ出力の中で@code{0}の代わりに@code{r0}を使うために使うことができる。
 
 @item N
-Integer that is valid as an immediate operand for
-a custom instruction opcode. Range 0 to 255.
+カスタム命令opcode用の即値オペランドとして有効な整数。範囲0から255。
 
 @item P
-An immediate operand for R2 andchi/andci instructions. 
+R2 andchi/andci命令用の即値オペランド。
 
 @item S
-Matches immediates which are addresses in the small
-data section and therefore can be added to @code{gp}
-as a 16-bit immediate to re-create their 32-bit value.
+小さなデータセクション内でアドレスを取り、それゆえに32ビット値を再構築するために16ビット即値として@code{gp}に加えることができる即値に一致する。
 
 @item U
-Matches constants suitable as an operand for the rdprs and
-cache instructions.
+rdprsとキャッシュ命令用のオペランドに適した定数に一致する。
 
 @item v
-A memory operand suitable for Nios II R2 load/store
-exclusive instructions.
+Nios II R2ロード・ストア排他命令に適したメモリオペランド。
 
 @item w
-A memory operand suitable for load/store IO and cache
-instructions.
+ロード・ストアIOとキャッシュ命令に適したメモリオペランド。
 
 @ifset INTERNALS
 @item T
