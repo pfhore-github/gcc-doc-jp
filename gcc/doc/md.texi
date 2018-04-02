@@ -2700,49 +2700,43 @@ representing a supported PIC or TLS relocation.
 @item PDP-11---@file{config/pdp11/constraints.md}
 @table @code
 @item a
-Floating point registers AC0 through AC3.  These can be loaded from/to
-memory with a single instruction.
+浮動小数点レジスタのAC0からAC3。単一命令でメモリーと読み書きできる。
 
 @item d
-Odd numbered general registers (R1, R3, R5).  These are used for
-16-bit multiply operations.
+奇数番号汎用レジスタ（R1、R3、R5）。16ビット乗算操作に使われる。
 
 @item f
-Any of the floating point registers (AC0 through AC5).
+任意の浮動小数点レジスタ（AC0からAC5）。
 
 @item G
-Floating point constant 0.
+浮動小数点定数0。
 
 @item I
-An integer constant that fits in 16 bits.
+16ビットに収まる整数定数。
 
 @item J
-An integer constant whose low order 16 bits are zero.
+下位16ビットが0である整数定数。
 
 @item K
-An integer constant that does not meet the constraints for codes
-@samp{I} or @samp{J}.
+コード@samp{I}と@samp{J}の制約を満たさない整数定数。
 
 @item L
-The integer constant 1.
+整数定数１。
 
 @item M
-The integer constant @minus{}1.
+整数定数-1。
 
 @item N
-The integer constant 0.
+整数定数0。
 
 @item O
-Integer constants @minus{}4 through @minus{}1 and 1 through 4; shifts by these
-amounts are handled as multiple single-bit shifts rather than a single
-variable-length shift.
+整数定数-4から-1までと1から4まで。これらの量によるシフトは単一変数の長さシフトではなく複数の単一ビットシフトとｓてい扱われる。
 
 @item Q
-A memory reference which requires an additional word (address or
-offset) after the opcode.
+opcodeの後に追加の語(アドレスかオフセット）を要求するメモリ参照。
 
 @item R
-A memory reference that is encoded within the opcode.
+opcode内に符号化されるメモリ参照。
 
 @end table
 
