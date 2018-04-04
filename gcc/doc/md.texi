@@ -2743,29 +2743,21 @@ opcode内に符号化されるメモリ参照。
 @item PowerPC and IBM RS6000---@file{config/rs6000/constraints.md}
 @table @code
 @item b
-Address base register
+アドレスベースレジスタ
 
 @item d
-Floating point register (containing 64-bit value)
+浮動小数点レジスタ（64ビット値を保持している）
 
 @item f
-Floating point register (containing 32-bit value)
+浮動小数点レジスタ（32ビット値を保持している）
 
 @item v
-Altivec vector register
+Altivecベクトルレジスタ
 
 @item wa
-Any VSX register if the @option{-mvsx} option was used or NO_REGS.
+@option{-mvsx}オプションが使われた場合は任意のVSXレジスタでさNO_REGS。
 
-When using any of the register constraints (@code{wa}, @code{wd},
-@code{wf}, @code{wg}, @code{wh}, @code{wi}, @code{wj}, @code{wk},
-@code{wl}, @code{wm}, @code{wo}, @code{wp}, @code{wq}, @code{ws},
-@code{wt}, @code{wu}, @code{wv}, @code{ww}, or @code{wy})
-that take VSX registers, you must use @code{%x<n>} in the template so
-that the correct register is used.  Otherwise the register number
-output in the assembly file will be incorrect if an Altivec register
-is an operand of a VSX instruction that expects VSX register
-numbering.
+VSXレジスタを取るレジスタ制約(@code{wa}, @code{wd}, @code{wf}, @code{wg}, @code{wh}, @code{wi}, @code{wj}, @code{wk}, @code{wl}, @code{wm}, @code{wo}, @code{wp}, @code{wq}, @code{ws}, @code{wt}, @code{wu}, @code{wv}, @code{ww},@code{wy})のどれかが使われたときは、正しいレジスタが使われるように@code{%x<n>}を使わなくてはならない。さもなければもしAltivecレジスタがVSXレジスタを期待するVSX命令のオペランドであるならばアセンブリファイルのレジスタ番号は正しくないだろう。
 
 @smallexample
 asm ("xvadddp %x0,%x1,%x2"
@@ -2774,7 +2766,7 @@ asm ("xvadddp %x0,%x1,%x2"
 @end smallexample
 
 @noindent
-is correct, but:
+は正しいが、
 
 @smallexample
 asm ("xvadddp %0,%1,%2" 
@@ -2783,10 +2775,9 @@ asm ("xvadddp %0,%1,%2"
 @end smallexample
 
 @noindent
-is not correct.
+は正しくない。
 
-If an instruction only takes Altivec registers, you do not want to use
-@code{%x<n>}.
+もし命令がAltivecレジスタのみを取るならば、@code{%x<n>}を使いたくないだろう。
 
 @smallexample
 asm ("xsaddqp %0,%1,%2"
@@ -2795,8 +2786,7 @@ asm ("xsaddqp %0,%1,%2"
 @end smallexample
 
 @noindent
-is correct because the @code{xsaddqp} instruction only takes Altivec
-registers, while:
+は@code{xsaddqp}命令がAltivecレジスタのみを取るので正しいが、
 
 @smallexample
 asm ("xsaddqp %x0,%x1,%x2" 
@@ -2805,231 +2795,213 @@ asm ("xsaddqp %x0,%x1,%x2"
 @end smallexample
 
 @noindent
-is incorrect.
+は正しくない。
 
 @item wb
-Altivec register if @option{-mcpu=power9} is used or NO_REGS.
+@option{-mcpu=power9}が使われるならばAltivecレジスタでさもなければNO_REGS。
 
 @item wd
-VSX vector register to hold vector double data or NO_REGS.
+ベクトル倍精度データを保持するVSXベクトルレジスタかNO_REGS。
 
 @item we
-VSX register if the @option{-mcpu=power9} and @option{-m64} options
-were used or NO_REGS.
+@option{-mcpu=power9}と@option{-m64}オプションが使われたならVSXレジスタレジスタでさもなければNO_REGS。
 
 @item wf
-VSX vector register to hold vector float data or NO_REGS.
+ベクトル単精度データを保持するVSXベクトルレジスタかNO_REGS。
 
 @item wg
-If @option{-mmfpgpr} was used, a floating point register or NO_REGS.
+@option{-mmfpgpr}が使われたなら、浮動小数点レジスタでさNO_REGS。
 
 @item wh
+直接ムーブが利用可能ならば浮動小数点レジスタで、さもなければNO_REGS。
 Floating point register if direct moves are available, or NO_REGS.
 
 @item wi
-FP or VSX register to hold 64-bit integers for VSX insns or NO_REGS.
+VSX命令用の64ビット整数を保持するFP及びVSX命令レジスタかNO_REGS。
 
 @item wj
-FP or VSX register to hold 64-bit integers for direct moves or NO_REGS.
+直接ムーブ用の64ビット整数を保持するFP及びVSX命令レジスタかNO_REGS。
 
 @item wk
-FP or VSX register to hold 64-bit doubles for direct moves or NO_REGS.
+直接ムーブ用の64ビット倍精度数を保持するFP及びVSX命令レジスタかNO_REGS。
 
 @item wl
-Floating point register if the LFIWAX instruction is enabled or NO_REGS.
+LFIWAX命令が有効ならば浮動小数点レジスタでさもなければNO_REGS。
 
 @item wm
-VSX register if direct move instructions are enabled, or NO_REGS.
+直接ムーブ命令が利用可能ならばVSXレジスタでさNO_REGS。
 
 @item wn
-No register (NO_REGS).
+レジスタなし(NO_REGS)。
 
 @item wo
-VSX register to use for ISA 3.0 vector instructions, or NO_REGS.
+ISA3.0 ベクトル命令用のVSXレジスタかNO_REGS。
 
 @item wp
-VSX register to use for IEEE 128-bit floating point TFmode, or NO_REGS.
+IEEE128ビット浮動小数点TFモード用のVSXレジスタかNO_REGS。
 
 @item wq
-VSX register to use for IEEE 128-bit floating point, or NO_REGS.
+IEEE128ビット浮動小数点用のVSXレジスタかNO_REGS。
 
 @item wr
-General purpose register if 64-bit instructions are enabled or NO_REGS.
+64ビット命令が利用可能ならば汎用目的レジスタでさもなければNO_REGS。
 
 @item ws
-VSX vector register to hold scalar double values or NO_REGS.
+スカラー倍精度値を保持するVSXレジスタかNO_REGS。
 
 @item wt
-VSX vector register to hold 128 bit integer or NO_REGS.
+128ビット整数を保持するVSXレジスタかNO_REGS。
 
 @item wu
-Altivec register to use for float/32-bit int loads/stores  or NO_REGS.
+単精度・32ビット整数のロード・ストア用に使うAltivecレジスタかNO_REGS。
 
 @item wv
-Altivec register to use for double loads/stores  or NO_REGS.
+倍精度ロード・ストア用に使うAltivecレジスタかNO_REGS。
 
 @item ww
-FP or VSX register to perform float operations under @option{-mvsx} or NO_REGS.
+@option{-mvsx}下での単精度命令を実行するためのFP及びVSXレジスタかNO_REGS。
 
 @item wx
-Floating point register if the STFIWX instruction is enabled or NO_REGS.
+STFIWX命令が有効ならば浮動小数点レジスタ、さもなければNO_REGS。
 
 @item wy
-FP or VSX register to perform ISA 2.07 float ops or NO_REGS.
+ISA 2.07浮動小数点命令を実行するためのFP及びVSXレジスタかNO_REGS。
 
 @item wz
-Floating point register if the LFIWZX instruction is enabled or NO_REGS.
+LFIWZX命令が有効ならば浮動小数点レジスタ、さもなければNO_REGS。
 
 @item wA
-Address base register if 64-bit instructions are enabled or NO_REGS.
+64ビット命令が有効ならばアドレスベースレジスタ、さもなければNO_REGS。
 
 @item wB
-Signed 5-bit constant integer that can be loaded into an altivec register.
+altivecレジスタへロードできる符号あり5ビット定数整数
 
 @item wD
-Int constant that is the element number of the 64-bit scalar in a vector.
+ベクトル内の64ビットスカラーの要素数である整数定数
 
 @item wE
-Vector constant that can be loaded with the XXSPLTIB instruction.
+XXSPLTIB命令とともにロードできるベクトル定数。
 
 @item wF
-Memory operand suitable for power9 fusion load/stores.
+power9融合ロード・ストアに適したメモリオペランド。
 
 @item wG
-Memory operand suitable for TOC fusion memory references.
+TOC融合メモリ参照に適したメモリオペランド。
 
 @item wH
-Altivec register if @option{-mvsx-small-integer}.
+@option{-mvsx-small-integer}ならばAltivecレジスタ。
 
 @item wI
-Floating point register if @option{-mvsx-small-integer}.
+@option{-mvsx-small-integer}ならば浮動小数点レジスタ。
 
 @item wJ
-FP register if @option{-mvsx-small-integer} and @option{-mpower9-vector}.
+@option{-mvsx-small-integer}と@option{-mpower9-vector}ならばFPレジスタ。
 
 @item wK
-Altivec register if @option{-mvsx-small-integer} and @option{-mpower9-vector}.
+@option{-mvsx-small-integer}と@option{-mpower9-vector}ならばAltivecレジスタ。
 
 @item wL
-Int constant that is the element number that the MFVSRLD instruction.
-targets.
+MFVSRLD命令が指す要素数である整数定数。
 
 @item wM
-Match vector constant with all 1's if the XXLORC instruction is available.
+XXLORC命令が利用可能ならばすべてが１であるベクトル定数に一致する。
 
 @item wO
-A memory operand suitable for the ISA 3.0 vector d-form instructions.
+ISA 3.0ベクトルd形式命令に適したメモリオペランド。
 
 @item wQ
-A memory address that will work with the @code{lq} and @code{stq}
-instructions.
+@code{lq}と@code{stq}命令と一緒に働くメモリアドレス。
 
 @item wS
-Vector constant that can be loaded with XXSPLTIB & sign extension.
+XXSPTLITBと符号拡張でロードできるベクトル定数。
 
 @item h
-@samp{MQ}, @samp{CTR}, or @samp{LINK} register
+@samp{MQ}, @samp{CTR}, 及び@samp{LINK} レジスタ。
 
 @item c
-@samp{CTR} register
+@samp{CTR} レジスタ
 
 @item l
-@samp{LINK} register
+@samp{LINK} レジスタ
 
 @item x
-@samp{CR} register (condition register) number 0
+@samp{CR} レジスタ（状態レジスタ）番号0
 
 @item y
-@samp{CR} register (condition register)
+@samp{CR} レジスタ（状態レジスタ）
 
 @item z
-@samp{XER[CA]} carry bit (part of the XER register)
+@samp{XER[CA]}キャリービット（XERレジスタの一部）
 
 @item I
-Signed 16-bit constant
+符号付き16ビット定数
 
 @item J
-Unsigned 16-bit constant shifted left 16 bits (use @samp{L} instead for
-@code{SImode} constants)
+左に16ビットシフトした符号なし16ビット定数。（@code{SImode}制約では代わりに@samp{L}を使う）
 
 @item K
-Unsigned 16-bit constant
+符号なし16ビット定数
 
 @item L
-Signed 16-bit constant shifted left 16 bits
+16ビット左にシフトした符号付き16ビット定数。
 
 @item M
-Constant larger than 31
+31より大きい定数
 
 @item N
-Exact power of 2
+正確に２の冪
 
 @item O
-Zero
+ゼロ
 
 @item P
-Constant whose negation is a signed 16-bit constant
+負にすると符号付き16ビット定数になる定数
 
 @item G
-Floating point constant that can be loaded into a register with one
-instruction per word
+語あたり1命令でレジスタにロードできる浮動小数点定数
 
 @item H
-Integer/Floating point constant that can be loaded into a register using
-three instructions
+3命令を使ってレジスタにロードできる整数・符号小数点定数
 
 @item m
-Memory operand.
-Normally, @code{m} does not allow addresses that update the base register.
-If @samp{<} or @samp{>} constraint is also used, they are allowed and
-therefore on PowerPC targets in that case it is only safe
-to use @samp{m<>} in an @code{asm} statement if that @code{asm} statement
-accesses the operand exactly once.  The @code{asm} statement must also
-use @samp{%U@var{<opno>}} as a placeholder for the ``update'' flag in the
-corresponding load or store instruction.  For example:
+メモリオペランド。通常、@code{m}はベースレジスタを更新するアドレスを許可しない。@samp{<}か@samp{>}制約も使われたならば、それらは許可され、したがってPowerPCターゲットではこの場合には@code{asm}文がオペランドに正確に1回だけアクセスするならばその場合のみ@code{asm}文で@samp{m<>}を使っても安全である。@code{asm}文は
+対応するロード・ストア命令で「更新」フラグの置き場所として@samp{%U@var{<opno>}も使わなくてはならない。例えば、
 
 @smallexample
 asm ("st%U0 %1,%0" : "=m<>" (mem) : "r" (val));
 @end smallexample
 
-is correct but:
+は正しいが、
 
 @smallexample
 asm ("st %1,%0" : "=m<>" (mem) : "r" (val));
 @end smallexample
 
-is not.
+は正しくない。
 
 @item es
-A ``stable'' memory operand; that is, one which does not include any
-automodification of the base register.  This used to be useful when
-@samp{m} allowed automodification of the base register, but as those are now only
-allowed when @samp{<} or @samp{>} is used, @samp{es} is basically the same
-as @samp{m} without @samp{<} and @samp{>}.
+「安定した」メモリオペランド。すなわち、ベースレジスタのいかなる自動更新も含まない。これは@samp{m}がベースレジスタの自動修正を許可していたときには役立っていたが、今はそれらが@samp{<}および@samp{>}が使われたときにのみ許可されるため、@samp{es}は基本的には@samp{<}と@samp{<}なしの@samp{m}と同じである。
 
 @item Q
-Memory operand that is an offset from a register (it is usually better
-to use @samp{m} or @samp{es} in @code{asm} statements)
+レジスタからのオフセットであるメモリオペランド（通常は@code{asm}文では@samp{m}か@samp{es}を使うほうがいい）
 
 @item Z
-Memory operand that is an indexed or indirect from a register (it is
-usually better to use @samp{m} or @samp{es} in @code{asm} statements)
+インデックスからレジスタからの間接であるメモリオペランド（通常は@code{asm}文では@samp{m}か@samp{es}を使うほうがいい）
 
 @item R
-AIX TOC entry
+AIX TOCエントリ
 
 @item a
-Address operand that is an indexed or indirect from a register (@samp{p} is
-preferable for @code{asm} statements)
+インデックスからレジスタからの間接であるアドレスオペランド（通常は@code{asm}文では@samp{p}を使うほうがいい）
 
 @item U
-System V Release 4 small data area reference
+System V Release 4s少データ領域参照
 
 @item W
-Vector constant that does not require memory
+メモリを要求しないベクトル定数
 
 @item j
-Vector constant that is all zeros.
+すべてゼロであるベクトル定数。
 
 @end table
 
