@@ -3009,89 +3009,89 @@ System V Release 4s少データ領域参照
 @table @code
 
 @item Int3
-An integer constant in the range 1 @dots{} 7.
+範囲1から7である整数定数
 @item Int8
-An integer constant in the range 0 @dots{} 255.
+範囲0から255である整数定数
 @item J
-An integer constant in the range @minus{}255 @dots{} 0
+範囲-255から0である整数定数
 @item K
-The integer constant 1.
+整数定数1
 @item L
-The integer constant -1.
+整数定数-1
 @item M
-The integer constant 0.
+整数定数0
 @item N
-The integer constant 2.
+整数定数2
 @item O
-The integer constant -2.
+整数定数-2
 @item P
-An integer constant in the range 1 @dots{} 15.
+範囲1から15である整数定数
 @item Qbi
-The built-in compare types--eq, ne, gtu, ltu, geu, and leu.
+組み込み比較型、eq, ne, gtu, ltu, geu, leu。
 @item Qsc
-The synthetic compare types--gt, lt, ge, and le.
+合成比較型、gt, lt, ge, le。
 @item Wab
-A memory reference with an absolute address.
+絶対アドレスのメモリ参照。
 @item Wbc
-A memory reference using @code{BC} as a base register, with an optional offset.
+ベースレジスタとして@code{BC}を使い、オプションでオフセットがあるメモリ参照。
 @item Wca
-A memory reference using @code{AX}, @code{BC}, @code{DE}, or @code{HL} for the address, for calls.
+呼び出し用の、アドレスに@code{AX}、@code{BC}、@code{DE}、@code{HL}を使うメモリ参照。
 @item Wcv
-A memory reference using any 16-bit register pair for the address, for calls.
+呼び出し用の、アドレスに任意の16ビットレジスタペアを使うメモリ参照。
 @item Wd2
-A memory reference using @code{DE} as a base register, with an optional offset.
+ベースレジスタとして@code{DE}を使い、オプションでオフセットがあるメモリ参照。
 @item Wde
-A memory reference using @code{DE} as a base register, without any offset.
+ベースレジスタとして@code{DE}を使い、オフセットがないメモリ参照。
 @item Wfr
-Any memory reference to an address in the far address space.
+遠距離アドレス空間内でのアドレスへのメモリ参照。
 @item Wh1
-A memory reference using @code{HL} as a base register, with an optional one-byte offset.
+ベースレジスタとして@code{HL}を使い、オプションで1バイトのオフセットがあるメモリ参照。
 @item Whb
-A memory reference using @code{HL} as a base register, with @code{B} or @code{C} as the index register.
+ベースレジスタとして@code{HL}を使い、@code{B}か@code{C}をインデックスレジスタとして使うメモリ参照。.
 @item Whl
-A memory reference using @code{HL} as a base register, without any offset.
+ベースレジスタとして@code{HL}を使い、オフセットがないメモリ参照。
 @item Ws1
-A memory reference using @code{SP} as a base register, with an optional one-byte offset.
+ベースレジスタとして@code{SP}を使い、オプションで1バイトのオフセットがあるメモリ参照。
 @item Y
-Any memory reference to an address in the near address space.
+近距離アドレス空間内でのアドレスへのメモリ参照。
 @item A
-The @code{AX} register.
+@code{AX}レジスタ。
 @item B
-The @code{BC} register.
+@code{BC}レジスタ。
 @item D
-The @code{DE} register.
+@code{DE}レジスタ。
 @item R
-@code{A} through @code{L} registers.
+@code{A}から@code{L}までのレジスタ。
 @item S
-The @code{SP} register.
+@code{SP}レジスタ。
 @item T
-The @code{HL} register.
+@code{HL}レジスタ。
 @item Z08W
-The 16-bit @code{R8} register.
+16ビット@code{R8}レジスタ。
 @item Z10W
-The 16-bit @code{R10} register.
+16ビット@code{R10}レジスタ。
 @item Zint
-The registers reserved for interrupts (@code{R24} to @code{R31}).
+割り込み用に予約されたレジスタ（@code{R24}から@code{R31}まで）。
 @item a
-The @code{A} register.
+@code{A}レジスタ。
 @item b
-The @code{B} register.
+@code{B}レジスタ。
 @item c
-The @code{C} register.
+@code{C}レジスタ。
 @item d
-The @code{D} register.
+@code{D}レジスタ。
 @item e
-The @code{E} register.
+@code{E}レジスタ。
 @item h
-The @code{H} register.
+@code{H}レジスタ。
 @item l
-The @code{L} register.
+@code{L}レジスタ。
 @item v
-The virtual registers.
+仮想レジスタ。
 @item w
-The @code{PSW} register.
+@code{PSW}レジスタ。
 @item x
-The @code{X} register.
+@code{X}レジスタ。
 
 @end table
 
