@@ -3099,19 +3099,19 @@ System V Release 4s少データ領域参照
 @table @code
 
 @item f
-A floating-point register (if availiable).
+（存在するなら）浮動小数点レジスタ
 
 @item I
-An I-type 12-bit signed immediate.
+Iタイプ12ビット符号あり即値
 
 @item J
-Integer zero.
+整数0
 
 @item K
-A 5-bit unsigned immediate for CSR access instructions.
+CSRアクセス命令用の5ビット符号なし即値。
 
 @item A
-An address that is held in a general-purpose register.
+汎用目的レジスタに保持されるアドレス。
 
 @end table
 
