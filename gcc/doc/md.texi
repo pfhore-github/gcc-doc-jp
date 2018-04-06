@@ -3118,26 +3118,25 @@ CSRアクセス命令用の5ビット符号なし即値。
 @item RX---@file{config/rx/constraints.md}
 @table @code
 @item Q
-An address which does not involve register indirect addressing or
-pre/post increment/decrement addressing.
+レジスタ間接アドレッシング及び前置・後置インクリメント・デクリメントアドレッシングに関与しないアドレス。
 
 @item Symbol
-A symbol reference.
+シンボル参照。
 
 @item Int08
-A constant in the range @minus{}256 to 255, inclusive.
+-256から255まで（両端を含む）の範囲の定数。
 
 @item Sint08
-A constant in the range @minus{}128 to 127, inclusive.
+-128から127まで（両端を含む）の範囲の定数。
 
 @item Sint16
-A constant in the range @minus{}32768 to 32767, inclusive.
+-32768から32767まで（両端を含む）の範囲の定数。
 
 @item Sint24
-A constant in the range @minus{}8388608 to 8388607, inclusive.
+-8388608から8388607まで（両端を含む）の範囲の定数。
 
 @item Uint04
-A constant in the range 0 to 15, inclusive.
+0から15まで（両端を含む）の範囲の定数。
 
 @end table
 
