@@ -3216,101 +3216,85 @@ CSRアクセス命令用の5ビット符号なし即値。
 @item SPARC---@file{config/sparc/sparc.h}
 @table @code
 @item f
-Floating-point register on the SPARC-V8 architecture and
-lower floating-point register on the SPARC-V9 architecture.
+SPARC-V8アーキテクチャでの浮動小数点レジスタとSPARC-V9アーキテクチャでの低位浮動小数点レジスタ。
 
 @item e
-Floating-point register.  It is equivalent to @samp{f} on the
-SPARC-V8 architecture and contains both lower and upper
-floating-point registers on the SPARC-V9 architecture.
+浮動小数点レジスタ。SPARC-V8アーキテクチャでは@samp{f}と同等であり、SPARC-V9アーキテクチャでは低位と上位の両方の浮動小数点レジスタを含む。
 
 @item c
-Floating-point condition code register.
+浮動小数点条件コードレジスタ。
 
 @item d
-Lower floating-point register.  It is only valid on the SPARC-V9
-architecture when the Visual Instruction Set is available.
+低位浮動小数点レジスタ。Visual Instruction Setが利用可能なときのSPARC-V9アーキテクチャでの正当である。
 
 @item b
-Floating-point register.  It is only valid on the SPARC-V9 architecture
-when the Visual Instruction Set is available.
+浮動小数点レジスタ。Visual Instruction Setが利用可能なときのSPARC-V9アーキテクチャでの正当である。
 
 @item h
-64-bit global or out register for the SPARC-V8+ architecture.
+SPARC-V8+アーキテクチャ用の64ビットグローバル及び出力レジスタ。
 
 @item C
-The constant all-ones, for floating-point.
+浮動小数点用の全ビット1定数。
 
 @item A
-Signed 5-bit constant
+符号付き5ビット定数
 
 @item D
-A vector constant
+ベクトル定数
 
 @item I
-Signed 13-bit constant
+符号付き13ビット定数
 
 @item J
-Zero
+ゼロ
 
 @item K
-32-bit constant with the low 12 bits clear (a constant that can be
-loaded with the @code{sethi} instruction)
+低位12ビットが0の32ビット定数。（@code{sethi}命令でロードできる定数）
 
 @item L
-A constant in the range supported by @code{movcc} instructions (11-bit
-signed immediate)
+@code{movcc}命令でサポートされる範囲の定数（11ビット符号あり即値）
 
 @item M
-A constant in the range supported by @code{movrcc} instructions (10-bit
-signed immediate)
+@code{movrcc}命令でサポートされる範囲の定数（10ビット符号あり即値）
 
 @item N
-Same as @samp{K}, except that it verifies that bits that are not in the
-lower 32-bit range are all zero.  Must be used instead of @samp{K} for
-modes wider than @code{SImode}
+低位32ビットの範囲でないビットがすべて0であるいことを確かめることを除いて、＠samp{K}と同じ。@code{SImode}よりも広いモードでは大抵は@samp{K}の代わりに使われる。
 
 @item O
-The constant 4096
+定数4096
 
 @item G
-Floating-point zero
+浮動小数点0
 
 @item H
-Signed 13-bit constant, sign-extended to 32 or 64 bits
+符号あり13ビット定数で、32ビットか64ビットに符号拡張される
 
 @item P
-The constant -1
+定数-1
 
 @item Q
-Floating-point constant whose integral representation can
-be moved into an integer register using a single sethi
-instruction
+整数部分が単一のsethi命令を使って整数レジスタに移動できる浮動小数点定数
 
 @item R
-Floating-point constant whose integral representation can
-be moved into an integer register using a single mov
-instruction
+整数部分が単一のmov命令を使って整数レジスタに移動できる浮動小数点定数
 
 @item S
-Floating-point constant whose integral representation can
-be moved into an integer register using a high/lo_sum
-instruction sequence
+整数部分がhigh/lo_suｍ命令列を使って整数レジスタに移動できる浮動小数点定数
 
 @item T
-Memory address aligned to an 8-byte boundary
+8バイト境界で整列されたメモリアドレス
 
 @item U
-Even register
+偶数レジスタ
 
 @item W
-Memory address for @samp{e} constraint registers
+@samp{e}制約レジスタ用のメモリアドレス
 
 @item w
-Memory address with only a base register
+ベースレジスタのみでのメモリアドレス
 
 @item Y
-Vector zero
+ベクトル0
 
 @end table
 
