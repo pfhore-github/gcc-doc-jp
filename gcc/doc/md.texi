@@ -3143,73 +3143,72 @@ CSRアクセス命令用の5ビット符号なし即値。
 @item S/390 and zSeries---@file{config/s390/s390.h}
 @table @code
 @item a
-Address register (general purpose register except r0)
+アドレスレジスタ（r0以外の汎用目的レジスタ）
 
 @item c
-Condition code register
+条件コード・レジスタ
 
 @item d
-Data register (arbitrary general purpose register)
+データレジスタ（任意の汎用目的レジスタ）
 
 @item f
-Floating-point register
+浮動小数点レジスタ
 
 @item I
-Unsigned 8-bit constant (0--255)
+符号なし８ビット定数（0から255）
 
 @item J
-Unsigned 12-bit constant (0--4095)
+符号なし12ビット定数（0から4095）
 
 @item K
-Signed 16-bit constant (@minus{}32768--32767)
+符号あり16ビット定数（-32768から32767）
 
 @item L
-Value appropriate as displacement.
+変位として適切な値
 @table @code
 @item (0..4095)
-for short displacement
+短い変位
 @item (@minus{}524288..524287)
-for long displacement
+長い変位
 @end table
 
 @item M
-Constant integer with a value of 0x7fffffff.
+0x7fffffffの値を持つ定数。
 
 @item N
-Multiple letter constraint followed by 4 parameter letters.
+複数の文字の制約の後に4つのパラメータ文字。
 @table @code
 @item 0..9:
-number of the part counting from most to least significant
+上位から下位へと数える部分の数
 @item H,Q:
-mode of the part
+部分のモード
 @item D,S,H:
-mode of the containing operand
+含んでいるオペランドのモード
 @item 0,F:
-value of the other parts (F---all bits set)
+他の部分の値（Fは全ビットがセット）
 @end table
-The constraint matches if the specified part of a constant
-has a value different from its other parts.
+指定された定数の一部が他の部分と異なる値を持つばらば、制約は一致する。
 
 @item Q
-Memory reference without index register and with short displacement.
+インデックスレジスタなしで短い変位を持つメモリ参照。
 
 @item R
-Memory reference with index register and short displacement.
+インデックスレジスタと短い変位を持つメモリ参照。
 
 @item S
-Memory reference without index register but with long displacement.
+インクックスレジスタなしで長い変位を持つメモリ参照。
 
 @item T
-Memory reference with index register and long displacement.
+インデックスレジスタと長い変位を持つメモリ参照。
 
 @item U
-Pointer with short displacement.
+短い変位を持つポインタ。
 
 @item W
-Pointer with long displacement.
+長い変位を持つポインタ。
 
 @item Y
-Shift count operand.
+シフト数オペランド。
 
 @end table
 
