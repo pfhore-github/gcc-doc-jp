@@ -3301,70 +3301,70 @@ SPARC-V8+アーキテクチャ用の64ビットグローバル及び出力レジ
 @item SPU---@file{config/spu/spu.h}
 @table @code
 @item a
-An immediate which can be loaded with the il/ila/ilh/ilhu instructions.  const_int is treated as a 64 bit value.
+il/ila/ilh/ilhu命令でロード可能な即値。const_intは64ビット値として扱われる。
 
 @item c
-An immediate for and/xor/or instructions.  const_int is treated as a 64 bit value.
+and/xor/or命令用の即値。const_intは64ビット値として扱われる。
 
 @item d
-An immediate for the @code{iohl} instruction.  const_int is treated as a 64 bit value.
+@code{iohl}命令用の即値。const_intは64ビット値として扱われる。
 
 @item f
-An immediate which can be loaded with @code{fsmbi}.
+@code{fsmbi}でロード可能な即値。
 
 @item A
-An immediate which can be loaded with the il/ila/ilh/ilhu instructions.  const_int is treated as a 32 bit value.
+il/ila/ilh/ilhu命令でロード可能な即値。const_intは32ビット値として扱われる。
 
 @item B
-An immediate for most arithmetic instructions.  const_int is treated as a 32 bit value.
+大抵の算術命令用の即値。const_intは32ビット値として扱われる。
 
 @item C
-An immediate for and/xor/or instructions.  const_int is treated as a 32 bit value.
+and/xor/or命令用の即値。const_intは32ビット値として扱われる。
 
 @item D
-An immediate for the @code{iohl} instruction.  const_int is treated as a 32 bit value.
+@code{iohl}命令用の即値。const_intは32ビット値として扱われる。
 
 @item I
-A constant in the range [@minus{}64, 63] for shift/rotate instructions.
+シフト・ロテート命令用の[-64, 63]の範囲の定数。
 
 @item J
-An unsigned 7-bit constant for conversion/nop/channel instructions.
+変換・nop・チャンネル命令用の符号なし7ビット定数。
 
 @item K
-A signed 10-bit constant for most arithmetic instructions.
+大抵の算術命令用の符号あり10ビット定数。
 
 @item M
-A signed 16 bit immediate for @code{stop}.
+@code{stop}用の符号あり16ビット即値。
 
 @item N
-An unsigned 16-bit constant for @code{iohl} and @code{fsmbi}.
+@code{iohl}と@code{fsmbi}用の符号なし16ビット定数。
 
 @item O
-An unsigned 7-bit constant whose 3 least significant bits are 0.
+最下位3ビットが0である符号なし7ビット定数。
 
 @item P
-An unsigned 3-bit constant for 16-byte rotates and shifts
+16バイトロテートとシフト命令用の符号なし3ビット定数。
 
 @item R
-Call operand, reg, for indirect calls
+間接呼び出し用の呼び出しオペランド、レジスタ。
 
 @item S
-Call operand, symbol, for relative calls.
+相対呼び出し用の呼び出しオペランド、シンボル。
 
 @item T
-Call operand, const_int, for absolute calls.
+全体呼び出し用の呼び出しオペランド、const_int。
 
 @item U
-An immediate which can be loaded with the il/ila/ilh/ilhu instructions.  const_int is sign extended to 128 bit.
+il/ila/ilh/ilhu命令でロードされる即値。const_intは128ビットに符号拡張される。
 
 @item W
-An immediate for shift and rotate instructions.  const_int is treated as a 32 bit value.
+シフトとロテート命令用の即値。const_intは32ビット値として扱われる。
 
 @item Y
-An immediate for and/xor/or instructions.  const_int is sign extended as a 128 bit.
+and/xor/or命令用の即値。const_intは128ビットに符号拡張される。
 
 @item Z
-An immediate for the @code{iohl} instruction.  const_int is sign extended to 128 bit.
+@code{iohl}命令用の即値。const_intは128ビットに符号拡張される。
 
 @end table
 
