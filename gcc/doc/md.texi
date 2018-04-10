@@ -3371,63 +3371,61 @@ and/xor/or命令用の即値。const_intは128ビットに符号拡張される�
 @item TI C6X family---@file{config/c6x/constraints.md}
 @table @code
 @item a
-Register file A (A0--A31).
+レジスタファイルA(A0からA31)。
 
 @item b
-Register file B (B0--B31).
+レジスタファイルB(B0からB31)。
 
 @item A
-Predicate registers in register file A (A0--A2 on C64X and
-higher, A1 and A2 otherwise).
+レジスタファイルA内の述語レジスタ（C64X以降ではA0からA2、それ以外はA1とA2）。
 
 @item B
-Predicate registers in register file B (B0--B2).
+レジスタフィアルBでの述語レジスタ（B0からB2）。
 
 @item C
-A call-used register in register file B (B0--B9, B16--B31).
+レジスタファイルBでの呼び出しで使われるレジスタ（B0からB9、B16からB31）。
 
 @item Da
-Register file A, excluding predicate registers (A3--A31,
-plus A0 if not C64X or higher).
+述語レジスタを除いたレジスタファイルA（A3からA31とC64X以降でなければA0）。
 
 @item Db
-Register file B, excluding predicate registers (B3--B31).
+述語レジスタを除いたレジスタファイルB（B3からB31）。
 
 @item Iu4
-Integer constant in the range 0 @dots{} 15.
+0から15までの範囲の整数定数。
 
 @item Iu5
-Integer constant in the range 0 @dots{} 31.
+0から31までの範囲の整数定数。
 
 @item In5
-Integer constant in the range @minus{}31 @dots{} 0.
+-31から0までの範囲の整数定数。
 
 @item Is5
-Integer constant in the range @minus{}16 @dots{} 15.
+-16から15までの範囲の整数定数。
 
 @item I5x
-Integer constant that can be the operand of an ADDA or a SUBA insn.
+ADDA及びSUBA命令のオペランドとして使うことができる整数定数。
 
 @item IuB
-Integer constant in the range 0 @dots{} 65535.
+0から65535の範囲の定数整数。
 
 @item IsB
-Integer constant in the range @minus{}32768 @dots{} 32767.
+-32768から32767の範囲の定数整数。
 
 @item IsC
-Integer constant in the range @math{-2^{20}} @dots{} @math{2^{20} - 1}.
+@math{-2^{20}} @dots{} @math{2^{20} - 1}の範囲の整数定数。
 
 @item Jc
-Integer constant that is a valid mask for the clr instruction.
+clr命令の正当なマスクである整数定数。
 
 @item Js
-Integer constant that is a valid mask for the set instruction.
+set命令の正当なマスクである整数定数。
 
 @item Q
-Memory location with A base register.
+A基底レジスタによるメモリ場所。
 
 @item R
-Memory location with B base register.
+B基底レジスタによるメモリ場所。
 
 @ifset INTERNALS
 @item S0
@@ -3447,7 +3445,7 @@ A memory operand with an address that cannot be used in an unaligned access.
 
 @end ifset
 @item Z
-Register B14 (aka DP).
+レジスタB14（すなわちDP）
 
 @end table
 
