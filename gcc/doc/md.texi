@@ -3462,68 +3462,62 @@ A memory operand with an address that cannot be used in an unaligned access.
 @itemx R08
 @itemx R09
 @itemx R10
-Each of these represents a register constraint for an individual
-register, from r0 to r10.
+これらのそれぞれは個々のレジスタ、R0からR10まで用のレジスタ制約を表現する。
 
 @item I
-Signed 8-bit integer constant.
+符号付き8ビット整数定数。
 
 @item J
-Signed 16-bit integer constant.
+符号付き16ビット整数定数。
 
 @item K
-Unsigned 16-bit integer constant.
+符号なし16ビット整数定数。
 
 @item L
-Integer constant that fits in one signed byte when incremented by one
-(@minus{}129 @dots{} 126).
+1加算したときに符号あり１バイトに収まる整数定数（-129から126）
 
 @item m
-Memory operand.  If used together with @samp{<} or @samp{>}, the
-operand can have postincrement which requires printing with @samp{%In}
-and @samp{%in} on TILE-Gx.  For example:
+メモリオペランド。@samp{<}および@samp{>}と一緒に使われたときは、オペランドは後置インクリメントを持つことができ、TILE-Gx上では@samp{%In}と@samp{$in}をつけて出力する必要がある。例えば、
 
 @smallexample
 asm ("st_add %I0,%1,%i0" : "=m<>" (*mem) : "r" (val));
 @end smallexample
 
 @item M
-A bit mask suitable for the BFINS instruction.
+BFINS命令に適したビットマスク。
 
 @item N
-Integer constant that is a byte tiled out eight times.
+8倍のバイト数の整数定数。
 
 @item O
-The integer zero constant.
+整数定数0。
 
 @item P
-Integer constant that is a sign-extended byte tiled out as four shorts.
+４つのshortのバイト数の符号拡張された整数定数。
 
 @item Q
-Integer constant that fits in one signed byte when incremented
-(@minus{}129 @dots{} 126), but excluding -1.
+インクリメントされたときに符号あり１バイトに収まる（-129から126）が、-1を含まない整数定数。
 
 @item S
-Integer constant that has all 1 bits consecutive and starting at bit 0.
+ビット0から始まり、全1ビット連続する整数定数。
 
 @item T
-A 16-bit fragment of a got, tls, or pc-relative reference.
+got、tls、PC相対参照の16ビット断片。
 
 @item U
-Memory operand except postincrement.  This is roughly the same as
-@samp{m} when not used together with @samp{<} or @samp{>}.
+ポストインクリメントを除くメモリ参照。これは@samp{<}および@samp{>}と一緒に使えないことを除いてはおおよそ@samp{m}と同等である。
 
 @item W
-An 8-element vector constant with identical elements.
+同一の要素をもつ8要素ベクトル定数。
 
 @item Y
-A 4-element vector constant with identical elements.
+同一の要素をもつ4要素ベクトル定数。
 
 @item Z0
-The integer constant 0xffffffff.
+整数定数0xffffffff。
 
 @item Z1
-The integer constant 0xffffffff00000000.
+整数定数0xffffffff00000000。
 
 @end table
 
