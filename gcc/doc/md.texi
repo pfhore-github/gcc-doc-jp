@@ -3477,7 +3477,7 @@ A memory operand with an address that cannot be used in an unaligned access.
 1加算したときに符号あり１バイトに収まる整数定数（-129から126）
 
 @item m
-メモリオペランド。@samp{<}および@samp{>}と一緒に使われたときは、オペランドは後置インクリメントを持つことができ、TILE-Gx上では@samp{%In}と@samp{$in}をつけて出力する必要がある。例えば、
+メモリオペランド。@samp{<}および@samp{>}と一緒に使われたときは、オペランドは後置インクリメントを持つことができ、TILE-Gx上では@samp{%In}と@samp{%in}をつけて出力する必要がある。例えば、
 
 @smallexample
 asm ("st_add %I0,%1,%i0" : "=m<>" (*mem) : "r" (val));
@@ -3534,60 +3534,53 @@ got、tls、PC相対参照の16ビット断片。
 @itemx R08
 @itemx R09
 @itemx R10
-Each of these represents a register constraint for an individual
-register, from r0 to r10.
+これらのそれぞれは個々のレジスタ、R0からR10まで用のレジスタ制約を表現する。
 
 @item I
-Signed 8-bit integer constant.
+符号付き8ビット整数定数。
 
 @item J
-Signed 16-bit integer constant.
+符号付き16ビット整数定数。
 
 @item K
-Nonzero integer constant with low 16 bits zero.
+下位16ビットが0である非ゼロの整数定数。
 
 @item L
-Integer constant that fits in one signed byte when incremented by one
-(@minus{}129 @dots{} 126).
+1加算したときに符号あり１バイトに収まる整数定数（-129から126）
 
 @item m
-Memory operand.  If used together with @samp{<} or @samp{>}, the
-operand can have postincrement which requires printing with @samp{%In}
-and @samp{%in} on TILEPro.  For example:
+メモリオペランド。@samp{<}および@samp{>}と一緒に使われたときは、オペランドは後置インクリメントを持つことができ、TILEPro上では@samp{%In}と@samp{%in}をつけて出力する必要がある。例えば、
 
 @smallexample
 asm ("swadd %I0,%1,%i0" : "=m<>" (mem) : "r" (val));
 @end smallexample
 
 @item M
-A bit mask suitable for the MM instruction.
+MM命令に適したビットマスク。
 
 @item N
-Integer constant that is a byte tiled out four times.
+4倍のバイト数の整数定数。
 
 @item O
-The integer zero constant.
+整数定数0。
 
 @item P
-Integer constant that is a sign-extended byte tiled out as two shorts.
+2つのshortのバイト数の符号拡張された整数定数。
 
 @item Q
-Integer constant that fits in one signed byte when incremented
-(@minus{}129 @dots{} 126), but excluding -1.
+インクリメントされたときに符号あり１バイトに収まる（-129から126）が、-1を含まない整数定数。
 
 @item T
-A symbolic operand, or a 16-bit fragment of a got, tls, or pc-relative
-reference.
+シンボルオペランド、及びgot、tls、PC相対参照の16ビット断片。
 
 @item U
-Memory operand except postincrement.  This is roughly the same as
-@samp{m} when not used together with @samp{<} or @samp{>}.
+ポストインクリメントを除くメモリ参照。これは@samp{<}および@samp{>}と一緒に使えないことを除いてはおおよそ@samp{m}と同等である。
 
 @item W
-A 4-element vector constant with identical elements.
+同一の要素をもつ4要素ベクトル定数。
 
 @item Y
-A 2-element vector constant with identical elements.
+同一の要素をもつ2要素ベクトル定数。
 
 @end table
 
