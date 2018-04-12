@@ -3587,13 +3587,13 @@ MM命令に適したビットマスク。
 @item Visium---@file{config/visium/constraints.md}
 @table @code
 @item b
-EAM register @code{mdb}
+EAMレジスタ@code{mdb}
 
 @item c
-EAM register @code{mdc}
+EAMレジスタ@code{mdc}
 
 @item f
-Floating point register
+浮動小数点レジスタ
 
 @ifset INTERNALS
 @item k
@@ -3601,37 +3601,37 @@ Register for sibcall optimization
 @end ifset
 
 @item l
-General register, but not @code{r29}, @code{r30} and @code{r31}
+@code{r29}、@code{r30}、@code{r31}を除いた汎用レジスタ。
 
 @item t
-Register @code{r1}
+レジスタ@code{r1}
 
 @item u
-Register @code{r2}
+レジスタ@code{r2}
 
 @item v
-Register @code{r3}
+レジスタ@code{r3}
 
 @item G
-Floating-point constant 0.0
+浮動小数点定数0.0
 
 @item J
-Integer constant in the range 0 .. 65535 (16-bit immediate)
+範囲0から65535の整数定数（16ビット即値）
 
 @item K
-Integer constant in the range 1 .. 31 (5-bit immediate)
+範囲1から31までの整数定数（５ビット即値）
 
 @item L
-Integer constant in the range @minus{}65535 .. @minus{}1 (16-bit negative immediate)
+範囲-65535から-1までの整数定数（16ビット負の即値）
 
 @item M
-Integer constant @minus{}1
+整数定数-1
 
 @item O
-Integer constant 0
+整数定数0
 
 @item P
-Integer constant 32
+整数定数32
 @end table
 
 @item x86 family---@file{config/i386/constraints.md}
