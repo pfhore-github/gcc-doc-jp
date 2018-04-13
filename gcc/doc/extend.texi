@@ -5763,43 +5763,29 @@ asm ("fyl2xp1" : "=t" (result) : "0" (x), "u" (y) : "st(1)");
 @raisesections
 
 @node Asm Labels
-@subsection Controlling Names Used in Assembler Code
+@subsection アセンブラコードで使われる名前を制御する
 @cindex assembler names for identifiers
 @cindex names used in assembler code
 @cindex identifiers, names in assembler code
 
-You can specify the name to be used in the assembler code for a C
-function or variable by writing the @code{asm} (or @code{__asm__})
-keyword after the declarator.
-It is up to you to make sure that the assembler names you choose do not
-conflict with any other assembler symbols, or reference registers.
+宣言子の後ろに@code{asm}（または@code{__ asm__}）キーワードを書くことによって、C関数または変数のアセンブラコードで使用される名前を指定できる。選択したアセンブラ名が他のアセンブラシンボルまたは参照レジスタと競合しないようにすることは、あなたの責任である。
 
-@subsubheading Assembler names for data:
+@subsubheading データ用のアセンブラ名
 
-This sample shows how to specify the assembler name for data:
+このサンプルは、データのアセンブラ名を指定する方法を示している。
 
 @smallexample
 int foo asm ("myfoo") = 2;
 @end smallexample
 
 @noindent
-This specifies that the name to be used for the variable @code{foo} in
-the assembler code should be @samp{myfoo} rather than the usual
-@samp{_foo}.
+これは、アセンブラコードの変数@code {foo}に使用される名前が通常の@samp{_foo}ではなく@samp{myfoo}であることを指定する。
 
-On systems where an underscore is normally prepended to the name of a C
-variable, this feature allows you to define names for the
-linker that do not start with an underscore.
+通常、アンダースコアがC変数の名前の前に付加されているシステムでは、この機能を使用して、アンダースコアで始まらないリンカーの名前を定義できる。GCCでは静的でないローカル変数は、アセンブラ名を持たないためにこの機能を使用することはサポートしていない。 変数を特定のレジスタに入れる場合は、@ref{Explicit Register Variables}を参照せよ。
 
-GCC does not support using this feature with a non-static local variable 
-since such variables do not have assembler names.  If you are
-trying to put the variable in a particular register, see 
-@ref{Explicit Register Variables}.
+@subsubheading 関数のアセンブラ名
 
-@subsubheading Assembler names for functions:
-
-To specify the assembler name for functions, write a declaration for the 
-function before its definition and put @code{asm} there, like this:
+関数のアセンブラ名を指定するには、その定義の前に関数の宣言を記述し、そこに@code{asm}を入れる。
 
 @smallexample
 int func (int x, int y) asm ("MYFUNC");
@@ -5810,8 +5796,7 @@ int func (int x, int y)
 @end smallexample
 
 @noindent
-This specifies that the name to be used for the function @code{func} in
-the assembler code should be @code{MYFUNC}.
+これは、アセンブラコードの関数@code {func}に使用される名前が@code{MYFUNC}であることを指定する。
 
 @node Explicit Register Variables
 @subsection Variables in Specified Registers
