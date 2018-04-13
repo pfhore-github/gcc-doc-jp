@@ -3831,25 +3831,25 @@ Rxによって指示されるレジスタ（未実装）。
 @item Xtensa---@file{config/xtensa/constraints.md}
 @table @code
 @item a
-General-purpose 32-bit register
+汎用目的32ビットレジスタ
 
 @item b
-One-bit boolean register
+1ビット真偽値レジスタ
 
 @item A
-MAC16 40-bit accumulator register
+MAC16 40ビット加算器レジスタ
 
 @item I
-Signed 12-bit integer constant, for use in MOVI instructions
+MOVI命令で使う用の符号あり12ビット整数定数。
 
 @item J
-Signed 8-bit integer constant, for use in ADDI instructions
+ADDI命令で使う用の符号あり8ビット整数定数。
 
 @item K
-Integer constant valid for BccI instructions
+BccI命令用の正当な整数定数。
 
 @item L
-Unsigned constant valid for BccUI instructions
+BccUI命令用の正当な符号なし定数。
 
 @end table
 
