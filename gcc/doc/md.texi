@@ -2965,7 +2965,7 @@ XXSPTLITBと符号拡張でロードできるベクトル定数。
 
 @item m
 メモリオペランド。通常、@code{m}はベースレジスタを更新するアドレスを許可しない。@samp{<}か@samp{>}制約も使われたならば、それらは許可され、したがってPowerPCターゲットではこの場合には@code{asm}文がオペランドに正確に1回だけアクセスするならばその場合のみ@code{asm}文で@samp{m<>}を使っても安全である。@code{asm}文は
-対応するロード・ストア命令で「更新」フラグの置き場所として@samp{%U@var{<opno>}も使わなくてはならない。例えば、
+対応するロード・ストア命令で「更新」フラグの置き場所として@samp{%U@var{<opno>}}も使わなくてはならない。例えば、
 
 @smallexample
 asm ("st%U0 %1,%0" : "=m<>" (mem) : "r" (val));
@@ -3637,17 +3637,12 @@ Register for sibcall optimization
 @item x86 family---@file{config/i386/constraints.md}
 @table @code
 @item R
-Legacy register---the eight integer registers available on all
-i386 processors (@code{a}, @code{b}, @code{c}, @code{d},
-@code{si}, @code{di}, @code{bp}, @code{sp}).
+古いレジスタ、全i386プロセッサで利用可能な8ビットレジスタ。(@code{a}、@code{b}、@code{c}、@code{d}、@code{si}、@code{di}、@code{bp}、@code{sp}）。
 
 @item q
-Any register accessible as @code{@var{r}l}.  In 32-bit mode, @code{a},
-@code{b}, @code{c}, and @code{d}; in 64-bit mode, any integer register.
-
+@code{@var{r}l}としてアクセス可能なレジスタ。32ビットモードでは、@code{a}、@code{b}、@code{c}、@code{d}。64ビットでは、任意の整数レジスタ。
 @item Q
-Any register accessible as @code{@var{r}h}: @code{a}, @code{b},
-@code{c}, and @code{d}.
+@code{@var{r}h}としてアクセス可能なレジスタ。@code{a}、@code{b}、@code{c}、@code{d}。
 
 @ifset INTERNALS
 @item l
@@ -3656,28 +3651,25 @@ access: that is, any general register except the stack pointer.
 @end ifset
 
 @item a
-The @code{a} register.
+@code{a}レジスタ。
 
 @item b
-The @code{b} register.
+@code{b}レジスタ。
 
 @item c
-The @code{c} register.
+@code{c}レジスタ。
 
 @item d
-The @code{d} register.
+@code{d}レジスタ。
 
 @item S
-The @code{si} register.
+@code{si}レジスタ。
 
 @item D
-The @code{di} register.
+@code{di}レジスタ。
 
 @item A
-The @code{a} and @code{d} registers.  This class is used for instructions
-that return double word results in the @code{ax:dx} register pair.  Single
-word values will be allocated either in @code{ax} or @code{dx}.
-For example on i386 the following implements @code{rdtsc}:
+@code{a}と@code{d}レジスタ。このクラスは、@code{ax:dx}レジスタペアでダブルワードの結果を返す命令のために使われる。単一のワードの値は@code{ax}か@code{dx}のどちらかに割り当てられる。例えばi386では以下は@code{rdtsc}を実装する。
 
 @smallexample
 unsigned long long rdtsc (void)
@@ -3688,8 +3680,7 @@ unsigned long long rdtsc (void)
 @}
 @end smallexample
 
-This is not correct on x86-64 as it would allocate tick in either @code{ax}
-or @code{dx}.  You have to use the following variant instead:
+これは、@code {ax}または@code{dx}にティックを割り当てるため、x86-64では正しくない。 代わりに、次のバリアントを使用する必要がある。
 
 @smallexample
 unsigned long long rdtsc (void)
@@ -3702,22 +3693,22 @@ unsigned long long rdtsc (void)
 
 
 @item f
-Any 80387 floating-point (stack) register.
+任意の80387浮動小数点（スタック）レジスタ。
 
 @item t
-Top of 80387 floating-point stack (@code{%st(0)}).
+80387浮動小数点スタックのトップ（@code{%st(0)}）。
 
 @item u
-Second from top of 80387 floating-point stack (@code{%st(1)}).
+80387浮動小数点スタックのトップから2番め（@code{%st(1)}）。
 
 @item y
-Any MMX register.
+任意のMMXレジスタ。
 
 @item x
-Any SSE register.
+任意のSSEレジスタ。
 
 @item Yz
-First SSE register (@code{%xmm0}).
+最初のSSE用レジスタ（@code{%xmm0}）。
 
 @ifset INTERNALS
 @item Y2
@@ -3731,23 +3722,22 @@ Any MMX register, when inter-unit moves are enabled.
 @end ifset
 
 @item I
-Integer constant in the range 0 @dots{} 31, for 32-bit shifts.
+32ビットシフト用の0から31までの範囲の整数定数。
 
 @item J
-Integer constant in the range 0 @dots{} 63, for 64-bit shifts.
+64ビットシフト用の0から63までの範囲の整数定数。
 
 @item K
-Signed 8-bit integer constant.
+符号あり8ビット整数定数。
 
 @item L
-@code{0xFF} or @code{0xFFFF}, for andsi as a zero-extending move.
+ゼロ拡張ムーブとしてのandis用の@code{0xFF}及び@code{0xFFFF}。
 
 @item M
-0, 1, 2, or 3 (shifts for the @code{lea} instruction).
+0、1、2、3（@code{lea}命令用のシフト）。
 
 @item N
-Unsigned 8-bit integer constant (for @code{in} and @code{out}
-instructions).
+符号なし8ビット整数定数（@code{in}と@code{out}用。）
 
 @ifset INTERNALS
 @item O
@@ -3755,20 +3745,16 @@ Integer constant in the range 0 @dots{} 127, for 128-bit shifts.
 @end ifset
 
 @item G
-Standard 80387 floating point constant.
+標準80387浮動小数点定数。
 
 @item C
-SSE constant zero operand.
+SSE定数0オペランド。
 
 @item e
-32-bit signed integer constant, or a symbolic reference known
-to fit that range (for immediate operands in sign-extending x86-64
-instructions).
+32ビット符号あり整数定数、及びその範囲に収まる事がわかっているシンボルの参照。（符号拡張x86-64命令での即値オペランド用）
 
 @item Z
-32-bit unsigned integer constant, or a symbolic reference known
-to fit that range (for immediate operands in zero-extending x86-64
-instructions).
+32ビット符号なし整数定数、及びその範囲に収まる事がわかっているシンボルの参照。（ゼロ拡張x86-64命令での即値オペランド用）
 
 @end table
 
