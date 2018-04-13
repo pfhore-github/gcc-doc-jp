@@ -2334,10 +2334,10 @@ $mem0から$mem15までのメモリに基づいた疑似レジスタ
 @minus{}65536 @dots{} @minus{}1
 
 @item Ilb
-正確に1ビットセットを持つ8ビット値。
+正確に1ビットがセットされた8ビット値。
 
 @item Ilw
-正確に1ビットセットを持つ16ビット値。
+正確に1ビットがセットされた16ビット値。
 
 @item Sd
 共通ソース・デスティネーションメモリアドレスモード。
@@ -3761,70 +3761,70 @@ SSE定数0オペランド。
 @item Xstormy16---@file{config/stormy16/stormy16.h}
 @table @code
 @item a
-Register r0.
+レジスタr0。
 
 @item b
-Register r1.
+レジスタr1。
 
 @item c
-Register r2.
+レジスタr2。
 
 @item d
-Register r8.
+レジスタr8。
 
 @item e
-Registers r0 through r7.
+レジスタr0からr7。
 
 @item t
-Registers r0 and r1.
+レジスタr0とr1。
 
 @item y
-The carry register.
+キャリーレジスタ。
 
 @item z
-Registers r8 and r9.
+レジスタr8とr9。
 
 @item I
-A constant between 0 and 3 inclusive.
+境界を含む0から3までの定数。
 
 @item J
-A constant that has exactly one bit set.
+正確に1ビットがセットされている定数。
 
 @item K
-A constant that has exactly one bit clear.
+正確に1ビットがクリアされている定数。
 
 @item L
-A constant between 0 and 255 inclusive.
+境界を含む0から255までの定数。
 
 @item M
-A constant between @minus{}255 and 0 inclusive.
+境界を含む-255から0までの定数。
 
 @item N
-A constant between @minus{}3 and 0 inclusive.
+境界を含む-3から0までの定数。
 
 @item O
-A constant between 1 and 4 inclusive.
+境界を含む1から4までの定数。
 
 @item P
-A constant between @minus{}4 and @minus{}1 inclusive.
+境界を含む-4から-1までの定数。
 
 @item Q
-A memory reference that is a stack push.
+スタックプッシュであるメモリ参照。
 
 @item R
-A memory reference that is a stack pop.
+スタックポップであるメモリ参照。
 
 @item S
-A memory reference that refers to a constant address of known value.
+既知の値の定数アドレスを参照するメモリ参照。
 
 @item T
-The register indicated by Rx (not implemented yet).
+Rxによって指示されるレジスタ（未実装）。
 
 @item U
-A constant that is not between 2 and 15 inclusive.
+協会を含む2から15までの定数。
 
 @item Z
-The constant 0.
+定数0。
 
 @end table
 
