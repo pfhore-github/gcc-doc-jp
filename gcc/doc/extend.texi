@@ -5919,26 +5919,11 @@ MIPSプラットフォームでは、特性が少し異なるローカルレジ�
 GNU Compiler Collection (GCC) Internals}）に関連する用途がある。
 
 @node Size of an asm
-@subsection Size of an @code{asm}
+@subsection @code{asm}のサイズ
 
-Some targets require that GCC track the size of each instruction used
-in order to generate correct code.  Because the final length of the
-code produced by an @code{asm} statement is only known by the
-assembler, GCC must make an estimate as to how big it will be.  It
-does this by counting the number of instructions in the pattern of the
-@code{asm} and multiplying that by the length of the longest
-instruction supported by that processor.  (When working out the number
-of instructions, it assumes that any occurrence of a newline or of
-whatever statement separator character is supported by the assembler --
-typically @samp{;} --- indicates the end of an instruction.)
+ターゲットによっては、GCCが正しいコードを生成するために使用される各命令のサイズを追跡する必要がある。 @code{asm}ステートメントで生成されるコードの最終的な長さはアセンブラでしか認識されないため、GCCはどれくらいの大きさになるかについての見積もりを行う必要がある。 これは、@code{asm}のパターンで命令の数を数え、そのプロセッサでサポートされている最長命令の長さで乗算することで行う。 （命令数を試してみると、改行やアセンブラでサポートされている文の区切り文字（通常@samp {;} ---）があれば、命令の終わりを示しているとみなされる。
 
-Normally, GCC's estimate is adequate to ensure that correct
-code is generated, but it is possible to confuse the compiler if you use
-pseudo instructions or assembler macros that expand into multiple real
-instructions, or if you use assembler directives that expand to more
-space in the object file than is needed for a single instruction.
-If this happens then the assembler may produce a diagnostic saying that
-a label is unreachable.
+通常、正しいコードが生成されるようにGCCの見積もりは適切だが、複数の実命令に展開する擬似命令またはアセンブラマクロを使用する場合、単一の命令で必要とされるよりも多くのオブジェクトファイル内の領域に展開するアセンブラディレクティブを使用する場合、コンパイラを混乱させる可能性がある。この場合、アセンブラはラベルに到達できないという診断を生成することがある。
 
 @node Alternate Keywords
 @section Alternate Keywords
