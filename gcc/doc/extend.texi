@@ -5869,39 +5869,24 @@ register int *foo asm ("r12");
 最終的にコンパイラに自動的にレジスタを選択させる方法があるかもしれないが、最初に選択方法と選択方法を導き出す方法を理解する必要がある。 解決策は明らかではない。
 
 @node Local Register Variables
-@subsubsection Specifying Registers for Local Variables
+@subsubsection ローカル変数用のレジスタを指定する
 @anchor{Local Reg Vars}
 @cindex local variables, specifying registers
 @cindex specifying registers for local variables
 @cindex registers for local variables
 
-You can define a local register variable and associate it with a specified 
-register like this:
+ローカルレジスタ変数を定義し、次のように指定されたレジスタに関連付けることができる：
 
 @smallexample
 register int *foo asm ("r12");
 @end smallexample
 
 @noindent
-Here @code{r12} is the name of the register that should be used.  Note
-that this is the same syntax used for defining global register variables, 
-but for a local variable the declaration appears within a function.  The 
-@code{register} keyword is required, and cannot be combined with 
-@code{static}.  The register name must be a valid register name for the
-target platform.
+ここで@code{r12}は使用すべきレジスタの名前である。これはグローバルレジスタ変数の定義と同じ構文だが、ローカル変数の場合は宣言が関数内に表示される。 @code{register}キーワードは必須で、@code{static}と組み合わせることはできない。 レジスタ名は、ターゲットプラットフォームの有効なレジスタ名でなければならない。
 
-As with global register variables, it is recommended that you choose 
-a register that is normally saved and restored by function calls on your 
-machine, so that calls to library routines will not clobber it.
+グローバルレジスタ変数の場合と同様に、通常は保存され、マシン上の関数呼び出しによってリストアされるレジスタを選択することを推奨する。これにより、ライブラリルーチンへの呼び出しがそれを壊さないようにする。
 
-The only supported use for this feature is to specify registers
-for input and output operands when calling Extended @code{asm} 
-(@pxref{Extended Asm}).  This may be necessary if the constraints for a 
-particular machine don't provide sufficient control to select the desired 
-register.  To force an operand into a register, create a local variable 
-and specify the register name after the variable's declaration.  Then use 
-the local variable for the @code{asm} operand and specify any constraint 
-letter that matches the register:
+この機能で唯一サポートされているのは、Extended @code{asm}（@pxref {Extended Asm}）を呼び出すときに入力オペランドと出力オペランドのためのレジスタを指定することである。 これは、特定の機械に対する制約が所望のレジスタを選択するのに十分な制御を提供しない場合に必要となることがある。 オペランドを強制的にレジスタに入れるには、ローカル変数を作成し、その変数の宣言の後にレジスタ名を指定する。 次に、@code{asm}オペランドにローカル変数を使用し、レジスタと一致する制約文字を指定する。
 
 @smallexample
 register int *p1 asm ("r0") = @dots{};
@@ -5910,11 +5895,7 @@ register int *result asm ("r0");
 asm ("sysint" : "=r" (result) : "0" (p1), "r" (p2));
 @end smallexample
 
-@emph{Warning:} In the above example, be aware that a register (for example 
-@code{r0}) can be call-clobbered by subsequent code, including function 
-calls and library calls for arithmetic operators on other variables (for 
-example the initialization of @code{p2}).  In this case, use temporary 
-variables for expressions between the register assignments:
+@emph{_警告_:} 上記の例では、関数呼び出しと他の変数の算術演算子のライブラリ呼び出し（例えば、@code{p2}の初期化などを含む、後続のコードによってレジスタ（たとえば@code{r0}）を呼び出すことができることに注意せよ）。 この場合、レジスタ割り当て間の式には一時変数を使用する。
 
 @smallexample
 int t1 = @dots{};
@@ -5924,34 +5905,18 @@ register int *result asm ("r0");
 asm ("sysint" : "=r" (result) : "0" (p1), "r" (p2));
 @end smallexample
 
-Defining a register variable does not reserve the register.  Other than
-when invoking the Extended @code{asm}, the contents of the specified 
-register are not guaranteed.  For this reason, the following uses 
-are explicitly @emph{not} supported.  If they appear to work, it is only 
-happenstance, and may stop working as intended due to (seemingly) 
-unrelated changes in surrounding code, or even minor changes in the 
-optimization of a future version of gcc:
+レジスタ変数を定義しても、レジスタは予約されない。 拡張@code{asm}を呼び出すとき以外は、指定されたレジスタの内容は保証されない。 このため、以下の用途は明示的にに対応してい@emph{_ない_}。 動作しているように見える場合は偶然であり、周辺コードの（一見）関連のない変更、またはgccの将来のバージョンの最適化におけるマイナーな変更のために意図したとおりに動作を停止する可能性がある。
 
 @itemize @bullet
-@item Passing parameters to or from Basic @code{asm}
-@item Passing parameters to or from Extended @code{asm} without using input 
-or output operands.
-@item Passing parameters to or from routines written in assembler (or
-other languages) using non-standard calling conventions.
+@item 基本@code{asm}とのパラメータのやり取り
+@item 入力・出力オペランドを使わずに拡張@code{asm}とのパラメータのやり取り
+@item 非標準の呼び出し規約を使ったアセンブラ（及び他の言語）で書かれたルーチンとのパラメータのやり取り
 @end itemize
 
-Some developers use Local Register Variables in an attempt to improve 
-gcc's allocation of registers, especially in large functions.  In this 
-case the register name is essentially a hint to the register allocator.
-While in some instances this can generate better code, improvements are
-subject to the whims of the allocator/optimizers.  Since there are no
-guarantees that your improvements won't be lost, this usage of Local
-Register Variables is discouraged.
+いくつかの開発者は、gccのレジスタの割り当てを改善するために、特に大きな関数でローカルレジスタ変数を使用する。 この場合、レジスタ名は基本的にレジスタアロケータのヒントになる。場合によってはより良いコードを生成することができるが、改善はアロケータ/オプティマイザの気まぐれに左右される。あなたの改善が失われないという保証はないので、このローカルレジスタ変数の使用は推奨しない。
 
-On the MIPS platform, there is related use for local register variables 
-with slightly different characteristics (@pxref{MIPS Coprocessors,, 
-Defining coprocessor specifics for MIPS targets, gccint, 
-GNU Compiler Collection (GCC) Internals}).
+MIPSプラットフォームでは、特性が少し異なるローカルレジスタ変数（@pxref {MIPS CoprocessorsDefining coprocessor specifics for MIPS targets, gccint, 
+GNU Compiler Collection (GCC) Internals}）に関連する用途がある。
 
 @node Size of an asm
 @subsection Size of an @code{asm}
