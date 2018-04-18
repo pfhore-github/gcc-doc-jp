@@ -5958,39 +5958,25 @@ GNU Compiler Collection (GCC) Internals}）に関連する用途がある。
 この拡張はGNU C ++ではサポートされていない。
 
 @node Function Names
-@section Function Names as Strings
+@section 文字列としての関数名
 @cindex @code{__func__} identifier
 @cindex @code{__FUNCTION__} identifier
 @cindex @code{__PRETTY_FUNCTION__} identifier
 
-GCC provides three magic constants that hold the name of the current
-function as a string.  In C++11 and later modes, all three are treated
-as constant expressions and can be used in @code{constexpr} constexts.
-The first of these constants is @code{__func__}, which is part of
-the C99 standard:
+GCCは現在の関数の名前を文字列として保持する3つのマジック定数を提供する。 C++11以降のモードでは、3つすべてが定数式として扱われ、@code{constexpr}文脈で使用できる。これらの定数の最初のものはC99標準の一部である@code{__ func__}である：
 
-The identifier @code{__func__} is implicitly declared by the translator
-as if, immediately following the opening brace of each function
-definition, the declaration
+識別子@code{__ func__}は、各関数定義の開始中括弧の直後に宣言
 
 @smallexample
 static const char __func__[] = "function-name";
 @end smallexample
 
 @noindent
-appeared, where function-name is the name of the lexically-enclosing
-function.  This name is the unadorned name of the function.  As an
-extension, at file (or, in C++, namespace scope), @code{__func__}
-evaluates to the empty string.
+が出現した場合と同様に、トランスレータによって暗黙的に宣言される。function-nameは字句を囲む関数の名前である。 この名前は、機能の未装飾の名前である。 拡張として、ファイル（または、C++では名前空間の）スコープで、@code{__func__}は空の文字列を評価する。
 
-@code{__FUNCTION__} is another name for @code{__func__}, provided for
-backward compatibility with old versions of GCC.
+@code{__FUNCTION__}は、GCCの旧バージョンとの下位互換性のために提供されている@code {__func__}の別の名前である。
 
-In C, @code{__PRETTY_FUNCTION__} is yet another name for
-@code{__func__}, except that at file (or, in C++, namespace scope),
-it evaluates to the string @code{"top level"}.  In addition, in C++,
-@code{__PRETTY_FUNCTION__} contains the signature of the function as
-well as its bare name.  For example, this program:
+Cでは、@code{__PRETTY_FUNCTION__}は、ファイル（またはC ++では名前空間の）スコープで@code {"top level"}という文字列になる点を除いて、@code{__func__}のもう一つの名前である。さらに、C++では、@code{__PRETTY_FUNCTION__}には関数の署名とその裸の名前が含まれている。 たとえば、次のプログラム：
 
 @smallexample
 extern "C" int printf (const char *, ...);
@@ -6014,16 +6000,14 @@ main (void)
 @end smallexample
 
 @noindent
-gives this output:
+は以下を出力する。
 
 @smallexample
 __FUNCTION__ = sub
 __PRETTY_FUNCTION__ = void a::sub(int)
 @end smallexample
 
-These identifiers are variables, not preprocessor macros, and may not
-be used to initialize @code{char} arrays or be concatenated with string
-literals.
+これらの識別子はプリプロセッサマクロではなく変数であり、@code{char}配列の初期化や文字列リテラルとの連結には使用できない。
 
 @node Return Address
 @section Getting the Return or Frame Address of a Function
