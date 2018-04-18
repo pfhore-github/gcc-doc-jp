@@ -5926,30 +5926,15 @@ GNU Compiler Collection (GCC) Internals}）に関連する用途がある。
 通常、正しいコードが生成されるようにGCCの見積もりは適切だが、複数の実命令に展開する擬似命令またはアセンブラマクロを使用する場合、単一の命令で必要とされるよりも多くのオブジェクトファイル内の領域に展開するアセンブラディレクティブを使用する場合、コンパイラを混乱させる可能性がある。この場合、アセンブラはラベルに到達できないという診断を生成することがある。
 
 @node Alternate Keywords
-@section Alternate Keywords
+@section 代替キーワード
 @cindex alternate keywords
 @cindex keywords, alternate
 
-@option{-ansi} and the various @option{-std} options disable certain
-keywords.  This causes trouble when you want to use GNU C extensions, or
-a general-purpose header file that should be usable by all programs,
-including ISO C programs.  The keywords @code{asm}, @code{typeof} and
-@code{inline} are not available in programs compiled with
-@option{-ansi} or @option{-std} (although @code{inline} can be used in a
-program compiled with @option{-std=c99} or @option{-std=c11}).  The
-ISO C99 keyword
-@code{restrict} is only available when @option{-std=gnu99} (which will
-eventually be the default) or @option{-std=c99} (or the equivalent
-@option{-std=iso9899:1999}), or an option for a later standard
-version, is used.
+@option {-ansi}とさまざまな@option {-std}オプションは、特定のキーワードを無効にする。 これは、GNU C拡張、またはISO Cプログラムを含むすべてのプログラムで使用可能な汎用ヘッダファイルを使用するときに問題を引き起こす。 @option{-ansi}または@option{-std}でコンパイルされたプログラムでは、キーワード@code{asm}、@code{typeof}と@code{inline}は使用できない（ただし、@code{inline}は @option{-std=c99}または@option{-std=c11}でコンパイルされたプログラムでは使用できる）。 ISO C99キーワード@code{restrict}は、@option{-std=gnu99}（結局はデフォルトである）または@option{-std=c99}（または同等の@option{-std=iso9899:1999}）以降の標準のオプションバージョンが使用されるときだけ利用可能である。
 
-The way to solve these problems is to put @samp{__} at the beginning and
-end of each problematical keyword.  For example, use @code{__asm__}
-instead of @code{asm}, and @code{__inline__} instead of @code{inline}.
+これらの問題を解決する方法は、各問題のキーワードの先頭と最後に@samp {__}を入れることである。 たとえば、@code{asm}ではなく@code{__ asm__}を使用し、@code{inline}ではなく@code{__ inline__}を使用する。
 
-Other C compilers won't accept these alternative keywords; if you want to
-compile with another compiler, you can define the alternate keywords as
-macros to replace them with the customary keywords.  It looks like this:
+他のCコンパイラはこれらの代替キーワードを受け入れない。 別のコンパイラでコンパイルする場合は、代替キーワードをマクロとして定義して、通常のキーワードと置き換えることができる。 これは次のようになる。
 
 @smallexample
 #ifndef __GNUC__
@@ -5959,11 +5944,7 @@ macros to replace them with the customary keywords.  It looks like this:
 
 @findex __extension__
 @opindex pedantic
-@option{-pedantic} and other options cause warnings for many GNU C extensions.
-You can
-prevent such warnings within one expression by writing
-@code{__extension__} before the expression.  @code{__extension__} has no
-effect aside from this.
+@option{-pedantic}と他のオプションは、多くのGNU C拡張の警告を引き起こす。式の前に@code{__extension__}を書くことで、そのような警告を防ぐことができる。 @code{__extension__}はこれとは別に何の効果もない。
 
 @node Incomplete Enums
 @section Incomplete @code{enum} Types
