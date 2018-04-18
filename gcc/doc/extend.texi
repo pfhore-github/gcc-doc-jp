@@ -5947,21 +5947,15 @@ GNU Compiler Collection (GCC) Internals}）に関連する用途がある。
 @option{-pedantic}と他のオプションは、多くのGNU C拡張の警告を引き起こす。式の前に@code{__extension__}を書くことで、そのような警告を防ぐことができる。 @code{__extension__}はこれとは別に何の効果もない。
 
 @node Incomplete Enums
-@section Incomplete @code{enum} Types
+@section 不完全@code{enum}型
 
-You can define an @code{enum} tag without specifying its possible values.
-This results in an incomplete type, much like what you get if you write
-@code{struct foo} without describing the elements.  A later declaration
-that does specify the possible values completes the type.
+可能な値を指定せずに@code {enum}タグを定義することができる。これは要素を記述せずに@code{struct foo}を書くと非常に似ている、不完全な型になる。 可能な値を指定する後の宣言は型を完成させる。
 
-You cannot allocate variables or storage using the type while it is
-incomplete.  However, you can work with pointers to that type.
+変数が不完全な場合は、型を使用して変数または記憶域を割り当てることはできない。 ただし、その型へのポインタで作業することはできる。
 
-This extension may not be very useful, but it makes the handling of
-@code{enum} more consistent with the way @code{struct} and @code{union}
-are handled.
+この拡張はそれほど有用ではないかもしれないが、@code{struct}と@code{union}の扱い方と@code{enum}の扱いがより一貫している。
 
-This extension is not supported by GNU C++.
+この拡張はGNU C ++ではサポートされていない。
 
 @node Function Names
 @section Function Names as Strings
