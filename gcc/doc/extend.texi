@@ -6010,79 +6010,41 @@ __PRETTY_FUNCTION__ = void a::sub(int)
 これらの識別子はプリプロセッサマクロではなく変数であり、@code{char}配列の初期化や文字列リテラルとの連結には使用できない。
 
 @node Return Address
-@section Getting the Return or Frame Address of a Function
+@section 関数のリターン・フレームアドレスの取得
 
-These functions may be used to get information about the callers of a
-function.
+これらの関数は、関数の呼び出し元に関する情報を取得するために使用できる。
 
 @deftypefn {Built-in Function} {void *} __builtin_return_address (unsigned int @var{level})
-This function returns the return address of the current function, or of
-one of its callers.  The @var{level} argument is number of frames to
-scan up the call stack.  A value of @code{0} yields the return address
-of the current function, a value of @code{1} yields the return address
-of the caller of the current function, and so forth.  When inlining
-the expected behavior is that the function returns the address of
-the function that is returned to.  To work around this behavior use
-the @code{noinline} function attribute.
+この関数は、現在の関数またはその呼び出し元のいずれかの戻りアドレスを返す。 @var{level}引数は、呼び出しスタックをスキャンするフレームの数である。 @code{0}の値は現在の関数の戻りアドレスを返し、@ code{1}の値は現在の関数の呼び出し元の戻りアドレスなどを返す。インライン化では、予期される振る舞いは、関数が返される関数のアドレスを返すことである。 この問題を回避するには、@code{noinline}関数属性を使用する。
 
-The @var{level} argument must be a constant integer.
+@var{level}引数は定数でなければならない。
 
-On some machines it may be impossible to determine the return address of
-any function other than the current one; in such cases, or when the top
-of the stack has been reached, this function returns @code{0} or a
-random value.  In addition, @code{__builtin_frame_address} may be used
-to determine if the top of the stack has been reached.
+マシンによっては、現在のもの以外の機能の戻りアドレスを特定できない場合がある。 そのような場合、またはスタックの最上部に達したとき、この関数は@code{0またはランダム値を返す。さらに、@code{__builtin_frame_address}は、スタックの先頭に到達したかどうかを判断するために使用できる。
 
-Additional post-processing of the returned value may be needed, see
-@code{__builtin_extract_return_addr}.
+戻り値の追加の後処理が必要な場合がある。@code{__builtin_extract_return_addr}を参照せよ。
 
-Calling this function with a nonzero argument can have unpredictable
-effects, including crashing the calling program.  As a result, calls
-that are considered unsafe are diagnosed when the @option{-Wframe-address}
-option is in effect.  Such calls should only be made in debugging
-situations.
+ゼロ以外の引数を指定してこの関数を呼び出すと、呼び出し元プログラムがクラッシュするなど、予期しない結果が生じる可能性がある。 その結果、@option{-Wframe-address}オプションが有効な場合、安全でないとみなされる呼び出しは診断が出される。 そのような呼び出しは、デバッグ状況でのみ行うべきである。
 @end deftypefn
 
 @deftypefn {Built-in Function} {void *} __builtin_extract_return_addr (void *@var{addr})
-The address as returned by @code{__builtin_return_address} may have to be fed
-through this function to get the actual encoded address.  For example, on the
-31-bit S/390 platform the highest bit has to be masked out, or on SPARC
-platforms an offset has to be added for the true next instruction to be
-executed.
+@code{__builtin_return_address}で返されたアドレスは、実際のコード化されたアドレスを取得するためにこの関数に渡さなければならないかもしれない。 たとえば、31ビットS/390プラットフォームでは、最上位ビットをマスクする必要がある。また、SPARCプラットフォームでは、真の次の命令を実行するためにオフセットを追加する必要がある。
 
-If no fixup is needed, this function simply passes through @var{addr}.
+フィックスアップが必要ない場合、この関数は単純に@var{addr}を渡す。
 @end deftypefn
 
 @deftypefn {Built-in Function} {void *} __builtin_frob_return_address (void *@var{addr})
-This function does the reverse of @code{__builtin_extract_return_addr}.
+この関数は@code{__builtin_extract_return_addr}の逆を行う。
 @end deftypefn
 
 @deftypefn {Built-in Function} {void *} __builtin_frame_address (unsigned int @var{level})
-This function is similar to @code{__builtin_return_address}, but it
-returns the address of the function frame rather than the return address
-of the function.  Calling @code{__builtin_frame_address} with a value of
-@code{0} yields the frame address of the current function, a value of
-@code{1} yields the frame address of the caller of the current function,
-and so forth.
+この関数は@code{__builtin_return_address}と似ているが、関数の戻りアドレスではなく関数フレームのアドレスを返す。 @code{0}の値を持つ@code{__builtin_frame_address}を呼び出すと、現在の関数のフレームアドレスが返され、@code{1}の値は現在の関数の呼び出し元のフレームアドレスなどを返す。
 
-The frame is the area on the stack that holds local variables and saved
-registers.  The frame address is normally the address of the first word
-pushed on to the stack by the function.  However, the exact definition
-depends upon the processor and the calling convention.  If the processor
-has a dedicated frame pointer register, and the function has a frame,
-then @code{__builtin_frame_address} returns the value of the frame
-pointer register.
+フレームは、ローカル変数と保存されたレジスタを保持するスタック上の領域である。 フレームアドレスは、通常、関数によってスタックにプッシュされた最初のワードのアドレスである。 しかし、正確な定義はプロセッサーと呼び出し規約によって異なる。 プロセッサに専用のフレームポインタレジスタがあり、関数にフレームがある場合、@code{__builtin_frame_address}はフレームポインタレジスタの値を返す。
 
-On some machines it may be impossible to determine the frame address of
-any function other than the current one; in such cases, or when the top
-of the stack has been reached, this function returns @code{0} if
-the first frame pointer is properly initialized by the startup code.
+一部のマシンでは、現在のもの以外の関数のフレームアドレスを判別することができない場合がある。 そのような場合、またはスタックの先頭に達したとき、この関数は最初のフレームポインタがスタートアップコードによって適切に初期化されていれば@code{0}を返す。
 
-Calling this function with a nonzero argument can have unpredictable
-effects, including crashing the calling program.  As a result, calls
-that are considered unsafe are diagnosed when the @option{-Wframe-address}
-option is in effect.  Such calls should only be made in debugging
-situations.
+ゼロ以外の引数を指定してこの関数を呼び出すと、呼び出し元プログラムがクラッシュするなど、予期しない結果が生じる可能性がある。 その結果、@option{-Wframe-address}オプションが有効な場合、安全でないとみなされる呼び出しは診断が出される。 そのような呼び出しは、デバッグ状況でのみ行うべきである。
+
 @end deftypefn
 
 @node Vector Extensions
