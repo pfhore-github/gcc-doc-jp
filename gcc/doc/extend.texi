@@ -6048,53 +6048,28 @@ __PRETTY_FUNCTION__ = void a::sub(int)
 @end deftypefn
 
 @node Vector Extensions
-@section Using Vector Instructions through Built-in Functions
+@section 組み込み関数を通してベクトル命令を使う
 
-On some targets, the instruction set contains SIMD vector instructions which
-operate on multiple values contained in one large register at the same time.
-For example, on the x86 the MMX, 3DNow!@: and SSE extensions can be used
-this way.
+いくつかのターゲットでは、命令セットには、同時に1つの大きなレジスタに格納された複数の値で動作するSIMDベクタ命令が含まれている。たとえば、x86ではMMX、3DNow！、 SSE拡張はこの方法で使用できる。
 
-The first step in using these extensions is to provide the necessary data
-types.  This should be done using an appropriate @code{typedef}:
+これらの拡張機能を使用するための最初のステップは、必要なデータ型を提供することである。 これは、適切な@code{typedef}を使って行う必要がある。
 
 @smallexample
 typedef int v4si __attribute__ ((vector_size (16)));
 @end smallexample
 
 @noindent
-The @code{int} type specifies the base type, while the attribute specifies
-the vector size for the variable, measured in bytes.  For example, the
-declaration above causes the compiler to set the mode for the @code{v4si}
-type to be 16 bytes wide and divided into @code{int} sized units.  For
-a 32-bit @code{int} this means a vector of 4 units of 4 bytes, and the
-corresponding mode of @code{foo} is @acronym{V4SI}.
+@code{int}型は基本型を指定し、属性は変数のベクトルサイズをバイト単位で指定する。 たとえば、上記の宣言では、コンパイラは@code{v4si}型のモードを16バイト幅に設定し、@code{int}サイズの単位に分割する。32ビットの@code{int}の場合、これは4バイトの4単位のベクトルを意味し、対応する@code{foo}のモードは@acronym{V4SI}である。
 
-The @code{vector_size} attribute is only applicable to integral and
-float scalars, although arrays, pointers, and function return values
-are allowed in conjunction with this construct. Only sizes that are
-a power of two are currently allowed.
+@code{vector_size}属性は、整数、浮動小数点スカラーにのみ適用されるが、配列、ポインタ、および関数の戻り値はこの構造体と一緒に使用できる。 現在、2の累乗であるサイズのみが許可されている。
 
-All the basic integer types can be used as base types, both as signed
-and as unsigned: @code{char}, @code{short}, @code{int}, @code{long},
-@code{long long}.  In addition, @code{float} and @code{double} can be
-used to build floating-point vector types.
+すべての基本整数型は、signed型とunsigned型の両方で、基本型として使用できる：@code{char}、@code{short}、@code{int}、@code{long}、@code{long long}。さらに、@code{float}と@code{double}を使用して、浮動小数点型を構築することができる。
 
-Specifying a combination that is not valid for the current architecture
-causes GCC to synthesize the instructions using a narrower mode.
-For example, if you specify a variable of type @code{V4SI} and your
-architecture does not allow for this specific SIMD type, GCC
-produces code that uses 4 @code{SIs}.
+現在のアーキテクチャに対して有効でない組み合わせを指定すると、GCCはより狭いモードを使用して命令を合成する。たとえば、@code{V4SI}型の変数を指定し、アーキテクチャがこの特定のSIMD型を許可しない場合、GCCは4つの@code{SIs}を使用するコードを生成する。
 
-The types defined in this manner can be used with a subset of normal C
-operations.  Currently, GCC allows using the following operators
-on these types: @code{+, -, *, /, unary minus, ^, |, &, ~, %}@.
+このように定義された型は、通常のC操作のサブセットとともに使用できる。 現在、GCCでは次のタイプの演算子を使用できる。@code{+, -, *, /, unary minus, ^, |, &, ~, %}。
 
-The operations behave like C++ @code{valarrays}.  Addition is defined as
-the addition of the corresponding elements of the operands.  For
-example, in the code below, each of the 4 elements in @var{a} is
-added to the corresponding 4 elements in @var{b} and the resulting
-vector is stored in @var{c}.
+操作はC++@code {valarrays}のように動作する。 加算は、オペランドの対応する要素の加算として定義される。 たとえば、以下のコードでは、@var{a}の4つの要素のそれぞれが@var {b}の対応する4つの要素に追加され、結果のベクトルは@var{c}に格納される。
 
 @smallexample
 typedef int v4si __attribute__ ((vector_size (16)));
@@ -6104,24 +6079,11 @@ v4si a, b, c;
 c = a + b;
 @end smallexample
 
-Subtraction, multiplication, division, and the logical operations
-operate in a similar manner.  Likewise, the result of using the unary
-minus or complement operators on a vector type is a vector whose
-elements are the negative or complemented values of the corresponding
-elements in the operand.
+減算、乗算、除算、論理演算も同様に動作すうる。 同様に、ベクトル型に対して単項マイナス演算子または補数演算子を使用した結果は、その要素がオペランドの対応する要素の負または補数の値であるベクトルである。
 
-It is possible to use shifting operators @code{<<}, @code{>>} on
-integer-type vectors. The operation is defined as following: @code{@{a0,
-a1, @dots{}, an@} >> @{b0, b1, @dots{}, bn@} == @{a0 >> b0, a1 >> b1,
-@dots{}, an >> bn@}}@. Vector operands must have the same number of
-elements. 
+整数型のベクトルにシフト演算子@code{<<}、@code {>>}を使用することは可能である。 @code{@{a0, a1, @dots{}, an@} >> @{b0, b1, @dots{}, bn@} == @{a0 >> b0, a1 >> b1, @dots{}, an >> bn@}}。 ベクトルオペランドは、同じ数の要素を持たなければならない。
 
-For convenience, it is allowed to use a binary vector operation
-where one operand is a scalar. In that case the compiler transforms
-the scalar operand into a vector where each element is the scalar from
-the operation. The transformation happens only if the scalar could be
-safely converted to the vector-element type.
-Consider the following code.
+便宜上、1つのオペランドがスカラーである場合、2進ベクトル演算を使用することが許される。 その場合、コンパイラはスカラー・オペランドをベクトルに変換する。ここで、各要素は操作のスカラーである。 スカラーがベクトル要素型に安全に変換できる場合にのみ変換が行われる。次のコードを考える。
 
 @smallexample
 typedef int v4si __attribute__ ((vector_size (16)));
@@ -6135,23 +6097,11 @@ a = 2 * b;    /* a = @{2,2,2,2@} * b; */
 a = l + a;    /* Error, cannot convert long to int. */
 @end smallexample
 
-Vectors can be subscripted as if the vector were an array with
-the same number of elements and base type.  Out of bound accesses
-invoke undefined behavior at run time.  Warnings for out of bound
-accesses for vector subscription can be enabled with
-@option{-Warray-bounds}.
+ベクトルは、ベクトルが同じ数の要素と基底型を持つ配列であるかのように添え字を付けることができる。 境界外アクセスは、実行時に未定義の動作を呼び出す。 ベクタの添字の境界外の警告は、@option{-Warray-bounds}で有効にすることができる。
 
-Vector comparison is supported with standard comparison
-operators: @code{==, !=, <, <=, >, >=}. Comparison operands can be
-vector expressions of integer-type or real-type. Comparison between
-integer-type vectors and real-type vectors are not supported.  The
-result of the comparison is a vector of the same width and number of
-elements as the comparison operands with a signed integral element
-type.
+ベクトル比較は、標準比較演算子@code{==, !=, <, <=, >, >=}でサポートされている。 比較オペランドは、整数型または実型のベクトル式にすることができる。 整数型ベクトルと実型ベクトルの比較はサポートされていない。 比較の結果は、符号付き整数要素型の比較オペランドと同じ幅および要素数のベクトルである。
 
-Vectors are compared element-wise producing 0 when comparison is false
-and -1 (constant of the appropriate type where all bits are set)
-otherwise. Consider the following example.
+ベクトルは、要素が比較され、比較が偽である場合は0を生成し、それ以外の場合は-1を返す（すべてのビットが設定されている場合は適切な型の定数）。 次の例を考える。
 
 @smallexample
 typedef int v4si __attribute__ ((vector_size (16)));
@@ -6164,41 +6114,16 @@ c = a >  b;     /* The result would be @{0, 0,-1, 0@}  */
 c = a == b;     /* The result would be @{0,-1, 0,-1@}  */
 @end smallexample
 
-In C++, the ternary operator @code{?:} is available. @code{a?b:c}, where
-@code{b} and @code{c} are vectors of the same type and @code{a} is an
-integer vector with the same number of elements of the same size as @code{b}
-and @code{c}, computes all three arguments and creates a vector
-@code{@{a[0]?b[0]:c[0], a[1]?b[1]:c[1], @dots{}@}}.  Note that unlike in
-OpenCL, @code{a} is thus interpreted as @code{a != 0} and not @code{a < 0}.
-As in the case of binary operations, this syntax is also accepted when
-one of @code{b} or @code{c} is a scalar that is then transformed into a
-vector. If both @code{b} and @code{c} are scalars and the type of
-@code{true?b:c} has the same size as the element type of @code{a}, then
-@code{b} and @code{c} are converted to a vector type whose elements have
-this type and with the same number of elements as @code{a}.
+C++では、三項演算子@code{?:}を使用できる。 @code{a？b：c}は、ここで@code{b}と@code{c}は同じ型のベクトルで、@code{a}は@code{b}および@code{c}と同じサイズの同じ要素数を持つ整数ベクトルであるとき、 3つの引数をすべて計算し、ベクトル@code{@{a[0]?b[0]:c[0], a[1]?b[1]:c[1], @dots{}@}}を作成する。 OpenCLとは異なり、@code{a}は@code{a！= 0}と解釈され、@code{a <0}と解釈されないことに注意せよ。バイナリ演算の場合と同様に、この構文は、@code {b}または@code{c}のいずれかがベクトルに変換されるスカラーである場合にも受け入れられる。 @code{b}と@code{c}の両方がスカラーで、@code{true？b：c}の型が@code {a}の要素の型と同じ大きさであれば、@code{b}と @code{c}は、この型を持ち、@code{a}と同じ数の要素を持つベクトル型に変換される。
 
-In C++, the logic operators @code{!, &&, ||} are available for vectors.
-@code{!v} is equivalent to @code{v == 0}, @code{a && b} is equivalent to
-@code{a!=0 & b!=0} and @code{a || b} is equivalent to @code{a!=0 | b!=0}.
-For mixed operations between a scalar @code{s} and a vector @code{v},
-@code{s && v} is equivalent to @code{s?v!=0:0} (the evaluation is
-short-circuit) and @code{v && s} is equivalent to @code{v!=0 & (s?-1:0)}.
+C++では、ベクトルの論理演算子@code {!, &&、||}を使用できまる。@code{a && b}は@code{a！= 0＆b！= 0}と、@code {a || b}hは、@code{a！= 0 | b！= 0}と同等である。スカラ@code{s}とベクトル@code{v}との混合演算の場合、@code{s && v}は@code{s？v！= 0：0}と等価である（評価は短絡である） 。@code{v && s}は@code{v！= 0＆（s？-1：0）}と等価である。
 
 @findex __builtin_shuffle
-Vector shuffling is available using functions
-@code{__builtin_shuffle (vec, mask)} and
-@code{__builtin_shuffle (vec0, vec1, mask)}.
-Both functions construct a permutation of elements from one or two
-vectors and return a vector of the same type as the input vector(s).
-The @var{mask} is an integral vector with the same width (@var{W})
-and element count (@var{N}) as the output vector.
+ベクトルシャッフルは、関数@code{__builtin_shuffle(vec、mask)}と@code {__builtin_shuffle(vec0ｍ, vec1, mask)}を使用して利用できる。両方の関数は、1つまたは2つのベクトルから要素の置換を構成し、入力ベクトルと同じ型のベクトルを返す。@var{mask}は出力ベクトルと同じ幅（@ var{W}）と要素数（@ var{N}）を持つ整数ベクトルである。
 
-The elements of the input vectors are numbered in memory ordering of
-@var{vec0} beginning at 0 and @var{vec1} beginning at @var{N}.  The
-elements of @var{mask} are considered modulo @var{N} in the single-operand
-case and modulo @math{2*@var{N}} in the two-operand case.
+入力ベクトルの要素には、0から始まる@var{vec0}と@var{N}で始まる@var {vec1}のメモリ順序で番号が付けられる。 @var{mask}の要素は、シングルオペランドの場合は@var{N}をモジュロと見なし、2オペランドの場合は@math{2 * @ var {N}}をモジュロと見なす。
 
-Consider the following example,
+以下の例を考える。
 
 @smallexample
 typedef int v4si __attribute__ ((vector_size (16)));
@@ -6213,18 +6138,11 @@ res = __builtin_shuffle (a, mask1);       /* res is @{1,2,2,4@}  */
 res = __builtin_shuffle (a, b, mask2);    /* res is @{1,5,3,6@}  */
 @end smallexample
 
-Note that @code{__builtin_shuffle} is intentionally semantically
-compatible with the OpenCL @code{shuffle} and @code{shuffle2} functions.
+@code{__ builtin_shuffle}は、OpenCL @code{shuffle}関数および@code{shuffle2}関数と意図的に意味的に互換性があることに注意せよ。
 
-You can declare variables and use them in function calls and returns, as
-well as in assignments and some casts.  You can specify a vector type as
-a return type for a function.  Vector types can also be used as function
-arguments.  It is possible to cast from one vector type to another,
-provided they are of the same size (in fact, you can also cast vectors
-to and from other datatypes of the same size).
+変数を宣言して、関数の呼び出しや戻り、代入やキャストなどで変数を使用できる。 関数の戻り値の型としてベクトル型を指定できる。 ベクトル型を関数の引数として使用することもできる。 同じサイズのものであれば、あるベクトル型から別の型にキャストすることができる（実際には、同じサイズの他のデータ型との間でベクトルをキャストすることもできる。）。
 
-You cannot operate between vectors of different lengths or different
-signedness without a cast.
+キャストなしでは、異なる長さのベクトル間で操作することはできない。
 
 @node Offsetof
 @section Support for @code{offsetof}
