@@ -6145,11 +6145,10 @@ res = __builtin_shuffle (a, b, mask2);    /* res is @{1,5,3,6@}  */
 キャストなしでは、異なる長さのベクトル間で操作することはできない。
 
 @node Offsetof
-@section Support for @code{offsetof}
+@section @code{offsetof}のサポート
 @findex __builtin_offsetof
 
-GCC implements for both C and C++ a syntactic extension to implement
-the @code{offsetof} macro.
+GCCはCとC ++の両方に@code{offsetof}マクロを実装するための構文拡張を実装している。
 
 @smallexample
 primary:
@@ -6161,16 +6160,14 @@ offsetof_member_designator:
         | offsetof_member_designator "[" @code{expr} "]"
 @end smallexample
 
-This extension is sufficient such that
+この拡張は、X
 
 @smallexample
 #define offsetof(@var{type}, @var{member})  __builtin_offsetof (@var{type}, @var{member})
 @end smallexample
 
 @noindent
-is a suitable definition of the @code{offsetof} macro.  In C++, @var{type}
-may be dependent.  In either case, @var{member} may consist of a single
-identifier, or a sequence of member accesses and array references.
+が@code{offsetof}マクロの適切な定義となるように十分である。 C++では、@var{type}は依存している可能性がある。 どちらの場合でも、@var{member}は単一の識別子、またはメンバーアクセスと配列参照のシーケンスで構成される。
 
 @node __sync Builtins
 @section Legacy @code{__sync} Built-in Functions for Atomic Memory Access
