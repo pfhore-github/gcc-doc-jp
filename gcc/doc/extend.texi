@@ -11,7 +11,7 @@
 @opindex pedantic
 GNU Cは、ISO標準Cにはないいくつかの言語機能を提供している。（これらの機能のいずれかが使用されている場合、@ option{-pedantic}オプションはGCCに警告メッセージを出力するように指示する）。条件付きコンパイルでこれらの機能が利用できるかどうかをテストするために、あらかじめ定義されたマクロ@code{__ GNUC__}が常にGCCの下で定義されている。
 
-これらの拡張は、CとObjective-Cで利用できる。 それらのほとんどはC ++でも利用可能である。C++に@emph{_のみ_}適用する拡張機能は、@xref{C++ Extensions,,C ++言語の拡張機能}。
+これらの拡張は、CとObjective-Cで利用できる。 それらのほとんどはC ++でも利用可能である。C++に@emph{<のみ>}適用する拡張機能は、@xref{C++ Extensions,,C ++言語の拡張機能}。
 
 ISO C99にはあるがC90やC ++にはない機能のいくつかは、拡張機能として、C90モードとC ++でGCCで受理される。
 
@@ -187,7 +187,7 @@ __label__ @var{label1}, @var{label2}, /* @r{@dots{}} */;
 
 ローカルラベルの宣言は、ブロックの先頭、通常の宣言または文の前に来なければならない。
 
-ラベル宣言はラベル@emph{_名_}を定義するが、ラベル自体は定義しない。 @code{@var{label}:}は、文の式の中で通常の方法で行う必要がある。
+ラベル宣言はラベル@emph{<名>}を定義するが、ラベル自体は定義しない。 @code{@var{label}:}は、文の式の中で通常の方法で行う必要がある。
 
 ローカルラベル機能は、複雑なマクロに便利である。 マクロにネストされたループが含まれている場合、@code{goto}はそれらのループを中断するのに便利である。 ただし、関数全体をスコープとする通常のラベルは使用できない。マクロを1つの関数で複数回展開できる場合、ラベルはその関数で複数定義される。 ローカルラベルはこの問題を回避する。 例えば：
 
@@ -911,12 +911,12 @@ GNU Cは、ISO/IEC DTR 18037のN1169草案で定義されている固定小数�
 
 AVRターゲットには、読み込み専用のデータをフラッシュメモリに格納し、そのフラッシュから読み込みに必要な特別な命令@code{LPM}または@code{ELPM}を使用してそのデータにアクセスするために使用できるいくつかのアドレス空間がある 。
 
-デフォルトでは、読み出し専用データを含むデータはすべてRAM（汎用アドレス空間）に配置され、フラッシュメモリ内の読み出し専用データを検索し、@emph{_かつ_}アセンブラコードを使用せずにこのデータにアクセスするための正しい命令を生成するために非汎用アドレス空間が必要である。
+デフォルトでは、読み出し専用データを含むデータはすべてRAM（汎用アドレス空間）に配置され、フラッシュメモリ内の読み出し専用データを検索し、@emph{<かつ>}アセンブラコードを使用せずにこのデータにアクセスするための正しい命令を生成するために非汎用アドレス空間が必要である。
 
 @table @code
 @item __flash
 @cindex @code{__flash} AVR Named Address Spaces
-@code{__ flash}修飾子は、データを@code{.progmem.data}セクションに配置する。 データは@code{LPM}命令を使用して読み込まれる。 このアドレス空間へのポインタは16ビット幅である。
+@code{__flash}修飾子は、データを@code{.progmem.data}セクションに配置する。 データは@code{LPM}命令を使用して読み込まれる。 このアドレス空間へのポインタは16ビット幅である。
 
 @item __flash1
 @itemx __flash2
@@ -1177,7 +1177,7 @@ foo (int n)
 @cindex @code{alloca} vs variable-length arrays
 可変長配列によく似た効果を得るには、関数@code{alloca}を使うことができる。 関数@code{alloca}は他の多くのC実装で利用可能である（ただし、すべてではない）。 一方、可変長配列はよりエレガントである。
 
-これらの2つの方法には他にも違いがある。 @code{alloca}で割り当てられたスペースは、それを含む@emph{_関数_}が返るまで存在する。可変長配列の空間は、このスコープで@code{alloca}も使用しない限り、配列名のスコープが終了するとすぐに割り当てから解放される。
+これらの2つの方法には他にも違いがある。 @code{alloca}で割り当てられたスペースは、それを含む@emph{<関数>}が返るまで存在する。可変長配列の空間は、このスコープで@code{alloca}も使用しない限り、配列名のスコープが終了するとすぐに割り当てから解放される。
 
 関数の引数として可変長配列を使うこともできる：
 
@@ -1255,7 +1255,7 @@ GNU CPPでは、このように可変引数を完全に省略することがで�
 @cindex escaped newlines
 @cindex newlines (escaped)
 
-エスケープされた改行のプリプロセッサ処理は、改行がバックスラッシュの直後に続くことを必要とするC90標準で指定されているものよりも緩やかである。GCCの実装では、空白、水平および垂直のタブ、およびバックスラッシュとそれに続く改行の間の書式フィードの形で空白を使用できる。 プリプロセッサは警告を出すが、有効なエスケープされた改行として扱い、2行を結合して1つの論理行を形成する。 これは、コメントとトークン、およびトークン間で機能する。 コメントはこのリラクゼーションの目的のために空白として扱われ@emph{_ない_}。なぜならそれらはまだスペースで置き換えられていないからである。
+エスケープされた改行のプリプロセッサ処理は、改行がバックスラッシュの直後に続くことを必要とするC90標準で指定されているものよりも緩やかである。GCCの実装では、空白、水平および垂直のタブ、およびバックスラッシュとそれに続く改行の間の書式フィードの形で空白を使用できる。 プリプロセッサは警告を出すが、有効なエスケープされた改行として扱い、2行を結合して1つの論理行を形成する。 これは、コメントとトークン、およびトークン間で機能する。 コメントはこのリラクゼーションの目的のために空白として扱われ@emph{<ない>}。なぜならそれらはまだスペースで置き換えられていないからである。
 
 @node Subscripting
 @section 非左辺値配列には添え字が付くことができる
@@ -1747,7 +1747,7 @@ void* my_alloc2(size_t) __attribute__((assume_aligned(32, 8)))
 多くの関数は引数以外の値を調べず、戻り値以外の効果はない。 関数はグローバルメモリを読み込むことができないので、基本的にこれは下の@code{pure}属性よりもわずかに厳密なクラスである。
 
 @cindex pointer arguments
-ポインタ引数を持ち、指されるデータを調べる関数は、@code{const}と宣言されては@emph{_ならない_}ことに注意せよ。 同様に、非@code{const}関数を呼び出す関数は、通常は@code{const}であってはならない。 @code{const}関数が@code{void}を返すのは意味がない。
+ポインタ引数を持ち、指されるデータを調べる関数は、@code{const}と宣言されては@emph{<ならない>}ことに注意せよ。 同様に、非@code{const}関数を呼び出す関数は、通常は@code{const}であってはならない。 @code{const}関数が@code{void}を返すのは意味がない。
 
 @item constructor
 @itemx destructor
@@ -2191,7 +2191,7 @@ default可視性は、言語の「外部リンケージ」に対応する。
 hidden(非表示)の可視性は、宣言されたエンティティが新しい形式のリンケージを持っていることを示している。これを「隠れリンケージ」と呼ぶ。 隠れたリンケージを持つオブジェクトの2つの宣言は、同じ共有オブジェクトにある場合、同じオブジェクトを参照する。
 
 @item internal
-internal(内部)可視性はhidden可視性と似ているが、追加のプロセッサ固有の意味がある。 psABIで別途指定されていない限り、GCCはinternal可視性を、関数が@emph{_決して_}他のモジュールから呼び出されることはないと定義する。 これを他のモジュールが直接参照することはできないが、関数ポインタを介して間接的に参照できる隠し関数と比較する。 関数がモジュールの外部から呼び出せないことを示すことによって、GCCは、呼び出し元関数が正しい値をロードしたことが分かっているため、例えばPICレジスタのロードを省略することができる。
+internal(内部)可視性はhidden可視性と似ているが、追加のプロセッサ固有の意味がある。 psABIで別途指定されていない限り、GCCはinternal可視性を、関数が@emph{<決して>}他のモジュールから呼び出されることはないと定義する。 これを他のモジュールが直接参照することはできないが、関数ポインタを介して間接的に参照できる隠し関数と比較する。 関数がモジュールの外部から呼び出せないことを示すことによって、GCCは、呼び出し元関数が正しい値をロードしたことが分かっているため、例えばPICレジスタのロードを省略することができる。
 
 @item protected
 protected(保護された)可視性は、定義モジュール内の参照がそのモジュールの定義にバインドされていることを示している点を除き、default可視性と似ている。 つまり、宣言されたエンティティを別のモジュールで上書きすることはできない。
@@ -2485,7 +2485,7 @@ AVRでは、ハードウェアは割り込みが実行されると割り込み�
 @cindex @code{OS_task} function attribute, AVR
 AVRでは、@code{OS_main}属性または@code{OS_task}属性を持つ関数は、プロローグ/エピローグに呼び出し保存レジスタを保存/復元しない。
 
-関数が入力された時点で割り込みが無効になっていることが@emph{_保証されている_}場合は、@code{OS_main}属性を使用できる。 これにより、ローカル変数のフレームを設定するためにスタックポインタを変更する必要がある場合に、リソースが節約される。
+関数が入力された時点で割り込みが無効になっていることが@emph{<保証されている>}場合は、@code{OS_main}属性を使用できる。 これにより、ローカル変数のフレームを設定するためにスタックポインタを変更する必要がある場合に、リソースが節約される。
 
 @code{OS_task}属性は、その関数が例えばマルチスレッド・オペレーティング・システムのタスク関数のように入力されたときに割り込みが無効になっているという保証がない場合に使用できる。その場合、スタックポインタレジスタの変更は、グローバル割込み許可フラグのセーブ/クリア/リストアによって保護される。
 
@@ -2837,7 +2837,7 @@ Microsoft WindowsおよびSymbian OSターゲットでは、@code{dllimport}属�
 
 @code{visibility}属性をサポートするシステムでは、この属性は「default」の可視性も意味する。 他の可視性を明示的に指定するのは誤りである。
 
-現在、インライン関数の場合、属性は無視される。属性がシンボル@emph{_定義_}に適用されると、エラーが報告される。以前に@code{dllimport}と宣言されたシンボルが後で定義された場合、その属性は後続の参照では無視され、警告が発行される。この属性は、以降の@code{dllexport}の宣言によっても上書きされる。
+現在、インライン関数の場合、属性は無視される。属性がシンボル@emph{<定義>}に適用されると、エラーが報告される。以前に@code{dllimport}と宣言されたシンボルが後で定義された場合、その属性は後続の参照では無視され、警告が発行される。この属性は、以降の@code{dllexport}の宣言によっても上書きされる。
 
 C++クラスに適用すると、属性はインラインでないメンバ関数と静的データメンバをインポートとしてマークする。 ただし、サンクを使用してvtableを作成できるようにする仮想メソッドでは、属性は無視される。
 
@@ -2845,7 +2845,7 @@ SH Symbian OSターゲットでは、@code{dllimport}属性には別の影響も
 
 Microsoft Windowsターゲットでは、関数に@code{dllimport}属性を使用する必要はないが、DLL内のサンクを除去することでパフォーマンスが少し向上する。@option{-enable-auto-import}スイッチをGNUリンカーに渡すことで、インポートされた変数に@code{dllimport}属性を使用することを避けることができる。 関数と同様に、変数の属性を使用すると、DLL内のサンクがなくなる。
 
-この属性を使用することの1つの欠点は、@code{dllimport}とマークされた@emph{_変数_}へのポインタを定数アドレスとして使用できないことである。 しかし、@code{dllimport}属性を持つ@emph{_関数_}へのポインタは定数初期化子として使用できる。 この場合、インポートlib内のスタブ関数のアドレスが参照される。 Microsoft Windowsターゲットでは、@option{-mnop-fun-dllimport}フラグを設定することで、関数の属性を無効にすることができる。
+この属性を使用することの1つの欠点は、@code{dllimport}とマークされた@emph{<変数>}へのポインタを定数アドレスとして使用できないことである。 しかし、@code{dllimport}属性を持つ@emph{<関数>}へのポインタは定数初期化子として使用できる。 この場合、インポートlib内のスタブ関数のアドレスが参照される。 Microsoft Windowsターゲットでは、@option{-mnop-fun-dllimport}フラグを設定することで、関数の属性を無効にすることができる。
 @end table
 
 @node MIPS Function Attributes
@@ -3810,7 +3810,7 @@ main()
 @end smallexample
 
 @noindent
-この例に示すように、@emph{_ローカル_}変数ではなく、@emph{_グローバル_}変数で@code{section}属性を使用すること。
+この例に示すように、@emph{<ローカル>}変数ではなく、@emph{<グローバル>}変数で@code{section}属性を使用すること。
 
 初期化されている、または初期化されていないグローバル変数で@code{section}属性を使うことができるが、リンカは各オブジェクトを一度定義する必要がある。例外は、初期化されていない変数は@code{common}（または@code{bss}）セクションに一時的に置かれ、複数回「定義」されることができることである。@code{section}属性を使用すると、変数に入るセクションが変更され、初期化されていない変数に複数の定義がある場合、リンカにエラーが発生する可能性がある。変数を@option{-fno-common}フラグまたは@code {nocommon}属性で強制的に初期化することができる。
 
@@ -4115,7 +4115,7 @@ int cpu_clock __attribute__((cb(0x123)));
 
 @item selectany
 @cindex @code{selectany} variable attribute
-@code{selectany}属性は、初期化されたグローバル変数にリンク時セマンティクスを持たせる。 変数の複数の定義にリンカーが遭遇すると、最初のものが選択され、残りは破棄される。 Microsoftコンパイラによる使用に続いて、リンカは複数の定義のサイズや内容の違いについて警告@emph{_しない_}と伝える。
+@code{selectany}属性は、初期化されたグローバル変数にリンク時セマンティクスを持たせる。 変数の複数の定義にリンカーが遭遇すると、最初のものが選択され、残りは破棄される。 Microsoftコンパイラによる使用に続いて、リンカは複数の定義のサイズや内容の違いについて警告@emph{<しない>}と伝える。
 
 この属性の主な用途はPOD型のためだが、属性はコンストラクタによって初期化されるグローバルC++オブジェクトにも適用できる。 この場合、オブジェクトの静的初期化コードおよび破棄コードがオブジェクトを定義する各変換で発行されるが、コンストラクタおよびデストラクタへの呼び出しはリンク時ガード変数によって保護される。
 
@@ -4287,7 +4287,7 @@ typedef int more_aligned_int __attribute__ ((aligned (8)));
 @end smallexample
 
 @noindent
-@code{struct S}または@code {more_aligned_int}の各変数が@emph{_少なくとも_}8バイト境界に割り当てられていることをコンパイラーに（可能な限り）保証させる。SPARCでは、@code{struct S}型の変数をすべて8バイトの境界に揃えておくと、 @code {struct S}型の変数を別のものにコピーするときに、コンパイラは@code {ldd}と@code{std}（ダブルワードのロードとストア）命令を使用して、実行時の効率が向上する。
+@code{struct S}または@code {more_aligned_int}の各変数が@emph{<少なくとも>}8バイト境界に割り当てられていることをコンパイラーに（可能な限り）保証させる。SPARCでは、@code{struct S}型の変数をすべて8バイトの境界に揃えておくと、 @code {struct S}型の変数を別のものにコピーするときに、コンパイラは@code {ldd}と@code{std}（ダブルワードのロードとストア）命令を使用して、実行時の効率が向上する。
 
 @code {struct}型や@code {union}型のアライメントは、ISO C標準では、少なくとも問題の@code{struct}または@code{union}のすべてのメンバーのアライメントの最低公倍数の完全な倍数であることが要求されることに注意せよ。つまり、@code{aligned}属性をそのような型のメンバのいずれかに付加することによって、@code {struct}型または@code{union}型の整列を効果的に調整することができるが、 上の例では、コンパイラに@code{struct}型または@code{union}型全体のアライメントを調整するように要求する、より明白で直感的で読みやすい方法を示している。
 
@@ -5345,7 +5345,7 @@ return old;
 
 @samp{&}制約修飾子（@pxref {Modifiers}）は、入力と重複してはならないすべての出力オペランドに対して使用する。 さもなければ、GCCは出力を生成する前にアセンブラコードがその入力を消費すると仮定して、無関係の入力オペランドと同じレジスタに出力オペランドを割り当てることができる。 アセンブラコードが実際に複数の命令で構成されている場合、この仮定は誤っている可能性がある。
 
-1つの出力パラメータ（@var{a}）がレジスタ制約を許可し、別の出力パラメータ（@var{b}）がメモリ制約を許容する場合、同じ問題が発生する可能性がある。@var{b}のメモリアドレスにアクセスするためにGCCによって生成されたコードは、@var{a}によって共有される@emph{_可能性のある_}レジスタを含むかもしれず、GCCはこれらのレジスタをasmへの入力と見なす。上記のように、GCCは、出力が書き込まれる前にそのような入力レジスタが消費されると仮定する。この仮定は、asmが@var{b}を使用する前に@var{a}に書き込むと正しく動作しなくなる可能性がある。@samp{&}修飾子を@var{a}のレジスタ制約と組み合わせると、@var{a}の変更が@var{b}が参照するアドレスに影響しないようになる。そうでなければ、@var{a}が変更されてから@var{b}が使用されると、@var{b}の位置は未定義である。
+1つの出力パラメータ（@var{a}）がレジスタ制約を許可し、別の出力パラメータ（@var{b}）がメモリ制約を許容する場合、同じ問題が発生する可能性がある。@var{b}のメモリアドレスにアクセスするためにGCCによって生成されたコードは、@var{a}によって共有される@emph{<可能性のある>}レジスタを含むかもしれず、GCCはこれらのレジスタをasmへの入力と見なす。上記のように、GCCは、出力が書き込まれる前にそのような入力レジスタが消費されると仮定する。この仮定は、asmが@var{b}を使用する前に@var{a}に書き込むと正しく動作しなくなる可能性がある。@samp{&}修飾子を@var{a}のレジスタ制約と組み合わせると、@var{a}の変更が@var{b}が参照するアドレスに影響しないようになる。そうでなければ、@var{a}が変更されてから@var{b}が使用されると、@var{b}の位置は未定義である。
 
 @code{asm}はオペランドのオペランド修飾子をサポートしている（例えば@samp{％2}の代わりに@samp{％k2}）。 通常、これらの修飾子はハードウェアに依存する。 x86でサポートされている修飾子のリストは、次の場所にあります。
 @ref{x86Operandmodifiers,x86 Operand modifiers}.
@@ -5496,7 +5496,7 @@ __asm__ ("some instructions"
    : "r" (Offset / 8));
 @end example
 
-@strong{警告:} 入力専用オペランドの内容を変更しては@emph{_ならない_}（出力に接続された入力を除く）。コンパイラは、@code{asm}文を終了すると、これらのオペランドには文を実行する前と同じ値が含まれているとみなす。これらの入力値が変化していることをコンパイラーに知らせるためにクローバーを使用することはでき@emph{_ない_}。 1つの一般的な回避策は、変化する入力変数を決して使用されない出力変数に結びつけることである。 ただし、@code{asm}文に続くコードが出力オペランドを使用しない場合、GCCオプティマイザは@code{asm}ステートメントを不要として破棄することがある。(@ref{Volatile}を見よ。)
+@strong{警告:} 入力専用オペランドの内容を変更しては@emph{<ならない>}（出力に接続された入力を除く）。コンパイラは、@code{asm}文を終了すると、これらのオペランドには文を実行する前と同じ値が含まれているとみなす。これらの入力値が変化していることをコンパイラーに知らせるためにクローバーを使用することはでき@emph{<ない>}。 1つの一般的な回避策は、変化する入力変数を決して使用されない出力変数に結びつけることである。 ただし、@code{asm}文に続くコードが出力オペランドを使用しない場合、GCCオプティマイザは@code{asm}ステートメントを不要として破棄することがある。(@ref{Volatile}を見よ。)
 
 @code{asm}はオペランドのオペランド修飾子をサポートしている（例えば@samp{％2}の代わりに@samp{％k2}）。 通常、これらの修飾子はハードウェアに依存する。 x86でサポートされている修飾子のリストは、@ref{x86Operandmodifiers,x86 Operand modifiers}にある。
 
@@ -5544,7 +5544,7 @@ asm volatile ("movc3 %0, %1, %2"
 @item "memory"
 @code{"memory"} clobberは、アセンブラコードが入出力オペランドにリストされているもの以外のメモリ（例えば、入力パラメータの1つが指すメモリにアクセスする）への読み書きを実行することをコンパイラに伝える。メモリに正しい値が含まれていることを確認するために、GCCは@code{asm}を実行する前に特定のレジスタ値をメモリにフラッシュする必要がある。 さらに、コンパイラは、@code{asm}の前にメモリから読み込まれた値がその@code{asm}の後も変わらないと仮定しない。 必要に応じて再ロードする。@code{"memory"} clobberを使用すると、コンパイラの読み書き可能メモリバリアが効果的に形成される。
 
-このclobberは、@emph{_プロセッサ_}が@code{asm}ステートメントより先に投機的な読み込みを行うことを妨げないことに注意せよ。 これを防ぐには、プロセッサ固有のフェンス命令が必要である。
+このclobberは、@emph{<プロセッサ>}が@code{asm}ステートメントより先に投機的な読み込みを行うことを妨げないことに注意せよ。 これを防ぐには、プロセッサ固有のフェンス命令が必要である。
 
 メモリへのレジスタのフラッシュはパフォーマンスに影響を与え、時間に敏感なコードの問題となる可能性がある。 これを避けるためにトリックを使うことができる。 たとえば、文字列の10バイトにアクセスする場合は、次のようなメモリ入力を使用する。
 
@@ -5840,7 +5840,7 @@ register int *foo asm ("r12");
 @item このレジスタへのストアは、たとえ死んでいるように見えても決して削除されないが、参照は削除、移動、または簡略化されるかもしれない。
 @end itemize
 
-これらの点は、定義でコンパイルされたコードに@emph{_のみ_}適用される。 単にリンクされているコード（例えば、ライブラリのコード）の動作は影響を受けない。
+これらの点は、定義でコンパイルされたコードに@emph{<のみ>}適用される。 単にリンクされているコード（例えば、ライブラリのコード）の動作は影響を受けない。
 
 グローバルレジスタ変数を実際に使用していないソースファイルを再コンパイルして、他の目的に使用しないようにするには、ソースコードにグローバルレジスタ宣言を実際に追加する必要はない。 レジスタを予約するには、コンパイラオプション@option{-ffixed-@var{reg}}（@pxref{Code Gen Options}）を指定するだけで十分である。
 
@@ -5855,7 +5855,7 @@ register int *foo asm ("r12");
 @subsubheading Using the variable
 
 @cindex @code{qsort}, and global register variables
-予約を認識していないルーチンを呼び出すときは、それらのルーチンがそれらを使用するコードにコールバックするかどうかに注意せよ。 例えば、@code{qsort}のシステムライブラリバージョンを呼び出すと、実行中にレジスタが壊れる可能性があるが、適切なレジスタを選択した場合は、復帰前に復元される。 しかし、@code{qsort}の比較関数を呼び出す前にそれらを復元し@emph{_ない_}。 その結果、@code{qsort}関数自体が再構築されない限り、グローバル関数の値は比較関数で確実に利用できなくなる。
+予約を認識していないルーチンを呼び出すときは、それらのルーチンがそれらを使用するコードにコールバックするかどうかに注意せよ。 例えば、@code{qsort}のシステムライブラリバージョンを呼び出すと、実行中にレジスタが壊れる可能性があるが、適切なレジスタを選択した場合は、復帰前に復元される。 しかし、@code{qsort}の比較関数を呼び出す前にそれらを復元し@emph{<ない>}。 その結果、@code{qsort}関数自体が再構築されない限り、グローバル関数の値は比較関数で確実に利用できなくなる。
 
 同様に、シグナルハンドラや複数の制御スレッドからグローバルレジスタ変数にアクセスすることは安全ではない。 手元のタスクのためにそれらを特別に再コンパイルしない限り、システムライブラリルーチンは他のもののために一時的にレジスタを使用するかもしれない。
 
@@ -5905,7 +5905,7 @@ register int *result asm ("r0");
 asm ("sysint" : "=r" (result) : "0" (p1), "r" (p2));
 @end smallexample
 
-レジスタ変数を定義しても、レジスタは予約されない。 拡張@code{asm}を呼び出すとき以外は、指定されたレジスタの内容は保証されない。 このため、以下の用途は明示的にに対応してい@emph{_ない_}。 動作しているように見える場合は偶然であり、周辺コードの（一見）関連のない変更、またはgccの将来のバージョンの最適化におけるマイナーな変更のために意図したとおりに動作を停止する可能性がある。
+レジスタ変数を定義しても、レジスタは予約されない。 拡張@code{asm}を呼び出すとき以外は、指定されたレジスタの内容は保証されない。 このため、以下の用途は明示的にに対応してい@emph{<ない>}。 動作しているように見える場合は偶然であり、周辺コードの（一見）関連のない変更、またはgccの将来のバージョンの最適化におけるマイナーな変更のために意図したとおりに動作を停止する可能性がある。
 
 @itemize @bullet
 @item 基本@code{asm}とのパラメータのやり取り
@@ -6019,7 +6019,7 @@ __PRETTY_FUNCTION__ = void a::sub(int)
 
 @var{level}引数は定数でなければならない。
 
-マシンによっては、現在のもの以外の機能の戻りアドレスを特定できない場合がある。 そのような場合、またはスタックの最上部に達したとき、この関数は@code{0またはランダム値を返す。さらに、@code{__builtin_frame_address}は、スタックの先頭に到達したかどうかを判断するために使用できる。
+マシンによっては、現在のもの以外の機能の戻りアドレスを特定できない場合がある。 そのような場合、またはスタックの最上部に達したとき、この関数は@code{0}またはランダム値を返す。さらに、@code{__builtin_frame_address}は、スタックの先頭に到達したかどうかを判断するために使用できる。
 
 戻り値の追加の後処理が必要な場合がある。@code{__builtin_extract_return_addr}を参照せよ。
 
@@ -6170,52 +6170,23 @@ offsetof_member_designator:
 が@code{offsetof}マクロの適切な定義となるように十分である。 C++では、@var{type}は依存している可能性がある。 どちらの場合でも、@var{member}は単一の識別子、またはメンバーアクセスと配列参照のシーケンスで構成される。
 
 @node __sync Builtins
-@section Legacy @code{__sync} Built-in Functions for Atomic Memory Access
+@section アトミック・メモリアクセスのための古い@code{__sync}組み込み関数
 
-The following built-in functions
-are intended to be compatible with those described
-in the @cite{Intel Itanium Processor-specific Application Binary Interface},
-section 7.4.  As such, they depart from normal GCC practice by not using
-the @samp{__builtin_} prefix and also by being overloaded so that they
-work on multiple types.
+次の組み込み関数は、@cite{Intel Itanium Processor-specific Application Binary Interface}のセクション7.4で説明されているものと互換性があることを意図している。 したがって、それらは@samp{__builtin_}接頭辞を使用しないことによって、また複数の型で動作するようにオーバーロードされることによって、通常のGCCの慣行から逸脱する。
 
-The definition given in the Intel documentation allows only for the use of
-the types @code{int}, @code{long}, @code{long long} or their unsigned
-counterparts.  GCC allows any scalar type that is 1, 2, 4 or 8 bytes in
-size other than the C type @code{_Bool} or the C++ type @code{bool}.
-Operations on pointer arguments are performed as if the operands were
-of the @code{uintptr_t} type.  That is, they are not scaled by the size
-of the type to which the pointer points.
+インテルのドキュメントに書かれている定義は、@code{int}、@code{long}、@code{long long}またはそれらの符号なし対応物の使用のみを許可する。 GCCでは、C型@code{_Bool}やC++型@code{bool}以外の1,2,4,8バイトのいずれかのスカラ型を使用できる。ポインタ引数の操作は、オペランドが@code{uintptr_t}型であるかのように実行される。 つまり、ポインタが指している型のサイズによってはスケーリングされない。
 
-These functions are implemented in terms of the @samp{__atomic}
-builtins (@pxref{__atomic Builtins}).  They should not be used for new
-code which should use the @samp{__atomic} builtins instead.
+これらの関数は@samp{__ atomic}組み込み関数（@pxref{__atomic Builtins}）で実装されている。 新しいコードのために使うべきではなく、代わりに@samp{__atomic}組み込み関数を使うべきである。
 
-Not all operations are supported by all target processors.  If a particular
-operation cannot be implemented on the target processor, a warning is
-generated and a call to an external function is generated.  The external
-function carries the same name as the built-in version,
-with an additional suffix
-@samp{_@var{n}} where @var{n} is the size of the data type.
+すべての操作がすべてのターゲットプロセッサでサポートされているわけではない。 ターゲットプロセッサ上で特定の操作を実装できない場合は、警告が生成され、外部関数への呼び出しが生成される。 外部関数には、@samp{_@ var{n}}という接尾辞が付いた組み込みバージョンと同じ名前が付けられる。ここで、@var{n}はデータ型のサイズである。
 
 @c ??? Should we have a mechanism to suppress this warning?  This is almost
 @c useful for implementing the operation under the control of an external
 @c mutex.
 
-In most cases, these built-in functions are considered a @dfn{full barrier}.
-That is,
-no memory operand is moved across the operation, either forward or
-backward.  Further, instructions are issued as necessary to prevent the
-processor from speculating loads across the operation and from queuing stores
-after the operation.
+ほとんどの場合、これらの組み込み関数は@dfn{full barrier}（フルバリア）とみなされる。つまり、メモリーオペランドは、操作の前後に移動しない。 さらに、オペレーションの間、およびオペレーションの後の待ち行列ストアからプロセッサが負荷を推測するのを防ぐために、必要に応じて命令が発行される。
 
-All of the routines are described in the Intel documentation to take
-``an optional list of variables protected by the memory barrier''.  It's
-not clear what is meant by that; it could mean that @emph{only} the
-listed variables are protected, or it could mean a list of additional
-variables to be protected.  The list is ignored by GCC which treats it as
-empty.  GCC interprets an empty list as meaning that all globally
-accessible variables should be protected.
+すべてのルーチンは、「メモリバリアによって保護された変数のオプションリスト」を取るように、インテルのドキュメントに記載されている。 それが何を意味するのかははっきりしない。 リストされた変数@emph{<のみ>}が保護されているか、さもなければ保護されるべき追加の変数のリストを意味する可能性がある。 このリストはGCCによって無視され、GCCはそれを空として扱う。 GCCは、空のリストを、グローバルにアクセス可能なすべての変数を保護する必要があると解釈する。
 
 @table @code
 @item @var{type} __sync_fetch_and_add (@var{type} *ptr, @var{type} value, ...)
@@ -6230,23 +6201,16 @@ accessible variables should be protected.
 @findex __sync_fetch_and_and
 @findex __sync_fetch_and_xor
 @findex __sync_fetch_and_nand
-These built-in functions perform the operation suggested by the name, and
-returns the value that had previously been in memory.  That is, operations
-on integer operands have the following semantics.  Operations on pointer
-arguments are performed as if the operands were of the @code{uintptr_t}
-type.  That is, they are not scaled by the size of the type to which
-the pointer points.
+これらの組み込み関数は、名前で示された操作を実行し、以前にメモリにあった値を返す。 つまり、整数オペランドの操作は次の意味を持つ。 ポインタ引数の操作は、オペランドが@code{uintptr_t}型であるかのように実行される。 つまり、ポインタが指している型のサイズによってはスケーリングされない。
 
 @smallexample
 @{ tmp = *ptr; *ptr @var{op}= value; return tmp; @}
 @{ tmp = *ptr; *ptr = ~(tmp & value); return tmp; @}   // nand
 @end smallexample
 
-The object pointed to by the first argument must be of integer or pointer
-type.  It must not be a boolean type.
+最初の引数が指すオブジェクトは、整数型またはポインタ型でなければなりません。 ブール型であってはならない。
 
-@emph{Note:} GCC 4.4 and later implement @code{__sync_fetch_and_nand}
-as @code{*ptr = ~(tmp & value)} instead of @code{*ptr = ~tmp & value}.
+@emph{_注意_:} GCC 4.4以降では、@code{__ sync_fetch_and_nand}を、@code{*ptr =~tmp＆value}ではなく@code{*ptr =~(tmp＆value)}として実装している。
 
 @item @var{type} __sync_add_and_fetch (@var{type} *ptr, @var{type} value, ...)
 @itemx @var{type} __sync_sub_and_fetch (@var{type} *ptr, @var{type} value, ...)
@@ -6260,71 +6224,42 @@ as @code{*ptr = ~(tmp & value)} instead of @code{*ptr = ~tmp & value}.
 @findex __sync_and_and_fetch
 @findex __sync_xor_and_fetch
 @findex __sync_nand_and_fetch
-These built-in functions perform the operation suggested by the name, and
-return the new value.  That is, operations on integer operands have
-the following semantics.  Operations on pointer operands are performed as
-if the operand's type were @code{uintptr_t}.
+これらの組み込み関数は、名前が示す操作を実行し、新しい値を返す。 つまり、整数オペランドの操作は次の意味を持つ。 ポインタオペランドの操作は、オペランドの型が@code{uintptr_t}であるかのように実行される。
 
 @smallexample
 @{ *ptr @var{op}= value; return *ptr; @}
 @{ *ptr = ~(*ptr & value); return *ptr; @}   // nand
 @end smallexample
 
-The same constraints on arguments apply as for the corresponding
-@code{__sync_op_and_fetch} built-in functions.
+引数の同じ制約は、対応する@code{__ sync_op_and_fetch}組み込み関数の場合と同様に適用される。
 
-@emph{Note:} GCC 4.4 and later implement @code{__sync_nand_and_fetch}
-as @code{*ptr = ~(*ptr & value)} instead of
-@code{*ptr = ~*ptr & value}.
+@emph{_注意_:} GCC 4.4以降では、@code{__sync_nand_and_fetch}を、@code{*ptr =~tmp＆value}ではなく@code{*ptr =~(tmp＆value)}として実装している。
 
 @item bool __sync_bool_compare_and_swap (@var{type} *ptr, @var{type} oldval, @var{type} newval, ...)
 @itemx @var{type} __sync_val_compare_and_swap (@var{type} *ptr, @var{type} oldval, @var{type} newval, ...)
 @findex __sync_bool_compare_and_swap
 @findex __sync_val_compare_and_swap
-These built-in functions perform an atomic compare and swap.
-That is, if the current
-value of @code{*@var{ptr}} is @var{oldval}, then write @var{newval} into
-@code{*@var{ptr}}.
+これらの組み込み関数は、アトミック比較およびスワップを実行する。つまり、@code{*@var{ptr}}の現在の値が@var {oldval}の場合、@var{newval}を@code{*@var{ptr}}に書き出す。
 
-The ``bool'' version returns true if the comparison is successful and
-@var{newval} is written.  The ``val'' version returns the contents
-of @code{*@var{ptr}} before the operation.
+比較が成功し、@var{newval}が書かれていれば、 "bool"バージョンは真を返す。 "val"バージョンは操作の前の@code{*@var{ptr}}の内容を返す。
 
 @item __sync_synchronize (...)
 @findex __sync_synchronize
-This built-in function issues a full memory barrier.
+この組み込み関数は、完全なメモリバリアを発行する。
 
 @item @var{type} __sync_lock_test_and_set (@var{type} *ptr, @var{type} value, ...)
 @findex __sync_lock_test_and_set
-This built-in function, as described by Intel, is not a traditional test-and-set
-operation, but rather an atomic exchange operation.  It writes @var{value}
-into @code{*@var{ptr}}, and returns the previous contents of
-@code{*@var{ptr}}.
+この組み込み関数は、Intelによって記述されているように、従来のテスト・アンド・セット操作ではなく、アトミック交換操作である。 @var{value}を@code{*@var{ptr}}に書き込み、以前の@code{*@var{ptr}}の内容を返す。
 
-Many targets have only minimal support for such locks, and do not support
-a full exchange operation.  In this case, a target may support reduced
-functionality here by which the @emph{only} valid value to store is the
-immediate constant 1.  The exact value actually stored in @code{*@var{ptr}}
-is implementation defined.
+多くのターゲットは、そのようなロックに対して最小限のサポートしか持たず、完全な交換操作をサポートしていない。 この場合、ターゲットは直接的な定数1であるようなストアするための有効な値@emph{<のみ>}の縮小された機能性をサポートする。実際には@code{*@var {ptr}}に格納されている正確な値は実装定義である。
 
-This built-in function is not a full barrier,
-but rather an @dfn{acquire barrier}.
-This means that references after the operation cannot move to (or be
-speculated to) before the operation, but previous memory stores may not
-be globally visible yet, and previous memory loads may not yet be
-satisfied.
+この組み込み関数は完全なバリアではなく、むしろ@dfn{acquire barrier}（獲得バリア）である。 つまり、操作後の参照は操作の前に移動できない（または推測することはできない）が、以前のメモリー・ストアはまだグローバルに可視でない可能性があり、前のメモリー・ロードはまだ満たされていない可能性がある。
 
 @item void __sync_lock_release (@var{type} *ptr, ...)
 @findex __sync_lock_release
-This built-in function releases the lock acquired by
-@code{__sync_lock_test_and_set}.
-Normally this means writing the constant 0 to @code{*@var{ptr}}.
+この組み込み関数は、@code{__ sync_lock_test_and_set}で獲得したロックを解放する。通常これは定数0を@code{*@var{ptr}}に書き込むことを意味する。
 
-This built-in function is not a full barrier,
-but rather a @dfn{release barrier}.
-This means that all previous memory stores are globally visible, and all
-previous memory loads have been satisfied, but following memory reads
-are not prevented from being speculated to before the barrier.
+この組み込み関数は完全なバリアではなく、むしろ@dfn{release barrier}（解放バリア）である。これは、すべての以前のメモリ・ストアがグローバルに可視であり、かつすべての以前のメモリ・ロードが満たされているが、その後のメモリ・リードがバリアの前に推測されることを妨げられないことを意味する。
 @end table
 
 @node __atomic Builtins
