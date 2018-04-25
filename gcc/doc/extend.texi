@@ -6263,188 +6263,95 @@ offsetof_member_designator:
 @end table
 
 @node __atomic Builtins
-@section Built-in Functions for Memory Model Aware Atomic Operations
+@section メモリモデルを関知するアトミック操作用の組み込み関数
 
-The following built-in functions approximately match the requirements
-for the C++11 memory model.  They are all
-identified by being prefixed with @samp{__atomic} and most are
-overloaded so that they work with multiple types.
+次の組み込み関数は、C++11メモリモデルの要件とほぼ同じである。 それらはすべて接頭辞@samp{__ atomic}によって識別され、大部分は複数の型で動作するようにオーバーロードされる。
 
-These functions are intended to replace the legacy @samp{__sync}
-builtins.  The main difference is that the memory order that is requested
-is a parameter to the functions.  New code should always use the
-@samp{__atomic} builtins rather than the @samp{__sync} builtins.
+これらの関数は、従来の@samp{__sync}組み込み関数を置き換えることを意図している。 主な違いは、要求されたメモリの順序が関数のパラメータであることである。 新しいコードでは、@samp{__sync}組み込み関数ではなく@samp{__atomic}組み込み関数を常に使用するべきである。
 
-Note that the @samp{__atomic} builtins assume that programs will
-conform to the C++11 memory model.  In particular, they assume
-that programs are free of data races.  See the C++11 standard for
-detailed requirements.
+@samp{__atomic}組み込み関数は、プログラムがC++11のメモリモデルに準拠していることを前提としている。 特に、それらはプログラムにはデータ競争がないと仮定している。 詳細な要件については、C ++ 11の標準を参照せよ。
 
-The @samp{__atomic} builtins can be used with any integral scalar or
-pointer type that is 1, 2, 4, or 8 bytes in length.  16-byte integral
-types are also allowed if @samp{__int128} (@pxref{__int128}) is
-supported by the architecture.
+@samp{__ atomic}組み込み関数は、長さが1,2,4、または8バイトの整数スカラーまたはポインター型で使用できる。 @samp{__int128}（@pxref{__int128}）がアーキテクチャでサポートされている場合は、16バイトの整数型も使用できる。
 
-The four non-arithmetic functions (load, store, exchange, and 
-compare_exchange) all have a generic version as well.  This generic
-version works on any data type.  It uses the lock-free built-in function
-if the specific data type size makes that possible; otherwise, an
-external call is left to be resolved at run time.  This external call is
-the same format with the addition of a @samp{size_t} parameter inserted
-as the first parameter indicating the size of the object being pointed to.
-All objects must be the same size.
+4つの非算術関数（load、store、exchange、およびcompare_exchange）はすべて汎用バージョンを持っている。 この汎用バージョンは、どのデータ型でも動作する。 特定のデータ型サイズが可能な場合は、ロックフリーの組み込み関数を使用する。 それ以外の場合は、実行時に外部呼び出しが解決される。 この外部呼び出しは、@samp{size_t}パラメータが追加された同じフォーマットで、指定されたオブジェクトのサイズを示す最初のパラメータとして挿入される。すべてのオブジェクトは同じサイズでなければならない。
 
-There are 6 different memory orders that can be specified.  These map
-to the C++11 memory orders with the same names, see the C++11 standard
-or the @uref{http://gcc.gnu.org/wiki/Atomic/GCCMM/AtomicSync,GCC wiki
-on atomic synchronization} for detailed definitions.  Individual
-targets may also support additional memory orders for use on specific
-architectures.  Refer to the target documentation for details of
-these.
+指定できるメモリ順序は6種類ある。 これらは、同じ名前のC++11メモリ順序に対応している。詳細な定義については、C++11標準または@uref{http://gcc.gnu.org/wiki/Atomic/GCCMM/AtomicSync,GCC wiki on atomic synchronization}を参照せよ。 個々のターゲットは、特定のアーキテクチャで使用するための追加のメモリ順序をサポートするかもしれない。 これらの詳細については、対象のドキュメントを参照せよ。
 
-An atomic operation can both constrain code motion and
-be mapped to hardware instructions for synchronization between threads
-(e.g., a fence).  To which extent this happens is controlled by the
-memory orders, which are listed here in approximately ascending order of
-strength.  The description of each memory order is only meant to roughly
-illustrate the effects and is not a specification; see the C++11
-memory model for precise semantics.
+アトミックオペレーションは、コードの動きを制限し、スレッド間の同期（例えばフェンス）のためのハードウェア命令にマッピングすることがありうる。 これがどの程度起こるかは、ここでは強さの昇順で列挙されているメモリの順序によって制御される。 各メモリの順序の説明は、その効果を概略的に示すためのものであり、仕様ではない。 正確なセマンティクスについては、C ++ 11のメモリモデルを参照せよ。
 
 @table  @code
 @item __ATOMIC_RELAXED
-Implies no inter-thread ordering constraints.
+スレッド間順序制約がないことを暗黙に指定する。
 @item __ATOMIC_CONSUME
-This is currently implemented using the stronger @code{__ATOMIC_ACQUIRE}
-memory order because of a deficiency in C++11's semantics for
-@code{memory_order_consume}.
+これは現在、@code{memory_order_consume}に対するC++11のセマンティクスの欠如のために、より強力な@code{__ATOMIC_ACQUIRE}メモリ命令を使用して実装されている。
 @item __ATOMIC_ACQUIRE
-Creates an inter-thread happens-before constraint from the release (or
-stronger) semantic store to this acquire load.  Can prevent hoisting
-of code to before the operation.
+解放（またはそれ以上）のセマンティックストアからこのロード取得までのスレッド間の発生前制約を作成する。 操作の前にコードを持ち上げるのを防ぐことができる
 @item __ATOMIC_RELEASE
-Creates an inter-thread happens-before constraint to acquire (or stronger)
-semantic loads that read from this release store.  Can prevent sinking
-of code to after the operation.
+この解放ストアから読み取ったセマンティックロードを取得するためにスレッド間の発生前制約を作成する。 操作後にコードが沈むのを防ぐことができる。
 @item __ATOMIC_ACQ_REL
-Combines the effects of both @code{__ATOMIC_ACQUIRE} and
-@code{__ATOMIC_RELEASE}.
+@code{__ ATOMIC_ACQUIRE}と@code{__ ATOMIC_RELEASE}の両方の効果を組み合わせる。
 @item __ATOMIC_SEQ_CST
-Enforces total ordering with all other @code{__ATOMIC_SEQ_CST} operations.
+その他すべての@code{__ ATOMIC_SEQ_CST}操作で順序付けを強制します。
 @end table
+C ++ 11メモリモデルにおいて、@emph{<フェンス>}（例えば、@samp{__ atomic_thread_fence}）は、特定のメモリ位置（例えば、アトミックロード）上の他のアトミック演算と組み合わせて有効であることに注意すること。 特定のメモリ位置に対する操作は、必ずしも同じように他の操作に影響するとは限らない。
 
-Note that in the C++11 memory model, @emph{fences} (e.g.,
-@samp{__atomic_thread_fence}) take effect in combination with other
-atomic operations on specific memory locations (e.g., atomic loads);
-operations on specific memory locations do not necessarily affect other
-operations in the same way.
+ターゲット・アーキテクチャーは、アトミック組み込み関数ごとに独自のパターンを提供することが推奨される。 ターゲットが指定されていない場合は、@samp{__sync}アトミック組み込み関数の元の非メモリモデルセットが、適切な動作を達成するために必要な同期フェンスとともに使用される。 この場合の実行には、組み込み関数と同じ制限が適用される。
 
-Target architectures are encouraged to provide their own patterns for
-each of the atomic built-in functions.  If no target is provided, the original
-non-memory model set of @samp{__sync} atomic built-in functions are
-used, along with any required synchronization fences surrounding it in
-order to achieve the proper behavior.  Execution in this case is subject
-to the same restrictions as those built-in functions.
+ロックフリーの命令シーケンスを提供するパターンまたはメカニズムがない場合、実行時に解決される同じパラメータを持つ外部ルーチンが呼び出される。
 
-If there is no pattern or mechanism to provide a lock-free instruction
-sequence, a call is made to an external routine with the same parameters
-to be resolved at run time.
+これらの組み込み関数のパターンを実装する場合、最も厳しい@code{__ ATOMIC_SEQ_CST}メモリの順序を実装している限り、メモリ順序パラメータは無視できる。 他のメモリ順序のどれもがこのメモリ順序で正しく実行されるが、緩和された要件のより適切な実装で可能な限り効率的には実行されない可能性がある。
 
-When implementing patterns for these built-in functions, the memory order
-parameter can be ignored as long as the pattern implements the most
-restrictive @code{__ATOMIC_SEQ_CST} memory order.  Any of the other memory
-orders execute correctly with this memory order but they may not execute as
-efficiently as they could with a more appropriate implementation of the
-relaxed requirements.
+C++11標準では、コンパイル時ではなく実行時にメモリの順序パラメータを決めることができる。 これらの組み込み関数は、ランタイムライブラリ呼び出しを呼び出すか、switch文をインライン化するのではなく、ランタイム値を@code{__ ATOMIC_SEQ_CST}にマップする。 これは標準に準拠し、安全であり、今のところ最も簡単なアプローチである。
 
-Note that the C++11 standard allows for the memory order parameter to be
-determined at run time rather than at compile time.  These built-in
-functions map any run-time value to @code{__ATOMIC_SEQ_CST} rather
-than invoke a runtime library call or inline a switch statement.  This is
-standard compliant, safe, and the simplest approach for now.
-
-The memory order parameter is a signed int, but only the lower 16 bits are
-reserved for the memory order.  The remainder of the signed int is reserved
-for target use and should be 0.  Use of the predefined atomic values
-ensures proper usage.
+メモリ順序パラメータは符号付きintだが、メモリ順序のために予約されているのは下位16ビットだけである。 符号付き整数の残りはターゲット用に予約されていて、0である必要がある。あらかじめ定義されたアトミック値を使用すると、適切な使用が保証される。
 
 @deftypefn {Built-in Function} @var{type} __atomic_load_n (@var{type} *ptr, int memorder)
-This built-in function implements an atomic load operation.  It returns the
-contents of @code{*@var{ptr}}.
+この組み込み関数はアトミックロード命令を実装する。それは@code{*@var{ptr}}の内容を返す。
 
-The valid memory order variants are
-@code{__ATOMIC_RELAXED}, @code{__ATOMIC_SEQ_CST}, @code{__ATOMIC_ACQUIRE},
-and @code{__ATOMIC_CONSUME}.
+正当なメモリ順序変種は@code{__ATOMIC_RELAXED}、@code{__ATOMIC_SEQ_CST}、@code{__ATOMIC_ACQUIRE}、@code{__ATOMIC_CONSUME}である。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} void __atomic_load (@var{type} *ptr, @var{type} *ret, int memorder)
-This is the generic version of an atomic load.  It returns the
-contents of @code{*@var{ptr}} in @code{*@var{ret}}.
+これはアトミック・ロードの汎用バージョンである。それは@code{*@var{ret}}での@code{*@var{ptr}}の内容を返す。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} void __atomic_store_n (@var{type} *ptr, @var{type} val, int memorder)
-This built-in function implements an atomic store operation.  It writes 
-@code{@var{val}} into @code{*@var{ptr}}.  
+この組み込み関数はアトミックストア命令を実装する。それは@code{@var{val}}を@code{*@var{ptr}}に返す。
 
-The valid memory order variants are
-@code{__ATOMIC_RELAXED}, @code{__ATOMIC_SEQ_CST}, and @code{__ATOMIC_RELEASE}.
+正当なメモリ順序変種は@code{__ATOMIC_RELAXED}、@code{__ATOMIC_SEQ_CST}、@code{__ATOMIC_RELEASE}である。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} void __atomic_store (@var{type} *ptr, @var{type} *val, int memorder)
-This is the generic version of an atomic store.  It stores the value
-of @code{*@var{val}} into @code{*@var{ptr}}.
+これはアトミックストアの汎用バージョンである。それは@code{*@var{val}}の値を@code{*@var{ptr}}へ格納する。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} @var{type} __atomic_exchange_n (@var{type} *ptr, @var{type} val, int memorder)
-This built-in function implements an atomic exchange operation.  It writes
-@var{val} into @code{*@var{ptr}}, and returns the previous contents of
-@code{*@var{ptr}}.
+この組み込み関数はアトミック交換命令を実装する。それは@var{val}を@code{*@var{ptr}}へと書き、@code{*@var{ptr}}の前の内容を返す。
 
-The valid memory order variants are
-@code{__ATOMIC_RELAXED}, @code{__ATOMIC_SEQ_CST}, @code{__ATOMIC_ACQUIRE},
-@code{__ATOMIC_RELEASE}, and @code{__ATOMIC_ACQ_REL}.
+正当なメモリ順序変種は@code{__ATOMIC_RELAXED}、@code{__ATOMIC_SEQ_CST}、@code{__ATOMIC_ACQUIRE}、@code{__ATOMIC_RELEASE}、@code{__ATOMIC_ACQ_REL}である。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} void __atomic_exchange (@var{type} *ptr, @var{type} *val, @var{type} *ret, int memorder)
-This is the generic version of an atomic exchange.  It stores the
-contents of @code{*@var{val}} into @code{*@var{ptr}}. The original value
-of @code{*@var{ptr}} is copied into @code{*@var{ret}}.
+これはアトミック交換の汎用バージョンである。それは@code{*@var{val}}の内容を@code{*@var{ptr}}へと格納する。@code{*@var{ptr}}のもとの値は@code{*@var{ret}}へとコピーされる。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} bool __atomic_compare_exchange_n (@var{type} *ptr, @var{type} *expected, @var{type} desired, bool weak, int success_memorder, int failure_memorder)
-This built-in function implements an atomic compare and exchange operation.
-This compares the contents of @code{*@var{ptr}} with the contents of
-@code{*@var{expected}}. If equal, the operation is a @emph{read-modify-write}
-operation that writes @var{desired} into @code{*@var{ptr}}.  If they are not
-equal, the operation is a @emph{read} and the current contents of
-@code{*@var{ptr}} are written into @code{*@var{expected}}.  @var{weak} is true
-for weak compare_exchange, which may fail spuriously, and false for
-the strong variation, which never fails spuriously.  Many targets
-only offer the strong variation and ignore the parameter.  When in doubt, use
-the strong variation.
+この組み込み関数はアトミックの比較・交換操作を実装する。これは@code{*@var{ptr}}の内容を@code{*@var{expected}}と比較する。もし等しければ操作は、@var{desired}を@code{*@var{ptr}}へと書き出す@emph{<読み込み・修正・書き出し＞}である。もし等しくなければ、操作を@emph{<読み出し>}であり、@code{*@var{ptr}}の現在の内容が@code{*@var{expected}}へと書かれる。@var{week}は見せかけの失敗をするかもしれない弱い比較交換の時ではtrueであり、決して見せかけの失敗をしない強いバリエーションではfalseである。多くのターゲットでは強いバリエーションのみを提供して、パラメータは無視される。疑いがあるときには、強いバリエーションを使うこと。
 
-If @var{desired} is written into @code{*@var{ptr}} then true is returned
-and memory is affected according to the
-memory order specified by @var{success_memorder}.  There are no
-restrictions on what memory order can be used here.
+@var{desired}が@code{*@var{ptr}}に書き込まれると、trueが返される。メモリは@var{success_memorder}で指定されたメモリ順序に従って影響を受ける。 ここで使用できるメモリ順序に制限はない。
 
-Otherwise, false is returned and memory is affected according
-to @var{failure_memorder}. This memory order cannot be
-@code{__ATOMIC_RELEASE} nor @code{__ATOMIC_ACQ_REL}.  It also cannot be a
-stronger order than that specified by @var{success_memorder}.
+それ以外の場合は、falseが返され、メモリは@var{failure_memorder}に従って影響を受ける。 このメモリの順序は@code{__ATOMIC_RELEASE}および@code{__ATOMIC_ACQ_REL}であることはできない。 また、@var{success_memorder}で指定されたものよりも強力な順序にすることもできない。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} bool __atomic_compare_exchange (@var{type} *ptr, @var{type} *expected, @var{type} *desired, bool weak, int success_memorder, int failure_memorder)
-This built-in function implements the generic version of
-@code{__atomic_compare_exchange}.  The function is virtually identical to
-@code{__atomic_compare_exchange_n}, except the desired value is also a
-pointer.
+この組み込み関数は、@code{__ atomic_compare_exchange}の汎用バージョンを実装する。 この関数は、目的の値もポインタであることを除いて、実質的に@code{__ atomic_compare_exchange_n}と同じである。
 
 @end deftypefn
 
@@ -6454,17 +6361,13 @@ pointer.
 @deftypefnx {Built-in Function} @var{type} __atomic_xor_fetch (@var{type} *ptr, @var{type} val, int memorder)
 @deftypefnx {Built-in Function} @var{type} __atomic_or_fetch (@var{type} *ptr, @var{type} val, int memorder)
 @deftypefnx {Built-in Function} @var{type} __atomic_nand_fetch (@var{type} *ptr, @var{type} val, int memorder)
-These built-in functions perform the operation suggested by the name, and
-return the result of the operation.  Operations on pointer arguments are
-performed as if the operands were of the @code{uintptr_t} type.  That is,
-they are not scaled by the size of the type to which the pointer points.
+これらの組み込み関数は、名前が示す操作を実行し、操作の結果を返す。 ポインタ引数の操作は、オペランドが@code{uintptr_t}型であるかのように実行される。 つまり、ポインタが指している型のサイズによってはスケーリングされない。
 
 @smallexample
 @{ *ptr @var{op}= val; return *ptr; @}
 @end smallexample
 
-The object pointed to by the first argument must be of integer or pointer
-type.  It must not be a boolean type.  All memory orders are valid.
+最初の引数が指すオブジェクトは、整数型またはポインタ型でなければならない。 ブール型であってはならない。 すべてのメモリ順序が有効である。
 
 @end deftypefn
 
@@ -6474,77 +6377,53 @@ type.  It must not be a boolean type.  All memory orders are valid.
 @deftypefnx {Built-in Function} @var{type} __atomic_fetch_xor (@var{type} *ptr, @var{type} val, int memorder)
 @deftypefnx {Built-in Function} @var{type} __atomic_fetch_or (@var{type} *ptr, @var{type} val, int memorder)
 @deftypefnx {Built-in Function} @var{type} __atomic_fetch_nand (@var{type} *ptr, @var{type} val, int memorder)
-These built-in functions perform the operation suggested by the name, and
-return the value that had previously been in @code{*@var{ptr}}.  Operations
-on pointer arguments are performed as if the operands were of
-the @code{uintptr_t} type.  That is, they are not scaled by the size of
-the type to which the pointer points.
+これらの組み込み関数は、名前で示される操作を実行し、以前に@code{*@var{ptr}}にあった値を返す。 ポインタ引数の操作は、オペランドが@code{uintptr_t}型であるかのように実行される。 つまり、ポインタが指している型のサイズによってはスケーリングされない。
 
 @smallexample
 @{ tmp = *ptr; *ptr @var{op}= val; return tmp; @}
 @end smallexample
 
-The same constraints on arguments apply as for the corresponding
-@code{__atomic_op_fetch} built-in functions.  All memory orders are valid.
+引数に関する制約は、対応する@code{__ atomic_op_fetch}組み込み関数の場合と同じである。 すべてのメモリ順序が有効である。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} bool __atomic_test_and_set (void *ptr, int memorder)
 
-This built-in function performs an atomic test-and-set operation on
-the byte at @code{*@var{ptr}}.  The byte is set to some implementation
-defined nonzero ``set'' value and the return value is @code{true} if and only
-if the previous contents were ``set''.
-It should be only used for operands of type @code{bool} or @code{char}. For 
-other types only part of the value may be set.
+この組み込み関数は、@code{*@var{ptr}}のバイトに対してアトミックなテスト・アンド・セット操作を実行する。 バイトは、ある実装で定義された非ゼロの"set"値に設定され、前の内容が "set"だった場合にのみ、戻り値は@code{true}になる。これは、@code{bool}型または@code{char}型のオペランドに対してのみ使用すべきである。 他のタイプの場合、値の一部のみを設定されるかもしれない。
 
-All memory orders are valid.
-
+すべてのメモリ順序が有効である。
+ 
 @end deftypefn
 
 @deftypefn {Built-in Function} void __atomic_clear (bool *ptr, int memorder)
 
-This built-in function performs an atomic clear operation on
-@code{*@var{ptr}}.  After the operation, @code{*@var{ptr}} contains 0.
-It should be only used for operands of type @code{bool} or @code{char} and 
-in conjunction with @code{__atomic_test_and_set}.
-For other types it may only clear partially. If the type is not @code{bool}
-prefer using @code{__atomic_store}.
+この組み込み関数は、@code{*@var{ptr}}に対してアトミックなクリア操作を実行する。 操作後、@code{*@var{ptr}}には0が入る。これは、@code{bool}型または@code{char}型と@code{__ atomic_test_and_set}との組み合わせでのみ使用すべきである。他のタイプの場合は、部分的にしかクリアされないかもしれないできません。 タイプが@code{bool}でないなら、@code{__ atomic_store}を使用すること。
 
-The valid memory order variants are
-@code{__ATOMIC_RELAXED}, @code{__ATOMIC_SEQ_CST}, and
-@code{__ATOMIC_RELEASE}.
+正当なメモリ順序変種は@code{__ATOMIC_RELAXED}、@code{__ATOMIC_SEQ_CST}、@code{__ATOMIC_RELEASE}である。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} void __atomic_thread_fence (int memorder)
 
-This built-in function acts as a synchronization fence between threads
-based on the specified memory order.
+この組み込み関数は、指定されたメモリ順序に基づいてスレッド間の同期フェンスとして機能する。
 
-All memory orders are valid.
+すべてのメモリ順序が有効である。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} void __atomic_signal_fence (int memorder)
 
-This built-in function acts as a synchronization fence between a thread
-and signal handlers based in the same thread.
+この組み込み関数は、同じスレッドに基づくスレッドハンドラとシグナルハンドラ間の同期フェンスとして機能する。
 
-All memory orders are valid.
+すべてのメモリ順序が有効である。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} bool __atomic_always_lock_free (size_t size,  void *ptr)
 
-This built-in function returns true if objects of @var{size} bytes always
-generate lock-free atomic instructions for the target architecture.
-@var{size} must resolve to a compile-time constant and the result also
-resolves to a compile-time constant.
+この組み込み関数は、@var{size}バイトのオブジェクトが常にターゲットアーキテクチャのロックフリーアトミック命令を生成する場合にtrueを返す。@var{size}はコンパイル時定数に解決されなければならず、結果はコンパイル時定数にも解決される。
 
-@var{ptr} is an optional pointer to the object that may be used to determine
-alignment.  A value of 0 indicates typical alignment should be used.  The 
-compiler may also ignore this parameter.
+@var{ptr}は、アラインメントを決定するために使用されるオブジェクトへのオプションのポインタである。 0の値は、通常のアラインメントを使用する必要があることを示す。 コンパイラはこのパラメータも無視することがある。
 
 @smallexample
 if (__atomic_always_lock_free (sizeof (long long), 0))
@@ -6554,14 +6433,9 @@ if (__atomic_always_lock_free (sizeof (long long), 0))
 
 @deftypefn {Built-in Function} bool __atomic_is_lock_free (size_t size, void *ptr)
 
-This built-in function returns true if objects of @var{size} bytes always
-generate lock-free atomic instructions for the target architecture.  If
-the built-in function is not known to be lock-free, a call is made to a
-runtime routine named @code{__atomic_is_lock_free}.
+この組み込み関数は、@var{size}バイトのオブジェクトが常にターゲットアーキテクチャのロックフリーアトミック命令を生成する場合にtrueを返す。 組み込み関数がロックフリーでないとわかっていない場合は、@code{__atomic_is_lock_free}というランタイムルーチンが呼び出される。
 
-@var{ptr} is an optional pointer to the object that may be used to determine
-alignment.  A value of 0 indicates typical alignment should be used.  The 
-compiler may also ignore this parameter.
+@var{ptr}は、アラインメントを決定するために使用されるオブジェクトへのオプションのポインタである。 0の値は、通常のアラインメントを使用する必要があることを示す。 コンパイラはこのパラメータも無視するかもしれない。
 @end deftypefn
 
 @node Integer Overflow Builtins
