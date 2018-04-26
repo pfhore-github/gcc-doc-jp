@@ -6439,10 +6439,9 @@ if (__atomic_always_lock_free (sizeof (long long), 0))
 @end deftypefn
 
 @node Integer Overflow Builtins
-@section Built-in Functions to Perform Arithmetic with Overflow Checking
+@section オーバーフローチェックつきの算術を実行する組み込み関数
 
-The following built-in functions allow performing simple arithmetic operations
-together with checking whether the operations overflowed.
+次の組み込み関数を使用すると、簡単な算術演算と一緒に操作がオーバーフローしたかどうかをチェックすることができる。
 
 @deftypefn {Built-in Function} bool __builtin_add_overflow (@var{type1} a, @var{type2} b, @var{type3} *res)
 @deftypefnx {Built-in Function} bool __builtin_sadd_overflow (int a, int b, int *res)
@@ -6452,21 +6451,11 @@ together with checking whether the operations overflowed.
 @deftypefnx {Built-in Function} bool __builtin_uaddl_overflow (unsigned long int a, unsigned long int b, unsigned long int *res)
 @deftypefnx {Built-in Function} bool __builtin_uaddll_overflow (unsigned long long int a, unsigned long long int b, unsigned long long int *res)
 
-These built-in functions promote the first two operands into infinite precision signed
-type and perform addition on those promoted operands.  The result is then
-cast to the type the third pointer argument points to and stored there.
-If the stored result is equal to the infinite precision result, the built-in
-functions return false, otherwise they return true.  As the addition is
-performed in infinite signed precision, these built-in functions have fully defined
-behavior for all argument values.
+これらの組み込み関数は、最初の2つのオペランドを無限精度の符号付き型に昇格させ、昇格したオペランドに対して加算を実行する。 その結果は、3番目のポインタ引数が指す型にキャストされ、そこに格納される。格納された結果が無限精度結果と等しい場合、組み込み関数はfalseを返し、そうでない場合はtrueを返す。 加算は無限の符号付き精度で実行されるため、これらの組み込み関数はすべての引数値に対して完全に定義された動作をする。
 
-The first built-in function allows arbitrary integral types for operands and
-the result type must be pointer to some integral type other than enumerated or
-boolean type, the rest of the built-in functions have explicit integer types.
+最初の組み込み関数はオペランドの任意の整数型を許可し、結果型は列挙型またはブール型以外の整数型へのポインタでなければならない。組み込み関数の残りの部分は明示的な整数型を持つ。
 
-The compiler will attempt to use hardware instructions to implement
-these built-in functions where possible, like conditional jump on overflow
-after addition, conditional jump on carry etc.
+コンパイラは、可能であればこれらのビルトイン関数をハードウェア命令を使用して、実装しようとする（加算後のオーバーフローでの条件ジャンプ、キャリーでの条件付きジャンプなど）。
 
 @end deftypefn
 
@@ -6478,9 +6467,7 @@ after addition, conditional jump on carry etc.
 @deftypefnx {Built-in Function} bool __builtin_usubl_overflow (unsigned long int a, unsigned long int b, unsigned long int *res)
 @deftypefnx {Built-in Function} bool __builtin_usubll_overflow (unsigned long long int a, unsigned long long int b, unsigned long long int *res)
 
-These built-in functions are similar to the add overflow checking built-in
-functions above, except they perform subtraction, subtract the second argument
-from the first one, instead of addition.
+これらの組み込み関数は、上記の組み込み関数のチェックのオーバーフローと似ているが、加算ではなく減算を行い、最初の引数から2番めの引数を減算することが異なる。
 
 @end deftypefn
 
@@ -6492,38 +6479,21 @@ from the first one, instead of addition.
 @deftypefnx {Built-in Function} bool __builtin_umull_overflow (unsigned long int a, unsigned long int b, unsigned long int *res)
 @deftypefnx {Built-in Function} bool __builtin_umulll_overflow (unsigned long long int a, unsigned long long int b, unsigned long long int *res)
 
-These built-in functions are similar to the add overflow checking built-in
-functions above, except they perform multiplication, instead of addition.
+これらの組み込み関数は、加算の代わりに乗算を実行する点を除いて、上記のビルトイン関数のオーバーフローチェックと同様である。
 
 @end deftypefn
 
-The following built-in functions allow checking if simple arithmetic operation
-would overflow.
+次のビルトイン関数は、単純な算術演算がオーバフローするかどうかのチェックを可能にする。
 
 @deftypefn {Built-in Function} bool __builtin_add_overflow_p (@var{type1} a, @var{type2} b, @var{type3} c)
 @deftypefnx {Built-in Function} bool __builtin_sub_overflow_p (@var{type1} a, @var{type2} b, @var{type3} c)
 @deftypefnx {Built-in Function} bool __builtin_mul_overflow_p (@var{type1} a, @var{type2} b, @var{type3} c)
 
-These built-in functions are similar to @code{__builtin_add_overflow},
-@code{__builtin_sub_overflow}, or @code{__builtin_mul_overflow}, except that
-they don't store the result of the arithmetic operation anywhere and the
-last argument is not a pointer, but some expression with integral type other
-than enumerated or boolean type.
+これらの組み込み関数は、算術演算の結果をどこにも格納せず、最後の引数がポインタではなく、列挙型またはブール型以外の整数型の式であることを除いて、@code{__builtin_add_overflow}、@code {__builtin_sub_overflow}、または@code {__builtin_mul_overflow}と似ている。
 
-The built-in functions promote the first two operands into infinite precision signed type
-and perform addition on those promoted operands. The result is then
-cast to the type of the third argument.  If the cast result is equal to the infinite
-precision result, the built-in functions return false, otherwise they return true.
-The value of the third argument is ignored, just the side-effects in the third argument
-are evaluated, and no integral argument promotions are performed on the last argument.
-If the third argument is a bit-field, the type used for the result cast has the
-precision and signedness of the given bit-field, rather than precision and signedness
-of the underlying type.
+組み込み関数は、最初の2つのオペランドを無限精度の符号付き型に昇格させ、昇格したオペランドに対して加算を実行する。 結果は3番目の引数の型にキャストされる。 キャスト結果が無限精度結果と等しい場合、組み込み関数はfalseを返し、そうでない場合はtrueを返す。3番目の引数の値は無視され、3番目の引数の副作用のみが評価され、最後の引数に対して整数引数の昇格は実行されない。3番目の引数がビットフィールドの場合、結果キャストに使用される型は、基になる型の精度と符号ではなく、指定されたビットフィールドの精度と符号を持つ。
 
-For example, the following macro can be used to portably check, at
-compile-time, whether or not adding two constant integers will overflow,
-and perform the addition only when it is known to be safe and not to trigger
-a @option{-Woverflow} warning.
+例えば、以下のマクロは、コンパイル時に、2つの定数がオーバーフローするかどうかをポータブルにチェックし、安全であることがわかっていて、@option{-Woverflow}警告をトリガしない場合にのみ加算を実行できる。
 
 @smallexample
 #define INT_ADD_OVERFLOW_P(a, b) \
@@ -6536,9 +6506,7 @@ enum @{
 @};
 @end smallexample
 
-The compiler will attempt to use hardware instructions to implement
-these built-in functions where possible, like conditional jump on overflow
-after addition, conditional jump on carry etc.
+コンパイラは、可能であれば、ハードウェア命令を使用してこれらのビルトイン関数を実装しようとする（加算後のオーバーフローでの条件ジャンプ、キャリーでの条件付きジャンプなど）。
  
 @end deftypefn
 
