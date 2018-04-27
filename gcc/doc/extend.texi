@@ -6511,24 +6511,18 @@ enum @{
 @end deftypefn
 
 @node x86 specific memory model extensions for transactional memory
-@section x86-Specific Memory Model Extensions for Transactional Memory
+@section x86固有のトランザクションメモリ用のメモリモデル拡張
 
-The x86 architecture supports additional memory ordering flags
-to mark critical sections for hardware lock elision. 
-These must be specified in addition to an existing memory order to
-atomic intrinsics.
+x86アーキテクチャーは、ハードウェア・ロック除去用のクリティカル・セクションをマークする追加のメモリー順序付けフラグをサポートしている。これらは、アトミック組み込み関数に対する既存のメモリー順序に加えて指定する必要がある。
 
 @table @code
 @item __ATOMIC_HLE_ACQUIRE
-Start lock elision on a lock variable.
-Memory order must be @code{__ATOMIC_ACQUIRE} or stronger.
+ロック変数でのロック除去を開始する。メモリ順序は@code{__ATOMIC_ACQUIRE}以上に強くなくてはならない。
 @item __ATOMIC_HLE_RELEASE
-End lock elision on a lock variable.
-Memory order must be @code{__ATOMIC_RELEASE} or stronger.
+ロック変数でのロック除去を終了する。メモリ順序は@code{__ATOMIC_RELEASE}以上に強くなくてはならない。
 @end table
 
-When a lock acquire fails, it is required for good performance to abort
-the transaction quickly. This can be done with a @code{_mm_pause}.
+ロック獲得に失敗した場合、良いパフォーマンスですぐにトランザクションを中断する必要がある。 これは@code{_mm_pause}で行うことができる。
 
 @smallexample
 #include <immintrin.h> // For _mm_pause
