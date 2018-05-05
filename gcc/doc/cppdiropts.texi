@@ -1,4 +1,4 @@
-@c Copyright (C) 1999-2017 Free Software Foundation, Inc.
+@c Copyright (C) 1999-2018 Free Software Foundation, Inc.
 @c This is part of the CPP and GCC manuals.
 @c For copying conditions, see the file gcc.texi.
 
@@ -21,8 +21,7 @@
 @ifset cppmanual
 @xref{Search Path}.
 @end ifset
-@var{dir}が@samp{=}で始まる場合、@samp{=}がsysroot接頭辞によって置き換えられる。
-@option{-sysroot}と@option{-isysroot}参照。
+@var{dir}が@samp{=}または@code{$SYSROOT}で始まる場合、@samp{=}または@code{$SYSROOT}がsysroot接頭辞によって置き換えられる。@option{-sysroot}と@option{-isysroot}参照。
 
 @option{-iquote}で指定されたディレクトリは、ディレクティブの引用形式@code{@w{#include "@var{file}"}}にのみ適用される。
 @option{-I}、@option{-isystem}、または@option{-idirafter}で指定されたディレクトリは、@code{@w{#include "@var{file}"}}と@code{@w{#include <@var{file}>}}ディレクティブの両方を検索するために適用される。

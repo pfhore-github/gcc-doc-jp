@@ -1,4 +1,4 @@
-@c Copyright (C) 1999-2017 Free Software Foundation, Inc.
+@c Copyright (C) 1999-2018 Free Software Foundation, Inc.
 @c This is part of the CPP and GCC manuals.
 @c For copying conditions, see the file gcc.texi.
 
@@ -28,7 +28,7 @@
 
 @item -include @var{file}
 @opindex include
-@code{#include "file"}がプライマリソースファイルの最初の行として現れたかのように@var{file}を処理する。 ただし、@var{file}を検索する最初のディレクトリは、メインソースファイルを含むディレクトリの@emph{<代わりに>}、プリプロセッサの作業ディレクトリである。 そこに見つからない場合は、@code{#include "@dots{}"}検索チェーンの残りの部分で通常どおり検索される。
+@code{#include "file"}がプライマリソースファイルの最初の行として現れたかのように@var{file}を処理する。 ただし、@var{file}を検索する最初のディレクトリは、メインソースファイルを含むディレクトリの@emph{_代わりに_}、プリプロセッサの作業ディレクトリである。 そこに見つからない場合は、@code{#include "@dots{}"}検索チェーンの残りの部分で通常どおり検索される。
 
 @option{-include}オプションが複数指定されている場合、ファイルはコマンドラインに表示される順序で含まれる。
 
@@ -73,6 +73,8 @@ POSIXスレッド・ライブラリーを使用するために必要な追加の
 @option{-M}または@option {-MM}とともに使用する場合は、依存関係を書き込むファイルを指定する。 @option{-MF}スイッチが指定されていない場合、プリプロセッサは前処理された出力を送信する同じ場所にルールを送信する。
 
 ドライバオプション@option{-MD}または@option{-MMD}とともに使用すると、@option{-MF}はデフォルトの依存関係出力ファイルを無効にする。
+
+もし@var{file}が@file{-}であるならば、依存性は@file{stdout}に書かれる。
 
 @item -MG
 @opindex MG
@@ -171,6 +173,10 @@ $$(objpfx)foo.o: foo.c
 
 @code {-ftrack-macro-expansion=2}はデフォルトで有効になっていることに注意。
 
+@item -fmacro-prefix-map=@var{old}=@var{new}
+@opindex fmacro-prefix-map
+ディレクトリ@file{@var{old}}にあるファイルを前処理する場合、ファイルがディレクトリ@file{@var{new}}にあるかのように@code{__ FILE__}マクロと@code{__ BASE_FILE__}マクロを展開する。 これは絶対パスを相対パスに変更するために@var{new}に@file{.}を使用することで、場所に依存しないより再現性のあるビルドが可能になる。このオプションは、コンパイル時に@code{__builtin_FILE()}にも影響する。 @option{-ffile-prefix-map}も参照せよ。
+ 
 @item -fexec-charset=@var{charset}
 @opindex fexec-charset
 @cindex character set, execution
@@ -307,7 +313,7 @@ touch foo.h; cpp -dM foo.h
 
 @item -dD
 @opindex dD
-2つの点を除いて@option{-dM}と似ている。それは定義済みマクロを含@emph{<まず>}、@samp{#define}ディレクティブと前処理の結果の@emph{<両方>}を出力する。出力の両方の種類は標準出力ファイルへと出力される。
+2つの点を除いて@option{-dM}と似ている。それは定義済みマクロを含@emph{_まず_}、@samp{#define}ディレクティブと前処理の結果の@emph{_両方_}を出力する。出力の両方の種類は標準出力ファイルへと出力される。
 
 @item -dN
 @opindex dN
