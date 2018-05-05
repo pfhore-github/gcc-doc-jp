@@ -1043,7 +1043,7 @@ See RS/6000 and PowerPC Options.
 -malign-power  -malign-natural 
 -msoft-float  -mhard-float  -mmultiple  -mno-multiple 
 -msingle-float  -mdouble-float  -msimple-fpu 
--mstring  -mno-string  -mupdate  -mno-update 
+-mupdate  -mno-update 
 -mavoid-indexed-addresses  -mno-avoid-indexed-addresses 
 -mfused-madd  -mno-fused-madd  -mbit-align  -mno-bit-align 
 -mstrict-align  -mno-strict-align  -mrelocatable 
@@ -1053,41 +1053,37 @@ See RS/6000 and PowerPC Options.
 -mprioritize-restricted-insns=@var{priority} 
 -msched-costly-dep=@var{dependence_type} 
 -minsert-sched-nops=@var{scheme} 
--mcall-sysv  -mcall-netbsd 
--maix-struct-return  -msvr4-struct-return 
+-mcall-aixdesc  -mcall-eabi  -mcall-freebsd  
+-mcall-linux  -mcall-netbsd  -mcall-openbsd  
+-mcall-sysv  -mcall-sysv-eabi  -mcall-sysv-noeabi 
+-mtraceback=@var{traceback_type} -maix-struct-return  -msvr4-struct-return 
 -mabi=@var{abi-type}  -msecure-plt  -mbss-plt 
 -mblock-move-inline-limit=@var{num} 
--misel  -mno-isel 
+-mblock-compare-inline-limit=@var{num} 
+-mblock-compare-inline-loop-limit=@var{num} 
+-mstring-compare-inline-limit=@var{num} -misel  -mno-isel 
 -misel=yes  -misel=no 
--mspe  -mno-spe 
--mspe=yes  -mspe=no 
 -mpaired 
--mgen-cell-microcode  -mwarn-cell-microcode 
 -mvrsave  -mno-vrsave 
 -mmulhw  -mno-mulhw 
 -mdlmzb  -mno-dlmzb 
--mfloat-gprs=yes  -mfloat-gprs=no  -mfloat-gprs=single  -mfloat-gprs=double 
 -mprototype  -mno-prototype 
 -msim  -mmvme  -mads  -myellowknife  -memb  -msdata 
--msdata=@var{opt}  -mvxworks  -G @var{num} 
+-msdata=@var{opt}  -mreadonly-in-sdata  -mvxworks  -G @var{num} 
 -mrecip  -mrecip=@var{opt}  -mno-recip  -mrecip-precision 
 -mno-recip-precision 
 -mveclibabi=@var{type}  -mfriz  -mno-friz 
 -mpointers-to-nested-functions  -mno-pointers-to-nested-functions 
 -msave-toc-indirect  -mno-save-toc-indirect 
 -mpower8-fusion  -mno-mpower8-fusion  -mpower8-vector  -mno-power8-vector 
--mcrypto  -mno-crypto  -mhtm  -mno-htm  -mdirect-move  -mno-direct-move 
+-mcrypto  -mno-crypto  -mhtm  -mno-htm 
 -mquad-memory  -mno-quad-memory 
 -mquad-memory-atomic  -mno-quad-memory-atomic 
 -mcompat-align-parm  -mno-compat-align-parm 
--mupper-regs-df  -mno-upper-regs-df  -mupper-regs-sf  -mno-upper-regs-sf 
--mupper-regs-di  -mno-upper-regs-di 
--mupper-regs  -mno-upper-regs 
 -mfloat128  -mno-float128  -mfloat128-hardware  -mno-float128-hardware 
 -mgnu-attribute  -mno-gnu-attribute 
 -mstack-protector-guard=@var{guard} -mstack-protector-guard-reg=@var{reg} 
--mstack-protector-guard-offset=@var{offset} 
--mlra  -mno-lra}
+-mstack-protector-guard-offset=@var{offset}}
 
 @emph{RX Options}
 @gccoptlist{-m64bit-doubles  -m32bit-doubles  -fpu  -nofpu
@@ -1231,15 +1227,17 @@ See RS/6000 and PowerPC Options.
 -mincoming-stack-boundary=@var{num} 
 -mcld  -mcx16  -msahf  -mmovbe  -mcrc32 
 -mrecip  -mrecip=@var{opt} 
--mvzeroupper  -mprefer-avx128 
+-mvzeroupper  -mprefer-avx128 -mprefer-vector-width=@var{opt} 
 -mmmx  -msse  -msse2  -msse3  -mssse3  -msse4.1  -msse4.2  -msse4  -mavx 
 -mavx2  -mavx512f  -mavx512pf  -mavx512er  -mavx512cd  -mavx512vl 
 -mavx512bw  -mavx512dq  -mavx512ifma  -mavx512vbmi  -msha  -maes 
--mpclmul  -mfsgsbase  -mrdrnd  -mf16c  -mfma 
+-mpclmul  -mfsgsbase  -mrdrnd  -mf16c  -mfma -mpconfig -mwbnoinvd 
 -mprefetchwt1  -mclflushopt  -mxsavec  -mxsaves 
 -msse4a  -m3dnow  -m3dnowa  -mpopcnt  -mabm  -mbmi  -mtbm  -mfma4  -mxop 
 -mlzcnt  -mbmi2  -mfxsr  -mxsave  -mxsaveopt  -mrtm  -mlwp  -mmpx  
--mmwaitx  -mclzero  -mpku  -mthreads 
+-mmwaitx  -mclzero  -mpku  -mthreads -mgfni  -mvaes  
+-mshstk -mforce-indirect-call -mavx512vbmi2 
+-mvpclmulqdq -mavx512bitalg -mmovdiri -mmovdir64b -mavx512vpopcntdq 
 -mms-bitfields  -mno-align-stringops  -minline-all-stringops 
 -minline-stringops-dynamically  -mstringop-strategy=@var{alg} 
 -mmemcpy-strategy=@var{strategy}  -mmemset-strategy=@var{strategy} 
@@ -1254,8 +1252,11 @@ See RS/6000 and PowerPC Options.
 -msse2avx  -mfentry  -mrecord-mcount  -mnop-mcount  -m8bit-idiv 
 -mavx256-split-unaligned-load  -mavx256-split-unaligned-store 
 -malign-data=@var{type}  -mstack-protector-guard=@var{guard} 
--mmitigate-rop  -mgeneral-regs-only
--mindirect-branch=@var{choice} -mfunction-return==@var{choice}
+-mstack-protector-guard-reg=@var{reg} 
+-mstack-protector-guard-offset=@var{offset} 
+-mstack-protector-guard-symbol=@var{symbol} -mmitigate-rop 
+-mgeneral-regs-only -mcall-ms2sysv-xlogues 
+-mindirect-branch=@var{choice} -mfunction-return=@var{choice} 
 -mindirect-branch-register}
 
 @emph{x86 Windows Options}
@@ -1776,7 +1777,11 @@ ISO C99のGNU変種。名前@samp{gnu9x}は非推奨である。
 
 @item gnu11
 @itemx gnu1x
-ISO C11のGNU変種。これはCコードのデフォルトである。名前@samp{gnu1x}は非推奨である。
+ISO C11のGNU変種。名前@samp{gnu1x}は非推奨である。
+
+@item gnu17
+@itemx gnu18
+ISO C17のGNU変種。これはCコードのデフォルトである。
 
 @item c++98
 @itemx c++03
@@ -1788,7 +1793,7 @@ ISO C11のGNU変種。これはCコードのデフォルトである。名前@sa
 
 @item c++11
 @itemx c++0x
-2011 ISO C++標準＋訂正案。名前@samp{c++0x}は非推奨である。
+2011 ISO C++標準＋改定。名前@samp{c++0x}は非推奨である。
 
 @item gnu++11
 @itemx gnu++0x
@@ -1796,17 +1801,26 @@ ISO C11のGNU変種。これはCコードのデフォルトである。名前@sa
 
 @item c++14
 @itemx c++1y
-2014 ISO C++標準＋訂正案。名前@samp{c++1y}は非推奨である。
+2014 ISO C++標準＋改定。名前@samp{c++1y}は非推奨である。
 
 @item gnu++14
 @itemx gnu++1y
 @option{-std=c++14}のGNU変種。これはC++コードのデフォルトである。名前@samp{gnu++1y}は非推奨である。
 
+@item c++17
 @item c++1z
-ISO C++標準の次の改定であり、とりあえず、2017年の間計画される。サポートは非常に実験的で、ほぼ間違いなく将来のリリースにおいて非互換の方向で変わる。
+2017 ISO C++標準＋改定。名前@samp{c++1z}は非推奨である。
 
+@item gnu++17
 @item gnu++1z
-@option{-std=c++1z}のGNU変種。サポートは非常に実験的で、ほぼ間違いなく将来のリリースにおいて非互換の方向で変わる。
+@option{-std=c++17}のGNU変種。名前@samp{gnu++1z}は非推奨である。
+
+@item c++2a
+ISO C++標準の次の改定であり、とりあえず、2020年の間計画される。サポートは非常に実験的で、ほぼ間違いなく将来のリリースにおいて非互換の方向で変わる。
+
+@item gnu++2a
+@option{-std=c++2a}のGNU変種。サポートは非常に実験的で、ほぼ間違いなく将来のリリースにおいて非互換の方向で変わる。
+
 @end table
 
 @item -fgnu89-inline
@@ -1922,7 +1936,7 @@ GIMPLEパスの単体試験を可能にする。
 @cindex OpenACC accelerator programming
 C/C++での@code{#pragma acc}とFortranでの@code{!$acc}OpenACCディレクティブを有効にする。
 @option{-fopenacc}が指定された時は、コンパイラはOpenACCアプリケーション・プログラミングインターフェースv2.0
-@w{@uref{http://www.openacc.org/}}に基づいた加速されたコードを生成する。このオプションは
+@w{@uref{https://www.openacc.org/}}に基づいた加速されたコードを生成する。このオプションは
 @option{-pthread}を含み、したがって@option{-pthread}をサポートするターゲットでのみサポートされている。
 
 @item -fopenacc-dim=@var{geom}
@@ -1947,15 +1961,6 @@ v4.5@w{@uref{http://www.openmp.org/}}による並列コードを生成する。�
 @cindex SIMD
 C/C++での@code{#pragma omp}とFortranでの@code{!$imp}でのOpenMPのSIMPディレクティブを有効にする。
 他のOpenMPディレクティブは無視される。
-
-@item -fcilkplus
-@opindex fcilkplus
-@cindex Enable Cilk Plus
-C/C++でのCilk Plus言語拡張の機能の使用を有効にする。オプション@option{-fcilkplus}が指定された
-時は、C/C++でのCilk Plus言語拡張の使用が有効になる。現在の実装はABI バージョン1.2に従っている。
-これは部分的に完成している実験的な機能で、そのインターフェースは公式の仕様書が変更されると
-将来のGCCのバージョンではインターフェースが変更されるかもしれない。現在、@code{_Cilk_for}以外の
-すべての機能が実装されている。
 
 @item -fgnu-tm
 @opindex fgnu-tm
@@ -2190,7 +2195,7 @@ void f()
 ISO C++では囲んでいるスコープで宣言されていないフレンド関数は引数依存検索でのみ見つけることができる。
 GCCのデフォルトは標準の振る舞いである。
 
-このオプションは互換性用であり、将来のG++のバージョンでは削除されるかもしれない。
+このオプションは廃止予定であり、削除されるだろう。
 
 @item -fno-elide-constructors
 @opindex fno-elide-constructors
@@ -2230,7 +2235,7 @@ C++11とOpneMPは@code{thread_local}と@code{threadprivate}変数が動的に（
 @code{for}ループ自身に制限される。もし@option{-fno-for-scope}が指定されると、古いバージョンG+＋や、
 他の（伝統的な）C++の実装のように、@i{for-初期化文}で宣言された変数のスコープは取り囲むスコープの終わりまで拡張される。
 
-どちらのフラグもないと、デフォルトは標準に従うが、不当であるか、異なった振る舞いをする旧式のコードを受理して警告を出す。
+このオプションは廃止予定であり、関連した非標準の機能は削除されるだろう。
 
 @item -fno-gnu-keywords
 @opindex fno-gnu-keywords
@@ -2265,7 +2270,7 @@ C++11とC++14に対するデファクト・レポートであるとも考えら�
 @opindex fnew-ttp-matching
 Core issue150、テンプレートテンプレートパラメータとデフォルト引数へのP0522解決を有効にする。
 これはデフォルトテンプレート引数のあるテンプレートをより少ないテンプレートパラメータでの
-テンプレートテンプレートパラメータの引数としての使用を可能にする。このフラグは@option{-std=c++1z}でデフォルトで
+テンプレートテンプレートパラメータの引数としての使用を可能にする。このフラグは@option{-std=c++17}でデフォルトで
 有効である。
 
 @item -fno-nonansi-builtins
@@ -2331,9 +2336,9 @@ void operator delete[] (void *, std::size_t) noexcept;
 @item -fstrong-eval-order
 @opindex fstrong-eval-order
 C++17で採用されたとおり、メンバアクセス、配列の添字、シフト表現を左から右への順序で評価し、
-代入文を右から左への順序で評価する。@option{-std=c++1z}ではデフォルトで有効である。
+代入文を右から左への順序で評価する。@option{-std=c++17}ではデフォルトで有効である。
 @option{-fstrong-eval-order=some}はメンバアクセスとシフト表現の順序のみ有効にし、
-@option{-std=c++1z}なしでデフォルトである。
+@option{-std=c++17}なしでデフォルトである。
 
 @item -ftemplate-backtrace-limit=@var{n}
 @opindex ftemplate-backtrace-limit
@@ -2588,15 +2593,28 @@ int i = @{ 2.2 @}; // error: narrowing from double to int
 @item -Wnoexcept-type @r{(C++とObjective-C++専用)}
 @opindex Wnoexcept-type
 @opindex Wno-noexcept-type
-関数型に@code{noexcept}部分が含まれるC++1zの機能がC++14と比較してシンボルのマングル名を変えるなら警告する。
-@option{-Wabi}と@option{-Wc++1z-compat}で有効である。
+関数型に@code{noexcept}部分が含まれるC++17の機能がC++14と比較してシンボルのマングル名を変えるなら警告する。
+@option{-Wabi}と@option{-Wc++17-compat}で有効である。
+
+例として：
 
 @smallexample
 template <class T> void f(T t) @{ t(); @};
 void g() noexcept;
-void h() @{ f(g); @} // C++14ではf<void(*)()>を呼び, C++1zではf<void(*)()noexcept>を呼ぶ
+void h() @{ f(g); @}
 @end smallexample
 
+@noindent
+C++14では、@code{f}は@code{f}@code{f<void(*)()>}を呼ぶが、C++17では、@code{f<void(*)()noexcept>}を呼ぶ。
+
+@item -Wclass-memaccess @r{(C++とObjective-C++のみ)}
+@opindex Wclass-memaccess
+@code{memset}や@code{memcpy}のような生のメモリ関数の呼び出し先がクラス型のオブジェクトで、そのようなオブジェクトへの書き込みがクラスの非自明な、または削除されたコンストラクタおよびコピー代入をバイパスするか、 constの正当性やカプセル化に違反するか、仮想テーブルポインタが壊れる可能性があるに警告する。 そのようなオブジェクトの表現を変更すると、そのクラスのメンバ関数によって維持される不変量に違反する可能性がある。 例えば、以下の@code{memset}への呼び出しは、自明ではないクラスオブジェクトを変更するため未定義で、診断される。 このような型のオブジェクトの記憶域を初期化またはクリアする安全な方法は、適切なコンストラクタまたは代入演算子が利用可能であればそれを使用することである。
+@smallexample
+std::string str = "abc";
+memset (&str, 0, sizeof str);
+@end smallexample
+@option{-Wclass-memaccess}オプションは@option {-Wall}によって有効になる。明示的にクラスオブジェクトへのポインタを@code{void *}にキャストするか、生のメモリ関数によって安全にアクセスできる型にキャストすると警告が抑制される。
 
 @item -Wnon-virtual-dtor @r{(C++とObjective-C++専用)}
 @opindex Wnon-virtual-dtor
@@ -2610,7 +2628,7 @@ void h() @{ f(g); @} // C++14ではf<void(*)()>を呼び, C++1zではf<void(*)()
 @opindex Wno-register
 GNU@ref{Explicit Register Variables}拡張の一部を除いて、@code{register}領域クラス指定子の使用について
 警告する。領域クラス指定子としての@code{register}キーワードの使用はC++11で非推奨になりC++17では取り除かれた。
-@option{-std=c++1z}ではデフォルトで有効である。
+@option{-std=c++17}ではデフォルトで有効である。
 
 @item -Wreorder @r{(C++とObjective-C++専用)}
 @opindex Wreorder
@@ -3058,6 +3076,10 @@ SGR substring for second additional range.
 @vindex diff-insert GCC_COLORS @r{capability}
 生成されたパッチ内の追加された行のSGR部分文字列
 
+@item type-diff=
+@vindex type-diff GCC_COLORS @r{capability}
+C++フロントエンドでのテンプレート引数内でハイライトしている一致していない型のSGR部分文字列。
+
 @end table
 
 @item -fno-diagnostics-show-option
@@ -3283,9 +3305,10 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 -Wbool-compare  
 -Wbool-operation  
 -Wc++11-compat  -Wc++14-compat  
+-Wcatch-value @r{(C++とObjective-C++のみ)}  
 -Wchar-subscripts  
 -Wcomment  
--Wduplicate-decl-specifier @r{(CとObjective-C専用)} 
+-Wduplicate-decl-specifier @r{(CとObjective-Cのみ)} 
 -Wenum-compare @r{(C/ObjCで。これはC++ではデフォルトである)} 
 -Wformat   
 -Wint-in-bool-context  
@@ -3299,7 +3322,9 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 -Wmemset-elt-size 
 -Wmemset-transposed-args 
 -Wmisleading-indentation @r{(C/C++専用)} 
+-Wmissing-attributes 
 -Wmissing-braces @r{(C/ObjC専用)} 
+-Wmultistatement-macros  
 -Wnarrowing @r{(C++専用)}  
 -Wnonnull  
 -Wnonnull-compare  
@@ -3307,9 +3332,11 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 -Wparentheses  
 -Wpointer-sign  
 -Wreorder   
+-Wrestrict
 -Wreturn-type  
 -Wsequence-point  
 -Wsign-compare @r{(C++専用)}  
+-Wsizeof-pointer-div
 -Wsizeof-pointer-memaccess 
 -Wstrict-aliasing  
 -Wstrict-overflow=1  
@@ -3338,6 +3365,7 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 古い名前はまだ利用可能だが、新しい名前はより描写的である。）
 
 @gccoptlist{-Wclobbered  
+-Wcast-function-type 
 -Wempty-body  
 -Wignored-qualifiers 
 -Wimplicit-fallthrough=3 
@@ -3729,10 +3757,8 @@ switch (cond)
 @end smallexample
 
 C++17ではGNU属性の代わりに、@code{[[fallthrough]];}を使って@option{-Wimplicit-fallthrough}警告
-抑制する標準の方法が存在する。C++11およびC++14のユーザはGNU拡張であるい@code{[[gnu::fallthrough]];}
-を使うことができる。これらの属性の代わりに、警告を黙らせる落下コメントを追加することも可能である。
-CおよびC++形式のコメントの全体が以下で並べられた与えられた正規表現に一致するべきである。
-オプション引数@var{n}は受理されるコメントの種類を指定する。
+抑制する標準の方法が存在する。C++11およびC++14のユーザはGNU拡張である@code{[[gnu::fallthrough]];}
+を使うことができる。これらの属性の代わりに、フォールスルー・コメントを追加して警告を抑止することもできる。 CまたはC++形式のコメントの本文は、以下に示す正規表現と一致する必要がある。 オプション引数@var{n}は、どのようなコメントが受け入れられるかを指定する：
 
 @itemize @bullet
 
@@ -3799,6 +3825,11 @@ switch (cond)
 @end smallexample
 
 The @option{-Wimplicit-fallthrough=3}警告は@option{-Wextra}によって有効になる。
+
+@item -Wif-not-aligned @r{(C, C++, Objective-C, Objective-C++のみ)}
+@opindex Wif-not-aligned
+@opindex Wno-if-not-aligned
+@code{warn_if_not_aligned}属性によってトリガされる警告を発行するかどうかを制御する。 これはデフォルトで有効になっている。 無効にするには、@option{-Word-aligned not-aligned}を使用する。
 
 @item -Wignored-qualifiers @r{(CとC++専用)}
 @opindex Wignored-qualifiers
@@ -3935,9 +3966,19 @@ This warning is enabled by @option{-Wall} in C and C++.
 
 @code{x<=t<=x}のような比較でも警告する。これは@code{x<=y ? 1 : 0) <= z}と等価であり、一般的な数学の表記の解釈とは異なる。
 
-
 @code{?:}の第2項を省略するGNU拡張の危険な使い方も警告する。@code{?:}演算子の条件が真偽値の場合は、
 省略された値は常に１である。しばしばプログラマは代わりに条件節内部で計算された値であることを期待する。
+
+C ++の場合、宣言で不要なかっこのいくつかの場合に警告される。これは宣言ではなく、関数呼び出しの試みを示しうる。
+
+@smallexample
+@{
+  // Declares a local variable called mymutex.
+  std::unique_lock<std::mutex> (mymutex);
+  // User meant std::unique_lock<std::mutex> lock (mymutex);
+@}
+@end smallexample
+
 
 この警告は@option{-Wall}で有効になる。
 
@@ -3989,7 +4030,7 @@ Cのみでは、戻り型が@code{void}である関数内の式つきの@code{re
 C++では、@option{-Wno-return-type}が指定された時でも、戻り値型のない関数は常に診断を生成する。
 唯一の例外は@code{main}とシステムヘッダで定義された関数である。
 
-この警告は@option{-Wall}で有効になる。
+この警告はC++ではデフォルトで有効であり、@option{-Wall}で有効になる。
 
 @item -Wshift-count-negative
 @opindex Wshift-count-negative
@@ -4230,10 +4271,12 @@ void store (int *i)
 @item -Wmaybe-uninitialized
 @opindex Wmaybe-uninitialized
 @opindex Wno-maybe-uninitialized
-自動変数で、関数の入り口から初期化されている変数の使用までの経路があるが、変数が初期化されない
+自動(すなわち、ローカル）変数で、関数の入り口から初期化されている変数の使用までの経路があるが、変数が初期化されない
 他の経路があるならば、コンパイラは未初期化の経路が実行時に実行されないことが証明できないならば警告を発する。
-これらの警告はGCCがコードがエラーに見えるがコードが正しいかもしれない理由全てを見れるほど賢くないので、
-オプションである。ここでこれが起こる一つの例がある。
+
+これらの警告は最適化コンパイルでのみ可能である。なぜならさもなければGCCはは変数の状態を追わないからである。
+
+これらの警告はGCCがコードがエラーに見えるがコードが正しいかもしれない理由全てを見れるほど賢くないので、オプションである。ここでこれが起こる一つの例がある。
 
 @smallexample
 @group
@@ -4258,8 +4301,6 @@ void store (int *i)
 
 @cindex @code{longjmp} warnings
 このオプションは非volatileの自動変数が@code{longjmp}への呼び出しで変更されるかもしれないときにも警告する。
-これらの警告も最適化コンパイルでのみ可能である。
-
 コンパイラは@code{setjmp}への呼び出しのみが見える。どこで@code{longjmp}が呼ばれるかを知ることができない。
 実際、シグナルハンドラはコードの任意の点で呼びうる。結果として、@code{longjmp}が実際には問題を起こす
 場所で呼ぶことができないので問題がないときでも警告を得るかもしれない。
@@ -4323,7 +4364,7 @@ GCCが理解できない@code{#pragma}ディレクティブに出会ったら警
 @itemx -Wstrict-overflow=@var{n}
 @opindex Wstrict-overflow
 @opindex Wno-strict-overflow
-このオプションは@option{-fstrict-overflow}が有効の場合のみ有効である。コンパイラが符号付き桁溢れが
+このオプションは符号付きの桁溢れが未定義の場合のみ有効である。コンパイラが符号付き桁溢れが
 起こらないと仮定して最適化した場合について警告する。コードが桁溢れするかもしれない場所全てを警告するわけではない
 ことに注意する。コンパイラが最適化を実装している場所のケースのみを警告する。したがってこの警告は最適化レベル
 に依存する。
@@ -4335,13 +4376,13 @@ GCCが理解できない@code{#pragma}ディレクティブに出会ったら警
 
 @table @gcctabopt
 @item -Wstrict-overflow=1
-疑わしく、かつ安易に避けられる場合について警告する。例えば、@option{-fstrict-overflow}では、
+疑わしく、かつ安易に避けられる場合について警告する。例えば、
 @code{x + 1 > x}を@code{1}に単純化する。この@option{-Wstrict-overflow}のレベルは
 は@option{-Wall}で有効になる。より高いレベルは有効にならないので、明示的に要求しなければならない。
 
 @item -Wstrict-overflow=2
 比較が定数へと単純化される場所の他のケースで警告する。例えば、@code{abs (x) >= 0}である。
-これは@option{-fstrict-overflow}が有効の時だけ単純化される。なぜなら、@code{abs (INT_MIN)}は
+これは符号付きの桁溢れが未定義の時だけ単純化される。なぜなら、@code{abs (INT_MIN)}は
 @code{INT_MIN}へと桁溢れし、0より小さい。@option{-Wstrict-overflow} （レベルなし）は
 @option{-Wstrict-overflow=2}と同じである。
 
@@ -4480,15 +4521,17 @@ safe.  @xref{Common Variable Attributes}.
 @item -Wsuggest-attribute=pure
 @itemx -Wsuggest-attribute=const
 @itemx -Wsuggest-attribute=noreturn
+@itemx -Wsuggest-attribute=malloc
 @opindex Wsuggest-attribute=pure
 @opindex Wno-suggest-attribute=pure
 @opindex Wsuggest-attribute=const
 @opindex Wno-suggest-attribute=const
 @opindex Wsuggest-attribute=noreturn
 @opindex Wno-suggest-attribute=noreturn
+@opindex Wsuggest-attribute=malloc
+@opindex Wno-suggest-attribute=malloc
 
-属性@code{pure}、@code{const}または@code{noreturn}の候補であるかもしれない関数について警告する。
-コンパイラは他のコンパイル単位で見える関数にだけ、あるいは（@code{pure}と@code{const}の場合）
+属性@code{pure}、@code{const}、@code{noreturn}または@code{malloc}の候補であるかもしれない関数について警告する。コンパイラは他のコンパイル単位で見える関数にだけ、あるいは（@code{pure}と@code{const}の場合）
 関数は通常戻ると証明できないならば警告する。それが無限のループを含まないか、例外を投げるか、
 @code{abort}を呼ぶか、トラップを呼ぶことによって異常に帰らことがないならば、関数は通常に戻る。
 この解析はオプション@option{-fipa-pure-const}を必要とする。そして、それは@option{-O}以上で
