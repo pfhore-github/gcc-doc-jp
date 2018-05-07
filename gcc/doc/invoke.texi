@@ -4557,6 +4557,13 @@ safe.  @xref{Common Variable Attributes}.
 どんな関数でも、@code{format}属性が適切かもしれないと、GCCは推測する、しかし、
 これは必ずしも本当でないかもしれない、そして、@code{format}属性が適切であるある関数は
 見つけられないかもしれない。
+
+@item -Wsuggest-attribute=cold
+@opindex Wsuggest-attribute=cold
+@opindex Wno-suggest-attribute=cold
+
+@code{cold}属性の候補となる可能性がある関数について警告する。 これは静的な検出に基づいており、一般的にはC++の@code{throw}のラッパーや@code{abort}につながる致命的なエラー報告関数のような別の@code{cold}関数への呼び出しにつながる関数についてのみ警告する。
+
 @end table
 
 @item -Wsuggest-final-types
@@ -4685,7 +4692,7 @@ if ((n > 1) == 2) @{ @dots{} @}
 @item -Wbool-operation
 @opindex Wno-bool-operation
 @opindex Wbool-operation
-ブール型の式に対する疑わしい操作について警告する。 たとえば、ブール値のビット単位の否定は、プログラムのバグである可能性が非常に高い。Cの場合、この警告はブール値のインクリメント・デクリメントについても警告するが、それはめったに意味があることはないためである。（C++では、ブール値のデクリメントは常に無効である。ブール値のインクリメントはC++1zでは無効で、それ以外の場合は非推奨である。）
+ブール型の式に対する疑わしい操作について警告する。 たとえば、ブール値のビット単位の否定は、プログラムのバグである可能性が非常に高い。Cの場合、この警告はブール値のインクリメント・デクリメントについても警告するが、それはめったに意味があることはないためである。（C++では、ブール値のデクリメントは常に無効である。ブール値のインクリメントはC++17では無効で、それ以外の場合は非推奨である。）
 
 この警告は@option{-Wall}によって有効になる。
 
@@ -4773,6 +4780,14 @@ int i = 1;
 @dots{}
 if (i > i) @{ @dots{} @}
 @end smallexample
+
+この警告は、常にtrueまたはfalseに評価されるビット単位の比較についても警告する。たとえば、
+
+@smallexample
+if ((a & 16) == 10) @{ @dots{} @}
+@end smallexample
+は常に偽である。
+ 
 この警告は@option{-Wall}で有効である。
 
 @item -Wtrampolines
@@ -5083,9 +5098,9 @@ ISO C++1998とISO C++2011で意味が異なるC++構造について警告する�
 ISO C++2011とISO C++2014で意味が異なるC++構造について警告する。
 この警告は@option{-Wall}で有効になる。
 
-@item -Wc++1z-compat @r{(C++とObjective-C++専用)}
-@opindex Wc++1z-compat
-ISO C++ 2014と来るISO C++ 2017(?)の間で意味が異なるC++構造について警告する。これは@option{-Wall}で有効になる。
+@item -Wc++17-compat @r{(C++とObjective-C++専用)}
+@opindex Wc++17-compat
+ISO C++ 2014とISO C++ 2017の間で意味が異なるC++構造について警告する。これは@option{-Wall}で有効になる。
 
 @item -Wcast-qual
 @opindex Wcast-qual
@@ -5253,6 +5268,11 @@ C・C++では、それぞれの@code{else}分岐は可能な最も内側の@code
 異なる列挙型の値間の比較について警告する。C++では条件式での列挙の不一致も診断して警告はデフォルトで有効になる。
 Cではこの警告は@option{-Wall}で有効になる。
 
+@item -Wextra-semi @r{(C++, Objective-C++のみ)}
+@opindex Wextra-semi
+@opindex Wno-extra-semi
+クラス内関数定義の後の冗長なセミコロンについて警告する。
+ 
 @item -Wjump-misses-init @r{(C, Objective-C専用)}
 @opindex Wjump-misses-init
 @opindex Wno-jump-misses-init
@@ -5303,19 +5323,31 @@ void operator delete[] (void *, std::size_t) noexcept;
 @end smallexample
 がないかその逆ならば警告する。@option{-Wextra}と@option{-fsized-deallocation}の時に警告する。
 
+@item -Wsizeof-pointer-div
+@opindex Wsizeof-pointer-div
+@opindex Wno-sizeof-pointer-div
+ポインタサイズを要素サイズで割る2つのsizeof式の疑わしい除算について警告する。これは、配列サイズを計算する通常の方法だが、ポインタで正しく機能しない。 この警告は、例えば@code{sizeof(ptr)/ sizeof(ptr [0])}について、@code{ptr}が配列ではなくポインタであると警告する。 この警告は@option{-Wall}によって有効になる。
+
 @item -Wsizeof-pointer-memaccess
 @opindex Wsizeof-pointer-memaccess
 @opindex Wno-sizeof-pointer-memaccess
-ある文字列とメモリの組み込み関数にもし引数が@code{sizeof}を使っているならば疑わしい長さパラメータに警告する。
-これは例えば、@code{memset (ptr, 0, sizeof (ptr));}が@code{ptr}が配列でなく、ポインタならば、
-あるいは、@code{memcpy( &foo, ptr, sizeof( foo));} ならば警告し、可能な修正を提案する。
-この警告は@option{-Wall}で有効になる。
+引数が@code{sizeof}を使用する場合で、特定の文字列とメモリの組み込み関数について疑わしい長さパラメータを警告する。 この警告は、例えば、@code{ptr}が配列でなく、ポインタである場合の@code{memset (ptr, 0, sizeof (ptr));}で、可能な修正を示唆している場合や、@code{memset(ptr、0、sizeof ＆foo、ptr、sizeof(＆foo));}についてである。@option{-Wsizeof-pointer-memaccess}は、ソース配列の@code{sizeof}表現を制限として指定した@code{strncat}や@code{strncpy}のような制限文字列コピー関数の呼び出しについても警告する。 たとえば、次の関数では、@code{strncat}を呼び出すと、ソース文字列のサイズが範囲として指定されます。 それはほぼ間違いであり、呼び出しは診断される。
+@smallexample
+void make_file (const char *name)
+@{
+  char path[PATH_MAX];
+  strncpy (path, name, sizeof path - 1);
+  strncat (path, ".text", sizeof ".text");
+  @dots{}
+@}
+@end smallexample
+
+@option{-Wsizeof-pointer-memaccess}オプションは@option{-Wall}で有効になる。
 
 @item -Wsizeof-array-argument
 @opindex Wsizeof-array-argument
 @opindex Wno-sizeof-array-argument
-@code{sizeof}演算子が関数定義の配列として宣言されているパラメータに適用されていると警告する。
-この傾向はCとC++プログラムではデフォルトである。
+@code{sizeof}演算子が関数定義の配列として宣言されているパラメータに適用されていると警告する。この警告はCとC++プログラムではデフォルトである。
 
 @item -Wmemset-elt-size
 @opindex Wmemset-elt-size
@@ -5388,7 +5420,7 @@ if ((!a) > 1) @{ @dots{} @}
 @item -Wno-builtin-declaration-mismatch
 @opindex Wno-builtin-declaration-mismatch
 @opindex Wbuiltin-declaration-mismatch
-組み込み関数が間違ったシグネチャで宣言されたら警告する。この警告はデフォルトで有効である。
+組み込み関数が間違ったシグネチャか非関数で宣言されたら警告する。この警告はデフォルトで有効である。
 
 @item -Wno-builtin-macro-redefined
 @opindex Wno-builtin-macro-redefined
@@ -5461,7 +5493,14 @@ struct s @{ int f, g, h; @};
 struct s x = @{ .f = 3, .g = 4 @};
 @end smallexample
 
-C++では空@{ @}の初期化子についても警告しない。例えば、
+Cでは、汎用ゼロ初期化子@samp{@{ 0 @}}については警告しない。:
+ 
+@smallexample
+struct s @{ int f, g, h; @};
+struct s x = @{ 0 @};
+@end smallexample
+
+同様に、C++では空@{ @}の初期化子については警告しない。例えば、
 
 @smallexample
 struct s @{ int f, g, h; @};
@@ -5531,7 +5570,7 @@ ISO 10646はそれらすべても同様に標準系に変換する@dfn{NFKC}正�
 
 @item -Wopenmp-simd
 @opindex Wopenm-simd
-ベクトル化コストモデルがユーザによって設定されたOpenMPおよびCilk Plus simdディレクティブを上書きしたら警告する。
+ベクトル化コストモデルがユーザによって設定されたOpenMP simdディレクティブを上書きしたら警告する。
 @option{-fsimd-cost-model=unlimited}はコストモデルを和らげるために使うことができる。
 
 @item -Woverride-init @r{(CとObjective-C専用)}
@@ -5620,10 +5659,20 @@ This warning is enabled by @option{-Wall}.
 @opindex Wno-redundant-decls
 複数の宣言が正当で、なんの変化がない時でも、何かが同じスコープで１つより多くのものが宣言されていたら警告する。
 
-@item -Wrestrict
+@item -Wno-restrict
 @opindex Wrestrict
 @opindex Wno-restrict
-引数に他の引数の別名になっているrestrictが指定されたパラメータを渡しているときに警告する。
+@code{restrict}修飾パラメータ（またはC++では@code{__ restrict}修飾パラメータ）によって参照されるオブジェクトが別の引数でエイリアスされた場合、またはそのようなオブジェクト間のコピーが重複した場合に警告する。たとえば、以下の@code{strcpy}関数を呼び出しは、最初の文字を最後の4文字に置き換えて文字列を切り詰めようとする。 しかし、呼び出しが終端NULを@code{a[4]}に書き込むため、コピーは重なり、呼び出しは診断される。
+
+@smallexample
+void foo (void)
+@{
+  char a[] = "abcd1234";
+  strcpy (a, a + 4);
+  @dots{}
+@}
+@end smallexample
+@option{-Wrestrict}オプションは、最適化を行わなくてもシンプルなオーバーラップのインスタンスを検出するが、@option{-O2}以上でうまく動作する。 これは@option{-Wall}に含まれている。
 
 @item -Wnested-externs @r{(CとObjective-C専用)}
 @opindex Wnested-externs
@@ -5815,26 +5864,19 @@ DWARFバージョン２では、ある移植では巻き戻しテーブルで衝
 バージョン4は最大の効果にはGDB 7.0と@option{-fvar-tracking-assignments}を要求する。
 
 GCCはもはやDWARFバージョン1をサポートせず、それはバージョン2以降とかなり異なっている。
-歴史的な理由で、他のDWARF関連のオプション（@option{-feliminate-dwarf2-dups}と 
-@option{-fno-dwarf2-cfi-asm}を含む）は名前にDWARFバージョン2への参照を含んでいるが、
-DWARFの現在サポートされたすべてのバージョンに適用される。
+歴史的な理由で、他の@option{-fno-dwarf2-cfi-asm}のようなDWARF関連のオプションは名前にDWARFバージョン2への参照を含んでいるが、DWARFの現在サポートされたすべてのバージョンに適用される。
 
 @item -gstabs
 @opindex gstabs
 （もしサポートされているなら）stabsフォーマットにデバッグ情報をGDB拡張なしで生成する。
 これはたいていのBSDシステムでDBXで使われたフォーマットである。MIPS、Alpha、System Vリリース4システムでは、
-このオプションはDBXやSDBで理解されないstabsデバッグ出力を生成する。System V リリース4システムでは、このオプションは
+このオプションはDBXで理解されないstabsデバッグ出力を生成する。System V リリース4システムでは、このオプションは
 GNUアセンブラを要求する。
 
 @item -gstabs+
 @opindex gstabs+
 （もしサポートされているなら）stabsフォーマットにGNUデバッガ(GDB)によってのみ理解されるGNU拡張を使って
 デバッグ情報を生成する。これらの拡張の使用はおそらく他のデバッガをクラッシュさせたり、プログラムの読み込みを拒否させたりするだろう。
-
-@item -gcoff
-@opindex gcoff
-（もしサポートされているなら）COFFフォーマットにデバッグ情報を生成する。
-これはSystem V リリース4以前の大抵のSystem VシステムでSDBで使われるフォーマットである。
 
 @item -gxcoff
 @opindex gxcoff
@@ -5886,7 +5928,7 @@ GCCがクラスのためにデバッグ情報を通常発する方法を取り�
 
 @item -fdebug-prefix-map=@var{old}=@var{new}
 @opindex fdebug-prefix-map
-@file{@var{old}}ディレクトリでファイルをコンパイルするとき、代わりに@file{@var{new}}にそれらを描写するデバッグ情報を記録する。
+ディレクトリ@file{@var{old}}にあるファイルをコンパイルするときは、そのファイルがディレクトリ@file{@var{new}}にあるかのようにデバッグ情報を記述する。 これは、ビルド時のパスをデバッグ情報のインストール時のパスに置き換えるために使用できる。 @var{new}に@file{.}を使用することによって、絶対パスを相対パスに変更することもできる。 これは場所に依存しないより再現性の高いビルドを提供することができるが、GDBにソースファイルの場所を指示するための追加のコマンドが必要になることがある。 @option {-ffile-prefix-map}も参照せよ。
 
 @item -fvar-tracking
 @opindex fvar-tracking
@@ -5945,11 +5987,61 @@ DW_AT_producer属性に追加する。オプションはコンパイラのバー
 @opindex gno-strict-dwarf
 @option{-gdwarf-@var{version}}で選択された以降のDWARFバージョン標準バージョンの拡張の使用を許可する。
 
+@item -gas-loc-support
+@opindex gas-loc-support
+アセンブラが@code{.loc}ディレクティブをサポートしていることをコンパイラに通知する。 その後、アセンブラがDWARF2+行番号テーブルを生成するために使用するかもしれない。
+ 
+アセンブラで生成された行番号テーブルは、コンパイラが生成できるものよりはるかにコンパクトであるため、これが一般に望ましい。
+
+このオプションは、GCCの設定時に、アセンブラでサポートされている場合に、デフォルトで有効になる。
+ 
+@item -gno-as-loc-support
+@opindex gno-as-loc-support
+DWARF2 +行番号テーブルを生成する場合、GCCにDWARF2+行番号テーブルを内部的に生成させる。
+
+@item gas-locview-support
+@opindex gas-locview-support
+アセンブラが@code{view}の割り当てをサポートし、@code{.loc}ディレクティブのアサーションチェックをリセットすることをコンパイラに通知する。
+
+このオプションは、GCCの設定時に、アセンブラでサポートされている場合に、デフォルトで有効になる。
+
+@item gno-as-locview-support
+@option{-gvariable-location-views}が明示的に要求されている場合、GCCに内部的にビュー番号を割り当てさせる。
+
 @item -gcolumn-info
-@item -gno-column-info
+@itemx -gno-column-info
 @opindex gcolumn-info
 @opindex gno-column-info
-ファイルと行だけでなく、DWARFデバッグ情報に位置情報の列情報を出力する。このオプションはデフォルトで無効になっている。
+ファイルと行だけでなく、DWARFデバッグ情報に位置情報の列情報を出力する。このオプションはデフォルトで有効になっている。
+@item -gstatement-frontiers
+@itemx -gno-statement-frontiers
+@opindex gstatement-frontiers
+@opindex gno-statement-frontiers
+このオプションを指定すると、GCCはステートメントの開始時に内部表現のマーカーを作成し、コンパイル時にそれらを大まかに保持して、行番号テーブルの@code{is_stmt}マーカーの出力をガイドするのに使用する。 これは、最適化（@option{-Os}、@option{-O}、@option{-O2}、@dots{}）でコンパイルし、DWARF 2デバッグ情報を通常レベルで出力するときにデフォルトで有効になる。
+
+@item -gvariable-location-views
+@itemx -gvariable-location-views=incompat5
+@itemx -gno-variable-location-views
+@opindex gvariable-location-views
+@opindex gvariable-location-views=incompat5
+@opindex gno-variable-location-views
+行番号テーブルから暗示されるプログレッシブビュー番号で可変ロケーションリストを拡張する。 これにより、たとえその時点で対応するソース位置に関連する命令が存在しなくても、デバッグ情報コンシューマはプログラムの特定の点で状態を検査することが可能になる。 アセンブラで行番号テーブルのビュー番号がサポートされていない場合、コンパイラは行番号テーブルを生成する。これにより、一般に多少コンパクトになる。 拡張された行番号テーブルとロケーションリストは完全に下位互換性があるため、これらの拡張機能を認識していないデバッグ情報コンシューマによって消費される可能性があるが、それらの利点もありません。
+
+これは、@option{-fvar-tracking-assignments}が有効で、@option{-gstrict-dwarf}が有効でない限り、DWARF 2デバッグ情報を通常レベルで出力するときにデフォルトで有効になる。 アセンブラのサポートが利用できない場合、これはまだ有効になっている可能性があるが、GCCに内部行番号テーブルを出力させ、@option{-INTERNAL-reset-location-views}が有効になっていないと、 ロケーションビューが一致しない。
+
+DWARF 5で導入されたロケーションリスト形式と下位互換性のないビュー番号のための提案された表現があり、@option{-gvariable-location-views = incompat5}で有効にできる。 このオプションは将来削除される可能性があり、提案された表現の参照実装としてのみ提供される。 デバッグ情報のコンシューマは、この拡張形式をサポートするとは期待されず、使用不能と判断され、位置リストをデコードできないだろう。
+
+@item -ginternal-reset-location-views
+@itemx -gnointernal-reset-location-views
+@opindex ginternal-reset-location-views
+@opindex gno-internal-reset-location-views
+ロケーションビューリストを省略することができるロケーションビューを決定しようとする。 これにより、コンパイラは非常に正確なinsn長さの推定値を必要とするが、必ずしもそうであるとは限らず、ロケーションビューリストをサポートしないアセンブラを使用すると、誤ったビューリストが自動的に生成される可能性がある。 GNUアセンブラはそのようなエラーを@code{view number mismatch}として警告する。 これは、信頼性の高い推定機能を定義するポートでのみ有効になる。
+
+@item -ginline-points
+@itemx -gno-inline-points
+@opindex ginline-points
+@opindex gno-inline-points
+インライン関数の拡張デバッグ情報を生成する。 インラインエントリーポイントに位置ビュートラッキングマーカーが挿入されているため、アドレスとビュー番号を計算してデバッグ情報に出力できる。 これはロケーションビューとは独立して有効にすることができる。この場合、ビュー番号は出力されないが、ステートメントフロンティアとともに有効にすることができ、ロケーションビューが有効な場合にのみデフォルトで有効になる。
 
 @item -gz@r{[}=@var{type}@r{]}
 @opindex gz
@@ -5959,11 +6051,6 @@ DW_AT_producer属性に追加する。オプションはコンパイラのバー
 @samp{zlib-gnu}（伝統的なGNU書式でzlib圧縮を使う）のどれかである。もしリンカが圧縮されたデバッグセクションを書くことを
 サポートしていないなら、オプションは拒絶される。さもなければ、もしアセンブラはサポートしていないなら、@option{-gz}は
 オブジェクトファイルを生成するときに単に無視される。
-
-@item -feliminate-dwarf2-dups
-@opindex feliminate-dwarf2-dups
-それぞれのシンボルについての重複情報を削除することでDWARFデバッグ情報を圧縮する。
-このオプションはDWARFデバッグ情報を生成するときだけ意味を持つ。
 
 @item -femit-struct-debug-baseonly
 @opindex femit-struct-debug-baseonly
@@ -6092,6 +6179,7 @@ GCCを@option{-Q --help=optimizers}で起動することでそれぞれのレベ
 -fipa-reference 
 -fmerge-constants 
 -fmove-loop-invariants 
+-fomit-frame-pointer 
 -freorder-blocks 
 -fshrink-wrap 
 -fshrink-wrap-separate 
@@ -6115,8 +6203,6 @@ GCCを@option{-Q --help=optimizers}で起動することでそれぞれのレベ
 -ftree-pta 
 -ftree-ter 
 -funit-at-a-time}
-
-@option{-O}はデバッグと干渉しない機種では@option{-fomit-frame-pointer}もオンにする。
 
 @item -O2
 @opindex O2
@@ -6154,7 +6240,7 @@ GCCを@option{-Q --help=optimizers}で起動することでそれぞれのレベ
 -fsched-interblock  -fsched-spec 
 -fschedule-insns  -fschedule-insns2 
 -fstore-merging 
--fstrict-aliasing -fstrict-overflow 
+-fstrict-aliasing 
 -ftree-builtin-call-dce 
 -ftree-switch-conversion -ftree-tail-merge 
 -fcode-hoisting 
@@ -6162,16 +6248,26 @@ GCCを@option{-Q --help=optimizers}で起動することでそれぞれのレベ
 -ftree-vrp 
 -fipa-ra}
 
-計算gotoを使うプログラムで@option{-O2}を呼ぶことについての@option{-fgcse}の警告に注意してください。
+計算gotoを使うプログラムでは@option{-O2}を呼ぶことについての@option{-fgcse}の警告に注意せよ。
 
 @item -O3
 @opindex O3
-もっと最適化する。@option{-O3}は@option{-O2}によって指定されたすべての最適化をオンにして、@option{-finline-functions},
-@option{-funswitch-loops}, @option{-fpredictive-commoning},
-@option{-fgcse-after-reload}, @option{-ftree-loop-vectorize},
-@option{-ftree-loop-distribute-patterns}, @option{-fsplit-paths}
-@option{-ftree-slp-vectorize}, @option{-fvect-cost-model},
-@option{-ftree-partial-pre}と@option{-fipa-cp-clone}オプションもオンにする。
+もっと最適化する。@option{-O3}は@option{-O2}によって指定されたすべての最適化をオンにして、以下の最適化フラグもオンにする。
+@gccoptlist{-finline-functions 
+-funswitch-loops 
+-fpredictive-commoning 
+-fgcse-after-reload 
+-ftree-loop-vectorize 
+-ftree-loop-distribution 
+-ftree-loop-distribute-patterns 
+-floop-interchange 
+-floop-unroll-and-jam 
+-fsplit-paths 
+-ftree-slp-vectorize 
+-fvect-cost-model 
+-ftree-partial-pre 
+-fpeel-loops 
+-fipa-cp-clone}
 
 @item -O0
 @opindex O0
@@ -6191,7 +6287,7 @@ GCCを@option{-Q --help=optimizers}で起動することでそれぞれのレベ
 @opindex Ofast
 厳密な標準準拠を無視する。@option{-Ofast}はすべての@option{-O3}最適化を有効にする。
 それはすべての標準準拠プログラムで正当なわけではない最適化を有効にする。それは@option{-ffast-math}と、
-Fortran固有の@option{-fno-protect-parens}と@option{-fstack-arrays}をオンにする。
+Fortran固有の@option{-fstack-arrays}、@option{-fmax-stack-var-size}が指定されていない限り@option{-fno-protect-parens}をオンにする。
 
 @item -Og
 @opindex Og
@@ -6234,17 +6330,13 @@ RTLでの前方伝搬パスを実行する。このパスは2つの命令を結�
 
 @item -fomit-frame-pointer
 @opindex fomit-frame-pointer
-必要がない関数でフレームポインタをレジスタに保持しない。これはフレームポインタの保存、準備、復帰の命令を避ける。それは多くの関数で余分なレジスタを
-利用可能にする。  @strong{ある機種ではデバッグを不可能にする。}
+必要がない関数でフレームポインタを省略する。これはフレームポインタの保存、準備、復帰の命令を避ける。それは多くの関数で余分なレジスタを利用可能にする。 
 
-VAXのようなある機種では、このフラグは効果がない、なぜなら標準呼び出し列が自動的にフレームポインタを扱い、
-それが存在しないと主張しても何も節約されないからだ。機種描写マクロ@code{FRAME_POINTER_REQUIRED}はターゲット機種がこのフラグをサポートするかを制御する。
-@xref{Registers,,Register Usage, gccint, GNU Compiler Collection (GCC) Internals}.
+あるターゲットではこのフラグは標準呼び出し列が常にフレームポインタを使い、省略できないので、効果がない。
 
-デフォルトの設定は（サイズの最適化をしない時は）32ビット GNU/Linux x86と32ビット Darwinターゲットは@option{-fomit-frame-pointer}である
-デフォルトを変えるために、@option{--enable-frame-pointer}設定オプションでGCCを設定することができる。
+@option{-fno-omit-frame-pionter}はフレームポインタがすべての関数で使われることを保証しない。あるターゲットでは末端の関数では常にフレームポインタを省略する。
 
-レベル@option{-O}, @option{-O2}, @option{-O3}, @option{-Os}で有効である。
+レベル@option{-O}以上で有効である。
 
 @item -foptimize-sibling-calls
 @opindex foptimize-sibling-calls
@@ -6271,14 +6363,14 @@ VAXのようなある機種では、このフラグは効果がない、なぜ�
 コンパイラはヒューリスティックにどの関数はこの方法で統合する価値が有るほど小さいかを決定する。
 インライン化は、たとえinlineと宣言されていなくても、全関数に適用される。
 
-レベル@option{-O2}で有効になる。
+レベル@option{-O2}, @option{-O3}, @option{-Os}で有効になる。
 
 @item -findirect-inlining
 @opindex findirect-inlining
 前のインラインのおかげでコンパイル時に既知のと発見された間接呼び出しもインライン化する。
 これは@option{-finline-functions}か@option{-finline-small-functions}オプションによってインライン自身がオンで時のみ効果がある。
 
-レベル@option{-O2}で有効になる。
+レベル@option{-O2}, @option{-O3}, @option{-Os}で有効になる。
 
 @item -finline-functions
 @opindex finline-functions
@@ -6286,7 +6378,7 @@ VAXのようなある機種では、このフラグは効果がない、なぜ�
 
 もし与えられた関数のすべての呼び出しが統合され、関数が@code{static}と宣言されていたら、関数はそれ自身は通常は出力されない。
 
-レベル@option{-O3}で有効になる。
+レベル@option{-O2}, @option{-O3}, @option{-Os}で有効になる。
 
 @item -finline-functions-called-once
 @opindex finline-functions-called-once
@@ -6326,9 +6418,9 @@ VAXのようなある機種では、このフラグは効果がない、なぜ�
 
 インライン化を制御する個々のパラメータとそれらのパラメータのデフォルトは文書の下を見よ。
 
-@emph{_注意_:} デフォルトの振る舞いを起こす@option{-finline-limit}の値はないかもしれない。
+@emph{注意:} デフォルトの振る舞いを起こす@option{-finline-limit}の値はないかもしれない。
 
-@emph{_注意_:} 擬似命令は、この文脈では、抽象的な関数のサイズの尺度である。それはアセンブリ命令の数を表すわけでは全く無く、
+@emph{注意:} 擬似命令は、この文脈では、抽象的な関数のサイズの尺度である。それはアセンブリ命令の数を表すわけでは全く無く、
 その正確な意味はリリースが変わるごとに変化するかもしれない。
 
 @item -fno-keep-inline-dllexport
@@ -6549,7 +6641,7 @@ GCCでの他の最適化パスはヌルポインタの無用なチェックを�
 @option{-fno-delete-null-pointer-checks}を使ってこの最適化を無効にする。
 
 このオプションはたいていのターゲットではデフォルトで有効である。Nios II ELFでは、デフォルトでオフである。
-AVRILとCR16では、このオプションは完全に無効にされる。
+AVRILとCR16、MSP430では、このオプションは完全に無効にされる。
 
 データフロー情報を使うパスは別の最適化レベルで独立して有効にされる。
 
@@ -7016,15 +7108,11 @@ switchでの単純な初期化からスカラー配列からの初期化への�
 木でのループ最適化を行う。このフラグは@option{-O}以上でデフォルトで有効である。
 
 @item -ftree-loop-linear
-@itemx -floop-interchange
 @itemx -floop-strip-mine
 @itemx -floop-block
-@itemx -floop-unroll-and-jam
 @opindex ftree-loop-linear
-@opindex floop-interchange
 @opindex floop-strip-mine
 @opindex floop-block
-@opindex floop-unroll-and-jam
 ループ入れ子最適化を行う。@option{-floop-nest-optimize}と同じである。この変換を使うためには、
 GCCはGraphiteループ変換基盤を有効にするために@option{--with-isl}で設定されていなければならない。
 
@@ -7209,7 +7297,7 @@ SSA→通常フェーズの間に一時式置換を行う。単一使用・単�
 
 @item -fsimd-cost-model=@var{model}
 @opindex fsimd-cost-model
-OpenMPかCilk PLus simdディレクティブマークされたループのベクトル化で使われるコストモデルを変える。
+OpenMP simdディレクティブマークされたループのベクトル化で使われるコストモデルを変える。
 @var{model}引数は @samp{unlimited}, @samp{dynamic}, @samp{cheap}の一つであるべきである。
 @var{model}のすべての値は@option{-fvect-cost-model}で描写されたのと同じ意味をもち、デフォルトでは
 @option{-fvect-cost-model}で使われたコストモデルが使われる。
@@ -7245,7 +7333,7 @@ OpenMPかCilk PLus simdディレクティブマークされたループのベク
 関数の部分をインライン化する。このオプションはインライン自身が@option{-finline-functions}か
 @option{-finline-small-functions}オプションによってONの時だけ効果がある。
 
-レベル@option{-O2}.で有効である。
+レベル@option{-O2}, @option{-O3}, @option{-Os}で有効である。
 
 @item -fpredictive-commoning
 @opindex fpredictive-commoning
@@ -7274,7 +7362,7 @@ if (snprintf (buf, "%08x", i) >= sizeof buf)
   @dots{}
 @end smallexample
 
-@option{-f printf-return-value}オプションは、他の最適化に依存し、@option{-O2}で最良の結果をもたらす。 @option{-Wformat-overflow}オプションと@option{-Wformat-truncation}オプションと連携して動作する。
+@option{-f printf-return-value}オプションは、他の最適化に依存し、@option{-O2}以上で最良の結果をもたらす。 @option{-Wformat-overflow}オプションと@option{-Wformat-truncation}オプションと連携して動作する。
 @option {-fprintf-return-value}オプションは、デフォルトで有効になっている。
 
 @item -fno-peephole
@@ -7322,10 +7410,9 @@ GCCをはもしプロファイリングフィードバック(@option{-fprofile-a
 熱いのと冷たい基本ブロックをアセンブリと@file{.o}ファイルの別々のセクションへと分割し、
 ページングとキャッシュ局所性パフォーマンスを向上させる。
 
-この最適化は例外処理ある時、一度リンクのセクション、ユーザ定義セクション属性の関数、
-名前付きセクションをサポートしないアーキテクチャでは自動的にオフになる。
-
-x86のレベル@option{-O2}, @option{-O3}で有効になる。
+この最適化は、例外処理または巻き戻しテーブル（setjump / longjumpまたはターゲット固有のスキームを使用するターゲット）、リンク・ワンスセクション、ユーザー定義セクション属性を持つ関数、および名前付きセクションサポートしていないアーキテクチャで自動的にオフになる。 @option{-fsplit-stack}を使用すると、このオプションはデフォルトでは（リンカエラーを避けるために）有効にはならないが、明示的に有効にすることができる（機能するリンカーを使用している場合）。
+  
+@option {-O2}、@option {-O3}、@option {-Os}のレベルでx86用に有効になる。
 
 @item -freorder-functions
 @opindex freorder-functions
@@ -7386,29 +7473,6 @@ int f() @{
 
 @option{-fstrict-aliasing}オプションはレベル@option{-O2}, @option{-O3}, @option{-Os}で有効になる。
 
-@item -fstrict-overflow
-@opindex fstrict-overflow
-コンパイラがコンパイルされる言語に依存して、厳密な符号付き桁あふれ規則を仮定することを許す。
-C（とC++）では、これは符号付き数での算術での桁あふれは未定義であることを意味し、それはコンパイラがそれが起こらないと
-仮定して良いことを意味する。これは様々な最適化を許す。例えば、コンパイラは@code{i + 10 > i}のような式を符号付きの@code{i}では
-常に真だと仮定する。この仮定は符号付き桁あふれが未定義の時だけ正当である。なぜならもし@code{i + 10}が2の補数の算術を使って
-桁あふれしたならば式は義になるからである。このオプションが効果があるときは符号付き数の操作が桁あふれを起こすかどうかを決定する試みでは
-実際に桁あふれを起こさないように注意して書かなくてはならない。
-
-このオプションはコンパイラが厳密なポインタの意味を仮定することも許す。
-オブジェクトを指しているポインタが与えられたなら、もしオフセットをポインタに足して
-同じオブジェクトへのポインタを生成するならば、加算は未定義である。これはコンパイラが
-ポインタ@code{p}と符号なしの@code{u}に対して@code{p + u > p}が常に真だと結論付けることを許す。
-この仮定は、もし@code{p + u}が２の補数算術を使って桁あふれしたならば表現が偽になるので、
-ポインタの回り込みが未定義であるという理由でのみ正当である。
-
-@option{-fwrapv}オプションも見よ。@option{-fwrapv}を使うことは整数符号付き桁あふれが完全に定義されていることを意味する。
-：回りこむ。@option{-fwrapv}が使われると、整数では@option{-fstrict-overflow}と@option{-fno-strict-overflow}に違いはない。
-@option{-fwrapv}で、ある種の桁あふれが許される。例えば、もしコンパイラが定数での算術をしていて桁あふれを得たら、桁あふれされた値はまだ
-@option{-fwrapv}では利用可能であるが、さもなければ不可能である。
-
-@option{-fstrict-overflow}はレベル@option{-O2}, @option{-O3}, @option{-Os}で有効である。
-
 @item -falign-functions
 @itemx -falign-functions=@var{n}
 @opindex falign-functions
@@ -7420,7 +7484,7 @@ C（とC++）では、これは符号付き数での算術での桁あふれは�
 
 あるアセンブラは@var{n}が2のベキの時だけこのフラグをサポートする。その場合は、切り上げられる。
 
-もし@var{n}が指定されていないか0ならば、機種依存のデフォルトが使われる。
+もし@var{n}が指定されていないか0ならば、機種依存のデフォルトが使われる。@var{n}の可能な最大値は65536である。
 
 レベル@option{-O2}, @option{-O3}で有効である。
 
@@ -7438,7 +7502,7 @@ C（とC++）では、これは符号付き数での算術での桁あふれは�
 
 @option{-falign-loops}か@option{-falign-jumps}が適用可能でこの値よりも大きいならば、代わりにそれらの値が使われる。
 
-もし@var{n}が指定されていないか0ならば、機種依存のデフォルト値が使われ、それはアラインメントをしないことを意味する@samp{1}である可能性が高い。
+もし@var{n}が指定されていないか0ならば、機種依存のデフォルト値が使われ、それはアラインメントをしないことを意味する@samp{1}である可能性が高い。@var{n}の可能な最大値は65536である。
 
 レベル@option{-O2}, @option{-O3}で有効である。
 
@@ -7448,7 +7512,7 @@ C（とC++）では、これは符号付き数での算術での桁あふれは�
 @option{-falign-functions}のように@var{n}バイトまで飛ばしてループを２のベキの境界に揃える。
 もしループが何回も実行されるなら、これはダミー操作の実行を作る。
 
-@option{-fno-align-loops}と@option{-falign-loops=1}は等価であり、ループがアラインメントされないことを意味する。
+@option{-fno-align-loops}と@option{-falign-loops=1}は等価であり、ループがアラインメントされないことを意味する。@var{n}の可能な最大値は65536である。
 
 もし@var{n}が指定されていないか0ならば、機種依存のデフォルトが使われる。
 
@@ -7462,7 +7526,7 @@ C（とC++）では、これは符号付き数での算術での桁あふれは�
 
 @option{-fno-align-jumps}と@option{-falign-jumps=1}は等価であり、ループがアラインメントされないことを意味する。
 
-もし@var{n}が指定されていないか0ならば、機種依存のデフォルトが使われる。
+もし@var{n}が指定されていないか0ならば、機種依存のデフォルトが使われる。@var{n}の可能な最大値は65536である。
 
 レベル@option{-O2}, @option{-O3}で有効である。
 
@@ -7627,8 +7691,7 @@ LTOの現在の実装は異なるタイプのホストで移植性があるバ�
 バイトコードファイルはバージョン化されて、厳密なバージョンチェックがあるので、あるバージョンのGCCで生成された
 バイトコードファイルは古い、もしくは新しいGCCのバージョンでは動かない。
 
-リンク時最適化はデバッグ情報の生成とはうまく働かない。Combining @option{-flto}と@option{-g}の組み合わせは現在実験的であい、、
-予期せぬ結果を生成することが予想される。
+リンク時最適化はELFとDWARFの組み合わせ以外でのシステムでのデバッグ情報の生成とはうまく働かない。
 
 任意の@var{n}を指定したならば、リンク時の最適化とコード生成はインストールされた@command{make}プログラムを調整して
 @var{n}の並列ジョブを使って並列に実行される。環境変数@env{MAKE}はツアクァれるプログラムを上書きするのに使うことができる。
@@ -7683,6 +7746,8 @@ goldかGNU ld 2.21以降で利用可能である。
 （静的ライブラリなどをビルドする能力がある）完全に機能するビルド環境を許すためにはリンカプラグインをサポートする必要がある。
 GCCは正しいオプションをそれらのツールに渡すために@command{gcc-ar}, @command{gcc-nm}, @command{gcc-ranlib}ラッパを提供している。
 非ファットLTOのmakefileはそれらを使うように修正する必要がある。
+
+現代のbinutilsは、プラグインの自動ロードメカニズムを提供している。 リンカプラグインを@file{$libdir/bfd-plugins}にインストールすると、コマンドラッパー（@command{gcc-ar}、@command{gcc-nm}、@command{gcc-ranlib}）と同じ効果がある 。
 
 デフォルトはリンカプラグインをサポートしたターゲットでは@option{-fno-fat-lto-objects}である。
 
