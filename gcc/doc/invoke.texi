@@ -8105,14 +8105,13 @@ multiple inner loops.
 もしターゲットが任意のセクションをサポートしていたらそれぞれの関数やデータアイテムを出力ファイルの自身のセクションに置く。
 関数やデータアイテムの名前は出力ファイルのセクションの名前を決定する。
 
-リンカが命令空間での参照の局所性を向上する最適化が行えるシステムで、これらのオプションを使う。
-ELFオブジェクトフォーマットを使う大抵のシステムとSolaris 2が走るSPARCプロセッサはそのような最適化のあるリンカを持っている。
-AIXは将来はこれらの最適化を持つかもしれない。
+リンカが最適化を実行して命令空間内の参照の局所性を改善できるシステムでは、これらのオプションを使用する。 ELFオブジェクト形式を使用するほとんどのシステムは、そのような最適化を備えたリンカを持っている。 AIXでは、リンカーはコールグラフに基づいてセクション（CSECT）を再配置する。 パフォーマンスへの影響はさまざまである。
+ 
+ リンカのガベージコレクション（リンカの@option{-gc-sections}オプション）と一緒に使うと、これらのオプションは静的にリンクされた実行可能ファイル（ストリッピング後）を小さくするかもしれない。
+ 
+ ELF / DWARFシステムでは、これらのオプションはデバッグ情報の品質を劣化させない。 他のオブジェクトファイル/デバッグ情報フォーマットでは問題がある可能性がある。
 
-そうすることでかなりの利点があるときだけこれらのオプションを使う。これらのオプションを指定するときは、
-アセンブラとリンカが大きなオブジェクトと実行ファイルを作りさらに遅くもなる。
-もしこのオプションを使ったならばすべてのシステムで@command{gprof}が使えるわけではなく、
-このオプションと@option{-g}の両方を指定したならばデバッグで問題があるかもしれない。
+これらのオプションは、大きな利点がある場合にのみ使用すること。 これらのオプションを指定すると、アセンブラとリンカはより大きなオブジェクトファイルと実行可能ファイルを作成し、処理速度も低下する。 これらのオプションはコード生成に影響する。 それらはリンク時間まで未知であるため、翻訳ユニット内の相対位置を使用するコンパイラおよびアセンブラによる最適化を妨げる。このような最適化の一例は、ショートコール命令へのコールを緩和することである。
 
 @item -fbranch-target-load-optimize
 @opindex fbranch-target-load-optimize
@@ -8179,7 +8178,7 @@ RTLのif変換がブロック周りの条件付き分岐を削除して条件付
 コンパイラはif変換が利益がありそうかどうかを決定するために他のヒューリスティックも使う。
 
 @item max-rtl-if-conversion-predictable-cost
-@item max-rtl-if-conversion-unpredictable-cost
+@itemx max-rtl-if-conversion-unpredictable-cost
 RTL if-conversionは、ブロックの周りの条件分岐を削除し、それらを条件付きで実行された命令に置き換えようとする。 これらのパラメータは、ブランチが予測可能であると静的に決定されているかどうかに応じて、if変換によって生成されるシーケンスの許容最大コストを示す。 このパラメータの単位は、GCCの内部seq_costメトリックの単位と同じである。 コンパイラは、BRANCH_COSTターゲットマクロを使用して、このパラメータに合理的なデフォルトを提供しようとする。
 
 @item max-crossjump-edges
@@ -8239,12 +8238,12 @@ GCCで使われるツリーインライン化器を制御する幾つかのパ�
 @option{-finline-funcions}(@option{-O3}に含まれる)を使った時、
 さもなければコンパイラによってインラインの考慮をされない多数の関数が調査される。
 それらの関数にとって、インラインと宣言された関数と比較して異なる（より制限的な）制限が適用される。
-デフォルト値は40である。
+デフォルト値は30である。
 
 @item inline-min-speedup
 呼び出し元・呼び出し先の推測されたパフォーマンスの向上がこの（パーセントでの）閾値を超えると、
 @option{--param max-inline-insns-single}と@option{--param max-inline-insns-auto}の制限にもかかわらず
-インライン化されうる。
+インライン化されうる。デフォルト値は15である。
 
 @item large-function-insns
 ほんとうに大きい関数を指定する制限。インライン化の後でこの制限よりも大きい関数では、インライン化は
@@ -8730,7 +8729,7 @@ expansion.  The default is 100000.
 IPA-SRAは一つ以上の新しいパラメータで集計へのポインタを置き換える。
 
 @item sra-max-scalarization-size-Ospeed
-@item sra-max-scalarization-size-Osize
+@itemx sra-max-scalarization-size-Osize
 ２つの集合値のスカラー導出過程(SRAとIPA-SRA)は集合値のスカラー部分を独立のスカラー変数の使用に置換することを助ける。
 これらのパラメータはストレージ単位での、それぞれ速度(@option{sra-max-scalarization-size-Ospeed})か
 サイズ(@option{sra-max-scalarization-size-Osize})でコンパイルした時に置換として考慮される集合値の最大値を制御する。
@@ -8741,11 +8740,7 @@ IPA-SRAは一つ以上の新しいパラメータで集計へのポインタを�
 このオプションは@option{-fgnu-tm}を使っているときだけ適用される。
 
 @item graphite-max-nb-scop-params
-Graphiteループ変換での指数的な効果を避けるために、静的制御部分(SCoP)でのパラメータの数は制限される。
-デフォルト値は10である。その値がコンパイル時に未知でありSCoPの外で定義された変数はSCoPのパラメータである。
-
-@item graphite-max-bbs-per-function
-SCoPの検知での指数的な効果を避けるために、Graphiteによって開先される関数のサイズは制限される。デフォルト値は100基本ブロックである。
+Graphiteループ変換での指数的な効果を避けるために、静的制御部分(SCoP)でのパラメータの数は制限される。デフォルト値は10個のパラメータで、0の値を使用して境界を持ち上げることができる。 コンパイル時に値が不明で、SCoPの外部で定義されている変数は、SCoPのパラメータである。
 
 @item loop-block-tile-size
 @option{-floop-block}か@option{-floop-strip-mine}で有効になる、ループブロッキングかループ露天掘り変換で、
@@ -8914,6 +8909,16 @@ libgompプラグインによってそれから読まれて、報告されるHSA�
 @item max-speculative-devirt-maydefs
 投機的に非仮想化できるかもしれない仮想呼び出しを呼び出すオブジェクトの動的型を指定する確実に定義されているものの検索時に解析する
 定義されているかもしれないものの最大値。
+
+@item max-vrp-switch-assertions
+VRP中にswitchステートメントのデフォルトエッジに沿って追加するアサーションの最大数。 デフォルトは10である。
+
+@item unroll-jam-min-percent
+unroll-and-jam変換が利益をもたらすと考えられるように最適化する必要のあるメモリー参照の最小パーセンテージ。
+
+@item unroll-jam-max-unroll
+unroll-and-jam変換によって外側ループを展開する必要のある最大回数。
+
 @end table
 @end table
 
@@ -8977,6 +8982,9 @@ libgompプラグインによってそれから読まれて、報告されるHSA�
 @option{-fprofile-arcs}と最適化とコード生成オプションでソースファイルをコンパイルする。
 テストカバレッジ解析のためには、追加の@option{-ftest-coverage}オプションを使う。
 プログラムの全ソースファイルをプロファイルする必要はない。
+
+@item
+@option{-fprofile-abs-path}を使用してソースファイルをコンパイルし、@file{.gcno}ファイルに絶対パス名を作成する。 これにより@command{gcov}は異なる作業ディレクトリでコンパイルが行われるプロジェクトで正しいソースを見つけることができる。
 
 @item
 オブジェクトファイルを@option{-lgcov}ないし@option{-fprofile-arcs}でリンクする。
@@ -9514,11 +9522,9 @@ on Intel Control-flow Enforcement Technology (CET).
 もしひとつしかスタックがないならばほとんどすべてのシステムで自動的にスタック溢れは検知されるので
 単一スレッド環境ではめったに指定する必要はない。
 
-このスイッチがチェックが実は、される原因にならないことに注意すべきである。
-オペレーティングシステムまたは言語ランタイムがそうしなければならない。
-スイッチは、コードの生成がそれらが拡張されているスタックを見ることを確実とする原因になる。
+このスイッチがチェックが実は、されることを矯正しないことに注意すべきである。オペレーティングシステムまたは言語ランタイムがそうしなければならない。スイッチは、コードの生成がそれらが拡張されているスタックを見ることを確実とするようにさせる。
 
-あなたは、文字列パラメータをさらに指定することができる：
+文字列パラメータをさらに指定することができる：
 @samp{no}はチェックしないことを意味し、@samp{generic}手段は旧式なチェックの使用を強制し、
 @samp{specific}は最高のチェック方法を意味し、裸の@option{-fstack-check}に等しい。
 
@@ -9526,7 +9532,7 @@ on Intel Control-flow Enforcement Technology (CET).
 
 @enumerate
 @item
-大きなオブジェクトへの修正された割り当て戦略。それらはもし固定しきい値をサイズが超えるならば常に動的に割り当てられる。
+大きなオブジェクトへの修正された割り当て戦略。それらはもし固定しきい値をサイズが超えるならば常に動的に割り当てられる。これはコードの意味を変えるかもしれないことに注意。
 
 @item
 関数の静的フレームのサイズの固定値制限。それが特定の関数によって上回られるとき、スタック・チェックは信頼できず、
@@ -9870,13 +9876,15 @@ GCCが特定の機種の欠点を克服するため、および、ある言語�
 
 @item -pie
 @opindex pie
-サポートされるターゲットで位置非依存実行ファイルを生成する。予測可能な結果のためには、
-このリンカオプションを指定するときにはコンパイルで使われたのと同じオプション集合
-(@option{-fpie}, @option{-fPIE},およびモデルサブオプション）も指定しなければならない。
-
+それをサポートするターゲット上で動的にリンクされた位置独立実行可能ファイルを生成する。 予測可能な結果を得るには、このリンカオプションを指定するときに、コンパイルに使用するのと同じオプションセット（@option{-fpie}、@option{-fPIE}、またはモデルサブオプション）も指定する必要がある。
+  
 @item -no-pie
 @opindex no-pie
-位置非依存実行ファイルを生成しない。
+動的にリンクされた位置独立実行可能ファイルを生成しない。
+ 
+@item -static-pie
+@opindex static-pie
+それをサポートするターゲット上で静的位置独立実行可能ファイルを生成する。 静的位置独立実行可能ファイルは静的実行可能ファイルに似ているが、ダイナミックリンカなしで任意のアドレスにロードできる。予測可能な結果を得るには、コンパイルに使用するのと同じオプションセットも指定する必要がある（@option{-fpie}、@option{-fPIE}、またはmodelサブオプション）を指定する。
 
 @item -pthread
 @opindex pthread
@@ -9894,7 +9902,7 @@ POSIXスレッドライブラリとのリンク。 このオプションは、GN
 
 @item -static
 @opindex static
-動的リンクをサポートするシステムで、共有ライブラリへのリンクを防ぐ。他のシステムでは、このオプションには効果がない。
+動的リンクをサポートするシステムで、@option{-pie}を上書きして共有ライブラリへのリンクを防ぐ。他のシステムでは、このオプションには効果がない。
 
 @item -shared
 @opindex shared
@@ -10905,7 +10913,7 @@ normal output.
 
 @item -dp
 @opindex dp
-アセンブラ出力にどのパターンと選択肢が使われたかを示すコメントで注釈する。それぞれの命令の長さも出力される。
+アセンブラ出力にどのパターンと選択肢が使われたかを示すコメントで注釈する。それぞれの命令の長さとコストも出力される。
 
 @item -dP
 @opindex dP
@@ -10933,20 +10941,6 @@ text / bss / data / heap / stack / dso開始場所のあるコンパイラ呼び
 @item -fdump-unnumbered-links
 @opindex fdump-unnumbered-links
 デバッグダンプをするとき(上の@option{-d}を見よ)、列の前後の命令へのリンクの命令番号を抑制する。
-
-@item -fdump-translation-unit @r{(C++専用)}
-@itemx -fdump-translation-unit-@var{options} @r{(C++専用)}
-@opindex fdump-translation-unit
-全翻訳単位の木構造の表現をファイルにダンプする。ファイル名はソースファイル名に@file{.tu}を加えて作られ、
-ファイルは出力ファイルと同じディレクトリに作られる。もし@samp{-@var{options}}形式が使われたなら、
-@var{option}は@option{-fdump-tree}オプションで描写されたようにダンプの詳細を制御する。
-
-@item -fdump-class-hierarchy @r{(C++専用)}
-@itemx -fdump-class-hierarchy-@var{options} @r{(C++専用)}
-@opindex fdump-class-hierarchy
-それぞれのクラス階層と仮想関数テーブルレイアウトの表現をファイルにダンプする。ファイル名はソースファイル名に
-@file{.class}を加えることで作られ、ファイルは出力ファイルと同じ場所に作られる。もし@samp{-@var{options}}形式が使われたなら、
-@var{options}は@option{-fdump-tree}オプションのために描写されたダンプの詳細を制御する。
 
 @item -fdump-ipa-@var{switch}
 @opindex fdump-ipa
@@ -11165,7 +11159,8 @@ gcc -O2 -ftree-vectorize -fopt-info-vec-missed
 
 @noindent
 ベクトル化パスからの失敗した最適化機会についての情報が@file{stderr}へと出力される。
-@option{-fopt-info-vec-missed}は@option{-fopt-info-missed-vec}と等価であることに注意する。
+@option{-fopt-info-vec-missed}は@option{-fopt-info-missed-vec}と等価であることに注意する。@option{-fopt-info}の後にリストされた最適化グループ名とメッセージタイプの順序は関係ない。
+  
 
 他の例として、
 @smallexample
@@ -11374,7 +11369,7 @@ not overridden}をセットすることでそうなる。
 @item -fcompare-debug-second
 @opindex fcompare-debug-second
 このオプションは暗黙に@option{-fcompare-debug}によって要求されている第二コンパイル用にコンパイラに渡され、
-警告を抑制し、コンパイラにファイルや標準出力へ出力する副作用を起こす他のオプションを省略させる。
+警告を抑制し、コンパイラーが副作用としてファイルへの出力または標準出力への出力を生成するその他のオプションを省略させる。
 ダンプファイルと保存された一時ファイルは、最初によって制し得されたものを上書きするのを防ぐために
 第二コンパイルの間は@code{.gk}の追加拡張子を含むように名前を変える。
 
@@ -11748,12 +11743,13 @@ ARM Cortex-A53エラッタ843419用の回避手段を有効・無効にする。
 ターゲットアーキテクチャと、オプションで1つ以上の機能修飾子を指定する。オプションは形式
 @option{-march=@var{arch}@r{@{}+@r{[}no@r{]}@var{feature}@r{@}*}}である。
 
-@var{arch}の可能な値は@samp{armv8-a}, @samp{armv8.1-a}, @samp{armv8.2-a}, @samp{armv8.3-a}, @var{native}である。
+@var{arch}の可能な値は@samp{armv8-a}, @samp{armv8.1-a}, @samp{armv8.2-a}, @samp{armv8.3-a}, @samp{armv8.4-a}, @var{native}である。
 
+値@samp {armv8.4-a}は@samp {armv8.3-a}を含み、ARMv8.4-Aアーキテクチャ拡張のコンパイラサポートを有効にする。
 値@samp{armv8.3-a}は@samp{armv8.2-a}を含み、ARMv8.3-Aアーキテクチャ拡張のコンパイラサポートを有効にする。
 値@samp{armv8.2-a}は@samp{armv8.1-a}を含み、ARMv8.2-Aアーキテクチャ拡張のコンパイラサポートを有効にする。
 値@samp{armv8.1-a}は@samp{armv8-a}を含み、ARMv8.1アーキテクチャ拡張のコンパイラサポートを有効にする。
-特に、@samp{+crc}と@samp{+lse}機能を有効にする。
+特に、@samp{+crc}、@samp{+lse}、@samp{+rdma}機能を有効にする。
 
 値@samp{native}はネイティブのAArch64 GNU/Linuxで利用可能であり、コンパイラにホストシステムの
 アーキテクチャを選ばせる。このオプションはもしコンパイラがホストシステムのアーキテクチャを
@@ -11768,18 +11764,20 @@ GCCは@var{name}をアセンブリコードを生成するときにどの種類�
 
 @item -mtune=@var{name}
 @opindex mtune
-GCCがコードのパフォーマンスを調整すべきターゲットプロセッサの名前を指定する。このオプションの可能な値は
-@samp{generic}, @samp{cortex-a35}, @samp{cortex-a53}, @samp{cortex-a57},
-@samp{cortex-a72}, @samp{cortex-a73}, @samp{exynos-m1}, @samp{falkor},
-@samp{qdf24xx}, @samp{xgene1}, @samp{vulcan}, @samp{thunderx},
+GCCがコードのパフォーマンスを調整すべきターゲットプロセッサの名前を指定する。このオプションの可能な値以下。
+@samp{generic}, @samp{cortex-a35}, @samp{cortex-a53}, @samp{cortex-a55},
+@samp{cortex-a57}, @samp{cortex-a72}, @samp{cortex-a73}, @samp{cortex-a75},
+@samp{exynos-m1}, @samp{falkor}, @samp{qdf24xx}, @samp{saphira},
+@samp{xgene1}, @samp{vulcan}, @samp{thunderx},
 @samp{thunderxt88}, @samp{thunderxt88p1}, @samp{thunderxt81},
 @samp{thunderxt83}, @samp{thunderx2t99}, @samp{cortex-a57.cortex-a53},
 @samp{cortex-a72.cortex-a53}, @samp{cortex-a73.cortex-a35},
-@samp{cortex-a73.cortex-a53}, @samp{native}.
+@samp{cortex-a73.cortex-a53}, @samp{cortex-a75.cortex-a55},
+@samp{native}。
 
 値@samp{cortex-a57.cortex-a53}, @samp{cortex-a72.cortex-a53},
-@samp{cortex-a73.cortex-a35}, @samp{cortex-a73.cortex-a53}
-はbig.LITTLEシステム用のコードのパフォーマンスを調整すべきだということも指定することができる。
+! @samp{cortex-a73.cortex-a35}, @samp{cortex-a73.cortex-a53},
+! @samp{cortex-a75.cortex-a55}はbig.LITTLEシステム用のコードのパフォーマンスを調整すべきだということも指定することができる。
 
 さらにネイティブのAArch64 GNU/Linuxシステムでは値@samp{native}が利用可能である。このオプションは、コンパイラに
 アーキテクチャを選択してホストシステムのプロセッサ用のコードのパフォーマンスを調整するようにさせる。
@@ -11808,9 +11806,15 @@ GCCは@var{name}を（まるで@option{-march}によってのように）アセ�
 
 このオプションはGCCを開発するときに役立つことだけを意図している。
 
+@item -mverbose-cost-dump
+@opindex mverbose-cost-dump
+デバッグダンプファイルで詳細なコストモデルのダンプを有効にする。 このオプションは、コンパイラのデバッグに使用するために用意されている。
+
 @item -mpc-relative-literal-loads
+@itemx -mno-pc-relative-literal-loads
 @opindex mpc-relative-literal-loads
-PC相対のリテラルロードを有効にする。このオプションを使用すると、リテラルプールは単一の命令を使用してアクセスされ、各関数の後に放出される。 これにより、関数の最大サイズが1MBに制限される。これは、@option{-mcmodel=tiny}に対してデフォルトで有効になっている。
+@opindex mno-pc-relative-literal-loads
+PC相対のリテラルロードを有効・無効にする。このオプションを使用すると、リテラルプールは単一の命令を使用してアクセスされ、各関数の後に放出される。 これにより、関数の最大サイズが1MBに制限される。これは、@option{-mcmodel=tiny}に対してデフォルトで有効になっている。
 
 @item -msign-return-address=@var{scope}
 @opindex msign-return-address
@@ -11833,33 +11837,33 @@ Crypto拡張を有効にする。これは拡張SIMDと浮動小数点命令も�
 浮動小数点命令を有効にする。これは@option{-march}と@option{-mcpu}オプションのすべての可能な値のデフォルトである。
 @item simd
 拡張SIMD命令を有効にする。これは浮動小数点命令も有効にする。これは@option{-march}と@option{-mcpu}オプションのすべての可能な値のデフォルトである。
+@item sve
+Scalable Vector Extension命令を有効にする。 これにより、アドバンストSIMDおよび浮動小数点命令も有効になる。
 @item lse
 ラージシステム実行命令を有効にする。これは@option{-march=armv8.1-a}のデフォルトである。
+@item rdma
+Round Double Multiply Accumulate命令を有効にします。 これは、デフォルトでは@option{-march = armv8.1-a}に対して有効になっている。
 @item fp16
 FP16拡張を有効にする、これは浮動小数点命令も有効にする。
-
-@item -msve-vector-bits=@var{bits}
-@opindex msve-vector-bits
-Specify the number of bits in an SVE vector register.  This option only has
-an effect when SVE is enabled.
-
-GCC supports two forms of SVE code generation: ``vector-length
-agnostic'' output that works with any size of vector register and
-``vector-length specific'' output that only works when the vector
-registers are a particular size.  Replacing @var{bits} with
-@samp{scalable} selects vector-length agnostic output while
-replacing it with a number selects vector-length specific output.
-The possible lengths in the latter case are: 128, 256, 512, 1024
-and 2048.  @samp{scalable} is the default.
-
-At present, @samp{-msve-vector-bits=128} produces the same output
-as @samp{-msve-vector-bits=scalable}.
-
+@item fp16fml
+FP16 fmla拡張機能を有効にする。 これにより、FP16拡張命令と浮動小数点命令も有効になる。 このオプションは、@option{-march=armv8.4-a}に対してデフォルトで有効になっている。 Armv8.2-Aより前のアーキテクチャでこのオプションを使用することはサポートされていない。
+@item rcpc
+RcPc拡張機能を有効にする。 これはGCCからのコード生成を変更するのではなく、アセンブラに渡され、インラインasm文がRcPc拡張からの命令を使用できるようにする。
+@item dotprod
+ドットプロダクト拡張を有効にする。 これにより、アドバンストSIMD命令も有効になる。
+@item aes
+Armv8-aesおよびpmull暗号拡張を有効にする。 これにより、アドバンストSIMD命令も有効になる。
+@item sha2
+Armv8-sha2暗号拡張を有効にする。 これにより、アドバンストSIMD命令も有効になる。
+@item sha3
+sha512およびsha3暗号拡張を有効にする。 これにより、アドバンストSIMD命令も有効になる。 Armv8.2-Aより前のアーキテクチャでこのオプションを使用することはサポートされていない。
+@item sm4
+sm3およびsm4暗号拡張を有効にする。 これにより、アドバンストSIMD命令も有効になる。Armv8.2-Aより前のアーキテクチャでこのオプションを使用することはサポートされていない。
+  
 @end table
 
-@option{crypto}は@option{simd}を含み、それは@option{fp}を含む。逆に、
-@option{nofp}(もしくは、それと等価な@option{-mgeneral-regs-only})は@option{nosimd}を含み、
-それは@option{noctypto}を含む。
+@option{crypto}は@option{aes}、@option{sha2}、@option{simd}を含み、それは@option{fp}を含む。逆に、
+@option{nofp}は@option{nosimd}を含み、それは@option{noctypto}、@option{noaes}、@option{nosha2}を含む。
 
 @node Adapteva Epiphany Options
 @subsection Adapteva Epiphanyオプション
