@@ -1,0 +1,1131 @@
+*** gcc/doc/invoke.texi	2018-01-16 20:22:01.000000000 +0900
+--- gcc/doc/invoke.texi	2018-04-26 22:52:59.000000000 +0900
+***************
+*** 15747,15755 ****
+  is used in conjunction with @option{-march} or @option{-mtune},
+  those options take precedence over the appropriate part of this option.
+  
+  Permissible names for this option are the same as those for
+  @option{-mtune}.
+  
+  @option{-mcpu=generic-@var{arch}} is also permissible, and is
+  equivalent to @option{-march=@var{arch} -mtune=generic-@var{arch}}.
+  See @option{-mtune} for more information.
+--- 16910,16982 ----
+  is used in conjunction with @option{-march} or @option{-mtune},
+  those options take precedence over the appropriate part of this option.
+  
++ Many of the supported CPUs implement optional architectural
++ extensions.  Where this is so the architectural extensions are
++ normally enabled by default.  If implementations that lack the
++ extension exist, then the extension syntax can be used to disable
++ those extensions that have been omitted.  For floating-point and
++ Advanced SIMD (Neon) instructions, the settings of the options
++ @option{-mfloat-abi} and @option{-mfpu} must also be considered:
++ floating-point and Advanced SIMD instructions will only be used if
++ @option{-mfloat-abi} is not set to @samp{soft}; and any setting of
++ @option{-mfpu} other than @samp{auto} will override the available
++ floating-point and SIMD extension instructions.
++ 
++ For example, @samp{cortex-a9} can be found in three major
++ configurations: integer only, with just a floating-point unit or with
++ floating-point and Advanced SIMD.  The default is to enable all the
++ instructions, but the extensions @samp{+nosimd} and @samp{+nofp} can
++ be used to disable just the SIMD or both the SIMD and floating-point
++ instructions respectively.
++ 
+  Permissible names for this option are the same as those for
+  @option{-mtune}.
+  
++ The following extension options are common to the listed CPUs:
++ 
++ @table @samp
++ @item +nodsp
++ Disable the DSP instructions on @samp{cortex-m33}.
++ 
++ @item  +nofp
++ Disables the floating-point instructions on @samp{arm9e},
++ @samp{arm946e-s}, @samp{arm966e-s}, @samp{arm968e-s}, @samp{arm10e},
++ @samp{arm1020e}, @samp{arm1022e}, @samp{arm926ej-s},
++ @samp{arm1026ej-s}, @samp{cortex-r5}, @samp{cortex-r7}, @samp{cortex-r8},
++ @samp{cortex-m4}, @samp{cortex-m7} and @samp{cortex-m33}.
++ Disables the floating-point and SIMD instructions on
++ @samp{generic-armv7-a}, @samp{cortex-a5}, @samp{cortex-a7},
++ @samp{cortex-a8}, @samp{cortex-a9}, @samp{cortex-a12},
++ @samp{cortex-a15}, @samp{cortex-a17}, @samp{cortex-a15.cortex-a7},
++ @samp{cortex-a17.cortex-a7}, @samp{cortex-a32}, @samp{cortex-a35},
++ @samp{cortex-a53} and @samp{cortex-a55}.
++ 
++ @item +nofp.dp
++ Disables the double-precision component of the floating-point instructions
++ on @samp{cortex-r5}, @samp{cortex-r52} and @samp{cortex-m7}.
++ 
++ @item +nosimd
++ Disables the SIMD (but not floating-point) instructions on
++ @samp{generic-armv7-a}, @samp{cortex-a5}, @samp{cortex-a7}
++ and @samp{cortex-a9}.
++ 
++ @item +crypto
++ Enables the cryptographic instructions on @samp{cortex-a32},
++ @samp{cortex-a35}, @samp{cortex-a53}, @samp{cortex-a55}, @samp{cortex-a57},
++ @samp{cortex-a72}, @samp{cortex-a73}, @samp{cortex-a75}, @samp{exynos-m1},
++ @samp{xgene1}, @samp{cortex-a57.cortex-a53}, @samp{cortex-a72.cortex-a53},
++ @samp{cortex-a73.cortex-a35}, @samp{cortex-a73.cortex-a53} and
++ @samp{cortex-a75.cortex-a55}.
++ @end table
++ 
++ Additionally the @samp{generic-armv7-a} pseudo target defaults to
++ VFPv3 with 16 double-precision registers.  It supports the following
++ extension options: @samp{vfpv3-d16}, @samp{vfpv3},
++ @samp{vfpv3-d16-fp16}, @samp{vfpv3-fp16}, @samp{vfpv4-d16},
++ @samp{vfpv4}, @samp{neon}, @samp{neon-vfpv3}, @samp{neon-fp16},
++ @samp{neon-vfpv4}.  The meanings are the same as for the extensions to
++ @option{-march=armv7-a}.
++ 
+  @option{-mcpu=generic-@var{arch}} is also permissible, and is
+  equivalent to @option{-march=@var{arch} -mtune=generic-@var{arch}}.
+  See @option{-mtune} for more information.
+***************
+*** 15762,15768 ****
+  @item -mfpu=@var{name}
+  @opindex mfpu
+  This specifies what floating-point hardware (or hardware emulation) is
+! available on the target.  Permissible names are: @samp{vfpv2}, @samp{vfpv3},
+  @samp{vfpv3-fp16}, @samp{vfpv3-d16}, @samp{vfpv3-d16-fp16}, @samp{vfpv3xd},
+  @samp{vfpv3xd-fp16}, @samp{neon-vfpv3}, @samp{neon-fp16}, @samp{vfpv4},
+  @samp{vfpv4-d16}, @samp{fpv4-sp-d16}, @samp{neon-vfpv4},
+--- 16989,16996 ----
+  @item -mfpu=@var{name}
+  @opindex mfpu
+  This specifies what floating-point hardware (or hardware emulation) is
+! available on the target.  Permissible names are: @samp{auto}, @samp{vfpv2},
+! @samp{vfpv3},
+  @samp{vfpv3-fp16}, @samp{vfpv3-d16}, @samp{vfpv3-d16-fp16}, @samp{vfpv3xd},
+  @samp{vfpv3xd-fp16}, @samp{neon-vfpv3}, @samp{neon-fp16}, @samp{vfpv4},
+  @samp{vfpv4-d16}, @samp{fpv4-sp-d16}, @samp{neon-vfpv4},
+***************
+*** 15771,15781 ****
+  Note that @samp{neon} is an alias for @samp{neon-vfpv3} and @samp{vfp}
+  is an alias for @samp{vfpv2}.
+  
+! If @option{-msoft-float} is specified this specifies the format of
+! floating-point values.
+  
+  If the selected floating-point hardware includes the NEON extension
+! (e.g. @option{-mfpu}=@samp{neon}), note that floating-point
+  operations are not generated by GCC's auto-vectorization pass unless
+  @option{-funsafe-math-optimizations} is also specified.  This is
+  because NEON hardware does not fully implement the IEEE 754 standard for
+--- 16999,17010 ----
+  Note that @samp{neon} is an alias for @samp{neon-vfpv3} and @samp{vfp}
+  is an alias for @samp{vfpv2}.
+  
+! The setting @samp{auto} is the default and is special.  It causes the
+! compiler to select the floating-point and Advanced SIMD instructions
+! based on the settings of @option{-mcpu} and @option{-march}.
+  
+  If the selected floating-point hardware includes the NEON extension
+! (e.g. @option{-mfpu=neon}), note that floating-point
+  operations are not generated by GCC's auto-vectorization pass unless
+  @option{-funsafe-math-optimizations} is also specified.  This is
+  because NEON hardware does not fully implement the IEEE 754 standard for
+***************
+*** 16012,16020 ****
+  
+  @item -mrestrict-it
+  @opindex mrestrict-it
+! Restricts generation of IT blocks to conform to the rules of ARMv8.
+  IT blocks can only contain a single 16-bit instruction from a select
+! set of instructions. This option is on by default for ARMv8 Thumb mode.
+  
+  @item -mprint-tune-info
+  @opindex mprint-tune-info
+--- 17249,17257 ----
+  
+  @item -mrestrict-it
+  @opindex mrestrict-it
+! Restricts generation of IT blocks to conform to the rules of ARMv8-A.
+  IT blocks can only contain a single 16-bit instruction from a select
+! set of instructions. This option is on by default for ARMv8-A Thumb mode.
+  
+  @item -mprint-tune-info
+  @opindex mprint-tune-info
+***************
+*** 16023,16034 ****
+  intended for ordinary use in compiling code.  This option is disabled
+  by default.
+  
+  @item -mpure-code
+  @opindex mpure-code
+  Do not allow constant data to be placed in code sections.
+  Additionally, when compiling for ELF object format give all text sections the
+  ELF processor-specific section attribute @code{SHF_ARM_PURECODE}.  This option
+! is only available when generating non-pic code for ARMv7-M targets.
+  
+  @item -mcmse
+  @opindex mcmse
+--- 17260,17277 ----
+  intended for ordinary use in compiling code.  This option is disabled
+  by default.
+  
++ @item -mverbose-cost-dump
++ @opindex mverbose-cost-dump
++ Enable verbose cost model dumping in the debug dump files.  This option is
++ provided for use in debugging the compiler.
++ 
+  @item -mpure-code
+  @opindex mpure-code
+  Do not allow constant data to be placed in code sections.
+  Additionally, when compiling for ELF object format give all text sections the
+  ELF processor-specific section attribute @code{SHF_ARM_PURECODE}.  This option
+! is only available when generating non-pic code for M-profile targets with the
+! MOVT instruction.
+  
+  @item -mcmse
+  @opindex mcmse
+***************
+*** 16413,16422 ****
+  
+  respectively and
+  
+! @code{100}, @code{102}, @code{104},
+  @code{105}, @code{106}, @code{107}
+  
+! for @var{mcu}=@code{avrtiny}, @code{avrxmega2}, @code{avrxmega4},
+  @code{avrxmega5}, @code{avrxmega6}, @code{avrxmega7}, respectively.
+  If @var{mcu} specifies a device, this built-in macro is set
+  accordingly. For example, with @option{-mmcu=atmega8} the macro is
+--- 17681,17692 ----
+  
+  respectively and
+  
+! @code{100},
+! @code{102}, @code{103}, @code{104},
+  @code{105}, @code{106}, @code{107}
+  
+! for @var{mcu}=@code{avrtiny},
+! @code{avrxmega2}, @code{avrxmega3}, @code{avrxmega4},
+  @code{avrxmega5}, @code{avrxmega6}, @code{avrxmega7}, respectively.
+  If @var{mcu} specifies a device, this built-in macro is set
+  accordingly. For example, with @option{-mmcu=atmega8} the macro is
+***************
+*** 16468,16474 ****
+  
+  @item __AVR_HAVE_JMP_CALL__
+  The device has the @code{JMP} and @code{CALL} instructions.
+! This is the case for devices with at least 16@tie{}KiB of program
+  memory.
+  
+  @item __AVR_HAVE_EIJMP_EICALL__
+--- 17738,17744 ----
+  
+  @item __AVR_HAVE_JMP_CALL__
+  The device has the @code{JMP} and @code{CALL} instructions.
+! This is the case for devices with more than 8@tie{}KiB of program
+  memory.
+  
+  @item __AVR_HAVE_EIJMP_EICALL__
+***************
+*** 16595,16603 ****
+  @opindex momit-leaf-frame-pointer
+  Don't keep the frame pointer in a register for leaf functions.  This
+  avoids the instructions to save, set up and restore frame pointers and
+! makes an extra register available in leaf functions.  The option
+! @option{-fomit-frame-pointer} removes the frame pointer for all functions,
+! which might make debugging harder.
+  
+  @item -mspecld-anomaly
+  @opindex mspecld-anomaly
+--- 17880,17886 ----
+  @opindex momit-leaf-frame-pointer
+  Don't keep the frame pointer in a register for leaf functions.  This
+  avoids the instructions to save, set up and restore frame pointers and
+! makes an extra register available in leaf functions.
+  
+  @item -mspecld-anomaly
+  @opindex mspecld-anomaly
+***************
+*** 20326,20332 ****
+  @item -mr10k-cache-barrier=@var{setting}
+  @opindex mr10k-cache-barrier
+  Specify whether GCC should insert cache barriers to avoid the
+! side-effects of speculation on R10K processors.
+  
+  In common with many processors, the R10K tries to predict the outcome
+  of a conditional branch and speculatively executes instructions from
+--- 21621,21627 ----
+  @item -mr10k-cache-barrier=@var{setting}
+  @opindex mr10k-cache-barrier
+  Specify whether GCC should insert cache barriers to avoid the
+! side effects of speculation on R10K processors.
+  
+  In common with many processors, the R10K tries to predict the outcome
+  of a conditional branch and speculatively executes instructions from
+***************
+*** 20899,20912 ****
+  @opindex mno-cmov
+  Do not generate conditional move instructions.
+  
+! @item -mperf-ext
+  @opindex mperf-ext
+  Generate performance extension instructions.
+  
+! @item -mno-perf-ext
+  @opindex mno-perf-ext
+  Do not generate performance extension instructions.
+  
+  @item -mv3push
+  @opindex mv3push
+  Generate v3 push25/pop25 instructions.
+--- 22194,22223 ----
+  @opindex mno-cmov
+  Do not generate conditional move instructions.
+  
+! @item -mext-perf
+  @opindex mperf-ext
+  Generate performance extension instructions.
+  
+! @item -mno-ext-perf
+  @opindex mno-perf-ext
+  Do not generate performance extension instructions.
+  
++ @item -mext-perf2
++ @opindex mperf-ext
++ Generate performance extension 2 instructions.
++ 
++ @item -mno-ext-perf2
++ @opindex mno-perf-ext
++ Do not generate performance extension 2 instructions.
++ 
++ @item -mext-string
++ @opindex mperf-ext
++ Generate string extension instructions.
++ 
++ @item -mno-ext-string
++ @opindex mno-perf-ext
++ Do not generate string extension instructions.
++ 
+  @item -mv3push
+  @opindex mv3push
+  Generate v3 push25/pop25 instructions.
+***************
+*** 22665,22671 ****
+  @samp{titan}, @samp{power3}, @samp{power4}, @samp{power5}, @samp{power5+},
+  @samp{power6}, @samp{power6x}, @samp{power7}, @samp{power8},
+  @samp{power9}, @samp{powerpc}, @samp{powerpc64}, @samp{powerpc64le},
+! and @samp{rs64}.
+  
+  @option{-mcpu=powerpc}, @option{-mcpu=powerpc64}, and
+  @option{-mcpu=powerpc64le} specify pure 32-bit PowerPC (either
+--- 24816,24822 ----
+  @samp{titan}, @samp{power3}, @samp{power4}, @samp{power5}, @samp{power5+},
+  @samp{power6}, @samp{power6x}, @samp{power7}, @samp{power8},
+  @samp{power9}, @samp{powerpc}, @samp{powerpc64}, @samp{powerpc64le},
+! @samp{rs64}, and @samp{native}.
+  
+  @option{-mcpu=powerpc}, @option{-mcpu=powerpc64}, and
+  @option{-mcpu=powerpc64le} specify pure 32-bit PowerPC (either
+***************
+*** 22673,22678 ****
+  architecture machine types, with an appropriate, generic processor
+  model assumed for scheduling purposes.
+  
+  The other options specify a specific processor.  Code generated under
+  those options runs best on that processor, and may not run at all on
+  others.
+--- 24824,24835 ----
+  architecture machine types, with an appropriate, generic processor
+  model assumed for scheduling purposes.
+  
++ Specifying @samp{native} as cpu type detects and selects the
++ architecture option that corresponds to the host processor of the
++ system performing the compilation.
++ @option{-mcpu=native} has no effect if GCC does not recognize the
++ processor.
++ 
+  The other options specify a specific processor.  Code generated under
+  those options runs best on that processor, and may not run at all on
+  others.
+***************
+*** 22683,22690 ****
+  @gccoptlist{-maltivec  -mfprnd  -mhard-float  -mmfcrf  -mmultiple 
+  -mpopcntb -mpopcntd  -mpowerpc64 
+  -mpowerpc-gpopt  -mpowerpc-gfxopt  -msingle-float -mdouble-float 
+! -msimple-fpu -mstring  -mmulhw  -mdlmzb  -mmfpgpr -mvsx 
+! -mcrypto -mdirect-move -mhtm -mpower8-fusion -mpower8-vector 
+  -mquad-memory -mquad-memory-atomic -mfloat128 -mfloat128-hardware}
+  
+  The particular options set for any particular CPU varies between
+--- 24840,24847 ----
+  @gccoptlist{-maltivec  -mfprnd  -mhard-float  -mmfcrf  -mmultiple 
+  -mpopcntb -mpopcntd  -mpowerpc64 
+  -mpowerpc-gpopt  -mpowerpc-gfxopt  -msingle-float -mdouble-float 
+! -msimple-fpu  -mmulhw  -mdlmzb  -mmfpgpr -mvsx 
+! -mcrypto -mhtm -mpower8-fusion -mpower8-vector 
+  -mquad-memory -mquad-memory-atomic -mfloat128 -mfloat128-hardware}
+  
+  The particular options set for any particular CPU varies between
+***************
+*** 22750,22756 ****
+  @opindex maltivec=be
+  Generate AltiVec instructions using big-endian element order,
+  regardless of whether the target is big- or little-endian.  This is
+! the default when targeting a big-endian platform.
+  
+  The element order is used to interpret element numbers in AltiVec
+  intrinsics such as @code{vec_splat}, @code{vec_extract}, and
+--- 24907,24915 ----
+  @opindex maltivec=be
+  Generate AltiVec instructions using big-endian element order,
+  regardless of whether the target is big- or little-endian.  This is
+! the default when targeting a big-endian platform.  Using this option
+! is currently deprecated.  Support for this feature will be removed in
+! GCC 9.
+  
+  The element order is used to interpret element numbers in AltiVec
+  intrinsics such as @code{vec_splat}, @code{vec_extract}, and
+***************
+*** 22775,22789 ****
+  @opindex mno-vrsave
+  Generate VRSAVE instructions when generating AltiVec code.
+  
+- @item -mgen-cell-microcode
+- @opindex mgen-cell-microcode
+- Generate Cell microcode instructions.
+- 
+- @item -mwarn-cell-microcode
+- @opindex mwarn-cell-microcode
+- Warn when a Cell microcode instruction is emitted.  An example
+- of a Cell microcode instruction is a variable shift.
+- 
+  @item -msecure-plt
+  @opindex msecure-plt
+  Generate code that allows @command{ld} and @command{ld.so}
+--- 24934,24939 ----
+  @opindex mno-vrsave
+  Generate VRSAVE instructions when generating AltiVec code.
+  
+  @item -msecure-plt
+  @opindex msecure-plt
+  Generate code that allows @command{ld} and @command{ld.so}
+***************
+*** 22810,22827 ****
+  This switch has been deprecated.  Use @option{-misel} and
+  @option{-mno-isel} instead.
+  
+- @item -mlra
+- @opindex mlra
+- Enable Local Register Allocation. By default the port uses LRA.
+- (i.e. @option{-mno-lra}).
+- 
+- @item -mspe
+- @itemx -mno-spe
+- @opindex mspe
+- @opindex mno-spe
+- This switch enables or disables the generation of SPE simd
+- instructions.
+- 
+  @item -mpaired
+  @itemx -mno-paired
+  @opindex mpaired
+--- 24960,24965 ----
+  This switch has been deprecated.  Use @option{-misel} and
+  @option{-mno-isel} instead.
+  
+  @item -mpaired
+  @itemx -mno-paired
+  @opindex mpaired
+***************
+*** 22829,22838 ****
+  This switch enables or disables the generation of PAIRED simd
+  instructions.
+  
+- @item -mspe=@var{yes/no}
+- This option has been deprecated.  Use @option{-mspe} and
+- @option{-mno-spe} instead.
+- 
+  @item -mvsx
+  @itemx -mno-vsx
+  @opindex mvsx
+--- 24967,24972 ----
+  This switch enables or disables the generation of PAIRED simd
+  instructions.
+  
+  @item -mvsx
+  @itemx -mno-vsx
+  @opindex mvsx
+***************
+*** 22849,22862 ****
+  access to the cryptographic instructions that were added in version
+  2.07 of the PowerPC ISA.
+  
+- @item -mdirect-move
+- @itemx -mno-direct-move
+- @opindex mdirect-move
+- @opindex mno-direct-move
+- Generate code that uses (does not use) the instructions to move data
+- between the general purpose registers and the vector/scalar (VSX)
+- registers that were added in version 2.07 of the PowerPC ISA.
+- 
+  @item -mhtm
+  @itemx -mno-htm
+  @opindex mhtm
+--- 24983,24988 ----
+  access to the cryptographic instructions that were added in version
+  2.07 of the PowerPC ISA.
+  
+  @item -mhtm
+  @itemx -mno-htm
+  @opindex mhtm
+***************
+*** 22898,22947 ****
+  instructions.  The @option{-mquad-memory-atomic} option requires use of
+  64-bit mode.
+  
+- @item -mupper-regs-di
+- @itemx -mno-upper-regs-di
+- @opindex mupper-regs-di
+- @opindex mno-upper-regs-di
+- Generate code that uses (does not use) the scalar instructions that
+- target all 64 registers in the vector/scalar floating point register
+- set that were added in version 2.06 of the PowerPC ISA when processing
+- integers.  @option{-mupper-regs-di} is turned on by default if you use
+- any of the @option{-mcpu=power7}, @option{-mcpu=power8},
+- @option{-mcpu=power9}, or @option{-mvsx} options.
+- 
+- @item -mupper-regs-df
+- @itemx -mno-upper-regs-df
+- @opindex mupper-regs-df
+- @opindex mno-upper-regs-df
+- Generate code that uses (does not use) the scalar double precision
+- instructions that target all 64 registers in the vector/scalar
+- floating point register set that were added in version 2.06 of the
+- PowerPC ISA.  @option{-mupper-regs-df} is turned on by default if you
+- use any of the @option{-mcpu=power7}, @option{-mcpu=power8},
+- @option{-mcpu=power9}, or @option{-mvsx} options.
+- 
+- @item -mupper-regs-sf
+- @itemx -mno-upper-regs-sf
+- @opindex mupper-regs-sf
+- @opindex mno-upper-regs-sf
+- Generate code that uses (does not use) the scalar single precision
+- instructions that target all 64 registers in the vector/scalar
+- floating point register set that were added in version 2.07 of the
+- PowerPC ISA.  @option{-mupper-regs-sf} is turned on by default if you
+- use either of the @option{-mcpu=power8}, @option{-mpower8-vector}, or
+- @option{-mcpu=power9} options.
+- 
+- @item -mupper-regs
+- @itemx -mno-upper-regs
+- @opindex mupper-regs
+- @opindex mno-upper-regs
+- Generate code that uses (does not use) the scalar
+- instructions that target all 64 registers in the vector/scalar
+- floating point register set, depending on the model of the machine.
+- 
+- If the @option{-mno-upper-regs} option is used, it turns off both
+- @option{-mupper-regs-sf} and @option{-mupper-regs-df} options.
+- 
+  @item -mfloat128
+  @itemx -mno-float128
+  @opindex mfloat128
+--- 25024,25029 ----
+  instructions.  The @option{-mquad-memory-atomic} option requires use of
+  64-bit mode.
+  
+  @item -mfloat128
+  @itemx -mno-float128
+  @opindex mfloat128
+***************
+*** 22950,22964 ****
+  and use either software emulation for IEEE 128-bit floating point or
+  hardware instructions.
+  
+! The VSX instruction set (@option{-mvsx}, @option{-mcpu=power7}, or
+! @option{-mcpu=power8}) must be enabled to use the @option{-mfloat128}
+! option.  The @option{-mfloat128} option only works on PowerPC 64-bit
+! Linux systems.
+! 
+! If you use the ISA 3.0 instruction set (@option{-mcpu=power9}), the
+! @option{-mfloat128} option will also enable the generation of ISA 3.0
+! IEEE 128-bit floating point instructions.  Otherwise, IEEE 128-bit
+! floating point will be done with software emulation.
+  
+  @item -mfloat128-hardware
+  @itemx -mno-float128-hardware
+--- 25032,25052 ----
+  and use either software emulation for IEEE 128-bit floating point or
+  hardware instructions.
+  
+! The VSX instruction set (@option{-mvsx}, @option{-mcpu=power7},
+! @option{-mcpu=power8}), or @option{-mcpu=power9} must be enabled to
+! use the IEEE 128-bit floating point support.  The IEEE 128-bit
+! floating point support only works on PowerPC Linux systems.
+! 
+! The default for @option{-mfloat128} is enabled on PowerPC Linux
+! systems using the VSX instruction set, and disabled on other systems.
+! 
+! If you use the ISA 3.0 instruction set (@option{-mpower9-vector} or
+! @option{-mcpu=power9}) on a 64-bit system, the IEEE 128-bit floating
+! point support will also enable the generation of ISA 3.0 IEEE 128-bit
+! floating point instructions.  Otherwise, if you do not specify to
+! generate ISA 3.0 instructions or you are targeting a 32-bit big endian
+! system, IEEE 128-bit floating point will be done with software
+! emulation.
+  
+  @item -mfloat128-hardware
+  @itemx -mno-float128-hardware
+***************
+*** 22967,22996 ****
+  Enable/disable using ISA 3.0 hardware instructions to support the
+  @var{__float128} data type.
+  
+! If you use @option{-mfloat128-hardware}, it will enable the option
+! @option{-mfloat128} as well.
+! 
+! If you select ISA 3.0 instructions with @option{-mcpu=power9}, but do
+! not use either @option{-mfloat128} or @option{-mfloat128-hardware},
+! the IEEE 128-bit floating point support will not be enabled.
+! 
+! @item -mfloat-gprs=@var{yes/single/double/no}
+! @itemx -mfloat-gprs
+! @opindex mfloat-gprs
+! This switch enables or disables the generation of floating-point
+! operations on the general-purpose registers for architectures that
+! support it.
+! 
+! The argument @samp{yes} or @samp{single} enables the use of
+! single-precision floating-point operations.
+! 
+! The argument @samp{double} enables the use of single and
+! double-precision floating-point operations.
+! 
+! The argument @samp{no} disables floating-point operations on the
+! general-purpose registers.
+! 
+! This option is currently only available on the MPC854x.
+  
+  @item -m32
+  @itemx -m64
+--- 25055,25063 ----
+  Enable/disable using ISA 3.0 hardware instructions to support the
+  @var{__float128} data type.
+  
+! The default for @option{-mfloat128-hardware} is enabled on PowerPC
+! Linux systems using the ISA 3.0 instruction set, and disabled on other
+! systems.
+  
+  @item -m32
+  @itemx -m64
+***************
+*** 23135,23153 ****
+  processor is in little-endian mode.  The exceptions are PPC740 and
+  PPC750 which permit these instructions in little-endian mode.
+  
+- @item -mstring
+- @itemx -mno-string
+- @opindex mstring
+- @opindex mno-string
+- Generate code that uses (does not use) the load string instructions
+- and the store string word instructions to save multiple registers and
+- do small block moves.  These instructions are generated by default on
+- POWER systems, and not generated on PowerPC systems.  Do not use
+- @option{-mstring} on little-endian PowerPC systems, since those
+- instructions do not work when the processor is in little-endian mode.
+- The exceptions are PPC740 and PPC750 which permit these instructions
+- in little-endian mode.
+- 
+  @item -mupdate
+  @itemx -mno-update
+  @opindex mupdate
+--- 25202,25207 ----
+  processor is in little-endian mode.  The exceptions are PPC740 and
+  PPC750 which permit these instructions in little-endian mode.
+  
+  @item -mupdate
+  @itemx -mno-update
+  @opindex mupdate
+***************
+*** 23401,23425 ****
+  @samp{no-spe}, @samp{ibmlongdouble}, @samp{ieeelongdouble},
+  @samp{elfv1}, @samp{elfv2}@.
+  
+- @item -mabi=spe
+- @opindex mabi=spe
+- Extend the current ABI with SPE ABI extensions.  This does not change
+- the default ABI, instead it adds the SPE ABI extensions to the current
+- ABI@.
+- 
+- @item -mabi=no-spe
+- @opindex mabi=no-spe
+- Disable Book-E SPE ABI extensions for the current ABI@.
+- 
+  @item -mabi=ibmlongdouble
+  @opindex mabi=ibmlongdouble
+  Change the current ABI to use IBM extended-precision long double.
+! This is a PowerPC 32-bit SYSV ABI option.
+  
+  @item -mabi=ieeelongdouble
+  @opindex mabi=ieeelongdouble
+  Change the current ABI to use IEEE extended-precision long double.
+! This is a PowerPC 32-bit Linux ABI option.
+  
+  @item -mabi=elfv1
+  @opindex mabi=elfv1
+--- 25460,25480 ----
+  @samp{no-spe}, @samp{ibmlongdouble}, @samp{ieeelongdouble},
+  @samp{elfv1}, @samp{elfv2}@.
+  
+  @item -mabi=ibmlongdouble
+  @opindex mabi=ibmlongdouble
+  Change the current ABI to use IBM extended-precision long double.
+! This is not likely to work if your system defaults to using IEEE
+! extended-precision long double.  If you change the long double type
+! from IEEE extended-precision, the compiler will issue a warning unless
+! you use the @option{-Wno-psabi} option.
+  
+  @item -mabi=ieeelongdouble
+  @opindex mabi=ieeelongdouble
+  Change the current ABI to use IEEE extended-precision long double.
+! This is not likely to work if your system defaults to using IBM
+! extended-precision long double.  If you change the long double type
+! from IBM extended-precision, the compiler will issue a warning unless
+! you use the @option{-Wno-psabi} option.
+  
+  @item -mabi=elfv1
+  @opindex mabi=elfv1
+***************
+*** 23799,23807 ****
+  @item -mstack-protector-guard=@var{guard}
+  @itemx -mstack-protector-guard-reg=@var{reg}
+  @itemx -mstack-protector-guard-offset=@var{offset}
+  @opindex mstack-protector-guard
+  @opindex mstack-protector-guard-reg
+  @opindex mstack-protector-guard-offset
+  Generate stack protection code using canary at @var{guard}.  Supported
+  locations are @samp{global} for global canary or @samp{tls} for per-thread
+  canary in the TLS block (the default with GNU libc version 2.4 or later).
+--- 25886,25896 ----
+  @item -mstack-protector-guard=@var{guard}
+  @itemx -mstack-protector-guard-reg=@var{reg}
+  @itemx -mstack-protector-guard-offset=@var{offset}
++ @itemx -mstack-protector-guard-symbol=@var{symbol}
+  @opindex mstack-protector-guard
+  @opindex mstack-protector-guard-reg
+  @opindex mstack-protector-guard-offset
++ @opindex mstack-protector-guard-symbol
+  Generate stack protection code using canary at @var{guard}.  Supported
+  locations are @samp{global} for global canary or @samp{tls} for per-thread
+  canary in the TLS block (the default with GNU libc version 2.4 or later).
+***************
+*** 23811,23817 ****
+  @option{-mstack-protector-guard-offset=@var{offset}} furthermore specify
+  which register to use as base register for reading the canary, and from what
+  offset from that base register. The default for those is as specified in the
+! relevant ABI.
+  @end table
+  
+  @node RX Options
+--- 25900,25907 ----
+  @option{-mstack-protector-guard-offset=@var{offset}} furthermore specify
+  which register to use as base register for reading the canary, and from what
+  offset from that base register. The default for those is as specified in the
+! relevant ABI.  @option{-mstack-protector-guard-symbol=@var{symbol}} overrides
+! the offset with a symbol reference to a canary in the TLS block.
+  @end table
+  
+  @node RX Options
+***************
+*** 25997,26007 ****
+  BMI, BMI2, F16C, RDSEED, ADCX, PREFETCHW, AVX512F, AVX512PF, AVX512ER and
+  AVX512CD instruction set support.
+  
+  @item skylake-avx512
+  Intel Skylake Server CPU with 64-bit extensions, MOVBE, MMX, SSE, SSE2, SSE3,
+  SSSE3, SSE4.1, SSE4.2, POPCNT, PKU, AVX, AVX2, AES, PCLMUL, FSGSBASE, RDRND, FMA,
+  BMI, BMI2, F16C, RDSEED, ADCX, PREFETCHW, CLFLUSHOPT, XSAVEC, XSAVES, AVX512F,
+! AVX512VL, AVX512BW, AVX512DQ and AVX512CD instruction set support.
+  
+  @item k6
+  AMD K6 CPU with MMX instruction set support.
+--- 28090,28130 ----
+  BMI, BMI2, F16C, RDSEED, ADCX, PREFETCHW, AVX512F, AVX512PF, AVX512ER and
+  AVX512CD instruction set support.
+  
++ @item knm
++ Intel Knights Mill CPU with 64-bit extensions, MOVBE, MMX, SSE, SSE2, SSE3,
++ SSSE3, SSE4.1, SSE4.2, POPCNT, AVX, AVX2, AES, PCLMUL, FSGSBASE, RDRND, FMA,
++ BMI, BMI2, F16C, RDSEED, ADCX, PREFETCHW, AVX512F, AVX512PF, AVX512ER, AVX512CD,
++ AVX5124VNNIW, AVX5124FMAPS and AVX512VPOPCNTDQ instruction set support.
++ 
+  @item skylake-avx512
+  Intel Skylake Server CPU with 64-bit extensions, MOVBE, MMX, SSE, SSE2, SSE3,
+  SSSE3, SSE4.1, SSE4.2, POPCNT, PKU, AVX, AVX2, AES, PCLMUL, FSGSBASE, RDRND, FMA,
+  BMI, BMI2, F16C, RDSEED, ADCX, PREFETCHW, CLFLUSHOPT, XSAVEC, XSAVES, AVX512F,
+! CLWB, AVX512VL, AVX512BW, AVX512DQ and AVX512CD instruction set support.
+! 
+! @item cannonlake
+! Intel Cannonlake Server CPU with 64-bit extensions, MOVBE, MMX, SSE, SSE2,
+! SSE3, SSSE3, SSE4.1, SSE4.2, POPCNT, PKU, AVX, AVX2, AES, PCLMUL, FSGSBASE,
+! RDRND, FMA, BMI, BMI2, F16C, RDSEED, ADCX, PREFETCHW, CLFLUSHOPT, XSAVEC,
+! XSAVES, AVX512F, AVX512VL, AVX512BW, AVX512DQ, AVX512CD, AVX512VBMI,
+! AVX512IFMA, SHA and UMIP instruction set support.
+! 
+! @item icelake-client
+! Intel Icelake Client CPU with 64-bit extensions, MOVBE, MMX, SSE, SSE2,
+! SSE3, SSSE3, SSE4.1, SSE4.2, POPCNT, PKU, AVX, AVX2, AES, PCLMUL, FSGSBASE,
+! RDRND, FMA, BMI, BMI2, F16C, RDSEED, ADCX, PREFETCHW, CLFLUSHOPT, XSAVEC,
+! XSAVES, AVX512F, AVX512VL, AVX512BW, AVX512DQ, AVX512CD, AVX512VBMI,
+! AVX512IFMA, SHA, CLWB, UMIP, RDPID, GFNI, AVX512VBMI2, AVX512VPOPCNTDQ,
+! AVX512BITALG, AVX512VNNI, VPCLMULQDQ, VAES instruction set support.
+! 
+! @item icelake-server
+! Intel Icelake Server CPU with 64-bit extensions, MOVBE, MMX, SSE, SSE2,
+! SSE3, SSSE3, SSE4.1, SSE4.2, POPCNT, PKU, AVX, AVX2, AES, PCLMUL, FSGSBASE,
+! RDRND, FMA, BMI, BMI2, F16C, RDSEED, ADCX, PREFETCHW, CLFLUSHOPT, XSAVEC,
+! XSAVES, AVX512F, AVX512VL, AVX512BW, AVX512DQ, AVX512CD, AVX512VBMI,
+! AVX512IFMA, SHA, CLWB, UMIP, RDPID, GFNI, AVX512VBMI2, AVX512VPOPCNTDQ,
+! AVX512BITALG, AVX512VNNI, VPCLMULQDQ, VAES, PCONFIG and WBNOINVD instruction
+! set support.
+  
+  @item k6
+  AMD K6 CPU with MMX instruction set support.
+***************
+*** 26277,26289 ****
+  comparison is unordered.
+  
+  @item -m80387
+! @item -mhard-float
+  @opindex 80387
+  @opindex mhard-float
+  Generate output containing 80387 instructions for floating point.
+  
+  @item -mno-80387
+! @item -msoft-float
+  @opindex no-80387
+  @opindex msoft-float
+  Generate output containing library calls for floating point.
+--- 28400,28412 ----
+  comparison is unordered.
+  
+  @item -m80387
+! @itemx -mhard-float
+  @opindex 80387
+  @opindex mhard-float
+  Generate output containing 80387 instructions for floating point.
+  
+  @item -mno-80387
+! @itemx -msoft-float
+  @opindex no-80387
+  @opindex msoft-float
+  Generate output containing library calls for floating point.
+***************
+*** 26691,26705 ****
+  @need 200
+  @itemx -mclzero
+  @opindex mclzero
+  @itemx -mpku
+  @opindex mpku
+  These switches enable the use of instructions in the MMX, SSE,
+  SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, AVX512F, AVX512PF, AVX512ER, AVX512CD,
+  SHA, AES, PCLMUL, FSGSBASE, RDRND, F16C, FMA, SSE4A, FMA4, XOP, LWP, ABM,
+! AVX512VL, AVX512BW, AVX512DQ, AVX512IFMA AVX512VBMI, BMI, BMI2, FXSR,
+! XSAVE, XSAVEOPT, LZCNT, RTM, MPX, MWAITX, PKU, 3DNow!@: or enhanced 3DNow!@:
+! extended instruction sets.  Each has a corresponding @option{-mno-} option
+! to disable use of these instructions.
+  
+  These extensions are also available as built-in functions: see
+  @ref{x86 Built-in Functions}, for details of the functions enabled and
+--- 28820,28861 ----
+  @need 200
+  @itemx -mclzero
+  @opindex mclzero
++ @need 200
+  @itemx -mpku
+  @opindex mpku
++ @need 200
++ @itemx -mavx512vbmi2
++ @opindex mavx512vbmi2
++ @need 200
++ @itemx -mgfni
++ @opindex mgfni
++ @need 200
++ @itemx -mvaes
++ @opindex mvaes
++ @need 200
++ @itemx -mvpclmulqdq
++ @opindex mvpclmulqdq
++ @need 200
++ @itemx -mavx512bitalg
++ @opindex mavx512bitalg
++ @need 200
++ @itemx -mmovdiri
++ @opindex mmovdiri
++ @need 200
++ @itemx -mmovdir64b
++ @opindex mmovdir64b
++ @need 200
++ @itemx -mavx512vpopcntdq
++ @opindex mavx512vpopcntdq
+  These switches enable the use of instructions in the MMX, SSE,
+  SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, AVX512F, AVX512PF, AVX512ER, AVX512CD,
+  SHA, AES, PCLMUL, FSGSBASE, RDRND, F16C, FMA, SSE4A, FMA4, XOP, LWP, ABM,
+! AVX512VL, AVX512BW, AVX512DQ, AVX512IFMA, AVX512VBMI, BMI, BMI2, VAES,
+! FXSR, XSAVE, XSAVEOPT, LZCNT, RTM, MPX, MWAITX, PKU, IBT, SHSTK, AVX512VBMI2,
+! GFNI, VPCLMULQDQ, AVX512BITALG, MOVDIRI, MOVDIR64B,
+! AVX512VPOPCNTDQ3DNow!@: or enhanced 3DNow!@: extended instruction sets.
+! Each has a corresponding @option{-mno-} option to disable use of these
+! instructions.
+  
+  These extensions are also available as built-in functions: see
+  @ref{x86 Built-in Functions}, for details of the functions enabled and
+***************
+*** 27234,27245 ****
+  Split 32-byte AVX unaligned load and store.
+  
+  @item -mstack-protector-guard=@var{guard}
+! @opindex mstack-protector-guard=@var{guard}
+  Generate stack protection code using canary at @var{guard}.  Supported
+  locations are @samp{global} for global canary or @samp{tls} for per-thread
+  canary in the TLS block (the default).  This option has effect only when
+  @option{-fstack-protector} or @option{-fstack-protector-all} is specified.
+  
+  @item -mmitigate-rop
+  @opindex mmitigate-rop
+  Try to avoid generating code sequences that contain unintended return
+--- 29431,29453 ----
+  Split 32-byte AVX unaligned load and store.
+  
+  @item -mstack-protector-guard=@var{guard}
+! @itemx -mstack-protector-guard-reg=@var{reg}
+! @itemx -mstack-protector-guard-offset=@var{offset}
+! @opindex mstack-protector-guard
+! @opindex mstack-protector-guard-reg
+! @opindex mstack-protector-guard-offset
+  Generate stack protection code using canary at @var{guard}.  Supported
+  locations are @samp{global} for global canary or @samp{tls} for per-thread
+  canary in the TLS block (the default).  This option has effect only when
+  @option{-fstack-protector} or @option{-fstack-protector-all} is specified.
+  
++ With the latter choice the options
++ @option{-mstack-protector-guard-reg=@var{reg}} and
++ @option{-mstack-protector-guard-offset=@var{offset}} furthermore specify
++ which segment register (@code{%fs} or @code{%gs}) to use as base register
++ for reading the canary, and from what offset from that base register.
++ The default for those is as specified in the relevant ABI.
++ 
+  @item -mmitigate-rop
+  @opindex mmitigate-rop
+  Try to avoid generating code sequences that contain unintended return
+***************
+*** 27265,27273 ****
+  function attribute @code{indirect_branch}.  @xref{Function Attributes}.
+  
+  Note that @option{-mcmodel=large} is incompatible with
+! @option{-mindirect-branch=thunk} nor
+  @option{-mindirect-branch=thunk-extern} since the thunk function may
+! not be reachable in large code model.
+  
+  @item -mfunction-return=@var{choice}
+  @opindex -mfunction-return
+--- 29473,29486 ----
+  function attribute @code{indirect_branch}.  @xref{Function Attributes}.
+  
+  Note that @option{-mcmodel=large} is incompatible with
+! @option{-mindirect-branch=thunk} and
+  @option{-mindirect-branch=thunk-extern} since the thunk function may
+! not be reachable in the large code model.
+! 
+! Note that @option{-mindirect-branch=thunk-extern} is incompatible with
+! @option{-fcf-protection=branch} and @option{-fcheck-pointer-bounds}
+! since the external thunk can not be modified to disable control-flow
+! check.
+  
+  @item -mfunction-return=@var{choice}
+  @opindex -mfunction-return
+***************
+*** 27281,27289 ****
+  @xref{Function Attributes}.
+  
+  Note that @option{-mcmodel=large} is incompatible with
+! @option{-mfunction-return=thunk} nor
+  @option{-mfunction-return=thunk-extern} since the thunk function may
+! not be reachable in large code model.
+  
+  
+  @item -mindirect-branch-register
+--- 29494,29502 ----
+  @xref{Function Attributes}.
+  
+  Note that @option{-mcmodel=large} is incompatible with
+! @option{-mfunction-return=thunk} and
+  @option{-mfunction-return=thunk-extern} since the thunk function may
+! not be reachable in the large code model.
+  
+  
+  @item -mindirect-branch-register
+***************
+*** 27934,27940 ****
+  Note that each comma in the substituted string is replaced by
+  a single space.
+  
+! @item %<@code{S}
+  Remove all occurrences of @code{-S} from the command line.  Note---this
+  command is position dependent.  @samp{%} commands in the spec string
+  before this one see @code{-S}, @samp{%} commands in the spec string
+--- 30147,30153 ----
+  Note that each comma in the substituted string is replaced by
+  a single space.
+  
+! @item %<S
+  Remove all occurrences of @code{-S} from the command line.  Note---this
+  command is position dependent.  @samp{%} commands in the spec string
+  before this one see @code{-S}, @samp{%} commands in the spec string
+***************
+*** 28032,28038 ****
+  in the @option{--target-help} output.
+  @end table
+  
+! @item %@{@code{S}@}
+  Substitutes the @code{-S} switch, if that switch is given to GCC@.
+  If that switch is not specified, this substitutes nothing.  Note that
+  the leading dash is omitted when specifying this option, and it is
+--- 30245,30251 ----
+  in the @option{--target-help} output.
+  @end table
+  
+! @item %@{S@}
+  Substitutes the @code{-S} switch, if that switch is given to GCC@.
+  If that switch is not specified, this substitutes nothing.  Note that
+  the leading dash is omitted when specifying this option, and it is
+***************
+*** 28040,28050 ****
+  string @samp{%@{foo@}} matches the command-line option @option{-foo}
+  and outputs the command-line option @option{-foo}.
+  
+! @item %W@{@code{S}@}
+  Like %@{@code{S}@} but mark last argument supplied within as a file to be
+  deleted on failure.
+  
+! @item %@{@code{S}*@}
+  Substitutes all the switches specified to GCC whose names start
+  with @code{-S}, but which also take an argument.  This is used for
+  switches like @option{-o}, @option{-D}, @option{-I}, etc.
+--- 30253,30263 ----
+  string @samp{%@{foo@}} matches the command-line option @option{-foo}
+  and outputs the command-line option @option{-foo}.
+  
+! @item %W@{S@}
+  Like %@{@code{S}@} but mark last argument supplied within as a file to be
+  deleted on failure.
+  
+! @item %@{S*@}
+  Substitutes all the switches specified to GCC whose names start
+  with @code{-S}, but which also take an argument.  This is used for
+  switches like @option{-o}, @option{-D}, @option{-I}, etc.
+***************
+*** 28052,28070 ****
+  one switch whose name starts with @samp{o}.  %@{o*@} substitutes this
+  text, including the space.  Thus two arguments are generated.
+  
+! @item %@{@code{S}*&@code{T}*@}
+  Like %@{@code{S}*@}, but preserve order of @code{S} and @code{T} options
+  (the order of @code{S} and @code{T} in the spec is not significant).
+  There can be any number of ampersand-separated variables; for each the
+  wild card is optional.  Useful for CPP as @samp{%@{D*&U*&A*@}}.
+  
+! @item %@{@code{S}:@code{X}@}
+  Substitutes @code{X}, if the @option{-S} switch is given to GCC@.
+  
+! @item %@{!@code{S}:@code{X}@}
+  Substitutes @code{X}, if the @option{-S} switch is @emph{not} given to GCC@.
+  
+! @item %@{@code{S}*:@code{X}@}
+  Substitutes @code{X} if one or more switches whose names start with
+  @code{-S} are specified to GCC@.  Normally @code{X} is substituted only
+  once, no matter how many such switches appeared.  However, if @code{%*}
+--- 30265,30283 ----
+  one switch whose name starts with @samp{o}.  %@{o*@} substitutes this
+  text, including the space.  Thus two arguments are generated.
+  
+! @item %@{S*&T*@}
+  Like %@{@code{S}*@}, but preserve order of @code{S} and @code{T} options
+  (the order of @code{S} and @code{T} in the spec is not significant).
+  There can be any number of ampersand-separated variables; for each the
+  wild card is optional.  Useful for CPP as @samp{%@{D*&U*&A*@}}.
+  
+! @item %@{S:X@}
+  Substitutes @code{X}, if the @option{-S} switch is given to GCC@.
+  
+! @item %@{!S:X@}
+  Substitutes @code{X}, if the @option{-S} switch is @emph{not} given to GCC@.
+  
+! @item %@{S*:X@}
+  Substitutes @code{X} if one or more switches whose names start with
+  @code{-S} are specified to GCC@.  Normally @code{X} is substituted only
+  once, no matter how many such switches appeared.  However, if @code{%*}
+***************
+*** 28089,28107 ****
+  --script=newchip/memory.ld
+  @end smallexample
+  
+! @item %@{.@code{S}:@code{X}@}
+  Substitutes @code{X}, if processing a file with suffix @code{S}.
+  
+! @item %@{!.@code{S}:@code{X}@}
+  Substitutes @code{X}, if @emph{not} processing a file with suffix @code{S}.
+  
+! @item %@{,@code{S}:@code{X}@}
+  Substitutes @code{X}, if processing a file for language @code{S}.
+  
+! @item %@{!,@code{S}:@code{X}@}
+  Substitutes @code{X}, if not processing a file for language @code{S}.
+  
+! @item %@{@code{S}|@code{P}:@code{X}@}
+  Substitutes @code{X} if either @code{-S} or @code{-P} is given to
+  GCC@.  This may be combined with @samp{!}, @samp{.}, @samp{,}, and
+  @code{*} sequences as well, although they have a stronger binding than
+--- 30302,30320 ----
+  --script=newchip/memory.ld
+  @end smallexample
+  
+! @item %@{.S:X@}
+  Substitutes @code{X}, if processing a file with suffix @code{S}.
+  
+! @item %@{!.S:X@}
+  Substitutes @code{X}, if @emph{not} processing a file with suffix @code{S}.
+  
+! @item %@{,S:X@}
+  Substitutes @code{X}, if processing a file for language @code{S}.
+  
+! @item %@{!,S:X@}
+  Substitutes @code{X}, if not processing a file for language @code{S}.
+  
+! @item %@{S|P:X@}
+  Substitutes @code{X} if either @code{-S} or @code{-P} is given to
+  GCC@.  This may be combined with @samp{!}, @samp{.}, @samp{,}, and
+  @code{*} sequences as well, although they have a stronger binding than
+***************
+*** 28136,28142 ****
+  
+  @end table
+  
+! The conditional text @code{X} in a %@{@code{S}:@code{X}@} or similar
+  construct may contain other nested @samp{%} constructs or spaces, or
+  even newlines.  They are processed as usual, as described above.
+  Trailing white space in @code{X} is ignored.  White space may also
+--- 30349,30362 ----
+  
+  @end table
+  
+! The switch matching text @code{S} in a @samp{%@{S@}}, @samp{%@{S:X@}}
+! or similar construct can use a backslash to ignore the special meaning
+! of the character following it, thus allowing literal matching of a
+! character that is otherwise specially treated.  For example,
+! @samp{%@{std=iso9899\:1999:X@}} substitutes @code{X} if the
+! @option{-std=iso9899:1999} option is given.
+! 
+! The conditional text @code{X} in a @samp{%@{S:X@}} or similar
+  construct may contain other nested @samp{%} constructs or spaces, or
+  even newlines.  They are processed as usual, as described above.
+  Trailing white space in @code{X} is ignored.  White space may also

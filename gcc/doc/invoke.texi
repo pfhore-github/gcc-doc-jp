@@ -11776,8 +11776,8 @@ GCCがコードのパフォーマンスを調整すべきターゲットプロ�
 @samp{native}。
 
 値@samp{cortex-a57.cortex-a53}, @samp{cortex-a72.cortex-a53},
-! @samp{cortex-a73.cortex-a35}, @samp{cortex-a73.cortex-a53},
-! @samp{cortex-a75.cortex-a55}はbig.LITTLEシステム用のコードのパフォーマンスを調整すべきだということも指定することができる。
+@samp{cortex-a73.cortex-a35}, @samp{cortex-a73.cortex-a53},
+@samp{cortex-a75.cortex-a55}はbig.LITTLEシステム用のコードのパフォーマンスを調整すべきだということも指定することができる。
 
 さらにネイティブのAArch64 GNU/Linuxシステムでは値@samp{native}が利用可能である。このオプションは、コンパイラに
 アーキテクチャを選択してホストシステムのプロセッサ用のコードのパフォーマンスを調整するようにさせる。
@@ -12489,7 +12489,7 @@ cbranchsiパターンのリロード前の使用を有効にする。
 
 @item -mexpand-adddi
 @opindex mexpand-adddi
-RTL生成時に@code{adddi3}と@code{subdi3}を@code{add.f}、@code{adc}などの展開する。
+RTL生成時に@code{adddi3}と@code{subdi3}を@code{add.f}、@code{adc}などの展開する。このオプションは廃止予定である。
 
 @item -mindexed-loads
 @opindex mindexed-loads
@@ -12748,36 +12748,288 @@ FPU固有の呼び出し規約を使う。
 ビッグエンディアンモードで実行するプロセッサ用のコードを生成する。デフォルトは
 リトルエンディアンプロセッサ用にコードをコンパイルする。
 
+@item -mbe8
+@itemx -mbe32
+@opindex mbe8
+ビッグエンディアンイメージをリンクするときは、BE8とBE32のフォーマットを選択する。このオプションはリトルエンディアンイメージには効果がなく、無視される。 デフォルトは、選択したターゲットアーキテクチャに依存する。 ARMv6以降のアーキテクチャの場合、デフォルトはBE8である。古いアーキテクチャの場合、デフォルトはBE32である。 BE32形式はARMによって推奨されていない。
+
 @item -march=@var{name}
 @opindex march
 これはターゲットARMアーキテクチャの名前を指定する。GCCはこの名前をアセンブリコードを生成するときに
 生成できる命令の種類を決定するために使う。このオプションは@option{-mcpu=}オプションと一緒に及び代わりに
-使うことができる。可能名前は以下である： @samp{armv2},
-@samp{armv2a}, @samp{armv3}, @samp{armv3m}, @samp{armv4}, @samp{armv4t},
-@samp{armv5}, @samp{armv5e}, @samp{armv5t}, @samp{armv5te},
-@samp{armv6}, @samp{armv6-m}, @samp{armv6j}, @samp{armv6k},
-@samp{armv6kz}, @samp{armv6s-m},
-@samp{armv6t2}, @samp{armv6z}, @samp{armv6zk},
-@samp{armv7}, @samp{armv7-a}, @samp{armv7-m}, @samp{armv7-r}, @samp{armv7e-m},
-@samp{armv7ve}, @samp{armv8-a}, @samp{armv8-a+crc}, @samp{armv8.1-a},
-@samp{armv8.1-a+crc}, @samp{armv8-m.base}, @samp{armv8-m.main},
-@samp{armv8-m.main+dsp}, @samp{iwmmxt}, @samp{iwmmxt2}.
+使うことができる。
 
-@option{armv4t}より古いアーキテクチャリビジョンは非推奨である。
+可能な名前は以下である： 
+@samp{armv4t},
+@samp{armv5t}, @samp{armv5te},
+@samp{armv6}, @samp{armv6j}, @samp{armv6k}, @samp{armv6kz}, @samp{armv6t2},
+@samp{armv6z}, @samp{armv6zk},
+@samp{armv7}, @samp{armv7-a}, @samp{armv7ve}, 
+@samp{armv8-a}, @samp{armv8.1-a}, @samp{armv8.2-a}, @samp{armv8.3-a},
+@samp{armv8.4-a},
+@samp{armv7-r},
+@samp{armv8-r},
+@samp{armv6-m}, @samp{armv6s-m},
+@samp{armv7-m}, @samp{armv7e-m},
+@samp{armv8-m.base}, @samp{armv8-m.main},
+@samp{iwmmxt} and @samp{iwmmxt2}.
 
-@option{-march=armv6s-m}は、（現在は必須の）SVC命令のサポートのある@samp{armv6-m}アーキテクチャである。
+さらに、Thumbの実行状態をサポートしない次のアーキテクチャは認識されますが、サポートは廃止予定である。
+@samp{armv2}, @samp{armv2a}, @samp{armv3}, @samp{armv3m},
+@samp{armv4}, @samp{armv5}, @samp{armv5e}.
 
-@option{-march=armv6zk}は@samp{armv6kz}の別名で後方互換のために存在する。
+多くのアーキテクチャが拡張をサポートしている。 これらは@samp{+@var{extension}}をアーキテクチャ名に追加することで追加できる。 拡張オプションは順番に処理され、機能が蓄積される。拡張は、それに依存する必要なベース拡張も有効にする。 例えば、@samp{+crypto}拡張は常に@samp{+simd}拡張を有効にする。 @samp{+no@dots {}}という接頭辞が付いた拡張機能は例外である。これらの拡張機能は指定されたオプションと、その拡張機能の存在に依存するその他の拡張機能を無効にする。
 
-@option{-march=armv7ve}は仮想化拡張のあるarmv7-aである。
+たとえば、@samp{-march=armv7-a+simd+nofp+vfpv4}オプションは@samp{+simd}オプションがそれに続くsamp{+nofp}オプションで完全に無効になっているので、@samp{-march=armv7-a+vfpv4}と書くのと等価である。
 
-@option{-march=armv8-a+crc}はオプションのCRC32拡張のあるARMv8-Aアーキテクチャ用にコードを生成する。
+ほとんどの拡張名には一般的に名前が付けられているが、適用されるアーキテクチャに依存する効果がある。 たとえば、@samp{+ simd}オプションは、@samp{armv7-a}と@samp{armv8-a}の両方のアーキテクチャに適用できるが、@samp{armv7-a}の拡張ARMv7-A Advanced SIMD（Neon）と@samp{armv8-a}のARMv8-Aの拡張が有効になる。
 
-@option{-march=armv8.1-a}は、ARMv8.1-Aアーキテクチャのコンパイラサポートを有効にする。 これにより、@option{-march=armv8-a+crc}によって提供される機能も有効になる。
+以下の表は、各アーキテクチャでサポートされている拡張機能の一覧です。言及されていないアーキテクチャは、拡張をサポートしていない。
 
-@option{-march=armv8.2-a}は、ARMv8.2-Aアーキテクチャのコンパイラサポートを有効にする。 これにより、@option{-march=armv8.1-a}によって提供される機能も有効になる。
+@table @samp
+@item  armv5e
+@itemx armv5te
+@itemx armv6
+@itemx armv6j
+@itemx armv6k
+@itemx armv6kz
+@itemx armv6t2
+@itemx armv6z
+@itemx armv6zk
+@table @samp
+@item +fp
+VFPv2浮動小数点命令。拡張@samp{+vfpv2}はこの拡張の別名として使うことができる。
 
-@option{-march=armv8.2-a+fp16}は、オプションのFP16命令拡張を含むARMv8.2-Aアーキテクチャのコンパイラサポートを有効にする。 これはまた、@option{-march=armv8.1-a}によって提供される機能を有効にし、@option{-mfp16-format=ieee}を意味する。
+@item +nofp
+浮動小数点命令を無効化する。
+@end table
+
+@item armv7
+ARMv7-A、ARMv7-R、ARMv7-Mアーキテクチャの共通部分集合。
+@table @samp
+@item +fp
+16の倍精度レジスタを持つVFPv3浮動小数点命令。 拡張@samp{+vfpv3-d16}は、この拡張の別名として使用できる。 注意として浮動小数点数は、基本ARMv7-Mアーキテクチャではサポートされていないが、ARMv7-AおよびARMv7-Rアーキテクチャと互換性がある。
+
+@item +nofp
+浮動小数点命令を無効化する。
+@end table
+
+@item armv7-a
+@table @samp
+@item +fp
+16の倍精度レジスタを持つVFPv3浮動小数点命令。 拡張@samp{+vfpv3-d16}は、この拡張の別名として使用できる。 
+
+@item +simd
+Advanced SIMD (Neon) v1とVFPv3浮動小数点命令。拡張@samp{+neon}と@samp{+neon-vfpv3}はこの命令の別名として使用できる。
+
+@item +vfpv3
+32の倍精度レジスタを持つVFPv3浮動小数点命令。
+
+@item +vfpv3-d16-fp16
+16の倍精度レジスタと半精度浮動小数点変換操作を持つVFPv3浮動小数点命令。
+
+@item +vfpv3-fp16
+32の倍精度レジスタと半精度浮動小数点変換操作を持つVFPv3浮動小数点命令。
+
+@item +vfpv4-d16
+16の倍精度レジスタを持つVFPv4浮動小数点命令。
+
+@item +vfpv4
+32の倍精度レジスタを持つVFPv4浮動小数点命令。
+
+@item +neon-fp16
+Advanced SIMD (Neon) v1と半精度浮動小数点変換操作を持つVFPv3浮動小数点命令。
+
+@item +neon-vfpv4
+Advanced SIMD (Neon) v2とVFPv4浮動小数点命令。
+
+@item +nosimd
+Advanced SIMD命令を無効化する（浮動小数点は無効化しない）
+
+@item +nofp
+浮動小数点数とAdvanced SIMD命令を無効化する。
+@end table
+
+@item armv7ve
+仮想化のサポートを持つARMv7-Aアーキテクチャの拡張バージョン。
+@table @samp
+@item +fp
+16の倍精度レジスタを持つVFPv4浮動小数点命令。 拡張@samp{+vfpv4-d16}は、この拡張の別名として使用できる。 
+
+@item +simd
+Advanced SIMD (Neon) v2とVFPv4浮動小数点命令。拡張@samp{+neon-vfpv4}はこの命令の別名として使用できる。
+
+@item +vfpv3-d16
+16の倍精度レジスタを持つVFPv3浮動小数点命令。
+
+@item +vfpv3
+32の倍精度レジスタを持つVFPv3浮動小数点命令。
+
+@item +vfpv3-d16-fp16
+16の倍精度レジスタと半精度浮動小数点変換操作を持つVFPv3浮動小数点命令。
+
+@item +vfpv3-fp16
+32の倍精度レジスタと半精度浮動小数点変換操作を持つVFPv3浮動小数点命令。
+
+@item +vfpv4-d16
+16の倍精度レジスタを持つVFPv4浮動小数点命令。
+
+@item +vfpv4
+32の倍精度レジスタを持つVFPv4浮動小数点命令。
+
+@item +neon
+Advanced SIMD (Neon) v1とVFPv3浮動小数点命令。拡張@samp{+neon-vfpv3}はこの命令の別名として使用できる。
+
+@item +neon-fp16
+Advanced SIMD (Neon) v1と半精度浮動小数点変換操作を持つVFPv3浮動小数点命令。
+
+@item +nosimd
+Advanced SIMD命令を無効化する（浮動小数点数は無効化しない）
+
+@item +nofp
+浮動小数点数とAdvanced SIMD命令を無効化する。
+@end table
+
+@item armv8-a
+@table @samp
+@item +crc
+循環冗長検査（CRC）命令。
+@item +simd
+ARMv8-A Advanced SIMDと浮動小数点命令。
+@item +crypto
+暗号命令。
+@item +nocrypto
+暗号命令を無効化する。
+@item +nofp
+浮動小数点数、Advanced SIMD、暗号命令を無効化する。
+@end table
+
+@item armv8.1-a
+@table @samp
+@item +simd
+ARMv8.1-A Advanced SIMDと浮動小数点命令。
+
+@item +crypto
+暗号命令。これはAdvanced SIMDと浮動小数点命令も有効化する。
+
+@item +nocrypto
+暗号命令を無効化する。
+
+@item +nofp
+浮動小数点数、Advanced SIMD、暗号命令を無効化する。
+@end table
+
+@item armv8.2-a
+@itemx armv8.3-a
+@table @samp
+@item +fp16
+半精度符号小数点データ処理命令。これはAdvanced SIMDと浮動小数点命令も有効化する。
+
+@item +fp16fml
+半精度浮動小数点fmla拡張。これは半精度浮動小数点拡張とAdvanced SIMD、浮動小数点命令も有効化する。
+
+@item +simd
+ARMv8.1-A Advanced SIMDと浮動小数点命令。
+
+@item +crypto
+暗号命令。これはAdvanced SIMDと浮動小数点命令も有効化する。
+
+@item +dotprod
+内積拡張を有効化する。これは、Advanced SIMD命令も有効化する。
+
+@item +nocrypto
+暗号拡張を無効化する。
+
+@item +nofp
+浮動小数点数、Advanced SIMD、暗号命令を無効化する。
+@end table
+
+@item armv8.4-a
+@table @samp
+@item +fp16
+半精度浮動小数点データ処理命令。これはAdvanced SIMD、浮動小数点命令だけでなく、内積拡張と半精度浮動小数点fmla拡張も有効にする。
+
+@item +simd
+ARMv8.1-A Advanced SIMDと浮動小数点命令に加えて内積拡張。
+
+@item +crypto
+暗号命令。これはAdvanced SIMD、浮動小数点命令に加えて内積拡張も有効にする。
+
+@item +nocrypto
+暗号拡張を無効にする。
+
+@item +nofp
+浮動小数点数、Advanced SIMD、暗号命令を無効化する。
+@end table
+
+@item armv7-r
+@table @samp
+@item +fp.sp
+単精度VFPv3浮動小数点命令。拡張@samp{+vfpv3xd}をこの拡張の別名として使用可能である。
+
+@item +fp
+16の倍精度レジスタを持つVFPv3浮動小数点命令。拡張@samp{+vfpv3-d16}をこの拡張の別名として使用可能である。
+
+@item +nofp
+浮動小数点拡張を無効にする。
+
+@item +idiv
+ARM状態整数除算命令。
+
+@item +noidiv
+ARM状態整数除算拡張を無効化する。
+@end table
+
+@item armv7e-m
+@table @samp
+@item +fp
+単精度VFPv4浮動小数点命令。
+
+@item +fpv5
+単精度FPv5浮動小数点命令。
+
+@item +fp.dp
+単精度・倍精度VFPv5浮動小数点命令。
+
+@item +nofp
+浮動小数点拡張を無効化する。
+@end table
+
+@item  armv8-m.main
+@table @samp
+@item +dsp
+DSP命令。
+
+@item +nodsp
+DSP拡張を無効化する。
+
+@item +fp
+単精度浮動小数点命令。
+
+@item +fp.dp
+単精度・倍精度浮動小数点命令。
+
+@item +nofp
+浮動小数点拡張を無効化する。
+@end table
+
+@item armv8-r
+@table @samp
+@item +crc
+循環冗長検査（CRC)命令。
+@item +fp.sp
+単精度FPv5浮動小数点命令。
+@item +simd
+ARMv8-A Advanced SIMDと浮動小数点命令。
+@item +crypto
+暗号命令。
+@item +nocrypto
+暗号命令を無効化する。
+@item +nofp
+浮動小数点数、Advanced SIMD、暗号命令を無効化する。
+@end table
+
+@end table
 
 @option{-march=native}はビルドコンピュータのアーキテクチャを自動で検出させる。
 現在は、この機能はGNU/Linuxでのみサポートされていて、すべてのアーキテクチャが認識されるわけではない。
@@ -12841,10 +13093,12 @@ FPU固有の呼び出し規約を使う。
 他のCPUのパフォーマンスの落とし穴を避けることである。このオプションの効果はCPUモデルが出入りするごとに
 将来のGCCバージョンでは変化するかもしれない。
 
+@option{-mtune}は@option {-mcpu}と同じ拡張オプションを許可するが、拡張オプションは生成されたコードのチューニングに影響しない。
+ 
 @option{-mtune=native}はコンパイラにCPUを自動検出させる。現在は、この機能はGNU/Linuxでのみサポートされていて、
 すべてのアーキテクチャで認識されるわけではない。もし自動検出が不成功ならばこのオプションはなんの効果もない。
 
-@item -mcpu=@var{name}
+@item -mcpu=@var{name}@r{[}+extension@dots{}@r{]}
 @opindex mcpu
 ターゲットARMプロセッサの名前を指定する。GCCはこの名前を
 （まるで@option{-march}で指定されたかのように）ターゲットARMアーキテクチャの名前と
