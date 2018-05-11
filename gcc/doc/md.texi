@@ -1584,7 +1584,13 @@ register preferences.
 スタックポインタレジスタ (@code{SP})
 
 @item w
-浮動小数点及びSIMDベクタレジスタ
+浮動小数点レジスタ、Advanced SIMDベクタレジスタ及びSVEベクタレジスタ
+
+@item Upl
+下位SVE手続きレジスタ(@code{P0}から@code{P7})の一つ
+
+@item Upa
+SVE手続きレジスタ(@code{P0}から@code{P15})のどれか
 
 @item I
 @code {ADD}命令の即値オペランドとして有効な整数定数
@@ -3720,26 +3726,97 @@ The call-clobbered integer registers.
 @item u
 80387浮動小数点スタックのトップから2番め（@code{%st(1)}）。
 
+@ifset INTERNALS
+@item Yk
+Any mask register that can be used as a predicate, i.e. @code{k1-k7}.
+
+@item k
+Any mask register.
+@end ifset
+
 @item y
 任意のMMXレジスタ。
 
 @item x
 任意のSSEレジスタ。
 
+@item v
+任意のEVEXエンコード可能SSEレジスタ(@code{%xmm0-%xmm31})。
+
+@ifset INTERNALS
+@item w
+Any bound register.
+@end ifset
+
 @item Yz
 最初のSSE用レジスタ（@code{%xmm0}）。
 
 @ifset INTERNALS
-@item Y2
-Any SSE register, when SSE2 is enabled.
-
 @item Yi
 Any SSE register, when SSE2 and inter-unit moves are enabled.
 
+@item Yj
+Any SSE register, when SSE2 and inter-unit moves from vector registers are enabled.
+
 @item Ym
 Any MMX register, when inter-unit moves are enabled.
-@end ifset
 
+@item Yn
+Any MMX register, when inter-unit moves from vector registers are enabled.
+
+@item Yp
+Any integer register when @code{TARGET_PARTIAL_REG_STALL} is disabled.
+
+@item Ya
+Any integer register when zero extensions with @code{AND} are disabled.
+
+@item Yb
+Any register that can be used as the GOT base when calling@*
+@code{___tls_get_addr}: that is, any general register except @code{a}
+and @code{sp} registers, for @option{-fno-plt} if linker supports it.
+Otherwise, @code{b} register.
+
+@item Yf
+Any x87 register when 80387 floating-point arithmetic is enabled.
+
+@item Yr
+Lower SSE register when avoiding REX prefix and all SSE registers otherwise.
+
+@item Yv
+For AVX512VL, any EVEX-encodable SSE register (@code{%xmm0-%xmm31}),
+otherwise any SSE register.
+
+@item Yh
+Any EVEX-encodable SSE register, that has number factor of four.
+
+@item Bf
+Flags register operand.
+
+@item Bg
+GOT memory operand.
+
+@item Bm
+Vector memory operand.
+
+@item Bc
+Constant memory operand.
+
+@item Bn
+Memory operand without REX prefix.
+
+@item Bs
+Sibcall memory operand.
+
+@item Bw
+Call memory operand.
+
+@item Bz
+Constant call address operand.
+
+@item BC
+SSE constant -1 operand.
+@end ifset
+  
 @item I
 32ビットシフト用の0から31までの範囲の整数定数。
 
@@ -3772,8 +3849,29 @@ SSE定数0オペランド。
 @item e
 32ビット符号あり整数定数、及びその範囲に収まる事がわかっているシンボルの参照。（符号拡張x86-64命令での即値オペランド用）
 
+@item We
+32ビット符号あり整数定数、及びその範囲に収まることが既知のシンボル参照（非@code{VOIDmode}即値オペランドを要求する符号拡張変換操作用。）
+
+@item Wz
+32ビット符号なし整数定数、及びその範囲に収まることが既知のシンボル参照（非@code{VOIDmode}即値オペランドを要求するゼロ拡張変換操作用。）
+
+@item Wd
+上位と下位の64ビットワードが安全に@code{e}制約を満足する128ビット整数定数。
+
 @item Z
 32ビット符号なし整数定数、及びその範囲に収まる事がわかっているシンボルの参照。（ゼロ拡張x86-64命令での即値オペランド用）
+
+@item Tv
+VSIBアドレスオペランド。
+ 
+@item Ts
+セグメントレジスタなしのアドレスオペランド。
+
+@item Ti
+添字なしのMPXアドレスオペランド。
+
+@item Tb
+ベースなしのMPXアドレスアドレスオペランド。
 
 @end table
 

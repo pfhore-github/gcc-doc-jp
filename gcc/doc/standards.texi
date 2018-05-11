@@ -83,8 +83,7 @@ GCCは、訂正されてないバージョンをサポートしない。
 
 @dfn{C11}として知られているC標準の第4のバージョンは、9899:2011でISO/IECとして2011年に発表された。
 （開発においてある間、この標準的な版の草案は@dfn{C1X}と呼ばれた。）
-GCCはこの標準に対するかなり完全な支持をする。そして、
-@option{-std=c11}または@option{-std=iso9899:2011}で使用可能にされる。
+GCCはこの標準に対するかなり完全な支持をする。そして、@option{-std=c11}または@option{-std=iso9899:2011}で使用可能にされる。統合された修正版は@dfn{C17}と呼ばれ、@option{-std=c17}または@option{-std=iso9899:2017}でサポートされている。 訂正は@option{-std=c11}でも適用され、オプション間の唯一の違いは@code{__STDC_VERSION__}の値である。
 
 GCCはデフォルトで、まれにC標準と衝突するC言語への拡張を提供する。
 @xref{C Extensions,,C言語族への拡張}。あるC99標準の一部の機能はC90モードの拡張と認められ、
@@ -142,14 +141,15 @@ GCCでこの標準を選ぶために、オプション@option{-ansi}、@option{-
 
 改正されたISO C++標準は、14882:2011でISO/IECとして2011年に発表されて、C++11と呼ばれる。
 その出版の前に、それは一般にC++0xと呼ばれた。C++11はC++言語のいくつかの変更を含む。そして、
-その全てはGCCで実装された。詳細のために、@uref{https://gcc.gnu.org/projects/cxx-status.html#cxx11}を見よ。
+その全てはGCCで実装された。詳細のために、@uref{https://gcc.gnu.org/projects/@/cxx-status.html#cxx11}を見よ。
 GCCでこの標準を選ぶために、オプション@option{-std=c++11}を使う。
 
 もう一つの改正されたISO C++標準は、14882:2014でISO/IECとして2014年に発表されて、C++14と呼ばれる。
 出版の前には、それは時々C++1yと呼ばれた。C++14はC++言語のいくつかの更なる変更を含む。そして、
-その全てはGCCで実装された。詳細は、@uref{https://gcc.gnu.org/projects/cxx-status.html#cxx14}を見よ。
+その全てはGCCで実装された。詳細は、@uref{https://gcc.gnu.org/projects/@/cxx-status.html#cxx14}を見よ。
 GCCでこの標準を選ぶために、オプション@option{-std=c++14}を使う。
 
+C++言語は2017年にさらに改訂され、ISO/IEC 14882：2017が発行された。 これはC++17と呼ばれ、出版前はしばしばC++1zと呼ばれていた。 GCCは、新しい仕様のすべての変更をサポートしている。 詳細は@uref{https://gcc.gnu.org/projects/@/cxx-status.html#cxx1z}を見よ。C++のこの変種を選択するためには@option{-std=c++17}オプションを使用する。
 
 GCCはC++ Concepts技術仕様（ISO/IEC TS 19217:2015）もサポートする。そして、それはテンプレートの制約を定義し、
 テンプレートの引数をチェックして制約に基づいてオーバーロードや特殊化をすることを可能にする。
@@ -168,7 +168,7 @@ C++標準に関する詳細な情報は、@uref{http://www.open-std.org/jtc1/sc2
 @xref{C++ Dialect Options,C++変種を制御するオプション}。上記の@option{-std}オプションの使用は、
 それらがC++標準版を選んで衝突するこれらの拡張を抑制する。あなたは、@option{-std=gnu++98} (GNU拡張つきC++98)、
 @option{-std=gnu++11} (GNU拡張付きC++11)、@option{-std=gnu++14} (GNU拡張付きC++14)、
-@option{-std=gnu++1z} (GNU拡張付きC++1z)で明示的にC++言語の延長したバージョンも選ぶかもしれない。
+@option{-std=gnu++17} (GNU拡張付きC++17)で明示的にC++言語の延長したバージョンも選ぶかもしれない。
 
 C++言語変種オプションが与えられていないならば、デフォルトは@option{-std=gnu++14}である。
 

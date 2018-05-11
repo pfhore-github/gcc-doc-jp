@@ -13106,7 +13106,47 @@ ARMv8-A Advanced SIMDと浮動小数点命令。
 を導出するために使う。このオプションが@option{-march}または@option{-mtune}と一緒に使われたときは、
 これらのオプションはこのオプションの対応する部分に優先する。
 
+サポートされているCPUの多くは、オプションのアーキテクチャ拡張を実装している。 そうであるところでは、アーキテクチャの拡張は通常、デフォルトで有効になっている。 拡張がない実装が存在する場合、拡張構文を使用して省略された拡張を無効にすることができる。 浮動小数点およびAdvanced SIMD（Neon）命令の場合は、オプション@option{-mfloat-abi}および@option{-mfpu}の設定も考慮する必要がある。浮動小数点およびAdvanced SIMD命令は、@option{-mfloat-abi}は@samp{soft}に設定されていない。 @samp{auto}以外の@option{-mfpu}の設定は、利用可能な浮動小数点命令とSIMD拡張命令を上書きする。
+
+例えば、@samp{cortex-a9}は3つの主要な構成で見つけることができる：整数のみ、浮動小数点ユニットのみ、または浮動小数点とAdvanced SIMD。 デフォルトではすべての命令が有効になるが、拡張@samp{+nosimd}と@samp{+nofp}を使用して、SIMDだけ、またはSIMD命令と浮動小数点命令の両方を無効にすることができる。
+
 このオプションの可能な値は@option{-mtune}のものと同じである。
+
+以下の拡張オプションは、リストされているCPUに共通です。
+
+@table @samp
+@item +nodsp
+@samp{cortex-m33}のDSP命令を無効にする。
++ 
+@item  +nofp
+@samp{arm9e}, @samp{arm946e-s}, @samp{arm966e-s}, @samp{arm968e-s}, @samp{arm10e},
+@samp{arm1020e}, @samp{arm1022e}, @samp{arm926ej-s},
+@samp{arm1026ej-s}, @samp{cortex-r5}, @samp{cortex-r7}, @samp{cortex-r8},
+@samp{cortex-m4}, @samp{cortex-m7}, @samp{cortex-m33}における浮動小数点命令を無効にする。
+@samp{generic-armv7-a}, @samp{cortex-a5}, @samp{cortex-a7},
+@samp{cortex-a8}, @samp{cortex-a9}, @samp{cortex-a12},
+@samp{cortex-a15}, @samp{cortex-a17}, @samp{cortex-a15.cortex-a7},
+@samp{cortex-a17.cortex-a7}, @samp{cortex-a32}, @samp{cortex-a35},
+@samp{cortex-a53}, @samp{cortex-a55}における浮動小数点とSIMD命令を無効にする。
+
+@item +nofp.dp
+@samp{cortex-r5}, @samp{cortex-r52}, @samp{cortex-m7}における浮動小数点命令の倍精度構成要素を無効化する。
+
+@item +nosimd
+@samp{generic-armv7-a}, @samp{cortex-a5}, @samp{cortex-a7}, @samp{cortex-a9}でのSIMD命令を無効化する（が、不動小数点はしない）
+ 
+@item +crypto
+@samp{cortex-a32}, @samp{cortex-a35}, @samp{cortex-a53}, @samp{cortex-a55}, @samp{cortex-a57},
+@samp{cortex-a72}, @samp{cortex-a73}, @samp{cortex-a75}, @samp{exynos-m1},
+@samp{xgene1}, @samp{cortex-a57.cortex-a53}, @samp{cortex-a72.cortex-a53},
+@samp{cortex-a73.cortex-a35}, @samp{cortex-a73.cortex-a53}, @samp{cortex-a75.cortex-a55}で
+暗号命令を有効化する。
+@end table
+
+さらに、@samp{generic-armv7-a}擬似ターゲットは、16倍精度レジスタを持つVFPv3にデフォルト設定されている。次の拡張オプションをサポートしている。@samp{vfpv3-d16}, @samp{vfpv3},
+@samp{vfpv3-d16-fp16}, @samp{vfpv3-fp16}, @samp{vfpv4-d16},
+@samp{vfpv4}, @samp{neon}, @samp{neon-vfpv3}, @samp{neon-fp16},
+@samp{neon-vfpv4}.  意味は@option{-march=armv7-a}への拡張と同じである。
 
 @option{-mcpu=generic-@var{arch}}も許可され、@option{-march=@var{arch} -mtune=generic-@var{arch}}
 と等価である。さらなる情報は@option{-mtune}を見よ。
@@ -13118,18 +13158,17 @@ ARMv8-A Advanced SIMDと浮動小数点命令。
 @item -mfpu=@var{name}
 @opindex mfpu
 これはどの浮動小数点ハードウェア（またはハードウェアエミュレーション）がターゲットで利用可能化を指定する。
-可能な名前は以下のとおりである： @samp{vfpv2}, @samp{vfpv3},
+可能な名前は以下のとおりである： @samp{auto}, @samp{vfpv2}, @samp{vfpv3},
 @samp{vfpv3-fp16}, @samp{vfpv3-d16}, @samp{vfpv3-d16-fp16}, @samp{vfpv3xd},
 @samp{vfpv3xd-fp16}, @samp{neon-vfpv3}, @samp{neon-fp16}, @samp{vfpv4},
 @samp{vfpv4-d16}, @samp{fpv4-sp-d16}, @samp{neon-vfpv4},
 @samp{fpv5-d16}, @samp{fpv5-sp-d16},
-@samp{fp-armv8}, @samp{neon-fp-armv8} and @samp{crypto-neon-fp-armv8}.
-Note that @samp{neon} is an alias for @samp{neon-vfpv3} and @samp{vfp}
-is an alias for @samp{vfpv2}.
+@samp{fp-armv8}, @samp{neon-fp-armv8}, @samp{crypto-neon-fp-armv8}。
+@samp{neon}は@samp{neon-vfpv3}の別名であり、@samp{vfp}は@samp{vfpv2}の別名であることに注意。
 
-もし@option{-msoft-float}が指定されるならば、これは浮動小数点値の書式を指定する。
+設定@samp{auto}がデフォルトであり、これは特別である。それはコンパイラに@option{-mcpu}と@option{-march}の設定に基づいて浮動小数点とAdvanced SIMD命令を選択させる。
 
-もし選択された浮動小数点ハードウェアがNEON拡張（例えば、@option{-mfpu}=@samp{neon})を含むなら、
+もし選択された浮動小数点ハードウェアがNEON拡張（例えば、@option{-mfpuneon})を含むなら、
 浮動小数点操作は@option{-funsafe-math-optimizations}も指定しない限りはGCCの自動ベクトル化によっては
 生成されない。これはNEONハードウェアが浮動小数点算術がIEEE754標準を完全には実装していないため、
 （特に非正規数は０として扱われる）NEON命令の使用は精度の消失を導くかもしれないためである。
@@ -13324,17 +13363,21 @@ flashからのデータの読み込みが命令の取得よりも遅いと仮定
 
 @item -mrestrict-it
 @opindex mrestrict-it
-ARMv8の規則に適合するためにITブロックの生成を制限する。ITブロックは命令の選択された集合からの
-単一の16ビット命令のみを含むことができる。このオプションはARMv8 Thumbモードではデフォルトでオンである。
+ARMv8-Aの規則に適合するためにITブロックの生成を制限する。ITブロックは命令の選択された集合からの
+単一の16ビット命令のみを含むことができる。このオプションはARMv8-A Thumbモードではデフォルトでオンである。
 
 @item -mprint-tune-info
 @opindex mprint-tune-info
 アセンブラファイルでのコメントとしてCPU調整情報を出力する。これはコンパイラの退行試験用のみに使われるオプションであり、
 コードをコンパイルする通常の使用は意図していない。このオプションはデフォルトで無効である。
 
+@item -mverbose-cost-dump
+@opindex mverbose-cost-dump
+デバッグダンプファイルで詳細なコストモデルのダンプを有効にする。 このオプションは、コンパイラのデバッグに使用するために用意されている。
+
 @item -mpure-code
 @opindex mpure-code
-コードセクションに定数データを配置しない。さらに、ELFオブジェクト形式用にコンパイルするとき、すべてのテキストセクションにELFプロセッサ固有のセクション属性@code{SHF_ARM_PURECODE}が与えらる。 このオプションは、ARMv7-Mターゲット用のピクチャでないコードを生成する場合にのみ使用できる。
+コードセクションに定数データを配置しない。さらに、ELFオブジェクト形式用にコンパイルするとき、すべてのテキストセクションにELFプロセッサ固有のセクション属性@code{SHF_ARM_PURECODE}が与えられる。 このオプションは、MOVT命令を使用してM-プロファイルターゲット用に非picコードを生成する場合にのみ使用できる。
 
 @item -mcmse
 @opindex mcmse
@@ -13615,10 +13658,10 @@ GCCは、ユーザーコードが機能の有無をテストできるように�
 はそれぞれ@var{mcu}=@code{avr2}, @code{avr25}, @code{avr3}, @code{avr31},
 @code{avr35}, @code{avr4}, @code{avr5}, @code{avr51}, @code{avr6}であり、
 
-@code{100}, @code{102}, @code{104},
+@code{100}, @code{102}, @code{103}, @code{104},
 @code{105}, @code{106}, @code{107}
 
-はそれぞれ@var{mcu}=@code{avrtiny}, @code{avrxmega2}, @code{avrxmega4},
+はそれぞれ@var{mcu}=@code{avrtiny}, @code{avrxmega2}, @code{avrxmega3}, @code{avrxmega4},
 @code{avrxmega5}, @code{avrxmega6}, @code{avrxmega7}である。
 @var{mcu}がデバイスを指定する場合、この組み込みマクロはそれに応じて設定される。 たとえば、@option{-mmcu=atmega8}の場合、マクロは@code {4}に定義される。
 
@@ -13653,7 +13696,7 @@ GCCは、ユーザーコードが機能の有無をテストできるように�
 デバイスには、ハードウェア乗算器がある。
 
 @item __AVR_HAVE_JMP_CALL__
-デバイスには@code {JMP}と@code {CALL}命令がある。これは、プログラムメモリの少なくとも16ビットのKiBを持つデバイスの場合である。
+デバイスには@code {JMP}と@code {CALL}命令がある。これは、プログラムメモリの少なくとも8KiBを持つデバイスの場合である。
 
 @item __AVR_HAVE_EIJMP_EICALL__
 @itemx __AVR_3_BYTE_PC__
@@ -13742,7 +13785,7 @@ GCCは、指定された@var{cpu}のプリプロセッサマクロを定義す�
 
 @item -momit-leaf-frame-pointer
 @opindex momit-leaf-frame-pointer
-リーフ時間数用のレジスタにフレームポインタを保持しない。 これにより、命令がフレームポインタのセーブ、セットアップ、および復元を回避し、リーフ関数で余分なレジスタを利用できるようになる。オプション@option{-fomit-frame-pointer}は、すべての関数のフレームポインタを削除する。これにより、デバッグが困難になる可能性がある。
+リーフ時間数用のレジスタにフレームポインタを保持しない。 これにより、命令がフレームポインタのセーブ、セットアップ、および復元を回避し、リーフ関数で余分なレジスタを利用できるようになる。
 
 @item -mspecld-anomaly
 @opindex mspecld-anomaly
@@ -16861,13 +16904,29 @@ Cランタイム初期化オブジェクトファイルにはリンクしない�
 @opindex mno-cmov
 条件付きムーブ命令を生成しない。
 
-@item -mperf-ext
+@item -mext-perf
 @opindex mperf-ext
 パフォーマンス拡張命令を生成する。
 
-@item -mno-perf-ext
+@item -mno-ext-perf
 @opindex mno-perf-ext
 パフォーマンス拡張命令を生成しない。
+
+@item -mext-perf2
+@opindex mperf-ext
+パフォーマンス拡張２命令を生成する。
+
+@item -mno-ext-perf2
+@opindex mno-perf-ext
+パフォーマンス拡張２命令を生成しない。
+
+@item -mext-string
+@opindex mperf-ext
+文字列拡張命令を生成する。
+
+@item -mno-ext-string
+@opindex mno-perf-ext
+文字列拡張命令を生成しない。
 
 @item -mv3push
 @opindex mv3push
@@ -17470,10 +17529,6 @@ This switch has been deprecated.  Use @option{-misel} and
 @opindex mno-spe
 This switch enables or disables the generation of SPE simd
 instructions.
-
-@item -mspe=@var{yes/no}
-This option has been deprecated.  Use @option{-mspe} and
-@option{-mno-spe} instead.
 
 @item -mfloat128
 @itemx -mno-float128
@@ -18382,9 +18437,11 @@ linker relaxations.
 @samp{e6500}, @samp{ec603e}, @samp{G3}, @samp{G4}, @samp{G5},
 @samp{titan}, @samp{power3}, @samp{power4}, @samp{power5}, @samp{power5+},
 @samp{power6}, @samp{power6x}, @samp{power7}, @samp{power8},
-@samp{power9}, @samp{powerpc}, @samp{powerpc64}, @samp{powerpc64le}, @samp{rs64}である。
+@samp{power9}, @samp{powerpc}, @samp{powerpc64}, @samp{powerpc64le}, @samp{rs64}, @samp{native}である。
 
 @option{-mcpu=powerpc}, @option{-mcpu=powerpc64}, @option{-mcpu=powerpc64le}は純粋な32ビットPowerPC（エンディアン）、64ビットビッグエンディアンPowerPCおよび64ビットリトルエンディアンPowerPCアーキテクチャの機種を指定し、適切な汎用プロセッサモデルをスケジューリングの目的で使用する。 
+
+cpuタイプとして@samp{native}を指定すると、コンパイルを実行するシステムのホストプロセッサに対応するアーキテクチャオプションが検出され、選択される。 GCCがプロセッサを認識しない場合、@option{-mcpu = native}は効果がない。
 
 他のオプションは、特定のプロセッサを指定する。 これらのオプションで生成されたコードは、そのプロセッサ上で最適に実行され、他のプロセッサ上ではまったく動作しない可能性がある。
 
@@ -18393,8 +18450,8 @@ linker relaxations.
 @gccoptlist{-maltivec  -mfprnd  -mhard-float  -mmfcrf  -mmultiple 
 -mpopcntb -mpopcntd  -mpowerpc64 
 -mpowerpc-gpopt  -mpowerpc-gfxopt  -msingle-float -mdouble-float 
--msimple-fpu -mstring  -mmulhw  -mdlmzb  -mmfpgpr -mvsx 
--mcrypto -mdirect-move -mhtm -mpower8-fusion -mpower8-vector 
+-msimple-fpu  -mmulhw  -mdlmzb  -mmfpgpr -mvsx 
+-mcrypto -mhtm -mpower8-fusion -mpower8-vector 
 -mquad-memory -mquad-memory-atomic -mfloat128 -mfloat128-hardware}
 
 特定のCPUに設定される特定のオプションは、そのCPUに最適なコードを生成するような設定に応じて、コンパイラのバージョンによって異なる。 実際のハードウェアの機能を必ずしも反映しているとは限らない。 個々のオプションを特定の値に設定したい場合は、@option{-mcpu=970 -mno-altivec}のように@option{-mcpu}オプションの後に指定することができる。
@@ -18427,7 +18484,7 @@ AltiVec命令を使用する（使用しない）コードを生成し、AltiVec
 
 @item -maltivec=be
 @opindex maltivec=be
-ターゲットがビッグエンディアンかリトルエンディアンかにかかわらず、ビッグエンディアンの要素順序を使用してAltiVec命令を生成する。 これは、ビッグエンディアンのプラットフォームをターゲットとする場合のデフォルトである。
+ターゲットがビッグエンディアンかリトルエンディアンかにかかわらず、ビッグエンディアンの要素順序を使用してAltiVec命令を生成する。 これは、ビッグエンディアンのプラットフォームをターゲットとする場合のデフォルトである。このオプションは現在非推奨である。この機能のサポートはGCCで取り除かれるだろう。
 
 要素の順序は、@code{vec_splat}、@code{vec_extract}、@code{vec_insert}などのAltiVec組み込み関数の要素番号を解釈するために使用される。 デフォルトでは、ターゲットのエンディアンに対応する配列要素の順序に一致する。
 @item -maltivec=le
@@ -18440,14 +18497,6 @@ AltiVec命令を使用する（使用しない）コードを生成し、AltiVec
 @opindex mvrsave
 @opindex mno-vrsave
 AltiVecコードを生成するときにVRSAVE命令を生成する。
-
-@item -mgen-cell-microcode
-@opindex mgen-cell-microcode
-Cellマイクロコード命令を生成する。
-
-@item -mwarn-cell-microcode
-@opindex mwarn-cell-microcode
-Cellのマイクロコード命令が発行されたときに警告する。 Cellマイクロコード命令の一例は、可変シフトである。
 
 @item -msecure-plt
 @opindex msecure-plt
@@ -18465,16 +18514,6 @@ Cellのマイクロコード命令が発行されたときに警告する。 Cel
 
 @item -misel=@var{yes/no}
 このスイッチは非推奨である。 代わりに、@option{-misel}と@option{-mno-isel}を使うこと。
-
-@item -mlra
-@opindex mlra
-ローカルレジスタ割り付けを有効にする。 デフォルトでは、ポートはLRAを使用します。 （つまり、@option{-mno-lra}）。
-
-@item -mspe
-@itemx -mno-spe
-@opindex mspe
-@opindex mno-spe
-このスイッチは、SPE simd命令の生成を有効または無効にする。
 
 @item -mpaired
 @itemx -mno-paired
@@ -18496,12 +18535,6 @@ Cellのマイクロコード命令が発行されたときに警告する。 Cel
 @opindex mcrypto
 @opindex mno-crypto
 PowerPC ISAのバージョン2.07で追加された暗号化命令に直接アクセスできる組み込み関数の使用を有効（無効）にする。
-
-@item -mdirect-move
-@itemx -mno-direct-move
-@opindex mdirect-move
-@opindex mno-direct-move
-PowerPC ISAのバージョン2.07で追加された汎用レジスタとベクトル/スカラー（VSX）レジスタ間でデータを移動する命令を使用する（しない）コードを生成する。
 
 @item -mhtm
 @itemx -mno-htm
@@ -18533,41 +18566,17 @@ PowerPC ISAのバージョン2.07で追加されたベクトルおよびスカ�
 @opindex mno-quad-memory-atomic
 アトミッククワッドワードメモリ命令を使用する（しない）コードを生成する。 @option{-mquad-memory-atomic}オプションを使用するには、64ビットモードを使用する必要がある。
 
-@item -mupper-regs-di
-@itemx -mno-upper-regs-di
-@opindex mupper-regs-di
-@opindex mno-upper-regs-di
-整数処理時にPowerPC ISAのバージョン2.06で追加されたベクトル/スカラー浮動小数点レジスタセット内の64個のレジスタすべてを対象とするスカラー命令を使用する（しない）コードを生成する。 @option{-mcpu=power7}、@option{-mcpu=power8}、@option{-mcpu=power9}、または@option{-mvsx}オプションを使用すると、デフォルトで@option {-mupper-regs-di}がオンになる。
-
-@item -mupper-regs-df
-@itemx -mno-upper-regs-df
-@opindex mupper-regs-df
-@opindex mno-upper-regs-df
-PowerPC ISAのバージョン2.06で追加されたベクトル/スカラー浮動小数点レジスタセット内の64個のレジスタすべてを対象とするスカラー倍精度命令を使用する（しない）コードを生成する。@option{-mupper-regs-df}は、@option{-mcpu=power7}, @option{-mcpu=power8}, @option{-mcpu=power9}, @option{-mvsx}オプションのどれかを使うとデフォルト有効になる。
-
-@item -mupper-regs-sf
-@itemx -mno-upper-regs-sf
-@opindex mupper-regs-sf
-@opindex mno-upper-regs-sf
-PowerPC ISAのバージョン2.07で追加されたベクトル/スカラー浮動小数点レジスタセット内の64個のレジスタすべてを対象とするスカラー単精度命令を使用する（しない）コードを生成する。@option{-mupper-regs-sf}は、@option{-mcpu=power8}, @option{-mpower8-vector}, @option{-mcpu=power9}オプションのどれかを使うとデフォルト有効になる。
-
-@item -mupper-regs
-@itemx -mno-upper-regs
-@opindex mupper-regs
-@opindex mno-upper-regs
-マシンのモデルに応じて、ベクトル/スカラー浮動小数点レジスタセット内の64個のレジスタすべてを対象とするスカラー命令を使用する（しない）コードを生成する。
-
-@option{-mno-upper-regs}オプションを使用すると、@option{-mupper-regs-sf}オプションと@option{-mupper-regs-df}オプションの両方がオフになる。
-
 @item -mfloat128
 @itemx -mno-float128
 @opindex mfloat128
 @opindex mno-float128
 ソフトウェアエミュレーションまたはハードウェア命令を使用したIEEE 128ビット浮動小数点の@var{__float128}キーワードを有効/無効にする。
 
-@option{-mfloat128}オプションを使用するには、VSX命令セット（@option{-mvsx}、@option{-mcpu=power7}、または@option{-mcpu=power8}）を有効にする必要がある。 @option{-mfloat128}オプションは、PowerPC 64ビットLinuxシステムでのみ動作する。
-
-ISA 3.0命令セット（@option{-mcpu=power9}）を使用すると、@option{-mfloat128}オプションによってISA 3.0 IEEE 128ビット浮動小数点命令の生成も可能になる。 それ以外の場合、IEEE 128ビット浮動小数点はソフトウェアエミュレーションで行われる。
+IEEE 128ビット浮動小数点サポートを使用するには、VSX命令セット（@option{-mvsx}、@option{-mcpu=power7}、@option{-mcpu=power8}）または@option{-mcpu=power9}を有効にする必要がある。IEEE 128ビット浮動小数点サポートは、PowerPC Linuxシステムでのみ動作する。
+ 
+@option{-mfloat128}のデフォルトは、VSX命令セットを使用するPowerPC Linuxシステムで有効になり、他のシステムでは無効になる。
+ 
+64ビットシステムでISA 3.0命令セット（@option{-mpower9-vector}または@option{-mcpu=power9}）を使用すると、IEEE 128ビット浮動小数点サポートによってISA 3.0 IEEE 128ビット浮動小数点命令の生成も有効になる。 それ以外の場合、ISA 3.0命令の生成を指定していない場合、または32ビットビッグエンディアンシステムをターゲットにしている場合は、IEEE 128ビット浮動小数点がソフトウェアエミュレーションで行われる。
 
 @item -mfloat128-hardware
 @itemx -mno-float128-hardware
@@ -18575,22 +18584,7 @@ ISA 3.0命令セット（@option{-mcpu=power9}）を使用すると、@option{-m
 @opindex mno-float128-hardware
 @var{__float128}データ型をサポートするためにISA 3.0ハードウェア命令を有効/無効にする。
 
-@option{-mfloat128-hardware}を使用すると、オプション@option{-mfloat128}も有効になる。
-
-@option{-mcpu=power9}でISA 3.0命令を選択し、@option{-mfloat128}または@option{-mfloat128-hardware}を使用しないと、IEEE 128ビット浮動小数点サポートは有効にならない。
-
-@item -mfloat-gprs=@var{yes/single/double/no}
-@itemx -mfloat-gprs
-@opindex mfloat-gprs
-このスイッチは、それをサポートするアーキテクチャの汎用レジスタで浮動小数点演算の生成を有効または無効にする。
-
-引数@samp{yes}または@samp{single}は、単精度浮動小数点演算の使用を可能にする。
-
-引数@samp{double}は、単精度浮動小数点演算と倍精度浮動小数点演算の使用を可能にする。
-
-引数@samp{no}は、汎用レジスタ上の浮動小数点演算を無効にする。
-
-このオプションは現在、MPC854xでのみ使用できる。
+@option {-mfloat128-hardware}のデフォルトは、ISA 3.0命令セットを使用するPowerPC Linuxシステムで有効になり、他のシステムでは無効になる。
 
 @item -m32
 @itemx -m64
@@ -18668,12 +18662,6 @@ AIX、32ビットDarwin、および64ビットPowerPC GNU/Linuxの場合、オ�
 @opindex mmultiple
 @opindex mno-multiple
 複数ワードのロード命令とストアの複数ワード命令を使用する（しない）コードを生成する。これらの命令は、デフォルトではPOWERシステムで生成され、PowerPCシステムでは生成されない。リトルエンディアンのPowerPCシステムでは、これらの命令がプロセッサがリトルエンディアンモードの時は動作しないため、@option{-multiple}は使用しないこと。例外は、リトルエンディアンモードでこれらの命令を許可するPPC740とPPC750である。
-
-@item -mstring
-@itemx -mno-string
-@opindex mstring
-@opindex mno-string
-ロード文字列命令とストア文字列ワード命令を使用し、複数のレジスタを保存し、小さなブロック移動を行うコードを生成する（しない）。デフォルトではPOWERシステムで生成され、PowerPCシステムでは生成されない。リトルエンディアンのPowerPCシステムでは、これらの命令がプロセッサがリトルエンディアンモードの時は動作しないため、@option{-multiple}は使用しないこと。例外は、リトルエンディアンモードでこれらの命令を許可するPPC740とPPC750である。
 
 @item -mupdate
 @itemx -mno-update
@@ -18851,21 +18839,13 @@ are @samp{full}, @samp{part}, and @samp{no}.
 @opindex mabi
 現在のABIを特定の拡張を追加するか、そのような拡張を削除する。可能な値は、@samp{altivec}, @samp{no-altivec}, @samp{spe}, @samp{no-spe}, @samp{ibmlongdouble}, @samp{ieeelongdouble}, @samp{elfv1}, @samp{elfv2}。
 
-@item -mabi=spe
-@opindex mabi=spe
-現在のABIをSPE ABI拡張で拡張する。これはデフォルトのABIを変更するのではなく、現在のABIにSPE ABI拡張を追加する。
-
-@item -mabi=no-spe
-@opindex mabi=no-spe
-現在のABIのBook-E SPE ABI拡張機能を無効にする。
-
 @item -mabi=ibmlongdouble
 @opindex mabi=ibmlongdouble
-現在のABIを変更して、IBM拡張精度long doubleを使用する。これはPowerPC 32ビットSYSV ABIオプションである。
+現在のABIをIBM拡張精度のlong doubleを使用するように変更する。 これは、システムがデフォルトでIEEE拡張精度long doubleを使用している場合にはうまくいかない可能性がある。 long double型をIEEE拡張精度から変更すると、コンパイラは@option{-Wno-psabi}オプションを使用しないかぎり警告を発行する。
 
 @item -mabi=ieeelongdouble
 @opindex mabi=ieeelongdouble
-現在のABIをIEEE拡張精度のlong doubleを使用するように変更する。これは、PowerPC 32ビットLinux ABIオプションである。
+現在のABIをIEEE拡張精度のlong doubleを使用するように変更します。 これは、システムがデフォルトでIBM拡張精度のlong doubleを使用する場合にはうまくいかない可能性がある。 long double型をIBM拡張精度から変更すると、コンパイラは@option{-Wno-psabi}オプションを使用しないかぎり警告を発行する。
 
 @item -mabi=elfv1
 @opindex mabi=elfv1
@@ -19088,12 +19068,15 @@ GCCの古いバージョンとの互換性のために、最大64ビットのア
 @item -mstack-protector-guard=@var{guard}
 @itemx -mstack-protector-guard-reg=@var{reg}
 @itemx -mstack-protector-guard-offset=@var{offset}
+@itemx -mstack-protector-guard-symbol=@var{symbol}
 @opindex mstack-protector-guard
 @opindex mstack-protector-guard-reg
 @opindex mstack-protector-guard-offset
+@opindex mstack-protector-guard-symbol
 @var{guard}にカナリアを使用してスタック保護コードを生成します。 サポートされている場所は、TLSブロック（GNU libcバージョン2.4以降のデフォルト）でグローバルカナリアンの場合は@samp{global}、スレッドごとカナリアンの場合は@samp{tls}である。
 
-後者のオプションでは、@option{-mstack-protector-guard-reg=@var{reg}}オプションと@option{-mstack-protector-guard-offset=@var{offset}}オプションは、 カナリアを読み取るためのベースレジスタと、そのベースレジスタからのどのオフセットからのものかを示します。 これらのデフォルトは、関連するABIで指定されている。
+後者のオプションでは、@option{-mstack-protector-guard-reg=@var{reg}}オプションと@option{-mstack-protector-guard-offset=@var{offset}}オプションは、 カナリアを読み取るためのベースレジスタと、そのベースレジスタからのどのオフセットからのものかを示します。 これらのデフォルトは、関連するABIで指定されている。@option{-mstack-protector-guard-symbol=@var{symbol}}は、TLSブロックのカナリアへのシンボル参照でオフセットを上書きする。
+
 @end table
 
 @node RX Options
@@ -20554,8 +20537,34 @@ MMX、SSE、SSE2、SSE3命令セットサポートを持つIntel Pentuim 4 CPU�
 @item knl
 64ビット拡張、MOVBE、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、AVX、AVX2、AES、PCLMUL、FSGSBASE、RDRND、MFA、BMI、BMI2、F16C、RDSEED、ADCX、PREFETCHW、AVX512F、AVX512PF、AVX512ER、AVX512CD命令セットサポート持つIntel Knight's Landing CPU。
 
+@item knm
+64-bit拡張, MOVBE, MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, POPCNT, AVX, AVX2, AES, PCLMUL, FSGSBASE, RDRND, FMA, BMI, BMI2, F16C, RDSEED, ADCX, PREFETCHW, AVX512F, AVX512PF, AVX512ER, AVX512CD, AVX5124VNNIW, AVX5124FMAPS, AVX512VPOPCNTDQ命令セットサポート持つIntel Knight's Mill CPU。
+
 @item skylake-avx512
 64ビット拡張、MOVBE、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、PKU、AVX、AVX2、AES、PCLMUL、FSGSBASE、RDRND、MFA、BMI、BMI2、F16C、RDSEED、ADCX、PREFETCHW、CLFLUSHOPT、XSAVEC、XSAVES、AVX512F、AVX512VL、AVX512BW、AVX512DQ、AVX512CD命令セットサポートを持つIntel SkylakeサーバーCPU。
+
+@item cannonlake
+64ビット拡張, MOVBE, MMX, SSE, SSE2,
+SSE3, SSSE3, SSE4.1, SSE4.2, POPCNT, PKU, AVX, AVX2, AES, PCLMUL, FSGSBASE,
+RDRND, FMA, BMI, BMI2, F16C, RDSEED, ADCX, PREFETCHW, CLFLUSHOPT, XSAVEC,
+XSAVES, AVX512F, AVX512VL, AVX512BW, AVX512DQ, AVX512CD, AVX512VBMI,
+AVX512IFMA, SHA, UMIP命令セットサポートを持つIntel CannonlakeサーバーCPU。
+
+@item icelake-client
+64ビット拡張, MOVBE, MMX, SSE, SSE2,
+SSE3, SSSE3, SSE4.1, SSE4.2, POPCNT, PKU, AVX, AVX2, AES, PCLMUL, FSGSBASE,
+RDRND, FMA, BMI, BMI2, F16C, RDSEED, ADCX, PREFETCHW, CLFLUSHOPT, XSAVEC,
+XSAVES, AVX512F, AVX512VL, AVX512BW, AVX512DQ, AVX512CD, AVX512VBMI,
+AVX512IFMA, SHA, CLWB, UMIP, RDPID, GFNI, AVX512VBMI2, AVX512VPOPCNTDQ,
+AVX512BITALG, AVX512VNNI, VPCLMULQDQ, VAES命令セットサポートを持つIntel Icelake クライアントCPU 。
+
+@item icelake-server
+64ビット拡張, MOVBE, MMX, SSE, SSE2,
+SSE3, SSSE3, SSE4.1, SSE4.2, POPCNT, PKU, AVX, AVX2, AES, PCLMUL, FSGSBASE,
+RDRND, FMA, BMI, BMI2, F16C, RDSEED, ADCX, PREFETCHW, CLFLUSHOPT, XSAVEC,
+XSAVES, AVX512F, AVX512VL, AVX512BW, AVX512DQ, AVX512CD, AVX512VBMI,
+AVX512IFMA, SHA, CLWB, UMIP, RDPID, GFNI, AVX512VBMI2, AVX512VPOPCNTDQ,
+AVX512BITALG, AVX512VNNI, VPCLMULQDQ, VAES, PCONFIG, WBNOINVD命令セットサポートを持つIntel Icelake サーバーCPU 。
 
 @item k6
 MMX命令セットサポートを持つAMD K6 CPU。
@@ -20723,13 +20732,13 @@ x86-32コンパイラでは、SSE拡張を有効にしてこのオプション�
 コンパイラがIEEE浮動小数点比較を使用するかどうかを制御する。 これらは、比較の結果が順序付けられていない場合を正しく処理する。
 
 @item -m80387
-@item -mhard-float
+@itemx -mhard-float
 @opindex 80387
 @opindex mhard-float
 浮動小数点用に80387命令を含む出力を生成する。
 
 @item -mno-80387
-@item -msoft-float
+@itemx -msoft-float
 @opindex no-80387
 @opindex msoft-float
 浮動小数点のライブラリ呼び出しを含む出力を生成する。
@@ -21003,9 +21012,37 @@ PentiumとPentium Proでは、@code{double}と@code{long double}の値は8バイ
 @need 200
 @itemx -mclzero
 @opindex mclzero
+@need 200
 @itemx -mpku
 @opindex mpku
-これらのスイッチを使用すると、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、AVX、AVX2、AVX512F、AVX512PF、AVX512ER、AVX512CD、SHA、AES、PCLMUL、FSGSBASE、RDRND、F16C、FMA、SSE4A、FMA4、XOP、LWP、ABM、AVX512VL、AVX512BW、AVX512DQ、AVX512VQ、AVX512VBMI、BMI2、FXSR、XSAVE、XSAVEOPT、LZCNT、RTM、MPX、MWAITX 、PKU、3DNow！ または強化された3DNow！ 拡張命令セットでの命令の使用を有効にする。それぞれに対応する@option {-mno-}オプションがあり、これらの命令の使用を無効にする。
+@need 200
+@itemx -mavx512vbmi2
+@opindex mavx512vbmi2
+@need 200
+@itemx -mgfni
+@opindex mgfni
+@need 200
+@itemx -mvaes
+@opindex mvaes
+@need 200
+@itemx -mvpclmulqdq
+@opindex mvpclmulqdq
+@need 200
+@itemx -mavx512bitalg
+@opindex mavx512bitalg
+@need 200
+@itemx -mmovdiri
+@opindex mmovdiri
+@need 200
+@itemx -mmovdir64b
+@opindex mmovdir64b
+@need 200
+@itemx -mavx512vpopcntdq
+@opindex mavx512vpopcntdq
+これらのスイッチを使用すると、MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, AVX512F, AVX512PF, AVX512ER, AVX512CD, SHA, AES, PCLMUL, FSGSBASE, RDRND, F16C, FMA, SSE4A, FMA4, XOP, LWP, ABM,  AVX512VL, AVX512BW, AVX512DQ, AVX512IFMA, AVX512VBMI, BMI, BMI2, VAES,
+FXSR, XSAVE, XSAVEOPT, LZCNT, RTM, MPX, MWAITX, PKU, IBT, SHSTK, AVX512VBMI2,
+GFNI, VPCLMULQDQ, AVX512BITALG, MOVDIRI, MOVDIR64B,
+AVX512VPOPCNTDQ3DNow! または強化された3DNow！ 拡張命令セットでの命令の使用を有効にする。それぞれに対応する@option {-mno-}オプションがあり、これらの命令の使用を無効にする。
 
 これらの拡張機能は、組み込み関数としても利用できる。これらのスイッチで有効または無効にする関数の詳細については、@ref{x86 Built-in Functions}を参照せよ。
 
@@ -21351,8 +21388,14 @@ Intel Atomのような一部のプロセッサでは、8ビット符号なし整
 32バイトのAVXのアラインメントされていないロードとストアを分割する。
 
 @item -mstack-protector-guard=@var{guard}
-@opindex mstack-protector-guard=@var{guard}
-@var{guard}にカナリアを使用してスタック保護コードを生成する。サポートされている場所は、グローバルカナリアンの@samp{global}およびTLSブロック内のスレッドカナリアン（デフォルト）の@samp{tls}である。このオプションは、@option{-fstack-protector}または@option{-fstack-protector-all}が指定されている場合にのみ有効である。
+@itemx -mstack-protector-guard-reg=@var{reg}
+@itemx -mstack-protector-guard-offset=@var{offset}
+@opindex mstack-protector-guard
+@opindex mstack-protector-guard-reg
+@opindex mstack-protector-guard-offset
+@var{guard}にカナリアを使用してスタック保護コードを生成する。サポートされている場所は、グローバルカナリアの@samp{global}およびTLSブロック内のスレッドカナリア（デフォルト）の@samp{tls}である。このオプションは、@option{-fstack-protector}または@option{-fstack-protector-all}が指定されている場合にのみ有効である。
+
+後者の選択肢では、オプション@option{-mstack-protector-guard-reg=@var{reg}}と@option{-mstack-protector-guard-offset=@var{offset} カナリアを読み込むためのベース・レジスタとして、またそのベース・レジスタからのオフセットから使用するために、@code{%fs}または@code{％gs}を使用する。 これらのデフォルトは、関連するABIで指定されている。
 
 @item -mmitigate-rop
 @opindex mmitigate-rop
@@ -21753,7 +21796,7 @@ GCCがスタートアップファイルを含んでいる可能性のあるデ�
 @item %*
 一致するオプションの可変部分を代入する。 下記参照。置換文字列の各カンマは単一のスペースで置き換えられることに注意せよ。
 
-@item %<@code{S}
+@item %<S
 コマンドラインから@code{-S}をすべて削除する。 注---このコマンドは位置によって異なる。これより前の@samp{%}コマンドは@code{-S}を見て、これよりあとの@samp{%}コマンドは見ない。
 
 @item %:@var{function}(@var{args})
@@ -21822,25 +21865,25 @@ Use "-Wa,OPTION" to pass "OPTION" to the assembler.
 @option{-target-help}出力のアセンブラオプションからコンパイラオプションを分離するために使用される。
 @end table
 
-@item %@{@code{S}@}
+@item %@{S@}
 スイッチがGCCに与えられている場合は、@code{-S}スイッチに置き換える。そのスイッチが指定されていない場合、これは何も置き換えない。先頭のダッシュはこのオプションを指定するときは省略され、置換が実行されると自動的に挿入されることに注意せよ。したがって、仕様文字列@samp{％@{foo@}}は、コマンドラインオプション@option{-foo}と一致し、コマンドラインオプション@option{-foo}を出力する。
 
-@item %W@{@code{S}@}
+@item %W@{S@}
 ％@{@code{S}@}と似ているが、失敗したときに削除するファイルとして指定された最後の引数をマークする。
 
-@item %@{@code{S}*@}
+@item %@{S*@}
 指定されたすべてのスイッチをGCCに代入する。名前は@code{-S}で始まるだけでなく、引数もとる。これは、@option{-o}、@option{-D}、@option{-I}などのスイッチに使用される。GCCは@option{-o foo}を@samp{o}で始まる1つのスイッチとみなす。 ％@{o*@}はスペースを含めてこのテキストを置き換えるます。 したがって、2つの引数が生成される。
 
-@item %@{@code{S}*&@code{T}*@}
+@item %@{S*&T*@}
 ％@{@code{S}*@}と似ているが、@code{S}と@code {T}オプションの順序を保持する（仕様の@code{S}と@code{T}の順序は重要ではない）。アンパサンドで区切られた変数はいくつでもよい。 ワイルドカードはそれぞれオプションである。@samp{％@{D*＆U*＆A*@}}としてCPPに役立つ。
 
-@item %@{@code{S}:@code{X}@}
+@item %@{S:X@}
 @option{-S}スイッチがGCCに与えられている場合、@code {X}に置き換えられる。
 
-@item %@{!@code{S}:@code{X}@}
+@item %@{!S:X@}
 @option{-S}スイッチがGCCに対して与えられて@emph{いない}場合、@code {X}に置き換えられる。
 
-@item %@{@code{S}*:@code{X}@}
+@item %@{S*:X@}
 名前が@code{-S}で始まるスイッチがGCCに指定されている場合は、@code {X}に置き換える。通常、@code{X}はスイッチの数にかかわらず一度だけ置換される。しかし、@code{％*}が@code{X}のどこかに現れた場合、@code {X}は、一致するスイッチごとに1回置き換えられ、@code {%*}は@code {*}に一致するスイッチの一部で置き換えられる。
 
 @code{％*}が仕様列の最後の部分として現れた場合、最後の置換の終了後にスペースが追加される。ただし、列内にテキストがさらに存在する場合は、スペースは生成されない。 これにより、より大きな文字列の一部として@code{％*}置換を使用することができる。たとえば、次のような列文字列があると：
@@ -21856,19 +21899,19 @@ Use "-Wa,OPTION" to pass "OPTION" to the assembler.
 --script=newchip/memory.ld
 @end smallexample
 
-@item %@{.@code{S}:@code{X}@}
+@item %@{.S:X@}
 接尾辞@code{S}を持つファイルを処理する場合は、@code{X}に置き換える。
 
-@item %@{!.@code{S}:@code{X}@}
+@item %@{!.S:X@}
 接尾辞@code{S}を持つファイルを処理@emph{しない}場合は、@code{X}に置き換える。
 
-@item %@{,@code{S}:@code{X}@}
+@item %@{,S:X@}
 言語@code{S}のファイルを処理する場合は、@code {X}に置き換える。
 
-@item %@{!,@code{S}:@code{X}@}
+@item %@{!,S:X@}
 言語@code{S}のファイルを処理していない場合は、@code{X}に置き換える。
 
-@item %@{@code{S}|@code{P}:@code{X}@}
+@item %@{S|P:X@}
 @code{-S}か@code{-P}のどちらかがGCCに与えられた場合、@code{X}に置き換える。これは@samp{!}、@samp{.}、@samp{,}、@code {*}シーケンスと組み合わせても問題ないが、結合は@samp{|}よりも強くなる。 @code{X*}に@code{％*}が含まれている場合は、すべての選択肢に星印を付ける必要があり、最初の一致する選択肢のみが置換される。
 
 たとえば、次のような仕様文字列があると、
@@ -21896,6 +21939,8 @@ GCCに@code{S}が与えられていれば、@code{X}に置き換えられる。 
 
 大きなコードモデルでは、サンク関数に到達できない可能性があるため、@option{-mcmodel=large}は@option{-mindirect-branch=thunk}や@option {-mindirect-branch=thunk-extern}と互換性がないことに注意せよ。
 
+外部のサンクを制御フローチェックを無効にするように変更することはできないので、@option{-mindirect-branch=thunk-extern}は@option{-fcf-protection=branch}や@option {-fcheck-pointer-bounds}と互換性がないことに注意せよ。
+
 @item -mfunction-return=@var{choice}
 @opindex -mfunction-return
 @var{choice}で関数復帰を変換する。 デフォルトは@samp{keep}で、関数復帰は変更されない。 @samp{thunk}は関数復帰をサンクの呼び出しと復帰に変換する。 @samp{thunk-inline}は、関数復帰をインライン化されたサンクの呼び出しと復帰に変換する。 @samp {thunk-extern}は、関数復帰を、別のオブジェクトファイルで提供されるサンクの呼び出しと復帰に変換する。 特定の関数に対してこの動作を制御するには、関数属性@code{function_return}を使用する。@xref{Function Attributes}.
@@ -21908,7 +21953,9 @@ GCCに@code{S}が与えられていれば、@code{X}に置き換えられる。 
 
 @end table
 
-%@{@code{S}:@code{X}@}内の条件付きテキスト@code{X}や他の同様の構文には、他のネストされた@samp{％}構造体やスペース、あるいは改行文字が含まれている。 これらは上記のように通常通り処理される。@code{X}の末尾の空白は無視される。 空白は、@code{.}や@code {*}とそれに対応する単語を除いて、これらの構造体のコロンの左側の任意の場所に表示されることもある。
+@samp{％@{S@}}や@samp{％@{S:X@}}やそれに類する構文のテキストの@code {S}にマッチするスイッチは、バックスラッシュを使って次の文字の特殊な意味を無視することができ、これにより、特別に扱われる文字のリテラルマッチングが可能になる。@option{-std=iso9899:1999}オプションが指定されている場合、@samp{％@{std=iso9899\:1999:X@}}は@code{X}を置き換える。
+
+@samp{%@{S:X@}}内の条件付きテキスト@code{X}や他の同様の構文には、他のネストされた@samp{％}構造体やスペース、あるいは改行文字が含まれている。 これらは上記のように通常通り処理される。@code{X}の末尾の空白は無視される。 空白は、@code{.}や@code {*}とそれに対応する単語を除いて、これらの構造体のコロンの左側の任意の場所に表示されることもある。
 
 @option{-O}、@option{-f}、@option{-m}、および@option{-W}スイッチは、これらの構造体で特に処理される。@option{-O}の別の値または@option{-f}、@option{-m}、または@option{-W}スイッチの否定された形式がコマンドラインの後のほうにある場合、以前のスイッチ値@{@code{S}*@}を除いて無視される。ここで@code {S}はすべての一致するオプションを渡す単一文字である。
 
