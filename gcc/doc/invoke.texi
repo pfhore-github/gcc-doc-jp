@@ -21395,7 +21395,7 @@ Intel Atomのような一部のプロセッサでは、8ビット符号なし整
 @opindex mstack-protector-guard-offset
 @var{guard}にカナリアを使用してスタック保護コードを生成する。サポートされている場所は、グローバルカナリアの@samp{global}およびTLSブロック内のスレッドカナリア（デフォルト）の@samp{tls}である。このオプションは、@option{-fstack-protector}または@option{-fstack-protector-all}が指定されている場合にのみ有効である。
 
-後者の選択肢では、オプション@option{-mstack-protector-guard-reg=@var{reg}}と@option{-mstack-protector-guard-offset=@var{offset} カナリアを読み込むためのベース・レジスタとして、またそのベース・レジスタからのオフセットから使用するために、@code{%fs}または@code{％gs}を使用する。 これらのデフォルトは、関連するABIで指定されている。
+後者の選択肢では、オプション@option{-mstack-protector-guard-reg=@var{reg}}と@option{-mstack-protector-guard-offset=@var{offset}}カナリアを読み込むためのベース・レジスタとして、またそのベース・レジスタからのオフセットから使用するために、@code{%fs}または@code{％gs}を使用する。 これらのデフォルトは、関連するABIで指定されている。
 
 @item -mmitigate-rop
 @opindex mmitigate-rop

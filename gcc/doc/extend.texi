@@ -7617,7 +7617,7 @@ GCCには、標準Cライブラリの多くの関数の組み込みバージョ�
 @opindex std
 厳密ISO Cモード (@option{-ansi}, @option{-std=c90}, @option{-std=c99}, @option{-std=c11})の外では、関数@code{_exit}, @code{alloca}, @code{bcmp}, @code{bzero}, @code{dcgettext}, @code{dgettext}, @code{dremf}, @code{dreml}, @code{drem}, @code{exp10f}, @code{exp10l}, @code{exp10}, @code{ffsll}, @code{ffsl}, @code{ffs}, @code{fprintf_unlocked}, @code{fputs_unlocked}, @code{gammaf}, @code{gammal}, @code{gamma}, @code{gammaf_r}, @code{gammal_r}, @code{gamma_r}, @code{gettext}, @code{index}, @code{isascii}, @code{j0f}, @code{j0l}, @code{j0}, @code{j1f}, @code{j1l}, @code{j1}, @code{jnf}, @code{jnl}, @code{jn}, @code{lgammaf_r}, @code{lgammal_r}, @code{lgamma_r}, @code{mempcpy}, @code{pow10f}, @code{pow10l}, @code{pow10}, @code{printf_unlocked}, @code{rindex}, @code{scalbf}, @code{scalbl}, @code{scalb}, @code{signbit}, @code{signbitf}, @code{signbitl}, @code{signbitd32}, @code{signbitd64}, @code{signbitd128}, @code{significandf}, @code{significandl}, @code{significand}, @code{sincosf}, @code{sincosl}, @code{sincos}, @code{stpcpy}, @code{stpncpy}, @code{strcasecmp}, @code{strdup}, @code{strfmon}, @code{strncasecmp}, @code{strndup}, @code{toascii}, @code{y0f}, @code{y0l}, @code{y0}, @code{y1f}, @code{y1l}, @code{y1}, @code{ynf}, @code{ynl},  @code{yn}は組み込み関数として扱うかもしれない。これらの関数はすべて、 @code{__builtin_}という接頭辞を持つ対応するバージョンを持っている。これは厳密なC90モードでも使用できる。
 
-The ISO C99 functions
+ISO C99 関数
 @code{_Exit}, @code{acoshf}, @code{acoshl}, @code{acosh}, @code{asinhf},
 @code{asinhl}, @code{asinh}, @code{atanhf}, @code{atanhl}, @code{atanh},
 @code{cabsf}, @code{cabsl}, @code{cabs}, @code{cacosf}, @code{cacoshf},
@@ -7657,11 +7657,9 @@ The ISO C99 functions
 @code{scalbn}, @code{snprintf}, @code{tgammaf}, @code{tgammal},
 @code{tgamma}, @code{truncf}, @code{truncl}, @code{trunc},
 @code{vfscanf}, @code{vscanf}, @code{vsnprintf} and @code{vsscanf}
-are handled as built-in functions
-except in strict ISO C90 mode (@option{-ansi} or @option{-std=c90}).
+はISO C90モード(@option{-ansi}または@option{-std=c90})でない限り組み込み関数として扱われる。
 
-There are also built-in versions of the ISO C99 functions
-@code{acosf}, @code{acosl}, @code{asinf}, @code{asinl}, @code{atan2f},
+ISO C90はISO C99がそれらの名前を付ける目的でこれらの名前を予約しているので、どのモードでも認識される@code{acosf}, @code{acosl}, @code{asinf}, @code{asinl}, @code{atan2f},
 @code{atan2l}, @code{atanf}, @code{atanl}, @code{ceilf}, @code{ceill},
 @code{cosf}, @code{coshf}, @code{coshl}, @code{cosl}, @code{expf},
 @code{expl}, @code{fabsf}, @code{fabsl}, @code{floorf}, @code{floorl},
@@ -7670,30 +7668,20 @@ There are also built-in versions of the ISO C99 functions
 @code{modfl}, @code{modf}, @code{powf}, @code{powl}, @code{sinf},
 @code{sinhf}, @code{sinhl}, @code{sinl}, @code{sqrtf}, @code{sqrtl},
 @code{tanf}, @code{tanhf}, @code{tanhl} and @code{tanl}
-that are recognized in any mode since ISO C90 reserves these names for
-the purpose to which ISO C99 puts them.  All these functions have
-corresponding versions prefixed with @code{__builtin_}.
+関数がある。 これらの関数には対応するバージョンの接頭辞@code {__builtin_}がある。
 
-There are also built-in functions @code{__builtin_fabsf@var{n}},
-@code{__builtin_fabsf@var{n}x}, @code{__builtin_copysignf@var{n}} and
-@code{__builtin_copysignf@var{n}x}, corresponding to the TS 18661-3
-functions @code{fabsf@var{n}}, @code{fabsf@var{n}x},
-@code{copysignf@var{n}} and @code{copysignf@var{n}x}, for supported
-types @code{_Float@var{n}} and @code{_Float@var{n}x}.
+サポートされた型TS18661-3関数@code{_Float@var{n}}と@code{_Float@var{n}x}用の
+@code{fabsf@var{n}}, @code{fabsf@var{n}x}, @code{copysignf@var{n}} and @code{copysignf@var{n}x}に対応する組み込み関数@code{__builtin_fabsf@var{n}}, @code{__builtin_fabsf@var{n}x}, @code{__builtin_copysignf@var{n}}, @code{__builtin_copysignf@var{n}x}も存在する。
 
-There are also GNU extension functions @code{clog10}, @code{clog10f} and
-@code{clog10l} which names are reserved by ISO C99 for future use.
-All these functions have versions prefixed with @code{__builtin_}.
+ISO C99によって将来の使用用に名前が予約されているGNU拡張関数@code{clog10}, @code{clog10f}, @code{clog10l}もある。これらの関数すべては@code{__builtin_}が前置したバージョンがある。
 
-The ISO C94 functions
-@code{iswalnum}, @code{iswalpha}, @code{iswcntrl}, @code{iswdigit},
+ISO C94関数@code{iswalnum}, @code{iswalpha}, @code{iswcntrl}, @code{iswdigit},
 @code{iswgraph}, @code{iswlower}, @code{iswprint}, @code{iswpunct},
-@code{iswspace}, @code{iswupper}, @code{iswxdigit}, @code{towlower} and
-@code{towupper}
-are handled as built-in functions
-except in strict ISO C90 mode (@option{-ansi} or @option{-std=c90}).
+@code{iswspace}, @code{iswupper}, @code{iswxdigit}, @code{towlower}, 
+@code{towupper}は厳密なISO C90モード(@option{-ansi}または@option{-std=c90})
+出ない限りは組み込み関数として扱われる。
 
-The ISO C90 functions
+ISO C90関数
 @code{abort}, @code{abs}, @code{acos}, @code{asin}, @code{atan2},
 @code{atan}, @code{calloc}, @code{ceil}, @code{cosh}, @code{cos},
 @code{exit}, @code{exp}, @code{fabs}, @code{floor}, @code{fmod},
@@ -7709,39 +7697,15 @@ The ISO C90 functions
 @code{strchr}, @code{strcmp}, @code{strcpy}, @code{strcspn},
 @code{strlen}, @code{strncat}, @code{strncmp}, @code{strncpy},
 @code{strpbrk}, @code{strrchr}, @code{strspn}, @code{strstr},
-@code{tanh}, @code{tan}, @code{vfprintf}, @code{vprintf} and @code{vsprintf}
-are all recognized as built-in functions unless
-@option{-fno-builtin} is specified (or @option{-fno-builtin-@var{function}}
-is specified for an individual function).  All of these functions have
-corresponding versions prefixed with @code{__builtin_}.
+@code{tanh}, @code{tan}, @code{vfprintf}, @code{vprintf}, @code{vsprintf}
+はすべて、@option{-fno-builtin}が指定されている（もしくは個別の関数に対して@option{-fno-builtin-@var{function}が指定されている）のでない限り、組み込み関数として認識される。これらの関数はすべて対応する接頭辞@code{__builtin_}つきのバージョンがある。
 
-GCC provides built-in versions of the ISO C99 floating-point comparison
-macros that avoid raising exceptions for unordered operands.  They have
-the same names as the standard macros ( @code{isgreater},
-@code{isgreaterequal}, @code{isless}, @code{islessequal},
-@code{islessgreater}, and @code{isunordered}) , with @code{__builtin_}
-prefixed.  We intend for a library implementor to be able to simply
-@code{#define} each standard macro to its built-in equivalent.
-In the same fashion, GCC provides @code{fpclassify}, @code{isfinite},
-@code{isinf_sign}, @code{isnormal} and @code{signbit} built-ins used with
-@code{__builtin_} prefixed.  The @code{isinf} and @code{isnan}
-built-in functions appear both with and without the @code{__builtin_} prefix.
+GCCには、順序付けられていないオペランドに対する例外を発生させない、ISO C99浮動小数点比較マクロの組み込みバージョンが用意されている。 標準マクロ（@code{isgreater}、@code{isgreaterequal}、@code{isless}、@code{islessequre}、@code{islessgreater}、@code{isunordered}）と同じ名前を持ち、@code{__builtin_}が接頭辞付きである。ライブラリの実装者が各標準マクロを組み込み関数に@code{#define}できるようにするためを意図している。同じ方法で、GCCは@code{__ builtin_}を接頭辞として使用して、@code{fpclassify}、@code{isfinite}、@code{isinf_sign}、@code{notnormal}および@code{signbit}組み込み関数を提供する。 @code{isinf}と@code{isnan}組み込み関数は、接頭辞@code{__ builtin_}の有無に関係なく存在する。
 
 @deftypefn {Built-in Function} void *__builtin_alloca (size_t size)
-The @code{__builtin_alloca} function must be called at block scope.
-The function allocates an object @var{size} bytes large on the stack
-of the calling function.  The object is aligned on the default stack
-alignment boundary for the target determined by the
-@code{__BIGGEST_ALIGNMENT__} macro.  The @code{__builtin_alloca}
-function returns a pointer to the first byte of the allocated object.
-The lifetime of the allocated object ends just before the calling
-function returns to its caller.   This is so even when
-@code{__builtin_alloca} is called within a nested block.
+@code {__ builtin_alloca}関数はブロックスコープで呼び出さなければならない。この関数は、呼び出し関数のスタック上で@var{size}バイトのオブジェクトを割り当てる。 オブジェクトは、@code{__BIGGEST_ALIGNMENT__}マクロによって決定されたターゲットのデフォルトスタック境界境界にアラインメントされる。 @code{__ builtin_alloca}関数は、割り当てられたオブジェクトの最初のバイトへのポインタを返す。割り当てられたオブジェクトの存続期間は、呼び出し元関数が呼び出し元に戻る直前に終了する。 これは、ネストされたブロック内で@code{__ builtin_alloca}が呼び出された場合でもそうである。
 
-For example, the following function allocates eight objects of @code{n}
-bytes each on the stack, storing a pointer to each in consecutive elements
-of the array @code{a}.  It then passes the array to function @code{g}
-which can safely use the storage pointed to by each of the array elements.
+たとえば、次の関数はスタック上に@code{n}バイトの8つのオブジェクトを割り当て、配列の各要素にポインタ@code{a}を格納する。 次に配列を関数@code{g}に渡す。これは各配列要素が指す記憶域を安全に使用できる。
 
 @smallexample
 void f (unsigned n)
@@ -7754,39 +7718,14 @@ void f (unsigned n)
 @}
 @end smallexample
 
-Since the @code{__builtin_alloca} function doesn't validate its argument
-it is the responsibility of its caller to make sure the argument doesn't
-cause it to exceed the stack size limit.
-The @code{__builtin_alloca} function is provided to make it possible to
-allocate on the stack arrays of bytes with an upper bound that may be
-computed at run time.  Since C99 Variable Length Arrays offer
-similar functionality under a portable, more convenient, and safer
-interface they are recommended instead, in both C99 and C++ programs
-where GCC provides them as an extension.
-@xref{Variable Length}, for details.
+@code{__ builtin_alloca}関数は引数を検証しないので、引数がスタックサイズの制限を超えないようにすることは呼び出し元の責任である。@code{__builtin_alloca}関数は、実行時に計算される上限を持つスタック配列に割り当てることを可能にするために提供されている。 C99の可変長配列は移植可能でより便利で安全なインタフェースの下で同様の機能を提供するので代わりに推奨され、GCCが拡張としてC99とC++プログラムの両方で提供される。詳細は@xref{Variable Length}。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} void *__builtin_alloca_with_align (size_t size, size_t alignment)
-The @code{__builtin_alloca_with_align} function must be called at block
-scope.  The function allocates an object @var{size} bytes large on
-the stack of the calling function.  The allocated object is aligned on
-the boundary specified by the argument @var{alignment} whose unit is given
-in bits (not bytes).  The @var{size} argument must be positive and not
-exceed the stack size limit.  The @var{alignment} argument must be a constant
-integer expression that evaluates to a power of 2 greater than or equal to
-@code{CHAR_BIT} and less than some unspecified maximum.  Invocations
-with other values are rejected with an error indicating the valid bounds.
-The function returns a pointer to the first byte of the allocated object.
-The lifetime of the allocated object ends at the end of the block in which
-the function was called.  The allocated storage is released no later than
-just before the calling function returns to its caller, but may be released
-at the end of the block in which the function was called.
+ブロックスコープで@code{__builtin_alloca_with_align}関数を呼び出さなければならない。この関数は、呼び出し関数のスタック上で@var{size}バイトのオブジェクトを割り当てる。割り当てられたオブジェクトは、ユニットがビット（バイトではない）で与えられる引数@var{alignment}で指定された境界に揃えられる。 @var{size}引数は正で、スタックサイズ制限を超えてはならない。 @var{alignment}引数は、@code{CHAR_BIT}以上である未指定の最大値よりも小さい2の累乗に評価される定数の整数式でなければならない。他の値の呼び出しは拒否され、有効な境界を示すエラーが返される。この関数は、割り当てられたオブジェクトの最初のバイトへのポインタを返す。割り当てられたオブジェクトの存続期間は、関数が呼び出されたブロックの終わりで終了する。割り当てられた記憶域は、呼び出し元関数が呼び出し元に戻る直前に解放されるが、関数が呼び出されたブロックの最後に解放される可能性がある。
 
-For example, in the following function the call to @code{g} is unsafe
-because when @code{overalign} is non-zero, the space allocated by
-@code{__builtin_alloca_with_align} may have been released at the end
-of the @code{if} statement in which it was called.
+たとえば、次の関数では、@code{overalign}がゼロでないとき、@code{__ builtin_alloca_with_align}によって割り当てられた領域は、それが呼び出された@code{if}ステートメントの終わりに解放されている可能性があるので@code{g}の呼び出しは安全でない。
 
 @smallexample
 void f (unsigned n, bool overalign)
@@ -7801,59 +7740,28 @@ void f (unsigned n, bool overalign)
 @}
 @end smallexample
 
-Since the @code{__builtin_alloca_with_align} function doesn't validate its
-@var{size} argument it is the responsibility of its caller to make sure
-the argument doesn't cause it to exceed the stack size limit.
-The @code{__builtin_alloca_with_align} function is provided to make
-it possible to allocate on the stack overaligned arrays of bytes with
-an upper bound that may be computed at run time.  Since C99
-Variable Length Arrays offer the same functionality under
-a portable, more convenient, and safer interface they are recommended
-instead, in both C99 and C++ programs where GCC provides them as
-an extension.  @xref{Variable Length}, for details.
+@code{__ __builtin_alloca_with_align}関数は引数を検証しないので、引数がスタックサイズの制限を超えないようにすることは呼び出し元の責任である。@code {__ builtin_alloca_with_align}関数は、オーバーアラインメントされたスタックの配列に、実行時に計算される上限を割り当てることを可能にするために提供されている。 C99の可変長配列は移植可能でより便利で安全なインタフェースの下で同様の機能を提供するので代わりに推奨され、GCCが拡張としてC99とC++プログラムの両方で提供される。詳細は@xref{Variable Length}。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} void *__builtin_alloca_with_align_and_max (size_t size, size_t alignment, size_t max_size)
-Similar to @code{__builtin_alloca_with_align} but takes an extra argument
-specifying an upper bound for @var{size} in case its value cannot be computed
-at compile time, for use by @option{-fstack-usage}, @option{-Wstack-usage}
-and @option{-Walloca-larger-than}.  @var{max_size} must be a constant integer
-expression, it has no effect on code generation and no attempt is made to
-check its compatibility with @var{size}.
+@code{__builtin_alloca_with_align}と似ているが、@value{-fstack-usage}、@option{-Wstack-usage}と@option {-Walloca-greater-than}で使用するためにコンパイル時に値を計算できない場合に@var{size}の上限を指定する追加の引数をとる。@var{max_size}は定数の整数式でなければならない。コード生成に影響はなく、@var{size}との互換性をチェックしようとしない。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_types_compatible_p (@var{type1}, @var{type2})
 
-You can use the built-in function @code{__builtin_types_compatible_p} to
-determine whether two types are the same.
+組み込み関数@code{__builtin_types_compatible_p}を使用して、2つの型が同じかどうかを判断できる。
 
-This built-in function returns 1 if the unqualified versions of the
-types @var{type1} and @var{type2} (which are types, not expressions) are
-compatible, 0 otherwise.  The result of this built-in function can be
-used in integer constant expressions.
+この組み込み関数は、@var{type1}および@var{type2}の型（式ではなく型）の非修飾バージョンが互換性がある場合は1を、それ以外の場合は0を返す。 この組み込み関数の結果は、整数定数式で使用できる。
 
-This built-in function ignores top level qualifiers (e.g., @code{const},
-@code{volatile}).  For example, @code{int} is equivalent to @code{const
-int}.
+この組み込み関数はトップレベルの修飾子（例えば、@code{const}、@code{volatile}）を無視する。 たとえば、@code{int}は@code{const int}と同じである。
 
-The type @code{int[]} and @code{int[5]} are compatible.  On the other
-hand, @code{int} and @code{char *} are not compatible, even if the size
-of their types, on the particular architecture are the same.  Also, the
-amount of pointer indirection is taken into account when determining
-similarity.  Consequently, @code{short *} is not similar to
-@code{short **}.  Furthermore, two types that are typedefed are
-considered compatible if their underlying types are compatible.
+@code{int[]}と@code{int[5]}は互換性がある。 一方、@code{int}と@code{char*}は、その型のサイズが特定のアーキテクチャ上で同じであっても、互換性がない。 また、類似性を判定する際に、ポインタ間接指示の量も考慮されます。 したがって、@code{short *}は@code{short **}と似ていない。 さらに、typedefされた2つの型は、それらの基本型が互換性がある場合、互換性があるとみなされる。
 
-An @code{enum} type is not considered to be compatible with another
-@code{enum} type even if both are compatible with the same integer
-type; this is what the C standard specifies.
-For example, @code{enum @{foo, bar@}} is not similar to
-@code{enum @{hot, dog@}}.
+@code{enum}型は、両方とも同じ整数型と互換性があっても、別の@code{enum}型と互換性があるとはみなされない。 これはC標準が指定するものである。 たとえば、@code{enum @{foo、bar @}}は@code{enum @{hot、dog @}}と似ていない。
 
-You typically use this function in code whose execution varies
-depending on the arguments' types.  For example:
+通常、この関数は引数の型によって実行が異なるコードで使用する。 例えば：
 
 @smallexample
 #define foo(x)                                                  \
@@ -7871,43 +7779,28 @@ depending on the arguments' types.  For example:
   @})
 @end smallexample
 
-@emph{Note:} This construct is only available for C@.
+@emph{注意:} この構造はCでのみ利用可能である
 
 @end deftypefn
 
 @deftypefn {Built-in Function} @var{type} __builtin_call_with_static_chain (@var{call_exp}, @var{pointer_exp})
 
-The @var{call_exp} expression must be a function call, and the
-@var{pointer_exp} expression must be a pointer.  The @var{pointer_exp}
-is passed to the function call in the target's static chain location.
-The result of builtin is the result of the function call.
+@var{call_exp}式は関数呼び出しでなければならず、@var{pointer_exp}式はポインタでなければならない。 @var{pointer_exp}は、ターゲットの静的チェーンの場所にある関数呼び出しに渡される。 組み込み関数の結果は、関数呼び出しの結果である。
 
-@emph{Note:} This builtin is only available for C@.
-This builtin can be used to call Go closures from C.
-
+@emph{注意e:} この組み込みはCでの利用可能である。この組み込みはCでのからGoクロージャーを呼ぶために使うことができる。
 @end deftypefn
 
 @deftypefn {Built-in Function} @var{type} __builtin_choose_expr (@var{const_exp}, @var{exp1}, @var{exp2})
 
-You can use the built-in function @code{__builtin_choose_expr} to
-evaluate code depending on the value of a constant expression.  This
-built-in function returns @var{exp1} if @var{const_exp}, which is an
-integer constant expression, is nonzero.  Otherwise it returns @var{exp2}.
+定数式の値に応じて、組み込み関数@code{__builtin_choose_expr}を使用してコードを評価することができる。 この組み込み関数は、整数定数式である@var{const_exp}がゼロでない場合、@var{exp1}を返す。 それ以外の場合は、@var{exp2}を返す。
 
-This built-in function is analogous to the @samp{? :} operator in C,
-except that the expression returned has its type unaltered by promotion
-rules.  Also, the built-in function does not evaluate the expression
-that is not chosen.  For example, if @var{const_exp} evaluates to true,
-@var{exp2} is not evaluated even if it has side effects.
+この組み込み関数は、返される式の型がプロモーションルールによって変更されていない点を除いて、Cでの@samp{? :}演算子に似ている。また、組み込み関数は、選択されていない式も評価しない。 たとえば、@var{const_exp}がtrueと評価された場合、@var{exp2}は副作用があっても評価されない。
 
-This built-in function can return an lvalue if the chosen argument is an
-lvalue.
+この組み込み関数は、選択した引数が左辺値の場合は左辺値を返す。
 
-If @var{exp1} is returned, the return type is the same as @var{exp1}'s
-type.  Similarly, if @var{exp2} is returned, its return type is the same
-as @var{exp2}.
+@var{exp1}が返された場合、戻り値の型は@var{exp1}の型と同じである。 同様に、@var{exp2}が返された場合、その戻り値の型は@var{exp2}と同じである。
 
-Example:
+例：
 
 @smallexample
 #define foo(x)                                                    \
@@ -7922,25 +7815,13 @@ Example:
       (void)0))
 @end smallexample
 
-@emph{Note:} This construct is only available for C@.  Furthermore, the
-unused expression (@var{exp1} or @var{exp2} depending on the value of
-@var{const_exp}) may still generate syntax errors.  This may change in
-future revisions.
+@emph{注意:} この構造はCでのみ利用可能である。さらに、未使用の式（@var{const_exp}の値に応じて@var{exp1}または@var{exp2}）でも構文エラーが発生する可能性がある。 これは将来の改訂で変更される可能性がある。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} @var{type} __builtin_tgmath (@var{functions}, @var{arguments})
 
-The built-in function @code{__builtin_tgmath}, available only for C
-and Objective-C, calls a function determined according to the rules of
-@code{<tgmath.h>} macros.  It is intended to be used in
-implementations of that header, so that expansions of macros from that
-header only expand each of their arguments once, to avoid problems
-when calls to such macros are nested inside the arguments of other
-calls to such macros; in addition, it results in better diagnostics
-for invalid calls to @code{<tgmath.h>} macros than implementations
-using other GNU C language features.  For example, the @code{pow}
-type-generic macro might be defined as:
+CおよびObjective-Cでのみ使用できる組み込み関数@code{__ builtin_tgmath}は、@code{<tgmath.h>}マクロの規則に従って決定された関数を呼び出す。 そのヘッダーの実装で使用することを意図している。そのヘッダーからのマクロの展開は、そのマクロの呼び出しがそのマクロへの他の呼び出しの引数の中に入れ子になっているときの問題を避けるために、 さらに、他のGNU C言語機能を使用する実装よりも、@code{<tgmath.h>}マクロに対する無効な呼び出しの診断が向上する。 たとえば、@code{pow}型汎用マクロは次のように定義される。
 
 @smallexample
 #define pow(a, b) __builtin_tgmath (powf, pow, powl, \
