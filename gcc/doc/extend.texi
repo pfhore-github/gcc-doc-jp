@@ -7828,74 +7828,24 @@ CおよびObjective-Cでのみ使用できる組み込み関数@code{__ builtin_
                                     cpowf, cpow, cpowl, a, b)
 @end smallexample
 
-The arguments to @code{__builtin_tgmath} are at least two pointers to
-functions, followed by the arguments to the type-generic macro (which
-will be passed as arguments to the selected function).  All the
-pointers to functions must be pointers to prototyped functions, none
-of which may have variable arguments, and all of which must have the
-same number of parameters; the number of parameters of the first
-function determines how many arguments to @code{__builtin_tgmath} are
-interpreted as function pointers, and how many as the arguments to the
-called function.
+@code{__builtin_tgmath}への引数は、関数への少なくとも2つのポインタと、型ジェネリックマクロへの引数（選択された関数への引数として渡される）である。 関数へのポインタはプロトタイプ関数へのポインタでなければならず、そのいずれも可変引数を持たず、すべてが同じ数のパラメータを持たなければならない。 最初の関数のパラメータの数は、@code{__builtin_tgmath}に対する引数の数を関数ポインタとして解釈し、呼び出された関数への引数の数を決定する。
 
-The types of the specified functions must all be different, but
-related to each other in the same way as a set of functions that may
-be selected between by a macro in @code{<tgmath.h>}.  This means that
-the functions are parameterized by a floating-point type @var{t},
-different for each such function.  The function return types may all
-be the same type, or they may be @var{t} for each function, or they
-may be the real type corresponding to @var{t} for each function (if
-some of the types @var{t} are complex).  Likewise, for each parameter
-position, the type of the parameter in that position may always be the
-same type, or may be @var{t} for each function (this case must apply
-for at least one parameter position), or may be the real type
-corresponding to @var{t} for each function.
+指定された関数の型はすべて異なっていなければならないが、@code{<tgmath.h>}内のマクロによって選択される関数のセットと同じ方法で互いに関連している必要がある。 これは、関数がそのような関数ごとに異なる浮動小数点型@var{t}によってパラメータ化されていることを意味する。 関数の戻り値の型は、すべて同じ型でもよいし、それぞれの関数で@var{t}であってもよいし、それぞれの関数で@var{t}に対応する実数型（@var{t}型のいくつかが複素数であるならば）であってもよい。 同様に、各パラメータの位置について、その位置のパラメータの型は常に同じ型であるか、それぞれの関数で@var{t}であるか（この場合は少なくとも1つのパラメータの位置に適用する必要がある）か、または 各関数の@var {t}に対応する実数型であってもよい。
 
-The standard rules for @code{<tgmath.h>} macros are used to find a
-common type @var{u} from the types of the arguments for parameters
-whose types vary between the functions; complex integer types (a GNU
-extension) are treated like @code{_Complex double} for this purpose
-(or @code{_Complex _Float64} if all the function return types are the
-same @code{_Float@var{n}} or @code{_Float@var{n}x} type).
-If the function return types vary, or are all the same integer type,
-the function called is the one for which @var{t} is @var{u}, and it is
-an error if there is no such function.  If the function return types
-are all the same floating-point type, the type-generic macro is taken
-to be one of those from TS 18661 that rounds the result to a narrower
-type; if there is a function for which @var{t} is @var{u}, it is
-called, and otherwise the first function, if any, for which @var{t}
-has at least the range and precision of @var{u} is called, and it is
-an error if there is no such function.
+@code{<tgmath.h>}マクロの標準規則は、関数間で型が異なるパラメータの引数の型から共通型@var{u}を見つけるために使用される。複素整数型（GNU拡張）はこの目的では@code{_Complex double}のように扱われる。（もしくは、もし全関数戻り値型が同じ@code{_Float@var{n}}か@code{_Float@var{n}x}型ならば@code{_Complex _Float64}）関数の戻り値の型が異なる場合、またはすべてが同じ整数型の場合、呼び出される関数は@var{t}が@var{u}の関数であり、そのような関数がない場合はエラーとなる。 関数の戻り値の型がすべて同じ浮動小数点型である場合、型ジェネリックマクロは結果をより狭い型に丸めたTS 18661のマクロの1つと解釈される。 @var{t}が@var {u}である関数があればそれが呼び出され、そうでない場合は@var{t}が@var{u}が呼び出され、そのような関数がない場合はエラーとなる。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} @var{type} __builtin_complex (@var{real}, @var{imag})
 
-The built-in function @code{__builtin_complex} is provided for use in
-implementing the ISO C11 macros @code{CMPLXF}, @code{CMPLX} and
-@code{CMPLXL}.  @var{real} and @var{imag} must have the same type, a
-real binary floating-point type, and the result has the corresponding
-complex type with real and imaginary parts @var{real} and @var{imag}.
-Unlike @samp{@var{real} + I * @var{imag}}, this works even when
-infinities, NaNs and negative zeros are involved.
+組み込み関数@code{__builtin_complex}は、ISO C11マクロ@code{CMPLXF}、@code{CMPLX}、@ code{CMPLXL}の実装に使用される。 @var{real}と@var {imag}は同じ型、実際のバイナリ浮動小数点型を持つ必要があり、結果は実部と虚部が@var{real}と@var{imag}に対応する複素数型を持つ。@samp{@var{real} + I * @var{imag}}とは異なり、無限大、NaN、負のゼロが関与している場合でも、これは機能する。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_constant_p (@var{exp})
-You can use the built-in function @code{__builtin_constant_p} to
-determine if a value is known to be constant at compile time and hence
-that GCC can perform constant-folding on expressions involving that
-value.  The argument of the function is the value to test.  The function
-returns the integer 1 if the argument is known to be a compile-time
-constant and 0 if it is not known to be a compile-time constant.  A
-return of 0 does not indicate that the value is @emph{not} a constant,
-but merely that GCC cannot prove it is a constant with the specified
-value of the @option{-O} option.
+組み込み関数@code{__builtin_constant_p}を使用して、コンパイル時に値が定数位であることが分かり、GCCがその値を含む式に定数畳み込みを実行できるかどうかを判断できる。 関数の引数はテストする値である。 この関数は、引数がコンパイル時定数である場合は整数1を返し、コンパイル時定数でない場合は0を返す。 0が返されても、その値が定数で@emph{ない}のはなく、GCCが@option{-O}オプションの指定された値で定数であることを証明できないことを意味する。
 
-You typically use this function in an embedded application where
-memory is a critical resource.  If you have some complex calculation,
-you may want it to be folded if it involves constants, but need to call
-a function if it does not.  For example:
+通常、メモリを重要なリソースとする組み込みアプリケーションでこの機能を使用する。 複雑な計算をしている場合は、定数が含まれていれば畳み込みたいが、そうでない場合は関数を呼び出す必要があるかもしれない。 例えば：
 
 @smallexample
 #define Scale_Value(X)      \
@@ -7903,16 +7853,9 @@ a function if it does not.  For example:
   ? ((X) * SCALE + OFFSET) : Scale (X))
 @end smallexample
 
-You may use this built-in function in either a macro or an inline
-function.  However, if you use it in an inlined function and pass an
-argument of the function as the argument to the built-in, GCC 
-never returns 1 when you call the inline function with a string constant
-or compound literal (@pxref{Compound Literals}) and does not return 1
-when you pass a constant numeric value to the inline function unless you
-specify the @option{-O} option.
+この組み込み関数は、マクロ関数またはインライン関数のどちらでも使用できる。 しかし、インライン関数でそれを使用し、その関数の引数を組み込みの引数として渡すと、GCCは文字列定数または複合リテラル（@pxref {Compound Literals}）でインライン関数を呼び出すと決して1を返さない ）、@option{-O}オプションを指定しない限り、インライン関数に定数数値を渡すと1を返さない。
 
-You may also use @code{__builtin_constant_p} in initializers for static
-data.  For instance, you can write
+静的データのイニシャライザで@code{__builtin_constant_p}を使用することもできる。 たとえば、次のように書くことができる。
 
 @smallexample
 static const int table[] = @{
@@ -7922,28 +7865,14 @@ static const int table[] = @{
 @end smallexample
 
 @noindent
-This is an acceptable initializer even if @var{EXPRESSION} is not a
-constant expression, including the case where
-@code{__builtin_constant_p} returns 1 because @var{EXPRESSION} can be
-folded to a constant but @var{EXPRESSION} contains operands that are
-not otherwise permitted in a static initializer (for example,
-@code{0 && foo ()}).  GCC must be more conservative about evaluating the
-built-in in this case, because it has no opportunity to perform
-optimization.
+@var {EXPRESSION}が定数式にならない場合でも@code{__builtin_constant_p}が1を返す場合を含め、これは許容される初期化子である。@var{EXPRESSION}は静的イニシャライザ（@code{0 && foo（）}など）では他に許可されていない。 GCCは、最適化を実行する機会がないので、この場合の組み込み関数を評価することについてより慎重でなければならない。
 @end deftypefn
 
 @deftypefn {Built-in Function} long __builtin_expect (long @var{exp}, long @var{c})
 @opindex fprofile-arcs
-You may use @code{__builtin_expect} to provide the compiler with
-branch prediction information.  In general, you should prefer to
-use actual profile feedback for this (@option{-fprofile-arcs}), as
-programmers are notoriously bad at predicting how their programs
-actually perform.  However, there are applications in which this
-data is hard to collect.
+@code{__ builtin_expect}を使用して、分岐予測情報をコンパイラに提供することができる。 一般的に、プログラマーはプログラムが実際にどのように実行されるかを予測することが悪いことが多いので、これに実際のプロファイルフィードバック（@option{-fprofile-arcs}）を使用する方がよいだろう。 しかし、このデータを収集するのは難しいアプリケーションがある。
 
-The return value is the value of @var{exp}, which should be an integral
-expression.  The semantics of the built-in are that it is expected that
-@var{exp} == @var{c}.  For example:
+戻り値は、@var{exp}の値であり、これは整数式でなければならない。組み込みの意味は、@var{exp} == @var{c}が期待されることである。 例えば：
 
 @smallexample
 if (__builtin_expect (x, 0))
@@ -7951,9 +7880,7 @@ if (__builtin_expect (x, 0))
 @end smallexample
 
 @noindent
-indicates that we do not expect to call @code{foo}, since
-we expect @code{x} to be zero.  Since you are limited to integral
-expressions for @var{exp}, you should use constructions such as
+は@code{x}がゼロであると予想しているので、@code{foo}を呼び出すことを期待していないことを示す。 @var{exp}は整数に限られているので、ポインタ及び浮動小数点値をテストするときは
 
 @smallexample
 if (__builtin_expect (ptr != NULL, 1))
@@ -7961,28 +7888,17 @@ if (__builtin_expect (ptr != NULL, 1))
 @end smallexample
 
 @noindent
-when testing pointer or floating-point values.
+のような構造を使うべきである。
 @end deftypefn
 
 @deftypefn {Built-in Function} void __builtin_trap (void)
-This function causes the program to exit abnormally.  GCC implements
-this function by using a target-dependent mechanism (such as
-intentionally executing an illegal instruction) or by calling
-@code{abort}.  The mechanism used may vary from release to release so
-you should not rely on any particular implementation.
+この関数は、プログラムを異常終了させる。 GCCは、ターゲットに依存するメカニズム（意図的に不正な命令を実行するなど）を使用するか、@code{abort}を呼び出すことによってこの機能を実装する。 使用されるメカニズムはリリースごとに異なる場合があるので、特定の実装に依存するべきではない。
 @end deftypefn
 
 @deftypefn {Built-in Function} void __builtin_unreachable (void)
-If control flow reaches the point of the @code{__builtin_unreachable},
-the program is undefined.  It is useful in situations where the
-compiler cannot deduce the unreachability of the code.
+制御フローが@code{__ builtin_unreachable}のポイントに達すると、プログラムは未定義である。 これは、コンパイラがコードの到達不能を推定できない場合に便利である。
 
-One such case is immediately following an @code{asm} statement that
-either never terminates, or one that transfers control elsewhere
-and never returns.  In this example, without the
-@code{__builtin_unreachable}, GCC issues a warning that control
-reaches the end of a non-void function.  It also generates code
-to return after the @code{asm}.
+このようなケースの1つは、決して終わらないか、制御を他の場所に移して戻ってこない@code{asm}ステートメントの直後である。 この例では、@code{__builtin_unreachable}を指定せずに、GCCは制御が非void関数の終わりに達するという警告を出す。 @code{asm}の後ろに戻るコードも生成する。
 
 @smallexample
 int f (int c, int v)
@@ -8000,14 +7916,9 @@ int f (int c, int v)
 @end smallexample
 
 @noindent
-Because the @code{asm} statement unconditionally transfers control out
-of the function, control never reaches the end of the function
-body.  The @code{__builtin_unreachable} is in fact unreachable and
-communicates this fact to the compiler.
+@code{asm}文は無条件に関数から制御を移すので、制御は決して関数本体の終わりに達しない。 実際、@code {__builtin_unreachable}は到達不能で、この事実をコンパイラに伝える。
 
-Another use for @code{__builtin_unreachable} is following a call a
-function that never returns but that is not declared
-@code{__attribute__((noreturn))}, as in this example:
+@code{__builtin_unreachable}の別の使い方は、この例のように決して返らないが、@code{__attribute__((noreturn))}宣言されていない関数を呼び出すことである。
 
 @smallexample
 void function_that_never_returns (void);
