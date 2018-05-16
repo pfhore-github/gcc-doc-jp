@@ -7940,60 +7940,35 @@ int g (int c)
 @end deftypefn
 
 @deftypefn {Built-in Function} {void *} __builtin_assume_aligned (const void *@var{exp}, size_t @var{align}, ...)
-This function returns its first argument, and allows the compiler
-to assume that the returned pointer is at least @var{align} bytes
-aligned.  This built-in can have either two or three arguments,
-if it has three, the third argument should have integer type, and
-if it is nonzero means misalignment offset.  For example:
+この関数は最初の引数を返し、コンパイラは返されたポインタが少なくとも@var{align}バイト整列していると仮定することができるようにするます。 この組み込み関数は、2つまたは3つの引数を持つことができ、3つの引数を持つ場合、3つ目の引数は整数型を持ち、0以外の場合は位置合わせのオフセットを意味する。 例えば：
 
 @smallexample
 void *x = __builtin_assume_aligned (arg, 16);
 @end smallexample
 
 @noindent
-means that the compiler can assume @code{x}, set to @code{arg}, is at least
-16-byte aligned, while:
+コンパイラが@code{x}を@code{arg}に設定し、少なくとも16バイト整列していると仮定できることを意味する一方、
 
 @smallexample
 void *x = __builtin_assume_aligned (arg, 32, 8);
 @end smallexample
 
 @noindent
-means that the compiler can assume for @code{x}, set to @code{arg}, that
-@code{(char *) x - 8} is 32-byte aligned.
+コンパイラが@code{x}を@code{arg}に設定し、@code{(char *) x - 8}を32バイトに整列させることができることを意味する。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_LINE ()
-This function is the equivalent of the preprocessor @code{__LINE__}
-macro and returns a constant integer expression that evaluates to
-the line number of the invocation of the built-in.  When used as a C++
-default argument for a function @var{F}, it returns the line number
-of the call to @var{F}.
+この関数は、プリプロセッサの@code{__ LINE__}マクロに相当し、ビルトインの呼び出しの行番号を評価する定数の整数式を返す。 関数@var{F}のC++のデフォルト引数として使用すると、@var{F}への呼び出しの行番号を返す。
 @end deftypefn
 
 @deftypefn {Built-in Function} {const char *} __builtin_FUNCTION ()
-This function is the equivalent of the @code{__FUNCTION__} symbol
-and returns an address constant pointing to the name of the function
-from which the built-in was invoked, or the empty string if
-the invocation is not at function scope.  When used as a C++ default
-argument for a function @var{F}, it returns the name of @var{F}'s
-caller or the empty string if the call was not made at function
-scope.
+この関数は、@code{__FUNCTION__}シンボルに相当し、ビルトインが呼び出された関数の名前を指すアドレス定数を返す。呼び出しが関数スコープでない場合は空の文字列を返す。 @var{F}の関数のC++のデフォルト引数として使用すると、@var{F}の呼び出し元の名前、または関数スコープで呼び出しが行われなかった場合は空文字列が返される。
 @end deftypefn
 
 @deftypefn {Built-in Function} {const char *} __builtin_FILE ()
-This function is the equivalent of the preprocessor @code{__FILE__}
-macro and returns an address constant pointing to the file name
-containing the invocation of the built-in, or the empty string if
-the invocation is not at function scope.  When used as a C++ default
-argument for a function @var{F}, it returns the file name of the call
-to @var{F} or the empty string if the call was not made at function
-scope.
+この関数はプリプロセッサの@code{__FILE__}マクロに相当し、ビルトインの呼び出しを含むファイル名を指すアドレス定数を返す。呼び出しが関数スコープにない場合は空の文字列を返す。 関数@var{F}のC ++のデフォルト引数として使用すると、@var {F}への呼び出しのファイル名、または関数スコープで呼び出しが行われなかった場合は空文字列が返される。
 
-For example, in the following, each call to function @code{foo} will
-print a line similar to @code{"file.c:123: foo: message"} with the name
-of the file and the line number of the @code{printf} call, the name of
-the function @code{foo}, followed by the word @code{message}.
+たとえば、以下では、関数@code{foo}を呼び出すたびに、@code{"file.c:123:foo:message"}と同様の、@code{printf}呼び出しのファイル名と行番号、関数@code{foo}の名前、@code{message}という単語が続けて出力される。
 
 @smallexample
 const char*
@@ -8011,39 +7986,15 @@ void foo (void)
 @end deftypefn
 
 @deftypefn {Built-in Function} void __builtin___clear_cache (char *@var{begin}, char *@var{end})
-This function is used to flush the processor's instruction cache for
-the region of memory between @var{begin} inclusive and @var{end}
-exclusive.  Some targets require that the instruction cache be
-flushed, after modifying memory containing code, in order to obtain
-deterministic behavior.
+この関数は、プロセッサの命令キャッシュを@var{begin}と@var{end}との間のメモリ領域に対してフラッシュするために使用される。 確定的な振る舞いを得るためには、コードを含むメモリを変更した後には、命令キャッシュをフラッシュする必要がある。
 
-If the target does not require instruction cache flushes,
-@code{__builtin___clear_cache} has no effect.  Otherwise either
-instructions are emitted in-line to clear the instruction cache or a
-call to the @code{__clear_cache} function in libgcc is made.
+ターゲットが命令キャッシュのフラッシュを必要としない場合、@code{__builtin___clear_cache}は効果がない。 そうでなければ、命令キャッシュをクリアするインラインで発行されるか、libgccの@code{__ clear_cache}関数の呼び出しが行われるかのどちらかが行われる。
 @end deftypefn
 
 @deftypefn {Built-in Function} void __builtin_prefetch (const void *@var{addr}, ...)
-This function is used to minimize cache-miss latency by moving data into
-a cache before it is accessed.
-You can insert calls to @code{__builtin_prefetch} into code for which
-you know addresses of data in memory that is likely to be accessed soon.
-If the target supports them, data prefetch instructions are generated.
-If the prefetch is done early enough before the access then the data will
-be in the cache by the time it is accessed.
+この機能は、データがアクセスされる前にキャッシュにデータを移動することによって、キャッシュミスのレイテンシを最小限に抑えるために使用される。@code{__builtin_prefetch}への呼び出しを、すぐにアクセスされる可能性が高いメモリ内のデータのアドレスを知っているコードに挿入することができる。ターゲットがそれらをサポートする場合、データプリフェッチ命令が生成される。プリフェッチがアクセスの前に早めに行われた場合、データはアクセスされるまでにキャッシュに格納される。
 
-The value of @var{addr} is the address of the memory to prefetch.
-There are two optional arguments, @var{rw} and @var{locality}.
-The value of @var{rw} is a compile-time constant one or zero; one
-means that the prefetch is preparing for a write to the memory address
-and zero, the default, means that the prefetch is preparing for a read.
-The value @var{locality} must be a compile-time constant integer between
-zero and three.  A value of zero means that the data has no temporal
-locality, so it need not be left in the cache after the access.  A value
-of three means that the data has a high degree of temporal locality and
-should be left in all levels of cache possible.  Values of one and two
-mean, respectively, a low or moderate degree of temporal locality.  The
-default is three.
+@var {addr}の値は、プリフェッチするメモリのアドレスである。オプション引数@var{rw}と@var{locality}がある。@var{rw}の値はコンパイル時定数1または0である。 1は、プリフェッチがメモリアドレスへの書き込みを準備していることを意味し、0はデフォルトであり、プリフェッチが読み出しを準備していることを意味する。値@var{locality}は、0と3の間のコンパイル時定数でなければならない。 ゼロの値は、データに時間的局所性がないことを意味するため、アクセス後にキャッシュに残す必要はない。 値が3の場合、データの時間的局所性が高く、可能なすべてのレベルのキャッシュに残す必要がある。 1と2の値はそれぞれ、低いまたは中程度の時間的局所性を意味する。 デフォルトは3である。
 
 @smallexample
 for (i = 0; i < n; i++)
@@ -8055,296 +8006,226 @@ for (i = 0; i < n; i++)
   @}
 @end smallexample
 
-Data prefetch does not generate faults if @var{addr} is invalid, but
-the address expression itself must be valid.  For example, a prefetch
-of @code{p->next} does not fault if @code{p->next} is not a valid
-address, but evaluation faults if @code{p} is not a valid address.
+@var{addr}が無効な場合、データプリフェッチはフォルトを生成しない、アドレス式自体は有効でなければならない。 たとえば、@code{p->next}が有効なアドレスではない場合、@code{p->next}のプリフェッチは失敗しないが、@code{p}が有効なアドレスでない場合、評価に失敗する。
 
-If the target does not support data prefetch, the address expression
-is evaluated if it includes side effects but no other code is generated
-and GCC does not issue a warning.
+ターゲットがデータプリフェッチをサポートしていない場合、アドレス式は副作用が含まれていても他のコードは生成されず、GCCは警告を出さない。
 @end deftypefn
 
 @deftypefn {Built-in Function} double __builtin_huge_val (void)
-Returns a positive infinity, if supported by the floating-point format,
-else @code{DBL_MAX}.  This function is suitable for implementing the
-ISO C macro @code{HUGE_VAL}.
+浮動小数点形式でサポートされている場合は正の無限大を返し、そうでなければ@code{DBL_MAX}を返す。 この関数はISO Cマクロ@code{HUGE_VAL}を実装するのに適している。
 @end deftypefn
 
 @deftypefn {Built-in Function} float __builtin_huge_valf (void)
-Similar to @code{__builtin_huge_val}, except the return type is @code{float}.
+@code{__builtin_huge_val}と似ているが、戻り値の型は@code{float}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} {long double} __builtin_huge_vall (void)
-Similar to @code{__builtin_huge_val}, except the return
-type is @code{long double}.
+@code{__builtin_huge_val}と似ているが、戻り値の型は@code{long double}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} _Float@var{n} __builtin_huge_valf@var{n} (void)
-Similar to @code{__builtin_huge_val}, except the return type is
-@code{_Float@var{n}}.
+@code{__builtin_huge_val}と似ているが、戻り値の型は@code{_Float@var{n}}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} _Float@var{n}x __builtin_huge_valf@var{n}x (void)
-Similar to @code{__builtin_huge_val}, except the return type is
-@code{_Float@var{n}x}.
+@code{__builtin_huge_val}と似ているが、戻り値の型は@code{_Float@var{n}x}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_fpclassify (int, int, int, int, int, ...)
-This built-in implements the C99 fpclassify functionality.  The first
-five int arguments should be the target library's notion of the
-possible FP classes and are used for return values.  They must be
-constant values and they must appear in this order: @code{FP_NAN},
-@code{FP_INFINITE}, @code{FP_NORMAL}, @code{FP_SUBNORMAL} and
-@code{FP_ZERO}.  The ellipsis is for exactly one floating-point value
-to classify.  GCC treats the last argument as type-generic, which
-means it does not do default promotion from float to double.
+この組み込み関数は、C99 fpclassify機能を実装する。 最初の5つのint引数は、ターゲットライブラリの可能なFPクラスの概念でなければならず、戻り値として使用される。 これらは定数値でなければならず、次の順序で表示されなければならない。@code{FP_NAN}、@code{FP_INFINITE}、@code{FP_NORMAL}、@code{FP_SUBNORMAL}、@code{FP_ZERO}である。 省略記号は、正確に1つの浮動小数点値を分類するためのものである。 GCCは最後の引数を型ジェネリックとして扱う。つまり、floatからdoubleへのデフォルトの昇格は行わない。
 @end deftypefn
 
 @deftypefn {Built-in Function} double __builtin_inf (void)
-Similar to @code{__builtin_huge_val}, except a warning is generated
-if the target floating-point format does not support infinities.
+@code{__builtin_huge_val}と似ているが、ターゲット浮動小数点フォーマットが無限をサポートしていない場合に警告が生成される点が異なる。
 @end deftypefn
 
 @deftypefn {Built-in Function} _Decimal32 __builtin_infd32 (void)
-Similar to @code{__builtin_inf}, except the return type is @code{_Decimal32}.
+@code{__builtin_inf}と似ているが、戻り値の型は@code{_Decimal32}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} _Decimal64 __builtin_infd64 (void)
-Similar to @code{__builtin_inf}, except the return type is @code{_Decimal64}.
+@code{__builtin_inf}と似ているが、戻り値の型は@code{_Decimal64}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} _Decimal128 __builtin_infd128 (void)
-Similar to @code{__builtin_inf}, except the return type is @code{_Decimal128}.
+@code{__builtin_inf}と似ているが、戻り値の型は@code{_Decimal128}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} float __builtin_inff (void)
-Similar to @code{__builtin_inf}, except the return type is @code{float}.
-This function is suitable for implementing the ISO C99 macro @code{INFINITY}.
+@code{__builtin_inf}と似ているが、戻り値の型は@code{float}である。この関数は、ISO C99マクロ@code {INFINITY}を実装するのに適している。
 @end deftypefn
 
 @deftypefn {Built-in Function} {long double} __builtin_infl (void)
-Similar to @code{__builtin_inf}, except the return
-type is @code{long double}.
+@code{__builtin_inf}と似ているが、戻り値の型は@code{long double}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} _Float@var{n} __builtin_inff@var{n} (void)
-Similar to @code{__builtin_inf}, except the return
-type is @code{_Float@var{n}}.
+@code{__builtin_inf}と似ているが、戻り値の型は@code{_Float@var{n}}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} _Float@var{n} __builtin_inff@var{n}x (void)
-Similar to @code{__builtin_inf}, except the return
-type is @code{_Float@var{n}x}.
+@code{__builtin_inf}と似ているが、戻り値の型は@code{_Float@var{n}x}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_isinf_sign (...)
-Similar to @code{isinf}, except the return value is -1 for
-an argument of @code{-Inf} and 1 for an argument of @code{+Inf}.
-Note while the parameter list is an
-ellipsis, this function only accepts exactly one floating-point
-argument.  GCC treats this parameter as type-generic, which means it
-does not do default promotion from float to double.
+引数が@code{-inf}の場合-1、引数が@code{+Inf}の場合1であるのを除き、@code{isinf}と同様である。パラメータリストは省略記号だが、この関数は1つの浮動小数点引数のみを受け入れる。 GCCはこのパラメータを型ジェネリックとして扱う。つまり、floatからdoubleへのデフォルト昇格は行わない。
 @end deftypefn
 
 @deftypefn {Built-in Function} double __builtin_nan (const char *str)
-This is an implementation of the ISO C99 function @code{nan}.
+これは、ISO C99関数@code {nan}の実装である。
 
-Since ISO C99 defines this function in terms of @code{strtod}, which we
-do not implement, a description of the parsing is in order.  The string
-is parsed as by @code{strtol}; that is, the base is recognized by
-leading @samp{0} or @samp{0x} prefixes.  The number parsed is placed
-in the significand such that the least significant bit of the number
-is at the least significant bit of the significand.  The number is
-truncated to fit the significand field provided.  The significand is
-forced to be a quiet NaN@.
+ISO C99では、我々が実装していない@code{strtod}の観点からこの関数を定義しているので、解析の説明が順番になります。 文字列は@code{strtol}のように解析される。 つまり、基底は@samp{0}や@samp{0x}プレフィックスの先頭で認識される。 解析された数は、仮数部の最下位ビットが仮数部の最下位ビットになるように仮数部に配置される。 指定された仮数フィールドに合うように数値が切り捨てられｒｙ。 仮数部は静かなNaNでなければならない。
 
-This function, if given a string literal all of which would have been
-consumed by @code{strtol}, is evaluated early enough that it is considered a
-compile-time constant.
+この関数は、@code{strtol}によって消費された文字列リテラルが与えられた場合、コンパイル時定数と見なされるほど早く評価される。
 @end deftypefn
 
 @deftypefn {Built-in Function} _Decimal32 __builtin_nand32 (const char *str)
-Similar to @code{__builtin_nan}, except the return type is @code{_Decimal32}.
+@code{__builtin_nan}と似ているが、戻り値の型は@code{_Decimal32}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} _Decimal64 __builtin_nand64 (const char *str)
-Similar to @code{__builtin_nan}, except the return type is @code{_Decimal64}.
+@code{__builtin_nan}と似ているが、戻り値の型は@code{_Decimal64}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} _Decimal128 __builtin_nand128 (const char *str)
-Similar to @code{__builtin_nan}, except the return type is @code{_Decimal128}.
+@code{__builtin_nan}と似ているが、戻り値の型は@code{_Decimal128}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} float __builtin_nanf (const char *str)
-Similar to @code{__builtin_nan}, except the return type is @code{float}.
+@code{__builtin_nan}と似ているが、戻り値の型は@code{float}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} {long double} __builtin_nanl (const char *str)
-Similar to @code{__builtin_nan}, except the return type is @code{long double}.
+@code{__builtin_nan}と似ているが、戻り値の型は@code{long double}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} _Float@var{n} __builtin_nanf@var{n} (const char *str)
-Similar to @code{__builtin_nan}, except the return type is
-@code{_Float@var{n}}.
+@code{__builtin_nan}と似ているが、戻り値の型は@code{_Float@var{n}}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} _Float@var{n}x __builtin_nanf@var{n}x (const char *str)
-Similar to @code{__builtin_nan}, except the return type is
-@code{_Float@var{n}x}.
+@code{__builtin_nan}と似ているが、戻り値の型は@code{_Float@var{n}x}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} double __builtin_nans (const char *str)
-Similar to @code{__builtin_nan}, except the significand is forced
-to be a signaling NaN@.  The @code{nans} function is proposed by
-@uref{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n965.htm,,WG14 N965}.
+@code{__builtin_nan}と似ているが、仮数部は強制的にシグナリングNaNになる。 @code{nans}関数は
+@uref{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n965.htm,,WG14 N965}で提案されている。
 @end deftypefn
 
 @deftypefn {Built-in Function} float __builtin_nansf (const char *str)
-Similar to @code{__builtin_nans}, except the return type is @code{float}.
+@code{__builtin_nans}と似ているが、戻り値の型は@code{float}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} {long double} __builtin_nansl (const char *str)
-Similar to @code{__builtin_nans}, except the return type is @code{long double}.
+@code{__builtin_nans}と似ているが、戻り値の型は@code{long double}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} _Float@var{n} __builtin_nansf@var{n} (const char *str)
-Similar to @code{__builtin_nans}, except the return type is
-@code{_Float@var{n}}.
+@code{__builtin_nans}と似ているが、戻り値の型は@code{_Float@var{n}}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} _Float@var{n}x __builtin_nansf@var{n}x (const char *str)
-Similar to @code{__builtin_nans}, except the return type is
-@code{_Float@var{n}x}.
+@code{__builtin_nans}と似ているが、戻り値の型は@code{_Float@var{n}x}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_ffs (int x)
-Returns one plus the index of the least significant 1-bit of @var{x}, or
-if @var{x} is zero, returns zero.
+@var{x}の最下位1ビットのインデックスに1を加えたものを返すか、@var{x}がゼロの場合はゼロを返す。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_clz (unsigned int x)
-Returns the number of leading 0-bits in @var{x}, starting at the most
-significant bit position.  If @var{x} is 0, the result is undefined.
+@var{x}の先頭の0ビットの数を最上位ビット位置から返す。@var{x}が0の場合、結果は未定義である。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_ctz (unsigned int x)
-Returns the number of trailing 0-bits in @var{x}, starting at the least
-significant bit position.  If @var{x} is 0, the result is undefined.
+@var{x}の末尾の0ビットの数を最下位ビット位置から返す。 @var{x}が0の場合、結果は未定義である。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_clrsb (int x)
-Returns the number of leading redundant sign bits in @var{x}, i.e.@: the
-number of bits following the most significant bit that are identical
-to it.  There are no special cases for 0 or other values. 
+@var{x}の先頭にある冗長符号ビットの数を返す。つまり、それと同一の最上位ビットに続くビット数である。 0やその他の値には特別な場合はない。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_popcount (unsigned int x)
-Returns the number of 1-bits in @var{x}.
+@var {x}の1ビット数を返す。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_parity (unsigned int x)
-Returns the parity of @var{x}, i.e.@: the number of 1-bits in @var{x}
-modulo 2.
+@var{x}のパリティを返す。すなわち、2を法とする@var{x}の1ビットの数である。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_ffsl (long)
-Similar to @code{__builtin_ffs}, except the argument type is
-@code{long}.
+@code{__builtin_ffs}と似ているが、引数の型は@code{long}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_clzl (unsigned long)
-Similar to @code{__builtin_clz}, except the argument type is
-@code{unsigned long}.
+@code{__builtin_clz}と似ているが、引数の型は@code{unsigned long}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_ctzl (unsigned long)
-Similar to @code{__builtin_ctz}, except the argument type is
-@code{unsigned long}.
+@code{__builtin_cyz}と似ているが、引数の型は@code{unsigned long}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_clrsbl (long)
-Similar to @code{__builtin_clrsb}, except the argument type is
-@code{long}.
+@code{__builtin_clrsb}と似ているが、引数の型は@code{long}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_popcountl (unsigned long)
-Similar to @code{__builtin_popcount}, except the argument type is
-@code{unsigned long}.
+@code{__builtin_popcount}と似ているが、引数の型は@code{unsigned long}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_parityl (unsigned long)
-Similar to @code{__builtin_parity}, except the argument type is
-@code{unsigned long}.
+@code{__builtin_parity}と似ているが、引数の型は@code{unsigned long}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_ffsll (long long)
-Similar to @code{__builtin_ffs}, except the argument type is
-@code{long long}.
+@code{__builtin_ffs}と似ているが、引数の型は@code{long long}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_clzll (unsigned long long)
-Similar to @code{__builtin_clz}, except the argument type is
-@code{unsigned long long}.
+@code{__builtin_clz}と似ているが、引数の型は@code{unsigned long long}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_ctzll (unsigned long long)
-Similar to @code{__builtin_ctz}, except the argument type is
-@code{unsigned long long}.
+@code{__builtin_ctz}と似ているが、引数の型は@code{unsigned long long}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_clrsbll (long long)
-Similar to @code{__builtin_clrsb}, except the argument type is
-@code{long long}.
+@code{__builtin_clrsb}と似ているが、引数の型は@code{long long}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_popcountll (unsigned long long)
-Similar to @code{__builtin_popcount}, except the argument type is
-@code{unsigned long long}.
+@code{__builtin_popcount}と似ているが、引数の型は@code{unsigned long long}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_parityll (unsigned long long)
-Similar to @code{__builtin_parity}, except the argument type is
-@code{unsigned long long}.
+@code{__builtin_parity}と似ているが、引数の型は@code{unsigned long long}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} double __builtin_powi (double, int)
-Returns the first argument raised to the power of the second.  Unlike the
-@code{pow} function no guarantees about precision and rounding are made.
+最初の引数を2番目の累乗に戻して返す。 @code{pow}関数とは異なり、精度や丸めの保証はない。
 @end deftypefn
 
 @deftypefn {Built-in Function} float __builtin_powif (float, int)
-Similar to @code{__builtin_powi}, except the argument and return types
-are @code{float}.
+@code{__builtin_powi}と似ているが、引数と戻り値型は@code{float}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} {long double} __builtin_powil (long double, int)
-Similar to @code{__builtin_powi}, except the argument and return types
-are @code{long double}.
+@code{__builtin_powi}と似ているが、引数と戻り値型は@code{long double}である。
 @end deftypefn
 
 @deftypefn {Built-in Function} uint16_t __builtin_bswap16 (uint16_t x)
-Returns @var{x} with the order of the bytes reversed; for example,
-@code{0xaabb} becomes @code{0xbbaa}.  Byte here always means
-exactly 8 bits.
+バイトの順序を逆にして@var{x}を返す。 たとえば、@code{0xaabb}は@code{0xbbaa}になる。 ここでのバイトは常に正確に8ビットを意味しする。
 @end deftypefn
 
 @deftypefn {Built-in Function} uint32_t __builtin_bswap32 (uint32_t x)
-Similar to @code{__builtin_bswap16}, except the argument and return types
-are 32 bit.
+@code{__builtin_bswap16}と似ているが、引数と戻り値型は32ビットである。
 @end deftypefn
 
 @deftypefn {Built-in Function} uint64_t __builtin_bswap64 (uint64_t x)
-Similar to @code{__builtin_bswap32}, except the argument and return types
-are 64 bit.
+@code{__builtin_bswap32}と似ているが、引数と戻り値型は64ビットである。
 @end deftypefn
 
 @deftypefn {Built-in Function} Pmode __builtin_extend_pointer (void * x)
-On targets where the user visible pointer size is smaller than the size
-of an actual hardware address this function returns the extended user
-pointer.  Targets where this is true included ILP32 mode on x86_64 or
-Aarch64.  This function is mainly useful when writing inline assembly
-code.
+ユーザーの可視ポインタサイズが実際のハードウェアアドレスのサイズより小さいターゲットでは、この関数は拡張ユーザーポインタを返す。 これが真であるターゲットには、x86_64またはAarch64のILP32モードが含まれている。 この関数は、主にインラインアセンブリコードを記述するときに便利である。
 @end deftypefn
 
 @node Target Builtins
