@@ -8229,11 +8229,9 @@ ISO C99では、我々が実装していない@code{strtod}の観点からこの
 @end deftypefn
 
 @node Target Builtins
-@section Built-in Functions Specific to Particular Target Machines
+@section 特定のターゲット機種に固有の組み込み関数
 
-On some target machines, GCC supports many built-in functions specific
-to those machines.  Generally these generate calls to specific machine
-instructions, but allow the compiler to schedule those calls.
+一部のターゲットマシンでは、GCCはそれらのマシンに固有の組み込み関数を多くサポートしている。 一般に、これらは特定のマシン命令への呼び出しを生成するが、コンパイラーがそれらの呼び出しをスケジュールできるようする。
 
 @menu
 * AArch64 Built-in Functions::
@@ -8274,10 +8272,9 @@ instructions, but allow the compiler to schedule those calls.
 @end menu
 
 @node AArch64 Built-in Functions
-@subsection AArch64 Built-in Functions
+@subsection AArch64組み込み関数
 
-These built-in functions are available for the AArch64 family of
-processors.
+これらの組み込み関数は、AArch64ファミリのプロセッサで使用できる。
 @smallexample
 unsigned int __builtin_aarch64_get_fpcr ()
 void __builtin_aarch64_set_fpcr (unsigned int)
@@ -8286,13 +8283,11 @@ void __builtin_aarch64_set_fpsr (unsigned int)
 @end smallexample
 
 @node Alpha Built-in Functions
-@subsection Alpha Built-in Functions
+@subsection Alpha組み込み関数
 
-These built-in functions are available for the Alpha family of
-processors, depending on the command-line switches used.
+これらの組み込み関数は、使用されているコマンドラインスイッチに応じて、Alphaファミリのプロセッサで使用できる。
 
-The following built-in functions are always available.  They
-all generate the machine instruction that is part of the name.
+以下の組み込み関数は常に利用可能である。 それらはすべて、名前の一部である機械命令を生成する。
 
 @smallexample
 long __builtin_alpha_implver (void)
@@ -8325,10 +8320,7 @@ long __builtin_alpha_zap (long, long)
 long __builtin_alpha_zapnot (long, long)
 @end smallexample
 
-The following built-in functions are always with @option{-mmax}
-or @option{-mcpu=@var{cpu}} where @var{cpu} is @code{pca56} or
-later.  They all generate the machine instruction that is part
-of the name.
+以下の組み込み関数は、常に@option{-mmax}または@option{-mcpu=@var{cpu}}を使用する。@var{cpu}は@code{pca56}以降である。 それらはすべて、名前の一部である機械命令を生成する。
 
 @smallexample
 long __builtin_alpha_pklb (long)
@@ -8346,10 +8338,7 @@ long __builtin_alpha_maxsw4 (long, long)
 long __builtin_alpha_perr (long, long)
 @end smallexample
 
-The following built-in functions are always with @option{-mcix}
-or @option{-mcpu=@var{cpu}} where @var{cpu} is @code{ev67} or
-later.  They all generate the machine instruction that is part
-of the name.
+以下の組み込み関数は、常に@option{-mcix}または@option{-mcpu=@var{cpu}}で、@var{cpu}は@code{ev67}以降である。 それらはすべて、名前の一部である機械命令を生成する。
 
 @smallexample
 long __builtin_alpha_cttz (long)
@@ -8357,10 +8346,7 @@ long __builtin_alpha_ctlz (long)
 long __builtin_alpha_ctpop (long)
 @end smallexample
 
-The following built-in functions are available on systems that use the OSF/1
-PALcode.  Normally they invoke the @code{rduniq} and @code{wruniq}
-PAL calls, but when invoked with @option{-mtls-kernel}, they invoke
-@code{rdval} and @code{wrval}.
+以下の組み込み関数は、OSF/1 PALcodeを使用するシステムで使用できる。 通常は@code{rduniq}と@code{wruniq}のPAL呼び出しを呼び出すが、@option{-mtls-kernel}で呼び出されると、@code{rdval}と@code{wrval}が呼び出される。
 
 @smallexample
 void *__builtin_thread_pointer (void)
@@ -8368,13 +8354,11 @@ void __builtin_set_thread_pointer (void *)
 @end smallexample
 
 @node Altera Nios II Built-in Functions
-@subsection Altera Nios II Built-in Functions
+@subsection Altera Nios II組み込み関数
 
-These built-in functions are available for the Altera Nios II
-family of processors.
+これらの組み込み関数は、Altera Nios IIプロセッサ・ファミリで使用できる。
 
-The following built-in functions are always available.  They
-all generate the machine instruction that is part of the name.
+以下の組み込み関数は常に利用可能である。 それらはすべて、名前の一部である機械命令を生成する。
 
 @example
 int __builtin_ldbio (volatile const void *)
@@ -8399,32 +8383,25 @@ int __builtin_ldsex (volatile const void *)
 int __builtin_stsex (volatile void *, int)
 @end example
 
-The following built-in functions are always available.  They
-all generate a Nios II Custom Instruction. The name of the
-function represents the types that the function takes and
-returns. The letter before the @code{n} is the return type
-or void if absent. The @code{n} represents the first parameter
-to all the custom instructions, the custom instruction number.
-The two letters after the @code{n} represent the up to two
-parameters to the function.
+以下の組み込み関数は常に利用可能である。 それらはすべてNios IIカスタム命令を生成する。 関数の名前は、関数が受け取り、返す型を表す。 @code{n}の前の文字は戻り値の型である。存在しない場合はvoidである。 @code{n}は、すべてのカスタム命令の最初のパラメータ、つまりカスタム命令番号を表す。@code{n}の後の2文字は、関数の最大2つのパラメータを表す。
 
-The letters represent the following data types:
+文字は次のデータ型を表す。
 @table @code
 @item <no letter>
-@code{void} for return type and no parameter for parameter types.
+戻り値型では@code{void}、パラメータ型ではパラメータなし。
 
 @item i
-@code{int} for return type and parameter type
+戻り値型とパラメータ型で@code{int}
 
 @item f
-@code{float} for return type and parameter type
+戻り値型とパラメータ型で@code{float}
 
 @item p
-@code{void *} for return type and parameter type
+戻り値型とパラメータ型で@code{void*}
 
 @end table
 
-And the function names are:
+関数名は次のとおりである。
 @example
 void __builtin_custom_n (void)
 void __builtin_custom_ni (int)
@@ -8481,192 +8458,161 @@ void * __builtin_custom_pnpp (void *, void *)
 @end example
 
 @node ARC Built-in Functions
-@subsection ARC Built-in Functions
+@subsection ARC組み込み関数
 
-The following built-in functions are provided for ARC targets.  The
-built-ins generate the corresponding assembly instructions.  In the
-examples given below, the generated code often requires an operand or
-result to be in a register.  Where necessary further code will be
-generated to ensure this is true, but for brevity this is not
-described in each case.
+ARCターゲットには、次の組み込み関数が用意されている。 組み込み関数は、対応するアセンブリ命令を生成する。 以下の例では、生成されたコードでは、しばしばオペランドまたは結果がレジスタに存在する必要がある。 必要であれば、これが真実であることを保証するためにさらなるコードが生成されるが、簡潔にするために、これはそれぞれの場合に記載されていない。
 
-@emph{Note:} Using a built-in to generate an instruction not supported
-by a target may cause problems. At present the compiler is not
-guaranteed to detect such misuse, and as a result an internal compiler
-error may be generated.
+@emph{注意:} 組み込み関数を使用してターゲットでサポートされていない命令を生成すると、問題が発生する可能性がある。 現在のところ、コンパイラはそのような誤使用を検出することは保証されてなく、その結果、内部コンパイラエラーが生成される可能性がある。
 
 @deftypefn {Built-in Function} int __builtin_arc_aligned (void *@var{val}, int @var{alignval})
-Return 1 if @var{val} is known to have the byte alignment given
-by @var{alignval}, otherwise return 0.
-Note that this is different from
+@var{val}が@var{alignval}によって与えられたバイト配列を持つことがわかっている場合は1を返し、それ以外の場合は0を返す。これは、
 @smallexample
 __alignof__(*(char *)@var{val}) >= alignval
 @end smallexample
-because __alignof__ sees only the type of the dereference, whereas
-__builtin_arc_align uses alignment information from the pointer
-as well as from the pointed-to type.
-The information available will depend on optimization level.
+とは__alignof__は逆参照の型だけを参照するのに対し、__builtin_arc_alignはポインターから参照されたポ型の整列情報を使用するため、異なっていることに注意する。
+利用可能な情報は、最適化レベルによって異なる。
 @end deftypefn
 
 @deftypefn {Built-in Function} void __builtin_arc_brk (void)
-Generates
+以下を生成する
 @example
 brk
 @end example
 @end deftypefn
 
 @deftypefn {Built-in Function} {unsigned int} __builtin_arc_core_read (unsigned int @var{regno})
-The operand is the number of a register to be read.  Generates:
+オペランドは、読み込むレジスタの番号である。以下を生成する：
 @example
 mov  @var{dest}, r@var{regno}
 @end example
-where the value in @var{dest} will be the result returned from the
-built-in.
+ここで@var{dest}の値はビルトインから返された結果になる。
 @end deftypefn
 
 @deftypefn {Built-in Function} void __builtin_arc_core_write (unsigned int @var{regno}, unsigned int @var{val})
-The first operand is the number of a register to be written, the
-second operand is a compile time constant to write into that
-register.  Generates:
+第1オペランドは書き込まれるレジスタの番号であり、第2オペランドはそのレジスタに書き込むコンパイル時定数である。以下を生成する：
 @example
 mov  r@var{regno}, @var{val}
 @end example
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_arc_divaw (int @var{a}, int @var{b})
-Only available if either @option{-mcpu=ARC700} or @option{-meA} is set.
-Generates:
+@option{-mcpu=ARC700}または@option{-meA}が設定されている場合にのみ使用できる。以下を生成する：
 @example
 divaw  @var{dest}, @var{a}, @var{b}
 @end example
-where the value in @var{dest} will be the result returned from the
-built-in.
+ここで@var{dest}の値は組み込みから返された結果になる。
 @end deftypefn
 
 @deftypefn {Built-in Function} void __builtin_arc_flag (unsigned int @var{a})
-Generates
+以下を生成する
 @example
 flag  @var{a}
 @end example
 @end deftypefn
 
 @deftypefn {Built-in Function} {unsigned int} __builtin_arc_lr (unsigned int @var{auxr})
-The operand, @var{auxv}, is the address of an auxiliary register and
-must be a compile time constant.  Generates:
+オペランド@var{auxv}は補助レジスタのアドレスであり、コンパイル時定数でなければならない。以下を生成する：
 @example
 lr  @var{dest}, [@var{auxr}]
 @end example
-Where the value in @var{dest} will be the result returned from the
-built-in.
+@var{dest}の値は、組み込み関数から返される結果になる。
 @end deftypefn
 
 @deftypefn {Built-in Function} void __builtin_arc_mul64 (int @var{a}, int @var{b})
-Only available with @option{-mmul64}.  Generates:
+@option{-mmul64}でのみ利用可能である。 以下を生成する：
 @example
 mul64  @var{a}, @var{b}
 @end example
 @end deftypefn
 
 @deftypefn {Built-in Function} void __builtin_arc_mulu64 (unsigned int @var{a}, unsigned int @var{b})
-Only available with @option{-mmul64}.  Generates:
+@option{-mmul64}でのみ利用可能である。 以下を生成する：
 @example
 mulu64  @var{a}, @var{b}
 @end example
 @end deftypefn
 
 @deftypefn {Built-in Function} void __builtin_arc_nop (void)
-Generates:
+以下を生成する：
 @example
 nop
 @end example
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_arc_norm (int @var{src})
-Only valid if the @samp{norm} instruction is available through the
-@option{-mnorm} option or by default with @option{-mcpu=ARC700}.
-Generates:
+@samp{norm}命令が@option{-mnorm}オプションで使用可能な場合、または@option{-mcpu=ARC700}でデフォルトで有効である。以下を生成する：
 @example
 norm  @var{dest}, @var{src}
 @end example
-Where the value in @var{dest} will be the result returned from the
-built-in.
+@var{dest}の値は、組み込み関数から返される結果になる。
 @end deftypefn
 
 @deftypefn {Built-in Function}  {short int} __builtin_arc_normw (short int @var{src})
-Only valid if the @samp{normw} instruction is available through the
-@option{-mnorm} option or by default with @option{-mcpu=ARC700}.
-Generates:
+@samp{normw}命令が@option{-mnorm}オプションで使用可能な場合、また@option{-mcpu = ARC700}ではデフォルトで有効である。以下を生成する：
 @example
 normw  @var{dest}, @var{src}
 @end example
-Where the value in @var{dest} will be the result returned from the
-built-in.
+@var{dest}の値は、組み込み関数から返される結果になる。
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_arc_rtie (void)
-Generates:
+以下を生成する：
 @example
 rtie
 @end example
 @end deftypefn
 
-@deftypefn {Built-in Function}  void __builtin_arc_sleep (int @var{a}
-Generates:
+@deftypefn {Built-in Function}  void __builtin_arc_sleep (int @var{a})
+以下を生成する：
 @example
 sleep  @var{a}
 @end example
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_arc_sr (unsigned int @var{auxr}, unsigned int @var{val})
-The first argument, @var{auxv}, is the address of an auxiliary
-register, the second argument, @var{val}, is a compile time constant
-to be written to the register.  Generates:
+最初の引数@var{auxv}は補助レジスタのアドレスで、2番目の引数@var{val}はレジスタに書き込まれるコンパイル時定数である。以下を生成する：
 @example
 sr  @var{auxr}, [@var{val}]
 @end example
 @end deftypefn
 
 @deftypefn {Built-in Function}  int __builtin_arc_swap (int @var{src})
-Only valid with @option{-mswap}.  Generates:
+@option{-mswap}でのみ有効である。以下を生成する。
 @example
 swap  @var{dest}, @var{src}
 @end example
-Where the value in @var{dest} will be the result returned from the
-built-in.
+@var{dest}の値は、組み込み関数から返される結果になる。
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_arc_swi (void)
-Generates:
+以下を生成する：
 @example
 swi
 @end example
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_arc_sync (void)
-Only available with @option{-mcpu=ARC700}.  Generates:
+@option{-mcpu=ARC700}でのみ利用可能である。以下を生成する。
 @example
 sync
 @end example
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_arc_trap_s (unsigned int @var{c})
-Only available with @option{-mcpu=ARC700}.  Generates:
+@option{-mcpu=ARC700}でのみ利用可能である。以下を生成する。
 @example
 trap_s  @var{c}
 @end example
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_arc_unimp_s (void)
-Only available with @option{-mcpu=ARC700}.  Generates:
+@option{-mcpu=ARC700}でのみ利用可能である。以下を生成する。
 @example
 unimp_s
 @end example
 @end deftypefn
 
-The instructions generated by the following builtins are not
-considered as candidates for scheduling.  They are not moved around by
-the compiler during scheduling, and thus can be expected to appear
-where they are put in the C code:
+次の組み込み関数によって生成される命令は、スケジューリングの候補とはみなされない。 スケジューリング中にコンパイラによって移動されることはないため、Cコードのどこに配置されるかは予測可能である。
 @example
 __builtin_arc_brk()
 __builtin_arc_core_read()
