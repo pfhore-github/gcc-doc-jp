@@ -8625,38 +8625,25 @@ __builtin_arc_swi()
 @end example
 
 @node ARC SIMD Built-in Functions
-@subsection ARC SIMD Built-in Functions
+@subsection ARC SIMD組み込み関数
 
-SIMD builtins provided by the compiler can be used to generate the
-vector instructions.  This section describes the available builtins
-and their usage in programs.  With the @option{-msimd} option, the
-compiler provides 128-bit vector types, which can be specified using
-the @code{vector_size} attribute.  The header file @file{arc-simd.h}
-can be included to use the following predefined types:
+コンパイラによって提供されるSIMD組み込み関数は、ベクトル命令を生成するために使用できる。 このセクションでは、使用可能な組み込み関数とそのプログラムでの使用法について説明する。 @option{-msimd}オプションを使用すると、コンパイラは128ビットのベクトル型を提供する。これは@code{vector_size}属性を使用して指定できる。 ヘッダーファイル@file{arc-simd.h}は、次の定義済み型を使用するためにインクルードできる。
 @example
 typedef int __v4si   __attribute__((vector_size(16)));
 typedef short __v8hi __attribute__((vector_size(16)));
 @end example
 
-These types can be used to define 128-bit variables.  The built-in
-functions listed in the following section can be used on these
-variables to generate the vector operations.
+これらの型を使用して、128ビットの変数を定義することができる。これらの変数で使用して、 次のセクションにリストされた組み込み関数を、ベクトル演算を生成するために使うことができる。
 
-For all builtins, @code{__builtin_arc_@var{someinsn}}, the header file
-@file{arc-simd.h} also provides equivalent macros called
-@code{_@var{someinsn}} that can be used for programming ease and
-improved readability.  The following macros for DMA control are also
-provided:
+@code{__builtin_arc_@var{someinsn}}のすべての組み込み関数について、ヘッダーファイル@file{arc-simd.h}には、プログラミングの容易さと読みやすさが向上したプログラミングに使用できる@code{_@var{someinsn}}という同等のマクロも用意されている。DMA制御用の以下のマクロも提供されている。
 @example
 #define _setup_dma_in_channel_reg _vdiwr
 #define _setup_dma_out_channel_reg _vdowr
 @end example
 
-The following is a complete list of all the SIMD built-ins provided
-for ARC, grouped by calling signature.
+以下は、ARCのために提供されるすべてのSIMDビルトインの完全なリストであり、呼び出しシグネチャでグループ化されている。
 
-The following take two @code{__v8hi} arguments and return a
-@code{__v8hi} result:
+次は2つの@code{__ v8hi}引数をとり、@code{__ v8hi}の結果を返す。
 @example
 __v8hi __builtin_arc_vaddaw (__v8hi, __v8hi)
 __v8hi __builtin_arc_vaddw (__v8hi, __v8hi)
@@ -8708,8 +8695,7 @@ __v8hi __builtin_arc_vxor (__v8hi, __v8hi)
 __v8hi __builtin_arc_vxoraw (__v8hi, __v8hi)
 @end example
 
-The following take one @code{__v8hi} and one @code{int} argument and return a
-@code{__v8hi} result:
+以下は@code{__ v8hi}と@code{int}引数をとり、@code{__ v8hi}の結果を返す：
 
 @example
 __v8hi __builtin_arc_vbaddw (__v8hi, int)
@@ -8722,18 +8708,16 @@ __v8hi __builtin_arc_vbrsubw (__v8hi, int)
 __v8hi __builtin_arc_vbsubw (__v8hi, int)
 @end example
 
-The following take one @code{__v8hi} argument and one @code{int} argument which
-must be a 3-bit compile time constant indicating a register number
-I0-I7.  They return a @code{__v8hi} result.
+次の1つの@code{__v8hi}引数と1つの@code{int}引数をとり、後者はレジスタ番号I0〜I7を示す3ビットのコンパイル時定数でなければならない。それらは@code{__v8hi}の結果を返す。
+
 @example
 __v8hi __builtin_arc_vasrw (__v8hi, const int)
 __v8hi __builtin_arc_vsr8 (__v8hi, const int)
 __v8hi __builtin_arc_vsr8aw (__v8hi, const int)
 @end example
 
-The following take one @code{__v8hi} argument and one @code{int}
-argument which must be a 6-bit compile time constant.  They return a
-@code{__v8hi} result.
+以下は1つの@code{__ v8hi}引数と1つの@code{int}引数をとり、後者は6ビットのコンパイル時定数でなければならない。 それらは@code{__v8hi}の結果を返す。
+
 @example
 __v8hi __builtin_arc_vasrpwbi (__v8hi, const int)
 __v8hi __builtin_arc_vasrrpwbi (__v8hi, const int)
@@ -8744,9 +8728,8 @@ __v8hi __builtin_arc_vsr8awi (__v8hi, const int)
 __v8hi __builtin_arc_vsr8i (__v8hi, const int)
 @end example
 
-The following take one @code{__v8hi} argument and one @code{int} argument which
-must be a 8-bit compile time constant.  They return a @code{__v8hi}
-result.
+以下は1つの@code{__v8hi}引数と1つの@code{int}引数を取り、後者は8ビットのコンパイル時定数でなければならない。それらは@code{__v8hi}の結果を返す。
+
 @example
 __v8hi __builtin_arc_vd6tapf (__v8hi, const int)
 __v8hi __builtin_arc_vmvaw (__v8hi, const int)
@@ -8754,17 +8737,16 @@ __v8hi __builtin_arc_vmvw (__v8hi, const int)
 __v8hi __builtin_arc_vmvzw (__v8hi, const int)
 @end example
 
-The following take two @code{int} arguments, the second of which which
-must be a 8-bit compile time constant.  They return a @code{__v8hi}
-result:
+以下は2つの@code{int}引数を取る。そのうち2つ目は8ビットのコンパイル時定数でなければならない。 それらは@code{__ v8hi}の結果を返す：
+
 @example
 __v8hi __builtin_arc_vmovaw (int, const int)
 __v8hi __builtin_arc_vmovw (int, const int)
 __v8hi __builtin_arc_vmovzw (int, const int)
 @end example
 
-The following take a single @code{__v8hi} argument and return a
-@code{__v8hi} result:
+以下は単一の@code{__ v8hi}引数をとり、@code{__ v8hi}の結果を返す：
+
 @example
 __v8hi __builtin_arc_vabsaw (__v8hi)
 __v8hi __builtin_arc_vabsw (__v8hi)
@@ -8779,21 +8761,21 @@ __v8hi __builtin_arc_vupsbaw (__v8hi)
 __v8hi __builtin_arc_vupsbw (__v8hi)
 @end example
 
-The following take two @code{int} arguments and return no result:
+以下は2つの@code{int}引数をとり、結果を返さない：
+
 @example
 void __builtin_arc_vdirun (int, int)
 void __builtin_arc_vdorun (int, int)
 @end example
 
-The following take two @code{int} arguments and return no result.  The
-first argument must a 3-bit compile time constant indicating one of
-the DR0-DR7 DMA setup channels:
+以下は2つの@code{int}引数をとり、結果を返さない。 最初の引数は、DR0-DR7 DMAセットアップチャネルの1つを示す3ビットのコンパイル時定数でなければならない。
 @example
 void __builtin_arc_vdiwr (const int, int)
 void __builtin_arc_vdowr (const int, int)
 @end example
 
-The following take an @code{int} argument and return no result:
+以下は@code{int}引数をとり、結果を返さない：
+
 @example
 void __builtin_arc_vendrec (int)
 void __builtin_arc_vrec (int)
@@ -8801,15 +8783,9 @@ void __builtin_arc_vrecrun (int)
 void __builtin_arc_vrun (int)
 @end example
 
-The following take a @code{__v8hi} argument and two @code{int}
-arguments and return a @code{__v8hi} result.  The second argument must
-be a 3-bit compile time constants, indicating one the registers I0-I7,
-and the third argument must be an 8-bit compile time constant.
+以下は@code{__v8hi}引数と2つの@code{int}引数をとり、@code{__v8hi}の結果を返す。 2番目の引数は3ビットのコンパイル時定数で、レジスタI0〜I7の1つを示し、3番目の引数は8ビットのコンパイル時定数でなければならない。
 
-@emph{Note:} Although the equivalent hardware instructions do not take
-an SIMD register as an operand, these builtins overwrite the relevant
-bits of the @code{__v8hi} register provided as the first argument with
-the value loaded from the @code{[Ib, u8]} location in the SDM.
+@emph{注意:} 同等のハードウェア命令はオペランドとしてSIMDレジスタを取らないが、これらの組み込み関数では、第1引数として提供される@code{__ v8hi}レジスタの関連ビットをSDMでの@code{[Ib、u8]}位置からロードされた値で上書きする。
 
 @example
 __v8hi __builtin_arc_vld32 (__v8hi, const int, const int)
@@ -8818,32 +8794,21 @@ __v8hi __builtin_arc_vld32wl (__v8hi, const int, const int)
 __v8hi __builtin_arc_vld64 (__v8hi, const int, const int)
 @end example
 
-The following take two @code{int} arguments and return a @code{__v8hi}
-result.  The first argument must be a 3-bit compile time constants,
-indicating one the registers I0-I7, and the second argument must be an
-8-bit compile time constant.
+以下は2つの@code{int}引数をとり、@code{__ v8hi}の結果を返す。 最初の引数は3ビットのコンパイル時定数で、レジスタI0〜I7の1つを示し、2番目の引数は8ビットのコンパイル時定数でなければならない。
 
 @example
 __v8hi __builtin_arc_vld128 (const int, const int)
 __v8hi __builtin_arc_vld64w (const int, const int)
 @end example
 
-The following take a @code{__v8hi} argument and two @code{int}
-arguments and return no result.  The second argument must be a 3-bit
-compile time constants, indicating one the registers I0-I7, and the
-third argument must be an 8-bit compile time constant.
+以下は@code{__v8hi}引数と2つの@code{int}引数をとり、結果を返さない。 2番目の引数は3ビットのコンパイル時定数で、レジスタI0〜I7の1つを示し、3番目の引数は8ビットのコンパイル時定数でなければならない。
 
 @example
 void __builtin_arc_vst128 (__v8hi, const int, const int)
 void __builtin_arc_vst64 (__v8hi, const int, const int)
 @end example
 
-The following take a @code{__v8hi} argument and three @code{int}
-arguments and return no result.  The second argument must be a 3-bit
-compile-time constant, identifying the 16-bit sub-register to be
-stored, the third argument must be a 3-bit compile time constants,
-indicating one the registers I0-I7, and the fourth argument must be an
-8-bit compile time constant.
+以下は@code{__v8hi}引数と@code{int}引数をとり、結果を返さない。 2番目の引数は、格納される16ビットのサブレジスタを識別する3ビットのコンパイル時定数でなければならず、3番目の引数はレジスタI0〜I7の1つを示す3ビットのコンパイル時定数でなければならず、4番目の引数は8ビットのコンパイル時定数でなければならない。
 
 @example
 void __builtin_arc_vst16_n (__v8hi, const int, const int, const int)
