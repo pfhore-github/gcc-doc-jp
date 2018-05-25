@@ -8816,10 +8816,9 @@ void __builtin_arc_vst32_n (__v8hi, const int, const int, const int)
 @end example
 
 @node ARM iWMMXt Built-in Functions
-@subsection ARM iWMMXt Built-in Functions
+@subsection ARM iWMMXt組み込み関数
 
-These built-in functions are available for the ARM family of
-processors when the @option{-mcpu=iwmmxt} switch is used:
+これらの組み込み関数は、@option {-mcpu=iwmmxt}スイッチを使用すると、ARMファミリのプロセッサで使用できる。
 
 @smallexample
 typedef int v2si __attribute__ ((vector_size (8)));
@@ -8970,34 +8969,20 @@ long long __builtin_arm_wzero ()
 
 
 @node ARM C Language Extensions (ACLE)
-@subsection ARM C Language Extensions (ACLE)
+@subsection ARM C言語拡張(ACLE)
 
-GCC implements extensions for C as described in the ARM C Language
-Extensions (ACLE) specification, which can be found at
-@uref{http://infocenter.arm.com/help/topic/com.arm.doc.ihi0053c/IHI0053C_acle_2_0.pdf}.
+GCCは、@uref{http://infocenter.arm.com/help/topic/com.arm.doc.ihi0053c/IHI0053C_acle_2_0.pdf}で見つかるARM C言語拡張（ACLE）仕様に記述されている、Cの拡張を実装している。
 
-As a part of ACLE, GCC implements extensions for Advanced SIMD as described in
-the ARM C Language Extensions Specification.  The complete list of Advanced SIMD
-intrinsics can be found at
-@uref{http://infocenter.arm.com/help/topic/com.arm.doc.ihi0073a/IHI0073A_arm_neon_intrinsics_ref.pdf}.
-The built-in intrinsics for the Advanced SIMD extension are available when
-NEON is enabled.
+GCCはACLEの一部として、ARM C言語拡張仕様で説明されているように拡張SIMDの拡張を実装している。 高度なSIMD組み込み関数の完全なリストは@uref{http://infocenter.arm.com/help/topic/com.arm.doc.ihi0073a/IHI0073A_arm_neon_intrinsics_ref.pdf}で見つかる。拡張SIMD拡張の組み込み関数は、NEONが有効な場合に使用できる。
 
-Currently, ARM and AArch64 back ends do not support ACLE 2.0 fully.  Both
-back ends support CRC32 intrinsics and the ARM back end supports the
-Coprocessor intrinsics, all from @file{arm_acle.h}.  The ARM back end's 16-bit
-floating-point Advanced SIMD intrinsics currently comply to ACLE v1.1.
-AArch64's back end does not have support for 16-bit floating point Advanced SIMD
-intrinsics yet.
+現在、ARMおよびAArch64のバックエンドは、ACLE 2.0を完全にサポートしていない。 両方のバックエンドはCRC32の組み込み関数をサポートし、ARMのバックエンドは@file{arm_acle.h}のコプロセッサー組み込み関数をサポートしている。 ARMバックエンドの16ビット浮動小数点アドバンストSIMD組み込み関数は、現在、ACLE v1.1に準拠している。AArch64のバックエンドはまだ16ビット浮動小数点アドバンストSIMD組み込み関数をサポートしていない。
 
-See @ref{ARM Options} and @ref{AArch64 Options} for more information on the
-availability of extensions.
+拡張機能の利用可能性の詳細については、@ref{ARM Options}と@ref{AArch64 Options}を参照せよ。
 
 @node ARM Floating Point Status and Control Intrinsics
-@subsection ARM Floating Point Status and Control Intrinsics
+@subsection ARM浮動小数点ステータスと制御組み込み関数
 
-These built-in functions are available for the ARM family of
-processors with floating-point unit.
+これらの組み込み関数は、浮動小数点ユニットを持つARMファミリのプロセッサで使用できる。
 
 @smallexample
 unsigned int __builtin_arm_get_fpscr ()
@@ -9005,18 +8990,13 @@ void __builtin_arm_set_fpscr (unsigned int)
 @end smallexample
 
 @node ARM ARMv8-M Security Extensions
-@subsection ARM ARMv8-M Security Extensions
+@subsection ARM ARMv8-Mセキュリティ拡張
 
-GCC implements the ARMv8-M Security Extensions as described in the ARMv8-M
-Security Extensions: Requirements on Development Tools Engineering
-Specification, which can be found at
-@uref{http://infocenter.arm.com/help/topic/com.arm.doc.ecm0359818/ECM0359818_armv8m_security_extensions_reqs_on_dev_tools_1_0.pdf}.
+GCCは、@uref{http://infocenter.arm.com/help/topic/com.arm.doc.ecm0359818/ECM0359818_armv8m_security_extensions_reqs_on_dev_tools_1_0.pdf}で見つかる「ARMv8-Mセキュリティ拡張：開発ツールのエンジニアリング仕様に関する要件」で説明されている、ARMv8-Mセキュリティ拡張を実装している。
 
-As part of the Security Extensions GCC implements two new function attributes:
-@code{cmse_nonsecure_entry} and @code{cmse_nonsecure_call}.
+セキュリティ拡張の一部として、GCCは2つの新しい関数属性、@code{cmse_nonsecure_entry}と@code{cmse_nonsecure_call}を実装している。
 
-As part of the Security Extensions GCC implements the intrinsics below.  FPTR
-is used here to mean any function pointer type.
+セキュリティ拡張の一部として、GCCは以下の組み込み関数を実装する。 FPTRは、関数のポインタ型を意味するためにここで使用される。
 
 @smallexample
 cmse_address_info_t cmse_TT (void *)
