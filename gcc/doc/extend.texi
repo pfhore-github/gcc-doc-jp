@@ -9100,13 +9100,9 @@ unsigned fract get_bits (uint_ur_t uval)
 @end smallexample
 
 @node Blackfin Built-in Functions
-@subsection Blackfin Built-in Functions
+@subsection Blackfin組み込み関数
 
-Currently, there are two Blackfin-specific built-in functions.  These are
-used for generating @code{CSYNC} and @code{SSYNC} machine insns without
-using inline assembly; by using these built-in functions the compiler can
-automatically add workarounds for hardware errata involving these
-instructions.  These functions are named as follows:
+現在、Blackfin固有の組み込み関数が2つある。 これらは、インラインアセンブリを使用せずに@code{CSYNC}と@code{SSYNC}マシン命令を生成するために使用される。 これらの組み込み関数を使用することにより、コンパイラはこれらの命令を含むハードウェアエラッタの回避策を自動的に追加できる。 これらの関数の名前は次のとおりである。
 
 @smallexample
 void __builtin_bfin_csync (void)
