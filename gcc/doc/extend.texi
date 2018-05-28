@@ -7698,7 +7698,7 @@ ISO C90関数
 @code{strlen}, @code{strncat}, @code{strncmp}, @code{strncpy},
 @code{strpbrk}, @code{strrchr}, @code{strspn}, @code{strstr},
 @code{tanh}, @code{tan}, @code{vfprintf}, @code{vprintf}, @code{vsprintf}
-はすべて、@option{-fno-builtin}が指定されている（もしくは個別の関数に対して@option{-fno-builtin-@var{function}が指定されている）のでない限り、組み込み関数として認識される。これらの関数はすべて対応する接頭辞@code{__builtin_}つきのバージョンがある。
+はすべて、@option{-fno-builtin}が指定されている（もしくは個別の関数に対して@option{-fno-builtin-@var{function}}が指定されている）のでない限り、組み込み関数として認識される。これらの関数はすべて対応する接頭辞@code{__builtin_}つきのバージョンがある。
 
 GCCには、順序付けられていないオペランドに対する例外を発生させない、ISO C99浮動小数点比較マクロの組み込みバージョンが用意されている。 標準マクロ（@code{isgreater}、@code{isgreaterequal}、@code{isless}、@code{islessequre}、@code{islessgreater}、@code{isunordered}）と同じ名前を持ち、@code{__builtin_}が接頭辞付きである。ライブラリの実装者が各標準マクロを組み込み関数に@code{#define}できるようにするためを意図している。同じ方法で、GCCは@code{__ builtin_}を接頭辞として使用して、@code{fpclassify}、@code{isfinite}、@code{isinf_sign}、@code{notnormal}および@code{signbit}組み込み関数を提供する。 @code{isinf}と@code{isnan}組み込み関数は、接頭辞@code{__ builtin_}の有無に関係なく存在する。
 
@@ -9014,13 +9014,9 @@ int cmse_nonsecure_caller (void)
 @end smallexample
 
 @node AVR Built-in Functions
-@subsection AVR Built-in Functions
+@subsection AVR組み込み関数
 
-For each built-in function for AVR, there is an equally named,
-uppercase built-in macro defined. That way users can easily query if
-or if not a specific built-in is implemented or not. For example, if
-@code{__builtin_avr_nop} is available the macro
-@code{__BUILTIN_AVR_NOP} is defined to @code{1} and undefined otherwise.
+AVRの組み込み関数ごとに、同じ名前の大文字の組み込みマクロが定義されている。 こうすることで、ユーザーは特定のビルトインが実装されているかどうかを簡単に照会できる。 たとえば、@code{__builtin_avr_nop}は利用可能ならば、マクロ@code{__BUILTIN_AVR_NOP}は@code {1}に定義され、それ以外の場合は未定義である。
 
 @table @code
 
@@ -9033,43 +9029,30 @@ or if not a specific built-in is implemented or not. For example, if
 @itemx unsigned int __builtin_avr_fmul (unsigned char, unsigned char)
 @itemx int __builtin_avr_fmuls (char, char)
 @itemx int __builtin_avr_fmulsu (char, unsigned char)
-These built-in functions map to the respective machine
-instruction, i.e.@: @code{nop}, @code{sei}, @code{cli}, @code{sleep},
-@code{wdr}, @code{swap}, @code{fmul}, @code{fmuls}
-resp. @code{fmulsu}. The three @code{fmul*} built-ins are implemented
-as library call if no hardware multiplier is available.
+これらの組み込み関数はそれぞれの機械命令に対応する、すなわち、それぞれ、@code{nop}, @code{sei}, @code{cli}, @code{sleep}, @code{wdr}, @code{swap}, @code{fmul}, @code{fmuls}, @code{fmulsu}. 
+3つの@code{fmul *}組み込み関数は、ハードウェア乗数がない場合はライブラリ呼び出しとして実装される。
 
 @item void __builtin_avr_delay_cycles (unsigned long ticks)
-Delay execution for @var{ticks} cycles. Note that this
-built-in does not take into account the effect of interrupts that
-might increase delay time. @var{ticks} must be a compile-time
-integer constant; delays with a variable number of cycles are not supported.
+@var{ticks}サイクルの遅延実行。 この組み込み関数は、遅延時間を増加させる可能性のある割り込みの影響を考慮していないことに注意せよ。 @var{ticks}はコンパイル時の整数定数でなければならない。 可変サイクル数の遅延はサポートされていない。
 
 @item char __builtin_avr_flash_segment (const __memx void*)
-This built-in takes a byte address to the 24-bit
-@ref{AVR Named Address Spaces,address space} @code{__memx} and returns
-the number of the flash segment (the 64 KiB chunk) where the address
-points to.  Counting starts at @code{0}.
-If the address does not point to flash memory, return @code{-1}.
+この組み込み関数は、24ビットの@ref{AVR Named Address Spaces,アドレス空間} @code {__ memx}にバイトアドレスを取り、アドレスが指すフラッシュセグメント（64 KiBチャンク）の番号を返す。 カウントは@code{0}から始まる。 アドレスがフラッシュメモリを指していない場合は、@code{-1}を返す。
 
 @item uint8_t __builtin_avr_insert_bits (uint32_t map, uint8_t bits, uint8_t val)
-Insert bits from @var{bits} into @var{val} and return the resulting
-value. The nibbles of @var{map} determine how the insertion is
-performed: Let @var{X} be the @var{n}-th nibble of @var{map}
+@var{bits}から@var{val}にビットを挿入し、結果の値を返す。 @var{map}のニブルは、挿入がどのように行われるかを決定する：@var{X}を@var{map}の@var{n}番目のニブルにするとき
 @enumerate
-@item If @var{X} is @code{0xf},
-then the @var{n}-th bit of @var{val} is returned unaltered.
+@item もし@var{X}が@code{0xf}ならば、
+@var{val}の@var{n}ビットは変更されずに返される。
 
-@item If X is in the range 0@dots{}7,
-then the @var{n}-th result bit is set to the @var{X}-th bit of @var{bits}
+@item もしXが範囲0から7ならば、
+@var{n}番目の結果ビットは@var{bits}の@var{X}ビットにセットされる
 
-@item If X is in the range 8@dots{}@code{0xe},
-then the @var{n}-th result bit is undefined.
+@item もしXが範囲8から@code{0xe}ならば、
+@ var {n}番目の結果ビットは未定義である。
 @end enumerate
 
 @noindent
-One typical use case for this built-in is adjusting input and
-output values to non-contiguous port layouts. Some examples:
+この組み込み関数の典型的な使用例の1つは、入力値と出力値を不連続なポートレイアウトに調整することです。 いくつかの例：
 
 @smallexample
 // same as val, bits is unused
@@ -9098,17 +9081,12 @@ __builtin_avr_insert_bits (0x01234567, bits, 0)
 @end smallexample
 
 @item void __builtin_avr_nops (unsigned count)
-Insert @var{count} @code{NOP} instructions.
-The number of instructions must be a compile-time integer constant.
+@var{count}の@code{NOP}命令を挿入する。命令の数は、コンパイル時の整数定数でなければならない。
 
 @end table
 
 @noindent
-There are many more AVR-specific built-in functions that are used to
-implement the ISO/IEC TR 18037 ``Embedded C'' fixed-point functions of
-section 7.18a.6.  You don't need to use these built-ins directly.
-Instead, use the declarations as supplied by the @code{stdfix.h} header
-with GNU-C99:
+ISO / IEC TR 18037 "Embedded C"の7.18a.6節の固定小数点関数を実装するために使用されるAVR固有の組み込み関数がさらに多くある。 これらの組み込み関数を直接使用する必要はない。代わりに、GNU-C99の@code{stdfix.h}ヘッダーで指定されている宣言を使用する。
 
 @smallexample
 #include <stdfix.h>
