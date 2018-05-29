@@ -9110,18 +9110,11 @@ void __builtin_bfin_ssync (void)
 @end smallexample
 
 @node FR-V Built-in Functions
-@subsection FR-V Built-in Functions
+@subsection FR-V組み込み関数
 
-GCC provides many FR-V-specific built-in functions.  In general,
-these functions are intended to be compatible with those described
-by @cite{FR-V Family, Softune C/C++ Compiler Manual (V6), Fujitsu
-Semiconductor}.  The two exceptions are @code{__MDUNPACKH} and
-@code{__MBTOHE}, the GCC forms of which pass 128-bit values by
-pointer rather than by value.
+GCCは多くのFR-V固有の組み込み関数を提供します。 一般に、これらの関数は@cite{FR-V Family, Softune C/C++ Compiler Manual (V6), Fujitsu Semiconductor}で記述されているものと互換性があることを意図している。 2つの例外は@code{__MDUNPACKH}と@code{__MBTOHE}で、GCC形式のものは値ではなくポインタで128ビットの値を渡す。
 
-Most of the functions are named after specific FR-V instructions.
-Such functions are said to be ``directly mapped'' and are summarized
-here in tabular form.
+ほとんどの機能は、特定のFR-V命令の名前に基づいている。そのような機能は「直接マッピング」されており、ここでは表形式で要約されている。
 
 @menu
 * Argument Types::
@@ -9132,51 +9125,40 @@ here in tabular form.
 @end menu
 
 @node Argument Types
-@subsubsection Argument Types
+@subsubsection 引数型
 
-The arguments to the built-in functions can be divided into three groups:
-register numbers, compile-time constants and run-time values.  In order
-to make this classification clear at a glance, the arguments and return
-values are given the following pseudo types:
+組み込み関数への引数は、レジスタ番号、コンパイル時定数、および実行時の値の3つのグループに分けられる。 この分類を一目瞭然にするために、引数と戻り値には次の擬似型が与えられる。
 
 @multitable @columnfractions .20 .30 .15 .35
-@item Pseudo type @tab Real C type @tab Constant? @tab Description
-@item @code{uh} @tab @code{unsigned short} @tab No @tab an unsigned halfword
-@item @code{uw1} @tab @code{unsigned int} @tab No @tab an unsigned word
-@item @code{sw1} @tab @code{int} @tab No @tab a signed word
+@item 擬似型 @tab 真のC型 @tab 定数? @tab 説明
+@item @code{uh} @tab @code{unsigned short} @tab No @tab 符号なしのハーフワード
+@item @code{uw1} @tab @code{unsigned int} @tab No @tab 符号なしのワード
+@item @code{sw1} @tab @code{int} @tab No @tab 符号ありのワード
 @item @code{uw2} @tab @code{unsigned long long} @tab No
-@tab an unsigned doubleword
-@item @code{sw2} @tab @code{long long} @tab No @tab a signed doubleword
-@item @code{const} @tab @code{int} @tab Yes @tab an integer constant
-@item @code{acc} @tab @code{int} @tab Yes @tab an ACC register number
-@item @code{iacc} @tab @code{int} @tab Yes @tab an IACC register number
+@tab 符号なしのダブルワード
+@item @code{sw2} @tab @code{long long} @tab No @tab 符号ありのダブルワード
+@item @code{const} @tab @code{int} @tab Yes @tab 整数定数
+@item @code{acc} @tab @code{int} @tab Yes @tab ACCレジスタ番号
+@item @code{iacc} @tab @code{int} @tab Yes @tab IACCレジスタ番号
 @end multitable
 
-These pseudo types are not defined by GCC, they are simply a notational
-convenience used in this manual.
+これらの擬似型はGCCでは定義されていないが、本書では表記上の便宜のために使用している。
 
-Arguments of type @code{uh}, @code{uw1}, @code{sw1}, @code{uw2}
-and @code{sw2} are evaluated at run time.  They correspond to
-register operands in the underlying FR-V instructions.
+@code{uh}、@code{uw1}、@code{sw1}、@code{uw2}、@code{sw2}の引数は、実行時に評価される。 それらは、基礎をなすFR-V命令のレジスタオペランドに対応する。
 
-@code{const} arguments represent immediate operands in the underlying
-FR-V instructions.  They must be compile-time constants.
+@code{const}引数は、基になるFR-V命令の即値オペランドを表す。 コンパイル時定数でなければならない。
 
-@code{acc} arguments are evaluated at compile time and specify the number
-of an accumulator register.  For example, an @code{acc} argument of 2
-selects the ACC2 register.
+@code{acc}引数はコンパイル時に評価され、アキュムレータレジスタの数を指定する。 たとえば、2の@code{acc}引数はACC2レジスタを選択する。
 
-@code{iacc} arguments are similar to @code{acc} arguments but specify the
-number of an IACC register.  See @pxref{Other Built-in Functions}
-for more details.
+@code{iacc}引数は@code{acc}引数に似ているが、IACCレジスタの番号を指定する。 詳細については、@pxref{Other Built-in Functions}を参照せよ。
 
 @node Directly-mapped Integer Functions
-@subsubsection Directly-Mapped Integer Functions
+@subsubsection 直接マップされた整数関数
 
-The functions listed below map directly to FR-V I-type instructions.
+以下の関数は、FR-V Iタイプの命令に直接マップされている。
 
 @multitable @columnfractions .45 .32 .23
-@item Function prototype @tab Example usage @tab Assembly output
+@item 関数プロトタイプ @tab 使用例 @tab アセンブリの出力
 @item @code{sw1 __ADDSS (sw1, sw1)}
 @tab @code{@var{c} = __ADDSS (@var{a}, @var{b})}
 @tab @code{ADDSS @var{a},@var{b},@var{c}}
@@ -9210,12 +9192,12 @@ The functions listed below map directly to FR-V I-type instructions.
 @end multitable
 
 @node Directly-mapped Media Functions
-@subsubsection Directly-Mapped Media Functions
+@subsubsection 直接マップされたメディア関数
 
-The functions listed below map directly to FR-V M-type instructions.
+以下の関数は、FR-V Mタイプの命令に直接マップされている。
 
 @multitable @columnfractions .45 .32 .23
-@item Function prototype @tab Example usage @tab Assembly output
+@item 関数プロトタイプ @tab 使用例 @tab アセンブリの出力
 @item @code{uw1 __MABSHS (sw1)}
 @tab @code{@var{b} = __MABSHS (@var{a})}
 @tab @code{MABSHS @var{a},@var{b}}
@@ -9483,12 +9465,9 @@ The functions listed below map directly to FR-V M-type instructions.
 @end multitable
 
 @node Raw read/write Functions
-@subsubsection Raw Read/Write Functions
+@subsubsection 生の読み書き関数
 
-This sections describes built-in functions related to read and write
-instructions to access memory.  These functions generate
-@code{membar} instructions to flush the I/O load and stores where
-appropriate, as described in Fujitsu's manual described above.
+このセクションでは、メモリにアクセスするための読み出しおよび書き込み命令に関連する組み込み関数について説明する。 これらの関数は、適切な場所でI / Oロード・ストアをフラッシュするための@code{membar}命令を生成する（前述の富士通のマニュアルに記載されている）。
 
 @table @code
 
@@ -9504,35 +9483,28 @@ appropriate, as described in Fujitsu's manual described above.
 @end table
 
 @node Other Built-in Functions
-@subsubsection Other Built-in Functions
+@subsubsection 他の組み込み関数
 
-This section describes built-in functions that are not named after
-a specific FR-V instruction.
+このセクションでは、特定のFR-V命令の後に命名されない組み込み関数について説明する。
 
 @table @code
 @item sw2 __IACCreadll (iacc @var{reg})
-Return the full 64-bit value of IACC0@.  The @var{reg} argument is reserved
-for future expansion and must be 0.
+IACC0の完全な64ビット値を返す。 @var{reg}引数は将来の拡張用に予約されており、0でなければならない。
 
 @item sw1 __IACCreadl (iacc @var{reg})
-Return the value of IACC0H if @var{reg} is 0 and IACC0L if @var{reg} is 1.
-Other values of @var{reg} are rejected as invalid.
+@var{reg}が0の場合はIACC0Hの値を返し、@var{reg}が1の場合はIACC0Lを返す。その他の@var{reg}の値は無効として拒否される。
 
 @item void __IACCsetll (iacc @var{reg}, sw2 @var{x})
-Set the full 64-bit value of IACC0 to @var{x}.  The @var{reg} argument
-is reserved for future expansion and must be 0.
+IACC0の全64ビット値を@var{x}に設定する。 @var{reg}引数は将来の拡張用に予約されており、0でなければならない。
 
 @item void __IACCsetl (iacc @var{reg}, sw1 @var{x})
-Set IACC0H to @var{x} if @var{reg} is 0 and IACC0L to @var{x} if @var{reg}
-is 1.  Other values of @var{reg} are rejected as invalid.
+@var{reg}が0の場合はIACC0Hを、@var{reg}が1の場合はIACC0Lを@var{x}に設定する。@var{reg}の他の値は無効として拒否される。
 
 @item void __data_prefetch0 (const void *@var{x})
-Use the @code{dcpl} instruction to load the contents of address @var{x}
-into the data cache.
+@code{dcpl}命令を使用してアドレス@var{x}の内容をデータキャッシュにロードする。
 
 @item void __data_prefetch (const void *@var{x})
-Use the @code{nldub} instruction to load the contents of address @var{x}
-into the data cache.  The instruction is issued in slot I1@.
+@code{nldub}命令を使用して、アドレス@var{x}の内容をデータキャッシュにロードする。 命令はスロットI1で発行される。
 @end table
 
 @node MIPS DSP Built-in Functions
