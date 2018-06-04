@@ -9508,37 +9508,17 @@ IACC0の全64ビット値を@var{x}に設定する。 @var{reg}引数は将来�
 @end table
 
 @node MIPS DSP Built-in Functions
-@subsection MIPS DSP Built-in Functions
+@subsection MIPS DSP組み込み関数
 
-The MIPS DSP Application-Specific Extension (ASE) includes new
-instructions that are designed to improve the performance of DSP and
-media applications.  It provides instructions that operate on packed
-8-bit/16-bit integer data, Q7, Q15 and Q31 fractional data.
+MIPS DSPアプリケーション固有拡張（ASE）には、DSPおよびメディアアプリケーションのパフォーマンスを向上させるための新しい命令が含まれている。 パックド8ビット/16ビット整数データ、Q7、Q15、Q31分数データで動作する命令を提供する。
 
-GCC supports MIPS DSP operations using both the generic
-vector extensions (@pxref{Vector Extensions}) and a collection of
-MIPS-specific built-in functions.  Both kinds of support are
-enabled by the @option{-mdsp} command-line option.
+GCCは、汎用ベクトル拡張（@pxref{Vector Extensions}）とMIPS固有の組み込み関数のコレクションの両方を使用してMIPS DSP演算をサポートしている。 どちらの種類のサポートも、@option{-mdsp}コマンドラインオプションによって有効になる。
 
-Revision 2 of the ASE was introduced in the second half of 2006.
-This revision adds extra instructions to the original ASE, but is
-otherwise backwards-compatible with it.  You can select revision 2
-using the command-line option @option{-mdspr2}; this option implies
-@option{-mdsp}.
+ASEのリビジョン2は2006年後半に導入された。このリビジョンでは、元のASEに追加の命令が追加されるが、それ以外の場合は後方互換性がある。 コマンド行オプション@option{-mdspr2}を使用してリビジョン2を選択できる。 このオプションは@option{-mdsp}を意味する。
 
-The SCOUNT and POS bits of the DSP control register are global.  The
-WRDSP, EXTPDP, EXTPDPV and MTHLIP instructions modify the SCOUNT and
-POS bits.  During optimization, the compiler does not delete these
-instructions and it does not delete calls to functions containing
-these instructions.
+DSP制御レジスタのSCOUNTビットとPOSビットはグローバルである。 WRDSP命令、EXTPDP命令、EXTPDPV命令、MTHLIP命令は、SCOUNTビットとPOSビットを変更する。 最適化中、コンパイラはこれらの命令を削除せず、これらの命令を含む関数への呼び出しも削除しない。
 
-At present, GCC only provides support for operations on 32-bit
-vectors.  The vector type associated with 8-bit integer data is
-usually called @code{v4i8}, the vector type associated with Q7
-is usually called @code{v4q7}, the vector type associated with 16-bit
-integer data is usually called @code{v2i16}, and the vector type
-associated with Q15 is usually called @code{v2q15}.  They can be
-defined in C as follows:
+現在のところ、GCCは32ビット・ベクタに対する演算のみをサポートしている。 8ビットの整数データに関連付けられたベクトル型は通常@code{v4i8}と呼ばれ、Q7に関連付けられたベクトル型は通常@code{v4q7}と呼ばれ、16ビット整数データに関連付けられたベクトル型は通常@code{v2i16}と呼ばれ、Q15に関連付けられたベクトル型は通常@code{v2q15}と呼ばれる。 それらはCで次のように定義できる。
 
 @smallexample
 typedef signed char v4i8 __attribute__ ((vector_size(4)));
@@ -9547,8 +9527,7 @@ typedef short v2i16 __attribute__ ((vector_size(4)));
 typedef short v2q15 __attribute__ ((vector_size(4)));
 @end smallexample
 
-@code{v4i8}, @code{v4q7}, @code{v2i16} and @code{v2q15} values are
-initialized in the same way as aggregates.  For example:
+@code{v4i8}、@code{v4q7}、@code{v2i16}および@code{v2q15}の値は、集計と同じ方法で初期化される。 例えば：
 
 @smallexample
 v4i8 a = @{1, 2, 3, 4@};
@@ -9560,43 +9539,28 @@ v2q15 d;
 d = (v2q15) @{0.1234 * 0x1.0p15, 0.4567 * 0x1.0p15@};
 @end smallexample
 
-@emph{Note:} The CPU's endianness determines the order in which values
-are packed.  On little-endian targets, the first value is the least
-significant and the last value is the most significant.  The opposite
-order applies to big-endian targets.  For example, the code above
-sets the lowest byte of @code{a} to @code{1} on little-endian targets
-and @code{4} on big-endian targets.
+@emph{注意:} CPUのエンディアンは、値がパックされる順序を決定する。 リトルエンディアンのターゲットでは、最初の値が最下位であり、最後の値が最上位である。 反対の順序はビッグエンディアンのターゲットに適用される。 たとえば、上記のコードは、リトルエンディアンのターゲットで@code{a}の最下位バイトを@code{1}に、ビッグエンディアンのターゲットで@code{4}に設定する。
 
-@emph{Note:} Q7, Q15 and Q31 values must be initialized with their integer
-representation.  As shown in this example, the integer representation
-of a Q7 value can be obtained by multiplying the fractional value by
-@code{0x1.0p7}.  The equivalent for Q15 values is to multiply by
-@code{0x1.0p15}.  The equivalent for Q31 values is to multiply by
-@code{0x1.0p31}.
+@emph{注意:} Q7、Q15、Q31の値は整数表現で初期化する必要がある。 この例に示すように、Q7値の整数表現は、分数の値に@code{0x1.0p7}を掛けて得ることができる。 Q15の値に相当するのは、@code{0x1.0p15}を掛けることである。 Q31の値に相当するのは、@code{0x1.0p31}を掛けることである。
 
-The table below lists the @code{v4i8} and @code{v2q15} operations for which
-hardware support exists.  @code{a} and @code{b} are @code{v4i8} values,
-and @code{c} and @code{d} are @code{v2q15} values.
+次の表は、ハードウェアサポートが存在する@code{v4i8}および@code{v2q15}操作の一覧である。@code{a}と@code{b}は@code{v4i8}の値で、@code{c}と@code{d}は@code{v2q15}の値である。
 
 @multitable @columnfractions .50 .50
-@item C code @tab MIPS instruction
+@item Cコード @tab MIPS命令
 @item @code{a + b} @tab @code{addu.qb}
 @item @code{c + d} @tab @code{addq.ph}
 @item @code{a - b} @tab @code{subu.qb}
 @item @code{c - d} @tab @code{subq.ph}
 @end multitable
 
-The table below lists the @code{v2i16} operation for which
-hardware support exists for the DSP ASE REV 2.  @code{e} and @code{f} are
-@code{v2i16} values.
+次の表は、DSP ASE REV 2のハードウェアサポートが存在する@code{v2i16}操作を示している。@code{e}および@code{f}は@code{v2i16}の値である。
 
 @multitable @columnfractions .50 .50
-@item C code @tab MIPS instruction
+@item Cコード code @tab MIPS命令
 @item @code{e * f} @tab @code{mul.ph}
 @end multitable
 
-It is easier to describe the DSP built-in functions if we first define
-the following types:
+最初に以下のタイプを定義すると、DSP組み込み関数を記述する方が簡単である。
 
 @smallexample
 typedef int q31;
@@ -9605,17 +9569,9 @@ typedef unsigned int ui32;
 typedef long long a64;
 @end smallexample
 
-@code{q31} and @code{i32} are actually the same as @code{int}, but we
-use @code{q31} to indicate a Q31 fractional value and @code{i32} to
-indicate a 32-bit integer value.  Similarly, @code{a64} is the same as
-@code{long long}, but we use @code{a64} to indicate values that are
-placed in one of the four DSP accumulators (@code{$ac0},
-@code{$ac1}, @code{$ac2} or @code{$ac3}).
+@code{q31}と@code{i32}は実際には@code{int}と同じだが、我々はQ31の端数値を示すために@code{q31}を使用し、32ビットの整数値には@code{i32}を使う。 同様に、@code{a64}は@code {long long}と同じだが、4つのDSPアキュムレータ（@code{$ac0}、@code{$ac1}、@code{$ac2}または@code{$ac3}）のひとつに置かれた値を示すために使用する。
 
-Also, some built-in functions prefer or require immediate numbers as
-parameters, because the corresponding DSP instructions accept both immediate
-numbers and register operands, or accept immediate numbers only.  The
-immediate parameters are listed as follows.
+また、組み込み関数の中には、即値を直接パラメータとして使用するものがある。対応するDSP命令は、即値とオペランドの両方を受け入れるか、即値のみを受け入れるためである。 即値のパラメータは以下の通りである。
 
 @smallexample
 imm0_3: 0 to 3.
@@ -9628,9 +9584,7 @@ imm_n32_31: -32 to 31.
 imm_n512_511: -512 to 511.
 @end smallexample
 
-The following built-in functions map directly to a particular MIPS DSP
-instruction.  Please refer to the architecture specification
-for details on what each instruction does.
+以下の組み込み関数は、特定のMIPS DSP命令に直接マップする。 各命令の詳細については、アーキテクチャの仕様を参照せよ。
 
 @smallexample
 v2q15 __builtin_mips_addq_ph (v2q15, v2q15)
@@ -9745,9 +9699,7 @@ a64 __builtin_mips_mult (i32, i32);
 a64 __builtin_mips_multu (ui32, ui32);
 @end smallexample
 
-The following built-in functions map directly to a particular MIPS DSP REV 2
-instruction.  Please refer to the architecture specification
-for details on what each instruction does.
+以下の組み込み関数は、特定のMIPS DSP REV 2命令に直接マップする。 各命令の詳細については、アーキテクチャの仕様を参照せよ。
 
 @smallexample
 v4q7 __builtin_mips_absq_s_qb (v4q7);
@@ -9800,28 +9752,19 @@ a64 __builtin_mips_dpsqx_sa_w_ph (a64, v2q15, v2q15);
 
 
 @node MIPS Paired-Single Support
-@subsection MIPS Paired-Single Support
+@subsection MIPSペア単精度サポート
 
-The MIPS64 architecture includes a number of instructions that
-operate on pairs of single-precision floating-point values.
-Each pair is packed into a 64-bit floating-point register,
-with one element being designated the ``upper half'' and
-the other being designated the ``lower half''.
+MIPS64アーキテクチャには、単精度浮動小数点値のペアで動作する多くの命令が含まれている。各ペアは64ビットの浮動小数点レジスタにパックされ、一方の要素は「上半分」に指定され、もう一方は「下半分」に指定される。
 
-GCC supports paired-single operations using both the generic
-vector extensions (@pxref{Vector Extensions}) and a collection of
-MIPS-specific built-in functions.  Both kinds of support are
-enabled by the @option{-mpaired-single} command-line option.
+GCCは、ジェネリックベクタ拡張（@pxref{Vector Extensions}）とMIPS固有の組み込み関数のコレクションの両方を使用したペアオペレーションをサポートしている。 どちらの種類のサポートも@option{-mpaired-single}コマンドラインオプションによって有効になる。
 
-The vector type associated with paired-single values is usually
-called @code{v2sf}.  It can be defined in C as follows:
+対になった単一の値に関連付けられたベクトル型は、通常、@code{v2sf}と呼ばれる。 これはC言語で次のように定義できる。
 
 @smallexample
 typedef float v2sf __attribute__ ((vector_size (8)));
 @end smallexample
 
-@code{v2sf} values are initialized in the same way as aggregates.
-For example:
+@code {v2sf}の値は、集約値と同じ方法で初期化される。例えば：
 
 @smallexample
 v2sf a = @{1.5, 9.1@};
@@ -9830,36 +9773,24 @@ float e, f;
 b = (v2sf) @{e, f@};
 @end smallexample
 
-@emph{Note:} The CPU's endianness determines which value is stored in
-the upper half of a register and which value is stored in the lower half.
-On little-endian targets, the first value is the lower one and the second
-value is the upper one.  The opposite order applies to big-endian targets.
-For example, the code above sets the lower half of @code{a} to
-@code{1.5} on little-endian targets and @code{9.1} on big-endian targets.
+@emph{注意:} CPUのエンディアンは、どの値がレジスタの上半分に格納され、どの値が下半分に格納されるかを決定する。
+リトルエンディアンのターゲットでは、最初の値は下位の値で、2番目の値は上の値である。 反対の順序はビッグエンディアンのターゲットに適用される。たとえば、上のコードは、@code{a}の下半分をリトルエンディアンのターゲットで@code{1.5}に、ビッグエンディアンのターゲットで@code{9.1}に設定する。
 
 @node MIPS Loongson Built-in Functions
-@subsection MIPS Loongson Built-in Functions
+@subsection MIPS Loongson組み込み関数
 
-GCC provides intrinsics to access the SIMD instructions provided by the
-ST Microelectronics Loongson-2E and -2F processors.  These intrinsics,
-available after inclusion of the @code{loongson.h} header file,
-operate on the following 64-bit vector types:
+GCCは、ST Microelectronics Loongson-2Eおよび-2Fプロセッサーによって提供されるSIMD命令にアクセスするための組み込み関数を提供する。 これらの組み込み関数は、@code{loongson.h}ヘッダファイルをインクルードした後に利用可能で、次の64ビットベクトル型で動作する。
 
 @itemize
-@item @code{uint8x8_t}, a vector of eight unsigned 8-bit integers;
-@item @code{uint16x4_t}, a vector of four unsigned 16-bit integers;
-@item @code{uint32x2_t}, a vector of two unsigned 32-bit integers;
-@item @code{int8x8_t}, a vector of eight signed 8-bit integers;
-@item @code{int16x4_t}, a vector of four signed 16-bit integers;
-@item @code{int32x2_t}, a vector of two signed 32-bit integers.
+@item @code{uint8x8_t}, 8の符号なし8ビット整数のベクタ
+@item @code{uint16x4_t}, 4の符号なし16ビット整数のベクタ
+@item @code{uint32x2_t}, 2の符号なし32ビット整数のベクタ
+@item @code{int8x8_t}, 8の符号あり8ビット整数のベクタ
+@item @code{int16x4_t}, 4の符号あり16ビット整数のベクタ
+@item @code{int32x2_t}, 2の符号あり32ビット整数のベクタ
 @end itemize
 
-The intrinsics provided are listed below; each is named after the
-machine instruction to which it corresponds, with suffixes added as
-appropriate to distinguish intrinsics that expand to the same machine
-instruction yet have different argument types.  Refer to the architecture
-documentation for a description of the functionality of each
-instruction.
+提供される組み込み関数を以下に示す。 各マシン命令に対応するマシン命令の名前が付けられ、同じマシン命令に拡張されていて異なる引数タイプを持つ命令を区別するのに適切な添え字が追加されている。 各命令の機能の説明については、アーキテクチャのドキュメントを参照せよ。
 
 @smallexample
 int16x4_t packsswh (int32x2_t s, int32x2_t t);
@@ -9970,14 +9901,12 @@ int8x8_t punpcklbh_s (int8x8_t s, int8x8_t t);
 @end menu
 
 @node Paired-Single Arithmetic
-@subsubsection Paired-Single Arithmetic
+@subsubsection ペア単精度算術
 
-The table below lists the @code{v2sf} operations for which hardware
-support exists.  @code{a}, @code{b} and @code{c} are @code{v2sf}
-values and @code{x} is an integral value.
+次の表は、ハードウェアサポートが存在する@code{v2sf}操作を示している。 @code{a}、@code{b}と@code{c}は@code{v2sf}の値で、@code{x}は整数値である。
 
 @multitable @columnfractions .50 .50
-@item C code @tab MIPS instruction
+@item Cコード @tab MIPS命令
 @item @code{a + b} @tab @code{add.ps}
 @item @code{a - b} @tab @code{sub.ps}
 @item @code{-a} @tab @code{neg.ps}
@@ -9989,8 +9918,7 @@ values and @code{x} is an integral value.
 @item @code{x ? a : b} @tab @code{movn.ps}/@code{movz.ps}
 @end multitable
 
-Note that the multiply-accumulate instructions can be disabled
-using the command-line option @code{-mno-fused-madd}.
+乗加算命令は、コマンドラインオプション@code{-mno-fused-madd}を使用して無効にすることができる。
 
 @node Paired-Single Built-in Functions
 @subsubsection Paired-Single Built-in Functions
