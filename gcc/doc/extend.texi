@@ -9921,58 +9921,52 @@ int8x8_t punpcklbh_s (int8x8_t s, int8x8_t t);
 乗加算命令は、コマンドラインオプション@code{-mno-fused-madd}を使用して無効にすることができる。
 
 @node Paired-Single Built-in Functions
-@subsubsection Paired-Single Built-in Functions
+@subsubsection ペア単精度組み込み関数
 
-The following paired-single functions map directly to a particular
-MIPS instruction.  Please refer to the architecture specification
-for details on what each instruction does.
+以下のペア単精度関数は、特定のMIPS命令に直接マップする。 各命令の詳細については、アーキテクチャの仕様を参照せよ。
 
 @table @code
 @item v2sf __builtin_mips_pll_ps (v2sf, v2sf)
-Pair lower lower (@code{pll.ps}).
+ペア下位・下位 (@code{pll.ps})。
 
 @item v2sf __builtin_mips_pul_ps (v2sf, v2sf)
-Pair upper lower (@code{pul.ps}).
+ペア上位・下位 (@code{pul.ps})。
 
 @item v2sf __builtin_mips_plu_ps (v2sf, v2sf)
-Pair lower upper (@code{plu.ps}).
+ペア下位・上位 (@code{plu.ps})。
 
 @item v2sf __builtin_mips_puu_ps (v2sf, v2sf)
-Pair upper upper (@code{puu.ps}).
+ペア上位・上位 (@code{puu.ps})。
 
 @item v2sf __builtin_mips_cvt_ps_s (float, float)
-Convert pair to paired single (@code{cvt.ps.s}).
+ペアをペア単精度に変換 (@code{cvt.ps.s})。
 
 @item float __builtin_mips_cvt_s_pl (v2sf)
-Convert pair lower to single (@code{cvt.s.pl}).
+ペア下位と単精度に変換 (@code{cvt.s.pl})。
 
 @item float __builtin_mips_cvt_s_pu (v2sf)
-Convert pair upper to single (@code{cvt.s.pu}).
+ペア上位と単精度に変換 (@code{cvt.s.pu})。
 
 @item v2sf __builtin_mips_abs_ps (v2sf)
-Absolute value (@code{abs.ps}).
+絶対値 (@code{abs.ps})。
 
 @item v2sf __builtin_mips_alnv_ps (v2sf, v2sf, int)
-Align variable (@code{alnv.ps}).
+変数の整列 (@code{alnv.ps})。
 
-@emph{Note:} The value of the third parameter must be 0 or 4
-modulo 8, otherwise the result is unpredictable.  Please read the
-instruction description for details.
+@emph{注意:} 3番目のパラメータの値は、8または8を法とする0または4でなければならない。そうでない場合、結果は予測できない。 詳細は、命令の説明を読むこと。
 @end table
 
-The following multi-instruction functions are also available.
-In each case, @var{cond} can be any of the 16 floating-point conditions:
+以下の複数命令関数も利用できる。それぞれの場合で、@var{cond}は16の浮動小数点条件のどれかである：
 @code{f}, @code{un}, @code{eq}, @code{ueq}, @code{olt}, @code{ult},
 @code{ole}, @code{ule}, @code{sf}, @code{ngle}, @code{seq}, @code{ngl},
-@code{lt}, @code{nge}, @code{le} or @code{ngt}.
+@code{lt}, @code{nge}, @code{le}, @code{ngt}.
 
 @table @code
 @item v2sf __builtin_mips_movt_c_@var{cond}_ps (v2sf @var{a}, v2sf @var{b}, v2sf @var{c}, v2sf @var{d})
 @itemx v2sf __builtin_mips_movf_c_@var{cond}_ps (v2sf @var{a}, v2sf @var{b}, v2sf @var{c}, v2sf @var{d})
-Conditional move based on floating-point comparison (@code{c.@var{cond}.ps},
-@code{movt.ps}/@code{movf.ps}).
+浮動小数点比較に基づいた条件付きムーブ (@code{c.@var{cond}.ps}, @code{movt.ps}/@code{movf.ps}).
 
-The @code{movt} functions return the value @var{x} computed by:
+@code{movt}関数は以下で計算された@var{x}の値を返す
 
 @smallexample
 c.@var{cond}.ps @var{cc},@var{a},@var{b}
@@ -9980,16 +9974,13 @@ mov.ps @var{x},@var{c}
 movt.ps @var{x},@var{d},@var{cc}
 @end smallexample
 
-The @code{movf} functions are similar but use @code{movf.ps} instead
-of @code{movt.ps}.
+@code{movf}関数は同様だが@code{movt.ps}の代わりに@code{movf.ps}を返す。
 
 @item int __builtin_mips_upper_c_@var{cond}_ps (v2sf @var{a}, v2sf @var{b})
 @itemx int __builtin_mips_lower_c_@var{cond}_ps (v2sf @var{a}, v2sf @var{b})
-Comparison of two paired-single values (@code{c.@var{cond}.ps},
-@code{bc1t}/@code{bc1f}).
+2つのペア単精度値の比較(@code{c.@var{cond}.ps}, @code{bc1t}/@code{bc1f}).
 
-These functions compare @var{a} and @var{b} using @code{c.@var{cond}.ps}
-and return either the upper or lower half of the result.  For example:
+これらの関数は@var{a}と@var{b}を@code{c.@var{cond}.ps}を使って比較して結果の上位と下位のどちらかを返す。例えば、
 
 @smallexample
 v2sf a, b;
@@ -10006,68 +9997,57 @@ else
 @end table
 
 @node MIPS-3D Built-in Functions
-@subsubsection MIPS-3D Built-in Functions
+@subsubsection MIPS-3D組み込み関数
 
-The MIPS-3D Application-Specific Extension (ASE) includes additional
-paired-single instructions that are designed to improve the performance
-of 3D graphics operations.  Support for these instructions is controlled
-by the @option{-mips3d} command-line option.
+MIPS-3Dアプリケーション固有エクステンション（ASE）には、3Dグラフィックス操作のパフォーマンスを向上させるために設計されたペア単精度命令が追加で含まれている。 これらの命令のサポートは、@option{-mips3d}コマンドラインオプションによって制御される。
 
-The functions listed below map directly to a particular MIPS-3D
-instruction.  Please refer to the architecture specification for
-more details on what each instruction does.
+以下に挙げる機能は、特定のMIPS-3D命令に直接マップする。 各命令の詳細については、アーキテクチャの仕様を参照せよ。
 
 @table @code
 @item v2sf __builtin_mips_addr_ps (v2sf, v2sf)
-Reduction add (@code{addr.ps}).
+還元加算 (@code{addr.ps}).
 
 @item v2sf __builtin_mips_mulr_ps (v2sf, v2sf)
-Reduction multiply (@code{mulr.ps}).
+還元乗算 (@code{mulr.ps}).
 
 @item v2sf __builtin_mips_cvt_pw_ps (v2sf)
-Convert paired single to paired word (@code{cvt.pw.ps}).
+ペア単精度とペアワードに変換 (@code{cvt.pw.ps}).
 
 @item v2sf __builtin_mips_cvt_ps_pw (v2sf)
-Convert paired word to paired single (@code{cvt.ps.pw}).
+ペアワードをペア単精度に変換 (@code{cvt.ps.pw}).
 
 @item float __builtin_mips_recip1_s (float)
 @itemx double __builtin_mips_recip1_d (double)
 @itemx v2sf __builtin_mips_recip1_ps (v2sf)
-Reduced-precision reciprocal (sequence step 1) (@code{recip1.@var{fmt}}).
+低精度逆数（列ステップ１） (@code{recip1.@var{fmt}}).
 
 @item float __builtin_mips_recip2_s (float, float)
 @itemx double __builtin_mips_recip2_d (double, double)
 @itemx v2sf __builtin_mips_recip2_ps (v2sf, v2sf)
-Reduced-precision reciprocal (sequence step 2) (@code{recip2.@var{fmt}}).
+低精度逆数（列ステップ２） (@code{recip2.@var{fmt}}).
 
 @item float __builtin_mips_rsqrt1_s (float)
 @itemx double __builtin_mips_rsqrt1_d (double)
 @itemx v2sf __builtin_mips_rsqrt1_ps (v2sf)
-Reduced-precision reciprocal square root (sequence step 1)
-(@code{rsqrt1.@var{fmt}}).
+低制度逆数平方根（列ステップ１）(@code{rsqrt1.@var{fmt}}).
 
 @item float __builtin_mips_rsqrt2_s (float, float)
 @itemx double __builtin_mips_rsqrt2_d (double, double)
 @itemx v2sf __builtin_mips_rsqrt2_ps (v2sf, v2sf)
-Reduced-precision reciprocal square root (sequence step 2)
-(@code{rsqrt2.@var{fmt}}).
+低制度逆数平方根（列ステップ２）(@code{rsqrt2.@var{fmt}}).
 @end table
 
-The following multi-instruction functions are also available.
-In each case, @var{cond} can be any of the 16 floating-point conditions:
+以下の複数命令関数も利用できる。それぞれの場合で、@var{cond}は16の浮動小数点条件のどれかである：
 @code{f}, @code{un}, @code{eq}, @code{ueq}, @code{olt}, @code{ult},
 @code{ole}, @code{ule}, @code{sf}, @code{ngle}, @code{seq},
-@code{ngl}, @code{lt}, @code{nge}, @code{le} or @code{ngt}.
+@code{ngl}, @code{lt}, @code{nge}, @code{le}, @code{ngt}.
 
 @table @code
 @item int __builtin_mips_cabs_@var{cond}_s (float @var{a}, float @var{b})
 @itemx int __builtin_mips_cabs_@var{cond}_d (double @var{a}, double @var{b})
-Absolute comparison of two scalar values (@code{cabs.@var{cond}.@var{fmt}},
-@code{bc1t}/@code{bc1f}).
+２つのスカラー値の絶対値比較 (@code{cabs.@var{cond}.@var{fmt}}, @code{bc1t}/@code{bc1f}).
 
-These functions compare @var{a} and @var{b} using @code{cabs.@var{cond}.s}
-or @code{cabs.@var{cond}.d} and return the result as a boolean value.
-For example:
+これらの関数は@var{a}と@var{b}を@code{cabs.@var{cond}.s}または@code{cabs.@var{cond}.d}を使って比較して結果を真偽値として返す。例えば、
 
 @smallexample
 float a, b;
@@ -10079,11 +10059,9 @@ else
 
 @item int __builtin_mips_upper_cabs_@var{cond}_ps (v2sf @var{a}, v2sf @var{b})
 @itemx int __builtin_mips_lower_cabs_@var{cond}_ps (v2sf @var{a}, v2sf @var{b})
-Absolute comparison of two paired-single values (@code{cabs.@var{cond}.ps},
-@code{bc1t}/@code{bc1f}).
+２つのペア単精度値の絶対値比較(@code{cabs.@var{cond}.ps}, @code{bc1t}/@code{bc1f}).
 
-These functions compare @var{a} and @var{b} using @code{cabs.@var{cond}.ps}
-and return either the upper or lower half of the result.  For example:
+これらの関数は@var{a}と@var{b}を@code{cabs.@var{cond}.ps}を使って比較して結果を上位または下位を返す。例えば、
 
 @smallexample
 v2sf a, b;
@@ -10100,10 +10078,9 @@ else
 
 @item v2sf __builtin_mips_movt_cabs_@var{cond}_ps (v2sf @var{a}, v2sf @var{b}, v2sf @var{c}, v2sf @var{d})
 @itemx v2sf __builtin_mips_movf_cabs_@var{cond}_ps (v2sf @var{a}, v2sf @var{b}, v2sf @var{c}, v2sf @var{d})
-Conditional move based on absolute comparison (@code{cabs.@var{cond}.ps},
-@code{movt.ps}/@code{movf.ps}).
+絶対値比較に基づいた条件付きムーブ (@code{cabs.@var{cond}.ps}, @code{movt.ps}/@code{movf.ps}).
 
-The @code{movt} functions return the value @var{x} computed by:
+@code{movt}関数は以下によって計算された@var{x}の値を返す
 
 @smallexample
 cabs.@var{cond}.ps @var{cc},@var{a},@var{b}
@@ -10111,21 +10088,16 @@ mov.ps @var{x},@var{c}
 movt.ps @var{x},@var{d},@var{cc}
 @end smallexample
 
-The @code{movf} functions are similar but use @code{movf.ps} instead
-of @code{movt.ps}.
+@code{movf}関数は同様だが@code{movt.ps}の代わりに@code{movf.ps}を使う。
 
 @item int __builtin_mips_any_c_@var{cond}_ps (v2sf @var{a}, v2sf @var{b})
 @itemx int __builtin_mips_all_c_@var{cond}_ps (v2sf @var{a}, v2sf @var{b})
 @itemx int __builtin_mips_any_cabs_@var{cond}_ps (v2sf @var{a}, v2sf @var{b})
 @itemx int __builtin_mips_all_cabs_@var{cond}_ps (v2sf @var{a}, v2sf @var{b})
-Comparison of two paired-single values
-(@code{c.@var{cond}.ps}/@code{cabs.@var{cond}.ps},
-@code{bc1any2t}/@code{bc1any2f}).
+２つのペア単精度値の比較(@code{c.@var{cond}.ps}/@code{cabs.@var{cond}.ps}, @code{bc1any2t}/@code{bc1any2f}).
 
-These functions compare @var{a} and @var{b} using @code{c.@var{cond}.ps}
-or @code{cabs.@var{cond}.ps}.  The @code{any} forms return true if either
-result is true and the @code{all} forms return true if both results are true.
-For example:
+これらの関数は@var{a}と@var{b}を@code{c.@var{cond}.ps}または@code{cabs.@var{cond}.ps}で比較する。
+@code{any}形式はどちらかの結果が真ならば真を返し、@code{all}形式は両方の結果が真ならば真を返す。例えば、
 
 @smallexample
 v2sf a, b;
@@ -10148,11 +10120,7 @@ Comparison of four paired-single values
 (@code{c.@var{cond}.ps}/@code{cabs.@var{cond}.ps},
 @code{bc1any4t}/@code{bc1any4f}).
 
-These functions use @code{c.@var{cond}.ps} or @code{cabs.@var{cond}.ps}
-to compare @var{a} with @var{b} and to compare @var{c} with @var{d}.
-The @code{any} forms return true if any of the four results are true
-and the @code{all} forms return true if all four results are true.
-For example:
+これらの関数は、@var{a}と@var{b}を比較し、@var{c}と@var{d}を比較するために@code{c.@var{cond}.ps}または@code{cabs.@var{cond}.ps}を使う。@code{any}形式は、4つの結果のいずれかが真であれば真を返し、@code{all}形式は4つの結果がすべて真であるならば真を返す。 例えば、
 
 @smallexample
 v2sf a, b, c, d;
