@@ -10137,54 +10137,44 @@ else
 @end table
 
 @node MIPS SIMD Architecture (MSA) Support
-@subsection MIPS SIMD Architecture (MSA) Support
+@subsection MIPS SIMD Architecture (MSA)サポート
 
 @menu
 * MIPS SIMD Architecture Built-in Functions::
 @end menu
 
-GCC provides intrinsics to access the SIMD instructions provided by the
-MSA MIPS SIMD Architecture.  The interface is made available by including
-@code{<msa.h>} and using @option{-mmsa -mhard-float -mfp64 -mnan=2008}.
-For each @code{__builtin_msa_*}, there is a shortened name of the intrinsic,
-@code{__msa_*}.
+GCCは、MSA MIPS SIMDアーキテクチャによって提供されるSIMD命令にアクセスするための組み込み関数を提供する。 このインターフェイスは、@code{<msa.h>}をインクルードして、@option{-mmsa -mhard-float -mfp64 -mnan=2008}を使用することで利用可能になる。各@code{__builtin_msa_*}には、組み込み関数の短縮名@code{__msa_*}がある。
 
-MSA implements 128-bit wide vector registers, operating on 8-, 16-, 32- and
-64-bit integer, 16- and 32-bit fixed-point, or 32- and 64-bit floating point
-data elements.  The following vectors typedefs are included in @code{msa.h}:
+MSAは、8ビット、16ビット、32ビットおよび64ビット整数、16ビットおよび32ビット固定小数点、または32ビットおよび64ビットの浮動小数点データ要素で動作する128ビット幅のベクトルレジスタを実装する。 @code {msa.h}には以下のベクタのtypedefが含まれている：
 @itemize
-@item @code{v16i8}, a vector of sixteen signed 8-bit integers;
-@item @code{v16u8}, a vector of sixteen unsigned 8-bit integers;
-@item @code{v8i16}, a vector of eight signed 16-bit integers;
-@item @code{v8u16}, a vector of eight unsigned 16-bit integers;
-@item @code{v4i32}, a vector of four signed 32-bit integers;
-@item @code{v4u32}, a vector of four unsigned 32-bit integers;
-@item @code{v2i64}, a vector of two signed 64-bit integers;
-@item @code{v2u64}, a vector of two unsigned 64-bit integers;
-@item @code{v4f32}, a vector of four 32-bit floats;
-@item @code{v2f64}, a vector of two 64-bit doubles.
+@item @code{v16i8}, 16の符号あり8ビット整数のベクタ
+@item @code{v16u8}, 16の符号なし8ビット整数のベクタ
+@item @code{v8i16}, 8の符号あり16ビット整数のベクタ
+@item @code{v8u16}, 8の符号なし16ビット整数のベクタ
+@item @code{v4i32}, 4の符号あり32ビット整数のベクタ
+@item @code{v4u32}, 4の符号なし32ビット整数のベクタ
+@item @code{v2i64}, 2の符号あり64ビット整数のベクタ
+@item @code{v2u64}, 2の符号なし64ビット整数のベクタ
+@item @code{v4f32}, 4の32ビット単精度のベクタ
+@item @code{v2f64}, 2の64ビット倍精度のベクタ
 @end itemize
 
-Instructions and corresponding built-ins may have additional restrictions and/or
-input/output values manipulated:
+命令と対応するビルトインには、追加の制限や入出力値の操作がある場合がある。
 @itemize
-@item @code{imm0_1}, an integer literal in range 0 to 1;
-@item @code{imm0_3}, an integer literal in range 0 to 3;
-@item @code{imm0_7}, an integer literal in range 0 to 7;
-@item @code{imm0_15}, an integer literal in range 0 to 15;
-@item @code{imm0_31}, an integer literal in range 0 to 31;
-@item @code{imm0_63}, an integer literal in range 0 to 63;
-@item @code{imm0_255}, an integer literal in range 0 to 255;
-@item @code{imm_n16_15}, an integer literal in range -16 to 15;
-@item @code{imm_n512_511}, an integer literal in range -512 to 511;
-@item @code{imm_n1024_1022}, an integer literal in range -512 to 511 left
-shifted by 1 bit, i.e., -1024, -1022, @dots{}, 1020, 1022;
-@item @code{imm_n2048_2044}, an integer literal in range -512 to 511 left
-shifted by 2 bits, i.e., -2048, -2044, @dots{}, 2040, 2044;
-@item @code{imm_n4096_4088}, an integer literal in range -512 to 511 left
-shifted by 3 bits, i.e., -4096, -4088, @dots{}, 4080, 4088;
-@item @code{imm1_4}, an integer literal in range 1 to 4;
-@item @code{i32, i64, u32, u64, f32, f64}, defined as follows:
+@item @code{imm0_1}, 0から1までの整数定数
+@item @code{imm0_3}, 0から3までの整数定数
+@item @code{imm0_7}, 0から7までの整数定数
+@item @code{imm0_15}, 0から15までの整数定数
+@item @code{imm0_31}, 0から31までの整数定数
+@item @code{imm0_63}, 0から63までの整数定数
+@item @code{imm0_255}, 0から255までの整数定数
+@item @code{imm_n16_15},-16から15までの整数定数
+@item @code{imm_n512_511}, -512から511までの整数定数
+@item @code{imm_n1024_1022}, -512から511までを1左シフトした整数定数、すなわち、-1024, -1022, @dots{}, 1020, 1022
+@item @code{imm_n2048_2044}, -512から511までを2左シフトした整数定数、すなわち、-2048, -2044, @dots{}, 2040, 2044
+@item @code{imm_n4096_4088}, -512から511までを3左シフトした整数定数、すなわち、-4096, -4088, @dots{}, 4080, 4088
+@item @code{imm1_4}, 1から4までの整数定数
+@item @code{i32, i64, u32, u64, f32, f64}, 以下のように定義される
 @end itemize
 
 @smallexample
@@ -10209,10 +10199,9 @@ typedef float f32;
 @end smallexample
 
 @node MIPS SIMD Architecture Built-in Functions
-@subsubsection MIPS SIMD Architecture Built-in Functions
+@subsubsection MIPS SIMD アーキテクチャ組み込み関数
 
-The intrinsics provided are listed below; each is named after the
-machine instruction.
+提供される組み込み関数を以下に示す。 それぞれに機械命令の名前が付けられる。
 
 @smallexample
 v16i8 __builtin_msa_add_a_b (v16i8, v16i8);
@@ -10925,24 +10914,19 @@ v16u8 __builtin_msa_xori_b (v16u8, imm0_255);
 @end smallexample
 
 @node Other MIPS Built-in Functions
-@subsection Other MIPS Built-in Functions
+@subsection 他のMIPS組み込み関数
 
-GCC provides other MIPS-specific built-in functions:
+GCCは他のMIPS固有の組み込み関数を提供する：
 
 @table @code
 @item void __builtin_mips_cache (int @var{op}, const volatile void *@var{addr})
-Insert a @samp{cache} instruction with operands @var{op} and @var{addr}.
-GCC defines the preprocessor macro @code{___GCC_HAVE_BUILTIN_MIPS_CACHE}
-when this function is available.
+オペランド@var{op}と@var{addr}を持つ@samp{cache}命令を挿入する。GCCは、この関数が利用可能なときにプリプロセッサマクロ@code {___GCC_HAVE_BUILTIN_MIPS_CACHE}を定義する。
 
 @item unsigned int __builtin_mips_get_fcsr (void)
 @itemx void __builtin_mips_set_fcsr (unsigned int @var{value})
-Get and set the contents of the floating-point control and status register
-(FPU control register 31).  These functions are only available in hard-float
-code but can be called in both MIPS16 and non-MIPS16 contexts.
+浮動小数点制御およびステータスレジスタ（FPU制御レジスタ31）の内容を取得および設定する。 これらの関数はハードフロートコードでのみ使用できるが、MIPS16と非MIPS16の両方のコンテキストで呼び出すことができる。
 
-@code{__builtin_mips_set_fcsr} can be used to change any bit of the
-register except the condition codes, which GCC assumes are preserved.
+@code{__builtin_mips_set_fcsr}は、GCCが保持していると仮定する条件コード以外のレジスタのビットを変更するために使用できる。
 @end table
 
 @node MSP430 Built-in Functions
