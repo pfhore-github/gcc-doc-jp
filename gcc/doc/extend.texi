@@ -10948,39 +10948,38 @@ GCCは、Cで割り込みハンドラを書くのを助ける特別な組み込�
 @node NDS32 Built-in Functions
 @subsection NDS32組み込み関数
 
-These built-in functions are available for the NDS32 target:
+これらの組み込み関数は、NDS32ターゲットで使用できる。
 
 @deftypefn {Built-in Function} void __builtin_nds32_isync (int *@var{addr})
-Insert an ISYNC instruction into the instruction stream where
-@var{addr} is an instruction address for serialization.
+命令ストリームにISYNC命令を挿入する。ここで、@var{addr}はシリアル化の命令アドレスである。
 @end deftypefn
 
 @deftypefn {Built-in Function} void __builtin_nds32_isb (void)
-Insert an ISB instruction into the instruction stream.
+命令ストリームにISB命令を挿入する。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_nds32_mfsr (int @var{sr})
-Return the content of a system register which is mapped by @var{sr}.
+@var {sr}でマップされたシステムレジスタの内容を返す。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_nds32_mfusr (int @var{usr})
-Return the content of a user space register which is mapped by @var{usr}.
+@var{usr}によってマップされるユーザー空間レジスタの内容を返す。
 @end deftypefn
 
 @deftypefn {Built-in Function} void __builtin_nds32_mtsr (int @var{value}, int @var{sr})
-Move the @var{value} to a system register which is mapped by @var{sr}.
+@var{value}を@var{sr}でマッピングされたシステムレジスタに移動する。
 @end deftypefn
 
 @deftypefn {Built-in Function} void __builtin_nds32_mtusr (int @var{value}, int @var{usr})
-Move the @var{value} to a user space register which is mapped by @var{usr}.
+@var{value}を@var{usr}によってマップされたユーザースペースレジスタに移動します。
 @end deftypefn
 
 @deftypefn {Built-in Function} void __builtin_nds32_setgie_en (void)
-Enable global interrupt.
+グローバル割り込みを有効にする。
 @end deftypefn
 
 @deftypefn {Built-in Function} void __builtin_nds32_setgie_dis (void)
-Disable global interrupt.
+グローバル割り込みを無効にする。
 @end deftypefn
 
 @node picoChip Built-in Functions
