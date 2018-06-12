@@ -10930,36 +10930,23 @@ GCCは他のMIPS固有の組み込み関数を提供する：
 @end table
 
 @node MSP430 Built-in Functions
-@subsection MSP430 Built-in Functions
+@subsection MSP430組み込み関数
 
-GCC provides a couple of special builtin functions to aid in the
-writing of interrupt handlers in C.
+GCCは、Cで割り込みハンドラを書くのを助ける特別な組み込み関数を提供している。
 
 @table @code
 @item __bic_SR_register_on_exit (int @var{mask})
-This clears the indicated bits in the saved copy of the status register
-currently residing on the stack.  This only works inside interrupt
-handlers and the changes to the status register will only take affect
-once the handler returns.
+これは、スタックに現在存在するステータスレジスタの保存されたコピーの示されたビットをクリアする。 これは割り込みハンドラ内でのみ機能し、ステータスレジスタへの変更はハンドラが復帰すると有効になる。
 
 @item __bis_SR_register_on_exit (int @var{mask})
-This sets the indicated bits in the saved copy of the status register
-currently residing on the stack.  This only works inside interrupt
-handlers and the changes to the status register will only take affect
-once the handler returns.
+これは、スタックに現在存在するステータスレジスタの保存されたコピーに示されたビットをセットする。 これは割り込みハンドラ内でのみ機能し、ステータスレジスタへの変更はハンドラが復帰すると有効になる。
 
 @item __delay_cycles (long long @var{cycles})
-This inserts an instruction sequence that takes exactly @var{cycles}
-cycles (between 0 and about 17E9) to complete.  The inserted sequence
-may use jumps, loops, or no-ops, and does not interfere with any other
-instructions.  Note that @var{cycles} must be a compile-time constant
-integer - that is, you must pass a number, not a variable that may be
-optimized to a constant later.  The number of cycles delayed by this
-builtin is exact.
+これは、完全に@var{cycles}サイクル（0と約17E9の間）かかる命令シーケンスを挿入する。 挿入されたシーケンスは、ジャンプ、ループ、またはno-opを使用する可能性があり、他の命令に干渉することはない。 @var{cycles}はコンパイル時定数でなければならないことに注意せよ。つまり、後で定数に最適化できる変数ではなく、数値を渡す必要がある。 この組み込みによって遅延されるサイクル数は正確である。
 @end table
 
 @node NDS32 Built-in Functions
-@subsection NDS32 Built-in Functions
+@subsection NDS32組み込み関数
 
 These built-in functions are available for the NDS32 target:
 
