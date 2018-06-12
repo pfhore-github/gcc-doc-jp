@@ -10983,38 +10983,28 @@ GCCは、Cで割り込みハンドラを書くのを助ける特別な組み込�
 @end deftypefn
 
 @node picoChip Built-in Functions
-@subsection picoChip Built-in Functions
+@subsection picoChip組み込み関数
 
-GCC provides an interface to selected machine instructions from the
-picoChip instruction set.
+GCCは、picoChip命令セットから選択されたマシン命令へのインタフェースを提供する。
 
 @table @code
 @item int __builtin_sbc (int @var{value})
-Sign bit count.  Return the number of consecutive bits in @var{value}
-that have the same value as the sign bit.  The result is the number of
-leading sign bits minus one, giving the number of redundant sign bits in
-@var{value}.
+符号ビット数。 @var{value}の符号ビットと同じ値を持つ連続するビット数を返す。 結果は先頭の符号ビットから1を引いた数で、@var{value}に冗長符号ビットの数が与えられる。
 
 @item int __builtin_byteswap (int @var{value})
-Byte swap.  Return the result of swapping the upper and lower bytes of
-@var{value}.
+バイトスワップ。 @var{value}の上位バイトと下位バイトを入れ替えた結果を返す。
 
 @item int __builtin_brev (int @var{value})
-Bit reversal.  Return the result of reversing the bits in
-@var{value}.  Bit 15 is swapped with bit 0, bit 14 is swapped with bit 1,
-and so on.
+ビット反転。 @var{value}のビットを反転した結果を返す。 ビット15はビット0とスワップされ、ビット14はビット1とスワップされ、以下同様に続く。
 
 @item int __builtin_adds (int @var{x}, int @var{y})
-Saturating addition.  Return the result of adding @var{x} and @var{y},
-storing the value 32767 if the result overflows.
+飽和加算。 @var{x}と@var{y}の加算結果を返し、結果がオーバーフローした場合は32767の値を格納する。
 
 @item int __builtin_subs (int @var{x}, int @var{y})
-Saturating subtraction.  Return the result of subtracting @var{y} from
-@var{x}, storing the value @minus{}32768 if the result overflows.
+飽和減算。 @var{x}から@var{y}を減算した結果を返し、結果がオーバーフローした場合は@minus{}32768を格納する。
 
 @item void __builtin_halt (void)
-Halt.  The processor stops execution.  This built-in is useful for
-implementing assertions.
+停止。 プロセッサは実行を停止する。 この組み込み関数は、アサーションを実装するのに便利である。
 
 @end table
 
