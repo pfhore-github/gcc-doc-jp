@@ -11009,65 +11009,57 @@ GCCは、picoChip命令セットから選択されたマシン命令へのイン
 @end table
 
 @node PowerPC Built-in Functions
-@subsection PowerPC Built-in Functions
+@subsection PowerPC組み込み関数
 
-The following built-in functions are always available and can be used to
-check the PowerPC target platform type:
+以下の組み込み関数は常に使用可能であり、PowerPCターゲットプラットフォームのタイプを確認するために使用できる。
 
 @deftypefn {Built-in Function} void __builtin_cpu_init (void)
-This function is a @code{nop} on the PowerPC platform and is included solely
-to maintain API compatibility with the x86 builtins.
+この関数は、PowerPCプラットフォームの@code {nop}であり、x86組み込み関数とのAPI互換性を維持するためだけに含まれている。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_cpu_is (const char *@var{cpuname})
-This function returns a value of @code{1} if the run-time CPU is of type
-@var{cpuname} and returns @code{0} otherwise
+この関数は、ランタイムCPUのタイプが@var{cpuname}の場合は@code{1}の値を返し、それ以外の場合は@code{0}を返す。
 
-The @code{__builtin_cpu_is} function requires GLIBC 2.23 or newer
-which exports the hardware capability bits.  GCC defines the macro
-@code{__BUILTIN_CPU_SUPPORTS__} if the @code{__builtin_cpu_supports}
-built-in function is fully supported.
+@code{__ builtin_cpu_is}関数には、ハードウェア機能ビットをエクスポートするGLIBC 2.23以降が必要である。 @code{__builtin_cpu_supports}組み込み関数が完全にサポートされている場合、GCCはマクロ@code{__BUILTIN_CPU_SUPPORTS__}を定義する。
 
-If GCC was configured to use a GLIBC before 2.23, the built-in
-function @code{__builtin_cpu_is} always returns a 0 and the compiler
-issues a warning.
+GLIBC2.23より前に使用するようにGCCを設定した場合、組み込み関数@code{__builtin_cpu_is}は常に0を返し、コンパイラは警告を出す。
 
-The following CPU names can be detected:
+次のCPU名を検出できる。
 
 @table @samp
 @item power9
-IBM POWER9 Server CPU.
+IBM POWER9サーバーCPU。
 @item power8
-IBM POWER8 Server CPU.
+IBM POWER8サーバーCPU。
 @item power7
-IBM POWER7 Server CPU.
+IBM POWER7サーバーCPU。
 @item power6x
-IBM POWER6 Server CPU (RAW mode).
+IBM POWER6サーバーCPU。(RAWモード）
 @item power6
-IBM POWER6 Server CPU (Architected mode).
+IBM POWER6サーバーCPU。(アーキテクテッドモード）
 @item power5+
-IBM POWER5+ Server CPU.
+IBM POWER5+サーバーCPU。
 @item power5
-IBM POWER5 Server CPU.
+IBM POWER5サーバーCPU。
 @item ppc970
-IBM 970 Server CPU (ie, Apple G5).
+IBM 970 サーバーCPU。（すなわち、Apple G5）。
 @item power4
-IBM POWER4 Server CPU.
+IBM POWER4サーバーCPU。
 @item ppca2
-IBM A2 64-bit Embedded CPU
+IBM A2 64ビット組み込みCPU。
 @item ppc476
-IBM PowerPC 476FP 32-bit Embedded CPU.
+IBM PowerPC 476FP 32ビット組み込みCPU。
 @item ppc464
-IBM PowerPC 464 32-bit Embedded CPU.
+IBM PowerPC 464 32ビット組み込みCPU。
 @item ppc440
-PowerPC 440 32-bit Embedded CPU.
+PowerPC 440 32ビット組み込みCPU。
 @item ppc405
-PowerPC 405 32-bit Embedded CPU.
+PowerPC 405 32ビット組み込みCPU。
 @item ppc-cell-be
-IBM PowerPC Cell Broadband Engine Architecture CPU.
+IBM PowerPC Cell Broadband EngineアーキテクチャCPU。
 @end table
 
-Here is an example:
+ここに例がある：
 @smallexample
 #ifdef __BUILTIN_CPU_SUPPORTS__
   if (__builtin_cpu_is ("power8"))
@@ -11083,101 +11075,94 @@ Here is an example:
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_cpu_supports (const char *@var{feature})
-This function returns a value of @code{1} if the run-time CPU supports the HWCAP
-feature @var{feature} and returns @code{0} otherwise.
+この関数は、ランタイムCPUがHWCAP機能@var{feature}をサポートしていれば@code{1}の値を返し、それ以外の場合は@code{0}を返す。
 
-The @code{__builtin_cpu_supports} function requires GLIBC 2.23 or
-newer which exports the hardware capability bits.  GCC defines the
-macro @code{__BUILTIN_CPU_SUPPORTS__} if the
-@code{__builtin_cpu_supports} built-in function is fully supported.
+@code{__builtin_cpu_supports}関数は、ハードウェア機能ビットをエクスポートするGLIBC 2.23以降が必要である。 @code{__builtin_cpu_supports}組み込み関数が完全にサポートされている場合、GCCはマクロ@code{__BUILTIN_CPU_SUPPORTS__}を定義する。
 
-If GCC was configured to use a GLIBC before 2.23, the built-in
-function @code{__builtin_cpu_suports} always returns a 0 and the
-compiler issues a warning.
+GLIBC2.23より前に使用するようにGCCを設定した場合、組み込み関数@code{__builtin_cpu_suports}は常に0を返し、コンパイラは警告を出す。
 
-The following features can be
-detected:
+次の機能を検出できる。
 
 @table @samp
 @item 4xxmac
-4xx CPU has a Multiply Accumulator.
+4xxCPUは複数の加算器を持っている。
 @item altivec
-CPU has a SIMD/Vector Unit.
+CPUはSIMD/ベクトルユニットを持っている。
 @item arch_2_05
-CPU supports ISA 2.05 (eg, POWER6)
+CPUはISA 2.05をサポートしている（例えば、POWER6）
 @item arch_2_06
-CPU supports ISA 2.06 (eg, POWER7)
+CPUはISA 2.06をサポートしている（例えば、POWER7）
 @item arch_2_07
-CPU supports ISA 2.07 (eg, POWER8)
+CPUはISA 2.07をサポートしている（例えば、POWER8）
 @item arch_3_00
-CPU supports ISA 3.0 (eg, POWER9)
+CPUはISA 3.0をサポートしている（例えば、POWER9）
 @item archpmu
-CPU supports the set of compatible performance monitoring events.
+CPUは互換性のあるパフォーマンス監視イベントのセットをサポートしている。
 @item booke
-CPU supports the Embedded ISA category.
+CPUは組み込みISAカテゴリーをサポートしている。
 @item cellbe
-CPU has a CELL broadband engine.
+CPUはCELLブロードバンドエンジンをサポートしている。
 @item dfp
-CPU has a decimal floating point unit.
+CPUは10進浮動小数点ユニットを持っている。
 @item dscr
-CPU supports the data stream control register.
+CPUはデータストリーム制御レジスタをサポートしている。
 @item ebb
-CPU supports event base branching.
+CPUはイベントベース分岐をサポートしている。
 @item efpdouble
-CPU has a SPE double precision floating point unit.
+CPUはSPE倍精度浮動小数点ユニットを持っている。
 @item efpsingle
-CPU has a SPE single precision floating point unit.
+CPUはSPE単精度浮動小数点ユニットを持っている。
 @item fpu
-CPU has a floating point unit.
+CPUは浮動小数点ユニットを持っている。
 @item htm
-CPU has hardware transaction memory instructions.
+CPUはハードウェアトランザクションメモリ命令を持っている。
 @item htm-nosc
-Kernel aborts hardware transactions when a syscall is made.
+カーネルはシステムコールが生じたときにハードウェアトランザクションを中止する。
 @item ic_snoop
-CPU supports icache snooping capabilities.
+CPUはicacheスヌーピング能力をサポートしている。
 @item ieee128
-CPU supports 128-bit IEEE binary floating point instructions.
+CPUは128ビットIEEE2進浮動小数点命令をサポートしている。
 @item isel
-CPU supports the integer select instruction.
+CPUは整数選択命令をサポートしている。
 @item mmu
-CPU has a memory management unit.
+CPUはメモリー管理ユニットを持っている。
 @item notb
-CPU does not have a timebase (eg, 601 and 403gx).
+CPUははタイムベースを持っていない（例えば601や403gx）。
 @item pa6t
-CPU supports the PA Semi 6T CORE ISA.
+CPUはPA Semi 6T CORE ISAをサポートしている。
 @item power4
-CPU supports ISA 2.00 (eg, POWER4)
+CPUはISA 2.00をサポートしている（例えば、POWER4）
 @item power5
-CPU supports ISA 2.02 (eg, POWER5)
+CPUはISA 2.02をサポートしている（例えば、POWER5）
 @item power5+
-CPU supports ISA 2.03 (eg, POWER5+)
+CPUはISA 2.03をサポートしている（例えば、POWER5+）
 @item power6x
-CPU supports ISA 2.05 (eg, POWER6) extended opcodes mffgpr and mftgpr.
+CPUはISA 2.05拡張オプコードmffgprとmftgprをサポートしている（例えば、POWER6）
 @item ppc32
-CPU supports 32-bit mode execution.
+CPUは32ビットモード実行をサポートしている。
 @item ppc601
-CPU supports the old POWER ISA (eg, 601)
+CPUは古いPOWER ISAをサポートしている（例えば、601）
 @item ppc64
-CPU supports 64-bit mode execution.
+CPUは64ビットモード実行をサポートしている。
 @item ppcle
-CPU supports a little-endian mode that uses address swizzling.
+CPUはアドレス入れ替えを使っているリトルエンディアンモードをサポートしている。
 @item smt
-CPU support simultaneous multi-threading.
+CPUは同時マルチスレッドをサポートしている。
 @item spe
-CPU has a signal processing extension unit.
+CPUはシグナル処理拡張ユニットを持っている。
 @item tar
-CPU supports the target address register.
+CPUはターゲットアドレスレジスタをサポートしている。
 @item true_le
-CPU supports true little-endian mode.
+CPUは真のリトルエンディアンモードをサポートしている。
 @item ucache
-CPU has unified I/D cache.
+CPUは統合I/Dキャッシュを持っている。
 @item vcrypto
-CPU supports the vector cryptography instructions.
+CPUはベクトル暗号命令をサポートしている。
 @item vsx
-CPU supports the vector-scalar extension.
+CPUはベクトルスカラ拡張をサポートしている。
 @end table
 
-Here is an example:
+ここに例がある
 @smallexample
 #ifdef __BUILTIN_CPU_SUPPORTS__
   if (__builtin_cpu_supports ("fpu"))
@@ -11192,8 +11177,7 @@ Here is an example:
 @end smallexample
 @end deftypefn
 
-These built-in functions are available for the PowerPC family of
-processors:
+これらの組み込み関数はPowerPCファミリのプロセッサで利用可能である。
 @smallexample
 float __builtin_recipdivf (float, float);
 float __builtin_rsqrtf (float);
@@ -11205,109 +11189,74 @@ double __builtin_unpack_longdouble (long double, int);
 long double __builtin_pack_longdouble (double, double);
 @end smallexample
 
-The @code{vec_rsqrt}, @code{__builtin_rsqrt}, and
-@code{__builtin_rsqrtf} functions generate multiple instructions to
-implement the reciprocal sqrt functionality using reciprocal sqrt
-estimate instructions.
+@code{vec_rsqrt}、@code{__builtin_rsqrt}、および@code{__builtin_rsqrtf}関数は、逆数sqrt推定命令を使用して逆数sqrt機能を実装するための複数の命令を生成する。
 
-The @code{__builtin_recipdiv}, and @code{__builtin_recipdivf}
-functions generate multiple instructions to implement division using
-the reciprocal estimate instructions.
+@code{__builtin_recipdiv}関数と@code{__builtin_recipdivf}関数は、逆数推定命令を使用して除算を実装するための複数の命令を生成する。
 
-The @code{__builtin_ppc_get_timebase} and @code{__builtin_ppc_mftb}
-functions generate instructions to read the Time Base Register.  The
-@code{__builtin_ppc_get_timebase} function may generate multiple
-instructions and always returns the 64 bits of the Time Base Register.
-The @code{__builtin_ppc_mftb} function always generates one instruction and
-returns the Time Base Register value as an unsigned long, throwing away
-the most significant word on 32-bit environments.
+@code{__builtin_ppc_get_timebase}関数と@code{__builtin_ppc_mftb}関数は、タイムベースレジスタを読み込む命令を生成する。 @code{__builtin_ppc_get_timebase}関数は、複数の命令を生成し、常にタイムベースレジスタの64ビットを返す。@code{__builtin_ppc_mftb}関数は常に1つの命令を生成し、32ビット環境で最上位ワードを投げ捨て、符号なしlongとしてタイムベースレジスタの値を返す。
 
-Additional built-in functions are available for the 64-bit PowerPC
-family of processors, for efficient use of 128-bit floating point
-(@code{__float128}) values.
+128ビット浮動小数点（@code{__float128}）値を効率的に使用するために、64ビットPowerPCファミリのプロセッサに追加の組み込み関数が用意されている。
 
-Previous versions of GCC supported some 'q' builtins for IEEE 128-bit
-floating point.  These functions are now mapped into the equivalent
-'f128' builtin functions.
+GCCの以前のバージョンでは、IEEE 128ビット浮動小数点用の「q」組み込み関数がサポートされていた。 これらの関数は、これと同等の 'f128'組み込み関数にマップされるようになった。
 
 @smallexample
-__builtin_fabsq is mapped into __builtin_fabsf128
-__builtin_copysignq is mapped into __builtin_copysignf128
-__builtin_infq is mapped into __builtin_inff128
-__builtin_huge_valq is mapped into __builtin_huge_valf128
-__builtin_nanq is mapped into __builtin_nanf128
-__builtin_nansq is mapped into __builtin_nansf128
+__builtin_fabsq は __builtin_fabsf128
+__builtin_copysignq は __builtin_copysignf128
+__builtin_infq は __builtin_inff128
+__builtin_huge_valq は __builtin_huge_valf128
+__builtin_nanq は __builtin_nanf128
+__builtin_nansq は __builtin_nansf128
 @end smallexample
 
-The following built-in functions are available on Linux 64-bit systems
-that use the ISA 3.0 instruction set.
+次の組み込み関数は、ISA 3.0命令セットを使用するLinux 64ビットシステムで使用できる。
 
 @table @code
 @item __float128 __builtin_sqrtf128 (__float128)
-Perform a 128-bit IEEE floating point square root operation.
+128ビットIEEE浮動小数点平方根演算を実行する。
 @findex __builtin_sqrtf128
 
 @item __float128 __builtin_fmaf128 (__float128, __float128, __float128)
-Perform a 128-bit IEEE floating point fused multiply and add operation.
+128ビットIEEE浮動小数点の積和演算を実行する。
 @findex __builtin_fmaf128
 
 @item __float128 __builtin_addf128_round_to_odd (__float128, __float128)
-Perform a 128-bit IEEE floating point add using round to odd as the
-rounding mode.
+丸めモードとしてround to oddを使用して128ビットのIEEE浮動小数点加算を実行する。
 @findex __builtin_addf128_round_to_odd
 
 @item __float128 __builtin_subf128_round_to_odd (__float128, __float128)
-Perform a 128-bit IEEE floating point subtract using round to odd as
-the rounding mode.
+丸めモードとしてround to oddを使用して128ビットのIEEE浮動小数点減算を実行する。
 @findex __builtin_subf128_round_to_odd
 
 @item __float128 __builtin_mulf128_round_to_odd (__float128, __float128)
-Perform a 128-bit IEEE floating point multiply using round to odd as
-the rounding mode.
+丸めモードとしてround to oddを使用して128ビットのIEEE浮動小数点乗算を実行する。
 @findex __builtin_mulf128_round_to_odd
 
 @item __float128 __builtin_divf128_round_to_odd (__float128, __float128)
-Perform a 128-bit IEEE floating point divide using round to odd as
-the rounding mode.
+丸めモードとしてround to oddを使用して128ビットのIEEE浮動小数点除算を実行する。
 @findex __builtin_divf128_round_to_odd
 
 @item __float128 __builtin_sqrtf128_round_to_odd (__float128)
-Perform a 128-bit IEEE floating point square root using round to odd
-as the rounding mode.
+丸めモードとしてround to oddを使用して128ビットのIEEE浮動小数点平方根を実行する。
 @findex __builtin_sqrtf128_round_to_odd
 
 @item __float128 __builtin_fmaf128 (__float128, __float128, __float128)
-Perform a 128-bit IEEE floating point fused multiply and add operation
-using round to odd as the rounding mode.
+丸めモードとしてround to oddを使用して、128ビットIEEE浮動小数点の積和演算を実行する。
 @findex __builtin_fmaf128_round_to_odd
 
 @item double __builtin_truncf128_round_to_odd (__float128)
-Convert a 128-bit IEEE floating point value to @code{double} using
-round to odd as the rounding mode.
+丸めモードとしてround to oddを使用して、128ビットのIEEE浮動小数点値を@code{double}に変換する。
 @findex __builtin_truncf128_round_to_odd
 @end table
 
-The following built-in functions are available for the PowerPC family
-of processors, starting with ISA 2.05 or later (@option{-mcpu=power6}
-or @option{-mcmpb}):
+次の組み込み関数は、PowerPCファミリのプロセッサで、ISA 2.05以降（@option{-mcpu=power6}または@option{-mcmpb}）から使用できる。
 @smallexample
 unsigned long long __builtin_cmpb (unsigned long long int, unsigned long long int);
 unsigned int __builtin_cmpb (unsigned int, unsigned int);
 @end smallexample
 
-The @code{__builtin_cmpb} function
-performs a byte-wise compare on the contents of its two arguments,
-returning the result of the byte-wise comparison as the returned
-value.  For each byte comparison, the corresponding byte of the return
-value holds 0xff if the input bytes are equal and 0 if the input bytes
-are not equal.  If either of the arguments to this built-in function
-is wider than 32 bits, the function call expands into the form that
-expects @code{unsigned long long int} arguments
-which is only available on 64-bit targets.
+@code{__builtin_cmpb}関数は、2つの引数の内容をバイト単位で比較し、バイト単位の比較の結果を戻り値として返す。 各バイト比較の場合、戻り値の対応するバイトは、入力バイトが等しい場合は0xffを、入力バイトが等しい場合は0を保持する。 この組み込み関数のいずれかの引数が32ビットより大きい場合、関数呼び出しは、64ビットターゲットでのみ使用可能な@code{unsigned long long int}引数を必要とする形式に展開される。
 
-The following built-in functions are available for the PowerPC family
-of processors, starting with ISA 2.06 or later (@option{-mcpu=power7}
-or @option{-mpopcntd}):
+次の組み込み関数は、PowerPCファミリのプロセッサで、ISA 2.06以降（@option{-mcpu=power7}または@option{-mpopcntd}）から使用できる。
 @smallexample
 long __builtin_bpermd (long, long);
 int __builtin_divwe (int, int);
@@ -11320,11 +11269,9 @@ unsigned int addg6s (unsigned int, unsigned int);
 void __builtin_rs6000_speculation_barrier (void);
 @end smallexample
 
-The @code{__builtin_divde} and @code{__builtin_divdeu} functions
-require a 64-bit environment supporting ISA 2.06 or later.
+@code{__builtin_divde}関数と@code{__builtin_divdeu}関数には、ISA 2.06以降をサポートする64ビット環境が必要である。
 
-The following built-in functions are available for the PowerPC family
-of processors, starting with ISA 3.0 or later (@option{-mcpu=power9}):
+次の組み込み関数は、PowerPCファミリのプロセッサで、ISA 3.0以降（@option{-mcpu=power9}）から使用できる。
 @smallexample
 long long __builtin_darn (void);
 long long __builtin_darn_raw (void);
