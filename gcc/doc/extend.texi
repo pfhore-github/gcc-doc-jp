@@ -11331,67 +11331,17 @@ int __builtin_dfp_dtstsfi_ov_dd (unsigned int comparison, _Decimal64 value);
 int __builtin_dfp_dtstsfi_ov_td (unsigned int comparison, _Decimal128 value);
 @end smallexample
 
-The @code{__builtin_darn} and @code{__builtin_darn_raw}
-functions require a
-64-bit environment supporting ISA 3.0 or later.
-The @code{__builtin_darn} function provides a 64-bit conditioned
-random number.  The @code{__builtin_darn_raw} function provides a
-64-bit raw random number.  The @code{__builtin_darn_32} function
-provides a 32-bit random number.
+@code{__builtin_darn}関数と@code{__builtin_darn_raw}関数には、ISA 3.0以降をサポートする64ビット環境が必要である。@code{__builtin_darn}関数は、64ビットの条件付き乱数を提供する。 @code{__builtin_darn_raw}関数は、64ビットの生の乱数を提供する。 @code{__builtin_darn_32}関数は、32ビットの乱数を提供する。
 
-The @code{scalar_extract_exp} and @code{scalar_extract_sig}
-functions require a 64-bit environment supporting ISA 3.0 or later.
-The @code{scalar_extract_exp} and @code{scalar_extract_sig} built-in
-functions return the significand and the biased exponent value
-respectively of their @code{source} arguments.
-When supplied with a 64-bit @code{source} argument, the
-result returned by @code{scalar_extract_sig} has
-the @code{0x0010000000000000} bit set if the
-function's @code{source} argument is in normalized form.
-Otherwise, this bit is set to 0.
-When supplied with a 128-bit @code{source} argument, the
-@code{0x00010000000000000000000000000000} bit of the result is
-treated similarly.
-Note that the sign of the significand is not represented in the result
-returned from the @code{scalar_extract_sig} function.  Use the
-@code{scalar_test_neg} function to test the sign of its @code{double}
-argument.
+@code{scalar_extract_exp}関数と@code{scalar_extract_sig}関数には、ISA 3.0以降をサポートする64ビット環境が必要である。@code{scalar_extract_exp}と@code{scalar_extract_sig}組み込み関数は、それぞれの@code{source}引数の仮数部とバイアスされた指数部の値を返す。64ビットの@code{source}引数を指定すると、@code{scalar_extract_sig}によって返される結果には、@code{0x0010000000000000}ビットが設定される。関数の@code{source}引数は正規化された形式である。それ以外の場合、このビットは0に設定される。128ビットの@code{source}引数を指定すると、結果の@code{0x00010000000000000000000000000000}ビットも同様に扱われる。仮数部の符号は、@code{scalar_extract_sig}関数から返された結果には現れない。 @code{double}引数の符号をテストするには、@code{scalar_test_neg}関数を使用する。
 
-The @code{scalar_insert_exp}
-functions require a 64-bit environment supporting ISA 3.0 or later.
-When supplied with a 64-bit first argument, the
-@code{scalar_insert_exp} built-in function returns a double-precision
-floating point value that is constructed by assembling the values of its
-@code{significand} and @code{exponent} arguments.  The sign of the
-result is copied from the most significant bit of the
-@code{significand} argument.  The significand and exponent components
-of the result are composed of the least significant 11 bits of the
-@code{exponent} argument and the least significant 52 bits of the
-@code{significand} argument respectively.
+@code {scalar_insert_exp}関数には、ISA 3.0以降をサポートする64ビット環境が必要である。64ビットの第1引数を指定すると、@code{scalar_insert_exp}組み込み関数は@code{significand}および@code{exponent}引数の値を組み立てることによって構築された倍精度浮動小数点値を返す。 結果の符号は@code{significand}引数の最上位ビットからコピーされる。 結果の有効成分と指数成分は、それぞれ@code{exponent}引数の最下位11ビットと@code{significand}引数の最下位52ビットで構成される。
 
-When supplied with a 128-bit first argument, the
-@code{scalar_insert_exp} built-in function returns a quad-precision
-ieee floating point value.  The sign bit of the result is copied from
-the most significant bit of the @code{significand} argument.
-The significand and exponent components of the result are composed of
-the least significant 15 bits of the @code{exponent} argument and the
-least significant 112 bits of the @code{significand} argument respectively.
+128ビットの第1引数を指定すると、@code{scalar_insert_exp}組み込み関数は4倍精度のieee浮動小数点値を返す。 結果の符号ビットは、@code{significand}引数の最上位ビットからコピーされる。結果の有効成分と指数成分は、それぞれ@code{exponent}引数の最下位15ビットと@code{significand}引数の最下位112ビットで構成される。
 
-The @code{scalar_cmp_exp_gt}, @code{scalar_cmp_exp_lt},
-@code{scalar_cmp_exp_eq}, and @code{scalar_cmp_exp_unordered} built-in
-functions return a non-zero value if @code{arg1} is greater than, less
-than, equal to, or not comparable to @code{arg2} respectively.  The
-arguments are not comparable if one or the other equals NaN (not a
-number). 
+@code{scalar_cmp_exp_lt}、@code{scalar_cmp_exp_eq}、および@code{scalar_cmp_exp_unordered}組み込み関数は、@code{arg1}が@code{arg2}に対して、より大きい、より小さい、等しい、または比較不能の場合、0以外の値を返す。どちらか一方がNaN（非数）に等しい場合、引数は比較不能である。
 
-The @code{scalar_test_data_class} built-in function returns 1
-if any of the condition tests enabled by the value of the
-@code{condition} variable are true, and 0 otherwise.  The
-@code{condition} argument must be a compile-time constant integer with
-value not exceeding 127.  The
-@code{condition} argument is encoded as a bitmask with each bit
-enabling the testing of a different condition, as characterized by the
-following:
+@code{scalar_test_data_class}組み込み関数は、@code{condition}変数の値によって有効にされた条件テストのいずれかが真であれば1を返し、そうでなければ0を返す。 @code{condition}引数は、127を超えない値を持つコンパイル時定数でなければならない。@code{condition}引数は、次のような特徴を持つ異なる条件のテストを可能にするビットごとのビットマスクとしてエンコードされる。
 @smallexample
 0x40    Test for NaN
 0x20    Test for +Infinity
@@ -11402,64 +11352,21 @@ following:
 0x01    Test for -Denormal
 @end smallexample
 
-The @code{scalar_test_neg} built-in function returns 1 if its
-@code{source} argument holds a negative value, 0 otherwise.
+@code{scalar_test_neg}組み込み関数は、@ code{source}引数が負の値を保持する場合は1を返し、それ以外の場合は0を返す。
 
-The @code{__builtin_byte_in_set} function requires a
-64-bit environment supporting ISA 3.0 or later.  This function returns
-a non-zero value if and only if its @code{u} argument exactly equals one of
-the eight bytes contained within its 64-bit @code{set} argument.
+@code{__builtin_byte_in_set}関数には、ISA 3.0以降をサポートする64ビット環境が必要である。 この関数は、その@code{u}引数が、その64ビット@code{set}引数に含まれる8バイトのいずれかと正確に等しい場合に限り、非ゼロの値を返す。
 
-The @code{__builtin_byte_in_range} and
-@code{__builtin_byte_in_either_range} require an environment
-supporting ISA 3.0 or later.  For these two functions, the
-@code{range} argument is encoded as 4 bytes, organized as
-@code{hi_1:lo_1:hi_2:lo_2}.
-The @code{__builtin_byte_in_range} function returns a
-non-zero value if and only if its @code{u} argument is within the
-range bounded between @code{lo_2} and @code{hi_2} inclusive.
-The @code{__builtin_byte_in_either_range} function returns non-zero if
-and only if its @code{u} argument is within either the range bounded
-between @code{lo_1} and @code{hi_1} inclusive or the range bounded
-between @code{lo_2} and @code{hi_2} inclusive.
+@code{__builtin_byte_in_range}と@code{__builtin_byte_in_either_range}には、ISA 3.0以降をサポートする環境が必要である。 これらの2つの関数の場合、@code{range}引数は4バイトとしてエンコードされ、@code{hi_1:lo_1:hi_2:lo_2}として編成される。@code{__ builtin_byte_in_range}関数は、@code{u}引数が@code{lo_2}と@code{hi_2}の間の範囲内にある場合にのみ、ゼロ以外の値を返す。@code{__builtin_byte_in_either_range}関数は、その@code{u}引数が@code{lo_1}と@code{hi_1}の間（境界含む）の範囲か@code{lo_2}と@code {hi_2}の間（境界含む）の範囲内の範囲内にある場合に限り、非ゼロを返す。
 
-The @code{__builtin_dfp_dtstsfi_lt} function returns a non-zero value
-if and only if the number of signficant digits of its @code{value} argument
-is less than its @code{comparison} argument.  The
-@code{__builtin_dfp_dtstsfi_lt_dd} and
-@code{__builtin_dfp_dtstsfi_lt_td} functions behave similarly, but
-require that the type of the @code{value} argument be
-@code{__Decimal64} and @code{__Decimal128} respectively.
+@code{__builtin_dfp_dtstsfi_lt}関数は、@code{value}引数のsignificant桁数が@code {compare}引数よりも小さい場合にのみ、ゼロ以外の値を返す。 @code{__builtin_dfp_dtstsfi_lt_dd}関数と@code{__builtin_dfp_dtstsfi_lt_td}関数も同様に動作するが、@code{value}引数の型はそれぞれ@code{__ Decimal64}と@code{__ Decimal128}である必要がある。
 
-The @code{__builtin_dfp_dtstsfi_gt} function returns a non-zero value
-if and only if the number of signficant digits of its @code{value} argument
-is greater than its @code{comparison} argument.  The
-@code{__builtin_dfp_dtstsfi_gt_dd} and
-@code{__builtin_dfp_dtstsfi_gt_td} functions behave similarly, but
-require that the type of the @code{value} argument be
-@code{__Decimal64} and @code{__Decimal128} respectively.
+@code{__builtin_dfp_dtstsfi_gt}関数は、@code{value}引数のsignificant桁数が@code{compare}引数より大きい場合にのみ、ゼロ以外の値を返す。 @code{__ builtin_dfp_dtstsfi_gt_dd}関数と@code{__ builtin_dfp_dtstsfi_gt_td}関数も同様に動作するが、@code{value}引数の型はそれぞれ@code{__Decimal64}と@code{__Decimal128}である必要がある。
 
-The @code{__builtin_dfp_dtstsfi_eq} function returns a non-zero value
-if and only if the number of signficant digits of its @code{value} argument
-equals its @code{comparison} argument.  The
-@code{__builtin_dfp_dtstsfi_eq_dd} and
-@code{__builtin_dfp_dtstsfi_eq_td} functions behave similarly, but
-require that the type of the @code{value} argument be
-@code{__Decimal64} and @code{__Decimal128} respectively.
+@code{__builtin_dfp_dtstsfi_eq}関数は、@code{value}引数のsignificant桁数が@code{compare}引数と等しい場合にのみ、ゼロ以外の値を返す。 @code{__builtin_dfp_dtstsfi_eq_dd}関数と@code{__builtin_dfp_dtstsfi_eq_td}関数も同様に動作するが、@code{value}引数の型はそれぞれ@code{__Decimal64}と@code{__Decimal128}である必要がある。
 
-The @code{__builtin_dfp_dtstsfi_ov} function returns a non-zero value
-if and only if its @code{value} argument has an undefined number of
-significant digits, such as when @code{value} is an encoding of @code{NaN}.
-The @code{__builtin_dfp_dtstsfi_ov_dd} and
-@code{__builtin_dfp_dtstsfi_ov_td} functions behave similarly, but
-require that the type of the @code{value} argument be
-@code{__Decimal64} and @code{__Decimal128} respectively.
+@code{value}が@code{NaN}のエンコーディングのような@code{value}引数に未定義の有効数字がある場合に限り、@code{__builtin_dfp_dtstsfi_ov}関数はゼロ以外の値を返す。@code{__builtin_dfp_dtstsfi_ov_dd}関数と@code{__builtin_dfp_dtstsfi_ov_td}関数も同様に動作するが、@code{value}引数の型はそれぞれ@code{__Decimal64}と@code{__Decimal128}である必要がある。
 
-The following built-in functions are also available for the PowerPC family
-of processors, starting with ISA 3.0 or later
-(@option{-mcpu=power9}).  These string functions are described
-separately in order to group the descriptions closer to the function
-prototypes:
+次の組み込み関数は、PowerPCファミリのプロセッサで、ISA 3.0以降（@option{-mcpu=power9}）からも利用できる。 これらの文字列関数は、関数のプロトタイプに近い記述をグループ化するために、別々に記述されている。
 @smallexample
 int vec_all_nez (vector signed char, vector signed char);
 int vec_all_nez (vector unsigned char, vector unsigned char);
@@ -11604,66 +11511,15 @@ unsigned int vec_xrx (unsigned int index, vector unsigned int data);
 float vec_xrx (unsigned int index, vector float data);
 @end smallexample
 
-The @code{vec_all_nez}, @code{vec_any_eqz}, and @code{vec_cmpnez}
-perform pairwise comparisons between the elements at the same
-positions within their two vector arguments.
-The @code{vec_all_nez} function returns a
-non-zero value if and only if all pairwise comparisons are not
-equal and no element of either vector argument contains a zero.
-The @code{vec_any_eqz} function returns a
-non-zero value if and only if at least one pairwise comparison is equal
-or if at least one element of either vector argument contains a zero.
-The @code{vec_cmpnez} function returns a vector of the same type as
-its two arguments, within which each element consists of all ones to
-denote that either the corresponding elements of the incoming arguments are
-not equal or that at least one of the corresponding elements contains
-zero.  Otherwise, the element of the returned vector contains all zeros.
+@code{vec_all_nez}、@code{vec_any_eqz}、および@code{vec_cmpnez}は、2つのベクトル引数内の同じ位置にある要素間のペアごとの比較を実行する。@code{vec_all_nez}関数は、すべてのペアごとの比較が等しくなく、どちらかのベクトル引数の要素にゼロが含まれていない場合にのみ、ゼロ以外の値を返す。@code{vec_any_eqz}関数は、少なくとも1つのペアの比較が等しい場合、またはベクトル引数の少なくとも1つの要素にゼロが含まれている場合にのみ、ゼロ以外の値を返す。@code{vec_cmpnez}関数は、2つの引数と同じ型のベクトルを返し、各要素はすべての要素から構成され、入力引数の対応する要素が等しくないか、または対応する要素の少なくとも1つがゼロを含むことを示している。それ以外の場合、返されたベクトルの要素にはすべて0が含まれる。
 
-The @code{vec_cntlz_lsbb} function returns the count of the number of
-consecutive leading byte elements (starting from position 0 within the
-supplied vector argument) for which the least-significant bit
-equals zero.  The @code{vec_cnttz_lsbb} function returns the count of
-the number of consecutive trailing byte elements (starting from
-position 15 and counting backwards within the supplied vector
-argument) for which the least-significant bit equals zero.
+@code{vec_cntlz_lsbb}関数は、最下位ビットがゼロに等しい連続する先頭バイト要素の数（指定されたベクトル引数内の位置0から始まる）の数を返す。 @code{vec_cnttz_lsbb}関数は、最下位ビットがゼロに等しい連続した後続のバイト要素の数（位置15から始まり、与えられたベクトル引数内で後方に数える）の数を返す。
 
-The @code{vec_xl_len} and @code{vec_xst_len} functions require a
-64-bit environment supporting ISA 3.0 or later.  The @code{vec_xl_len}
-function loads a variable length vector from memory.  The
-@code{vec_xst_len} function stores a variable length vector to memory.
-With both the @code{vec_xl_len} and @code{vec_xst_len} functions, the
-@code{addr} argument represents the memory address to or from which
-data will be transferred, and the
-@code{len} argument represents the number of bytes to be
-transferred, as computed by the C expression @code{min((len & 0xff), 16)}.
-If this expression's value is not a multiple of the vector element's
-size, the behavior of this function is undefined.
-In the case that the underlying computer is configured to run in
-big-endian mode, the data transfer moves bytes 0 to @code{(len - 1)} of
-the corresponding vector.  In little-endian mode, the data transfer
-moves bytes @code{(16 - len)} to @code{15} of the corresponding
-vector.  For the load function, any bytes of the result vector that
-are not loaded from memory are set to zero.
-The value of the @code{addr} argument need not be aligned on a
-multiple of the vector's element size.
+@code{vec_xl_len}関数と@code{vec_xst_len}関数には、ISA 3.0以降をサポートする64ビット環境が必要である。@code{vec_xl_len}関数は、メモリから可変長ベクトルをロードする。@code{vec_xst_len}関数は可変長ベクトルをメモリに格納する。@code{vec_xl_len}と@code{vec_xst_len}の両方の関数では、@code{addr}引数は、データの転送先または転送元のメモリアドレスを表し、@code{len}引数は、 C式@code{min((len＆0xff), 16)}で計算されるように転送される。この式の値がベクトル要素のサイズの倍数でない場合、この関数の動作は未定義である。基底のコンピュータがビッグエンディアンモードで実行されるように構成されている場合、データ転送によってバイト0が対応するベクトルの@code{(len-1)}に移動する。リトルエンディアンモードでは、データ転送は、対応するベクトルのバイト@code {(16 - len)}を@code{15}に移動する。ロード関数の場合、メモリからロードされていない結果ベクトルのバイトはゼロに設定される。@code{addr}引数の値は、ベクトルの要素サイズの倍数に揃える必要はない。
 
-The @code{vec_xlx} and @code{vec_xrx} functions extract the single
-element selected by the @code{index} argument from the vector
-represented by the @code{data} argument.  The @code{index} argument
-always specifies a byte offset, regardless of the size of the vector
-element.  With @code{vec_xlx}, @code{index} is the offset of the first
-byte of the element to be extracted.  With @code{vec_xrx}, @code{index}
-represents the last byte of the element to be extracted, measured
-from the right end of the vector.  In other words, the last byte of
-the element to be extracted is found at position @code{(15 - index)}.
-There is no requirement that @code{index} be a multiple of the vector
-element size.  However, if the size of the vector element added to
-@code{index} is greater than 15, the content of the returned value is
-undefined.
+@code{vec_xlx}関数と@code{vec_xrx}関数は、@code{index}引数で選択された単一要素を@code{data}引数で表されるベクトルから抽出する。 @code{index}引数は、ベクトル要素のサイズに関係なく、常にバイトオフセットを指定する。 @code{vec_xlx}の場合、@code{index}は抽出される要素の最初のバイトのオフセットである。 @code{vec_xrx}の場合、@code{index}は抽出される要素の最後のバイトを表し、ベクトルの右端から測定される。 つまり、抽出される要素の最後のバイトは@code {(15 - index)}の位置にある。@code{index}がベクトル要素のサイズの倍数である必要はない。 しかし、@code{index}に追加されたベクトル要素のサイズが15より大きい場合、返される値の内容は未定義である。
 
-The following built-in functions are available for the PowerPC family
-of processors when hardware decimal floating point
-(@option{-mhard-dfp}) is available:
+ハードウェア10進浮動小数点（@option{-mhard-dfp}）が利用可能な場合、次の組み込み関数をPowerPCファミリのプロセッサで使用できる。
 @smallexample
 long long __builtin_dxex (_Decimal64);
 long long __builtin_dxexq (_Decimal128);
@@ -11681,9 +11537,7 @@ unsigned long long __builtin_unpack_dec128 (_Decimal128, int);
 _Decimal128 __builtin_pack_dec128 (unsigned long long, unsigned long long);
 @end smallexample
 
-The following built-in functions are available for the PowerPC family
-of processors when the Vector Scalar (vsx) instruction set is
-available:
+ベクタスカラー（vsx）命令セットが使用可能な場合、PowerPCファミリプロセッサでは次の組み込み関数を使用できる。
 @smallexample
 unsigned long long __builtin_unpack_vector_int128 (vector __int128_t, int);
 vector __int128_t __builtin_pack_vector_int128 (unsigned long long,
