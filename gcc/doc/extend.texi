@@ -11545,14 +11545,8 @@ vector __int128_t __builtin_pack_vector_int128 (unsigned long long,
 @end smallexample
 
 @node PowerPC AltiVec/VSX Built-in Functions
-@subsection PowerPC AltiVec Built-in Functions
-
-GCC provides an interface for the PowerPC family of processors to access
-the AltiVec operations described in Motorola's AltiVec Programming
-Interface Manual.  The interface is made available by including
-@code{<altivec.h>} and using @option{-maltivec} and
-@option{-mabi=altivec}.  The interface supports the following vector
-types.
+@subsection PowerPC AltiVec組み込み関数
+GCCは、MotorolaのAltiVec Programming Interface Manualに記載されているAltiVecの操作にPowerPCファミリのプロセッサがアクセスするためのインタフェースを提供する。 このインタフェースは、@code{<altivec.h>}と@option{-maltivec}と@option{-mabi=altivec}を使用することで利用可能になる。 インタフェースは、以下のベクトル型をサポートしている。
 
 @smallexample
 vector unsigned char
@@ -11570,8 +11564,7 @@ vector bool int
 vector float
 @end smallexample
 
-If @option{-mvsx} is used the following additional vector types are
-implemented.
+@option {-mvsx}を使用すると、以下の追加のベクトル型が実装される。
 
 @smallexample
 vector unsigned long
@@ -11579,75 +11572,45 @@ vector signed long
 vector double
 @end smallexample
 
-The long types are only implemented for 64-bit code generation, and
-the long type is only used in the floating point/integer conversion
-instructions.
+long型は64ビットコード生成でのみ実装され、long型は浮動小数点/整数変換命令でのみ使用される。
 
-GCC's implementation of the high-level language interface available from
-C and C++ code differs from Motorola's documentation in several ways.
+GCCのCおよびC++コードからの高水準言語インターフェイスの実装は、Motorolaのドキュメントといくつかの点で異なる。
 
 @itemize @bullet
 
 @item
-A vector constant is a list of constant expressions within curly braces.
+ベクトル定数は、中括弧内の定数式のリストである。
 
 @item
-A vector initializer requires no cast if the vector constant is of the
-same type as the variable it is initializing.
+ベクトル初期化子は、初期化する変数と同じ型のベクトル定数であればキャストは必要ない。
 
 @item
-If @code{signed} or @code{unsigned} is omitted, the signedness of the
-vector type is the default signedness of the base type.  The default
-varies depending on the operating system, so a portable program should
-always specify the signedness.
+@code{signed}または@code{unsigned}が省略されている場合、ベクタ型の符号の有無は、基本型のデフォルトの符号の有無である。 デフォルトはオペレーティングシステムによって異なるので、可搬性のあるプログラムでは必ず符号の有無を指定する必要がある。
 
 @item
-Compiling with @option{-maltivec} adds keywords @code{__vector},
-@code{vector}, @code{__pixel}, @code{pixel}, @code{__bool} and
-@code{bool}.  When compiling ISO C, the context-sensitive substitution
-of the keywords @code{vector}, @code{pixel} and @code{bool} is
-disabled.  To use them, you must include @code{<altivec.h>} instead.
+@option {-maltivec}でコンパイルすると、キーワード@code{__vector}、@code{vector}、@code{__pixel}、@code{pixel}、@code{__bool}、および@code{bool}が追加される。 ISO Cをコンパイルするとき、キーワード@code{vector}、@code{pixel}および@code{bool}の状況依存置換が無効になる。 それらを使用するには、代わりに@code{<altivec.h>}を含める必要がある。
 
 @item
-GCC allows using a @code{typedef} name as the type specifier for a
-vector type.
+GCCでは、ベクタ型の型指定子として@code {typedef}名を使用できる。
 
 @item
-For C, overloaded functions are implemented with macros so the following
-does not work:
+Cの場合、オーバーロードされた関数はマクロで実装されているため、次の関数は機能しない。
 
 @smallexample
   vec_add ((vector signed int)@{1, 2, 3, 4@}, foo);
 @end smallexample
 
 @noindent
-Since @code{vec_add} is a macro, the vector constant in the example
-is treated as four separate arguments.  Wrap the entire argument in
-parentheses for this to work.
+@code {vec_add}はマクロなので、この例のベクトル定数は4つの独立した引数として扱われる。 これを行うには、引数全体をカッコで囲む。
 @end itemize
 
-@emph{Note:} Only the @code{<altivec.h>} interface is supported.
-Internally, GCC uses built-in functions to achieve the functionality in
-the aforementioned header file, but they are not supported and are
-subject to change without notice.
+@emph{注意:} @code {<altivec.h>}インタフェースのみがサポートされている。 内部的には、GCCは前述のヘッダーファイルの機能を実現するための組み込み関数を使用するが、サポートされておらず、予告なしに変更されることがある。
 
-GCC complies with the OpenPOWER 64-Bit ELF V2 ABI Specification,
-which may be found at
-@uref{http://openpowerfoundation.org/wp-content/uploads/resources/leabi-prd/content/index.html}.
-Appendix A of this document lists the vector API interfaces that must be
-provided by compliant compilers.  Programmers should preferentially use
-the interfaces described therein.  However, historically GCC has provided
-additional interfaces for access to vector instructions.  These are
-briefly described below.
+GCCはOpenPOWER 64ビットELF V2 ABI仕様に準拠しており、これは@uref{http://openpowerfoundation.org/wp-content/uploads/resources/leabi-prd/content/index.html}でみつかる。このドキュメントの付録Aには、準拠したコンパイラによって提供されなければならないベクトルAPIインタフェースがリストされている。 プログラマは、そこに記載されたインタフェースを優先的に使用すべきである。しかし、歴史的に、GCCはベクトル命令へのアクセスのための追加のインタフェースを提供してきた。 以下、これらについて簡単に説明する。
 
-The following interfaces are supported for the generic and specific
-AltiVec operations and the AltiVec predicates.  In cases where there
-is a direct mapping between generic and specific operations, only the
-generic names are shown here, although the specific operations can also
-be used.
+以下のインターフェースは、一般的なAltiVec操作とAltiVec述部でサポートされている。 ジェネリックと特定のオペレーションの間に直接マッピングがある場合、特定のオペレーションも使用できるが、ジェネリック名のみがここに表示される。
 
-Arguments that are documented as @code{const int} require literal
-integral values within the range required for that operation.
+@code{const int}として記述されている引数は、その操作に必要な範囲内のリテラル整数値を必要とする。
 
 @smallexample
 vector signed char vec_abs (vector signed char);
@@ -13648,8 +13611,7 @@ int vec_any_numeric (vector float);
 int vec_any_out (vector float, vector float);
 @end smallexample
 
-If the vector/scalar (VSX) instruction set is available, the following
-additional functions are available:
+ベクトル/スカラー（VSX）命令セットが使用可能な場合、次の追加機能を使用できる。
 
 @smallexample
 vector double vec_abs (vector double);
@@ -13911,18 +13873,9 @@ vector unsigned char vec_xxsldi (vector unsigned char,
                                  vector unsigned char, int);
 @end smallexample
 
-Note that the @samp{vec_ld} and @samp{vec_st} built-in functions always
-generate the AltiVec @samp{LVX} and @samp{STVX} instructions even
-if the VSX instruction set is available.  The @samp{vec_vsx_ld} and
-@samp{vec_vsx_st} built-in functions always generate the VSX @samp{LXVD2X},
-@samp{LXVW4X}, @samp{STXVD2X}, and @samp{STXVW4X} instructions.
+@samp{vec_ld}と@samp{vec_st}組み込み関数は、VSX命令セットが利用可能であっても常にAltiVec @samp{LVX}命令と@samp{STVX}命令を生成することに注意せよ。 @samp{vec_vsx_ld}および@samp{vec_vsx_st}組み込み関数は、常にVSX @samp{LXVD2X}、@samp{LXVW4X}、@samp{STXVD2X}、および@samp{STXVW4X}命令を生成する。
 
-If the ISA 2.07 additions to the vector/scalar (power8-vector)
-instruction set are available, the following additional functions are
-available for both 32-bit and 64-bit targets.  For 64-bit targets, you
-can use @var{vector long} instead of @var{vector long long},
-@var{vector bool long} instead of @var{vector bool long long}, and
-@var{vector unsigned long} instead of @var{vector unsigned long long}.
+ベクトル/スカラー（power8ベクトル）命令セットへのISA 2.07の追加が利用可能な場合、以下の追加機能が32ビットターゲットと64ビットターゲットの両方で利用可能である。 64ビットのターゲットでは、@var{vector long long}の代わりに@var {vector long}、@var{vector bool long long}の代わりに@var{vector bool long}、@ var{vector unsigned long long}の代わりに@var{vector unsigned long}を使うことができる。
 
 @smallexample
 vector long long vec_abs (vector long long);
@@ -14259,16 +14212,9 @@ vector long long vec_vupklsw (vector int);
 vector unsigned long long vec_vupklsw (vector int);
 @end smallexample
 
-If the ISA 2.07 additions to the vector/scalar (power8-vector)
-instruction set are available, the following additional functions are
-available for 64-bit targets.  New vector types
-(@var{vector __int128_t} and @var{vector __uint128_t}) are available
-to hold the @var{__int128_t} and @var{__uint128_t} types to use these
-builtins.
+ベクトル/スカラー（power8ベクトル）命令セットへのISA 2.07の追加が利用可能である場合、以下の追加機能が64ビットターゲットに対して利用可能である。 これらの組み込み関数を使用するために、新しいベクトル型（@var{vector __int128_t}と@var{vector __uint128_t}）を使用して、@var{__ int128_t}型と@var{__ uint128_t}型を保持できる。
 
-The normal vector extract, and set operations work on
-@var{vector __int128_t} and @var{vector __uint128_t} types,
-but the index value must be 0.
+法線ベクトル抽出とセット操作は@var{vector __int128_t}型と@var{vector __int128_t}型で動作するが、インデックス値は0でなければならない。
 
 @smallexample
 vector __int128_t vec_vaddcuq (vector __int128_t, vector __int128_t);
@@ -14315,8 +14261,7 @@ int __builtin_bcdsub_gt (vector __int128_t, vector __int128_t);
 int __builtin_bcdsub_ov (vector __int128_t, vector __int128_t);
 @end smallexample
 
-If the ISA 3.0 instruction set additions (@option{-mcpu=power9})
-are available:
+ISA 3.0命令セットの追加（@option {-mcpu = power9}）が利用可能な場合、
 
 @smallexample
 vector unsigned long long vec_bperm (vector unsigned long long,
@@ -14389,8 +14334,7 @@ vector long long vec_vprtybd (vector long long);
 vector unsigned long long vec_vprtybd (vector unsigned long long);
 @end smallexample
 
-On 64-bit targets, if the ISA 3.0 additions (@option{-mcpu=power9})
-are available:
+64ビットのターゲットでは、ISA 3.0の追加（@option{-mcpu=power9}）が利用可能な場合：
 
 @smallexample
 vector long vec_vprtyb (vector long);
@@ -14405,8 +14349,7 @@ vector __int128_t vec_vprtybq (vector __int128_t);
 vector __uint128_t vec_vprtybd (vector __uint128_t);
 @end smallexample
 
-The following built-in vector functions are available for the PowerPC family
-of processors, starting with ISA 3.0 or later (@option{-mcpu=power9}):
+次の組み込みベクトル関数は、PowerPCファミリのプロセッサでは、ISA 3.0以降（@option{-mcpu=power9}）から使用できる。
 @smallexample
 __vector unsigned char
 vec_slv (__vector unsigned char src, __vector unsigned char shift_distance);
@@ -14414,32 +14357,10 @@ __vector unsigned char
 vec_srv (__vector unsigned char src, __vector unsigned char shift_distance);
 @end smallexample
 
-The @code{vec_slv} and @code{vec_srv} functions operate on
-all of the bytes of their @code{src} and @code{shift_distance}
-arguments in parallel.  The behavior of the @code{vec_slv} is as if
-there existed a temporary array of 17 unsigned characters
-@code{slv_array} within which elements 0 through 15 are the same as
-the entries in the @code{src} array and element 16 equals 0.  The
-result returned from the @code{vec_slv} function is a
-@code{__vector} of 16 unsigned characters within which element
-@code{i} is computed using the C expression
-@code{0xff & (*((unsigned short *)(slv_array + i)) << (0x07 &
-shift_distance[i]))},
-with this resulting value coerced to the @code{unsigned char} type.
-The behavior of the @code{vec_srv} is as if
-there existed a temporary array of 17 unsigned characters
-@code{srv_array} within which element 0 equals zero and
-elements 1 through 16 equal the elements 0 through 15 of
-the @code{src} array.  The
-result returned from the @code{vec_srv} function is a
-@code{__vector} of 16 unsigned characters within which element
-@code{i} is computed using the C expression
-@code{0xff & (*((unsigned short *)(srv_array + i)) >>
-(0x07 & shift_distance[i]))},
-with this resulting value coerced to the @code{unsigned char} type.
+@code{vec_slv}関数と@code{vec_srv}関数は、@code{src}引数と@code{shift_distance}引数のすべてのバイトに対して並列に動作する。 @code{vec_slv}の振る舞いは、要素0〜15が@code{src}配列の要素と同じで、要素16が0に等しい17の符号なし文字@code{slv_array}の一時的な配列が存在するかのようにである。@code{vec_slv}関数から返される結果は、Cの式@code{0xff & (*((unsigned short *)(slv_array + i)) << (0x07 & shift_distance[i]))}を使用して要素@code {i}が計算され、この結果の値が@code {unsigned char}型に変換された16の符号なし文字の@code{__vector}である。
+@code {vec_srv}の振る舞いは、要素0が0で、要素1から16までが@code{src}の要素0から15に等しい17の符号なし文字の一時的な配列@code{srv_array}のようである。@code{vec_srv}関数から返される結果は、C式@code{0xff & (*((unsigned short *)(srv_array + i)) >> (0x07 & shift_distance[i]))}を使用して要素@code{i}が計算され、この結果値が@code{unsigned char}型に変換された16の符号なし文字の@code{__vector}である。
 
-The following built-in functions are available for the PowerPC family
-of processors, starting with ISA 3.0 or later (@option{-mcpu=power9}):
+次の組み込み関数は、PowerPCファミリのプロセッサで、ISA 3.0以降（@option{-mcpu=power9}）から使用できる。
 @smallexample
 __vector unsigned char
 vec_absd (__vector unsigned char arg1, __vector unsigned char arg2);
@@ -14455,15 +14376,8 @@ vec_absdh (__vector unsigned short arg1, __vector unsigned short arg2);
 __vector unsigned int
 vec_absdw (__vector unsigned int arg1, __vector unsigned int arg2);
 @end smallexample
-
-The @code{vec_absd}, @code{vec_absdb}, @code{vec_absdh}, and
-@code{vec_absdw} built-in functions each computes the absolute
-differences of the pairs of vector elements supplied in its two vector
-arguments, placing the absolute differences into the corresponding
-elements of the vector result.
-
-The following built-in functions are available for the PowerPC family
-of processors, starting with ISA 3.0 or later (@option{-mcpu=power9}):
+@code{vec_absd}、@code{vec_absdh}、@code{vec_absdh}、および@code{vec_absdw}組み込み関数はそれぞれ、2つのベクトル引数に供給されるベクトル要素のペアの絶対差を計算し、絶対差をベクトル結果の対応する要素に配置する。
+次の組み込み関数は、PowerPCファミリのプロセッサで、ISA 3.0以降（@option{-mcpu=power9}）から使用できる。
 @smallexample
 __vector unsigned int
 vec_extract_exp (__vector float source);
@@ -14494,50 +14408,11 @@ __vector bool long long int vec_test_data_class (__vector double source,
                                                  const int condition);
 @end smallexample
 
-The @code{vec_extract_sig} and @code{vec_extract_exp} built-in
-functions return vectors representing the significands and biased
-exponent values of their @code{source} arguments respectively.
-Within the result vector returned by @code{vec_extract_sig}, the
-@code{0x800000} bit of each vector element returned when the
-function's @code{source} argument is of type @code{float} is set to 1
-if the corresponding floating point value is in normalized form.
-Otherwise, this bit is set to 0.  When the @code{source} argument is
-of type @code{double}, the @code{0x10000000000000} bit within each of
-the result vector's elements is set according to the same rules.
-Note that the sign of the significand is not represented in the result
-returned from the @code{vec_extract_sig} function.  To extract the
-sign bits, use the
-@code{vec_cpsgn} function, which returns a new vector within which all
-of the sign bits of its second argument vector are overwritten with the
-sign bits copied from the coresponding elements of its first argument
-vector, and all other (non-sign) bits of the second argument vector
-are copied unchanged into the result vector.
+@code{vec_extract_sig}と@code{vec_extract_exp}組み込み関数は、それぞれの@code{source}引数の有効数字とバイアスされた指数値を表すベクトルを返す。関数の@code{source}引数が@code{float}型のときに返される各ベクトル要素の@code{vec_extract_sig}によって返される結果ベクトル内では、対応する浮動小数点値は正規化された形式である。それ以外の場合、このビットは0に設定される。@code{source}引数が@code{double}型の場合、結果ベクタの各要素内の@code{0x10000000000000}ビットは同じ規則に従って設定される。仮数部の符号は、@code{vec_extract_sig}関数から返された結果には現れない。 符号ビットを抽出するには、第2引数ベクトルのすべての符号ビットが、その第1引数ベクトルの対応する要素からコピーされた符号ビットで上書きされる新しいベクトルを返す@code{vec_cpsgn}関数を使用する。 第2引数ベクトルの他の（符号のない）ビットはすべて変更されずに結果ベクトルにコピーされる。
 
-The @code{vec_insert_exp} built-in functions return a vector of
-single- or double-precision floating
-point values constructed by assembling the values of their
-@code{significands} and @code{exponents} arguments into the
-corresponding elements of the returned vector.
-The sign of each
-element of the result is copied from the most significant bit of the
-corresponding entry within the @code{significands} argument.
-Note that the relevant
-bits of the @code{significands} argument are the same, for both integer
-and floating point types.
-The
-significand and exponent components of each element of the result are
-composed of the least significant bits of the corresponding
-@code{significands} element and the least significant bits of the
-corresponding @code{exponents} element.
+@code{vec_insert_exp}組み込み関数は、@code{significands}引数と@code{exponents}引数の値を返されたベクトルの対応する要素に組み立てることによって構築された単精度または倍精度浮動小数点値のベクトルを返す。結果の各要素の符号は、@code{significands}引数内の対応するエントリの最上位ビットからコピーされる。@code{significands}引数の関連するビットは、整数型と浮動小数点型の両方で同じであることに注意せよ。結果の各要素の有効成分と指数成分は、対応する@code{significands}要素の最下位ビットと対応する@code{exponents}要素の最下位ビットで構成される。
 
-The @code{vec_test_data_class} built-in function returns a vector
-representing the results of testing the @code{source} vector for the
-condition selected by the @code{condition} argument.  The
-@code{condition} argument must be a compile-time constant integer with
-value not exceeding 127.  The
-@code{condition} argument is encoded as a bitmask with each bit
-enabling the testing of a different condition, as characterized by the
-following:
+@code{vec_test_data_class}組み込み関数は、@code{condition}引数で選択された条件の@code{source}ベクトルをテストした結果を表すベクトルを返す。 @code{condition}引数は、127を超えない値を持つコンパイル時定数でなければならない。@code{condition}引数は、次のような特徴を持つ異なる条件のテストを可能にするビットごとのビットマスクとしてエンコードされる。
 @smallexample
 0x40    Test for NaN
 0x20    Test for +Infinity
@@ -14548,12 +14423,9 @@ following:
 0x01    Test for -Denormal
 @end smallexample
 
-If any of the enabled test conditions is true, the corresponding entry
-in the result vector is -1.  Otherwise (all of the enabled test
-conditions are false), the corresponding entry of the result vector is 0.
+有効なテスト条件のいずれかが真である場合、結果ベクトルの対応するエントリは-1である。 それ以外の場合（有効なテスト条件はすべて偽である場合）、結果ベクトルの対応するエントリは0になる。
 
-The following built-in functions are available for the PowerPC family
-of processors, starting with ISA 3.0 or later (@option{-mcpu=power9}):
+次の組み込み関数は、PowerPCファミリのプロセッサで、ISA 3.0以降（@option{-mcpu=power9}）から使用できる。
 @smallexample
 vector unsigned int vec_rlmi (vector unsigned int, vector unsigned int,
                               vector unsigned int);
@@ -14570,27 +14442,13 @@ vector unsigned long long vec_vrlnm (vector unsigned long long,
                                      vector unsigned long long);
 @end smallexample
 
-The result of @code{vec_rlmi} is obtained by rotating each element of
-the first argument vector left and inserting it under mask into the
-second argument vector.  The third argument vector contains the mask
-beginning in bits 11:15, the mask end in bits 19:23, and the shift
-count in bits 27:31, of each element.
+@code{vec_rlmi}の結果は、最初の引数ベクトルの各要素を左に回転し、マスクの下にそれを第2引数ベクトルに挿入することによって得られる。 3番目の引数ベクトルには、ビット11:15で始まるマスク、ビット19:23でのマスク終了、および各要素のビット27:31でのシフトカウントが含まれている。
 
-The result of @code{vec_rlnm} is obtained by rotating each element of
-the first argument vector left and ANDing it with a mask specified by
-the second and third argument vectors.  The second argument vector
-contains the shift count for each element in the low-order byte.  The
-third argument vector contains the mask end for each element in the
-low-order byte, with the mask begin in the next higher byte.
+@code{vec_rlnm}の結果は、最初の引数ベクトルの各要素を左に回転し、2番目と3番目の引数ベクトルで指定されたマスクとANDをとることで得られる。 第2引数ベクトルには、下位バイトの各要素のシフトカウントが格納される。 3番目の引数ベクトルには、順番のバイトの各要素のマスク終了点が含まれ、マスクは次の上位バイトで開始する。
 
-The result of @code{vec_vrlnm} is obtained by rotating each element
-of the first argument vector left and ANDing it with a mask.  The
-second argument vector contains the mask  beginning in bits 11:15,
-the mask end in bits 19:23, and the shift count in bits 27:31,
-of each element.
+@code{vec_vrlnm}の結果は、最初の引数ベクトルの各要素を左に回転し、マスクとANDをとることで得られる。 第2引数ベクトルは、ビット11:15で始まるマスクと、ビット19:23におけるマスクの終わりと、各要素のビット27:31でのシフト・カウントとを含む。
 
-If the ISA 3.0 instruction set additions (@option{-mcpu=power9})
-are available:
+次の組み込み関数は、PowerPCファミリのプロセッサで、ISA 3.0以降（@option{-mcpu=power9}）から使用できる。
 @smallexample
 vector signed bool char vec_revb (vector signed char);
 vector signed char vec_revb (vector signed char);
@@ -14608,8 +14466,7 @@ vector unsigned long long vec_revb (vector unsigned long long);
 vector double vec_revb (vector double);
 @end smallexample
 
-On 64-bit targets, if the ISA 3.0 additions (@option{-mcpu=power9})
-are available:
+64ビットのターゲットでは、ISA 3.0の追加（@option{-mcpu=power9}）が利用可能な場合：
 @smallexample
 vector long vec_revb (vector long);
 vector unsigned long vec_revb (vector unsigned long);
@@ -14617,12 +14474,9 @@ vector __int128_t vec_revb (vector __int128_t);
 vector __uint128_t vec_revb (vector __uint128_t);
 @end smallexample
 
-The @code{vec_revb} built-in function reverses the bytes on an element
-by element basis.  A vector of @code{vector unsigned char} or
-@code{vector signed char} reverses the bytes in the whole word.
+@code{vec_revb}組込み関数は、要素単位でバイトを逆転させる。 @code{vector unsigned char}のベクタまたは@code{vector signed char}は、ワード全体のバイトを反転する。
 
-If the cryptographic instructions are enabled (@option{-mcrypto} or
-@option{-mcpu=power8}), the following builtins are enabled.
+暗号化命令が有効な場合（@option{-mcrypto}または@option{-mcpu=power8}）、以下の組み込み関数が有効になる。
 
 @smallexample
 vector unsigned long long __builtin_crypto_vsbox (vector unsigned long long);
@@ -14676,15 +14530,11 @@ vector unsigned int __builtin_crypto_vshasigmaw (vector unsigned int,
                                                  int, int);
 @end smallexample
 
-The second argument to @var{__builtin_crypto_vshasigmad} and
-@var{__builtin_crypto_vshasigmaw} must be a constant
-integer that is 0 or 1.  The third argument to these built-in functions
-must be a constant integer in the range of 0 to 15.
+@var{__builtin_crypto_vshasigmad}と@var{__builtin_crypto_vshasigmaw}の2番目の引数は、0または1の定数でなければならない。これらの組み込み関数の3番目の引数は、0から15の範囲の定数でなければならない。
 
-If the ISA 3.0 instruction set additions 
-are enabled (@option{-mcpu=power9}), the following additional
-functions are available for both 32-bit and 64-bit targets.
+ISA 3.0命令セットの追加が有効な場合（@option{-mcpu=power9}）、以下の追加機能が32ビットと64ビットのターゲットで使用できる。
 
+@smallexample
 vector short vec_xl (int, vector short *);
 vector short vec_xl (int, short *);
 vector unsigned short vec_xl (int, vector unsigned short *);
@@ -14702,6 +14552,7 @@ void vec_xst (vector char, int, vector char *);
 void vec_xst (vector char, int, char *);
 void vec_xst (vector unsigned char, int, vector unsigned char *);
 void vec_xst (vector unsigned char, int, unsigned char *);
+@end smallexample
 
 @node PowerPC Hardware Transactional Memory Built-in Functions
 @subsection PowerPC Hardware Transactional Memory Built-in Functions
