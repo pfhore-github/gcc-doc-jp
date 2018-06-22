@@ -14555,29 +14555,14 @@ void vec_xst (vector unsigned char, int, unsigned char *);
 @end smallexample
 
 @node PowerPC Hardware Transactional Memory Built-in Functions
-@subsection PowerPC Hardware Transactional Memory Built-in Functions
-GCC provides two interfaces for accessing the Hardware Transactional
-Memory (HTM) instructions available on some of the PowerPC family
-of processors (eg, POWER8).  The two interfaces come in a low level
-interface, consisting of built-in functions specific to PowerPC and a
-higher level interface consisting of inline functions that are common
-between PowerPC and S/390.
+@subsection PowerPCハードウェアトランザクションメモリー組み込み関数
+GCCは、PowerPCファミリのプロセッサ（POWER8など）の一部で利用可能なハードウェアトランザクションメモリ（HTM）命令にアクセスするための2つのインタフェースを提供している。 2つのインタフェースは、PowerPC特有の組み込み関数と、PowerPCとS / 390の間で共通のインライン関数で構成されたより高レベルのインタフェースで構成された低レベルのインタフェースになっている。
 
-@subsubsection PowerPC HTM Low Level Built-in Functions
+@subsubsection PowerPC HTM低レベル組み込み関数
 
-The following low level built-in functions are available with
-@option{-mhtm} or @option{-mcpu=CPU} where CPU is `power8' or later.
-They all generate the machine instruction that is part of the name.
+CPUが「power8」以降の@option{-mhtm}または@option{-mcpu=CPU}で、以下の低レベル組み込み関数を利用できる。 それらはすべて、名前の一部である機械命令を生成する。
 
-The HTM builtins (with the exception of @code{__builtin_tbegin}) return
-the full 4-bit condition register value set by their associated hardware
-instruction.  The header file @code{htmintrin.h} defines some macros that can
-be used to decipher the return value.  The @code{__builtin_tbegin} builtin
-returns a simple true or false value depending on whether a transaction was
-successfully started or not.  The arguments of the builtins match exactly the
-type and order of the associated hardware instruction's operands, except for
-the @code{__builtin_tcheck} builtin, which does not take any input arguments.
-Refer to the ISA manual for a description of each instruction's operands.
+HTMの組み込み関数（@code{__builtin_tbegin}を除く）は、関連するハードウェア命令によって設定された4ビットの条件レジスタの値をすべて返す。 ヘッダーファイル@code{htmintrin.h}は、戻り値を解読するために使用できるマクロを定義している。 @code{__builtin_tbegin}組み込み関数は、トランザクションが正常に開始されたかどうかに応じて、単純な真または偽の値を返す。 組み込み関数の引数は、組み込みハードウェア命令のオペランドの型と順序に正確に一致するが、組み込み関数の@code{__builtin_tcheck}は入力引数をとらない。各命令のオペランドの説明については、ISAのマニュアルを参照せよ。
 
 @smallexample
 unsigned int __builtin_tbegin (unsigned int)
@@ -14595,8 +14580,7 @@ unsigned int __builtin_trechkpt (void)
 unsigned int __builtin_tsr (unsigned int)
 @end smallexample
 
-In addition to the above HTM built-ins, we have added built-ins for
-some common extended mnemonics of the HTM instructions:
+上記のHTM組み込み関数に加えて、HTM命令のいくつかの一般的な拡張ニーモニックの組み込み関数を追加した。
 
 @smallexample
 unsigned int __builtin_tendall (void)
@@ -14604,30 +14588,9 @@ unsigned int __builtin_tresume (void)
 unsigned int __builtin_tsuspend (void)
 @end smallexample
 
-Note that the semantics of the above HTM builtins are required to mimic
-the locking semantics used for critical sections.  Builtins that are used
-to create a new transaction or restart a suspended transaction must have
-lock acquisition like semantics while those builtins that end or suspend a
-transaction must have lock release like semantics.  Specifically, this must
-mimic lock semantics as specified by C++11, for example: Lock acquisition is
-as-if an execution of __atomic_exchange_n(&globallock,1,__ATOMIC_ACQUIRE)
-that returns 0, and lock release is as-if an execution of
-__atomic_store(&globallock,0,__ATOMIC_RELEASE), with globallock being an
-implicit implementation-defined lock used for all transactions.  The HTM
-instructions associated with with the builtins inherently provide the
-correct acquisition and release hardware barriers required.  However,
-the compiler must also be prohibited from moving loads and stores across
-the builtins in a way that would violate their semantics.  This has been
-accomplished by adding memory barriers to the associated HTM instructions
-(which is a conservative approach to provide acquire and release semantics).
-Earlier versions of the compiler did not treat the HTM instructions as
-memory barriers.  A @code{__TM_FENCE__} macro has been added, which can
-be used to determine whether the current compiler treats HTM instructions
-as memory barriers or not.  This allows the user to explicitly add memory
-barriers to their code when using an older version of the compiler.
+上記のHTM組み込み関数のセマンティクスは、クリティカルセクションで使用されるロックセマンティクスを模倣する必要があることに注意せよ。新しいトランザクションの作成や中断されたトランザクションの再起動に使用される組み込み関数は、セマンティクスのようなロック取得を持つ必要がある一方、トランザクションを終了または中断する組み込み関数はセマンティクスのようにロックを解放する必要がある。具体的には、これはC++11で指定されたロックセマンティクスを模倣する必要がある。ロック取得は、0を返す__atomic_exchange_n(&globallock,1,__ATOMIC_ACQUIRE)の実行と同じであり、ロック解除は、すべてのトランザクションで使用される暗黙の実装定義のロックである、グローバルロックが__atomic_store(&globallock,0,__ATOMIC_RELEASE)の実行の場合と同じである。組み込み関数に関連するHTM命令は、本質的に、必要な正しい取得と解放のハードウェア障壁を提供する。 しかし、コンパイラは、セマンティクスに違反するような方法で、組み込み関数間でロードとストアを移動することも禁止されなければならない。 これは、関連付けられたHTM命令にメモリバリアを追加することによって達成されている（これは、取得セマンティクスとリリースセマンティクスを提供する控えめなアプローチである）。以前のバージョンのコンパイラは、HTM命令をメモリバリアとして扱わなった。 現在のコンパイラがHTM命令をメモリバリアとして扱うかどうかを判断するために使用できる@code{__ TM_FENCE__}マクロが追加された。 これにより、古いバージョンのコンパイラを使用しているときに、コードにメモリバリアを明示的に追加することができる。
 
-The following set of built-in functions are available to gain access
-to the HTM specific special purpose registers.
+HTM固有の専用レジスタにアクセスするには、次の組み込み関数セットを使用できる。
 
 @smallexample
 unsigned long __builtin_get_texasr (void)
@@ -14641,7 +14604,7 @@ void __builtin_set_tfhar (unsigned long);
 void __builtin_set_tfiar (unsigned long);
 @end smallexample
 
-Example usage of these low level built-in functions may look like:
+これらの低レベル組み込み関数の使用例は次のようになる。
 
 @smallexample
 #include <htmintrin.h>
@@ -14675,16 +14638,13 @@ while (1)
   @}
 @end smallexample
 
-One final built-in function has been added that returns the value of
-the 2-bit Transaction State field of the Machine Status Register (MSR)
-as stored in @code{CR0}.
+@code{CR0}に格納されているMachine Status Register（MSR）の2ビットTransaction Stateフィールドの値を返す最後の組み込み関数が1つ追加された。
 
 @smallexample
 unsigned long __builtin_ttest (void)
 @end smallexample
 
-This built-in can be used to determine the current transaction state
-using the following code example:
+この組み込み関数を使用して、次のコード例を使用して現在のトランザクション状態を判断できる。
 
 @smallexample
 #include <htmintrin.h>
@@ -14705,13 +14665,9 @@ else if (tx_state == _HTM_SUSPENDED)
   @}
 @end smallexample
 
-@subsubsection PowerPC HTM High Level Inline Functions
+@subsubsection PowerPC HTM高レベルインライン関数
 
-The following high level HTM interface is made available by including
-@code{<htmxlintrin.h>} and using @option{-mhtm} or @option{-mcpu=CPU}
-where CPU is `power8' or later.  This interface is common between PowerPC
-and S/390, allowing users to write one HTM source implementation that
-can be compiled and executed on either system.
+次の高レベルHTMインタフェースは、@code{<htmxlintrin.h>}をインクロードして、@option{-mhtm}またはCPUが「power8」以降の@option{-mcpu=CPU}を使用することで利用可能になる。 このインタフェースはPowerPCとS/390の間で共通であり、ユーザーはいずれかのシステムでコンパイルして実行できる1つのHTMソース実装を記述できる。
 
 @smallexample
 long __TM_simple_begin (void)
@@ -14734,9 +14690,7 @@ long __TM_failure_address(void* const TM_buff)
 long long __TM_failure_code(void* const TM_buff)
 @end smallexample
 
-Using these common set of HTM inline functions, we can create
-a more portable version of the HTM example in the previous
-section that will work on either PowerPC or S/390:
+これらの共通のHTMインライン関数セットを使用して、PowerPCまたはS / 390のいずれかで動作する前のセクションで、より移植性の高いHTMの例を作成することができる。
 
 @smallexample
 #include <htmxlintrin.h>
