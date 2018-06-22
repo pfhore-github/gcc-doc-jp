@@ -14726,13 +14726,10 @@ while (1)
 @end smallexample
 
 @node PowerPC Atomic Memory Operation Functions
-@subsection PowerPC Atomic Memory Operation Functions
-ISA 3.0 of the PowerPC added new atomic memory operation (amo)
-instructions.  GCC provides support for these instructions in 64-bit
-environments.  All of the functions are declared in the include file
-@code{amo.h}.
+@subsection PowerPCアトミックメモリー操作関数
+PowerPCのISA 3.0は、新しいアトミックメモリ操作（amo）命令を追加した。 GCCは、64ビット環境でこれらの命令をサポートしている。 すべての関数はインクルードファイル@code{amo.h}で宣言されている。
 
-The functions supported are:
+サポートしている関数は：
 
 @smallexample
 #include <amo.h>
