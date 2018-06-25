@@ -14784,118 +14784,91 @@ void amo_stdat_smin (int64_t *, int64_t);
 @end smallexample
 
 @node RX Built-in Functions
-@subsection RX Built-in Functions
-GCC supports some of the RX instructions which cannot be expressed in
-the C programming language via the use of built-in functions.  The
-following functions are supported:
+@subsection RX組み込み関数
+GCCは、組み込み関数を使用してCプログラミング言語で表現できないRX命令の一部をサポートしている。 次の機能がサポートされている。
 
 @deftypefn {Built-in Function}  void __builtin_rx_brk (void)
-Generates the @code{brk} machine instruction.
+@code {brk}マシン命令を生成する。
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_rx_clrpsw (int)
-Generates the @code{clrpsw} machine instruction to clear the specified
-bit in the processor status word.
+@code{clrpsw}マシン命令を生成し、プロセッサステータスワードの指定されたビットをクリアする。
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_rx_int (int)
-Generates the @code{int} machine instruction to generate an interrupt
-with the specified value.
+@code {int}マシン命令を生成して、指定された値の割り込みを生成する。
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_rx_machi (int, int)
-Generates the @code{machi} machine instruction to add the result of
-multiplying the top 16 bits of the two arguments into the
-accumulator.
+@code{machi}マシン命令を生成して、2つの引数の上位16ビットに累算器を乗算した結果を加算する。
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_rx_maclo (int, int)
-Generates the @code{maclo} machine instruction to add the result of
-multiplying the bottom 16 bits of the two arguments into the
-accumulator.
+@code{maclo}マシン命令を生成して、2つの引数の下位16ビットに累算器を乗算した結果を加算する。
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_rx_mulhi (int, int)
-Generates the @code{mulhi} machine instruction to place the result of
-multiplying the top 16 bits of the two arguments into the
-accumulator.
+@code{mulhi}マシン命令を生成して、2つの引数の上位16ビットに累算器を乗算した結果を格納する。
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_rx_mullo (int, int)
-Generates the @code{mullo} machine instruction to place the result of
-multiplying the bottom 16 bits of the two arguments into the
-accumulator.
+@code {mullo}マシン命令を生成して、2つの引数の下位16ビットに累算器を掛けた結果を置く。
 @end deftypefn
 
 @deftypefn {Built-in Function}  int  __builtin_rx_mvfachi (void)
-Generates the @code{mvfachi} machine instruction to read the top
-32 bits of the accumulator.
+@code {mvfachi}マシン命令を生成し、アキュムレータの上位32ビットを読み込む。
 @end deftypefn
 
 @deftypefn {Built-in Function}  int  __builtin_rx_mvfacmi (void)
-Generates the @code{mvfacmi} machine instruction to read the middle
-32 bits of the accumulator.
+@code {mvfacmi}マシン命令を生成し、アキュムレータの中央の32ビットを読み込む。
 @end deftypefn
 
 @deftypefn {Built-in Function}  int __builtin_rx_mvfc (int)
-Generates the @code{mvfc} machine instruction which reads the control
-register specified in its argument and returns its value.
+@code{mvfc}マシン命令を生成し、引数に指定された制御レジスタを読み取り、その値を返す。
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_rx_mvtachi (int)
-Generates the @code{mvtachi} machine instruction to set the top
-32 bits of the accumulator.
+アキュムレータの上位32ビットを設定する@code{mvtachi}マシン命令を生成する。
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_rx_mvtaclo (int)
-Generates the @code{mvtaclo} machine instruction to set the bottom
-32 bits of the accumulator.
+@code {mvtaclo}マシン命令を生成し、アキュムレータの下位32ビットを設定する。
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_rx_mvtc (int reg, int val)
-Generates the @code{mvtc} machine instruction which sets control
-register number @code{reg} to @code{val}.
+制御レジスタ番号@code{reg}を@code{val}に設定する@code{mvtc}マシン命令を生成する。
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_rx_mvtipl (int)
-Generates the @code{mvtipl} machine instruction set the interrupt
-priority level.
+@code{mvtipl}マシン命令を生成し、割り込みの優先順位を設定する。
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_rx_racw (int)
-Generates the @code{racw} machine instruction to round the accumulator
-according to the specified mode.
+指定されたモードに従ってアキュムレータを丸める@code{racw}マシン命令を生成する。
 @end deftypefn
 
 @deftypefn {Built-in Function}  int __builtin_rx_revw (int)
-Generates the @code{revw} machine instruction which swaps the bytes in
-the argument so that bits 0--7 now occupy bits 8--15 and vice versa,
-and also bits 16--23 occupy bits 24--31 and vice versa.
+ビット0-7が現在ビット8~15を占めその逆も同様であり、ビット16~23がビット24~31を占め、その逆もまた同様であるようにするように、引数のバイトをスワップする@code{revw}マシン命令を生成する。
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_rx_rmpa (void)
-Generates the @code{rmpa} machine instruction which initiates a
-repeated multiply and accumulate sequence.
+繰り返しの乗算と累算のシーケンスを開始する@code{rmpa}マシン命令を生成する。
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_rx_round (float)
-Generates the @code{round} machine instruction which returns the
-floating-point argument rounded according to the current rounding mode
-set in the floating-point status word register.
+浮動小数点ステータスワードレジスタに設定されている現在の丸めモードに従って丸められた浮動小数点引数を返す@code{round}マシン命令を生成する。
 @end deftypefn
 
 @deftypefn {Built-in Function}  int __builtin_rx_sat (int)
-Generates the @code{sat} machine instruction which returns the
-saturated value of the argument.
+引数の飽和値を返す@code{sat}マシン命令を生成する。
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_rx_setpsw (int)
-Generates the @code{setpsw} machine instruction to set the specified
-bit in the processor status word.
+@code{setpsw}マシン命令を生成し、プロセッサステータスワードの指定されたビットをセットする。
 @end deftypefn
 
 @deftypefn {Built-in Function}  void __builtin_rx_wait (void)
-Generates the @code{wait} machine instruction.
+@code {wait}マシン命令を生成する。
 @end deftypefn
 
 @node S/390 System z Built-in Functions
