@@ -14935,25 +14935,16 @@ GCCは、組み込み関数を使用してCプログラミング言語で表現�
 @end deftypefn
 
 @node SH Built-in Functions
-@subsection SH Built-in Functions
-The following built-in functions are supported on the SH1, SH2, SH3 and SH4
-families of processors:
+@subsection SH組み込み関数
+次の組み込み関数は、SH1、SH2、SH3、およびSH4ファミリのプロセッサでサポートされている。
 
 @deftypefn {Built-in Function} {void} __builtin_set_thread_pointer (void *@var{ptr})
-Sets the @samp{GBR} register to the specified value @var{ptr}.  This is usually
-used by system code that manages threads and execution contexts.  The compiler
-normally does not generate code that modifies the contents of @samp{GBR} and
-thus the value is preserved across function calls.  Changing the @samp{GBR}
-value in user code must be done with caution, since the compiler might use
-@samp{GBR} in order to access thread local variables.
+@samp{GBR}レジスタを指定された値@var{ptr}に設定する。 これは通常、スレッドと実行コンテキストを管理するシステムコードによって使用される。 コンパイラは、通常、@samp{GBR}の内容を変更するコードを生成しないので、値は関数呼び出しを超えて保持されつ。 スレッドローカル変数にアクセスするためにコンパイラが@samp{GBR}を使用する可能性があるので、ユーザコードの@samp{GBR}値を変更することは慎重に行う必要がある。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} {void *} __builtin_thread_pointer (void)
-Returns the value that is currently set in the @samp{GBR} register.
-Memory loads and stores that use the thread pointer as a base address are
-turned into @samp{GBR} based displacement loads and stores, if possible.
-For example:
+@samp{GBR}レジスタに現在設定されている値を返す。スレッドポインタをベースアドレスとして使用するメモリロードとストアは、可能であれば@samp{GBR}ベースのディスプレースメントロードとストアに変換される。例えば：
 @smallexample
 struct my_tcb
 @{
@@ -14970,12 +14961,11 @@ int get_tcb_value (void)
 @end deftypefn
 
 @deftypefn {Built-in Function} {unsigned int} __builtin_sh_get_fpscr (void)
-Returns the value that is currently set in the @samp{FPSCR} register.
+@samp {FPSCR}レジスタに現在設定されている値を返す。
 @end deftypefn
 
 @deftypefn {Built-in Function} {void} __builtin_sh_set_fpscr (unsigned int @var{val})
-Sets the @samp{FPSCR} register to the specified value @var{val}, while
-preserving the current values of the FR, SZ and PR bits.
+FR、SZ、およびPRビットの現在の値を保持しながら、@samp{FPSCR}レジスタを指定された値@ var{val}に設定する。
 @end deftypefn
 
 @node SPARC VIS Built-in Functions
