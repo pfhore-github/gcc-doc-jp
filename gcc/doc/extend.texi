@@ -15183,59 +15183,43 @@ long __builtin_vis_fpcmpur32shl (v2si, v2si, int);
 @end smallexample
 
 @node SPU Built-in Functions
-@subsection SPU Built-in Functions
+@subsection SPU組み込み関数
 
-GCC provides extensions for the SPU processor as described in the
-Sony/Toshiba/IBM SPU Language Extensions Specification.  GCC's
-implementation differs in several ways.
+GCCは、Sony/Toshiba/IBM SPU言語拡張仕様に記述されているようなSPUプロセッサの拡張を提供する。 GCCの実装はいくつかの点で異なる。
 
 @itemize @bullet
 
 @item
-The optional extension of specifying vector constants in parentheses is
-not supported.
+括弧内のベクトル定数を指定するオプションの拡張はサポートされていない。
 
 @item
-A vector initializer requires no cast if the vector constant is of the
-same type as the variable it is initializing.
+ベクトル初期化子は、初期化する変数と同じ型のベクトル定数であればキャストは必要あない。
 
 @item
-If @code{signed} or @code{unsigned} is omitted, the signedness of the
-vector type is the default signedness of the base type.  The default
-varies depending on the operating system, so a portable program should
-always specify the signedness.
+@code{signed}または@code{unsigned}が省略されている場合、ベクタ型の符号の有無は、基本型のデフォルトの符号の有無である。 デフォルトはオペレーティングシステムによって異なるので、可搬性のあるプログラムでは必ず符号の有無を指定する必要がある。
 
 @item
-By default, the keyword @code{__vector} is added. The macro
-@code{vector} is defined in @code{<spu_intrinsics.h>} and can be
-undefined.
+デフォルトでは、キーワード@code{__vector}が追加されている。 @code{vector}マクロは@code{<spu_intrinsics.h>}で定義されていて、未定義にできる。
 
 @item
-GCC allows using a @code{typedef} name as the type specifier for a
-vector type.
+GCCでは、ベクタ型の型指定子として@code{typedef}名を使用できる。
 
 @item
-For C, overloaded functions are implemented with macros so the following
-does not work:
+Cの場合、オーバーロードされた関数はマクロで実装されているため、次の関数は機能しない。
 
 @smallexample
   spu_add ((vector signed int)@{1, 2, 3, 4@}, foo);
 @end smallexample
 
 @noindent
-Since @code{spu_add} is a macro, the vector constant in the example
-is treated as four separate arguments.  Wrap the entire argument in
-parentheses for this to work.
+@code{spu_add}はマクロなので、この例のベクトル定数は4つの独立した引数として扱われる。 これを行うには、引数全体をカッコで囲む。
 
 @item
-The extended version of @code{__builtin_expect} is not supported.
+@code{__builtin_expect}の拡張バージョンはサポートされていない。
 
 @end itemize
 
-@emph{Note:} Only the interface described in the aforementioned
-specification is supported. Internally, GCC uses built-in functions to
-implement the required functionality, but these are not supported and
-are subject to change without notice.
+@emph{注意:} 前述の仕様に記述されているインタフェースのみがサポートされている。 内部的には、GCCは組み込み関数を使用して必要な機能を実装しているが、これらはサポートされてなく、予告なしに変更されることがある。
 
 @node TI C6X Built-in Functions
 @subsection TI C6X Built-in Functions
