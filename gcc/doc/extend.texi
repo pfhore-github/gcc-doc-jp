@@ -14969,12 +14969,9 @@ FR、SZ、およびPRビットの現在の値を保持しながら、@samp{FPSCR
 @end deftypefn
 
 @node SPARC VIS Built-in Functions
-@subsection SPARC VIS Built-in Functions
+@subsection SPARC VIS組み込み関数
 
-GCC supports SIMD operations on the SPARC using both the generic vector
-extensions (@pxref{Vector Extensions}) as well as built-in functions for
-the SPARC Visual Instruction Set (VIS).  When you use the @option{-mvis}
-switch, the VIS extension is exposed as the following built-in functions:
+GCCは、汎用ベクトル拡張（@pxref{Vector Extensions}）とSPARCビジュアル命令セット（VIS）用の組み込み関数の両方を使用して、SPARC上でSIMD演算をサポートしている。 @option{-mvis}スイッチを使用すると、VIS拡張機能は次の組み込み関数として公開される。
 
 @smallexample
 typedef int v1si __attribute__ ((vector_size (4)));
@@ -15041,8 +15038,7 @@ long __builtin_vis_array16 (long, long);
 long __builtin_vis_array32 (long, long);
 @end smallexample
 
-When you use the @option{-mvis2} switch, the VIS version 2.0 built-in
-functions also become available:
+@option{-mvis2}スイッチを使用すると、VISバージョン2.0の組み込み関数も使用可能になる。
 
 @smallexample
 long __builtin_vis_bmask (long, long);
@@ -15059,8 +15055,7 @@ long __builtin_vis_edge32n (void *, void *);
 long __builtin_vis_edge32ln (void *, void *);
 @end smallexample
 
-When you use the @option{-mvis3} switch, the VIS version 3.0 built-in
-functions also become available:
+@option {-mvis3}スイッチを使用すると、VISバージョン3.0の組み込み関数も使用可能になる。
 
 @smallexample
 void __builtin_vis_cmask8 (long);
@@ -15111,8 +15106,7 @@ int64_t __builtin_vis_xmulx (int64_t, int64_t);
 int64_t __builtin_vis_xmulxhi (int64_t, int64_t);
 @end smallexample
 
-When you use the @option{-mvis4} switch, the VIS version 4.0 built-in
-functions also become available:
+@option {-mvis4}スイッチを使用すると、VISバージョン4.0の組み込み関数も使用可能になる。
 
 @smallexample
 v8qi __builtin_vis_fpadd8 (v8qi, v8qi);
@@ -15150,8 +15144,7 @@ v4hi __builtin_vis_fpminu16 (v4hi, v4hi);
 v2si __builtin_vis_fpminu32 (v2si, v2si);
 @end smallexample
 
-When you use the @option{-mvis4b} switch, the VIS version 4.0B
-built-in functions also become available:
+@option{-mvis4b}スイッチを使用すると、VISバージョン4.0Bの組み込み関数も使用可能になる。
 
 @smallexample
 v8qi __builtin_vis_dictunpack8 (double, int);
