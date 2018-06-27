@@ -15288,10 +15288,9 @@ void __tile_udn_send (unsigned long long)
 命令@code {void __tile_network_barrier(void)}は、それが後に並べ替えられる前にネットワーク操作が行われないことを保証するために使用される。
 
 @node TILEPro Built-in Functions
-@subsection TILEPro Built-in Functions
+@subsection TILEPro組み込み関数
 
-GCC provides intrinsics to access every instruction of the TILEPro
-processor.  The intrinsics are of the form:
+GCCは、TILEProプロセッサのすべての命令にアクセスするための組み込み関数を提供する。 組み込み関数の形式は次のとおりである。
 
 @smallexample
 
@@ -15300,11 +15299,9 @@ unsigned __insn_@var{op} (...)
 @end smallexample
 
 @noindent
-where @var{op} is the name of the instruction.  Refer to the ISA manual
-for the complete list of instructions.
+@var{op}は命令の名前である。 指示の完全なリストについては、ISAマニュアルを参照せよ。
 
-GCC also provides intrinsics to directly access the network registers.
-The intrinsics are:
+GCCは、ネットワークレジスタに直接アクセスするための組み込み関数も提供する。組み込み関数は次のとおりである。
 
 @smallexample
 
@@ -15321,9 +15318,7 @@ void __tile_udn_send (unsigned)
 
 @end smallexample
 
-The intrinsic @code{void __tile_network_barrier (void)} is used to
-guarantee that no network operations before it are reordered with
-those after it.
+命令@code {void __tile_network_barrier(void)}は、それが後に並べ替えられる前にネットワーク操作が行われないことを保証するために使用される。
 
 @node x86 Built-in Functions
 @subsection x86 Built-in Functions
