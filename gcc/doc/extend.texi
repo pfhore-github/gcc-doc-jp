@@ -15321,89 +15321,60 @@ void __tile_udn_send (unsigned)
 命令@code {void __tile_network_barrier(void)}は、それが後に並べ替えられる前にネットワーク操作が行われないことを保証するために使用される。
 
 @node x86 Built-in Functions
-@subsection x86 Built-in Functions
+@subsection x86組み込み関数
 
-These built-in functions are available for the x86-32 and x86-64 family
-of computers, depending on the command-line switches used.
+これらの組み込み関数は、使用されるコマンドラインスイッチに応じて、x86-32およびx86-64ファミリのコンピュータで使用できる。
 
-If you specify command-line switches such as @option{-msse},
-the compiler could use the extended instruction sets even if the built-ins
-are not used explicitly in the program.  For this reason, applications
-that perform run-time CPU detection must compile separate files for each
-supported architecture, using the appropriate flags.  In particular,
-the file containing the CPU detection code should be compiled without
-these options.
+@option{-msse}のようなコマンドラインスイッチを指定すると、組み込み関数がプログラムで明示的に使用されていなくても、コンパイラは拡張命令セットを使用できる。 このため、実行時CPU検出を実行するアプリケーションは、適切なフラグを使用して、サポートされているアーキテクチャごとに別々のファイルをコンパイルする必要がある。 特に、CPU検出コードを含むファイルは、これらのオプションなしでコンパイルする必要がある。
 
-The following machine modes are available for use with MMX built-in functions
-(@pxref{Vector Extensions}): @code{V2SI} for a vector of two 32-bit integers,
-@code{V4HI} for a vector of four 16-bit integers, and @code{V8QI} for a
-vector of eight 8-bit integers.  Some of the built-in functions operate on
-MMX registers as a whole 64-bit entity, these use @code{V1DI} as their mode.
+次のマシンモードは、MMX組み込み関数（@pxref{Vector Extensions}）で使用できる。2つの32ビット整数のベクトルの場合は@code{V2SI}、4つの16ビット整数のベクトルの場合は@code{V4HI}、8つの8ビット整数のベクトルの場合は@code{V8QI}である。  組み込み関数の中には、64ビットエンティティ全体としてMMXレジスタ上で動作するものがあり、これらのモードでは@code{V1DI}が使用される。
 
-If 3DNow!@: extensions are enabled, @code{V2SF} is used as a mode for a vector
-of two 32-bit floating-point values.
+3DNow！拡張機能が有効な場合、2つの32ビット浮動小数点値のベクトルのモードとして@code{V2SF}が使用される。
 
-If SSE extensions are enabled, @code{V4SF} is used for a vector of four 32-bit
-floating-point values.  Some instructions use a vector of four 32-bit
-integers, these use @code{V4SI}.  Finally, some instructions operate on an
-entire vector register, interpreting it as a 128-bit integer, these use mode
-@code{TI}.
+SSE拡張が有効になっている場合、4つの32ビット浮動小数点値のベクトルに@code{V4SF}が使用される。 命令によっては、4つの32ビット整数のベクトルを使用する命令もあるが、これらは@code{V4SI}を使用する。 最後に、いくつかの命令はベクトルレジスタ全体で動作し、128ビット整数として解釈する。これらのモードは@code{TI}を使用する。
 
-The x86-32 and x86-64 family of processors use additional built-in
-functions for efficient use of @code{TF} (@code{__float128}) 128-bit
-floating point and @code{TC} 128-bit complex floating-point values.
+x86-32およびx86-64ファミリのプロセッサでは、128ビットの浮動小数点@code{TF}（@code{__float128}）と@code{TC}128ビットの複素数浮動小数点値を効率的に使用するための組み込み関数が追加されている。
 
-The following floating-point built-in functions are always available.  All
-of them implement the function that is part of the name.
+次の浮動小数点組み込み関数は常に使用できます。 それらのすべてが名前の一部である機能を実装する。
 
 @smallexample
 __float128 __builtin_fabsq (__float128)
 __float128 __builtin_copysignq (__float128, __float128)
 @end smallexample
 
-The following built-in functions are always available.
+以下の組み込み関数は常に利用可能である。
 
 @table @code
 @item __float128 __builtin_infq (void)
-Similar to @code{__builtin_inf}, except the return type is @code{__float128}.
+@code{__builtin_inf}と似ているが、戻り値の型は@code{__float128}である。
 @findex __builtin_infq
 
 @item __float128 __builtin_huge_valq (void)
-Similar to @code{__builtin_huge_val}, except the return type is @code{__float128}.
+@code{__builtin_huge_val}と似ているが、戻り値の型は@code{__float128}である。
 @findex __builtin_huge_valq
 
 @item __float128 __builtin_nanq (void)
-Similar to @code{__builtin_nan}, except the return type is @code{__float128}.
+@code{__builtin_nan}と似ているが、戻り値の型は@code{__float128}である。
 @findex __builtin_nanq
 
 @item __float128 __builtin_nansq (void)
-Similar to @code{__builtin_nans}, except the return type is @code{__float128}.
+@code{__builtin_nans}と似ているが、戻り値の型は@code{__float128}である。
 @findex __builtin_nansq
 @end table
 
-The following built-in function is always available.
+次の組み込み関数は常に利用可能である。
 
 @table @code
 @item void __builtin_ia32_pause (void)
-Generates the @code{pause} machine instruction with a compiler memory
-barrier.
+@code{pause}マシン命令をコンパイラのメモリバリアで生成する。
 @end table
 
-The following built-in functions are always available and can be used to
-check the target platform type.
+以下の組み込み関数は常に使用可能であり、ターゲットプラットフォームタイプのチェックに使用できる。
 
 @deftypefn {Built-in Function} void __builtin_cpu_init (void)
-This function runs the CPU detection code to check the type of CPU and the
-features supported.  This built-in function needs to be invoked along with the built-in functions
-to check CPU type and features, @code{__builtin_cpu_is} and
-@code{__builtin_cpu_supports}, only when used in a function that is
-executed before any constructors are called.  The CPU detection code is
-automatically executed in a very high priority constructor.
+この関数はCPU検出コードを実行して、CPUのタイプとサポートされている機能をチェックする。 この組み込み関数は、コンストラクタが呼び出される前に実行される関数で使用される場合にのみ、CPUの型と機能をチェックする組み込み関数、@code{__builtin_cpu_is}と@code{__ builtin_cpu_supports}とともに呼び出される必要がある。 CPU検出コードは、非常に高い優先度のコンストラクタで自動的に実行される。
 
-For example, this function has to be used in @code{ifunc} resolvers that
-check for CPU type using the built-in functions @code{__builtin_cpu_is}
-and @code{__builtin_cpu_supports}, or in constructors on targets that
-don't support constructor priority.
+たとえば、@code{__builtin_cpu_is} and @code{__builtin_cpu_supports}組み込み関数を使用してCPUタイプをチェックする@code{ifunc}リゾルバや、コンストラクタの優先順位をサポートしないターゲットのコンストラクタでこの関数を使用する必要がある。
 @smallexample
 
 static void (*resolve_memcpy (void)) (void)
@@ -15424,76 +15395,74 @@ void *memcpy (void *, const void *, size_t)
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_cpu_is (const char *@var{cpuname})
-This function returns a positive integer if the run-time CPU
-is of type @var{cpuname}
-and returns @code{0} otherwise. The following CPU names can be detected:
+この関数は、ランタイムCPUのタイプが@var{cpuname}の場合は正の整数を返し、それ以外の場合は@code{0}を返す。 次のCPU名を検出できる。
 
 @table @samp
 @item intel
-Intel CPU.
+Intel CPU。
 
 @item atom
-Intel Atom CPU.
+Intel Atom CPU。
 
 @item core2
-Intel Core 2 CPU.
+Intel Core 2 CPU。
 
 @item corei7
-Intel Core i7 CPU.
+Intel Core i7 CPU。
 
 @item nehalem
-Intel Core i7 Nehalem CPU.
+Intel Core i7 Nehalem CPU。
 
 @item westmere
-Intel Core i7 Westmere CPU.
+Intel Core i7 Westmere CPU。
 
 @item sandybridge
-Intel Core i7 Sandy Bridge CPU.
+Intel Core i7 Sandy Bridge CPU。
 
 @item amd
-AMD CPU.
+AMD CPU。
 
 @item amdfam10h
-AMD Family 10h CPU.
+AMD Family 10h CPU。
 
 @item barcelona
-AMD Family 10h Barcelona CPU.
+AMD Family 10h Barcelona CPU。
 
 @item shanghai
-AMD Family 10h Shanghai CPU.
+AMD Family 10h Shanghai CPU。
 
 @item istanbul
-AMD Family 10h Istanbul CPU.
+AMD Family 10h Istanbul CPU。
 
 @item btver1
-AMD Family 14h CPU.
+AMD Family 14h CPU。
 
 @item amdfam15h
-AMD Family 15h CPU.
+AMD Family 15h CPU。
 
 @item bdver1
-AMD Family 15h Bulldozer version 1.
+AMD Family 15h Bulldozerバージョン１。
 
 @item bdver2
-AMD Family 15h Bulldozer version 2.
+AMD Family 15h Bulldozerバージョン２。
 
 @item bdver3
-AMD Family 15h Bulldozer version 3.
+AMD Family 15h Bulldozerバージョン３。
 
 @item bdver4
-AMD Family 15h Bulldozer version 4.
+AMD Family 15h Bulldozerバージョン４。
 
 @item btver2
-AMD Family 16h CPU.
+AMD Family 16h CPU。
 
 @item amdfam17h
-AMD Family 17h CPU.
+AMD Family 17h CPU。
 
 @item znver1
-AMD Family 17h Zen version 1.
+AMD Family 17h Zen バージョン１。
 @end table
 
-Here is an example:
+ここに例がある
 @smallexample
 if (__builtin_cpu_is ("corei7"))
   @{
@@ -15507,38 +15476,36 @@ else
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_cpu_supports (const char *@var{feature})
-This function returns a positive integer if the run-time CPU
-supports @var{feature}
-and returns @code{0} otherwise. The following features can be detected:
+この関数は、実行時CPUが@var{feature}をサポートしていれば正の整数を返し、それ以外の場合は@code{0}を返す。 次の機能を検出できる。
 
 @table @samp
 @item cmov
-CMOV instruction.
+CMOV命令。
 @item mmx
-MMX instructions.
+MMX命令。
 @item popcnt
-POPCNT instruction.
+POPCNT命令。
 @item sse
-SSE instructions.
+SSE命令。
 @item sse2
-SSE2 instructions.
+SSE2命令。
 @item sse3
-SSE3 instructions.
+SSE3命令。
 @item ssse3
-SSSE3 instructions.
+SSSE3命令。
 @item sse4.1
-SSE4.1 instructions.
+SSE4.1命令。
 @item sse4.2
-SSE4.2 instructions.
+SSE4.2命令。
 @item avx
-AVX instructions.
+AVX命令。
 @item avx2
-AVX2 instructions.
+AVX2命令。
 @item avx512f
-AVX512F instructions.
+AVX512F命令。
 @end table
 
-Here is an example:
+ここに例がある。
 @smallexample
 if (__builtin_cpu_supports ("popcnt"))
   @{
@@ -15551,10 +15518,7 @@ else
 @end smallexample
 @end deftypefn
 
-
-The following built-in functions are made available by @option{-mmmx}.
-All of them generate the machine instruction that is part of the name.
-
+以下の組み込み関数は、@option{-mmmx}によって利用可能になる。それらのすべてが名前の一部である機械命令を生成する
 @smallexample
 v8qi __builtin_ia32_paddb (v8qi, v8qi)
 v4hi __builtin_ia32_paddw (v4hi, v4hi)
@@ -15611,9 +15575,7 @@ v2si __builtin_ia32_psradi (v2si, int)
 
 @end smallexample
 
-The following built-in functions are made available either with
-@option{-msse}, or with @option{-m3dnowa}.  All of them generate
-the machine instruction that is part of the name.
+以下の組み込み関数は、@option{-msse}または@option{-m3dnowa}のいずれかで使用できる。 それらのすべてが名前の一部である機械命令を生成する。
 
 @smallexample
 v4hi __builtin_ia32_pmulhuw (v4hi, v4hi)
@@ -15630,8 +15592,7 @@ void __builtin_ia32_movntq (di *, di)
 void __builtin_ia32_sfence (void)
 @end smallexample
 
-The following built-in functions are available when @option{-msse} is used.
-All of them generate the machine instruction that is part of the name.
+@option{-msse}を使用すると、次の組み込み関数を使用できる。それらのすべてが名前の一部である機械命令を生成する。
 
 @smallexample
 int __builtin_ia32_comieq (v4sf, v4sf)
@@ -15704,27 +15665,26 @@ void __builtin_ia32_movntps (float *, v4sf)
 int __builtin_ia32_movmskps (v4sf)
 @end smallexample
 
-The following built-in functions are available when @option{-msse} is used.
+@option{-msse}を使用すると、次の組み込み関数を使用できる。
 
 @table @code
 @item v4sf __builtin_ia32_loadups (float *)
-Generates the @code{movups} machine instruction as a load from memory.
+@code{movups}機械命令をメモリからロードとして生成する。
 @item void __builtin_ia32_storeups (float *, v4sf)
-Generates the @code{movups} machine instruction as a store to memory.
+@code {movups}機械命令をメモリへのストアとして生成する。
 @item v4sf __builtin_ia32_loadss (float *)
-Generates the @code{movss} machine instruction as a load from memory.
+@code{movss}機械命令をメモリからロードとして生成する。
 @item v4sf __builtin_ia32_loadhps (v4sf, const v2sf *)
-Generates the @code{movhps} machine instruction as a load from memory.
+@code{movhps}機械命令をメモリからロードとして生成する。
 @item v4sf __builtin_ia32_loadlps (v4sf, const v2sf *)
-Generates the @code{movlps} machine instruction as a load from memory
+@code{movlps}機械命令をメモリからロードとして生成する。
 @item void __builtin_ia32_storehps (v2sf *, v4sf)
-Generates the @code{movhps} machine instruction as a store to memory.
+@code {movhps}機械命令をメモリへのストアとして生成する。
 @item void __builtin_ia32_storelps (v2sf *, v4sf)
-Generates the @code{movlps} machine instruction as a store to memory.
+@code {movlps}機械命令をメモリへのストアとして生成する。
 @end table
 
-The following built-in functions are available when @option{-msse2} is used.
-All of them generate the machine instruction that is part of the name.
+@option{-msse2}を使用すると、次の組み込み関数を使用できる。それらのすべてが名前の一部である機械命令を生成する。
 
 @smallexample
 int __builtin_ia32_comisdeq (v2df, v2df)
@@ -15884,8 +15844,7 @@ v4si __builtin_ia32_pmaddwd128 (v8hi, v8hi)
 v2di __builtin_ia32_movq128 (v2di)
 @end smallexample
 
-The following built-in functions are available when @option{-msse3} is used.
-All of them generate the machine instruction that is part of the name.
+@option{-msse3}を使用すると、次の組み込み関数を使用できる。それらのすべてが名前の一部である機械命令を生成する。
 
 @smallexample
 v2df __builtin_ia32_addsubpd (v2df, v2df)
@@ -15901,8 +15860,7 @@ v4sf __builtin_ia32_movsldup (v4sf)
 void __builtin_ia32_mwait (unsigned int, unsigned int)
 @end smallexample
 
-The following built-in functions are available when @option{-mssse3} is used.
-All of them generate the machine instruction that is part of the name.
+@option{-mssse3}を使用すると、次の組み込み関数を使用できる。それらのすべてが名前の一部である機械命令を生成する。
 
 @smallexample
 v2si __builtin_ia32_phaddd (v2si, v2si)
@@ -15923,8 +15881,7 @@ v2si __builtin_ia32_pabsd (v2si)
 v4hi __builtin_ia32_pabsw (v4hi)
 @end smallexample
 
-The following built-in functions are available when @option{-mssse3} is used.
-All of them generate the machine instruction that is part of the name.
+@option{-mssse3}を使用すると、次の組み込み関数を使用できる。それらのすべてが名前の一部である機械命令を生成する。
 
 @smallexample
 v4si __builtin_ia32_phaddd128 (v4si, v4si)
@@ -15945,9 +15902,7 @@ v4si __builtin_ia32_pabsd128 (v4si)
 v8hi __builtin_ia32_pabsw128 (v8hi)
 @end smallexample
 
-The following built-in functions are available when @option{-msse4.1} is
-used.  All of them generate the machine instruction that is part of the
-name.
+@option{-msse4.1}を使用すると、次の組み込み関数を使用できる。それらのすべてが名前の一部である機械命令を生成する。
 
 @smallexample
 v2df __builtin_ia32_blendpd (v2df, v2df, const int)
@@ -15995,37 +15950,33 @@ v2df __builtin_ia32_roundsd (v2df, v2df, const int)
 v4sf __builtin_ia32_roundss (v4sf, v4sf, const int)
 @end smallexample
 
-The following built-in functions are available when @option{-msse4.1} is
-used.
+@option{-msse4.1}を使用すると、次の組み込み関数を使用できる。
 
 @table @code
 @item v4sf __builtin_ia32_vec_set_v4sf (v4sf, float, const int)
-Generates the @code{insertps} machine instruction.
+@code{insertps}機械命令を生成する。
 @item int __builtin_ia32_vec_ext_v16qi (v16qi, const int)
-Generates the @code{pextrb} machine instruction.
+@code{pextrb}機械命令を生成する。
 @item v16qi __builtin_ia32_vec_set_v16qi (v16qi, int, const int)
-Generates the @code{pinsrb} machine instruction.
+@code{pinsrb}機械命令を生成する。
 @item v4si __builtin_ia32_vec_set_v4si (v4si, int, const int)
-Generates the @code{pinsrd} machine instruction.
+@code{pinsrd}機械命令を生成する。
 @item v2di __builtin_ia32_vec_set_v2di (v2di, long long, const int)
-Generates the @code{pinsrq} machine instruction in 64bit mode.
+64ビットモードで@code{pinsrq}機械命令を生成する。
 @end table
 
-The following built-in functions are changed to generate new SSE4.1
-instructions when @option{-msse4.1} is used.
+@option{-msse4.1}を使用すると、次の組み込み関数が変更されて新しいSSE4.1命令が生成される。
 
 @table @code
 @item float __builtin_ia32_vec_ext_v4sf (v4sf, const int)
-Generates the @code{extractps} machine instruction.
+@code{extractps}機械命令を生成する。
 @item int __builtin_ia32_vec_ext_v4si (v4si, const int)
-Generates the @code{pextrd} machine instruction.
+@code{pextrd}機械命令を生成する。
 @item long long __builtin_ia32_vec_ext_v2di (v2di, const int)
-Generates the @code{pextrq} machine instruction in 64bit mode.
+@code{pextrq}機械命令を64ビットモードで生成する。
 @end table
 
-The following built-in functions are available when @option{-msse4.2} is
-used.  All of them generate the machine instruction that is part of the
-name.
+@option{-msse4.2}を使用すると、次の組み込み関数を使用できる。 それらのすべてが名前の一部である機械命令を生成する。
 
 @smallexample
 v16qi __builtin_ia32_pcmpestrm128 (v16qi, int, v16qi, int, const int)
@@ -16045,36 +15996,31 @@ int __builtin_ia32_pcmpistriz128 (v16qi, v16qi, const int)
 v2di __builtin_ia32_pcmpgtq (v2di, v2di)
 @end smallexample
 
-The following built-in functions are available when @option{-msse4.2} is
-used.
+@option{-msse4.2}を使用すると、次の組み込み関数を使用できる。
 
 @table @code
 @item unsigned int __builtin_ia32_crc32qi (unsigned int, unsigned char)
-Generates the @code{crc32b} machine instruction.
+@code{crc32b}機械命令を生成する。
 @item unsigned int __builtin_ia32_crc32hi (unsigned int, unsigned short)
-Generates the @code{crc32w} machine instruction.
+@code{crc32w}機械命令を生成する。
 @item unsigned int __builtin_ia32_crc32si (unsigned int, unsigned int)
-Generates the @code{crc32l} machine instruction.
+@code{crc32l}機械命令を生成する。
 @item unsigned long long __builtin_ia32_crc32di (unsigned long long, unsigned long long)
-Generates the @code{crc32q} machine instruction.
+@code{crc32q}機械命令を生成する。
 @end table
 
-The following built-in functions are changed to generate new SSE4.2
-instructions when @option{-msse4.2} is used.
+@option{-msse4.2}を使用すると、次の組み込み関数が変更されて新しいSSE4.2命令が生成される。
 
 @table @code
 @item int __builtin_popcount (unsigned int)
-Generates the @code{popcntl} machine instruction.
+@code{popcntl}機械命令を生成する。
 @item int __builtin_popcountl (unsigned long)
-Generates the @code{popcntl} or @code{popcntq} machine instruction,
-depending on the size of @code{unsigned long}.
+@code{unsigned long}のサイズに依存して@code{popcntl}または@code{popcntq}機械命令を生成する。
 @item int __builtin_popcountll (unsigned long long)
-Generates the @code{popcntq} machine instruction.
+@code{popcntq}機械命令を生成する。
 @end table
 
-The following built-in functions are available when @option{-mavx} is
-used. All of them generate the machine instruction that is part of the
-name.
+@option{-mavx}を使用すると、次の組み込み関数を使用できる。 それらのすべてが名前の一部である機械命令を生成する。
 
 @smallexample
 v4df __builtin_ia32_addpd256 (v4df,v4df)
@@ -16207,9 +16153,7 @@ v4df __builtin_ia32_xorpd256 (v4df,v4df)
 v8sf __builtin_ia32_xorps256 (v8sf,v8sf)
 @end smallexample
 
-The following built-in functions are available when @option{-mavx2} is
-used. All of them generate the machine instruction that is part of the
-name.
+@option{-mavx2}を使用すると、次の組み込み関数を使用できる。 それらのすべてが名前の一部である機械命令を生成する。
 
 @smallexample
 v32qi __builtin_ia32_mpsadbw256 (v32qi,v32qi,int)
@@ -16385,9 +16329,7 @@ v4si __builtin_ia32_gatherdiv4si (v4si, pcint,v2di,v4si,int)
 v4si __builtin_ia32_gatherdiv4si256 (v4si, pcint,v4di,v4si,int)
 @end smallexample
 
-The following built-in functions are available when @option{-maes} is
-used.  All of them generate the machine instruction that is part of the
-name.
+@option {-maes}を使用すると、次の組み込み関数を使用できる。 それらのすべてが名前の一部である機械命令を生成する。
 
 @smallexample
 v2di __builtin_ia32_aesenc128 (v2di, v2di)
@@ -16398,17 +16340,14 @@ v2di __builtin_ia32_aeskeygenassist128 (v2di, const int)
 v2di __builtin_ia32_aesimc128 (v2di)
 @end smallexample
 
-The following built-in function is available when @option{-mpclmul} is
-used.
+@option {-mpclmul}を使用すると、次の組み込み関数を使用できる。
 
 @table @code
 @item v2di __builtin_ia32_pclmulqdq128 (v2di, v2di, const int)
-Generates the @code{pclmulqdq} machine instruction.
+@code{pclmulqdq}機械命令を生成する。
 @end table
 
-The following built-in function is available when @option{-mfsgsbase} is
-used.  All of them generate the machine instruction that is part of the
-name.
+@option{-mfsgsbase}を使用すると、次の組み込み関数を使用できる。 それらのすべてが名前の一部である機械命令を生成する。
 
 @smallexample
 unsigned int __builtin_ia32_rdfsbase32 (void)
@@ -16421,9 +16360,7 @@ void _writegsbase_u32 (unsigned int)
 void _writegsbase_u64 (unsigned long long)
 @end smallexample
 
-The following built-in function is available when @option{-mrdrnd} is
-used.  All of them generate the machine instruction that is part of the
-name.
+@option{-mrdrnd}を使用すると、次の組み込み関数を使用できる。 それらのすべてが名前の一部である機械命令を生成する。
 
 @smallexample
 unsigned int __builtin_ia32_rdrand16_step (unsigned short *)
@@ -16431,8 +16368,7 @@ unsigned int __builtin_ia32_rdrand32_step (unsigned int *)
 unsigned int __builtin_ia32_rdrand64_step (unsigned long long *)
 @end smallexample
 
-The following built-in functions are available when @option{-msse4a} is used.
-All of them generate the machine instruction that is part of the name.
+@option{-msse4a}を使用すると、次の組み込み関数を使用できる。それらのすべてが名前の一部である機械命令を生成する。
 
 @smallexample
 void __builtin_ia32_movntsd (double *, v2df)
@@ -16443,7 +16379,7 @@ v2di __builtin_ia32_insertq (v2di, v2di)
 v2di __builtin_ia32_insertqi (v2di, v2di, const unsigned int, const unsigned int)
 @end smallexample
 
-The following built-in functions are available when @option{-mxop} is used.
+@option{-mxop}を使用すると、次の組み込み関数を使用できる。
 @smallexample
 v2df __builtin_ia32_vfrczpd (v2df)
 v4sf __builtin_ia32_vfrczps (v4sf)
@@ -16571,8 +16507,7 @@ v2di __builtin_ia32_vpshlq (v2di, v2di)
 v8hi __builtin_ia32_vpshlw (v8hi, v8hi)
 @end smallexample
 
-The following built-in functions are available when @option{-mfma4} is used.
-All of them generate the machine instruction that is part of the name.
+@option{-mfma4}を使用すると、次の組み込み関数を使用できる。それらのすべてが名前の一部である機械命令を生成する。
 
 @smallexample
 v2df __builtin_ia32_vfmaddpd (v2df, v2df, v2df)
@@ -16610,7 +16545,7 @@ v8sf __builtin_ia32_vfmsubaddps256 (v8sf, v8sf, v8sf)
 
 @end smallexample
 
-The following built-in functions are available when @option{-mlwp} is used.
+@option{-mlwp}を使用すると、次の組み込み関数を使用できる。
 
 @smallexample
 void __builtin_ia32_llwpcb16 (void *);
@@ -16627,15 +16562,15 @@ unsigned char __builtin_ia32_lwpins32 (unsigned int, unsigned int, unsigned int)
 unsigned char __builtin_ia32_lwpins64 (unsigned __int64, unsigned int, unsigned int)
 @end smallexample
 
-The following built-in functions are available when @option{-mbmi} is used.
-All of them generate the machine instruction that is part of the name.
+@option{-mbmi}を使用すると、次の組み込み関数を使用できる。それらのすべてが名前の一部である機械命令を生成する。
+
 @smallexample
 unsigned int __builtin_ia32_bextr_u32(unsigned int, unsigned int);
 unsigned long long __builtin_ia32_bextr_u64 (unsigned long long, unsigned long long);
 @end smallexample
 
-The following built-in functions are available when @option{-mbmi2} is used.
-All of them generate the machine instruction that is part of the name.
+@option{-mbmi2}を使用すると、次の組み込み関数を使用できる。それらのすべてが名前の一部である機械命令を生成する。
+
 @smallexample
 unsigned int _bzhi_u32 (unsigned int, unsigned int)
 unsigned int _pdep_u32 (unsigned int, unsigned int)
@@ -16645,16 +16580,16 @@ unsigned long long _pdep_u64 (unsigned long long, unsigned long long)
 unsigned long long _pext_u64 (unsigned long long, unsigned long long)
 @end smallexample
 
-The following built-in functions are available when @option{-mlzcnt} is used.
-All of them generate the machine instruction that is part of the name.
+@option{-mlzcnt}を使用すると、次の組み込み関数を使用できる。それらのすべてが名前の一部である機械命令を生成する。
+
 @smallexample
 unsigned short __builtin_ia32_lzcnt_u16(unsigned short);
 unsigned int __builtin_ia32_lzcnt_u32(unsigned int);
 unsigned long long __builtin_ia32_lzcnt_u64 (unsigned long long);
 @end smallexample
 
-The following built-in functions are available when @option{-mfxsr} is used.
-All of them generate the machine instruction that is part of the name.
+@option{-mfxsr}を使用すると、次の組み込み関数を使用できる。それらのすべてが名前の一部である機械命令を生成する。
+
 @smallexample
 void __builtin_ia32_fxsave (void *)
 void __builtin_ia32_fxrstor (void *)
@@ -16662,8 +16597,8 @@ void __builtin_ia32_fxsave64 (void *)
 void __builtin_ia32_fxrstor64 (void *)
 @end smallexample
 
-The following built-in functions are available when @option{-mxsave} is used.
-All of them generate the machine instruction that is part of the name.
+@option{-mxsave}を使用すると、次の組み込み関数を使用できる。それらのすべてが名前の一部である機械命令を生成する。
+
 @smallexample
 void __builtin_ia32_xsave (void *, long long)
 void __builtin_ia32_xrstor (void *, long long)
@@ -16671,15 +16606,15 @@ void __builtin_ia32_xsave64 (void *, long long)
 void __builtin_ia32_xrstor64 (void *, long long)
 @end smallexample
 
-The following built-in functions are available when @option{-mxsaveopt} is used.
-All of them generate the machine instruction that is part of the name.
+@option{-mxsaveopt}を使用すると、次の組み込み関数を使用できる。それらのすべてが名前の一部である機械命令を生成する。
+
 @smallexample
 void __builtin_ia32_xsaveopt (void *, long long)
 void __builtin_ia32_xsaveopt64 (void *, long long)
 @end smallexample
 
-The following built-in functions are available when @option{-mtbm} is used.
-Both of them generate the immediate form of the bextr machine instruction.
+@option{-mtbm}を使用すると、次の組み込み関数を使用できる。それらのすべてが名前の一部である機械命令を生成する。
+
 @smallexample
 unsigned int __builtin_ia32_bextri_u32 (unsigned int,
                                         const unsigned int);
@@ -16687,9 +16622,7 @@ unsigned long long __builtin_ia32_bextri_u64 (unsigned long long,
                                               const unsigned long long);
 @end smallexample
 
-
-The following built-in functions are available when @option{-m3dnow} is used.
-All of them generate the machine instruction that is part of the name.
+@option{-m3dnow}を使用すると、次の組み込み関数を使用できる。それらのすべてが名前の一部である機械命令を生成する。
 
 @smallexample
 void __builtin_ia32_femms (void)
@@ -16713,8 +16646,7 @@ v2sf __builtin_ia32_pi2fd (v2si)
 v4hi __builtin_ia32_pmulhrw (v4hi, v4hi)
 @end smallexample
 
-The following built-in functions are available when @option{-m3dnowa} is used.
-All of them generate the machine instruction that is part of the name.
+@option{-m3dnowa}を使用すると、次の組み込み関数を使用できる。それらのすべてが名前の一部である機械命令を生成する。
 
 @smallexample
 v2si __builtin_ia32_pf2iw (v2sf)
@@ -16725,10 +16657,7 @@ v2sf __builtin_ia32_pswapdsf (v2sf)
 v2si __builtin_ia32_pswapdsi (v2si)
 @end smallexample
 
-The following built-in functions are available when @option{-mrtm} is used
-They are used for restricted transactional memory. These are the internal
-low level functions. Normally the functions in 
-@ref{x86 transactional memory intrinsics} should be used instead.
+@option{-mrtm}を使用すると、次の組み込み関数を使用できる。制限されたトランザクションメモリに使用される。 これらは内部低レベル機能である。 通常、@ref{x86 transactional memory intrinsics}の関数を代わりに使用するべきである。
 
 @smallexample
 int __builtin_ia32_xbegin ()
@@ -16737,33 +16666,27 @@ void __builtin_ia32_xabort (status)
 int __builtin_ia32_xtest ()
 @end smallexample
 
-The following built-in functions are available when @option{-mmwaitx} is used.
-All of them generate the machine instruction that is part of the name.
+@option{-mmwaitx}を使用すると、次の組み込み関数を使用できる。それらのすべてが名前の一部である機械命令を生成する。
+
 @smallexample
 void __builtin_ia32_monitorx (void *, unsigned int, unsigned int)
 void __builtin_ia32_mwaitx (unsigned int, unsigned int, unsigned int)
 @end smallexample
 
-The following built-in functions are available when @option{-mclzero} is used.
-All of them generate the machine instruction that is part of the name.
+@option{-mclzero}を使用すると、次の組み込み関数を使用できる。それらのすべてが名前の一部である機械命令を生成する。
+
 @smallexample
 void __builtin_i32_clzero (void *)
 @end smallexample
 
-The following built-in functions are available when @option{-mpku} is used.
-They generate reads and writes to PKRU.
+@option{-mpku}を使用すると、次の組み込み関数を使用できる。PKRUへの読み書きを生成する。
+
 @smallexample
 void __builtin_ia32_wrpkru (unsigned int)
 unsigned int __builtin_ia32_rdpkru ()
 @end smallexample
 
-The following built-in functions are available when @option{-mcet} or
-@option{-mshstk} option is used.  They support shadow stack
-machine instructions from Intel Control-flow Enforcement Technology (CET).
-Each built-in function generates the  machine instruction that is part
-of the function's name.  These are the internal low-level functions.
-Normally the functions in @ref{x86 control-flow protection intrinsics}
-should be used instead.
+@option{-mcet}オプションまたは@option{-mshstk}オプションを使用すると、次の組み込み関数を使用できる。 インテルのControl-Flow Enforcement Technology（CET）のシャドウスタックマシンの命令をサポートしている。各組み込み関数は、関数の名前の一部である機械命令を生成する。 これらは内部の低水準関数である。通常、@ref{x86 control-flow protection intrinsics}の関数を代わりに使用するべきである。
 
 @smallexample
 unsigned int __builtin_ia32_rdsspd (void)
