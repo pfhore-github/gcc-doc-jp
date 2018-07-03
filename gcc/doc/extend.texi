@@ -16777,23 +16777,17 @@ else
 ほとんどの場合、トランザクションコードと非トランザクションコードは、一貫性を保証するために一緒に同期する必要があることに注意せよ。
 
 @node x86 control-flow protection intrinsics
-@subsection x86 Control-Flow Protection Intrinsics
+@subsection x86制御フロー防御命令
 
 @deftypefn {CET Function} {ret_type} _get_ssp (void)
-Get the current value of shadow stack pointer if shadow stack support
-from Intel CET is enabled in the hardware or @code{0} otherwise.
-The @code{ret_type} is @code{unsigned long long} for 64-bit targets 
-and @code{unsigned int} for 32-bit targets.
+Intel CETのシャドウスタックサポートがハードウェアで有効になっている場合はシャドウスタックポインタの現在の値を取得し、そうでない場合は@code{0}を取得する。@code{ret_type}は、64ビットターゲットでは@code{unsigned long long}、32ビットターゲットでは@code{unsigned int}である。
 @end deftypefn
 
 @deftypefn {CET Function} void _inc_ssp (unsigned int)
-Increment the current shadow stack pointer by the size specified by the
-function argument.  The argument is masked to a byte value for security
-reasons, so to increment by more than 255 bytes you must call the function
-multiple times.
+現在のシャドウスタックポインタを、関数の引数で指定されたサイズだけインクリメントする。 この引数はセキュリティ上の理由からバイト値にマスクされているため、255バイト以上インクリメントするには、関数を複数回呼び出す必要がある。
 @end deftypefn
 
-The shadow stack unwind code looks like:
+シャドウスタックのアンワインドコードは次のようになる。
 
 @smallexample
 #include <immintrin.h>
@@ -16818,8 +16812,7 @@ The shadow stack unwind code looks like:
 @end smallexample
 
 @noindent
-This code runs unconditionally on all 64-bit processors.  For 32-bit
-processors the code runs on those that support multi-byte NOP instructions.
+このコードは、すべての64ビットプロセッサで無条件に実行される。 32ビットプロセッサの場合、コードはマルチバイトNOP命令をサポートするもので実行される。
 
 @node Target Format Checks
 @section Format Checks Specific to Particular Target Machines
