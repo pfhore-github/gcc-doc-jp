@@ -16704,70 +16704,50 @@ void __builtin_ia32_clrssbsy(void *);
 @end smallexample
 
 @node x86 transactional memory intrinsics
-@subsection x86 Transactional Memory Intrinsics
+@subsection x86トランザクションメモリ命令
 
-These hardware transactional memory intrinsics for x86 allow you to use
-memory transactions with RTM (Restricted Transactional Memory).
-This support is enabled with the @option{-mrtm} option.
-For using HLE (Hardware Lock Elision) see 
-@ref{x86 specific memory model extensions for transactional memory} instead.
+x86用のこれらのハードウェアトランザクションメモリ組み込み関数により、RTM（Restricted Transactional Memory）でメモリトランザクションを使用できる。このサポートは、@option{-mrtm}オプションで有効になる。HLE（Hardware Lock Elision）を使用する場合は、代わりに@ref{x86 specific memory model extensions for transactional memory}を見よ。
 
-A memory transaction commits all changes to memory in an atomic way,
-as visible to other threads. If the transaction fails it is rolled back
-and all side effects discarded.
+メモリトランザクションは、他のスレッドから見えるように、アトミックな方法でメモリへのすべての変更をコミットする。 トランザクションが失敗した場合、ロールバックされ、すべての副作用は破棄される。
 
-Generally there is no guarantee that a memory transaction ever succeeds
-and suitable fallback code always needs to be supplied.
+一般に、メモリトランザクションが成功し、適切なフォールバックコードが常に供給される必要があるという保証はない。
 
 @deftypefn {RTM Function} {unsigned} _xbegin ()
-Start a RTM (Restricted Transactional Memory) transaction. 
-Returns @code{_XBEGIN_STARTED} when the transaction
-started successfully (note this is not 0, so the constant has to be 
-explicitly tested).  
+RTM（Restricted Transactional Memory）トランザクションを開始する。トランザクションが正常に開始されたときに@code{_XBEGIN_STARTED}を返す。（これは0ではないので、定数を明示的にテストする必要がある）。
 
-If the transaction aborts, all side effects
-are undone and an abort code encoded as a bit mask is returned.
-The following macros are defined:
+トランザクションが異常終了すると、すべての副作用が取り消され、ビットマスクとしてエンコードされた中止コードが返される。 次のマクロが定義されている。
 
 @table @code
 @item _XABORT_EXPLICIT
-Transaction was explicitly aborted with @code{_xabort}.  The parameter passed
-to @code{_xabort} is available with @code{_XABORT_CODE(status)}.
+トランザクションは@code{_xabort}で明示的に中止された。 @code{_xabort}に渡されるパラメータは、@code{_XABORT_CODE(status)}で利用可能である。
 @item _XABORT_RETRY
-Transaction retry is possible.
+トランザクション再試行が可能である。
 @item _XABORT_CONFLICT
-Transaction abort due to a memory conflict with another thread.
+他のスレッドとのメモリ競合によるトランザクションの中止。
 @item _XABORT_CAPACITY
-Transaction abort due to the transaction using too much memory.
+トランザクションが多すぎるためにトランザクションが中止された。
 @item _XABORT_DEBUG
-Transaction abort due to a debug trap.
+デバッグトラップによるトランザクションの中止。
 @item _XABORT_NESTED
-Transaction abort in an inner nested transaction.
+内部ネストされたトランザクションでトランザクションが中止された。
 @end table
 
-There is no guarantee
-any transaction ever succeeds, so there always needs to be a valid
-fallback path.
+トランザクションが成功するという保証はないので、常に有効なフォールバックパスが必要である。
 @end deftypefn
 
 @deftypefn {RTM Function} {void} _xend ()
-Commit the current transaction. When no transaction is active this faults.
-All memory side effects of the transaction become visible
-to other threads in an atomic manner.
+現在のトランザクションをコミットする。 トランザクションがアクティブでない場合、これは失敗する。トランザクションのすべてのメモリー副作用は、アトミックな方法で他のスレッドから見えるようになる。
 @end deftypefn
 
 @deftypefn {RTM Function} {int} _xtest ()
-Return a nonzero value if a transaction is currently active, otherwise 0.
+トランザクションが現在アクティブな場合は0以外の値を返し、そうでない場合は0を返す。
 @end deftypefn
 
 @deftypefn {RTM Function} {void} _xabort (status)
-Abort the current transaction. When no transaction is active this is a no-op.
-The @var{status} is an 8-bit constant; its value is encoded in the return 
-value from @code{_xbegin}.
+現在のトランザクションを中止する。 アクティブなトランザクションがない場合、これは何もしない。@var{status}は8ビットの定数である。その値は@code{_xbegin}の戻り値にエンコードされる。
 @end deftypefn
 
-Here is an example showing handling for @code{_XABORT_RETRY}
-and a fallback path for other failures:
+@code{_XABORT_RETRY}の処理例と、他の障害のフォールバックパスを示す例を次に示す。
 
 @smallexample
 #include <immintrin.h>
@@ -16794,8 +16774,7 @@ else
 @end smallexample
 
 @noindent
-Note that, in most cases, the transactional and non-transactional code
-must synchronize together to ensure consistency.
+ほとんどの場合、トランザクションコードと非トランザクションコードは、一貫性を保証するために一緒に同期する必要があることに注意せよ。
 
 @node x86 control-flow protection intrinsics
 @subsection x86 Control-Flow Protection Intrinsics
