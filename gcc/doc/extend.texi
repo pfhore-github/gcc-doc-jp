@@ -16815,10 +16815,9 @@ Intel CETのシャドウスタックサポートがハードウェアで有効�
 このコードは、すべての64ビットプロセッサで無条件に実行される。 32ビットプロセッサの場合、コードはマルチバイトNOP命令をサポートするもので実行される。
 
 @node Target Format Checks
-@section Format Checks Specific to Particular Target Machines
+@section 特定のターゲット機種に固有のフォーマットチェック
 
-For some target machines, GCC supports additional options to the
-format attribute
+一部のターゲットマシンでは、GCCはformat属性に対する追加のオプションをサポートしている。
 (@pxref{Function Attributes,,Declaring Attributes of Functions}).
 
 @menu
@@ -16827,26 +16826,16 @@ format attribute
 @end menu
 
 @node Solaris Format Checks
-@subsection Solaris Format Checks
+@subsection Solarisフォーマットチェック
 
-Solaris targets support the @code{cmn_err} (or @code{__cmn_err__}) format
-check.  @code{cmn_err} accepts a subset of the standard @code{printf}
-conversions, and the two-argument @code{%b} conversion for displaying
-bit-fields.  See the Solaris man page for @code{cmn_err} for more information.
+Solarisターゲットは、@code{cmn_err}（または@code{__ cmn_err__}）形式のチェックをサポートする。 @code{cmn_err}は、標準の@code{printf}変換のサブセットと、ビットフィールドを表示するための2引数の@code{％b}変換を受け入れる。 詳細は、Solarisのマニュアルページ@code{cmn_err}を参照せよ。
 
 @node Darwin Format Checks
-@subsection Darwin Format Checks
+@subsection Darwinフォーマットチェック
 
-Darwin targets support the @code{CFString} (or @code{__CFString__}) in the format
-attribute context.  Declarations made with such attribution are parsed for correct syntax
-and format argument types.  However, parsing of the format string itself is currently undefined
-and is not carried out by this version of the compiler.
+ダーウィンのターゲットは、フォーマット属性コンテキストで@code{CFString}（または@code{__CFString__}）をサポートする。 そのような属性を使って行われた宣言は、正しい構文とフォーマットの引数型のために解析される。 ただし、フォーマット文字列自体の解析は現在未定義であり、このバージョンのコンパイラでは実行されない。
 
-Additionally, @code{CFStringRefs} (defined by the @code{CoreFoundation} headers) may
-also be used as format arguments.  Note that the relevant headers are only likely to be
-available on Darwin (OSX) installations.  On such installations, the XCode and system
-documentation provide descriptions of @code{CFString}, @code{CFStringRefs} and
-associated functions.
+さらに、フォーマット引数として@code{CoreFoundation}ヘッダーで定義された@code{CFStringRefs}も使用できる。 関連するヘッダは、Darwin（OSX）のインストールでのみ利用可能である可能性が高いことに注意せよ。 そのようなインストールでは、Xcodeとシステムのドキュメントに@code{CFString}、@code{CFStringRefs}とそれに関連する関数の説明がある。
 
 @node Pragmas
 @section Pragmas Accepted by GCC
