@@ -16911,22 +16911,17 @@ char port3;
 @end table
 
 @node MeP Pragmas
-@subsection MeP Pragmas
+@subsection MePプラグマ
 
 @table @code
 
 @item custom io_volatile (on|off)
 @cindex pragma, custom io_volatile
-Overrides the command-line option @code{-mio-volatile} for the current
-file.  Note that for compatibility with future GCC releases, this
-option should only be used once before any @code{io} variables in each
-file.
+現在のファイルのコマンドラインオプション@code{-mio-volatile}を上書きする。将来のGCCリリースとの互換性のために、このオプションは各ファイルの@code{io}変数の前に一度だけ使われるべきであることに注意せよ。
 
 @item GCC coprocessor available @var{registers}
 @cindex pragma, coprocessor available
-Specifies which coprocessor registers are available to the register
-allocator.  @var{registers} may be a single register, register range
-separated by ellipses, or comma-separated list of those.  Example:
+レジスタアロケータで使用できるコプロセッサレジスタを指定する。 @var{registers}は、単一のレジスタ、楕円で区切られたレジスタ範囲、またはそれらのカンマ区切りのリストである。 例：
 
 @smallexample
 #pragma GCC coprocessor available $c0...$c10, $c28
@@ -16934,10 +16929,7 @@ separated by ellipses, or comma-separated list of those.  Example:
 
 @item GCC coprocessor call_saved @var{registers}
 @cindex pragma, coprocessor call_saved
-Specifies which coprocessor registers are to be saved and restored by
-any function using them.  @var{registers} may be a single register,
-register range separated by ellipses, or comma-separated list of
-those.  Example:
+どのコプロセッサレジスタを使用する関数によって保存および復元するコプロセッサレジスタを指定する。 @var{registers}は、単一のレジスタ、楕円で区切られたレジスタ範囲、またはそれらのカンマ区切りのリストである。 例：
 
 @smallexample
 #pragma GCC coprocessor call_saved $c4...$c6, $c31
@@ -16945,10 +16937,7 @@ those.  Example:
 
 @item GCC coprocessor subclass '(A|B|C|D)' = @var{registers}
 @cindex pragma, coprocessor subclass
-Creates and defines a register class.  These register classes can be
-used by inline @code{asm} constructs.  @var{registers} may be a single
-register, register range separated by ellipses, or comma-separated
-list of those.  Example:
+登録クラスを作成して定義します。 これらのレジスタクラスは、インラインの@code{asm}構文で使用できる。@var{registers}は、単一のレジスタ、楕円で区切られたレジスタ範囲、またはそれらのカンマ区切りのリストである。 例：
 
 @smallexample
 #pragma GCC coprocessor subclass 'B' = $c2, $c4, $c6
@@ -16958,10 +16947,7 @@ asm ("cpfoo %0" : "=B" (x));
 
 @item GCC disinterrupt @var{name} , @var{name} @dots{}
 @cindex pragma, disinterrupt
-For the named functions, the compiler adds code to disable interrupts
-for the duration of those functions.  If any functions so named 
-are not encountered in the source, a warning is emitted that the pragma is
-not used.  Examples:
+名前付き関数の場合、コンパイラは、それらの関数の持続時間中割り込みを無効にするコードを追加する。このような名前の関数がソースで見つからない場合、プラグマが使用されていないという警告が表示される。 例：
 
 @smallexample
 #pragma disinterrupt foo
@@ -16971,8 +16957,7 @@ int foo () @{ @dots{} @}
 
 @item GCC call @var{name} , @var{name} @dots{}
 @cindex pragma, call
-For the named functions, the compiler always uses a register-indirect
-call model when calling the named functions.  Examples:
+名前付き関数の場合、コンパイラは名前付き関数を呼び出すときに常にレジスタ間接呼び出しモデルを使用する。 例：
 
 @smallexample
 extern int foo ();
@@ -16982,24 +16967,17 @@ extern int foo ();
 @end table
 
 @node RS/6000 and PowerPC Pragmas
-@subsection RS/6000 and PowerPC Pragmas
+@subsection RS/6000とPowerPCのプラグマ
 
-The RS/6000 and PowerPC targets define one pragma for controlling
-whether or not the @code{longcall} attribute is added to function
-declarations by default.  This pragma overrides the @option{-mlongcall}
-option, but not the @code{longcall} and @code{shortcall} attributes.
-@xref{RS/6000 and PowerPC Options}, for more information about when long
-calls are and are not necessary.
+RS/6000とPowerPCのターゲットは、@code{longcall}属性がデフォルトで関数宣言に追加されるかどうかを制御する1つのプラグマを定義する。 このプラグマは@option{-mlongcall}オプションをオーバーライドするが、@code{longcall}および@code{shortcall}属性はオーバーライドしない。長い呼び出しが必要な場合と不要な場合の詳細については、@xref{RS/6000 and PowerPC Options}を参照せよ。
 
 @table @code
 @item longcall (1)
 @cindex pragma, longcall
-Apply the @code{longcall} attribute to all subsequent function
-declarations.
+すべての後続の関数宣言に@code{longcall}属性を適用する。
 
 @item longcall (0)
-Do not apply the @code{longcall} attribute to subsequent function
-declarations.
+すべての後続の関数宣言に@code{longcall}属性を適用しない。
 @end table
 
 @c Describe h8300 pragmas here.
@@ -17007,19 +16985,16 @@ declarations.
 @c Describe v850 pragmas here.
 
 @node S/390 Pragmas
-@subsection S/390 Pragmas
+@subsection S/390 プラグマ
 
-The pragmas defined by the S/390 target correspond to the S/390
-target function attributes and some the additional options:
+S/390ターゲットで定義されたプラグマは、S/390ターゲット関数の属性といくつかの追加オプションに対応している。
 
 @table @samp
 @item zvector
 @itemx no-zvector
 @end table
 
-Note that options of the pragma, unlike options of the target
-attribute, do change the value of preprocessor macros like
-@code{__VEC__}.  They can be specified as below:
+プラグマのオプションは、ターゲット属性のオプションとは異なり、@code{__ VEC__}のようなプリプロセッサマクロの値を変更することに注意せよ。 次のように指定できる。
 
 @smallexample
 #pragma GCC target("string[,string]...")
@@ -17027,108 +17002,72 @@ attribute, do change the value of preprocessor macros like
 @end smallexample
 
 @node Darwin Pragmas
-@subsection Darwin Pragmas
+@subsection Darwin プラグマ
 
-The following pragmas are available for all architectures running the
-Darwin operating system.  These are useful for compatibility with other
-Mac OS compilers.
+次のプラグマは、Darwinオペレーティングシステムを実行するすべてのアーキテクチャで使用できる これらは他のMac OSコンパイラとの互換性のために便利である。
 
 @table @code
 @item mark @var{tokens}@dots{}
 @cindex pragma, mark
-This pragma is accepted, but has no effect.
+このプラグマは受理されるが、効果はない。
 
 @item options align=@var{alignment}
 @cindex pragma, options align
-This pragma sets the alignment of fields in structures.  The values of
-@var{alignment} may be @code{mac68k}, to emulate m68k alignment, or
-@code{power}, to emulate PowerPC alignment.  Uses of this pragma nest
-properly; to restore the previous setting, use @code{reset} for the
-@var{alignment}.
+このプラグマは、構造内のフィールドの配置を設定する。 @var{alignment}の値は、m68k整列をエミュレートするために@code{mac68k}、またはPowerPC整列をエミュレートするために@code{power}にすることができる。 このプラグマのネストは正しく使用される。 以前の設定を復元するには、@var{alignment}に@code{reset}を使用する。
 
 @item segment @var{tokens}@dots{}
 @cindex pragma, segment
-This pragma is accepted, but has no effect.
+このプラグマは受理されるが、効果はない。
 
 @item unused (@var{var} [, @var{var}]@dots{})
 @cindex pragma, unused
-This pragma declares variables to be possibly unused.  GCC does not
-produce warnings for the listed variables.  The effect is similar to
-that of the @code{unused} attribute, except that this pragma may appear
-anywhere within the variables' scopes.
+このプラグマは、変数が未使用である可能性があると宣言する。 GCCは、リストされた変数に対して警告を出さない。 このプラグマが変数のスコープ内のどこにでも現れることを除けば、この効果は@code{unused}属性の効果に似ている。
 @end table
 
 @node Solaris Pragmas
-@subsection Solaris Pragmas
+@subsection Solaris プラグマ
 
-The Solaris target supports @code{#pragma redefine_extname}
-(@pxref{Symbol-Renaming Pragmas}).  It also supports additional
-@code{#pragma} directives for compatibility with the system compiler.
+Solarisターゲットは@code{#pragma redefine_extname}（@pxref{Symbol-Renaming Pragmas}）をサポートしている。 また、システムコンパイラとの互換性のための追加の@code{#pragma}ディレクティブもサポートしている。
 
 @table @code
 @item align @var{alignment} (@var{variable} [, @var{variable}]...)
 @cindex pragma, align
 
-Increase the minimum alignment of each @var{variable} to @var{alignment}.
-This is the same as GCC's @code{aligned} attribute @pxref{Variable
-Attributes}).  Macro expansion occurs on the arguments to this pragma
-when compiling C and Objective-C@.  It does not currently occur when
-compiling C++, but this is a bug which may be fixed in a future
-release.
+@var{variable}の@var{alignment}への最小整列を増やす。これはGCCの@code{aligned}属性（@pxref{Variable Attributes}）と同じである。 CおよびObjective-Cのコンパイル時にこのプラグマの引数にマクロ展開が行われる。 現在のところ、C ++のコンパイル時には発生しないが、これは将来のリリースで修正されるバグである。
 
 @item fini (@var{function} [, @var{function}]...)
 @cindex pragma, fini
 
-This pragma causes each listed @var{function} to be called after
-main, or during shared module unloading, by adding a call to the
-@code{.fini} section.
+このプラグマは、@code{.fini}セクションへの呼び出しを追加することによって、リストされた@var{function}がmainの後、または共有モジュールのアンロード中に呼び出されるようにする。
 
 @item init (@var{function} [, @var{function}]...)
 @cindex pragma, init
 
-This pragma causes each listed @var{function} to be called during
-initialization (before @code{main}) or during shared module loading, by
-adding a call to the @code{.init} section.
+このプラグマは、@code{.init}セクションへの呼び出しを追加することによって、リストされた@var{function}を初期化中（@code{main}の前）または共有モジュールのロード中に呼び出させる。
 
 @end table
 
 @node Symbol-Renaming Pragmas
-@subsection Symbol-Renaming Pragmas
+@subsection シンボルリネームプラグマ
 
-GCC supports a @code{#pragma} directive that changes the name used in
-assembly for a given declaration. While this pragma is supported on all
-platforms, it is intended primarily to provide compatibility with the
-Solaris system headers. This effect can also be achieved using the asm
-labels extension (@pxref{Asm Labels}).
+GCCは特定の宣言のアセンブリで使用される名前を変更する@code{#pragma}ディレクティブをサポートしている。このプラグマはすべてのプラットフォームでサポートされているが、主にSolarisシステムのヘッダーとの互換性を提供することを目的としている。 この効果は、asmラベル拡張を使用しても達成できる。 (@pxref{Asm Labels}).
 
 @table @code
 @item redefine_extname @var{oldname} @var{newname}
 @cindex pragma, redefine_extname
 
-This pragma gives the C function @var{oldname} the assembly symbol
-@var{newname}.  The preprocessor macro @code{__PRAGMA_REDEFINE_EXTNAME}
-is defined if this pragma is available (currently on all platforms).
+このプラグマは、C関数@var{oldname}にアセンブリシンボル@var{newname}を与える。 プリプロセッサマクロ@code{__PRAGMA_REDEFINE_EXTNAME}は、このプラグマが使用可能である場合に定義されている（現在はすべてのプラットフォーム上にある）。
 @end table
 
-This pragma and the asm labels extension interact in a complicated
-manner.  Here are some corner cases you may want to be aware of:
-
+このプラグマとasmラベル拡張子は複雑なやり方で相互作用する。 あなたが気づいておきたいいくつかのコーナーケースを次に示す。
 @enumerate
-@item This pragma silently applies only to declarations with external
-linkage.  Asm labels do not have this restriction.
+@item このプラグマは、外部リンケージの宣言にのみ適用される。 Asmラベルにはこの制限はない。
 
-@item In C++, this pragma silently applies only to declarations with
-``C'' linkage.  Again, asm labels do not have this restriction.
+@item C ++では、このプラグマは "C"リンケージの宣言にのみ自動的に適用される。 ここでも、asmラベルにはこの制限はない。
 
-@item If either of the ways of changing the assembly name of a
-declaration are applied to a declaration whose assembly name has
-already been determined (either by a previous use of one of these
-features, or because the compiler needed the assembly name in order to
-generate code), and the new name is different, a warning issues and
-the name does not change.
+@item 宣言のアセンブリ名を変更する方法のいずれかが、アセンブリ名がすでに決定されている宣言に適用された場合（これらの機能のいずれかを以前に使用した場合、またはコンパイラがコードを生成するためにアセンブリ名を必要としたため）、新しい名前が違うと、警告の問題が発生し、名前は変更されない。
 
-@item The @var{oldname} used by @code{#pragma redefine_extname} is
-always the C-language name.
+@item @code{#pragma redefine_extname}で使用される@var{oldname}は、常にC言語の名前である。
 @end enumerate
 
 @node Structure-Layout Pragmas
