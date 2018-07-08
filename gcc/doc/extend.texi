@@ -17071,100 +17071,60 @@ GCCは特定の宣言のアセンブリで使用される名前を変更する@c
 @end enumerate
 
 @node Structure-Layout Pragmas
-@subsection Structure-Layout Pragmas
+@subsection 構造体レイアウトプラグマ
 
-For compatibility with Microsoft Windows compilers, GCC supports a
-set of @code{#pragma} directives that change the maximum alignment of
-members of structures (other than zero-width bit-fields), unions, and
-classes subsequently defined. The @var{n} value below always is required
-to be a small power of two and specifies the new alignment in bytes.
+GCCは、Microsoft Windowsコンパイラとの互換性のために、その後定義され（ゼロ幅のビットフィールド以外の）構造体のメンバ、共用体、およびるクラスの最大整列を変更する一連の@code{#pragma}ディレクティブをサポートしている。 以下の@var{n}値は、常に2の小2乗である必要があり、新しい整列をバイト単位で指定する。
 
 @enumerate
-@item @code{#pragma pack(@var{n})} simply sets the new alignment.
-@item @code{#pragma pack()} sets the alignment to the one that was in
-effect when compilation started (see also command-line option
-@option{-fpack-struct[=@var{n}]} @pxref{Code Gen Options}).
-@item @code{#pragma pack(push[,@var{n}])} pushes the current alignment
-setting on an internal stack and then optionally sets the new alignment.
-@item @code{#pragma pack(pop)} restores the alignment setting to the one
-saved at the top of the internal stack (and removes that stack entry).
-Note that @code{#pragma pack([@var{n}])} does not influence this internal
-stack; thus it is possible to have @code{#pragma pack(push)} followed by
-multiple @code{#pragma pack(@var{n})} instances and finalized by a single
-@code{#pragma pack(pop)}.
+@item @code{#pragma pack(@var{n})}は単純に新しいアラインメントをセットする
+@item @code{#pragma pack()}は、コンパイルが開始されたときに有効であったアラインメントを設定する。(コマンドラインオプション@option{-fpack-struct[=@var{n}]} @pxref{Code Gen Options}も見よ。)
+@item @code{#pragma pack(push[,@var{n}])}は現在の位置合わせ設定を内部スタックにプッシュし、オプションで新しい位置合わせを設定する。 
+@item @code{#pragma pack(pop)}は内部スタックの一番上に保存されている位置合わせ設定に戻す（そしてそのスタックエントリを削除する）。 
+Note that @code{#pragma pack([@var{n}])}はこの内部スタックには影響しない。@code{#pragma pack(push)}の後に複数の@code{#pragma pack(@var{n})}インスタンスを持ち、単一の@code{#pragma pack(pop)}でファイナライズすることができる。
 @end enumerate
 
-Some targets, e.g.@: x86 and PowerPC, support the @code{#pragma ms_struct}
-directive which lays out structures and unions subsequently defined as the
-documented @code{__attribute__ ((ms_struct))}.
+一部のターゲット（例：x86、PowerPC）は、文書化された@code{__attribute__((ms_struct))}として後で定義される構造体と共用体をレイアウトする@code{#pragma ms_struct}ディレクティブをサポートする。
 
 @enumerate
-@item @code{#pragma ms_struct on} turns on the Microsoft layout.
-@item @code{#pragma ms_struct off} turns off the Microsoft layout.
-@item @code{#pragma ms_struct reset} goes back to the default layout.
+@item @code{#pragma ms_struct on}はMicrosoftレイアウトをオンにする。
+@item @code{#pragma ms_struct off}はMicrosoftレイアウトをオフにする。
+@item @code{#pragma ms_struct reset}はデフォルトレイアウトに戻す。
 @end enumerate
 
-Most targets also support the @code{#pragma scalar_storage_order} directive
-which lays out structures and unions subsequently defined as the documented
-@code{__attribute__ ((scalar_storage_order))}.
+ほとんどのターゲットは、文書化された@code{__attribute__ ((scalar_storage_order))}として後で定義される構造体および共用体をレイアウトする@code{#pragma scalar_storage_order}ディレクティブもサポートしている。
 
 @enumerate
-@item @code{#pragma scalar_storage_order big-endian} sets the storage order
-of the scalar fields to big-endian.
-@item @code{#pragma scalar_storage_order little-endian} sets the storage order
-of the scalar fields to little-endian.
-@item @code{#pragma scalar_storage_order default} goes back to the endianness
-that was in effect when compilation started (see also command-line option
-@option{-fsso-struct=@var{endianness}} @pxref{C Dialect Options}).
+@item @code{#pragma scalar_storage_order big-endian}はスカラーフィルドの格納順序をビッグエンディアンにする。
+@item @code{#pragma scalar_storage_order little-endian}はスカラーフィルドの格納順序をリトルエンディアンにする。
+@item @code{#pragma scalar_storage_order default}はコンパイルが開始されたときに有効だったエンディアンに戻す。(コマンドラインオプション@option{-fsso-struct=@var{endianness}}も参照 @pxref{C Dialect Options})。
 @end enumerate
 
 @node Weak Pragmas
-@subsection Weak Pragmas
+@subsection 弱プラグマ
 
-For compatibility with SVR4, GCC supports a set of @code{#pragma}
-directives for declaring symbols to be weak, and defining weak
-aliases.
+SVR4との互換性のために、GCCは、シンボルを弱く宣言し弱いエイリアスを定義するための一連の@code{#pragma}ディレクティブをサポートしている。
 
 @table @code
 @item #pragma weak @var{symbol}
 @cindex pragma, weak
-This pragma declares @var{symbol} to be weak, as if the declaration
-had the attribute of the same name.  The pragma may appear before
-or after the declaration of @var{symbol}.  It is not an error for
-@var{symbol} to never be defined at all.
+このプラグマは、宣言に同じ名前の属性があるかのように、@var{symbol}を弱く宣言する。 プラグマは@var{symbol}の宣言の前後に現れる。 @var{symbol}がまったく定義されないことは誤りではない。
 
 @item #pragma weak @var{symbol1} = @var{symbol2}
-This pragma declares @var{symbol1} to be a weak alias of @var{symbol2}.
-It is an error if @var{symbol2} is not defined in the current
-translation unit.
+このプラグマは、@var{symbol1}が@var{symbol2}の弱いエイリアスであると宣言する。 @var{symbol2}が現在の翻訳単位で定義されていないと、エラーになる。
 @end table
 
 @node Diagnostic Pragmas
-@subsection Diagnostic Pragmas
+@subsection 診断プラグマ
 
-GCC allows the user to selectively enable or disable certain types of
-diagnostics, and change the kind of the diagnostic.  For example, a
-project's policy might require that all sources compile with
-@option{-Werror} but certain files might have exceptions allowing
-specific types of warnings.  Or, a project might selectively enable
-diagnostics and treat them as errors depending on which preprocessor
-macros are defined.
+GCCでは、特定のタイプの診断を選択的に有効または無効にし、診断の種類を変更することができる。 たとえば、プロジェクトのポリシーでは、すべてのソースを@option{-Werror}でコンパイルする必要があるかもしれないが、特定のファイルには特定のタイプの警告を許可する例外が存在する場合がある。 あるいは、プロジェクトは診断を選択的に有効にし、定義されているプリプロセッサマクロに応じてエラーとして扱う。
 
 @table @code
 @item #pragma GCC diagnostic @var{kind} @var{option}
 @cindex pragma, diagnostic
 
-Modifies the disposition of a diagnostic.  Note that not all
-diagnostics are modifiable; at the moment only warnings (normally
-controlled by @samp{-W@dots{}}) can be controlled, and not all of them.
-Use @option{-fdiagnostics-show-option} to determine which diagnostics
-are controllable and which option controls them.
+診断の処理を変更する。 すべての診断が変更可能であるわけではないことに注意する。 現時点では、@samp {-W@dots {}}によって制御される警告のみが制御され、それらのすべてではない。@option{-fdiagnostics-show-option}を使用して、どの診断が制御可能で、どのオプションがそれらを制御するのかを判断する。
 
-@var{kind} is @samp{error} to treat this diagnostic as an error,
-@samp{warning} to treat it like a warning (even if @option{-Werror} is
-in effect), or @samp{ignored} if the diagnostic is to be ignored.
-@var{option} is a double quoted string that matches the command-line
-option.
+@var{kind}は、（@option {-Werror}が有効な場合でも）この診断をエラーとして扱うための@samp{error}、警告のように扱うための@samp{warning}、診断を無視する場合には@samp{ignored}である。 @var{option}は、コマンドラインオプションと一致する二重引用符で囲まれた文字列である。
 
 @smallexample
 #pragma GCC diagnostic warning "-Wformat"
@@ -17172,18 +17132,12 @@ option.
 #pragma GCC diagnostic ignored "-Wformat"
 @end smallexample
 
-Note that these pragmas override any command-line options.  GCC keeps
-track of the location of each pragma, and issues diagnostics according
-to the state as of that point in the source file.  Thus, pragmas occurring
-after a line do not affect diagnostics caused by that line.
+これらのプラグマは、どのコマンドラインオプションよりも優先されることに注意せよ。 GCCは各プラグマの位置を追跡し、ソースファイル内のその時点の状態に応じて診断を発行する。 したがって、行の後に出現するプラグマは、その行によって引き起こされる診断に影響を与えない。
 
 @item #pragma GCC diagnostic push
 @itemx #pragma GCC diagnostic pop
 
-Causes GCC to remember the state of the diagnostics as of each
-@code{push}, and restore to that point at each @code{pop}.  If a
-@code{pop} has no matching @code{push}, the command-line options are
-restored.
+GCCは@code{push}ごとに診断プログラムの状態を覚えて、@code{pop}ごとに診断ポイントを復元する。 コード@{pop}に一致する@code{push}がない場合、コマンドラインオプションが復元される。
 
 @smallexample
 #pragma GCC diagnostic error "-Wuninitialized"
@@ -17199,22 +17153,19 @@ restored.
 
 @end table
 
-GCC also offers a simple mechanism for printing messages during
-compilation.
+GCCは、コンパイル時にメッセージを出力するための簡単なメカニズムも提供する。
 
 @table @code
 @item #pragma message @var{string}
 @cindex pragma, diagnostic
 
-Prints @var{string} as a compiler message on compilation.  The message
-is informational only, and is neither a compilation warning nor an error.
+@var{string}をコンパイル時のコンパイルメッセージとして出力する。 メッセージは通知のみであり、コンパイルの警告でもエラーでもない。
 
 @smallexample
 #pragma message "Compiling " __FILE__ "..."
 @end smallexample
 
-@var{string} may be parenthesized, and is printed with location
-information.  For example,
+@var{string}はカッコで囲まれ、位置情報とともに出力されてもよい。 例えば、
 
 @smallexample
 #define DO_PRAGMA(x) _Pragma (#x)
@@ -17230,46 +17181,36 @@ TODO - Remember to fix this}.
 @end table
 
 @node Visibility Pragmas
-@subsection Visibility Pragmas
+@subsection 可視性プラグマ
 
 @table @code
 @item #pragma GCC visibility push(@var{visibility})
 @itemx #pragma GCC visibility pop
 @cindex pragma, visibility
 
-This pragma allows the user to set the visibility for multiple
-declarations without having to give each a visibility attribute
-(@pxref{Function Attributes}).
+このプラグマを使用すると、それぞれに可視属性を与えることなく、複数の宣言の可視性を設定できる。(@pxref{Function Attributes}).
 
-In C++, @samp{#pragma GCC visibility} affects only namespace-scope
-declarations.  Class members and template specializations are not
-affected; if you want to override the visibility for a particular
-member or instantiation, you must use an attribute.
+C++では、@samp{#pragma GCC visibility}は名前空間スコープ宣言のみに影響する。 クラスメンバーとテンプレートの特殊化は影響を受けない。 特定のメンバーまたはインスタンス化の可視性をオーバーライドする場合は、属性を使用する必要がある。
 
 @end table
 
 
 @node Push/Pop Macro Pragmas
-@subsection Push/Pop Macro Pragmas
+@subsection Push/Popマクロプラグマ
 
-For compatibility with Microsoft Windows compilers, GCC supports
-@samp{#pragma push_macro(@var{"macro_name"})}
-and @samp{#pragma pop_macro(@var{"macro_name"})}.
+Microsoft Windowsコンパイラとの互換性のため、GCCは@samp{#pragma push_macro(@var{"macro_name"})}と@samp{#pragma pop_macro(@var {"macro_name"})}をサポートしている。
 
 @table @code
 @item #pragma push_macro(@var{"macro_name"})
 @cindex pragma, push_macro
-This pragma saves the value of the macro named as @var{macro_name} to
-the top of the stack for this macro.
+このプラグマは、このマクロのスタックの先頭に@var{macro_name}という名前のマクロの値を保存する。
 
 @item #pragma pop_macro(@var{"macro_name"})
 @cindex pragma, pop_macro
-This pragma sets the value of the macro named as @var{macro_name} to
-the value on top of the stack for this macro. If the stack for
-@var{macro_name} is empty, the value of the macro remains unchanged.
+このプラグマは、@var{macro_name}という名前のマクロの値を、このマクロのスタックの一番上の値に設定する。 @var{macro_name}のスタックが空の場合、マクロの値は変更されない。
 @end table
 
-For example:
+例えば、
 
 @smallexample
 #define X  1
@@ -17281,72 +17222,48 @@ int x [X];
 @end smallexample
 
 @noindent
-In this example, the definition of X as 1 is saved by @code{#pragma
-push_macro} and restored by @code{#pragma pop_macro}.
+この例では、Xの1の定義は@code{#pragma push_macro}によって保存され、@ code{#pragma pop_macro}によって復元される。
 
 @node Function Specific Option Pragmas
-@subsection Function Specific Option Pragmas
+@subsection 関数特有オプションプラグマ
 
 @table @code
 @item #pragma GCC target (@var{"string"}...)
 @cindex pragma GCC target
 
-This pragma allows you to set target specific options for functions
-defined later in the source file.  One or more strings can be
-specified.  Each function that is defined after this point is as
-if @code{attribute((target("STRING")))} was specified for that
-function.  The parenthesis around the options is optional.
-@xref{Function Attributes}, for more information about the
-@code{target} attribute and the attribute syntax.
+このプラグマを使用すると、ソースファイルで後で定義された関数のターゲット固有のオプションを設定できる。 1つ以上の文字列を指定できる。 このポイントの後に定義される各関数は、その関数に@code{attribute((target( "STRING")))}が指定されているかのようになる。 オプションのかっこは任意である。 @code{target}属性と属性構文の詳細については、@xref{Function Attributes}を参照せよ。
 
-The @code{#pragma GCC target} pragma is presently implemented for
-x86, ARM, AArch64, PowerPC, S/390, and Nios II targets only.
+@code{#pragma GCC target}プラグマは現在、x86、ARM、AArch64、PowerPC、S/390、およびNios IIターゲット用にのみ実装されている。
 
 @item #pragma GCC optimize (@var{"string"}...)
 @cindex pragma GCC optimize
 
-This pragma allows you to set global optimization options for functions
-defined later in the source file.  One or more strings can be
-specified.  Each function that is defined after this point is as
-if @code{attribute((optimize("STRING")))} was specified for that
-function.  The parenthesis around the options is optional.
-@xref{Function Attributes}, for more information about the
-@code{optimize} attribute and the attribute syntax.
+このプラグマを使用すると、ソースファイルで後で定義された関数のグローバル最適化オプションを設定できる。 1つ以上の文字列を指定できる。 このポイントの後に定義される各関数は、その関数に@code{attribute((optiomize("STRING ")))}が指定されているかのようになる。 オプションのかっこは任意である。 @code{optimize}属性と属性構文の詳細については、@xref{Function Attributes}を参照せよ。
 
 @item #pragma GCC push_options
 @itemx #pragma GCC pop_options
 @cindex pragma GCC push_options
 @cindex pragma GCC pop_options
 
-These pragmas maintain a stack of the current target and optimization
-options.  It is intended for include files where you temporarily want
-to switch to using a different @samp{#pragma GCC target} or
-@samp{#pragma GCC optimize} and then to pop back to the previous
-options.
+これらのプラグマは、現在のターゲットと最適化オプションのスタックを維持する。 これは、一時的に別の@samp{#pragma GCC target}または@samp{#pragma GCC optimize}を使用して切り替えて、以前のオプションにポップバックするインクルードファイルを対象としている。
 
 @item #pragma GCC reset_options
 @cindex pragma GCC reset_options
 
-This pragma clears the current @code{#pragma GCC target} and
-@code{#pragma GCC optimize} to use the default switches as specified
-on the command line.
+このプラグマは、現在の@code{#pragma GCC target}と@code{#pragma GCC optimize}をクリアして、コマンドラインで指定したデフォルトのスイッチを使用する。
 
 @end table
 
 @node Loop-Specific Pragmas
-@subsection Loop-Specific Pragmas
+@subsection ループ固有プラグマ
 
 @table @code
 @item #pragma GCC ivdep
 @cindex pragma GCC ivdep
 
-With this pragma, the programmer asserts that there are no loop-carried
-dependencies which would prevent consecutive iterations of
-the following loop from executing concurrently with SIMD
-(single instruction multiple data) instructions.
+このプラグマを使用すると、プログラマは、次のループの連続反復がSIMD（単一命令複数データ）命令と並行して実行されないようにする、ループ搬送依存性がないことを主張する。
 
-For example, the compiler can only unconditionally vectorize the following
-loop with the pragma:
+たとえば、コンパイラはプラグマで次のループを無条件にベクトル化できる。
 
 @smallexample
 void foo (int n, int *a, int *b, int *c)
@@ -17359,10 +17276,7 @@ void foo (int n, int *a, int *b, int *c)
 @end smallexample
 
 @noindent
-In this example, using the @code{restrict} qualifier had the same
-effect. In the following example, that would not be possible. Assume
-@math{k < -m} or @math{k >= m}. Only with the pragma, the compiler knows
-that it can unconditionally vectorize the following loop:
+この例では、@code{restrict}修飾子を使用すると同じ効果があった。 次の例では、これは不可能である。 @math{k <-m}または@math{k> = m}と仮定する。 コンパイラは、プラグマのみを使用して、次のループを無条件にベクトル化できることを認識している。
 
 @smallexample
 void ignore_vec_dep (int *a, int k, int c, int m)
@@ -17376,11 +17290,7 @@ void ignore_vec_dep (int *a, int k, int c, int m)
 @item #pragma GCC unroll @var{n}
 @cindex pragma GCC unroll @var{n}
 
-You can use this pragma to control how many times a loop should be unrolled.
-It must be placed immediately before a @code{for}, @code{while} or @code{do}
-loop or a @code{#pragma GCC ivdep}, and applies only to the loop that follows.
-@var{n} is an integer constant expression specifying the unrolling factor.
-The values of @math{0} and @math{1} block any unrolling of the loop.
+このプラグマを使用して、ループをアンロールする回数を制御できる。 @code{for}、@code{while}または@code{do}ループまたは@code{#pragma GCC ivdep}の直前に置く必要があり、それに続くループのみに適用される。 @var{n}はアンローリング係数を指定する整数定数式である。 @math{0}と@math{1}の値は、ループのアンロールをブロックする。
 
 @end table
 
