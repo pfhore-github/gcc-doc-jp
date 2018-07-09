@@ -17356,22 +17356,14 @@ s1 f1 (struct s2 *p) @{ return p->s1; @}
 これらの使用法は、あいまいでない場合にのみ許可される。
 
 @node Thread-Local
-@section Thread-Local Storage
+@section スレッドローカル領域
 @cindex Thread-Local Storage
 @cindex @acronym{TLS}
 @cindex @code{__thread}
 
-Thread-local storage (@acronym{TLS}) is a mechanism by which variables
-are allocated such that there is one instance of the variable per extant
-thread.  The runtime model GCC uses to implement this originates
-in the IA-64 processor-specific ABI, but has since been migrated
-to other processors as well.  It requires significant support from
-the linker (@command{ld}), dynamic linker (@command{ld.so}), and
-system libraries (@file{libc.so} and @file{libpthread.so}), so it
-is not available everywhere.
+スレッドローカル領域（@acronym{TLS}）は、既存のスレッドごとに変数のインスタンスが1つ存在するように変数を割り当てるメカニズムである。 GCCがこれを実装するために使用する実行時モデルは、IA-64プロセッサ固有のABIに由来しているが、以来他のプロセッサにも移行されている。 リンカ（@command{ld}）、動的リンカ（@command{ld.so}）、システムライブラリ（@file{libc.so}、@file{libpthread.so}）からの大きなサポートが必要であるので、 どこでも利用できるわけではない。
 
-At the user level, the extension is visible with a new storage
-class keyword: @code{__thread}.  For example:
+ユーザーレベルでは、拡張は新しいストレージクラスキーワード@code{__ thread}で表示される。 例えば：
 
 @smallexample
 __thread int i;
@@ -17379,31 +17371,17 @@ extern __thread struct state s;
 static __thread char *p;
 @end smallexample
 
-The @code{__thread} specifier may be used alone, with the @code{extern}
-or @code{static} specifiers, but with no other storage class specifier.
-When used with @code{extern} or @code{static}, @code{__thread} must appear
-immediately after the other storage class specifier.
+@code{__ thread}指定子は、@code{extern}または@code{static}指定子とともに単独で使用できるが、他の記憶域クラス指定子は使用できない。@code{extern}または@code{static}と一緒に使用する場合、@code{__ thread}は他のストレージクラス指定子の直後に指定する必要がある。
 
-The @code{__thread} specifier may be applied to any global, file-scoped
-static, function-scoped static, or static data member of a class.  It may
-not be applied to block-scoped automatic or non-static data member.
+@code{__ thread}指定子は、任意のグローバル、ファイルスコープ静的、関数スコープの静的またはクラスの静的データメンバーに適用できる。 ブロックスコープの自動または非静的データメンバーには適用できない。
 
-When the address-of operator is applied to a thread-local variable, it is
-evaluated at run time and returns the address of the current thread's
-instance of that variable.  An address so obtained may be used by any
-thread.  When a thread terminates, any pointers to thread-local variables
-in that thread become invalid.
+address-of演算子がスレッドローカル変数に適用されると、実行時に評価され、その変数の現在のスレッドのインスタンスのアドレスが返される。 そのようにして得られたアドレスは、どのスレッドでも使用できる。 スレッドが終了すると、そのスレッドのスレッドローカル変数へのポインタは無効になる。
 
-No static initialization may refer to the address of a thread-local variable.
+静的初期化は、スレッドローカル変数のアドレスを参照することはできない。
 
-In C++, if an initializer is present for a thread-local variable, it must
-be a @var{constant-expression}, as defined in 5.19.2 of the ANSI/ISO C++
-standard.
+C++では、スレッドローカル変数に初期化子が存在する場合は、ANSI/ISO C++標準の5.19.2で定義されている@var{constant-expression}でなければならない。
 
-See @uref{https://www.akkadia.org/drepper/tls.pdf,
-ELF Handling For Thread-Local Storage} for a detailed explanation of
-the four thread-local storage addressing models, and how the runtime
-is expected to function.
+4つのスレッドローカルストレージアドレス指定モデルの詳細と、ランタイムがどのように機能するのかについては、@uref{https://www.akkadia.org/drepper/tls.pdf, ELF Handling For Thread-Local Storage}を参照せよ。
 
 @menu
 * C99 Thread-Local Edits::
