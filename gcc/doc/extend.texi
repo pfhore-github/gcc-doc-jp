@@ -17389,207 +17389,164 @@ C++では、スレッドローカル変数に初期化子が存在する場合�
 @end menu
 
 @node C99 Thread-Local Edits
-@subsection ISO/IEC 9899:1999 Edits for Thread-Local Storage
+@subsection スレッドローカル領域用のISO/IEC 9899:1999編集
 
-The following are a set of changes to ISO/IEC 9899:1999 (aka C99)
-that document the exact semantics of the language extension.
+以下は、言語拡張の正確なセマンティクスを文書化しているISO / IEC 9899：1999（別名C99）の一連の変更である。
 
 @itemize @bullet
 @item
 @cite{5.1.2  Execution environments}
 
-Add new text after paragraph 1
+段落1の後に新しいテキストを追加する
 
 @quotation
-Within either execution environment, a @dfn{thread} is a flow of
-control within a program.  It is implementation defined whether
-or not there may be more than one thread associated with a program.
-It is implementation defined how threads beyond the first are
-created, the name and type of the function called at thread
-startup, and how threads may be terminated.  However, objects
-with thread storage duration shall be initialized before thread
-startup.
+どちらの実行環境でも、@dfn{thread}はプログラム内の制御の流れである。プログラムに関連付けられた複数のスレッドが存在するかどうかは、実装が定義する。実装は、最初のスレッドがどのように作成されるか、スレッドの起動時に呼び出される関数の名前と型、およびスレッドの終了方法を定義する。 ただし、スレッドの格納期間を持つオブジェクトは、スレッドの起動前に初期化される。
 @end quotation
 
 @item
 @cite{6.2.4  Storage durations of objects}
 
-Add new text before paragraph 3
+段落3の後に新しいテキストを追加する
 
 @quotation
-An object whose identifier is declared with the storage-class
-specifier @w{@code{__thread}} has @dfn{thread storage duration}.
-Its lifetime is the entire execution of the thread, and its
-stored value is initialized only once, prior to thread startup.
+識別子がstorage-class指定子@w{@code{__thread}}で宣言されているオブジェクトは、@dfn{thread storage duration}を持つ。その存続期間はスレッドの実行全体であり、格納された値はスレッドの起動前に一度だけ初期化される。
 @end quotation
 
 @item
 @cite{6.4.1  Keywords}
 
-Add @code{__thread}.
+@code{__thread}を追加
 
 @item
 @cite{6.7.1  Storage-class specifiers}
 
-Add @code{__thread} to the list of storage class specifiers in
-paragraph 1.
+@code{__thread}を段落1のストレージクラス指定子のリストに追加する。
 
-Change paragraph 2 to
+段落2をいかに変更する
 
 @quotation
-With the exception of @code{__thread}, at most one storage-class
-specifier may be given [@dots{}].  The @code{__thread} specifier may
-be used alone, or immediately following @code{extern} or
-@code{static}.
+@code{__thread}を除いて、多くても1つのストレージクラス指定子に[@dots{}]を付けることができる。 @code{__thread}指定子は単独で使うことも、@code{extern}や@code{static}の直後に使うこともできる。
 @end quotation
 
-Add new text after paragraph 6
+段落6のあとに新しいテキストを加える
 
 @quotation
-The declaration of an identifier for a variable that has
-block scope that specifies @code{__thread} shall also
-specify either @code{extern} or @code{static}.
+@code{__thread}を指定するブロックスコープを持つ変数の識別子の宣言でも、@code{extern}または@code{static}のいずれかを指定する必要がある。
 
-The @code{__thread} specifier shall be used only with
-variables.
+@code{__thread}指定子は変数でのみ使用される。
 @end quotation
 @end itemize
 
 @node C++98 Thread-Local Edits
-@subsection ISO/IEC 14882:1998 Edits for Thread-Local Storage
+@subsection スレッドローカル領域用のISO/IEC 14882:1998編集
 
-The following are a set of changes to ISO/IEC 14882:1998 (aka C++98)
-that document the exact semantics of the language extension.
+以下は、言語拡張の正確なセマンティクスを文書化したISO/IEC 14882：1998（別名C++98）に対する一連の変更である。
 
 @itemize @bullet
 @item
 @b{[intro.execution]}
 
-New text after paragraph 4
+段落4のあとに新しいテキスト
 
 @quotation
-A @dfn{thread} is a flow of control within the abstract machine.
-It is implementation defined whether or not there may be more than
-one thread.
+@dfn{thread}は、抽象マシン内の制御の流れである。 複数のスレッドが存在するかどうかは、実装定義である。
 @end quotation
 
-New text after paragraph 7
+段落7のあとに新しいテキスト
 
 @quotation
-It is unspecified whether additional action must be taken to
-ensure when and whether side effects are visible to other threads.
+副作用が他のスレッドから見えるかどうかを確認するために追加の処置を取らなければならないかどうかは未指定である。
 @end quotation
 
 @item
 @b{[lex.key]}
 
-Add @code{__thread}.
+@code{__thread}を追加。
 
 @item
 @b{[basic.start.main]}
 
-Add after paragraph 5
+段落5のあとに加える
 
 @quotation
-The thread that begins execution at the @code{main} function is called
-the @dfn{main thread}.  It is implementation defined how functions
-beginning threads other than the main thread are designated or typed.
-A function so designated, as well as the @code{main} function, is called
-a @dfn{thread startup function}.  It is implementation defined what
-happens if a thread startup function returns.  It is implementation
-defined what happens to other threads when any thread calls @code{exit}.
+@code{main}関数で実行を開始するスレッドは@dfn{main thread}と呼ばれる。 メインスレッド以外のスレッドを開始する関数がどのように指定され、どのように型指定されているかは実装定義である。このように指定された関数と@code{main}関数は@dfn{thread startup function}と呼ばれる。 スレッドの起動関数が返ってきたら何が起こるかは、実装定義である。 スレッドが@code{exit}を呼び出すときに、他のスレッドに何が起こるかは実装定義である。
 @end quotation
 
 @item
 @b{[basic.start.init]}
 
-Add after paragraph 4
+段落4のあとに加える
 
 @quotation
-The storage for an object of thread storage duration shall be
-statically initialized before the first statement of the thread startup
-function.  An object of thread storage duration shall not require
-dynamic initialization.
+スレッド記憶期間のオブジェクトの記憶域は、スレッド起動関数の最初の文の前に静的に初期化されなければならない。 スレッド記憶期間のオブジェクトは、動的初期化を必要とてはならない。
 @end quotation
 
 @item
 @b{[basic.start.term]}
 
-Add after paragraph 3
+段落3のあとに加える
 
 @quotation
-The type of an object with thread storage duration shall not have a
-non-trivial destructor, nor shall it be an array type whose elements
-(directly or indirectly) have non-trivial destructors.
+スレッド記憶期間を持つオブジェクトの型は、自明でないデストラクタを持ってはならず、（直接的または間接的に）要素が非自明のデストラクタを持つ配列型でもいけない。
 @end quotation
 
 @item
 @b{[basic.stc]}
 
-Add ``thread storage duration'' to the list in paragraph 1.
+段落1のリストに「スレッド保存期間」を追加する。
 
-Change paragraph 2
+段落２を変更する
 
 @quotation
-Thread, static, and automatic storage durations are associated with
-objects introduced by declarations [@dots{}].
+スレッド、静的および自動ストレージの持続時間は、宣言[@dots {}]によって導入されたオブジェクトに関連付けられる。
 @end quotation
 
-Add @code{__thread} to the list of specifiers in paragraph 3.
+段落3の指定子のリストに@code{__thread}を追加する。
 
 @item
 @b{[basic.stc.thread]}
 
-New section before @b{[basic.stc.static]}
+@b{[basic.stc.static]}の前に新しい節
 
 @quotation
-The keyword @code{__thread} applied to a non-local object gives the
-object thread storage duration.
+非ローカルオブジェクトに適用されるキーワード@code{__thread}は、オブジェクトスレッドの格納期間を与える。
 
-A local variable or class data member declared both @code{static}
-and @code{__thread} gives the variable or member thread storage
-duration.
+@code{static}と@code{__thread}の両方で宣言されたローカル変数またはクラスデータメンバは、変数またはメンバスレッドの格納期間を与える。
 @end quotation
 
 @item
 @b{[basic.stc.static]}
 
-Change paragraph 1
+段落１を変更
 
 @quotation
-All objects that have neither thread storage duration, dynamic
-storage duration nor are local [@dots{}].
+スレッド記憶期間も動的記憶期間もローカルな[@dots {}]も持たないすべてのオブジェクト。
 @end quotation
 
 @item
 @b{[dcl.stc]}
 
-Add @code{__thread} to the list in paragraph 1.
+段落1のリストに@code{__thread}を追加。
 
-Change paragraph 1
+段落１を変更
 
 @quotation
-With the exception of @code{__thread}, at most one
-@var{storage-class-specifier} shall appear in a given
-@var{decl-specifier-seq}.  The @code{__thread} specifier may
-be used alone, or immediately following the @code{extern} or
-@code{static} specifiers.  [@dots{}]
+@code{__thread}を除いて、多くの1つの@var{storage-class-specifier}は与えられた@var{decl-specifier-seq}に現れる。@code{__thread}指定子は単独で使うことも、@code{extern}や@code{static}指定子の直後に使うこともできる。 [@dots {}]
 @end quotation
 
-Add after paragraph 5
+段落５のあとに追加
 
 @quotation
-The @code{__thread} specifier can be applied only to the names of objects
-and to anonymous unions.
+@code{__thread}指定子は、オブジェクトの名前と匿名の共用体にのみ適用できる。
 @end quotation
 
 @item
 @b{[class.mem]}
 
-Add after paragraph 6
+段落６のあとに追加
 
 @quotation
-Non-@code{static} members shall not be @code{__thread}.
+非@code{static}メンバーは@code{__thread}であってはいけない。
 @end quotation
 @end itemize
 
