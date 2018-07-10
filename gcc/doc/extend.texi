@@ -17551,15 +17551,12 @@ C++では、スレッドローカル変数に初期化子が存在する場合�
 @end itemize
 
 @node Binary constants
-@section Binary Constants using the @samp{0b} Prefix
+@section @samp{0b}接頭辞を使った２進定数
 @cindex Binary constants using the @samp{0b} prefix
 
-Integer constants can be written as binary constants, consisting of a
-sequence of @samp{0} and @samp{1} digits, prefixed by @samp{0b} or
-@samp{0B}.  This is particularly useful in environments that operate a
-lot on the bit level (like microcontrollers).
+整数定数は、@samp{0b}と@samp{0B}の接頭辞を持つ@samp{0}と@samp {1}桁のシーケンスからなるバイナリ定数として記述できる。 これは、ビットレベルで多く動作する（マイクロコントローラのような）環境で特に便利である。
 
-The following statements are identical:
+以下の文は同一である。
 
 @smallexample
 i =       42;
@@ -17568,9 +17565,7 @@ i =      052;
 i = 0b101010;
 @end smallexample
 
-The type of these constants follows the same rules as for octal or
-hexadecimal integer constants, so suffixes like @samp{L} or @samp{UL}
-can be applied.
+これらの定数の型は、8進または16進整数定数と同じ規則に従うので、@samp{L}や@samp{UL}のような接尾辞を適用できる。
 
 @node C++ Extensions
 @chapter Extensions to the C++ Language
