@@ -17568,85 +17568,49 @@ i = 0b101010;
 これらの定数の型は、8進または16進整数定数と同じ規則に従うので、@samp{L}や@samp{UL}のような接尾辞を適用できる。
 
 @node C++ Extensions
-@chapter Extensions to the C++ Language
+@chapter C++言語への拡張
 @cindex extensions, C++ language
 @cindex C++ language extensions
 
-The GNU compiler provides these extensions to the C++ language (and you
-can also use most of the C language extensions in your C++ programs).  If you
-want to write code that checks whether these features are available, you can
-test for the GNU compiler the same way as for C programs: check for a
-predefined macro @code{__GNUC__}.  You can also use @code{__GNUG__} to
-test specifically for GNU C++ (@pxref{Common Predefined Macros,,
-Predefined Macros,cpp,The GNU C Preprocessor}).
+GNUコンパイラは、これらの拡張機能をC++言語に提供している（C++プログラムではほとんどのC言語拡張も使用できる）。これらの機能が利用可能かどうかをチェックするコードを書く場合は、Cプログラムと同じ方法でGNUコンパイラをテストすることができる。定義済みのマクロ@code{__GNUC__}を確認せよ。 @code{__GNUG__}を使ってGNU C ++をテストすることもできる。
+ (@pxref{Common Predefined Macros,,定義済みマクロ,cpp,The GNU C Preprocessor}).
 
 @menu
-* C++ Volatiles::       What constitutes an access to a volatile object.
-* Restricted Pointers:: C99 restricted pointers and references.
-* Vague Linkage::       Where G++ puts inlines, vtables and such.
-* C++ Interface::       You can use a single C++ header file for both
-                        declarations and definitions.
-* Template Instantiation:: Methods for ensuring that exactly one copy of
-                        each needed template instantiation is emitted.
-* Bound member functions:: You can extract a function pointer to the
-                        method denoted by a @samp{->*} or @samp{.*} expression.
-* C++ Attributes::      Variable, function, and type attributes for C++ only.
-* Function Multiversioning::   Declaring multiple function versions.
-* Type Traits::         Compiler support for type traits.
-* C++ Concepts::        Improved support for generic programming.
-* Deprecated Features:: Things will disappear from G++.
-* Backwards Compatibility:: Compatibilities with earlier definitions of C++.
+* C++ Volatiles::       volatileオブジェクトへのアクセスを構成するもの
+* Restricted Pointers:: C99制限付きポインタと参照
+* Vague Linkage::       G++がインライン、vtableなどを置く場所
+* C++ Interface::       宣言と定義の両方用に単一のC++ヘッダファイルを使うことができる
+* Template Instantiation:: 必要なテンプレートインスタンス化の正確に1つのコピーが確実に出力されるようにする方法
+* Bound member functions:: @samp{->*}及び@samp{.*}式に表現されるメソッドへの関数ポインタを抽出することができる。
+* C++ Attributes::      C++専用の変数、関数、型属性
+* Function Multiversioning::   複数の関数バージョンの宣言
+* Type Traits::         型特性用のコンパイラのサポート
+* C++ Concepts::        汎用プログラムの向上されたサポート
+* Deprecated Features:: G++から消えるもの
+* Backwards Compatibility:: C++の初期の定義との互換性
 @end menu
 
 @node C++ Volatiles
-@section When is a Volatile C++ Object Accessed?
+@section Volatile C++オブジェクトにいつアクセスするか
 @cindex accessing volatiles
 @cindex volatile read
 @cindex volatile write
 @cindex volatile access
 
-The C++ standard differs from the C standard in its treatment of
-volatile objects.  It fails to specify what constitutes a volatile
-access, except to say that C++ should behave in a similar manner to C
-with respect to volatiles, where possible.  However, the different
-lvalueness of expressions between C and C++ complicate the behavior.
-G++ behaves the same as GCC for volatile access, @xref{C
-Extensions,,Volatiles}, for a description of GCC's behavior.
+C++標準は、volatileオブジェクトの処理におけるC標準とは異なる。 C++は、volatileオブジェクトに関して可能であればCと同様の振る舞いをするべきであるということを除いて、volatile性のアクセスを構成するものを特定することはできない。 しかし、CとC++の間の表現の価値が異なることは、その動作を複雑にする。 G++の動作の説明については、G++はvolatileアクセスの場合はGCCと同じように動作し、@xref{C Extensions、Volatiles}と同じ動作をする。
 
-The C and C++ language specifications differ when an object is
-accessed in a void context:
+C言語とC++の言語仕様は、オブジェクトがvoidコンテキストでアクセスされるときに異なる。
 
 @smallexample
 volatile int *src = @var{somevalue};
 *src;
 @end smallexample
 
-The C++ standard specifies that such expressions do not undergo lvalue
-to rvalue conversion, and that the type of the dereferenced object may
-be incomplete.  The C++ standard does not specify explicitly that it
-is lvalue to rvalue conversion that is responsible for causing an
-access.  There is reason to believe that it is, because otherwise
-certain simple expressions become undefined.  However, because it
-would surprise most programmers, G++ treats dereferencing a pointer to
-volatile object of complete type as GCC would do for an equivalent
-type in C@.  When the object has incomplete type, G++ issues a
-warning; if you wish to force an error, you must force a conversion to
-rvalue with, for instance, a static cast.
+C++標準では、このような式は左辺値変換を行わず、逆参照されたオブジェクトの型が不完全である可能性があることを指定している。 C++標準では、アクセスを引き起こす原因となる左辺から右辺への変換であることを明示的に指定していない。 そうでなければ特定の単純な式が未定義になるので、そうであると信じる理由がある。 しかし、ほとんどのプログラマを驚かせるため、G++は、GCCがCの同等の型に対して行うように完全な型のvolatileオブジェクトへのポインタの逆参照を扱う。オブジェクトに型が不完全な場合、G++は警告を出す。 エラーを強制したい場合は、たとえば静的キャストなどでrvalueに変換する必要がある。
 
-When using a reference to volatile, G++ does not treat equivalent
-expressions as accesses to volatiles, but instead issues a warning that
-no volatile is accessed.  The rationale for this is that otherwise it
-becomes difficult to determine where volatile access occur, and not
-possible to ignore the return value from functions returning volatile
-references.  Again, if you wish to force a read, cast the reference to
-an rvalue.
+volatileへの参照を使用する場合、G++は同等の式をvolatileオブジェクトへのアクセスとして扱わないが、代わりにvolatileにアクセスしないという警告を発行する。 これは、volatileアクセスが発生する場所を特定することが難しくなり、volatile性の参照を返す関数からの戻り値を無視できなくなるという根拠がある。再び、強制的に読み込みたい場合は、参照を右辺値にキャストする。
 
-G++ implements the same behavior as GCC does when assigning to a
-volatile object---there is no reread of the assigned-to object, the
-assigned rvalue is reused.  Note that in C++ assignment expressions
-are lvalues, and if used as an lvalue, the volatile object is
-referred to.  For instance, @var{vref} refers to @var{vobj}, as
-expected, in the following example:
+G++は、volatileオブジェクトに代入するときにGCCと同じ動作を実装する。割り当てられたオブジェクトの再読み込みがない場合、代入されたrvalueが再利用される。 C++の代入式ではlvaluesが使用され、lvalueとして使用される場合はvolatileオブジェクトが参照されることに注意せよ。 たとえば、次の例では、@var{vref}は@var{vobj}を参照している。
 
 @smallexample
 volatile int vobj;
@@ -17654,19 +17618,14 @@ volatile int &vref = vobj = @var{something};
 @end smallexample
 
 @node Restricted Pointers
-@section Restricting Pointer Aliasing
+@section 制限ポインタエイリアス
 @cindex restricted pointers
 @cindex restricted references
 @cindex restricted this pointer
 
-As with the C front end, G++ understands the C99 feature of restricted pointers,
-specified with the @code{__restrict__}, or @code{__restrict} type
-qualifier.  Because you cannot compile C++ by specifying the @option{-std=c99}
-language flag, @code{restrict} is not a keyword in C++.
+Cフロントエンドと同様に、G++は@code{__restrict__}や@code {__restrict}型の修飾子で指定された、制限付きポインタのC99機能を理解している。 @option{-std=c99}言語フラグを指定してC++をコンパイルできないため、@code{restrict}はC++のキーワードではない。
 
-In addition to allowing restricted pointers, you can specify restricted
-references, which indicate that the reference is not aliased in the local
-context.
+制限付きポインターを許可するだけでなく、参照がローカル・コンテキストで別名指定されていないことを示す制限付き参照を指定することもできる。
 
 @smallexample
 void fn (int *__restrict__ rptr, int &__restrict__ rref)
@@ -17676,11 +17635,9 @@ void fn (int *__restrict__ rptr, int &__restrict__ rref)
 @end smallexample
 
 @noindent
-In the body of @code{fn}, @var{rptr} points to an unaliased integer and
-@var{rref} refers to a (different) unaliased integer.
+@code{fn}の本体では、@var{rptr}は別名なしの整数を指し、@var{rref}は（別の）別名なしの整数を指す。
 
-You may also specify whether a member function's @var{this} pointer is
-unaliased by using @code{__restrict__} as a member function qualifier.
+また、メンバ関数の修飾子として@code{__restrict__}を使うことで、メンバ関数の@var{this}ポインタの非別名化を指定することもできる。
 
 @smallexample
 void T::fn () __restrict__
@@ -17690,185 +17647,90 @@ void T::fn () __restrict__
 @end smallexample
 
 @noindent
-Within the body of @code{T::fn}, @var{this} has the effective
-definition @code{T *__restrict__ const this}.  Notice that the
-interpretation of a @code{__restrict__} member function qualifier is
-different to that of @code{const} or @code{volatile} qualifier, in that it
-is applied to the pointer rather than the object.  This is consistent with
-other compilers that implement restricted pointers.
+@code{T::fn}の本体の中で、@var{this}はj事実上@code{T *__restrict__ const this}の定義を持っている。 @code{__restrict__}メンバ関数の修飾子は、オブジェクトではなくポインタに適用されるという点で、@code{const}または@code{volatile}修飾子の解釈とは異なることに注意せよ。 これは、制限されたポインタを実装する他のコンパイラと一貫している。
 
-As with all outermost parameter qualifiers, @code{__restrict__} is
-ignored in function definition matching.  This means you only need to
-specify @code{__restrict__} in a function definition, rather than
-in a function prototype as well.
+一番外側のすべてのパラメータ修飾子と同様に、@code{__restrict__}は関数定義のマッチングでは無視される。 つまり、関数プロトタイプではなく、関数定義でのみ@code{__restrict__}を指定する必要がある。
 
 @node Vague Linkage
-@section Vague Linkage
+@section 曖昧なリンケージ
 @cindex vague linkage
 
-There are several constructs in C++ that require space in the object
-file but are not clearly tied to a single translation unit.  We say that
-these constructs have ``vague linkage''.  Typically such constructs are
-emitted wherever they are needed, though sometimes we can be more
-clever.
+C++には、オブジェクトファイルにスペースが必要であるが、単一の翻訳単位に明確に結びついていない構造がいくつかある。 我々は、これらの構築物には「曖昧なリンケージ」があると言う。 典型的には、そのような構築物は必要な場所に放出されるが、時にはもっと賢いこともある。
 
 @table @asis
-@item Inline Functions
-Inline functions are typically defined in a header file which can be
-included in many different compilations.  Hopefully they can usually be
-inlined, but sometimes an out-of-line copy is necessary, if the address
-of the function is taken or if inlining fails.  In general, we emit an
-out-of-line copy in all translation units where one is needed.  As an
-exception, we only emit inline virtual functions with the vtable, since
-it always requires a copy.
+@item インライン関数
+インライン関数は、通常、さまざまなコンパイルに含めることができるヘッダーファイルで定義される。うまくいけば、通常はインライン化できるが、関数のアドレスが取られたり、インライン化が失敗したりすると、アウトラインコピーが必要になることがある。 一般的に、我々は、必要とされるすべての翻訳単位でアウトオブラインコピーを発行する。 例外として、常にコピーが必要なため、vtableでインライン仮想関数のみを発行する。
 
-Local static variables and string constants used in an inline function
-are also considered to have vague linkage, since they must be shared
-between all inlined and out-of-line instances of the function.
+インライン関数で使用されるローカルの静的変数と文字列定数は、関数のインライン化されたインスタンスとライン外のインスタンスの間で共有される必要があるため、曖昧なリンケージとみなされる。
 
 @item VTables
 @cindex vtable
-C++ virtual functions are implemented in most compilers using a lookup
-table, known as a vtable.  The vtable contains pointers to the virtual
-functions provided by a class, and each object of the class contains a
-pointer to its vtable (or vtables, in some multiple-inheritance
-situations).  If the class declares any non-inline, non-pure virtual
-functions, the first one is chosen as the ``key method'' for the class,
-and the vtable is only emitted in the translation unit where the key
-method is defined.
+C++の仮想関数は、vtableと呼ばれるルックアップテーブルを使用して、ほとんどのコンパイラで実装されている。 vtableにはクラスによって提供される仮想関数へのポインタが含まれ、クラスの各オブジェクトにはvtable（または複数の継承状況ではvtables）へのポインタが含まれる。 クラスが非インラインで非純粋な仮想関数を宣言している場合、最初のクラスはクラスの「キーメソッド」として選択され、vtableはキーメソッドが定義されている変換単位でのみ生成される。
 
-@emph{Note:} If the chosen key method is later defined as inline, the
-vtable is still emitted in every translation unit that defines it.
-Make sure that any inline virtuals are declared inline in the class
-body, even if they are not defined there.
+@emph{注意:} 選択されたキーメソッドが後でインラインとして定義された場合、vtableはそれを定義するすべてのトランスレーションユニットで引き続き発行される。 インライン仮想クラスが定義されていなくても、インライン仮想クラスがクラス本体内でインラインで宣言されていることを確認せよ。
 
-@item @code{type_info} objects
+@item @code{type_info} オブジェクト
 @cindex @code{type_info}
 @cindex RTTI
-C++ requires information about types to be written out in order to
-implement @samp{dynamic_cast}, @samp{typeid} and exception handling.
-For polymorphic classes (classes with virtual functions), the @samp{type_info}
-object is written out along with the vtable so that @samp{dynamic_cast}
-can determine the dynamic type of a class object at run time.  For all
-other types, we write out the @samp{type_info} object when it is used: when
-applying @samp{typeid} to an expression, throwing an object, or
-referring to a type in a catch clause or exception specification.
+C ++では、@samp{dynamic_cast}、@samp{typeid}、例外処理を実装するために書き出される型に関する情報が必要である。多相クラス（仮想関数を持つクラス）では、実行時に@samp{dynamic_cast}がクラスオブジェクトの動的型を判別できるように、@samp{type_info}オブジェクトがvtableとともに書き出される。 他のすべての型については、式の@samp{typeid}を適用するとき、オブジェクトを投げるとき、またはcatch節または例外指定の型を参照するときに@samp{type_info}オブジェクトを使用するときに、そのオブジェクトを書き出す。
 
-@item Template Instantiations
-Most everything in this section also applies to template instantiations,
-but there are other options as well.
+@item テンプレート実体化
+このセクションのほとんどは、テンプレートのインスタンス化にも適用されるが、その他のオプションもある。
 @xref{Template Instantiation,,Where's the Template?}.
 
 @end table
 
-When used with GNU ld version 2.8 or later on an ELF system such as
-GNU/Linux or Solaris 2, or on Microsoft Windows, duplicate copies of
-these constructs will be discarded at link time.  This is known as
-COMDAT support.
+GNU/LinuxやSolaris 2などのELFシステムまたはMicrosoft WindowsでGNU ld version 2.8以降を使用すると、リンク時にこれらの構成要素の複製が破棄される。 これはCOMDATサポートと呼ばれる。
 
-On targets that don't support COMDAT, but do support weak symbols, GCC
-uses them.  This way one copy overrides all the others, but
-the unused copies still take up space in the executable.
+COMDATをサポートしていないが弱いシンボルをサポートするターゲットでは、GCCがそれらを使用する。 この方法では、1つのコピーは他のすべてのものを上書きするが、未使用のコピーは実行可能ファイル内の領域を占有する。
 
-For targets that do not support either COMDAT or weak symbols,
-most entities with vague linkage are emitted as local symbols to
-avoid duplicate definition errors from the linker.  This does not happen
-for local statics in inlines, however, as having multiple copies
-almost certainly breaks things.
+COMDATまたは弱いシンボルをサポートしないターゲットの場合、曖昧なリンケージを持つほとんどのエンティティは、リンカからの重複した定義エラーを避けるために、ローカルシンボルとして発行される。 しかし、複数のコピーを持つことは事実上ほぼ確実に壊れるので、インラインのローカル静的変数ではこれは起こらない。
 
-@xref{C++ Interface,,Declarations and Definitions in One Header}, for
-another way to control placement of these constructs.
+これらの構造の配置を制御する別の方法は@xref{C++ Interface,,Declarations and Definitions in One Header}
 
 @node C++ Interface
-@section C++ Interface and Implementation Pragmas
+@section C++インターフェースと実装のプラグマ
 
 @cindex interface and implementation headers, C++
 @cindex C++ interface and implementation headers
 @cindex pragmas, interface and implementation
 
-@code{#pragma interface} and @code{#pragma implementation} provide the
-user with a way of explicitly directing the compiler to emit entities
-with vague linkage (and debugging information) in a particular
-translation unit.
+@code{#pragma interface}と@code{#pragma implementation}は、特定の翻訳単位で曖昧なリンケージ（およびデバッグ情報）を持つエンティティを明示的に出力する方法をユーザに提供する。
 
-@emph{Note:} These @code{#pragma}s have been superceded as of GCC 2.7.2
-by COMDAT support and the ``key method'' heuristic
-mentioned in @ref{Vague Linkage}.  Using them can actually cause your
-program to grow due to unnecessary out-of-line copies of inline
-functions.
+@emph{注意:} これらの@code{#pragma}はCOMDATサポートと@ref{Vague Linkage}で触れた「キーメソッド」'のヒューリスティックによってGCC 2.7.2の時点で置き換えられた。 それらを使用すると、インライン関数の不要な行外コピーによってプログラムが実際に大きくなる可能性がある。
 
 @table @code
 @item #pragma interface
 @itemx #pragma interface "@var{subdir}/@var{objects}.h"
 @kindex #pragma interface
-Use this directive in @emph{header files} that define object classes, to save
-space in most of the object files that use those classes.  Normally,
-local copies of certain information (backup copies of inline member
-functions, debugging information, and the internal tables that implement
-virtual functions) must be kept in each object file that includes class
-definitions.  You can use this pragma to avoid such duplication.  When a
-header file containing @samp{#pragma interface} is included in a
-compilation, this auxiliary information is not generated (unless
-the main input source file itself uses @samp{#pragma implementation}).
-Instead, the object files contain references to be resolved at link
-time.
+これらのクラスを使用するほとんどのオブジェクトファイルの領域を節約するために、オブジェクトクラスを定義する@emph{ヘッダファイル}にこのディレクティブを使用する。 通常、クラス定義を含む各オブジェクトファイルには、特定の情報のローカルコピー（インラインメンバ関数のバックアップコピー、デバッグ情報、および仮想関数を実装する内部テーブル）を保持する必要がある。 このプラグマを使用すると、そのような重複を避けることができる。 @samp{#pragma interface}を含むヘッダファイルがコンパイルに含まれている場合、この補助情報は生成されない（メイン入力ファイル自体が@samp{#pragma implementation}を使用しない限り）。 代わりに、オブジェクトファイルにはリンク時に解決される参照が含まれている。
 
-The second form of this directive is useful for the case where you have
-multiple headers with the same name in different directories.  If you
-use this form, you must specify the same string to @samp{#pragma
-implementation}.
+このディレクティブの2番目の形式は、異なるディレクトリに同じ名前のヘッダーが複数ある場合に便利である。 この形式を使用する場合は、同じ文字列を@samp{#pragma implementation}に指定する必要がある。
 
 @item #pragma implementation
 @itemx #pragma implementation "@var{objects}.h"
 @kindex #pragma implementation
-Use this pragma in a @emph{main input file}, when you want full output from
-included header files to be generated (and made globally visible).  The
-included header file, in turn, should use @samp{#pragma interface}.
-Backup copies of inline member functions, debugging information, and the
-internal tables used to implement virtual functions are all generated in
-implementation files.
+インクルードされたヘッダファイルから完全な出力を生成したい場合（グローバルに表示する場合）、このプラグマを@emph{メイン入力ファイル}で使用する。 インクルードされたヘッダーファイルは、@samp{#pragma interface}を使用する必要がある。インラインメンバー関数、デバッグ情報、および仮想関数の実装に使用される内部テーブルのバックアップコピーは、すべてインプリメンテーションファイルで生成される。
 
 @cindex implied @code{#pragma implementation}
 @cindex @code{#pragma implementation}, implied
 @cindex naming convention, implementation headers
-If you use @samp{#pragma implementation} with no argument, it applies to
-an include file with the same basename@footnote{A file's @dfn{basename}
-is the name stripped of all leading path information and of trailing
-suffixes, such as @samp{.h} or @samp{.C} or @samp{.cc}.} as your source
-file.  For example, in @file{allclass.cc}, giving just
-@samp{#pragma implementation}
-by itself is equivalent to @samp{#pragma implementation "allclass.h"}.
+引数を指定せずに@samp{#pragma implementation}を使用すると、ソースファイルと同じベース名@footnote{ファイルの@dfn{basename}は、@samp {.h}や@samp {.C}や@samp {.cc}のような先頭のパス情報と末尾の接尾辞のすべてを取り除いた名前である。}を持つインクルードファイルに適用される。 たとえば、@file{allclass.cc}では、@samp{#pragma implementation}だけを与えることは@samp{#pragma implementation "allclass.h"}と同じである。
 
-Use the string argument if you want a single implementation file to
-include code from multiple header files.  (You must also use
-@samp{#include} to include the header file; @samp{#pragma
-implementation} only specifies how to use the file---it doesn't actually
-include it.)
+単一のインプリメンテーションファイルに複数のヘッダーファイルのコードを含める場合は、文字列引数を使用する。（ヘッダファイルをインクルードするには@samp{#include}も使う必要がある。@samp{#pragma implementation}はファイルの使い方だけを指定する---実際にはインクルードしない）。
 
-There is no way to split up the contents of a single header file into
-multiple implementation files.
+1つのヘッダーファイルの内容を複数の実装ファイルに分割する方法はない。
 @end table
 
 @cindex inlining and C++ pragmas
 @cindex C++ pragmas, effect on inlining
 @cindex pragmas in C++, effect on inlining
-@samp{#pragma implementation} and @samp{#pragma interface} also have an
-effect on function inlining.
+@samp{#pragma implementation}と@samp{#pragma interface}は関数のインライン展開にも影響する。
 
-If you define a class in a header file marked with @samp{#pragma
-interface}, the effect on an inline function defined in that class is
-similar to an explicit @code{extern} declaration---the compiler emits
-no code at all to define an independent version of the function.  Its
-definition is used only for inlining with its callers.
+@samp{#pragma interface}でマークされたヘッダファイルにクラスを定義すると、そのクラスで定義されているインライン関数の効果は、明示的な@code{extern}宣言に似ている---コンパイラは関数の独立バージョンを定義するためのコードをまったく発行しない。 その定義は呼び出し元とのインライン化にのみ使用される。
 
 @opindex fno-implement-inlines
-Conversely, when you include the same header file in a main source file
-that declares it as @samp{#pragma implementation}, the compiler emits
-code for the function itself; this defines a version of the function
-that can be found via pointers (or by callers compiled without
-inlining).  If all calls to the function can be inlined, you can avoid
-emitting the function by compiling with @option{-fno-implement-inlines}.
-If any calls are not inlined, you will get linker errors.
+逆に、@samp{#pragma implementation}と宣言しているメインソースファイルに同じヘッダファイルをインクルードすると、コンパイラは関数自体のコードを出力する。 これは、ポインタを介して（またはインライン化せずにコンパイルされた呼び出し元によって）見つけることができる関数のバージョンを定義する。 関数へのすべての呼び出しをインライン化できる場合は、@option{-fno-implement-inlines}をコンパイルして関数を発行しないようにすることができる。 呼び出しがインライン化されていない場合、リンカーエラーが発生する。
 
 @node Template Instantiation
 @section Where's the Template?
