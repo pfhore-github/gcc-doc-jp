@@ -17733,83 +17733,36 @@ COMDATまたは弱いシンボルをサポートしないターゲットの場�
 逆に、@samp{#pragma implementation}と宣言しているメインソースファイルに同じヘッダファイルをインクルードすると、コンパイラは関数自体のコードを出力する。 これは、ポインタを介して（またはインライン化せずにコンパイルされた呼び出し元によって）見つけることができる関数のバージョンを定義する。 関数へのすべての呼び出しをインライン化できる場合は、@option{-fno-implement-inlines}をコンパイルして関数を発行しないようにすることができる。 呼び出しがインライン化されていない場合、リンカーエラーが発生する。
 
 @node Template Instantiation
-@section Where's the Template?
+@section テンプレートはどこ？
 @cindex template instantiation
 
-C++ templates were the first language feature to require more
-intelligence from the environment than was traditionally found on a UNIX
-system.  Somehow the compiler and linker have to make sure that each
-template instance occurs exactly once in the executable if it is needed,
-and not at all otherwise.  There are two basic approaches to this
-problem, which are referred to as the Borland model and the Cfront model.
+C++テンプレートは、UNIXシステムで従来よりも多くのインテリジェンスを必要とする最初の言語機能だった。 どうにかしてコンパイラとリンカは、各テンプレートインスタンスが必要に応じて実行可能ファイル内で正確に1回発生するようにしなければならない。 この問題には、ボーランドモデルとCfrontモデルと呼ばれる2つの基本的なアプローチがある。
 
 @table @asis
-@item Borland model
-Borland C++ solved the template instantiation problem by adding the code
-equivalent of common blocks to their linker; the compiler emits template
-instances in each translation unit that uses them, and the linker
-collapses them together.  The advantage of this model is that the linker
-only has to consider the object files themselves; there is no external
-complexity to worry about.  The disadvantage is that compilation time
-is increased because the template code is being compiled repeatedly.
-Code written for this model tends to include definitions of all
-templates in the header file, since they must be seen to be
-instantiated.
+@item ボーランドモデル
+Borland C++は、リンカに共通ブロックのコードを追加することで、テンプレートのインスタンス化の問題を解決した。 コンパイラはそれらを使用する各翻訳単位でテンプレートインスタンスを発行し、リンカはそれらを一緒に折りたたむ。 このモデルの利点は、リンカがオブジェクトファイル自体を考慮すればよいことである。 心配する外部の複雑さはない。 テンプレートコードが繰り返しコンパイルされているため、コンパイル時間が長くなるという欠点がある。 このモデル用に書かれたコードは、ヘッダファイルにすべてのテンプレートの定義を含める傾向がある。なぜなら、それらはインスタンス化されているときに見える必要があるからである。
 
-@item Cfront model
-The AT&T C++ translator, Cfront, solved the template instantiation
-problem by creating the notion of a template repository, an
-automatically maintained place where template instances are stored.  A
-more modern version of the repository works as follows: As individual
-object files are built, the compiler places any template definitions and
-instantiations encountered in the repository.  At link time, the link
-wrapper adds in the objects in the repository and compiles any needed
-instances that were not previously emitted.  The advantages of this
-model are more optimal compilation speed and the ability to use the
-system linker; to implement the Borland model a compiler vendor also
-needs to replace the linker.  The disadvantages are vastly increased
-complexity, and thus potential for error; for some code this can be
-just as transparent, but in practice it can been very difficult to build
-multiple programs in one directory and one program in multiple
-directories.  Code written for this model tends to separate definitions
-of non-inline member templates into a separate file, which should be
-compiled separately.
+@item Cfrontモデル
+AT＆T C++変換器のCfrontは、テンプレートインスタンスが格納されている場所を自動的に管理するテンプレートリポジトリの概念を作成することによって、テンプレートのインスタンス化の問題を解決した。リポジトリのより現代的なバージョンは、次のように動作する。個々のオブジェクトファイルが構築されると、コンパイラはリポジトリ内で見つかったテンプレート定義とインスタンス化を配置する。リンク時に、リンクラッパーはリポジトリー内のオブジェクトを追加し、以前に発行されなかった必要なインスタンスをコンパイルする。このモデルの利点は、より最適なコンパイル速度と、システムリンカを使用する能力である。 Borlandモデルを実装するには、コンパイラベンダもリンカを交換する必要がある。欠点は、複雑さが大幅に増加し、したがってエラーの可能性も増えることである。いくつかのコードでは、これは透過的になりうるが、実際には1つのディレクトリに複数のプログラムを、複数のディレクトリに1つのプログラムを構築することは非常に困難である。このモデル用に作成されたコードは、非インラインメンバーテンプレートの定義を別々のファイルに分割する傾向があり、別々にコンパイルする必要がある。
 @end table
 
-G++ implements the Borland model on targets where the linker supports it,
-including ELF targets (such as GNU/Linux), Mac OS X and Microsoft Windows.
-Otherwise G++ implements neither automatic model.
+G++は、ELFターゲット（GNU/Linuxなど）、Mac OS X、Microsoft Windowsなど、リンカがサポートするターゲット上でBorlandモデルを実装する。それ以外の場合、G++はどの自動モデルも実装しない。
 
-You have the following options for dealing with template instantiations:
+テンプレートのインスタンス化を処理するためのオプションは次のとおりである。
 
 @enumerate
 @item
-Do nothing.  Code written for the Borland model works fine, but
-each translation unit contains instances of each of the templates it
-uses.  The duplicate instances will be discarded by the linker, but in
-a large program, this can lead to an unacceptable amount of code
-duplication in object files or shared libraries.
+何もしない。 Borlandモデル用に書かれたコードは正常に動作するが、各翻訳単位には使用する各テンプレートのインスタンスが含まれている。 重複したインスタンスはリンカによって破棄されるが、大きなプログラムでは、オブジェクトファイルや共有ライブラリで許容されない量のコードが重複する可能性がある。
 
-Duplicate instances of a template can be avoided by defining an explicit
-instantiation in one object file, and preventing the compiler from doing
-implicit instantiations in any other object files by using an explicit
-instantiation declaration, using the @code{extern template} syntax:
+あるオブジェクトファイルで明示的なインスタンス化宣言を使用して明示的なインスタンスを定義し、@code{extern template}構文を使用してコンパイラが他のオブジェクトファイルで暗黙的なインスタンス化を行わないようにすることで、テンプレートの重複インスタンスを回避できる。
 
 @smallexample
 extern template int max (int, int);
 @end smallexample
 
-This syntax is defined in the C++ 2011 standard, but has been supported by
-G++ and other compilers since well before 2011.
+この構文はC++ 2011標準で定義されているが、2011年以前からG++や他のコンパイラでサポートされている。
 
-Explicit instantiations can be used for the largest or most frequently
-duplicated instances, without having to know exactly which other instances
-are used in the rest of the program.  You can scatter the explicit
-instantiations throughout your program, perhaps putting them in the
-translation units where the instances are used or the translation units
-that define the templates themselves; you can put all of the explicit
-instantiations you need into one big file; or you can create small files
-like
+明示的なインスタンス化は、プログラムの残りの部分で使用されているインスタンスを正確に把握することなく、最大または最も頻繁に複製されるインスタンスに対して使用できる。 明示的なインスタンス化をプログラム全体に分散させることができる。インスタンスを使用する翻訳単位やテンプレート自体を定義する翻訳単位に入れる。 必要な明示的なインスタンス化をすべて1つの大きなファイルに入れることができる。 次のようなファイルを作成することもできる。
 
 @smallexample
 #include "Foo.h"
@@ -17821,64 +17774,27 @@ template ostream& operator <<
 @end smallexample
 
 @noindent
-for each of the instances you need, and create a template instantiation
-library from those.
+必要なインスタンスごとにテンプレートのインスタンス化ライブラリを作成する。
 
-This is the simplest option, but also offers flexibility and
-fine-grained control when necessary. It is also the most portable
-alternative and programs using this approach will work with most modern
-compilers.
+これは最も簡単なオプションだが、必要に応じて柔軟性ときめ細かな制御も提供する。 最も移植性の高い代替方法であり、このアプローチを使用するプログラムは、最新のコンパイラでも動作する。
 
 @item
 @opindex frepo
-Compile your template-using code with @option{-frepo}.  The compiler
-generates files with the extension @samp{.rpo} listing all of the
-template instantiations used in the corresponding object files that
-could be instantiated there; the link wrapper, @samp{collect2},
-then updates the @samp{.rpo} files to tell the compiler where to place
-those instantiations and rebuild any affected object files.  The
-link-time overhead is negligible after the first pass, as the compiler
-continues to place the instantiations in the same files.
+テンプレート使用コードを@option{-frepo}でコンパイルする。 コンパイラは、拡張子@samp{.rpo}を持つファイルを生成して、インスタンス化できる対応するオブジェクトファイルで使用されているすべてのテンプレートインスタンス化をリストする。 リンクラッパー@samp{collect2}は@samp{.rpo}ファイルを更新して、それらのインスタンスをどこに配置し、影響を受けるオブジェクトファイルを再構築するかをコンパイラに指示する。 コンパイラはインスタンス化を同じファイルに配置し続けるため、リンク時のオーバーヘッドは最初のパスの後では無視できる。
 
-This can be a suitable option for application code written for the Borland
-model, as it usually just works.  Code written for the Cfront model 
-needs to be modified so that the template definitions are available at
-one or more points of instantiation; usually this is as simple as adding
-@code{#include <tmethods.cc>} to the end of each template header.
+Borlandモデル用に作成されたアプリケーションコードには、通常は機能するので、これは適切なオプションである。 Cfrontモデル用に記述されたコードは、テンプレート定義がインスタンス化の1つ以上のポイントで利用できるように変更する必要がある。 通常、これは単に各テンプレートヘッダの末尾に@code{#include <tmethods.cc>}を追加するだけである。
 
-For library code, if you want the library to provide all of the template
-instantiations it needs, just try to link all of its object files
-together; the link will fail, but cause the instantiations to be
-generated as a side effect.  Be warned, however, that this may cause
-conflicts if multiple libraries try to provide the same instantiations.
-For greater control, use explicit instantiation as described in the next
-option.
+ライブラリコードでは、必要なテンプレートインスタンシエーションのすべてをライブラリに提供したい場合は、すべてのオブジェクトファイルをリンクしようとすること。 リンクは失敗するが、インスタンス化は副作用として生成される。 ただし、複数のライブラリが同じインスタンシエーションを提供しようとすると、競合が発生する可能性があることに注意せよ。 より高度な制御を行うには、次のオプションで説明する明示的なインスタンス化を使用する。
 
 @item
 @opindex fno-implicit-templates
-Compile your code with @option{-fno-implicit-templates} to disable the
-implicit generation of template instances, and explicitly instantiate
-all the ones you use.  This approach requires more knowledge of exactly
-which instances you need than do the others, but it's less
-mysterious and allows greater control if you want to ensure that only
-the intended instances are used.
+@option{-fno-implicit-templates}を使用してコードをコンパイルして、テンプレートインスタンスの暗黙的な生成を無効にし、使用するインスタンスをすべて明示的にインスタンス化する。 このアプローチでは、他のインスタンスよりも必要なインスタンスを正確に把握する必要があるが、それほど不思議ではなく、意図したインスタンスのみが使用されるようにする場合は、より大きな制御が可能である。
 
-If you are using Cfront-model code, you can probably get away with not
-using @option{-fno-implicit-templates} when compiling files that don't
-@samp{#include} the member template definitions.
+Cfront-modelコードを使用している場合、メンバテンプレート定義を@samp{#include}しないファイルをコンパイルするときに@option{-fno-implicit-templates}を使用しないで済むかもしれない。
 
-If you use one big file to do the instantiations, you may want to
-compile it without @option{-fno-implicit-templates} so you get all of the
-instances required by your explicit instantiations (but not by any
-other files) without having to specify them as well.
+1つの大きなファイルを使用してインスタンス化を行う場合は、@option{-fno-implicit-templates}を指定せずにコンパイルして、（他のファイルによってではなく）明示的なインスタンス化によってそれらを指定する必要なしにインスタンスをすべて取得したいかもしれない。
 
-In addition to forward declaration of explicit instantiations
-(with @code{extern}), G++ has extended the template instantiation
-syntax to support instantiation of the compiler support data for a
-template class (i.e.@: the vtable) without instantiating any of its
-members (with @code{inline}), and instantiation of only the static data
-members of a template class, without the support data or member
-functions (with @code{static}):
+明示的なインスタンス化の前方宣言（@code{extern}）に加えて、G++は、テンプレート・インスタンス化構文を拡張し、(@code{inline}によって）いずれもメンバーのインスタンス化もなしのテンプレートクラスのコンパイラサポートデータ（すなわち、vtable）のインスタンス化、および（@code{static}で）サポートデータまたはメンバー関数なしでの、テンプレートクラスの静的データメンバーのみのインスタンス化をサポートしている。
 
 @smallexample
 inline template class Foo<int>;
@@ -17887,27 +17803,16 @@ static template class Foo<int>;
 @end enumerate
 
 @node Bound member functions
-@section Extracting the Function Pointer from a Bound Pointer to Member Function
+@section メンバ関数への結合ポインタから関数ポインタを取り出す
 @cindex pmf
 @cindex pointer to member function
 @cindex bound pointer to member function
 
-In C++, pointer to member functions (PMFs) are implemented using a wide
-pointer of sorts to handle all the possible call mechanisms; the PMF
-needs to store information about how to adjust the @samp{this} pointer,
-and if the function pointed to is virtual, where to find the vtable, and
-where in the vtable to look for the member function.  If you are using
-PMFs in an inner loop, you should really reconsider that decision.  If
-that is not an option, you can extract the pointer to the function that
-would be called for a given object/PMF pair and call it directly inside
-the inner loop, to save a bit of time.
+C++では、メンバー関数（PMF）へのポインタは、可能なすべての呼び出しメカニズムを処理するための一種のワイドポインタを使用して実装されている。 PMFは@samp{this}ポインタを調整する方法と、指された関数が仮想であれば、vtableを見つける場所と、vtableでメンバー関数を探す場所に関する情報を格納する必要がある。 内部ループでPMFを使用している場合、その決定を本当に再考する必要がある。 これが適切な選択肢でない場合は、指定されたオブジェクト/PMFペアに対して呼び出される関数へのポインタを抽出し、内部ループ内で直接呼び出すことで、少し時間を節約できる。
 
-Note that you still pay the penalty for the call through a
-function pointer; on most modern architectures, such a call defeats the
-branch prediction features of the CPU@.  This is also true of normal
-virtual function calls.
+関数ポインタを使用して呼び出しのペナルティはまだ支払うことに注意せよ。 最近のアーキテクチャでは、このような呼び出しはCPUの分岐予測機能を無効にする。 これは、通常の仮想関数呼び出しにも当てはまる。
 
-The syntax for this extension is
+この拡張機能の構文は次のとおりである。
 
 @smallexample
 extern A a;
@@ -17917,76 +17822,43 @@ typedef int (*fptr)(A *);
 fptr p = (fptr)(a.*fp);
 @end smallexample
 
-For PMF constants (i.e.@: expressions of the form @samp{&Klasse::Member}),
-no object is needed to obtain the address of the function.  They can be
-converted to function pointers directly:
+PMF定数（すなわち、@samp{&Klasse::Member}という形式の式）では、関数のアドレスを取得するためのオブジェクトは必要ない。 関数ポインタに直接変換することができる。
 
 @smallexample
 fptr p1 = (fptr)(&A::foo);
 @end smallexample
 
 @opindex Wno-pmf-conversions
-You must specify @option{-Wno-pmf-conversions} to use this extension.
+この拡張機能を使用するには、@option {-Wno-pmf-conversions}を指定する必要がある。
 
 @node C++ Attributes
-@section C++-Specific Variable, Function, and Type Attributes
+@section C++特有の変数、関数、型属性
 
-Some attributes only make sense for C++ programs.
+一部の属性はC ++プログラムでのみ意味がある。
 
 @table @code
 @item abi_tag ("@var{tag}", ...)
 @cindex @code{abi_tag} function attribute
 @cindex @code{abi_tag} variable attribute
 @cindex @code{abi_tag} type attribute
-The @code{abi_tag} attribute can be applied to a function, variable, or class
-declaration.  It modifies the mangled name of the entity to
-incorporate the tag name, in order to distinguish the function or
-class from an earlier version with a different ABI; perhaps the class
-has changed size, or the function has a different return type that is
-not encoded in the mangled name.
+@code{abi_tag}属性は、関数、変数、またはクラス宣言に適用できる。 これは、機能やクラスを異なるABIを持つ以前のバージョンと区別するために、タグ名を組み込むようにエンティティの変更された名前を変更する。 おそらくクラスのサイズが変更されているか、または関数のマングルされた名前で符号化されない戻り値の型が異なっている。
 
-The attribute can also be applied to an inline namespace, but does not
-affect the mangled name of the namespace; in this case it is only used
-for @option{-Wabi-tag} warnings and automatic tagging of functions and
-variables.  Tagging inline namespaces is generally preferable to
-tagging individual declarations, but the latter is sometimes
-necessary, such as when only certain members of a class need to be
-tagged.
+属性はインラインネームスペースにも適用できるが、ネームスペースのマングルされた名前には影響しない。 この場合、@option{-Wabi-tag}の警告と関数と変数の自動タグ付けにのみ使用される。 インラインネームスペースにタグを付けることは、一般的に個々の宣言にタグを付けるよりも望ましいが、クラスの特定のメンバーだけがタグ付けされる必要がある場合など、後者が時には必要になることがある。
 
-The argument can be a list of strings of arbitrary length.  The
-strings are sorted on output, so the order of the list is
-unimportant.
+引数は、任意の長さの文字列のリストである。 文字列は出力時にソートされるため、リストの順序は重要ではない。
 
-A redeclaration of an entity must not add new ABI tags,
-since doing so would change the mangled name.
+エンティティの再宣言では、新しいABIタグを追加してはいけない。変更すると、マングルされた名前が変更されるからである。
 
-The ABI tags apply to a name, so all instantiations and
-specializations of a template have the same tags.  The attribute will
-be ignored if applied to an explicit specialization or instantiation.
+ABIタグは名前に適用されるため、テンプレートのインスタンス化と特殊化にはすべて同じタグが使用される。 明示的な特殊化またはインスタンス化に適用すると、属性は無視される。
 
-The @option{-Wabi-tag} flag enables a warning about a class which does
-not have all the ABI tags used by its subobjects and virtual functions; for users with code
-that needs to coexist with an earlier ABI, using this option can help
-to find all affected types that need to be tagged.
+@option{-Wabi-tag}フラグは、そのサブオブジェクトと仮想関数によって使用されるすべてのABIタグを持たないクラスについての警告を有効にする。 以前のABIと共存する必要のあるコードを持つユーザーの場合、このオプションを使用すると、タグ付けが必要な影響を受けるすべてのタイプを見つけるのに役立つ。
 
-When a type involving an ABI tag is used as the type of a variable or
-return type of a function where that tag is not already present in the
-signature of the function, the tag is automatically applied to the
-variable or function.  @option{-Wabi-tag} also warns about this
-situation; this warning can be avoided by explicitly tagging the
-variable or function or moving it into a tagged inline namespace.
+ABIタグを含む型が、関数の変数または戻り型の型として使用され、そのタグが関数のシグネチャにまだ存在しない場合、タグは自動的に変数または関数に適用される。 @option{-Wabi-tag}はこのような状況についても警告する。 この警告は、変数または関数に明示的にタグを付けたり、タグ付きのインライン名前空間に移動したりすることで回避できる。
 
 @item init_priority (@var{priority})
 @cindex @code{init_priority} variable attribute
 
-In Standard C++, objects defined at namespace scope are guaranteed to be
-initialized in an order in strict accordance with that of their definitions
-@emph{in a given translation unit}.  No guarantee is made for initializations
-across translation units.  However, GNU C++ allows users to control the
-order of initialization of objects defined at namespace scope with the
-@code{init_priority} attribute by specifying a relative @var{priority},
-a constant integral expression currently bounded between 101 and 65535
-inclusive.  Lower numbers indicate a higher priority.
+標準C++では、名前空間のスコープで定義されたオブジェクトは、@emph{与えられた翻訳単位}の定義に厳密に従った順序で初期化されることが保証されている。 翻訳単位間の初期設定は保証されていない。 しかし、GNU C++では、@code{init_priority}属性で名前空間のスコープで定義されたオブジェクトの初期化の順序を制御することができる。相対的な@var{priority}は現在101〜65535の範囲にある定数式である。 数字が小さいほど優先度が高くなる。
 
 In the following example, @code{A} would normally be created before
 @code{B}, but the @code{init_priority} attribute reverses that order:
@@ -17997,37 +17869,24 @@ Some_Class  B  __attribute__ ((init_priority (543)));
 @end smallexample
 
 @noindent
-Note that the particular values of @var{priority} do not matter; only their
-relative ordering.
+次の例では、通常@code{A}は@code{B}の前に作成されるが、@code{init_priority}属性はその順序を逆にする。
 
 @item warn_unused
 @cindex @code{warn_unused} type attribute
 
-For C++ types with non-trivial constructors and/or destructors it is
-impossible for the compiler to determine whether a variable of this
-type is truly unused if it is not referenced. This type attribute
-informs the compiler that variables of this type should be warned
-about if they appear to be unused, just like variables of fundamental
-types.
+単純でないコンストラクタやデストラクタを持つC++型では、コンパイラはこの型の変数が参照されていない場合にも本当に使用されていないかどうかを判断することはできない。 この型の属性は、基本型の変数と同じように、この型の変数が使用されていないように見えるように警告する必要があることをコンパイラに通知する。
 
-This attribute is appropriate for types which just represent a value,
-such as @code{std::string}; it is not appropriate for types which
-control a resource, such as @code{std::lock_guard}.
+この属性は@code{std::string}のような値を表す型に適している。 @code{std::lock_guard}のように、リソースを制御する型には適切ではない。
 
-This attribute is also accepted in C, but it is unnecessary because C
-does not have constructors or destructors.
+この属性はCでも受け入れられるが、Cにはコンストラクタやデストラクタがないので不要である。
 
 @end table
 
 @node Function Multiversioning
-@section Function Multiversioning
+@section 関数の複数バージョン化
 @cindex function versions
 
-With the GNU C++ front end, for x86 targets, you may specify multiple
-versions of a function, where each function is specialized for a
-specific target feature.  At runtime, the appropriate version of the
-function is automatically executed depending on the characteristics of
-the execution platform.  Here is an example.
+x86ターゲットのGNU C++フロントエンドでは、関数の複数のバージョンを指定できる。各関数は特定のターゲット機能に特化している。 実行時には、適切なバージョンの関数が実行プラットフォームの特性に応じて自動的に実行される。 ここに例がある。
 
 @smallexample
 __attribute__ ((target ("default")))
@@ -18066,16 +17925,7 @@ int main ()
 @}
 @end smallexample
 
-In the above example, four versions of function foo are created. The
-first version of foo with the target attribute "default" is the default
-version.  This version gets executed when no other target specific
-version qualifies for execution on a particular platform. A new version
-of foo is created by using the same function signature but with a
-different target string.  Function foo is called or a pointer to it is
-taken just like a regular function.  GCC takes care of doing the
-dispatching to call the right version at runtime.  Refer to the
-@uref{http://gcc.gnu.org/wiki/FunctionMultiVersioning, GCC wiki on
-Function Multiversioning} for more details.
+上記の例では、関数fooの4つのバージョンが作成されている。 target属性が"default"のfooの最初のバージョンがデフォルトのバージョンである。 このバージョンは、他のターゲット固有のバージョンが特定のプラットフォームで実行する資格がない場合に実行される。 fooの新しいバージョンは、同じ関数シグネチャを使用するが、異なるターゲット文字列を使用して作成される。 関数fooは通常の関数のように呼び出されるか、関数へのポインタが取られる。 GCCはディスパッチを行い、実行時に適切なバージョンを呼び出すようにする。 詳細は@uref{http://gcc.gnu.org/wiki/FunctionMultiVersioning, Function Multiversioningに関するGCC wiki}を参照せよ。
 
 @node Type Traits
 @section Type Traits
