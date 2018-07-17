@@ -17928,282 +17928,157 @@ int main ()
 上記の例では、関数fooの4つのバージョンが作成されている。 target属性が"default"のfooの最初のバージョンがデフォルトのバージョンである。 このバージョンは、他のターゲット固有のバージョンが特定のプラットフォームで実行する資格がない場合に実行される。 fooの新しいバージョンは、同じ関数シグネチャを使用するが、異なるターゲット文字列を使用して作成される。 関数fooは通常の関数のように呼び出されるか、関数へのポインタが取られる。 GCCはディスパッチを行い、実行時に適切なバージョンを呼び出すようにする。 詳細は@uref{http://gcc.gnu.org/wiki/FunctionMultiVersioning, Function Multiversioningに関するGCC wiki}を参照せよ。
 
 @node Type Traits
-@section Type Traits
+@section 型特性
 
-The C++ front end implements syntactic extensions that allow
-compile-time determination of 
-various characteristics of a type (or of a
-pair of types).
+C++フロントエンドは、型（または一対の型）のさまざまな特性のコンパイル時の決定を可能にする構文拡張を実装する。
 
 @table @code
 @item __has_nothrow_assign (type)
-If @code{type} is const qualified or is a reference type then the trait is
-false.  Otherwise if @code{__has_trivial_assign (type)} is true then the trait
-is true, else if @code{type} is a cv class or union type with copy assignment
-operators that are known not to throw an exception then the trait is true,
-else it is false.  Requires: @code{type} shall be a complete type,
-(possibly cv-qualified) @code{void}, or an array of unknown bound.
+@code{type}がconst修飾されているか参照型である場合、その特性は偽である。 そうでない場合、@code{__has_trivial_assign(type)}が真である場合は特性が真であり、そうでない場合は@code{type}が例外をスローしないことがわかっているコピー代入演算子を持つcvクラスまたは共用体型である場合は真であり、 それ以外の場合は偽である。条件：@code{type}は、完全な型、（おそらくCV修飾された）@code{void}、または未知の範囲の配列でなければならない。
 
 @item __has_nothrow_copy (type)
-If @code{__has_trivial_copy (type)} is true then the trait is true, else if
-@code{type} is a cv class or union type with copy constructors that
-are known not to throw an exception then the trait is true, else it is false.
-Requires: @code{type} shall be a complete type, (possibly cv-qualified)
-@code{void}, or an array of unknown bound.
+@code{__has_trivial_copy(type)}が真の場合は特性は真であり、そうでない場合は@code{type}が例外をスローしないことがわかっているコピーコンストラクタを持つcvクラスまたは共用体型であるならば真であり、さもなければ偽である。条件：@code{type}は、完全な型、（おそらくCV修飾された）@code{void}、または未知の範囲の配列でなければならない。
 
 @item __has_nothrow_constructor (type)
-If @code{__has_trivial_constructor (type)} is true then the trait is
-true, else if @code{type} is a cv class or union type (or array
-thereof) with a default constructor that is known not to throw an
-exception then the trait is true, else it is false.  Requires:
-@code{type} shall be a complete type, (possibly cv-qualified)
-@code{void}, or an array of unknown bound.
+@code{__has_trivial_constructor(type)}が真の場合は特性は真であり、そうでない場合は@code {type}が例外をスローしないことがわかっているデフォルトのコンストラクタを持つcvクラスまたは共用体型（またはその配列）の場合、 特性は真であり、そうでなければ偽である。条件：@code{type}は、完全な型、（おそらくCV修飾された）@code{void}、または未知の範囲の配列でなければならない。
 
 @item __has_trivial_assign (type)
-If @code{type} is const qualified or is a reference type then the trait is
-false.  Otherwise if @code{__is_pod (type)} is true then the trait is
-true, else if @code{type} is a cv class or union type with a trivial
-copy assignment ([class.copy]) then the trait is true, else it is
-false.  Requires: @code{type} shall be a complete type, (possibly
-cv-qualified) @code{void}, or an array of unknown bound.
+@code{type}がconst修飾されているか参照型である場合、その特性は偽である。 そうでない場合は@code{__ is_pod(type)}が真であればその特性は真、そうでなければ@code{type}が単純なコピー代入（[class.copy]）を持つcvクラスまたは共用体型であればその特性は真であり、 それ以外の場合は偽である。  条件：@code{type}は、完全な型、（おそらくCV修飾された）@code{void}、または未知の範囲の配列でなければならない。
 
 @item __has_trivial_copy (type)
-If @code{__is_pod (type)} is true or @code{type} is a reference type
-then the trait is true, else if @code{type} is a cv class or union type
-with a trivial copy constructor ([class.copy]) then the trait
-is true, else it is false.  Requires: @code{type} shall be a complete
-type, (possibly cv-qualified) @code{void}, or an array of unknown bound.
+@code{__is_pod(type)}が真であるか、@code{type}が参照型である場合、その特性は真である。そうでない場合は単純なコピーコンストラクタ（[class.copy]）を持つ@code{type}がcvクラスまたは共用体型ならば、その特性は真であり、そうでなければ偽である。 条件：@code{type}は、完全な型、（おそらくCV修飾された）@code{void}、または未知の範囲の配列でなければならない。
 
 @item __has_trivial_constructor (type)
-If @code{__is_pod (type)} is true then the trait is true, else if
-@code{type} is a cv class or union type (or array thereof) with a
-trivial default constructor ([class.ctor]) then the trait is true,
-else it is false.  Requires: @code{type} shall be a complete
-type, (possibly cv-qualified) @code{void}, or an array of unknown bound.
+@code{__is_pod(type)}が真である場合、特性は真であり、そうでない場合、@code{type}が単純なデフォルトのコンストラクタ（[class.ctor]）を持つcvクラスまたは共用体型（またはその配列） であるならば特性は真であり、そうでなければ偽である。条件：@code{type}は、完全な型、（おそらくCV修飾された）@code{void}、または未知の範囲の配列でなければならない。
 
 @item __has_trivial_destructor (type)
-If @code{__is_pod (type)} is true or @code{type} is a reference type then
-the trait is true, else if @code{type} is a cv class or union type (or
-array thereof) with a trivial destructor ([class.dtor]) then the trait
-is true, else it is false.  Requires: @code{type} shall be a complete
-type, (possibly cv-qualified) @code{void}, or an array of unknown bound.
+@code{__is_pod(type)}が真であるか、@code{type}が参照型である場合、その特性は真であり、そうでなければ@code{type}が単純なデストラクタを持つcvクラスまたは共用体型（またはその配列） （[class.dtor]）の場合は真、そうでない場合は偽である。条件：@code{type}は、完全な型、（おそらくCV修飾された）@code{void}、または未知の範囲の配列でなければならない。
 
 @item __has_virtual_destructor (type)
-If @code{type} is a class type with a virtual destructor
-([class.dtor]) then the trait is true, else it is false.  Requires:
-@code{type} shall be a complete type, (possibly cv-qualified)
-@code{void}, or an array of unknown bound.
+@code{type}が仮想デストラクタ（[class.dtor]）を持つクラス型である場合、その特性は真であり、そうでない場合は偽である。条件：@code{type}は、完全な型、（おそらくCV修飾された）@code{void}、または未知の範囲の配列でなければならない。
 
 @item __is_abstract (type)
-If @code{type} is an abstract class ([class.abstract]) then the trait
-is true, else it is false.  Requires: @code{type} shall be a complete
-type, (possibly cv-qualified) @code{void}, or an array of unknown bound.
+@code {type}が抽象クラス（[class.abstract]）の場合、その特性は真である。それ以外の場合は偽である。 条件：@code{type}は、完全な型、（おそらくCV修飾された）@code{void}、または未知の範囲の配列でなければならない。
 
 @item __is_base_of (base_type, derived_type)
-If @code{base_type} is a base class of @code{derived_type}
-([class.derived]) then the trait is true, otherwise it is false.
-Top-level cv qualifications of @code{base_type} and
-@code{derived_type} are ignored.  For the purposes of this trait, a
-class type is considered is own base.  Requires: if @code{__is_class
-(base_type)} and @code{__is_class (derived_type)} are true and
-@code{base_type} and @code{derived_type} are not the same type
-(disregarding cv-qualifiers), @code{derived_type} shall be a complete
-type.  A diagnostic is produced if this requirement is not met.
+@code{base_type}が@code{derived_type}（[class.derived]）の基本クラスである場合、その特性は真である。それ以外の場合は偽である。 @code{base_type}と@code{derived_type}のトップレベルCV資格は無視される。 この特性の目的では、クラス型は自分の基底とみなされる。 条件：@code{__is_class(base_type)}と@code{__is_class(derived_type)}が真で、@code{base_type}と@code{derived_type}が（cv-qualifierを無視して）同じ型ではなく、@code{derived_type}は完全型である。 この要件が満たされない場合、診断が生成される。
 
 @item __is_class (type)
-If @code{type} is a cv class type, and not a union type
-([basic.compound]) the trait is true, else it is false.
+@code {type}がcvクラス型で共用型（[basic.compound]）でない場合、その特性は真である。それ以外の場合は偽である。
 
 @item __is_empty (type)
-If @code{__is_class (type)} is false then the trait is false.
-Otherwise @code{type} is considered empty if and only if: @code{type}
-has no non-static data members, or all non-static data members, if
-any, are bit-fields of length 0, and @code{type} has no virtual
-members, and @code{type} has no virtual base classes, and @code{type}
-has no base classes @code{base_type} for which
-@code{__is_empty (base_type)} is false.  Requires: @code{type} shall
-be a complete type, (possibly cv-qualified) @code{void}, or an array
-of unknown bound.
+@code{__is_class(type)}がfalseの場合、その特性は偽である。それ以外の場合、以下の条件を満たすなら、その場合に限り空とみなされる。@code{type}は非静的データメンバーを持たないか、非静的データメンバーがあればそれは長さ0のビットフィールドであり、@code{type}には仮想メンバーはなく、@code{type}には仮想基本クラスがなく、@code{type}には@code{__ is_empty(base_type)}が偽の基本クラス@code {base_type}がない。 条件：@code{type}は、完全な型、（おそらくCV修飾された）@code{void}、または未知の範囲の配列でなければならない。
 
 @item __is_enum (type)
-If @code{type} is a cv enumeration type ([basic.compound]) the trait is
-true, else it is false.
+@code{type}がcv列挙型（[basic.compound]）の場合、その特性は真であり、そうでない場合は偽である。
 
 @item __is_literal_type (type)
-If @code{type} is a literal type ([basic.types]) the trait is
-true, else it is false.  Requires: @code{type} shall be a complete type,
-(possibly cv-qualified) @code{void}, or an array of unknown bound.
+@code {type}がリテラル型（[basic.types]）の場合、その特性は真であり、そうでない場合は偽である。 条件：@code{type}は、完全な型、（おそらくCV修飾された）@code{void}、または未知の範囲の配列でなければならない。
 
 @item __is_pod (type)
-If @code{type} is a cv POD type ([basic.types]) then the trait is true,
-else it is false.  Requires: @code{type} shall be a complete type,
-(possibly cv-qualified) @code{void}, or an array of unknown bound.
+@code {type}がcv POD型（[basic.types]）の場合、その特性は真であり、そうでない場合は偽である。条件：@code{type}は、完全な型、（おそらくCV修飾された）@code{void}、または未知の範囲の配列でなければならない。
 
 @item __is_polymorphic (type)
-If @code{type} is a polymorphic class ([class.virtual]) then the trait
-is true, else it is false.  Requires: @code{type} shall be a complete
-type, (possibly cv-qualified) @code{void}, or an array of unknown bound.
+@code {type}がポリモーフィッククラス（[class.virtual]）の場合、その特性は真であり、そうでない場合は偽である。条件：@code{type}は、完全な型、（おそらくCV修飾された）@code{void}、または未知の範囲の配列でなければならない。
 
 @item __is_standard_layout (type)
-If @code{type} is a standard-layout type ([basic.types]) the trait is
-true, else it is false.  Requires: @code{type} shall be a complete
-type, (possibly cv-qualified) @code{void}, or an array of unknown bound.
+@code {type}が標準レイアウト型（[basic.types]）の場合、その特性は真であり、そうでない場合は偽である。条件：@code{type}は、完全な型、（おそらくCV修飾された）@code{void}、または未知の範囲の配列でなければならない。
 
 @item __is_trivial (type)
-If @code{type} is a trivial type ([basic.types]) the trait is
-true, else it is false.  Requires: @code{type} shall be a complete
-type, (possibly cv-qualified) @code{void}, or an array of unknown bound.
+@code {type}がトリビアルな型（[basic.types]）である場合、その特性は真であり、そうでない場合は偽である。条件：@code{type}は、完全な型、（おそらくCV修飾された）@code{void}、または未知の範囲の配列でなければならない。
 
 @item __is_union (type)
-If @code{type} is a cv union type ([basic.compound]) the trait is
-true, else it is false.
+@code {type}がcv 共用体型（[basic.compound]）の場合、その特性は真であり、そうでない場合は偽である。
 
 @item __underlying_type (type)
-The underlying type of @code{type}.  Requires: @code{type} shall be
-an enumeration type ([dcl.enum]).
+@code {type}の基になる型。 条件：@code{type}は列挙型（[dcl.enum]）でなければならない。
 
 @item __integer_pack (length)
-When used as the pattern of a pack expansion within a template
-definition, expands to a template argument pack containing integers
-from @code{0} to @code{length-1}.  This is provided for efficient
-implementation of @code{std::make_integer_sequence}.
+テンプレート定義内でパック展開のパターンとして使用された場合、@code{0}から@code {length-1}までの整数を含むテンプレート引数パックに展開される。 これは、@code{std::make_integer_sequence}の効率的な実装のために提供されている。
 
 @end table
 
 
 @node C++ Concepts
-@section C++ Concepts
+@section C++ コンセプト
 
-C++ concepts provide much-improved support for generic programming. In
-particular, they allow the specification of constraints on template arguments.
-The constraints are used to extend the usual overloading and partial
-specialization capabilities of the language, allowing generic data structures
-and algorithms to be ``refined'' based on their properties rather than their
-type names.
+C ++のコンセプトは、ジェネリックプログラミングのサポートを大幅に改善する。 特に、テンプレート引数の制約を指定することができる。制約は、言語の通常のオーバーロードと部分的な特殊化機能を拡張するために使用され、汎用データ構造とアルゴリズムを型名ではなくプロパティに基づいて「洗練された」ものにすることができる。
 
-The following keywords are reserved for concepts.
+次のキーワードは概念のために予約されている。
 
 @table @code
 @item assumes
-States an expression as an assumption, and if possible, verifies that the
-assumption is valid. For example, @code{assume(n > 0)}.
+表現を前提とし、可能であれば、その前提が有効であることを検証する。 たとえば、@code{assume(n > 0)}
 
 @item axiom
-Introduces an axiom definition. Axioms introduce requirements on values.
+公理の定義を導入する。 公理は値に対する要件を導入する。
 
 @item forall
-Introduces a universally quantified object in an axiom. For example,
-@code{forall (int n) n + 0 == n}).
+公理の中で普遍的に定量化されたオブジェクトを導入する。 例えば、@code{forall (int n) n + 0 == n}).
 
 @item concept
-Introduces a concept definition. Concepts are sets of syntactic and semantic
-requirements on types and their values.
+コンセプト定義を紹介します。 コンセプトとは、型とその値に対する構文的および意味的な要件のセットである。
 
 @item requires
-Introduces constraints on template arguments or requirements for a member
-function of a class template.
+クラステンプレートのメンバ関数のテンプレート引数または要件に関する制約を導入する。
 
 @end table
 
-The front end also exposes a number of internal mechanism that can be used
-to simplify the writing of type traits. Note that some of these traits are
-likely to be removed in the future.
+フロントエンドは、タイプ特性の記述を簡素化するために使用できるいくつかの内部メカニズムも公開している。 これらの特性のいくつかは将来的に削除される可能性があることに注意せよ。
 
 @table @code
 @item __is_same (type1, type2)
-A binary type trait: true whenever the type arguments are the same.
+バイナリ型の特性：型引数が同じ場合は常にtrueである。
 
 @end table
 
 
 @node Deprecated Features
-@section Deprecated Features
+@section 廃止予定の機能
 
-In the past, the GNU C++ compiler was extended to experiment with new
-features, at a time when the C++ language was still evolving.  Now that
-the C++ standard is complete, some of those features are superseded by
-superior alternatives.  Using the old features might cause a warning in
-some cases that the feature will be dropped in the future.  In other
-cases, the feature might be gone already.
+過去には、GNU C++コンパイラは、C ++言語がまだ進化していたときに、新しい機能を試すように拡張された。 C ++標準が完成したので、それらの機能のいくつかは優れた選択肢に取って代わられている。 以前の機能を使用すると、将来機能が削除されることがあるという警告が表示されることがある。 それ以外の場合は、この機能が既に終了している可能性がある。
 
-While the list below is not exhaustive, it documents some of the options
-that are now deprecated or have been removed:
+以下の一覧は網羅的なものではないが、廃止予定または削除されているオプションのいくつかを記載している。
 
 @table @code
 
 @item -fno-for-scope
 @itemx -ffriend-injection
-These two options provide compatibility with pre-standard C++.
+これらの2つのオプションは、標準より前のC ++との互換性を提供する。
 @xref{Backwards Compatibility}.
 
 @end table
 
-G++ allows a virtual function returning @samp{void *} to be overridden
-by one returning a different pointer type.  This extension to the
-covariant return type rules is now deprecated and will be removed from a
-future version.
+G ++では、@samp{void *}を返す仮想関数を、異なるポインタ型を返す仮想関数でオーバーライドすることができる。 この共変リターンタイプルールへの拡張は非推奨となり、将来のバージョンから削除される予定である。
 
-The use of default arguments in function pointers, function typedefs
-and other places where they are not permitted by the standard is
-deprecated and will be removed from a future version of G++.
+関数ポインタ、関数型宣言子、および標準で許可されていないその他の場所でのデフォルト引数の使用は廃止され、G++の将来のバージョンから削除される。
 
-G++ allows floating-point literals to appear in integral constant expressions,
-e.g.@: @samp{ enum E @{ e = int(2.2 * 3.7) @} }
-This extension is deprecated and will be removed from a future version.
+G++は、浮動小数点リテラルを整数定数式で表現することを可能にする（例：@samp{ enum E @{ e = int(2.2 * 3.7) @} }）この拡張機能は廃止され、将来のバージョンから削除される。
 
-G++ allows static data members of const floating-point type to be declared
-with an initializer in a class definition. The standard only allows
-initializers for static members of const integral types and const
-enumeration types so this extension has been deprecated and will be removed
-from a future version.
+G ++では、const浮動小数点型の静的データメンバをクラス定義の初期化子で宣言できる。 標準では、const整数型とconst列挙型の静的メンバーの初期化子のみが使用できるようになっているので、この拡張は廃止され、将来のバージョンから削除される。
 
-G++ allows attributes to follow a parenthesized direct initializer,
-e.g.@: @samp{ int f (0) __attribute__ ((something)); } This extension
-has been ignored since G++ 3.3 and is deprecated.
+G ++では、属性が後に続く括弧で囲まれた直接イニシャライザ（@：@samp {int f（0）__attribute__（（something）））を許容する。この拡張は、G++ 3.3以降では無視されていて、廃止予定である。
 
-G++ allows anonymous structs and unions to have members that are not
-public non-static data members (i.e.@: fields).  These extensions are
-deprecated.
+G++では、匿名の構造体および共用体に、非静的なパブリックなデータメンバーではないメンバー（つまり、フィールド）を持たせることができる。 これらの拡張機能は廃止予定である。
 
 @node Backwards Compatibility
-@section Backwards Compatibility
+@section 後方互換性
 @cindex Backwards Compatibility
 @cindex ARM [Annotated C++ Reference Manual]
 
-Now that there is a definitive ISO standard C++, G++ has a specification
-to adhere to.  The C++ language evolved over time, and features that
-used to be acceptable in previous drafts of the standard, such as the ARM
-[Annotated C++ Reference Manual], are no longer accepted.  In order to allow
-compilation of C++ written to such drafts, G++ contains some backwards
-compatibilities.  @emph{All such backwards compatibility features are
-liable to disappear in future versions of G++.} They should be considered
-deprecated.   @xref{Deprecated Features}.
+ISO標準のC++が完成したので、G++には遵守すべき仕様がある。 C++言語は時間の経過とともに進化し、ARM [Annotated C ++ Reference Manual]のような従来の標準のドラフトで受け入れられていた機能はもはや受け入れられない。 このようなドラフトに書かれたC++のコンパイルを可能にするために、G++にはいくつかの後方互換性が含まれている。 @emph{G ++の将来のバージョンでは、そのような後方互換性の機能はすべて消えてしまうだろう。}。これらは廃止予定だとみなされる。@xref{Deprecated Features}.
 
 @table @code
-@item For scope
-If a variable is declared at for scope, it used to remain in scope
-until the end of the scope that contained the for statement (rather
-than just within the for scope).  The deprecated
-@option{-fno-for-scope} option enables this non-standard behavior.
-Without the option, G++ retains this, but issues a warning, if such a
-variable is accessed outside the for scope.
+@item Forスコープ
+変数がforスコープで宣言されている場合、forステートメントを含むスコープの終わり（forスコープ内ではなく）までスコープ内にとどまる。 非推奨の@option {-fno-for-scope}オプションは、この非標準的な動作を有効にします。 オプションがなければ、G++はこれを保持するが、そのような変数がforスコープの外部にアクセスされている場合は警告を出す。
 
-The behavior is deprecated, only available with @option{-std=c++98}
-@option{-std=gnu++98} languages and you must use the
-@option{-fpermissive} option to enable it.  The behavior will be
-removed.
+この動作は廃止され、@option{-std=c++98} @option{-std=gnu++98}言語でのみ利用可能であり、@option{-fpermissive}オプションを使用して有効にする必要がある。 動作は削除されるだろう。
 
-@item Friend Injection
-The @option{-ffriend-injection} option makes injected friends visible
-to regular name lookup, unlike standard C++.  This option is
-deprecated and will be removed.
+@item Friend注入
+@option{-ffriend-injection}オプションは、標準のC++とは異なり、注入されたfriendを通常の名前検索で見えるようにする。 このオプションは廃止され、削除されるだろう。
 
-@item Implicit C language
-Old C system header files did not contain an @code{extern "C" @{@dots{}@}}
-scope to set the language.  On such systems, all header files are
-implicitly scoped inside a C language scope.  Also, an empty prototype
-@code{()} is treated as an unspecified number of arguments, rather
-than no arguments, as C++ demands.
+@item 暗黙のC言語
+古いCシステムのヘッダーファイルには、言語を設定するための@code{extern "C" @{@dots{}@}}スコープが含まれていなかった。 このようなシステムでは、すべてのヘッダーファイルがC言語スコープ内で暗黙的にスコープされる。 また、空のプロトタイプ@code{()}は、C ++が要求するように引数がなくむしろ不特定多数の引数として扱われる。
 @end table
 
 @c  LocalWords:  emph deftypefn builtin ARCv2EM SIMD builtins msimd
