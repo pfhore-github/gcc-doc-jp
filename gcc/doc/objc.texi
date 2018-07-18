@@ -5,11 +5,9 @@
 @node Objective-C
 @comment  node-name,  next,  previous,  up
 
-@chapter GNU Objective-C Features
+@chapter GNU Objective-Cの特徴
 
-This document is meant to describe some of the GNU Objective-C
-features.  It is not intended to teach you Objective-C.  There are
-several resources on the Internet that present the language.
+このドキュメントは、GNU Objective-Cの機能のいくつかを説明するためのものである。 Objective-Cを教えることを意図したものではない。 インターネット上には、その言語を提示するいくつかのリソースがある。
 
 @menu
 * GNU Objective-C runtime API::
@@ -26,22 +24,13 @@ several resources on the Internet that present the language.
 
 @c =========================================================================
 @node GNU Objective-C runtime API
-@section GNU Objective-C Runtime API
+@section GNU Objective-C ランタイム API
 
-This section is specific for the GNU Objective-C runtime.  If you are
-using a different runtime, you can skip it.
+この節は、GNU Objective-Cランタイムに特有のものである。 別のランタイムを使用している場合は、この節をスキップできる。
 
-The GNU Objective-C runtime provides an API that allows you to
-interact with the Objective-C runtime system, querying the live
-runtime structures and even manipulating them.  This allows you for
-example to inspect and navigate classes, methods and protocols; to
-define new classes or new methods, and even to modify existing classes
-or protocols.
+GNU Objective-Cランタイムは、Objective-Cランタイムシステムと対話し、実行時ランタイム構造を照会し、それらを操作することを可能にするAPIを提供する。 これにより、例えば、クラス、メソッド、プロトコルを検査してナビゲートすることができる。 新しいクラスや新しいメソッドを定義し、既存のクラスやプロトコルを変更することさえできる。
 
-If you are using a ``Foundation'' library such as GNUstep-Base, this
-library will provide you with a rich set of functionality to do most
-of the inspection tasks, and you probably will only need direct access
-to the GNU Objective-C runtime API to define new classes or methods.
+GNUstep-Baseのような 「Foundation」'ライブラリを使用している場合、このライブラリは多くの検査タスクを行う豊富な機能を提供する。おそらく、新しいクラスやメソッドを定義するには、GNU Objective-CランタイムAPIに直接アクセスするだけで済む。
 
 @menu
 * Modern GNU Objective-C runtime API::
@@ -50,77 +39,41 @@ to the GNU Objective-C runtime API to define new classes or methods.
 
 @c =========================================================================
 @node Modern GNU Objective-C runtime API
-@subsection Modern GNU Objective-C Runtime API
+@subsection 新しいGNU Objective-CランタイムAPI
 
-The GNU Objective-C runtime provides an API which is similar to the
-one provided by the ``Objective-C 2.0'' Apple/NeXT Objective-C
-runtime.  The API is documented in the public header files of the GNU
-Objective-C runtime:
+GNU Objective-Cランタイムは、「Objective-C 2.0」のApple/NeXT Objective-Cランタイムが提供するAPIに似たAPIを提供する。 APIは、GNU Objective-Cランタイムのパブリックヘッダファイルに記述されている。
 
 @itemize @bullet
 
 @item
-@file{objc/objc.h}: this is the basic Objective-C header file,
-defining the basic Objective-C types such as @code{id}, @code{Class}
-and @code{BOOL}.  You have to include this header to do almost
-anything with Objective-C.
+@file{objc/objc.h}: これは基本的なObjective-Cヘッダファイルで、@code{id}、@code{Class}、@code{BOOL}のような基本的なObjective-Cの型を定義する。 Objective-Cにはほとんど何でもするためにこのヘッダーを含める必要がある。
 
 @item
-@file{objc/runtime.h}: this header declares most of the public runtime
-API functions allowing you to inspect and manipulate the Objective-C
-runtime data structures.  These functions are fairly standardized
-across Objective-C runtimes and are almost identical to the Apple/NeXT
-Objective-C runtime ones.  It does not declare functions in some
-specialized areas (constructing and forwarding message invocations,
-threading) which are in the other headers below.  You have to include
-@file{objc/objc.h} and @file{objc/runtime.h} to use any of the
-functions, such as @code{class_getName()}, declared in
-@file{objc/runtime.h}.
+@file{objc/runtime.h}: このヘッダーは、Objective-Cランタイムデータ構造の検査と操作を可能にする、ほとんどのパブリックランタイムAPI関数を宣言している。 これらの関数は、Objective-Cランタイム間でかなり標準化されており、Apple/NeXT Objective-Cランタイムとほぼ同じである。 特殊な領域（メッセージの呼び出しの作成と転送、スレッド化）での関数は宣言されてなく、下の他のヘッダーにある。 @file{objc/runtime.h}で宣言されている@code{class_getName()}などの関数を使用するには、@file{objc/objc.h}と@file{objc/runtime.h}をインクルードする必要がある。
 
 @item
-@file{objc/message.h}: this header declares public functions used to
-construct, deconstruct and forward message invocations.  Because
-messaging is done in quite a different way on different runtimes,
-functions in this header are specific to the GNU Objective-C runtime
-implementation.
+@file{objc/message.h}: このヘッダーは、メッセージの呼び出しを構築、分解、転送するために使用されるパブリック関数を宣言する。 メッセージングは異なるランタイムで全く異なる方法で行われるため、このヘッダーの関数はGNU Objective-Cランタイム実装に固有である。
 
 @item
-@file{objc/objc-exception.h}: this header declares some public
-functions related to Objective-C exceptions.  For example functions in
-this header allow you to throw an Objective-C exception from plain
-C/C++ code.
+@file{objc/objc-exception.h}: このヘッダーは、Objective-C例外に関連するいくつかのパブリック関数を宣言する。 たとえば、このヘッダーの関数を使用すると、単純なC/C ++コードからObjective-C例外をスローすることができる。
 
 @item
-@file{objc/objc-sync.h}: this header declares some public functions
-related to the Objective-C @code{@@synchronized()} syntax, allowing
-you to emulate an Objective-C @code{@@synchronized()} block in plain
-C/C++ code.
+@file{objc/objc-sync.h}: このヘッダーはObjective-C @code{@@synchronized()}構文に関連するいくつかのパブリック関数を宣言し、Objective-C @code{@@synchronized()}ブロックを単純なC/C++コードでエミュレートできる。
 
 @item
-@file{objc/thr.h}: this header declares a public runtime API threading
-layer that is only provided by the GNU Objective-C runtime.  It
-declares functions such as @code{objc_mutex_lock()}, which provide a
-platform-independent set of threading functions.
+@file{objc/thr.h}: このヘッダーは、GNU Objective-Cランタイムによってのみ提供されるパブリックランタイムAPIスレッディングレイヤを宣言する。 これは、@code{objc_mutex_lock()}のような関数を宣言する。これは、プラットフォームに依存しないスレッド関数のセットを提供する。
 
 @end itemize
 
-The header files contain detailed documentation for each function in
-the GNU Objective-C runtime API.
+ヘッダーファイルには、GNU Objective-CランタイムAPIの各関数の詳細なドキュメントが含まれている。
 
 @c =========================================================================
 @node Traditional GNU Objective-C runtime API
-@subsection Traditional GNU Objective-C Runtime API
+@subsection 従来のGNU Objective-CランタイムAPI
 
-The GNU Objective-C runtime used to provide a different API, which we
-call the ``traditional'' GNU Objective-C runtime API.  Functions
-belonging to this API are easy to recognize because they use a
-different naming convention, such as @code{class_get_super_class()}
-(traditional API) instead of @code{class_getSuperclass()} (modern
-API).  Software using this API includes the file
-@file{objc/objc-api.h} where it is declared.
+GNU Objective-Cランタイムは、「従来の」GNU Objective-CランタイムAPIと呼ばれる異なるAPIを提供するために使用されていた。 このAPIに属する関数は、@code{class_getSuperclass()}（現代のAPI）の代わりに@code{class_get_super_class()}（従来のAPI）などの異なる命名規則を使用するため、認識しやすくなる。 このAPIを使用するソフトウェアには、宣言されている@file{objc/objc-api.h}ファイルが含まれている。
 
-Starting with GCC 4.7.0, the traditional GNU runtime API is no longer
-available.
+GCC 4.7.0以降、もはや従来のGNUランタイムAPIは利用できない。
 
 @c =========================================================================
 @node Executing code before main
