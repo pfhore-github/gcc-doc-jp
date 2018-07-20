@@ -77,26 +77,15 @@ GCC 4.7.0以降、もはや従来のGNUランタイムAPIは利用できない�
 
 @c =========================================================================
 @node Executing code before main
-@section @code{+load}: Executing Code before @code{main}
+@section @code{+load}: @code{main}の前に実行されるコード
 
-This section is specific for the GNU Objective-C runtime.  If you are
-using a different runtime, you can skip it.
+この節は、GNU Objective-Cランタイムに特有のものである。 別のランタイムを使用している場合は、この節をスキップできる。
 
-The GNU Objective-C runtime provides a way that allows you to execute
-code before the execution of the program enters the @code{main}
-function.  The code is executed on a per-class and a per-category basis,
-through a special class method @code{+load}.
+GNU Objective-Cランタイムは、プログラムの実行が@code{main}関数に入る前にコードを実行できる方法を提供する。 このコードは特別なクラスメソッド@code{+load}によって、クラスごとおよびカテゴリごとに実行される。
 
-This facility is very useful if you want to initialize global variables
-which can be accessed by the program directly, without sending a message
-to the class first.  The usual way to initialize global variables, in the
-@code{+initialize} method, might not be useful because
-@code{+initialize} is only called when the first message is sent to a
-class object, which in some cases could be too late.
+この機能は、最初にクラスにメッセージを送信することなく、プログラムが直接アクセスできるグローバル変数を初期化する場合に非常に便利である。@code{+initialize}メソッドがグローバル変数を初期化する通常の方法は、場合によっては遅すぎる可能性があるため、最初のメッセージがクラスオブジェクトに送られたときにのみ呼び出されるので便利ではないかもしれない。
 
-Suppose for example you have a @code{FileStream} class that declares
-@code{Stdin}, @code{Stdout} and @code{Stderr} as global variables, like
-below:
+たとえば、以下のように、@code{Stdin}、@code{Stdout}および@code{Stderr}をグローバル変数として宣言する@code{FileStream}クラスがあるとする。
 
 @smallexample
 
@@ -118,17 +107,9 @@ FileStream *Stderr = nil;
 
 @end smallexample
 
-In this example, the initialization of @code{Stdin}, @code{Stdout} and
-@code{Stderr} in @code{+initialize} occurs too late.  The programmer can
-send a message to one of these objects before the variables are actually
-initialized, thus sending messages to the @code{nil} object.  The
-@code{+initialize} method which actually initializes the global
-variables is not invoked until the first message is sent to the class
-object.  The solution would require these variables to be initialized
-just before entering @code{main}.
+この例では、@code{Stdin}、@code{Stdout}と@code{+initialize}の@code{Stderr}の初期化が遅すぎる。 プログラマは、変数が実際に初期化される前に、これらのオブジェクトの1つにメッセージを送信して、メッセージを@code{nil}オブジェクトに送ることができる。 グローバル変数を実際に初期化する@code{+initialize}メソッドは、最初のメッセージがクラスオブジェクトに送られるまで呼び出されない。 これらの変数は、@code{main}を入力する直前に初期化する必要がある。
 
-The correct solution of the above problem is to use the @code{+load}
-method instead of @code{+initialize}:
+上記の問題の正しい解決策は、@code{+initialize}の代わりに@code{+load}メソッドを使うことである：
 
 @smallexample
 
@@ -146,14 +127,9 @@ method instead of @code{+initialize}:
 
 @end smallexample
 
-The @code{+load} is a method that is not overridden by categories.  If a
-class and a category of it both implement @code{+load}, both methods are
-invoked.  This allows some additional initializations to be performed in
-a category.
+@code {+ load}は、カテゴリによってオーバーライドされないメソッドである。 クラスとカテゴリの両方が@code{+load}を実装している場合、両方のメソッドが呼び出される。 これにより、カテゴリ内でいくつかの追加の初期化を実行できる。
 
-This mechanism is not intended to be a replacement for @code{+initialize}.
-You should be aware of its limitations when you decide to use it
-instead of @code{+initialize}.
+このメカニズムは、@code{+initialize}の代わりになるものではない。@code{+initialize}の代わりにそれを使用することに決めたときの限界を知っておくべきある。
 
 @menu
 * What you can and what you cannot do in +load::
@@ -161,88 +137,59 @@ instead of @code{+initialize}.
 
 
 @node What you can and what you cannot do in +load
-@subsection What You Can and Cannot Do in @code{+load}
+@subsection @code{+load}でできることとできないこと
 
-@code{+load} is to be used only as a last resort.  Because it is
-executed very early, most of the Objective-C runtime machinery will
-not be ready when @code{+load} is executed; hence @code{+load} works
-best for executing C code that is independent on the Objective-C
-runtime.
+@code{+load}は最後の手段としてのみ使用される。 非常に早い時期に実行されるため、@code{+load}が実行されたとき、ほとんどのObjective-Cランタイム機械は準備ができていない。 したがって、@code{+load}はObjective-Cランタイムとは独立したCコードの実行に最適である。
 
-The @code{+load} implementation in the GNU runtime guarantees you the
-following things:
+GNUランタイムの@code{+load}実装は、あなたに次のことを保証する。
 
 @itemize @bullet
 
 @item
-you can write whatever C code you like;
+あなたは好きなCコードを書くことができる。
 
 @item
-you can allocate and send messages to objects whose class is implemented
-in the same file;
+クラスが同じファイルに実装されているオブジェクトにメッセージを割り当てて送信することができる。
 
 @item
-the @code{+load} implementation of all super classes of a class are
-executed before the @code{+load} of that class is executed;
+クラスのすべてのスーパークラスの@code{+load}実装は、そのクラスの@code{+load}が実行される前に実行される。
 
 @item
-the @code{+load} implementation of a class is executed before the
-@code{+load} implementation of any category.
+クラスの@code{+load}実装は、どのカテゴリの@code{+load}実装よりも前に実行される。
 
 @end itemize
 
-In particular, the following things, even if they can work in a
-particular case, are not guaranteed:
+特に、次のようなことは、たとえ特定のケースで動いたとしても、保証されていない。
 
 @itemize @bullet
 
 @item
-allocation of or sending messages to arbitrary objects;
+任意のオブジェクトへのメッセージの割り当てまたは送信。
 
 @item
-allocation of or sending messages to objects whose classes have a
-category implemented in the same file;
+同じファイルにカテゴリが実装されているオブジェクトへのメッセージの割り当てまたは送信。
 
 @item
-sending messages to Objective-C constant strings (@code{@@"this is a
-constant string"});
+Objective-C定数文字列にメッセージを送る（@code{@@"これは定数文字列"}）。
 
 @end itemize
 
-You should make no assumptions about receiving @code{+load} in sibling
-classes when you write @code{+load} of a class.  The order in which
-sibling classes receive @code{+load} is not guaranteed.
+クラスの@code{+load}を書くときに、兄弟クラスで@code{+load}を受け取ることについての仮定をするべきではない。 兄弟クラスが@code{+load}を受け取る順序は保証されない。
 
-The order in which @code{+load} and @code{+initialize} are called could
-be problematic if this matters.  If you don't allocate objects inside
-@code{+load}, it is guaranteed that @code{+load} is called before
-@code{+initialize}.  If you create an object inside @code{+load} the
-@code{+initialize} method of object's class is invoked even if
-@code{+load} was not invoked.  Note if you explicitly call @code{+load}
-on a class, @code{+initialize} will be called first.  To avoid possible
-problems try to implement only one of these methods.
+これが問題であれば、@code{+load}と@code{+initialize}が呼び出される順序が問題になる可能性がある。@code{+load}の中にオブジェクトを配置しなければ、@code{+load}が@code{+initialize}の前に呼び出されることが保証される。 @code{+load}の中にオブジェクトを作成すると、@code{+load}が呼び出されなくても、オブジェクトのクラスの@code{+initialize}メソッドが呼び出される。 クラスに対して@code{+load}を明示的に呼び出すと、@code{+initialize}が最初に呼び出される。 考えられる問題を回避するには、これらのメソッドのうちの1つだけを実装しようとすること。
 
-The @code{+load} method is also invoked when a bundle is dynamically
-loaded into your running program.  This happens automatically without any
-intervening operation from you.  When you write bundles and you need to
-write @code{+load} you can safely create and send messages to objects whose
-classes already exist in the running program.  The same restrictions as
-above apply to classes defined in bundle.
+@code{+load}メソッドは、バンドルが実行中のプログラムに動的にロードされるときにも呼び出される。 これは、あなたからの介入なしに自動的に行われる。 バンドルを作成し、@code{+load}を書く必要があるときは、クラスが実行中のプログラムにすでに存在するオブジェクトにメッセージを作成して安全に送信できる。 上記と同じ制限は、バンドルで定義されたクラスに適用される。
 
 
 
 @node Type encoding
-@section Type Encoding
+@section 型符号化
 
-This is an advanced section.  Type encodings are used extensively by
-the compiler and by the runtime, but you generally do not need to know
-about them to use Objective-C.
+これは高度なセクションである。型の符号化は、コンパイラとランタイムによって広く使用されるが、Objective-Cを使用するためにそれらについて知る必要はない。
 
-The Objective-C compiler generates type encodings for all the types.
-These type encodings are used at runtime to find out information about
-selectors and methods and about objects and classes.
+Objective-Cコンパイラは、すべての型の型エンコーディングを生成する。これらの型の符号化は、実行時にセレクタとメソッド、およびオブジェクトとクラスに関する情報を検索するために使用される。
 
-The types are encoded in the following way:
+型は次のように符号化される。
 
 @c @sp 1
 
@@ -286,57 +233,45 @@ The types are encoded in the following way:
 @item @code{char*}
 @tab @code{*}
 @item @code{enum}
-@tab an @code{enum} is encoded exactly as the integer type that the compiler uses for it, which depends on the enumeration
-values.  Often the compiler users @code{unsigned int}, which is then encoded as @code{I}.
-@item unknown type
+@tab @code {enum}はコンパイラが使用する整数型として正確に符号化される。これは列挙値に依存する。 多くの場合、コンパイラは@code{unsigned int}を使用する。これは@code{I}として符号化される。
+@item 未知の型
 @tab @code{?}
-@item Complex types
-@tab @code{j} followed by the inner type.  For example @code{_Complex double} is encoded as "jd".
-@item bit-fields
-@tab @code{b} followed by the starting position of the bit-field, the type of the bit-field and the size of the bit-field (the bit-fields encoding was changed from the NeXT's compiler encoding, see below)
+@item 複素数型
+@tab @code{j}の後ろに内部型がある。 たとえば、@code{_Complex double}は "jd"として符号化される。
+@item ビットフィールド
+@tab @code{b}の後ろにビットフィールドの開始位置、ビットフィールドのタイプ、ビットフィールドのサイズ（ビットフィールドの符号化は、NeXTのコンパイラ符号化から変更された。以下を参照せよ）
 @end multitable
 
 @c @sp 1
 
-The encoding of bit-fields has changed to allow bit-fields to be
-properly handled by the runtime functions that compute sizes and
-alignments of types that contain bit-fields.  The previous encoding
-contained only the size of the bit-field.  Using only this information
-it is not possible to reliably compute the size occupied by the
-bit-field.  This is very important in the presence of the Boehm's
-garbage collector because the objects are allocated using the typed
-memory facility available in this collector.  The typed memory
-allocation requires information about where the pointers are located
-inside the object.
+ビットフィールドの符号化は、ビットフィールドがビットフィールドを含む型のサイズおよび整列を計算する実行時関数によって適切に処理されるように変更された。 前の符号化は、ビットフィールドのサイズのみを含んでいた。 この情報のみを使用した場合、ビットフィールドが占有するサイズを確実に計算することはできない。 Boehmのガベージコレクタが存在する場合、オブジェクトはこのコレクタで使用可能な型付きメモリファシリティを使用して割り当てられるため、これは非常に重要である。 型付きメモリ割り当てには、ポインタがオブジェクト内にある場所に関する情報が必要である。
 
-The position in the bit-field is the position, counting in bits, of the
-bit closest to the beginning of the structure.
+ビットフィールド内の位置は、構造の先頭に最も近いビットの位置をビットでカウントしたものである。
 
-The non-atomic types are encoded as follows:
+非アトミック型は、次のように符号化される。
 
 @c @sp 1
 
 @multitable @columnfractions .2 .8
-@item pointers
-@tab @samp{^} followed by the pointed type.
-@item arrays
-@tab @samp{[} followed by the number of elements in the array followed by the type of the elements followed by @samp{]}
-@item structures
-@tab @samp{@{} followed by the name of the structure (or @samp{?} if the structure is unnamed), the @samp{=} sign, the type of the members and by @samp{@}}
-@item unions
-@tab @samp{(} followed by the name of the structure (or @samp{?} if the union is unnamed), the @samp{=} sign, the type of the members followed by @samp{)}
-@item vectors
-@tab @samp{![} followed by the vector_size (the number of bytes composing the vector) followed by a comma, followed by the alignment (in bytes) of the vector, followed by the type of the elements followed by @samp{]}
+@item ポインタ
+@tab @samp{^}の後ろに参照される型
+@item 配列
+@tab @samp {{}の後に配列の要素数、要素の型、@samp{]}が続く。
+@item 構造体
+@tab @samp{@{}の後ろに構造体の名前（構造体に名前がない場合は@samp{?}）、@samp{=}記号、メンバーの型、@samp{@}}が続く。
+@item 共用体
+@tab @samp{@(}の後ろに構造体の名前（共用体に名前がない場合は@samp{?}）、@samp{=}記号、メンバーの型、@samp{@))}が続く。
+@item ベクタ
+@tab @samp{!}の後ろにvector_size（ベクトルを構成するバイト数）、カンマ、ベクトルの整列（バイト単位）、要素の型、@samp{]}が続く。
 @end multitable
 
-Here are some types and their encodings, as they are generated by the
-compiler on an i386 machine:
+i386マシン上のコンパイラによって生成される、いくつかの型とその符号化がここにある：
 
 @sp 1
 
 @multitable @columnfractions .60 .40
-@item Objective-C type
-@tab Compiler encoding
+@item Objective-C型
+@tab コンパイラ符号化
 @item
 @smallexample
 int a[10];
@@ -357,14 +292,12 @@ struct @{
 @smallexample
 int a __attribute__ ((vector_size (16)));
 @end smallexample
-@tab @code{![16,16i]} (alignment depends on the machine)
+@tab @code{![16,16i]} (アラインメントは機種依存）
 @end multitable
 
 @sp 1
 
-In addition to the types the compiler also encodes the type
-specifiers.  The table below describes the encoding of the current
-Objective-C type specifiers:
+型に加えて、コンパイラは型指定子も符号化する。 以下の表は、現在のObjective-C型指定子の符号化について説明する。
 
 @sp 1
 
@@ -389,17 +322,15 @@ Objective-C type specifiers:
 
 @sp 1
 
-The type specifiers are encoded just before the type.  Unlike types
-however, the type specifiers are only encoded when they appear in method
-argument types.
+型指定子は、型の直前に符号化される。 しかし型とは異なり、型指定子はメソッド引数型に現れるときにのみ符号化される。
 
-Note how @code{const} interacts with pointers:
+@code{const}がポインタとやり取りする方法に注意せよ：
 
 @sp 1
 
 @multitable @columnfractions .25 .75
-@item Objective-C type
-@tab Compiler encoding
+@item Objective-C型
+@tab コンパイラ符号化
 @item
 @smallexample
 const int
@@ -419,19 +350,11 @@ int *const
 
 @sp 1
 
-@code{const int*} is a pointer to a @code{const int}, and so is
-encoded as @code{^ri}.  @code{int* const}, instead, is a @code{const}
-pointer to an @code{int}, and so is encoded as @code{r^i}.
+@code{const int *}は@code {const int}へのポインタなので、@code{^ri}として符号化される。 一方、@code{int * const}は、@code {int}への@code{const}ポインタであり、したがって@code{r^i}として符号化される。
 
-Finally, there is a complication when encoding @code{const char *}
-versus @code{char * const}.  Because @code{char *} is encoded as
-@code{*} and not as @code{^c}, there is no way to express the fact
-that @code{r} applies to the pointer or to the pointee.
+最後に、@code{const char *}と@code{char * const}を符号化するときに複雑なことがある。 @code{char *}は@code{^c}ではなく@code{*}として符号化されているので、@code{r}がポインターまたはポインタ対象に適用されるという事実を表現する方法はない。
 
-Hence, it is assumed as a convention that @code{r*} means @code{const
-char *} (since it is what is most often meant), and there is no way to
-encode @code{char *const}.  @code{char *const} would simply be encoded
-as @code{*}, and the @code{const} is lost.
+したがって、@code{r*}は@code{const char *}を意味するという慣例として仮定されていて（それは最もよく使われるものである）、@code{char * const}を符号化する方法はない。 @code{char * const}は単に@code{*}として符号化され、@code{const}は失われる。
 
 @menu
 * Legacy type encoding::
@@ -440,97 +363,57 @@ as @code{*}, and the @code{const} is lost.
 @end menu
 
 @node Legacy type encoding
-@subsection Legacy Type Encoding
+@subsection 古い型符号化
 
-Unfortunately, historically GCC used to have a number of bugs in its
-encoding code.  The NeXT runtime expects GCC to emit type encodings in
-this historical format (compatible with GCC-3.3), so when using the
-NeXT runtime, GCC will introduce on purpose a number of incorrect
-encodings:
+残念ながら、歴史的にGCCはコードのコードにいくつかのバグを持っていた。 NeXTランタイムは、GCCがこの歴史的フォーマット（GCC-3.3と互換性がある）で型符号化を生成することを期待する。そのため、NeXTランタイムを使用する場合、GCCは誤ったエンコーディングをいくつか導入する。
 
 @itemize @bullet
 
 @item
-the read-only qualifier of the pointee gets emitted before the '^'.
-The read-only qualifier of the pointer itself gets ignored, unless it
-is a typedef.  Also, the 'r' is only emitted for the outermost type.
+ポイントされるものの読み取り専用修飾子は '^'の前に出される。typedefでない限り、ポインタ自体の読み取り専用修飾子は無視される。 また、 'r'は最も外側の型に対してのみ送出される。
 
 @item
-32-bit longs are encoded as 'l' or 'L', but not always.  For typedefs,
-the compiler uses 'i' or 'I' instead if encoding a struct field or a
-pointer.
+32ビット長は 'l'または 'L'としてエンコードされるが、必ずしもそうではない。 typedefの場合、structフィールドまたはポインタを符号化する場合、コンパイラは代わりに 'i'または 'I'を使用する。
 
 @item
-@code{enum}s are always encoded as 'i' (int) even if they are actually
-unsigned or long.
+実際には符号なしかlongであっても、@code{enum}は常に 'i'（int）として符号化される。
 
 @end itemize
-
-In addition to that, the NeXT runtime uses a different encoding for
-bitfields.  It encodes them as @code{b} followed by the size, without
-a bit offset or the underlying field type.
+それに加えて、NeXTランタイムは、ビットフィールドに異なる符号化を使用する。 ビットオフセットや基になるフィールドタイプを使わずに、それらを@code{b}の後にサイズで符号化する。
 
 @node @@encode
 @subsection @code{@@encode}
 
-GNU Objective-C supports the @code{@@encode} syntax that allows you to
-create a type encoding from a C/Objective-C type.  For example,
-@code{@@encode(int)} is compiled by the compiler into @code{"i"}.
+GNU Objective-Cは、C/Objective-C型から型の符号化を作成できる@code{@@encode}構文をサポートしている。 たとえば、@code{@@encode(int)}は、コンパイラによって@code{"i"}にコンパイルされる。
 
-@code{@@encode} does not support type qualifiers other than
-@code{const}.  For example, @code{@@encode(const char*)} is valid and
-is compiled into @code{"r*"}, while @code{@@encode(bycopy char *)} is
-invalid and will cause a compilation error.
+@code{@@encode}は@code{const}以外の型修飾子をサポートしていない。 たとえば、@code {@@encode(const char *)}は有効で、@code{"r*"}へとコンパイルされるが、@code{@@encode(bycopy char *)}は無効でコンパイル エラーの原因となる。
 
 @node Method signatures
-@subsection Method Signatures
+@subsection メソッドシグネチャ
 
-This section documents the encoding of method types, which is rarely
-needed to use Objective-C.  You should skip it at a first reading; the
-runtime provides functions that will work on methods and can walk
-through the list of parameters and interpret them for you.  These
-functions are part of the public ``API'' and are the preferred way to
-interact with method signatures from user code.
+この節では、Objective-Cを使用するにはめったに必要にならないメソッド型の符号化について説明する。最初に読むときにはここを飛ばすべきである。ランタイムはメソッド上で動作する関数を提供し、パラメータのリストを辿って解釈することができる。 これらの関数はパブリック「API」の一部であり、ユーザコードからのメソッドシグネチャと対話するための好ましい方法である。
 
-But if you need to debug a problem with method signatures and need to
-know how they are implemented (i.e., the ``ABI''), read on.
+しかし、メソッドのシグネチャの問題をデバッグし、メソッドシグネチャの実装方法（つまり、 「ABI」）を知る必要がある場合は、読むこと。
 
-Methods have their ``signature'' encoded and made available to the
-runtime.  The ``signature'' encodes all the information required to
-dynamically build invocations of the method at runtime: return type
-and arguments.
+メソッドは、「シグネチャ」が符号化され、実行時に利用可能になる。「シグネチャ」は、実行時にメソッドの呼び出しを動的に構築するのに必要なすべての情報、つまり戻り値の型と引数を符号化する。
 
-The ``signature'' is a null-terminated string, composed of the following:
+「シグネチャ」はヌルで終了する文字列で、次の要素で構成される：
 
 @itemize @bullet
 
 @item
-The return type, including type qualifiers.  For example, a method
-returning @code{int} would have @code{i} here.
+型修飾子を含む戻り型。 たとえば、@code{int}を返すメソッドはここに@code{i}を持つ。
 
 @item
-The total size (in bytes) required to pass all the parameters.  This
-includes the two hidden parameters (the object @code{self} and the
-method selector @code{_cmd}).
+すべてのパラメータを渡すために必要な合計サイズ（バイト単位）。 これには2つの隠しパラメータ（オブジェクト@code{self}とメソッドセレクタ@code{_cmd}）が含まれる。
 
 @item
-Each argument, with the type encoding, followed by the offset (in
-bytes) of the argument in the list of parameters.
+それぞれの引数は、型の符号化の後に、パラメータのリスト内の引数のオフセット（バイト単位）が続く。
 
 @end itemize
+たとえば、ポインタのサイズが4の場合、引数を持たずに@code{int}を返すメソッドは、@code{i8@@0:4}のシグネチャを持つ。このシグネチャは、次のように解釈される。@code{i }は戻り値の型（@code{int}）、@code{8}はバイト単位のパラメータの合計サイズ（サイズがそれぞれ2つのポインタ）、@code{@@ 0}は最初のパラメータ （バイトオフセット@code{0}のオブジェクト）、@code{:4}は2番目のパラメータ（バイトオフセット@code{4}の@code{SEL}）である。
 
-For example, a method with no arguments and returning @code{int} would
-have the signature @code{i8@@0:4} if the size of a pointer is 4.  The
-signature is interpreted as follows: the @code{i} is the return type
-(an @code{int}), the @code{8} is the total size of the parameters in
-bytes (two pointers each of size 4), the @code{@@0} is the first
-parameter (an object at byte offset @code{0}) and @code{:4} is the
-second parameter (a @code{SEL} at byte offset @code{4}).
-
-You can easily find more examples by running the ``strings'' program
-on an Objective-C object file compiled by GCC.  You'll see a lot of
-strings that look very much like @code{i8@@0:4}.  They are signatures
-of Objective-C methods.
+GCCでコンパイルされたObjective-Cオブジェクトファイルで"strings"プログラムを実行すると、より多くの例を簡単に見つけることができる。@code{i8@@0:4}と非常によく似た文字列が多数表示される。 それらはObjective-Cメソッドのシグネチャである。
 
 
 @node Garbage Collection
