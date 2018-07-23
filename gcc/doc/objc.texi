@@ -417,41 +417,19 @@ GCCでコンパイルされたObjective-Cオブジェクトファイルで"strin
 
 
 @node Garbage Collection
-@section Garbage Collection
+@section ガベージコレクション
 
-This section is specific for the GNU Objective-C runtime.  If you are
-using a different runtime, you can skip it.
+この節は、GNU Objective-Cランタイムに特有のものである。 別のランタイムを使用している場合は、この節をスキップできる。
 
-Support for garbage collection with the GNU runtime has been added by
-using a powerful conservative garbage collector, known as the
-Boehm-Demers-Weiser conservative garbage collector.
+Boehm-Demers-Weiserの保守的なガベージコレクタと呼ばれる強力な保守的ガベージコレクタを使用することにより、GNUランタイムによるガベージコレクションのサポートが追加された。
 
-To enable the support for it you have to configure the compiler using
-an additional argument, @w{@option{--enable-objc-gc}}.  This will
-build the boehm-gc library, and build an additional runtime library
-which has several enhancements to support the garbage collector.  The
-new library has a new name, @file{libobjc_gc.a} to not conflict with
-the non-garbage-collected library.
+サポートを有効にするには、@w{@option{-enable-objc-gc}}という追加の引数を使用してコンパイラを設定する必要がある。 これにより、boehm-gcライブラリが構築され、ガベージコレクタをサポートするためのいくつかの拡張機能を備えた追加のランタイムライブラリが構築される。 新しいライブラリには、ガベージコレクションされていないライブラリと競合しないように新しい名前@file{libobjc_gc.a}を持つ。
 
-When the garbage collector is used, the objects are allocated using the
-so-called typed memory allocation mechanism available in the
-Boehm-Demers-Weiser collector.  This mode requires precise information on
-where pointers are located inside objects.  This information is computed
-once per class, immediately after the class has been initialized.
+ガベージコレクタが使用されるとき、オブジェクトは、Boehm-Demers-Weiserコレクタで利用可能ないわゆる型付きメモリ割り当てメカニズムを使用して割り当てられる。 このモードでは、ポインタがオブジェクト内のどこにあるかについての正確な情報が必要である。この情報は、クラスが初期化された直後にクラスごとに1回計算される。
 
-There is a new runtime function @code{class_ivar_set_gcinvisible()}
-which can be used to declare a so-called @dfn{weak pointer}
-reference.  Such a pointer is basically hidden for the garbage collector;
-this can be useful in certain situations, especially when you want to
-keep track of the allocated objects, yet allow them to be
-collected.  This kind of pointers can only be members of objects, you
-cannot declare a global pointer as a weak reference.  Every type which is
-a pointer type can be declared a weak pointer, including @code{id},
-@code{Class} and @code{SEL}.
+@code{class_ivar_set_gcinvisible()}という新しいランタイム関数があり、これはいわゆる@dfn{弱ポインタ}の参照を宣言するために使用できる。 そのようなポインタは、基本的にガベージコレクタでは隠されている。 特定の状況で、特に割り当てられたオブジェクトを追跡し、収集できるようにする場合に便利である。 この種のポインタはオブジェクトのメンバーにしかなり得まない。グローバルポインタを弱い参照として宣言することはできない。 ポインタ型のすべての型は、@code{id}、@code{Class}、@code{SEL}を含む弱ポインタとして宣言できる。
 
-Here is an example of how to use this feature.  Suppose you want to
-implement a class whose instances hold a weak pointer reference; the
-following class does this:
+この機能の使用例を次に示す。 弱ポインタ参照を保持するインスタンスを持つクラスを実装したいとする。 次のクラスはこれを行う：
 
 @smallexample
 
@@ -488,34 +466,21 @@ following class does this:
 
 @end smallexample
 
-Weak pointers are supported through a new type character specifier
-represented by the @samp{!} character.  The
-@code{class_ivar_set_gcinvisible()} function adds or removes this
-specifier to the string type description of the instance variable named
-as argument.
+弱いポインタは、@samp {!}文字で表される新しい型の文字指定子でサポートされている。 @code{class_ivar_set_gcinvisible()}関数は、この指定子を引数として指定されたインスタンス変数の文字列型の記述に追加または削除する。
 
 @c =========================================================================
 @node Constant string objects
-@section Constant String Objects
+@section 定数文字列オブジェクト
 
-GNU Objective-C provides constant string objects that are generated
-directly by the compiler.  You declare a constant string object by
-prefixing a C constant string with the character @samp{@@}:
+GNU Objective-Cは、コンパイラによって直接生成される定数文字列オブジェクトを提供する。 文字定数@samp{@@}をCの定数文字列の前に付けて、定数文字列オブジェクトを宣言する。
 
 @smallexample
   id myString = @@"this is a constant string object";
 @end smallexample
 
-The constant string objects are by default instances of the
-@code{NXConstantString} class which is provided by the GNU Objective-C
-runtime.  To get the definition of this class you must include the
-@file{objc/NXConstStr.h} header file.
+定数文字列オブジェクトは、GNU Objective-Cランタイムによって提供される@code{NXConstantString}クラスのデフォルトインスタンスである。 このクラスの定義を取得するには、@file{objc/NXConstStr.h}ヘッダーファイルを含める必要がある。
 
-User defined libraries may want to implement their own constant string
-class.  To be able to support them, the GNU Objective-C compiler provides
-a new command line options @option{-fconstant-string-class=@var{class-name}}.
-The provided class should adhere to a strict structure, the same
-as @code{NXConstantString}'s structure:
+ユーザー定義ライブラリは、独自の定数文字列クラスを実装したい場合がある。 それらをサポートするために、GNU Objective-Cコンパイラは新しいコマンドラインオプション@option{-fconstant-string-class=@var{class-name}}を提供する。 提供されるクラスは、@code{NXConstantString}の構造と同じ厳密な構造に従うべきである：
 
 @smallexample
 
@@ -529,63 +494,39 @@ as @code{NXConstantString}'s structure:
 
 @end smallexample
 
-@code{NXConstantString} inherits from @code{Object}; user class
-libraries may choose to inherit the customized constant string class
-from a different class than @code{Object}.  There is no requirement in
-the methods the constant string class has to implement, but the final
-ivar layout of the class must be the compatible with the given
-structure.
+@code{NXConstantString}は@code{Object}から継承する。 ユーザークラスライブラリは、カスタマイズされた定数文字列クラスを@code{Object}とは異なるクラスから継承することを選択することができる。 定数文字列クラスが実装しなければならないメソッドには要件はないが、クラスの最終的なivarレイアウトは指定された構造と互換性がなければならない。
 
-When the compiler creates the statically allocated constant string
-object, the @code{c_string} field will be filled by the compiler with
-the string; the @code{length} field will be filled by the compiler with
-the string length; the @code{isa} pointer will be filled with
-@code{NULL} by the compiler, and it will later be fixed up automatically
-at runtime by the GNU Objective-C runtime library to point to the class
-which was set by the @option{-fconstant-string-class} option when the
-object file is loaded (if you wonder how it works behind the scenes, the
-name of the class to use, and the list of static objects to fixup, are
-stored by the compiler in the object file in a place where the GNU
-runtime library will find them at runtime).
+コンパイラが静的に割り当てられた定数文字列オブジェクトを作成すると、@code{c_string}フィールドはコンパイラによって文字列で埋められる。 @code{length}フィールドはコンパイラによって文字列長で埋められる。 @code{isa}ポインタはコンパイラによって@code{NULL}で埋められ、後で実行時にGNU Objective-Cランタイムライブラリによって自動的に修正され、オブジェクトファイルのロード時に@option {-fconstant-string-class}オプションで設定されたクラスを指すようになる（シーンの裏でどのように動作するのか知りたいと思うなら、使用するクラスの名前、修正する静的オブジェクトのリストは、コンパイラによってGNUランタイムライブラリが実行時にそれらを見つける場所のオブジェクトファイルに格納される。）
 
-As a result, when a file is compiled with the
-@option{-fconstant-string-class} option, all the constant string objects
-will be instances of the class specified as argument to this option.  It
-is possible to have multiple compilation units referring to different
-constant string classes, neither the compiler nor the linker impose any
-restrictions in doing this.
+その結果、ファイルが@option{-fconstant-string-class}オプションでコンパイルされると、すべての定数文字列オブジェクトはこのオプションの引数として指定されたクラスのインスタンスになる。 さまざまな定数文字列クラスを参照する複数のコンパイル単位を持つことは可能だが、コンパイラやリンカーはこれを行う際に制限を課さない。
 
 @c =========================================================================
 @node compatibility_alias
 @section @code{compatibility_alias}
 
-The keyword @code{@@compatibility_alias} allows you to define a class name
-as equivalent to another class name.  For example:
+キーワード@code{@@compatibility_alias}を使用すると、クラス名を別のクラス名と同等に定義できる。 例えば：
 
 @smallexample
 @@compatibility_alias WOApplication GSWApplication;
 @end smallexample
 
-tells the compiler that each time it encounters @code{WOApplication} as
-a class name, it should replace it with @code{GSWApplication} (that is,
-@code{WOApplication} is just an alias for @code{GSWApplication}).
+は、クラス名として@code{WOApplication}が出現するたびに、それを@code{GSWApplication}に置き換える必要があることをコンパイラーに伝える。（つまり、@code{WOApplication}は@code{GSWApplication}のエイリアスである。）
 
-There are some constraints on how this can be used---
+これをどのように使用するかにはいくつかの制約がある---
 
 @itemize @bullet
 
-@item @code{WOApplication} (the alias) must not be an existing class;
+@item @code{WOApplication} (エイリアス)は既存クラスであってはならない
 
-@item @code{GSWApplication} (the real class) must be an existing class.
+@item @code{GSWApplication} (本物のクラス)は既存クラスでなければならない
 
 @end itemize
 
 @c =========================================================================
 @node Exceptions
-@section Exceptions
+@section 例外
 
-GNU Objective-C provides exception support built into the language, as
-in the following example:
+GNU Objective-Cは、次の例のように、言語に組み込まれた例外サポートを提供する。
 
 @smallexample
   @@try @{
@@ -613,58 +554,33 @@ in the following example:
   @}
 @end smallexample
 
-The @code{@@throw} statement may appear anywhere in an Objective-C or
-Objective-C++ program; when used inside of a @code{@@catch} block, the
-@code{@@throw} may appear without an argument (as shown above), in
-which case the object caught by the @code{@@catch} will be rethrown.
+@code{@@throw}文は、Objective-CまたはObjective-C++プログラムのどこにでも置くことができる。 @code{@@catch}ブロックの内部で使用される場合、（上記のように）@code{@@throw}は引数なしで現れることができ、@code{@@catch}で捕捉されたオブジェクトは再送出される。
 
-Note that only (pointers to) Objective-C objects may be thrown and
-caught using this scheme.  When an object is thrown, it will be caught
-by the nearest @code{@@catch} clause capable of handling objects of
-that type, analogously to how @code{catch} blocks work in C++ and
-Java.  A @code{@@catch(id @dots{})} clause (as shown above) may also
-be provided to catch any and all Objective-C exceptions not caught by
-previous @code{@@catch} clauses (if any).
+このスキームを使用してObjective-Cオブジェクト（のポインタ）のみがスローされ捕捉されることに注意せよ。 オブジェクトがスローされると、C++やJavaで@code{catch}ブロックが動作するやり方と同様に、その型のオブジェクトを扱うことができる最も近い@code{@@catch}節でキャッチされる。 以前の@code{@@ catch}節（もしあれば）によって捕捉されなかったすべてのObjective-C例外をキャッチするために、@code{@@catch(id @dots {})}節を使うことができる。 
 
-The @code{@@finally} clause, if present, will be executed upon exit
-from the immediately preceding @code{@@try @dots{} @@catch} section.
-This will happen regardless of whether any exceptions are thrown,
-caught or rethrown inside the @code{@@try @dots{} @@catch} section,
-analogously to the behavior of the @code{finally} clause in Java.
+@code{@@finally}句が存在する場合、その直前の@code{@@try @dots{} @@catch}セクションから終了時に実行される。 これは、Javaの@code{finally}節の動作と同様に、@code{@@try @dots{} @@catch}セクション内に例外がスローされ、キャッチされ、再スローされるかどうかにかかわらず発生する。
 
-There are several caveats to using the new exception mechanism:
+新しい例外メカニズムの使用にはいくつかの注意点がある。
 
 @itemize @bullet
 @item
-The @option{-fobjc-exceptions} command line option must be used when
-compiling Objective-C files that use exceptions.
+例外を使用するObjective-Cファイルをコンパイルするときは、@option{-fobjc-exceptions}コマンドラインオプションを使用する必要がある。
 
 @item
-With the GNU runtime, exceptions are always implemented as ``native''
-exceptions and it is recommended that the @option{-fexceptions} and
-@option{-shared-libgcc} options are used when linking.
+GNUランタイムでは、例外は常に「ネイティブ」例外として実装される。リンク時には、@option{-fexceptions}オプションと@option{-shared-libgcc}オプションを使用することを推奨する。
 
 @item
-With the NeXT runtime, although currently designed to be binary
-compatible with @code{NS_HANDLER}-style idioms provided by the
-@code{NSException} class, the new exceptions can only be used on Mac
-OS X 10.3 (Panther) and later systems, due to additional functionality
-needed in the NeXT Objective-C runtime.
+NeXTランタイムでは、現在のところ、@code{NSException}クラスによって提供される@code{NS_HANDLER}スタイルのイディオムとバイナリ互換に設計されているが、新しい例外はMac OS X 10.3（Panther）以降のシステムでのみ使用できる。 NeXT Objective-Cランタイムで必要とされる追加機能が原因である。
 
 @item
-As mentioned above, the new exceptions do not support handling
-types other than Objective-C objects.   Furthermore, when used from
-Objective-C++, the Objective-C exception model does not interoperate with C++
-exceptions at this time.  This means you cannot @code{@@throw} an exception
-from Objective-C and @code{catch} it in C++, or vice versa
-(i.e., @code{throw @dots{} @@catch}).
+前述のように、新しい例外はObjective-C以外のオブジェクトの処理をサポートしていない。 さらに、Objective-C++から使用される場合、Objective-C例外モデルは現時点でC++例外と相互運用されない。 つまり、Objective-Cからの例外を@code{@@throw}して、C++で@code{catch}する、およびその逆(すなわち、 @code{throw @dots{} @@catch})はできない。
 @end itemize
 
 @c =========================================================================
 @node Synchronization
-@section Synchronization
+@section 同期
 
-GNU Objective-C provides support for synchronized blocks:
+GNU Objective-Cは同期ブロックをサポートしている：
 
 @smallexample
   @@synchronized (ObjCClass *guard) @{
@@ -672,29 +588,16 @@ GNU Objective-C provides support for synchronized blocks:
   @}
 @end smallexample
 
-Upon entering the @code{@@synchronized} block, a thread of execution
-shall first check whether a lock has been placed on the corresponding
-@code{guard} object by another thread.  If it has, the current thread
-shall wait until the other thread relinquishes its lock.  Once
-@code{guard} becomes available, the current thread will place its own
-lock on it, execute the code contained in the @code{@@synchronized}
-block, and finally relinquish the lock (thereby making @code{guard}
-available to other threads).
+@code{@@synchronized}ブロックに入ると、実行スレッドは、最初にロックが対応する@code{guard}オブジェクトに別のスレッドによって置かれているかどうかをチェックする。 もしあれば、現在のスレッドは、他のスレッドがそのロックを放棄するまで待つ。 @code{guard}が利用可能になると、現在のスレッドはそれ自身のロックを行い、@code{@@ synchronized}ブロックに含まれるコードを実行し、最後にロックを解放する（それによって@code {guard}を他のスレッドが利用できるようにする）。
 
-Unlike Java, Objective-C does not allow for entire methods to be
-marked @code{@@synchronized}.  Note that throwing exceptions out of
-@code{@@synchronized} blocks is allowed, and will cause the guarding
-object to be unlocked properly.
+Javaとは異なり、Objective-Cはメソッド全体を@code{@@synchronized}とマークすることはできない。 @code{@@synchronized}ブロックから例外を投げることが許可されていて、ガードオブジェクトのロックが適切に解除される。
 
-Because of the interactions between synchronization and exception
-handling, you can only use @code{@@synchronized} when compiling with
-exceptions enabled, that is with the command line option
-@option{-fobjc-exceptions}.
+同期と例外処理の間の相互作用のために、例外を有効にしてコンパイルする場合、つまりコマンドラインオプション@option{-fobjc-exceptions}を使用してコンパイルする場合にのみ@code{@@synchronized}を使用できる。
 
 
 @c =========================================================================
 @node Fast enumeration
-@section Fast Enumeration
+@section 高速列挙
 
 @menu
 * Using fast enumeration::
@@ -705,9 +608,9 @@ exceptions enabled, that is with the command line option
 
 @c ================================
 @node Using fast enumeration
-@subsection Using Fast Enumeration
+@subsection 高速列挙の使用
 
-GNU Objective-C provides support for the fast enumeration syntax:
+GNU Objective-Cは、高速列挙構文をサポートしている：
 
 @smallexample
   id array = @dots{};
@@ -719,20 +622,11 @@ GNU Objective-C provides support for the fast enumeration syntax:
   @}
 @end smallexample
 
-@code{array} needs to be an Objective-C object (usually a collection
-object, for example an array, a dictionary or a set) which implements
-the ``Fast Enumeration Protocol'' (see below).  If you are using a
-Foundation library such as GNUstep Base or Apple Cocoa Foundation, all
-collection objects in the library implement this protocol and can be
-used in this way.
+@code array}は「高速列挙プロトコル」（下記参照）を実装するObjective-Cオブジェクト（通常は配列、辞書、セットなどのコレクションオブジェクト）である必要がある。 GNUstep BaseやApple Cocoa FoundationなどのFoundationライブラリを使用している場合は、ライブラリ内のすべてのコレクションオブジェクトがこのプロトコルを実装し、このように使用できる。
 
-The code above would iterate over all objects in @code{array}.  For
-each of them, it assigns it to @code{object}, then executes the
-@code{Do something with 'object'} statements.
+上のコードは@code{array}のすべてのオブジェクトを繰り返し処理する。 それぞれに対して、それを@code{object}に代入し、次に@code{something with 'object'}ステートメントを実行する。
 
-Here is a fully worked-out example using a Foundation library (which
-provides the implementation of @code{NSArray}, @code{NSString} and
-@code{NSLog}):
+以下は、Foundationライブラリ（@code{NSArray}、@code{NSString}、@code{NSLog}の実装を提供する）を使用した完全に実践された例である：
 
 @smallexample
   NSArray *array = [NSArray arrayWithObjects: @@"1", @@"2", @@"3", nil];
@@ -745,9 +639,9 @@ provides the implementation of @code{NSArray}, @code{NSString} and
 
 @c ================================
 @node c99-like fast enumeration syntax
-@subsection C99-Like Fast Enumeration Syntax
+@subsection C99風の高速列挙構文
 
-A c99-like declaration syntax is also allowed:
+c99のような宣言構文も使用できる。
 
 @smallexample
   id array = @dots{};
@@ -758,7 +652,7 @@ A c99-like declaration syntax is also allowed:
   @}
 @end smallexample
 
-this is completely equivalent to:
+これは完全に次のものと同等であるが、
 
 @smallexample
   id array = @dots{};
@@ -772,10 +666,9 @@ this is completely equivalent to:
   @}
 @end smallexample
 
-but can save some typing.
+いくつかの入力を省くことができる。
 
-Note that the option @option{-std=c99} is not required to allow this
-syntax in Objective-C.
+Objective-Cでこの構文を許可するには、オプション@option{-std = c99}は不要であることに注意。
 
 @c ================================
 @node Fast enumeration details
