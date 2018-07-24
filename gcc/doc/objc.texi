@@ -672,9 +672,9 @@ Objective-Cでこの構文を許可するには、オプション@option{-std = 
 
 @c ================================
 @node Fast enumeration details
-@subsection Fast Enumeration Details
+@subsection 高速列挙の詳細
 
-Here is a more technical description with the gory details.  Consider the code
+ここでは、より詳細な技術的な説明がある。このコードを考える
 
 @smallexample
   for (@var{object expression} in @var{collection expression})
@@ -683,62 +683,37 @@ Here is a more technical description with the gory details.  Consider the code
   @}
 @end smallexample
 
-here is what happens when you run it:
+ここでそれを実行するときに起こるものである：
 
 @itemize @bullet
 @item
-@code{@var{collection expression}} is evaluated exactly once and the
-result is used as the collection object to iterate over.  This means
-it is safe to write code such as @code{for (object in [NSDictionary
-keyEnumerator]) @dots{}}.
+@code{@var{collection expression}}は正確に1回評価され、結果は反復処理のコレクションオブジェクトとして使用される。 つまり、@code{for (object in [NSDictionary keyEnumerator]) @dots{}}などのコードを記述することは安全である。
 
 @item
-the iteration is implemented by the compiler by repeatedly getting
-batches of objects from the collection object using the fast
-enumeration protocol (see below), then iterating over all objects in
-the batch.  This is faster than a normal enumeration where objects are
-retrieved one by one (hence the name ``fast enumeration'').
+反復は、高速列挙プロトコル（下記参照）を使用してコレクションオブジェクトからオブジェクトのバッチを繰り返し取得した後、バッチ内のすべてのオブジェクトを反復処理することによってコンパイラによって実装される。 これは、オブジェクトが1つずつ検索される通常の列挙型よりも高速である（したがって、名前は「高速列挙」）。
 
 @item
-if there are no objects in the collection, then
-@code{@var{object expression}} is set to @code{nil} and the loop
-immediately terminates.
+コレクションにオブジェクトがない場合、@code{@var{object expression}}は@code {nil}に設定され、ループはただちに終了する。
 
 @item
-if there are objects in the collection, then for each object in the
-collection (in the order they are returned) @code{@var{object expression}}
-is set to the object, then @code{@var{statements}} are executed.
+コレクション内にオブジェクトがある場合、コレクション内の各オブジェクト（返された順序）で@code{@var{object expression}}がオブジェクトに設定され、次に@code{@var{statements}}が実行される。
 
 @item
-@code{@var{statements}} can contain @code{break} and @code{continue}
-commands, which will abort the iteration or skip to the next loop
-iteration as expected.
+@code{@var{statements}}には、@code{break}コマンドと@code{continue}コマンドを含めることができる。これにより、繰り返しを中断したり、次のループの繰り返しにスキップしたりできる。
 
 @item
-when the iteration ends because there are no more objects to iterate
-over, @code{@var{object expression}} is set to @code{nil}.  This allows
-you to determine whether the iteration finished because a @code{break}
-command was used (in which case @code{@var{object expression}} will remain
-set to the last object that was iterated over) or because it iterated
-over all the objects (in which case @code{@var{object expression}} will be
-set to @code{nil}).
+繰り返し処理するオブジェクトがなくなるため反復が終了すると、@code{@var{object expression}}は@code {nil}に設定される。 これにより、@code{break}コマンドが使用されたため（その場合は@code{@var{object expression}}は、反復処理された最後のオブジェクトに設定されたままである。）に反復が終了したか、すべてのオブジェクトを反復したが （この場合は@code{@var{object expression}}は@code {nil}に設定される）どうかを判断できる。
 
 @item
-@code{@var{statements}} must not make any changes to the collection
-object; if they do, it is a hard error and the fast enumeration
-terminates by invoking @code{objc_enumerationMutation}, a runtime
-function that normally aborts the program but which can be customized
-by Foundation libraries via @code{objc_set_mutation_handler} to do
-something different, such as raising an exception.
+@code{@var{statements}}はコレクションオブジェクトを変更してはならない。 もしそうであれば、それは深刻なエラーであり、高速列挙は@code{objc_enumerationMutation}を呼び出すことによって終了する。これは、通常はプログラムを強制終了するが、Foundationライブラリが@code{objc_set_mutation_handler}を介して、例えば例外を生じるようにカスタマイズすることができる。
 
 @end itemize
 
 @c ================================
 @node Fast enumeration protocol
-@subsection Fast Enumeration Protocol
+@subsection 高速列挙プロトコル
 
-If you want your own collection object to be usable with fast
-enumeration, you need to have it implement the method
+独自のコレクションオブジェクトを高速列挙で使用できるようにするには、以下のメソッドを実装する必要がある
 
 @smallexample
 - (unsigned long) countByEnumeratingWithState: (NSFastEnumerationState *)state
@@ -746,7 +721,7 @@ enumeration, you need to have it implement the method
                                         count: (unsigned long)len;
 @end smallexample
 
-where @code{NSFastEnumerationState} must be defined in your code as follows:
+ここで@code{NSFastEnumerationState}は以下のようにコード内で定義されていなくてはならない
 
 @smallexample
 typedef struct
@@ -758,76 +733,31 @@ typedef struct
 @} NSFastEnumerationState;
 @end smallexample
 
-If no @code{NSFastEnumerationState} is defined in your code, the
-compiler will automatically replace @code{NSFastEnumerationState *}
-with @code{struct __objcFastEnumerationState *}, where that type is
-silently defined by the compiler in an identical way.  This can be
-confusing and we recommend that you define
-@code{NSFastEnumerationState} (as shown above) instead.
+コードに@code {NSFastEnumerationState}が定義されていない場合、コンパイラは自動的に@code{NSFastEnumerationState *}を@code{struct __objcFastEnumerationState *}に置き換える。この型はコンパイラによって同じ方法で静かに定義される。 これは混乱する可能性がある。代わりに@code{NSFastEnumerationState}を定義することを推奨する（上を参照）。
 
-The method is called repeatedly during a fast enumeration to retrieve
-batches of objects.  Each invocation of the method should retrieve the
-next batch of objects.
+このメソッドは、オブジェクトのバッチを取得するための高速列挙中に繰り返し呼び出される。 メソッドの各呼び出しは、オブジェクトの次のバッチを取得する必要がある。
 
-The return value of the method is the number of objects in the current
-batch; this should not exceed @code{len}, which is the maximum size of
-a batch as requested by the caller.  The batch itself is returned in
-the @code{itemsPtr} field of the @code{NSFastEnumerationState} struct.
+メソッドの戻り値は、現在のバッチ内のオブジェクトの数である。 これは、呼び出し側が要求したバッチの最大サイズである@code{len}を超えてはならない。 バッチ自体は、@code{NSFastEnumerationState}構造体の@code{itemsPtr}フィールドに返される。
 
-To help with returning the objects, the @code{objects} array is a C
-array preallocated by the caller (on the stack) of size @code{len}.
-In many cases you can put the objects you want to return in that
-@code{objects} array, then do @code{itemsPtr = objects}.  But you
-don't have to; if your collection already has the objects to return in
-some form of C array, it could return them from there instead.
+オブジェクトを返すのを助けるために、@code{objects}配列は、@code{len}というサイズの呼び出し側が（スタック上に）あらかじめ割り当てたC配列である。 多くの場合、返すオブジェクトをその@code{objects}配列に配置してから、@code{itemsPtr = objects}とすることができる。 しかし、その必要はない。 コレクションに既にC配列の何らかの形で返すオブジェクトがある場合、代わりにそこから戻すことができる。
 
-The @code{state} and @code{extra} fields of the
-@code{NSFastEnumerationState} structure allows your collection object
-to keep track of the state of the enumeration.  In a simple array
-implementation, @code{state} may keep track of the index of the last
-object that was returned, and @code{extra} may be unused.
+@code{NSFastEnumerationState}構造体の@code{state}フィールドと@code{extra}フィールドは、コレクションオブジェクトが列挙の状態を追跡できるようにする。 単純な配列の実装では、@code{state}は最後に返されたオブジェクトのインデックスを追跡し、@code{extra}は使用されないかもしれない。
 
-The @code{mutationsPtr} field of the @code{NSFastEnumerationState} is
-used to keep track of mutations.  It should point to a number; before
-working on each object, the fast enumeration loop will check that this
-number has not changed.  If it has, a mutation has happened and the
-fast enumeration will abort.  So, @code{mutationsPtr} could be set to
-point to some sort of version number of your collection, which is
-increased by one every time there is a change (for example when an
-object is added or removed).  Or, if you are content with less strict
-mutation checks, it could point to the number of objects in your
-collection or some other value that can be checked to perform an
-approximate check that the collection has not been mutated.
+@code{NSFastEnumerationState}の@code{mutationsPtr}フィールドは、書き換えを追跡するために使用される。 それは数字を指すべきである。 各オブジェクトを処理する前に、高速列挙ループはこの番号が変更されていないことを確認する。 それがあれば、書き換えが起こり、高速列挙が中止される。 したがって、@code{mutationsPtr}はコレクションのバージョン番号を指すように設定することができる。オブジェクトの追加や削除などの変更があるたびに1ずつ増加する。 あるいは、厳密な書き換えチェックをしていないコンテンツの場合は、コレクション内のオブジェクトの数、またはコレクションが書き換えをしていないことを確認するためにチェックできる他の値を指すことができる。
 
-Finally, note how we declared the @code{len} argument and the return
-value to be of type @code{unsigned long}.  They could also be declared
-to be of type @code{unsigned int} and everything would still work.
+最後に、@code{len}引数と戻り値の型を@code {unsigned long}と宣言したことに注意せよ。 それらは@code{unsigned int}型であると宣言することもできるが、それでもすべてが動作する。
 
 @c =========================================================================
 @node Messaging with the GNU Objective-C runtime
-@section Messaging with the GNU Objective-C Runtime
+@section GNU Objective-C ランタイムでのメッセージング
 
-This section is specific for the GNU Objective-C runtime.  If you are
-using a different runtime, you can skip it.
+この節は、GNU Objective-Cランタイムに特有のものである。 別のランタイムを使用している場合は、この節をスキップできる。
 
-The implementation of messaging in the GNU Objective-C runtime is
-designed to be portable, and so is based on standard C.
+GNU Objective-Cランタイムでのメッセージングの実装は移植性が高く設計されており、標準Cに基づいている。
 
-Sending a message in the GNU Objective-C runtime is composed of two
-separate steps.  First, there is a call to the lookup function,
-@code{objc_msg_lookup ()} (or, in the case of messages to super,
-@code{objc_msg_lookup_super ()}).  This runtime function takes as
-argument the receiver and the selector of the method to be called; it
-returns the @code{IMP}, that is a pointer to the function implementing
-the method.  The second step of method invocation consists of casting
-this pointer function to the appropriate function pointer type, and
-calling the function pointed to it with the right arguments.
+GNU Objective-Cランタイムでのメッセージの送信は、2つのステップから構成されている。 まず、ルックアップ関数@code{objc_msg_lookup()}（superへのメッセージの場合は@code{objc_msg_lookup_super()}）を呼び出す。 この実行時関数は、呼び出されるメソッドの受信側とセレクタを引数として取る。 メソッドを実装している関数へのポインタである@code{IMP}を返す。 メソッド呼び出しの2番目のステップは、このポインタ関数を適切な関数ポインタ型にキャストし、正しい引数で指された関数を呼び出すことである。
 
-For example, when the compiler encounters a method invocation such as
-@code{[object init]}, it compiles it into a call to
-@code{objc_msg_lookup (object, @@selector(init))} followed by a cast
-of the returned value to the appropriate function pointer type, and
-then it calls it.
+たとえば、コンパイラが@code{[object init]}のようなメソッド呼び出しを検出すると、コンパイラはそれをコンパイルして@code{objc_msg_lookup(object, @@selector(init))} 値を適切な関数ポインタ型に変換し、それを呼び出す。
 
 @menu
 * Dynamically registering methods::
@@ -836,32 +766,23 @@ then it calls it.
 
 @c =========================================================================
 @node Dynamically registering methods
-@subsection Dynamically Registering Methods
+@subsection 動的に登録されたメソッド
 
-If @code{objc_msg_lookup()} does not find a suitable method
-implementation, because the receiver does not implement the required
-method, it tries to see if the class can dynamically register the
-method.
+受信側が必要なメソッドを実装していないため、@code{objc_msg_lookup()}が適切なメソッド実装を見つけられない場合、クラスがメソッドを動的に登録できるかどうかを確認しようとする。
 
-To do so, the runtime checks if the class of the receiver implements
-the method
+そうするために、ランタイムは、レシーバの以下のクラスがメソッドを実装しているかどうかをチェックする。
 
 @smallexample
 + (BOOL) resolveInstanceMethod: (SEL)selector;
 @end smallexample
 
-in the case of an instance method, or
+これはインスタンスメソッドの場合で
 
 @smallexample
 + (BOOL) resolveClassMethod: (SEL)selector;
 @end smallexample
 
-in the case of a class method.  If the class implements it, the
-runtime invokes it, passing as argument the selector of the original
-method, and if it returns @code{YES}, the runtime tries the lookup
-again, which could now succeed if a matching method was added
-dynamically by @code{+resolveInstanceMethod:} or
-@code{+resolveClassMethod:}.
+これはクラスメソッドの場合である。クラスがそれを実装すると、ランタイムはそれを呼び出し、元のメソッドのセレクタを引数として渡し、@code{YES}を返す場合、ランタイムは再度参照を試み、一致したメソッドが@code{+resolveInstanceMethod:}または@code{+resolveClassMethod:}によって動的に加えられるなら成功する可能性がある。
 
 This allows classes to dynamically register methods (by adding them to
 the class using @code{class_addMethod}) when they are first called.
