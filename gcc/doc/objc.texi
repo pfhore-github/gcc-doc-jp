@@ -784,77 +784,26 @@ GNU Objective-Cランタイムでのメッセージの送信は、2つのステ�
 
 これはクラスメソッドの場合である。クラスがそれを実装すると、ランタイムはそれを呼び出し、元のメソッドのセレクタを引数として渡し、@code{YES}を返す場合、ランタイムは再度参照を試み、一致したメソッドが@code{+resolveInstanceMethod:}または@code{+resolveClassMethod:}によって動的に加えられるなら成功する可能性がある。
 
-This allows classes to dynamically register methods (by adding them to
-the class using @code{class_addMethod}) when they are first called.
-To do so, a class should implement @code{+resolveInstanceMethod:} (or,
-depending on the case, @code{+resolveClassMethod:}) and have it
-recognize the selectors of methods that can be registered dynamically
-at runtime, register them, and return @code{YES}.  It should return
-@code{NO} for methods that it does not dynamically registered at
-runtime.
+これにより、クラスを最初に呼び出すときに、クラスを（@code{class_addMethod}を使用してクラスに追加することによって）メソッドを動的に登録することができる。 これを行うには、クラスは@code{+resolveInstanceMethod:}（あるいは場合によっては@code{+resolveClassMethod:}）を実装し、実行時に動的に登録できるメソッドのセレクタを認識させて登録し、 @code{YES}を返す。 実行時に動的に登録されないメソッドの場合は、@code{NO}を返す必要がある。
 
-If @code{+resolveInstanceMethod:} (or @code{+resolveClassMethod:}) is
-not implemented or returns @code{NO}, the runtime then tries the
-forwarding hook.
+@code{+resolveInstanceMethod:}（または@code{+resolveClassMethod:}）が実装されていないか、または@code{NO}を返した場合、ランタイムは転送フックを試行する。
 
-Support for @code{+resolveInstanceMethod:} and
-@code{resolveClassMethod:} was added to the GNU Objective-C runtime in
-GCC version 4.6.
+@code{+resolveInstanceMethod:}と@code{resolveClassMethod:}のサポートは、GCCバージョン4.6のGNU Objective-Cランタイムに追加された。
 
 @c =========================================================================
 @node Forwarding hook
-@subsection Forwarding Hook
+@subsection 転送フック
 
-The GNU Objective-C runtime provides a hook, called
-@code{__objc_msg_forward2}, which is called by
-@code{objc_msg_lookup()} when it cannot find a method implementation in
-the runtime tables and after calling @code{+resolveInstanceMethod:}
-and @code{+resolveClassMethod:} has been attempted and did not succeed
-in dynamically registering the method.
+GNU Objective-Cランタイムは@code{__objc_msg_forward2}と呼ばれるフックを提供する。フックはランタイムテーブルでメソッドの実装が見つからず、@code{+resolveInstanceMethod:}と@code{+resolveClassMethod:}の呼び出しが試行され、メソッドを動的に登録できなかった場合、@code{objc_msg_lookup()}によって呼び出される。
 
-To configure the hook, you set the global variable
-@code{__objc_msg_forward2} to a function with the same argument and
-return types of @code{objc_msg_lookup()}.  When
-@code{objc_msg_lookup()} can not find a method implementation, it
-invokes the hook function you provided to get a method implementation
-to return.  So, in practice @code{__objc_msg_forward2} allows you to
-extend @code{objc_msg_lookup()} by adding some custom code that is
-called to do a further lookup when no standard method implementation
-can be found using the normal lookup.
+フックを設定するには、グローバル変数@code{__objc_msg_forward2}を、@code{objc_msg_lookup()}と同じ引数を持ち同じ型を返す関数に設定する。 @code{objc_msg_lookup()}がメソッド実装を見つけることができないときは、提供したフック関数を呼び出して、メソッド実装が返るようにする。 したがって、実際には、@code{__objc_msg_forward2}では、通常のルックアップを使用して標準メソッドの実装が見つからない場合に、さらにルックアップを行うために呼び出されるカスタムコードを追加することで、@code{objc_msg_lookup()}を拡張できる。
 
-This hook is generally reserved for ``Foundation'' libraries such as
-GNUstep Base, which use it to implement their high-level method
-forwarding API, typically based around the @code{forwardInvocation:}
-method.  So, unless you are implementing your own ``Foundation''
-library, you should not set this hook.
+このフックは一般的に、GNUstep Baseのような "Foundation"ライブラリのために予約されています。GNUstep Baseは、通常、@code{forwardInvocation:}メソッドに基づいて高水準メソッド転送APIを実装する。 したがって、独自の "Foundation"ライブラリを実装している場合を除き、このフックを設定するべきではない。
 
-In a typical forwarding implementation, the @code{__objc_msg_forward2}
-hook function determines the argument and return type of the method
-that is being looked up, and then creates a function that takes these
-arguments and has that return type, and returns it to the caller.
-Creating this function is non-trivial and is typically performed using
-a dedicated library such as @code{libffi}.
+一般的な転送実装では、@code{__objc_msg_forward2}フック関数は、検索されているメソッドの引数と戻り値の型を決定し、これらの引数をとり、その戻り値の型を持つ関数を作成し、呼び出し元に返す 。 この関数を作成するのは簡単ではなく、通常は@code{libffi}などの専用ライブラリを使用して実行される。
 
-The forwarding method implementation thus created is returned by
-@code{objc_msg_lookup()} and is executed as if it was a normal method
-implementation.  When the forwarding method implementation is called,
-it is usually expected to pack all arguments into some sort of object
-(typically, an @code{NSInvocation} in a ``Foundation'' library), and
-hand it over to the programmer (@code{forwardInvocation:}) who is then
-allowed to manipulate the method invocation using a high-level API
-provided by the ``Foundation'' library.  For example, the programmer
-may want to examine the method invocation arguments and name and
-potentially change them before forwarding the method invocation to one
-or more local objects (@code{performInvocation:}) or even to remote
-objects (by using Distributed Objects or some other mechanism).  When
-all this completes, the return value is passed back and must be
-returned correctly to the original caller.
+転送メソッドの実装が呼び出されると、通常、すべての引数をある種のオブジェクト（通常は「Foundation」ライブラリの@code {NSInvocation}）にパックし、プログラマに渡してから(@code{forwardInvocation:})、 "Foundation"ライブラリによって提供される高水準APIを使用してメソッド呼び出しを操作することができる。たとえば、プログラマーは、メソッド呼び出しの引数と名前を調べ、メソッド呼び出しを1つ以上のローカルオブジェクト（@code{performInvocation:}）またはリモートオブジェクトにさえ転送する前にそれらを変更することができる（分散オブジェクトまたは 他のメカニズムを使うことによって）。 これがすべて完了すると、戻り値は返され、元の呼び出し元に正しく返されなければならない。
 
-Note that the GNU Objective-C runtime currently provides no support
-for method forwarding or method invocations other than the
-@code{__objc_msg_forward2} hook.
+GNU Objective-Cランタイムは現在、@code{__ objc_msg_forward2}フック以外のメソッド転送やメソッド呼び出しをサポートしていないことに注意せよ。
 
-If the forwarding hook does not exist or returns @code{NULL}, the
-runtime currently attempts forwarding using an older, deprecated API,
-and if that fails, it aborts the program.  In future versions of the
-GNU Objective-C runtime, the runtime will immediately abort.
+転送フックが存在しないか、または@code{NULL}を返す場合、ランタイムは現在、廃止予定の古いAPIを使用して転送を試みる。失敗した場合、プログラムは異常終了する。 GNU Objective-Cランタイムの将来のバージョンでは、ランタイムは即座に中止されるだろう。
