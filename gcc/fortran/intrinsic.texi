@@ -1,5 +1,5 @@
 @ignore
-Copyright (C) 2005-2017 Free Software Foundation, Inc.
+Copyright (C) 2005-2018 Free Software Foundation, Inc.
 This is part of the GNU Fortran manual.   
 For copying conditions, see the file gfortran.texi.
 
@@ -36,7 +36,17 @@ Some basic guidelines for editing this document:
 @end tex
 
 
-@node Intrinsic Procedures
+
+@ifinfo
+@node Intrinsic
+@end ifinfo
+@ifnotinfo
+@anchor{Intrinsic}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{Intrinsic}
+@end ifnotinfo Procedures
 @chapter Intrinsic Procedures
 @cindex intrinsic procedures
 
@@ -324,7 +334,17 @@ Some basic guidelines for editing this document:
 * @code{XOR}:           XOR,       Bitwise logical exclusive or
 @end menu
 
-@node Introduction to Intrinsics
+
+@ifinfo
+@node Introduction
+@end ifinfo
+@ifnotinfo
+@anchor{Introduction}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{Introduction}
+@end ifnotinfo to Intrinsics
 @section Introduction to intrinsic procedures
 
 The intrinsic procedures provided by GNU Fortran include all of the
@@ -366,7 +386,17 @@ the applicable standard for each intrinsic procedure is noted.
 
 
 
+
+@ifinfo
 @node ABORT
+@end ifinfo
+@ifnotinfo
+@anchor{ABORT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ABORT}
+@end ifnotinfo
 @section @code{ABORT} --- Abort the program
 @fnindex ABORT
 @cindex program termination, with core dump
@@ -406,7 +436,17 @@ end program test_abort
 
 
 
+
+@ifinfo
 @node ABS
+@end ifinfo
+@ifnotinfo
+@anchor{ABS}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ABS}
+@end ifnotinfo
 @section @code{ABS} --- Absolute value
 @fnindex ABS
 @fnindex CABS
@@ -474,7 +514,17 @@ end program test_abs
 
 
 
+
+@ifinfo
 @node ACCESS
+@end ifinfo
+@ifnotinfo
+@anchor{ACCESS}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ACCESS}
+@end ifnotinfo
 @section @code{ACCESS} --- Checks file access modes
 @fnindex ACCESS
 @cindex file system, access mode
@@ -533,7 +583,17 @@ end program access_test
 
 
 
+
+@ifinfo
 @node ACHAR
+@end ifinfo
+@ifnotinfo
+@anchor{ACHAR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ACHAR}
+@end ifnotinfo
 @section @code{ACHAR} --- Character in @acronym{ASCII} collating sequence 
 @fnindex ACHAR
 @cindex @acronym{ASCII} collating sequence
@@ -584,7 +644,17 @@ and formatted string representations.
 
 
 
+
+@ifinfo
 @node ACOS
+@end ifinfo
+@ifnotinfo
+@anchor{ACOS}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ACOS}
+@end ifnotinfo
 @section @code{ACOS} --- Arccosine function 
 @fnindex ACOS
 @fnindex DACOS
@@ -696,7 +766,17 @@ Radians function: @ref{ACOS}
 
 
 
+
+@ifinfo
 @node ACOSH
+@end ifinfo
+@ifnotinfo
+@anchor{ACOSH}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ACOSH}
+@end ifnotinfo
 @section @code{ACOSH} --- Inverse hyperbolic cosine function
 @fnindex ACOSH
 @fnindex DACOSH
@@ -748,7 +828,17 @@ Inverse function: @ref{COSH}
 
 
 
+
+@ifinfo
 @node ADJUSTL
+@end ifinfo
+@ifnotinfo
+@anchor{ADJUSTL}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ADJUSTL}
+@end ifnotinfo
 @section @code{ADJUSTL} --- Left adjust a string 
 @fnindex ADJUSTL
 @cindex string, adjust left
@@ -793,7 +883,17 @@ end program test_adjustl
 
 
 
+
+@ifinfo
 @node ADJUSTR
+@end ifinfo
+@ifnotinfo
+@anchor{ADJUSTR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ADJUSTR}
+@end ifnotinfo
 @section @code{ADJUSTR} --- Right adjust a string 
 @fnindex ADJUSTR
 @cindex string, adjust right
@@ -838,7 +938,17 @@ end program test_adjustr
 
 
 
+
+@ifinfo
 @node AIMAG
+@end ifinfo
+@ifnotinfo
+@anchor{AIMAG}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{AIMAG}
+@end ifnotinfo
 @section @code{AIMAG} --- Imaginary part of complex number  
 @fnindex AIMAG
 @fnindex DIMAG
@@ -894,7 +1004,17 @@ end program test_aimag
 
 
 
+
+@ifinfo
 @node AINT
+@end ifinfo
+@ifnotinfo
+@anchor{AINT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{AINT}
+@end ifnotinfo
 @section @code{AINT} --- Truncate to a whole number
 @fnindex AINT
 @fnindex DINT
@@ -952,7 +1072,17 @@ end program test_aint
 
 
 
+
+@ifinfo
 @node ALARM
+@end ifinfo
+@ifnotinfo
+@anchor{ALARM}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ALARM}
+@end ifnotinfo
 @section @code{ALARM} --- Execute a routine after a given delay
 @fnindex ALARM
 @cindex delayed execution
@@ -1003,7 +1133,17 @@ after 3 seconds.
 
 
 
+
+@ifinfo
 @node ALL
+@end ifinfo
+@ifnotinfo
+@anchor{ALL}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ALL}
+@end ifnotinfo
 @section @code{ALL} --- All values in @var{MASK} along @var{DIM} are true 
 @fnindex ALL
 @cindex array, apply condition
@@ -1070,7 +1210,17 @@ end program test_all
 
 
 
+
+@ifinfo
 @node ALLOCATED
+@end ifinfo
+@ifnotinfo
+@anchor{ALLOCATED}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ALLOCATED}
+@end ifnotinfo
 @section @code{ALLOCATED} --- Status of an allocatable entity
 @fnindex ALLOCATED
 @cindex allocation, status
@@ -1116,7 +1266,17 @@ end program test_allocated
 
 
 
+
+@ifinfo
 @node AND
+@end ifinfo
+@ifnotinfo
+@anchor{AND}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{AND}
+@end ifnotinfo
 @section @code{AND} --- Bitwise logical AND
 @fnindex AND
 @cindex bitwise logical and
@@ -1170,7 +1330,17 @@ Fortran 95 elemental function: @ref{IAND}
 
 
 
+
+@ifinfo
 @node ANINT
+@end ifinfo
+@ifnotinfo
+@anchor{ANINT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ANINT}
+@end ifnotinfo
 @section @code{ANINT} --- Nearest whole number
 @fnindex ANINT
 @fnindex DNINT
@@ -1226,7 +1396,17 @@ end program test_anint
 
 
 
+
+@ifinfo
 @node ANY
+@end ifinfo
+@ifnotinfo
+@anchor{ANY}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ANY}
+@end ifnotinfo
 @section @code{ANY} --- Any value in @var{MASK} along @var{DIM} is true 
 @fnindex ANY
 @cindex array, apply condition
@@ -1293,7 +1473,17 @@ end program test_any
 
 
 
+
+@ifinfo
 @node ASIN
+@end ifinfo
+@ifnotinfo
+@anchor{ASIN}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ASIN}
+@end ifnotinfo
 @section @code{ASIN} --- Arcsine function 
 @fnindex ASIN
 @fnindex DASIN
@@ -1405,7 +1595,17 @@ Radians function: @ref{ASIN}
 
 
 
+
+@ifinfo
 @node ASINH
+@end ifinfo
+@ifnotinfo
+@anchor{ASINH}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ASINH}
+@end ifnotinfo
 @section @code{ASINH} --- Inverse hyperbolic sine function
 @fnindex ASINH
 @fnindex DASINH
@@ -1457,7 +1657,17 @@ Inverse function: @ref{SINH}
 
 
 
+
+@ifinfo
 @node ASSOCIATED
+@end ifinfo
+@ifnotinfo
+@anchor{ASSOCIATED}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ASSOCIATED}
+@end ifnotinfo
 @section @code{ASSOCIATED} --- Status of a pointer or pointer/target pair 
 @fnindex ASSOCIATED
 @cindex pointer, status
@@ -1534,7 +1744,17 @@ end program test_associated
 
 
 
+
+@ifinfo
 @node ATAN
+@end ifinfo
+@ifnotinfo
+@anchor{ATAN}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ATAN}
+@end ifnotinfo
 @section @code{ATAN} --- Arctangent function 
 @fnindex ATAN
 @fnindex DATAN
@@ -1659,7 +1879,17 @@ Radians function: @ref{ATAN}
 
 
 
+
+@ifinfo
 @node ATAN2
+@end ifinfo
+@ifnotinfo
+@anchor{ATAN2}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ATAN2}
+@end ifnotinfo
 @section @code{ATAN2} --- Arctangent function 
 @fnindex ATAN2
 @fnindex DATAN2
@@ -1790,7 +2020,17 @@ Radians function: @ref{ATAN2}
 
 
 
+
+@ifinfo
 @node ATANH
+@end ifinfo
+@ifnotinfo
+@anchor{ATANH}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ATANH}
+@end ifnotinfo
 @section @code{ATANH} --- Inverse hyperbolic tangent function
 @fnindex ATANH
 @fnindex DATANH
@@ -1842,7 +2082,17 @@ Inverse function: @ref{TANH}
 
 
 
+
+@ifinfo
 @node ATOMIC_ADD
+@end ifinfo
+@ifnotinfo
+@anchor{ATOMIC_ADD}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ATOMIC_ADD}
+@end ifnotinfo
 @section @code{ATOMIC_ADD} --- Atomic ADD operation
 @fnindex ATOMIC_ADD
 @cindex Atomic subroutine, add
@@ -1892,7 +2142,17 @@ end program atomic
 
 
 
+
+@ifinfo
 @node ATOMIC_AND
+@end ifinfo
+@ifnotinfo
+@anchor{ATOMIC_AND}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ATOMIC_AND}
+@end ifnotinfo
 @section @code{ATOMIC_AND} --- Atomic bitwise AND operation
 @fnindex ATOMIC_AND
 @cindex Atomic subroutine, AND
@@ -1941,7 +2201,17 @@ end program atomic
 
 
 
+
+@ifinfo
 @node ATOMIC_CAS
+@end ifinfo
+@ifnotinfo
+@anchor{ATOMIC_CAS}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ATOMIC_CAS}
+@end ifnotinfo
 @section @code{ATOMIC_CAS} --- Atomic compare and swap
 @fnindex ATOMIC_DEFINE
 @cindex Atomic subroutine, compare and swap
@@ -1995,7 +2265,17 @@ end program atomic
 
 
 
+
+@ifinfo
 @node ATOMIC_DEFINE
+@end ifinfo
+@ifnotinfo
+@anchor{ATOMIC_DEFINE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ATOMIC_DEFINE}
+@end ifnotinfo
 @section @code{ATOMIC_DEFINE} --- Setting a variable atomically
 @fnindex ATOMIC_DEFINE
 @cindex Atomic subroutine, define
@@ -2046,7 +2326,17 @@ end program atomic
 
 
 
+
+@ifinfo
 @node ATOMIC_FETCH_ADD
+@end ifinfo
+@ifnotinfo
+@anchor{ATOMIC_FETCH_ADD}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ATOMIC_FETCH_ADD}
+@end ifnotinfo
 @section @code{ATOMIC_FETCH_ADD} --- Atomic ADD operation with prior fetch
 @fnindex ATOMIC_FETCH_ADD
 @cindex Atomic subroutine, ADD with fetch
@@ -2099,7 +2389,17 @@ end program atomic
 
 
 
+
+@ifinfo
 @node ATOMIC_FETCH_AND
+@end ifinfo
+@ifnotinfo
+@anchor{ATOMIC_FETCH_AND}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ATOMIC_FETCH_AND}
+@end ifnotinfo
 @section @code{ATOMIC_FETCH_AND} --- Atomic bitwise AND operation with prior fetch
 @fnindex ATOMIC_FETCH_AND
 @cindex Atomic subroutine, AND with fetch
@@ -2150,7 +2450,17 @@ end program atomic
 
 
 
+
+@ifinfo
 @node ATOMIC_FETCH_OR
+@end ifinfo
+@ifnotinfo
+@anchor{ATOMIC_FETCH_OR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ATOMIC_FETCH_OR}
+@end ifnotinfo
 @section @code{ATOMIC_FETCH_OR} --- Atomic bitwise OR operation with prior fetch
 @fnindex ATOMIC_FETCH_OR
 @cindex Atomic subroutine, OR with fetch
@@ -2201,7 +2511,17 @@ end program atomic
 
 
 
+
+@ifinfo
 @node ATOMIC_FETCH_XOR
+@end ifinfo
+@ifnotinfo
+@anchor{ATOMIC_FETCH_XOR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ATOMIC_FETCH_XOR}
+@end ifnotinfo
 @section @code{ATOMIC_FETCH_XOR} --- Atomic bitwise XOR operation with prior fetch
 @fnindex ATOMIC_FETCH_XOR
 @cindex Atomic subroutine, XOR with fetch
@@ -2252,7 +2572,17 @@ end program atomic
 
 
 
+
+@ifinfo
 @node ATOMIC_OR
+@end ifinfo
+@ifnotinfo
+@anchor{ATOMIC_OR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ATOMIC_OR}
+@end ifnotinfo
 @section @code{ATOMIC_OR} --- Atomic bitwise OR operation
 @fnindex ATOMIC_OR
 @cindex Atomic subroutine, OR
@@ -2301,7 +2631,17 @@ end program atomic
 
 
 
+
+@ifinfo
 @node ATOMIC_REF
+@end ifinfo
+@ifnotinfo
+@anchor{ATOMIC_REF}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ATOMIC_REF}
+@end ifnotinfo
 @section @code{ATOMIC_REF} --- Obtaining the value of a variable atomically
 @fnindex ATOMIC_REF
 @cindex Atomic subroutine, reference
@@ -2358,7 +2698,17 @@ end program atomic
 @end table
 
 
+
+@ifinfo
 @node ATOMIC_XOR
+@end ifinfo
+@ifnotinfo
+@anchor{ATOMIC_XOR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ATOMIC_XOR}
+@end ifnotinfo
 @section @code{ATOMIC_XOR} --- Atomic bitwise OR operation
 @fnindex ATOMIC_XOR
 @cindex Atomic subroutine, XOR
@@ -2406,7 +2756,17 @@ end program atomic
 @end table
 
 
+
+@ifinfo
 @node BACKTRACE
+@end ifinfo
+@ifnotinfo
+@anchor{BACKTRACE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{BACKTRACE}
+@end ifnotinfo
 @section @code{BACKTRACE} --- Show a backtrace
 @fnindex BACKTRACE
 @cindex backtrace
@@ -2435,7 +2795,17 @@ None
 
 
 
+
+@ifinfo
 @node BESSEL_J0
+@end ifinfo
+@ifnotinfo
+@anchor{BESSEL_J0}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{BESSEL_J0}
+@end ifnotinfo
 @section @code{BESSEL_J0} --- Bessel function of the first kind of order 0
 @fnindex BESSEL_J0
 @fnindex BESJ0
@@ -2484,7 +2854,17 @@ end program test_besj0
 
 
 
+
+@ifinfo
 @node BESSEL_J1
+@end ifinfo
+@ifnotinfo
+@anchor{BESSEL_J1}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{BESSEL_J1}
+@end ifnotinfo
 @section @code{BESSEL_J1} --- Bessel function of the first kind of order 1
 @fnindex BESSEL_J1
 @fnindex BESJ1
@@ -2533,7 +2913,17 @@ end program test_besj1
 
 
 
+
+@ifinfo
 @node BESSEL_JN
+@end ifinfo
+@ifnotinfo
+@anchor{BESSEL_JN}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{BESSEL_JN}
+@end ifnotinfo
 @section @code{BESSEL_JN} --- Bessel function of the first kind
 @fnindex BESSEL_JN
 @fnindex BESJN
@@ -2599,7 +2989,17 @@ end program test_besjn
 
 
 
+
+@ifinfo
 @node BESSEL_Y0
+@end ifinfo
+@ifnotinfo
+@anchor{BESSEL_Y0}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{BESSEL_Y0}
+@end ifnotinfo
 @section @code{BESSEL_Y0} --- Bessel function of the second kind of order 0
 @fnindex BESSEL_Y0
 @fnindex BESY0
@@ -2646,7 +3046,17 @@ end program test_besy0
 
 
 
+
+@ifinfo
 @node BESSEL_Y1
+@end ifinfo
+@ifnotinfo
+@anchor{BESSEL_Y1}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{BESSEL_Y1}
+@end ifnotinfo
 @section @code{BESSEL_Y1} --- Bessel function of the second kind of order 1
 @fnindex BESSEL_Y1
 @fnindex BESY1
@@ -2693,7 +3103,17 @@ end program test_besy1
 
 
 
+
+@ifinfo
 @node BESSEL_YN
+@end ifinfo
+@ifnotinfo
+@anchor{BESSEL_YN}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{BESSEL_YN}
+@end ifnotinfo
 @section @code{BESSEL_YN} --- Bessel function of the second kind
 @fnindex BESSEL_YN
 @fnindex BESYN
@@ -2759,7 +3179,17 @@ end program test_besyn
 
 
 
+
+@ifinfo
 @node BGE
+@end ifinfo
+@ifnotinfo
+@anchor{BGE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{BGE}
+@end ifnotinfo
 @section @code{BGE} --- Bitwise greater than or equal to
 @fnindex BGE
 @cindex bitwise comparison
@@ -2794,7 +3224,17 @@ The return value is of type @code{LOGICAL} and of the default kind.
 
 
 
+
+@ifinfo
 @node BGT
+@end ifinfo
+@ifnotinfo
+@anchor{BGT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{BGT}
+@end ifnotinfo
 @section @code{BGT} --- Bitwise greater than
 @fnindex BGT
 @cindex bitwise comparison
@@ -2828,7 +3268,17 @@ The return value is of type @code{LOGICAL} and of the default kind.
 
 
 
+
+@ifinfo
 @node BIT_SIZE
+@end ifinfo
+@ifnotinfo
+@anchor{BIT_SIZE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{BIT_SIZE}
+@end ifnotinfo
 @section @code{BIT_SIZE} --- Bit size inquiry function
 @fnindex BIT_SIZE
 @cindex bits, number of
@@ -2870,7 +3320,17 @@ end program test_bit_size
 
 
 
+
+@ifinfo
 @node BLE
+@end ifinfo
+@ifnotinfo
+@anchor{BLE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{BLE}
+@end ifnotinfo
 @section @code{BLE} --- Bitwise less than or equal to
 @fnindex BLE
 @cindex bitwise comparison
@@ -2905,7 +3365,17 @@ The return value is of type @code{LOGICAL} and of the default kind.
 
 
 
+
+@ifinfo
 @node BLT
+@end ifinfo
+@ifnotinfo
+@anchor{BLT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{BLT}
+@end ifnotinfo
 @section @code{BLT} --- Bitwise less than
 @fnindex BLT
 @cindex bitwise comparison
@@ -2939,7 +3409,17 @@ The return value is of type @code{LOGICAL} and of the default kind.
 
 
 
+
+@ifinfo
 @node BTEST
+@end ifinfo
+@ifnotinfo
+@anchor{BTEST}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{BTEST}
+@end ifnotinfo
 @section @code{BTEST} --- Bit test function
 @fnindex BTEST
 @fnindex BBTEST
@@ -2995,7 +3475,17 @@ end program test_btest
 @end multitable
 @end table
 
+
+@ifinfo
 @node C_ASSOCIATED
+@end ifinfo
+@ifnotinfo
+@anchor{C_ASSOCIATED}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{C_ASSOCIATED}
+@end ifnotinfo
 @section @code{C_ASSOCIATED} --- Status of a C pointer
 @fnindex C_ASSOCIATED
 @cindex association status, C pointer
@@ -3043,7 +3533,17 @@ end subroutine association_test
 @end table
 
 
+
+@ifinfo
 @node C_F_POINTER
+@end ifinfo
+@ifnotinfo
+@anchor{C_F_POINTER}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{C_F_POINTER}
+@end ifnotinfo
 @section @code{C_F_POINTER} --- Convert C into Fortran pointer
 @fnindex C_F_POINTER
 @cindex pointer, convert C to Fortran
@@ -3097,7 +3597,17 @@ end program main
 @end table
 
 
+
+@ifinfo
 @node C_F_PROCPOINTER
+@end ifinfo
+@ifnotinfo
+@anchor{C_F_PROCPOINTER}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{C_F_PROCPOINTER}
+@end ifnotinfo
 @section @code{C_F_PROCPOINTER} --- Convert C into Fortran procedure pointer
 @fnindex C_F_PROCPOINTER
 @cindex pointer, C address of pointers
@@ -3154,7 +3664,17 @@ end program main
 @end table
 
 
+
+@ifinfo
 @node C_FUNLOC
+@end ifinfo
+@ifnotinfo
+@anchor{C_FUNLOC}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{C_FUNLOC}
+@end ifnotinfo
 @section @code{C_FUNLOC} --- Obtain the C address of a procedure
 @fnindex C_FUNLOC
 @cindex pointer, C address of procedures
@@ -3211,7 +3731,17 @@ end program main
 @end table
 
 
+
+@ifinfo
 @node C_LOC
+@end ifinfo
+@ifnotinfo
+@anchor{C_LOC}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{C_LOC}
+@end ifnotinfo
 @section @code{C_LOC} --- Obtain the C address of an object
 @fnindex C_LOC
 @cindex procedure pointer, convert C to Fortran
@@ -3256,7 +3786,17 @@ end subroutine association_test
 @end table
 
 
+
+@ifinfo
 @node C_SIZEOF
+@end ifinfo
+@ifnotinfo
+@anchor{C_SIZEOF}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{C_SIZEOF}
+@end ifnotinfo
 @section @code{C_SIZEOF} --- Size in bytes of an expression
 @fnindex C_SIZEOF
 @cindex expression size
@@ -3306,7 +3846,17 @@ where default @code{REAL} variables are unusually padded.
 @end table
 
 
+
+@ifinfo
 @node CEILING
+@end ifinfo
+@ifnotinfo
+@anchor{CEILING}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{CEILING}
+@end ifnotinfo
 @section @code{CEILING} --- Integer ceiling function
 @fnindex CEILING
 @cindex ceiling
@@ -3353,7 +3903,17 @@ end program test_ceiling
 
 
 
+
+@ifinfo
 @node CHAR
+@end ifinfo
+@ifnotinfo
+@anchor{CHAR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{CHAR}
+@end ifnotinfo
 @section @code{CHAR} --- Character conversion function
 @fnindex CHAR
 @cindex conversion, to character
@@ -3408,7 +3968,17 @@ and formatted string representations.
 
 
 
+
+@ifinfo
 @node CHDIR
+@end ifinfo
+@ifnotinfo
+@anchor{CHDIR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{CHDIR}
+@end ifnotinfo
 @section @code{CHDIR} --- Change working directory
 @fnindex CHDIR
 @cindex system, working directory
@@ -3459,7 +4029,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node CHMOD
+@end ifinfo
+@ifnotinfo
+@anchor{CHMOD}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{CHMOD}
+@end ifnotinfo
 @section @code{CHMOD} --- Change access permissions of files
 @fnindex CHMOD
 @cindex file system, change access mode
@@ -3528,7 +4108,17 @@ end program chmod_test
 
 
 
+
+@ifinfo
 @node CMPLX
+@end ifinfo
+@ifnotinfo
+@anchor{CMPLX}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{CMPLX}
+@end ifnotinfo
 @section @code{CMPLX} --- Complex conversion function
 @fnindex CMPLX
 @cindex complex numbers, conversion to
@@ -3583,7 +4173,17 @@ end program test_cmplx
 
 
 
+
+@ifinfo
 @node CO_BROADCAST
+@end ifinfo
+@ifnotinfo
+@anchor{CO_BROADCAST}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{CO_BROADCAST}
+@end ifnotinfo
 @section @code{CO_BROADCAST} --- Copy a value to all images the current set of images
 @fnindex CO_BROADCAST
 @cindex Collectives, value broadcasting
@@ -3636,7 +4236,17 @@ end program test
 
 
 
+
+@ifinfo
 @node CO_MAX
+@end ifinfo
+@ifnotinfo
+@anchor{CO_MAX}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{CO_MAX}
+@end ifnotinfo
 @section @code{CO_MAX} --- Maximal value on the current set of images
 @fnindex CO_MAX
 @cindex Collectives, maximal value
@@ -3690,7 +4300,17 @@ end program test
 
 
 
+
+@ifinfo
 @node CO_MIN
+@end ifinfo
+@ifnotinfo
+@anchor{CO_MIN}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{CO_MIN}
+@end ifnotinfo
 @section @code{CO_MIN} --- Minimal value on the current set of images
 @fnindex CO_MIN
 @cindex Collectives, minimal value
@@ -3744,7 +4364,17 @@ end program test
 
 
 
+
+@ifinfo
 @node CO_REDUCE
+@end ifinfo
+@ifnotinfo
+@anchor{CO_REDUCE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{CO_REDUCE}
+@end ifnotinfo
 @section @code{CO_REDUCE} --- Reduction of values on the current set of images
 @fnindex CO_REDUCE
 @cindex Collectives, generic reduction
@@ -3824,7 +4454,17 @@ type as result.
 
 
 
+
+@ifinfo
 @node CO_SUM
+@end ifinfo
+@ifnotinfo
+@anchor{CO_SUM}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{CO_SUM}
+@end ifnotinfo
 @section @code{CO_SUM} --- Sum of values on the current set of images
 @fnindex CO_SUM
 @cindex Collectives, sum of values
@@ -3878,7 +4518,17 @@ end program test
 
 
 
+
+@ifinfo
 @node COMMAND_ARGUMENT_COUNT
+@end ifinfo
+@ifnotinfo
+@anchor{COMMAND_ARGUMENT_COUNT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{COMMAND_ARGUMENT_COUNT}
+@end ifnotinfo
 @section @code{COMMAND_ARGUMENT_COUNT} --- Get number of command line arguments
 @fnindex COMMAND_ARGUMENT_COUNT
 @cindex command-line arguments
@@ -3922,7 +4572,17 @@ end program test_command_argument_count
 
 
 
+
+@ifinfo
 @node COMPILER_OPTIONS
+@end ifinfo
+@ifnotinfo
+@anchor{COMPILER_OPTIONS}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{COMPILER_OPTIONS}
+@end ifnotinfo
 @section @code{COMPILER_OPTIONS} --- Options passed to the compiler
 @fnindex COMPILER_OPTIONS
 @cindex flags inquiry function
@@ -3966,7 +4626,17 @@ the @code{COMPILER_OPTIONS} intrinsic.
 
 
 
+
+@ifinfo
 @node COMPILER_VERSION
+@end ifinfo
+@ifnotinfo
+@anchor{COMPILER_VERSION}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{COMPILER_VERSION}
+@end ifnotinfo
 @section @code{COMPILER_VERSION} --- Compiler version string
 @fnindex COMPILER_VERSION
 @cindex compiler, name and version
@@ -4008,7 +4678,17 @@ It contains the name of the compiler and its version number.
 
 
 
+
+@ifinfo
 @node COMPLEX
+@end ifinfo
+@ifnotinfo
+@anchor{COMPLEX}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{COMPLEX}
+@end ifnotinfo
 @section @code{COMPLEX} --- Complex conversion function
 @fnindex COMPLEX
 @cindex complex numbers, conversion to
@@ -4059,7 +4739,17 @@ end program test_complex
 
 
 
+
+@ifinfo
 @node CONJG
+@end ifinfo
+@ifnotinfo
+@anchor{CONJG}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{CONJG}
+@end ifnotinfo
 @section @code{CONJG} --- Complex conjugate function
 @fnindex CONJG
 @fnindex DCONJG
@@ -4109,7 +4799,17 @@ end program test_conjg
 
 
 
+
+@ifinfo
 @node COS
+@end ifinfo
+@ifnotinfo
+@anchor{COS}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{COS}
+@end ifnotinfo
 @section @code{COS} --- Cosine function
 @fnindex COS
 @fnindex DCOS
@@ -4232,7 +4932,17 @@ Radians function: @ref{COS}
 
 
 
+
+@ifinfo
 @node COSH
+@end ifinfo
+@ifnotinfo
+@anchor{COSH}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{COSH}
+@end ifnotinfo
 @section @code{COSH} --- Hyperbolic cosine function
 @fnindex COSH
 @fnindex DCOSH
@@ -4286,116 +4996,17 @@ Inverse function: @ref{ACOSH}
 
 
 
-@node COTAN
-@section @code{COTAN} --- Cotangent function
-@fnindex COTAN
-@fnindex DCOTAN
-@cindex trigonometric function, cotangent
-@cindex cotangent
 
-@table @asis
-@item @emph{Description}:
-@code{COTAN(X)} computes the cotangent of @var{X}. Equivalent to @code{COS(x)}
-divided by @code{SIN(x)}, or @code{1 / TAN(x)}.
-
-This function is for compatibility only and should be avoided in favor of
-standard constructs wherever possible.
-
-@item @emph{Standard}:
-GNU Extension, enabled with @option{-fdec-math}.
-
-@item @emph{Class}:
-Elemental function
-
-@item @emph{Syntax}:
-@code{RESULT = COTAN(X)}
-
-@item @emph{Arguments}:
-@multitable @columnfractions .15 .70
-@item @var{X} @tab The type shall be @code{REAL} or @code{COMPLEX}.
-@end multitable
-
-@item @emph{Return value}:
-The return value has same type and kind as @var{X}, and its value is in radians.
-
-@item @emph{Example}:
-@smallexample
-program test_cotan
-  real(8) :: x = 0.165_8
-  x = cotan(x)
-end program test_cotan
-@end smallexample
-
-@item @emph{Specific names}:
-@multitable @columnfractions .20 .20 .20 .25
-@item Name            @tab Argument          @tab Return type     @tab Standard
-@item @code{COTAN(X)}   @tab @code{REAL(4) X}  @tab @code{REAL(4)}  @tab GNU Extension
-@item @code{DCOTAN(X)}  @tab @code{REAL(8) X}  @tab @code{REAL(8)}  @tab GNU Extension
-@end multitable
-
-@item @emph{See also}:
-Converse function: @ref{TAN}
-Degrees function: @ref{COTAND}
-@end table
-
-
-
-@node COTAND
-@section @code{COTAND} --- Cotangent function, degrees
-@fnindex COTAND
-@fnindex DCOTAND
-@cindex trigonometric function, cotangent, degrees
-@cindex cotangent, degrees
-
-@table @asis
-@item @emph{Description}:
-@code{COTAND(X)} computes the cotangent of @var{X} in degrees.  Equivalent to
-@code{COSD(x)} divided by @code{SIND(x)}, or @code{1 / TAND(x)}.
-
-@item @emph{Standard}:
-GNU Extension, enabled with @option{-fdec-math}.
-
-This function is for compatibility only and should be avoided in favor of
-standard constructs wherever possible.
-
-@item @emph{Class}:
-Elemental function
-
-@item @emph{Syntax}:
-@code{RESULT = COTAND(X)}
-
-@item @emph{Arguments}:
-@multitable @columnfractions .15 .70
-@item @var{X} @tab The type shall be @code{REAL} or @code{COMPLEX}.
-@end multitable
-
-@item @emph{Return value}:
-The return value has same type and kind as @var{X}, and its value is in degrees.
-
-@item @emph{Example}:
-@smallexample
-program test_cotand
-  real(8) :: x = 0.165_8
-  x = cotand(x)
-end program test_cotand
-@end smallexample
-
-@item @emph{Specific names}:
-@multitable @columnfractions .20 .20 .20 .25
-@item Name            @tab Argument          @tab Return type     @tab Standard
-@item @code{COTAND(X)}   @tab @code{REAL(4) X}  @tab @code{REAL(4)}  @tab GNU Extension
-@item @code{DCOTAND(X)}  @tab @code{REAL(8) X}  @tab @code{REAL(8)}  @tab GNU Extension
-@end multitable
-
-@item @emph{See also}:
-Converse function: @ref{TAND}
-Radians function: @ref{COTAN}
-
-@end table
-
-
-
+@ifinfo
 @node COUNT
+@end ifinfo
+@ifnotinfo
+@anchor{COUNT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{COUNT}
+@end ifnotinfo
 @section @code{COUNT} --- Count function
 @fnindex COUNT
 @cindex array, conditionally count elements
@@ -4463,7 +5074,17 @@ end program test_count
 
 
 
+
+@ifinfo
 @node CPU_TIME
+@end ifinfo
+@ifnotinfo
+@anchor{CPU_TIME}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{CPU_TIME}
+@end ifnotinfo
 @section @code{CPU_TIME} --- CPU elapsed time in seconds
 @fnindex CPU_TIME
 @cindex time, elapsed
@@ -4518,7 +5139,17 @@ end program test_cpu_time
 
 
 
+
+@ifinfo
 @node CSHIFT
+@end ifinfo
+@ifnotinfo
+@anchor{CSHIFT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{CSHIFT}
+@end ifnotinfo
 @section @code{CSHIFT} --- Circular shift elements of an array
 @fnindex CSHIFT
 @cindex array, shift circularly
@@ -4574,7 +5205,17 @@ end program test_cshift
 
 
 
+
+@ifinfo
 @node CTIME
+@end ifinfo
+@ifnotinfo
+@anchor{CTIME}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{CTIME}
+@end ifnotinfo
 @section @code{CTIME} --- Convert a time into a string
 @fnindex CTIME
 @cindex time, conversion to string
@@ -4633,7 +5274,17 @@ end program test_ctime
 
 
 
+
+@ifinfo
 @node DATE_AND_TIME
+@end ifinfo
+@ifnotinfo
+@anchor{DATE_AND_TIME}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{DATE_AND_TIME}
+@end ifnotinfo
 @section @code{DATE_AND_TIME} --- Date and time subroutine
 @fnindex DATE_AND_TIME
 @cindex date, current
@@ -4709,7 +5360,17 @@ end program test_time_and_date
 
 
 
+
+@ifinfo
 @node DBLE
+@end ifinfo
+@ifnotinfo
+@anchor{DBLE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{DBLE}
+@end ifnotinfo
 @section @code{DBLE} --- Double conversion function
 @fnindex DBLE
 @cindex conversion, to real
@@ -4752,7 +5413,17 @@ end program test_dble
 
 
 
+
+@ifinfo
 @node DCMPLX
+@end ifinfo
+@ifnotinfo
+@anchor{DCMPLX}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{DCMPLX}
+@end ifnotinfo
 @section @code{DCMPLX} --- Double complex conversion function
 @fnindex DCMPLX
 @cindex complex numbers, conversion to
@@ -4801,7 +5472,17 @@ end program test_dcmplx
 @end table
 
 
+
+@ifinfo
 @node DIGITS
+@end ifinfo
+@ifnotinfo
+@anchor{DIGITS}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{DIGITS}
+@end ifnotinfo
 @section @code{DIGITS} --- Significant binary digits function
 @fnindex DIGITS
 @cindex model representation, significant digits
@@ -4844,7 +5525,17 @@ end program test_digits
 
 
 
+
+@ifinfo
 @node DIM
+@end ifinfo
+@ifnotinfo
+@anchor{DIM}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{DIM}
+@end ifnotinfo
 @section @code{DIM} --- Positive difference
 @fnindex DIM
 @fnindex IDIM
@@ -4897,7 +5588,17 @@ end program test_dim
 
 
 
+
+@ifinfo
 @node DOT_PRODUCT
+@end ifinfo
+@ifnotinfo
+@anchor{DOT_PRODUCT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{DOT_PRODUCT}
+@end ifnotinfo
 @section @code{DOT_PRODUCT} --- Dot product function
 @fnindex DOT_PRODUCT
 @cindex dot product
@@ -4951,7 +5652,17 @@ end program test_dot_prod
 
 
 
+
+@ifinfo
 @node DPROD
+@end ifinfo
+@ifnotinfo
+@anchor{DPROD}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{DPROD}
+@end ifnotinfo
 @section @code{DPROD} --- Double product function
 @fnindex DPROD
 @cindex product, double-precision
@@ -4998,7 +5709,17 @@ end program test_dprod
 @end table
 
 
+
+@ifinfo
 @node DREAL
+@end ifinfo
+@ifnotinfo
+@anchor{DREAL}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{DREAL}
+@end ifnotinfo
 @section @code{DREAL} --- Double real part function
 @fnindex DREAL
 @cindex complex numbers, real part
@@ -5039,7 +5760,17 @@ end program test_dreal
 
 
 
+
+@ifinfo
 @node DSHIFTL
+@end ifinfo
+@ifnotinfo
+@anchor{DSHIFTL}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{DSHIFTL}
+@end ifnotinfo
 @section @code{DSHIFTL} --- Combined left shift
 @fnindex DSHIFTL
 @cindex left shift, combined
@@ -5084,7 +5815,17 @@ kind type parameter of the other.
 @end table
 
 
+
+@ifinfo
 @node DSHIFTR
+@end ifinfo
+@ifnotinfo
+@anchor{DSHIFTR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{DSHIFTR}
+@end ifnotinfo
 @section @code{DSHIFTR} --- Combined right shift
 @fnindex DSHIFTR
 @cindex right shift, combined
@@ -5129,7 +5870,17 @@ kind type parameter of the other.
 @end table
 
 
+
+@ifinfo
 @node DTIME
+@end ifinfo
+@ifnotinfo
+@anchor{DTIME}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{DTIME}
+@end ifnotinfo
 @section @code{DTIME} --- Execution time subroutine (or function)
 @fnindex DTIME
 @cindex time, elapsed
@@ -5218,7 +5969,17 @@ end program test_dtime
 
 
 
+
+@ifinfo
 @node EOSHIFT
+@end ifinfo
+@ifnotinfo
+@anchor{EOSHIFT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{EOSHIFT}
+@end ifnotinfo
 @section @code{EOSHIFT} --- End-off shift elements of an array
 @fnindex EOSHIFT
 @cindex array, shift
@@ -5283,7 +6044,17 @@ end program test_eoshift
 
 
 
+
+@ifinfo
 @node EPSILON
+@end ifinfo
+@ifnotinfo
+@anchor{EPSILON}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{EPSILON}
+@end ifnotinfo
 @section @code{EPSILON} --- Epsilon function
 @fnindex EPSILON
 @cindex model representation, epsilon
@@ -5323,7 +6094,17 @@ end program test_epsilon
 
 
 
+
+@ifinfo
 @node ERF
+@end ifinfo
+@ifnotinfo
+@anchor{ERF}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ERF}
+@end ifnotinfo
 @section @code{ERF} --- Error function 
 @fnindex ERF
 @cindex error function
@@ -5367,7 +6148,17 @@ end program test_erf
 
 
 
+
+@ifinfo
 @node ERFC
+@end ifinfo
+@ifnotinfo
+@anchor{ERFC}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ERFC}
+@end ifnotinfo
 @section @code{ERFC} --- Error function 
 @fnindex ERFC
 @cindex error function, complementary
@@ -5411,7 +6202,17 @@ end program test_erfc
 
 
 
+
+@ifinfo
 @node ERFC_SCALED
+@end ifinfo
+@ifnotinfo
+@anchor{ERFC_SCALED}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ERFC_SCALED}
+@end ifnotinfo
 @section @code{ERFC_SCALED} --- Error function 
 @fnindex ERFC_SCALED
 @cindex error function, complementary, exponentially-scaled
@@ -5449,7 +6250,17 @@ end program test_erfc_scaled
 
 
 
+
+@ifinfo
 @node ETIME
+@end ifinfo
+@ifnotinfo
+@anchor{ETIME}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ETIME}
+@end ifnotinfo
 @section @code{ETIME} --- Execution time subroutine (or function)
 @fnindex ETIME
 @cindex time, elapsed
@@ -5526,7 +6337,17 @@ end program test_etime
 
 
 
+
+@ifinfo
 @node EVENT_QUERY
+@end ifinfo
+@ifnotinfo
+@anchor{EVENT_QUERY}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{EVENT_QUERY}
+@end ifnotinfo
 @section @code{EVENT_QUERY} --- Query whether a coarray event has occurred
 @fnindex EVENT_QUERY
 @cindex Events, EVENT_QUERY
@@ -5577,7 +6398,17 @@ end program atomic
 
 
 
+
+@ifinfo
 @node EXECUTE_COMMAND_LINE
+@end ifinfo
+@ifnotinfo
+@anchor{EXECUTE_COMMAND_LINE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{EXECUTE_COMMAND_LINE}
+@end ifnotinfo
 @section @code{EXECUTE_COMMAND_LINE} --- Execute a shell command
 @fnindex EXECUTE_COMMAND_LINE
 @cindex system, system call
@@ -5657,7 +6488,17 @@ terminated alongside.
 
 
 
+
+@ifinfo
 @node EXIT
+@end ifinfo
+@ifnotinfo
+@anchor{EXIT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{EXIT}
+@end ifnotinfo
 @section @code{EXIT} --- Exit the program with status. 
 @fnindex EXIT
 @cindex program termination
@@ -5701,7 +6542,17 @@ end program test_exit
 
 
 
+
+@ifinfo
 @node EXP
+@end ifinfo
+@ifnotinfo
+@anchor{EXP}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{EXP}
+@end ifnotinfo
 @section @code{EXP} --- Exponential function 
 @fnindex EXP
 @fnindex DEXP
@@ -5754,7 +6605,17 @@ end program test_exp
 
 
 
+
+@ifinfo
 @node EXPONENT
+@end ifinfo
+@ifnotinfo
+@anchor{EXPONENT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{EXPONENT}
+@end ifnotinfo
 @section @code{EXPONENT} --- Exponent function 
 @fnindex EXPONENT
 @cindex real number, exponent
@@ -5796,7 +6657,17 @@ end program test_exponent
 
 
 
+
+@ifinfo
 @node EXTENDS_TYPE_OF
+@end ifinfo
+@ifnotinfo
+@anchor{EXTENDS_TYPE_OF}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{EXTENDS_TYPE_OF}
+@end ifnotinfo
 @section @code{EXTENDS_TYPE_OF} ---  Query dynamic type for extension
 @fnindex EXTENDS_TYPE_OF
 
@@ -5832,7 +6703,17 @@ the dynamic type of A is an extension type of the dynamic type of MOLD.
 
 
 
+
+@ifinfo
 @node FDATE
+@end ifinfo
+@ifnotinfo
+@anchor{FDATE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{FDATE}
+@end ifnotinfo
 @section @code{FDATE} --- Get the current time as a string
 @fnindex FDATE
 @cindex time, current
@@ -5892,7 +6773,17 @@ end program test_fdate
 @end table
 
 
+
+@ifinfo
 @node FGET
+@end ifinfo
+@ifnotinfo
+@anchor{FGET}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{FGET}
+@end ifnotinfo
 @section @code{FGET} --- Read a single character in stream mode from stdin 
 @fnindex FGET
 @cindex read character, stream mode
@@ -5957,7 +6848,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node FGETC
+@end ifinfo
+@ifnotinfo
+@anchor{FGETC}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{FGETC}
+@end ifnotinfo
 @section @code{FGETC} --- Read a single character in stream mode
 @fnindex FGETC
 @cindex read character, stream mode
@@ -6022,7 +6923,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node FLOOR
+@end ifinfo
+@ifnotinfo
+@anchor{FLOOR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{FLOOR}
+@end ifnotinfo
 @section @code{FLOOR} --- Integer floor function
 @fnindex FLOOR
 @cindex floor
@@ -6069,7 +6980,17 @@ end program test_floor
 
 
 
+
+@ifinfo
 @node FLUSH
+@end ifinfo
+@ifnotinfo
+@anchor{FLUSH}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{FLUSH}
+@end ifnotinfo
 @section @code{FLUSH} --- Flush I/O unit(s)
 @fnindex FLUSH
 @cindex file operation, flush
@@ -6139,7 +7060,17 @@ descriptor of the I/O unit as argument (retrieved with GNU intrinsic
 
 
 
+
+@ifinfo
 @node FNUM
+@end ifinfo
+@ifnotinfo
+@anchor{FNUM}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{FNUM}
+@end ifnotinfo
 @section @code{FNUM} --- File number function
 @fnindex FNUM
 @cindex file operation, file number
@@ -6180,7 +7111,17 @@ end program test_fnum
 
 
 
+
+@ifinfo
 @node FPUT
+@end ifinfo
+@ifnotinfo
+@anchor{FPUT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{FPUT}
+@end ifnotinfo
 @section @code{FPUT} --- Write a single character in stream mode to stdout 
 @fnindex FPUT
 @cindex write character, stream mode
@@ -6239,7 +7180,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node FPUTC
+@end ifinfo
+@ifnotinfo
+@anchor{FPUTC}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{FPUTC}
+@end ifnotinfo
 @section @code{FPUTC} --- Write a single character in stream mode
 @fnindex FPUTC
 @cindex write character, stream mode
@@ -6302,7 +7253,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node FRACTION
+@end ifinfo
+@ifnotinfo
+@anchor{FRACTION}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{FRACTION}
+@end ifnotinfo
 @section @code{FRACTION} --- Fractional part of the model representation
 @fnindex FRACTION
 @cindex real number, fraction
@@ -6345,7 +7306,17 @@ end program test_fraction
 
 
 
+
+@ifinfo
 @node FREE
+@end ifinfo
+@ifnotinfo
+@anchor{FREE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{FREE}
+@end ifnotinfo
 @section @code{FREE} --- Frees memory
 @fnindex FREE
 @cindex pointer, cray
@@ -6385,7 +7356,17 @@ See @code{MALLOC} for an example.
 
 
 
+
+@ifinfo
 @node FSEEK
+@end ifinfo
+@ifnotinfo
+@anchor{FSEEK}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{FSEEK}
+@end ifnotinfo
 @section @code{FSEEK} --- Low level file positioning subroutine
 @fnindex FSEEK
 @cindex file operation, seek
@@ -6466,7 +7447,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node FSTAT
+@end ifinfo
+@ifnotinfo
+@anchor{FSTAT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{FSTAT}
+@end ifnotinfo
 @section @code{FSTAT} --- Get file status
 @fnindex FSTAT
 @cindex file system, file status
@@ -6510,7 +7501,17 @@ To stat a link: @ref{LSTAT}, to stat a file: @ref{STAT}
 
 
 
+
+@ifinfo
 @node FTELL
+@end ifinfo
+@ifnotinfo
+@anchor{FTELL}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{FTELL}
+@end ifnotinfo
 @section @code{FTELL} --- Current stream position
 @fnindex FTELL
 @cindex file operation, position
@@ -6560,7 +7561,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node GAMMA
+@end ifinfo
+@ifnotinfo
+@anchor{GAMMA}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{GAMMA}
+@end ifnotinfo
 @section @code{GAMMA} --- Gamma function
 @fnindex GAMMA
 @fnindex DGAMMA
@@ -6619,7 +7630,17 @@ Logarithm of the Gamma function: @ref{LOG_GAMMA}
 
 
 
+
+@ifinfo
 @node GERROR
+@end ifinfo
+@ifnotinfo
+@anchor{GERROR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{GERROR}
+@end ifnotinfo
 @section @code{GERROR} --- Get last system error message
 @fnindex GERROR
 @cindex system, error handling
@@ -6658,7 +7679,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node GETARG
+@end ifinfo
+@ifnotinfo
+@anchor{GETARG}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{GETARG}
+@end ifnotinfo
 @section @code{GETARG} --- Get command line arguments
 @fnindex GETARG
 @cindex command-line arguments
@@ -6722,7 +7753,17 @@ Fortran 2003 functions and subroutines: @ref{GET_COMMAND},
 
 
 
+
+@ifinfo
 @node GET_COMMAND
+@end ifinfo
+@ifnotinfo
+@anchor{GET_COMMAND}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{GET_COMMAND}
+@end ifnotinfo
 @section @code{GET_COMMAND} --- Get the entire command line
 @fnindex GET_COMMAND
 @cindex command-line arguments
@@ -6773,7 +7814,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node GET_COMMAND_ARGUMENT
+@end ifinfo
+@ifnotinfo
+@anchor{GET_COMMAND_ARGUMENT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{GET_COMMAND_ARGUMENT}
+@end ifnotinfo
 @section @code{GET_COMMAND_ARGUMENT} --- Get command line arguments
 @fnindex GET_COMMAND_ARGUMENT
 @cindex command-line arguments
@@ -6840,7 +7891,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node GETCWD
+@end ifinfo
+@ifnotinfo
+@anchor{GETCWD}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{GETCWD}
+@end ifnotinfo
 @section @code{GETCWD} --- Get current working directory
 @fnindex GETCWD
 @cindex system, working directory
@@ -6886,7 +7947,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node GETENV
+@end ifinfo
+@ifnotinfo
+@anchor{GETENV}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{GETENV}
+@end ifnotinfo
 @section @code{GETENV} --- Get an environmental variable
 @fnindex GETENV
 @cindex environment variable
@@ -6939,7 +8010,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node GET_ENVIRONMENT_VARIABLE
+@end ifinfo
+@ifnotinfo
+@anchor{GET_ENVIRONMENT_VARIABLE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{GET_ENVIRONMENT_VARIABLE}
+@end ifnotinfo
 @section @code{GET_ENVIRONMENT_VARIABLE} --- Get an environmental variable
 @fnindex GET_ENVIRONMENT_VARIABLE
 @cindex environment variable
@@ -7001,7 +8082,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node GETGID
+@end ifinfo
+@ifnotinfo
+@anchor{GETGID}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{GETGID}
+@end ifnotinfo
 @section @code{GETGID} --- Group ID function
 @fnindex GETGID
 @cindex system, group ID
@@ -7033,7 +8124,17 @@ See @code{GETPID} for an example.
 
 
 
+
+@ifinfo
 @node GETLOG
+@end ifinfo
+@ifnotinfo
+@anchor{GETLOG}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{GETLOG}
+@end ifnotinfo
 @section @code{GETLOG} --- Get login name
 @fnindex GETLOG
 @cindex system, login name
@@ -7078,7 +8179,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node GETPID
+@end ifinfo
+@ifnotinfo
+@anchor{GETPID}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{GETPID}
+@end ifnotinfo
 @section @code{GETPID} --- Process ID function
 @fnindex GETPID
 @cindex system, process ID
@@ -7117,7 +8228,17 @@ end program info
 
 
 
+
+@ifinfo
 @node GETUID
+@end ifinfo
+@ifnotinfo
+@anchor{GETUID}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{GETUID}
+@end ifnotinfo
 @section @code{GETUID} --- User ID function
 @fnindex GETUID
 @cindex system, user ID
@@ -7150,7 +8271,17 @@ See @code{GETPID} for an example.
 
 
 
+
+@ifinfo
 @node GMTIME
+@end ifinfo
+@ifnotinfo
+@anchor{GMTIME}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{GMTIME}
+@end ifnotinfo
 @section @code{GMTIME} --- Convert time to GMT info
 @fnindex GMTIME
 @cindex time, conversion to GMT info
@@ -7207,7 +8338,17 @@ effect, zero if not, and negative if the information is not available.
 
 
 
+
+@ifinfo
 @node HOSTNM
+@end ifinfo
+@ifnotinfo
+@anchor{HOSTNM}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{HOSTNM}
+@end ifnotinfo
 @section @code{HOSTNM} --- Get system host name
 @fnindex HOSTNM
 @cindex system, host name
@@ -7246,7 +8387,17 @@ be obtained, or to a blank string otherwise.
 
 
 
+
+@ifinfo
 @node HUGE
+@end ifinfo
+@ifnotinfo
+@anchor{HUGE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{HUGE}
+@end ifnotinfo
 @section @code{HUGE} --- Largest number of a kind
 @fnindex HUGE
 @cindex limits, largest number
@@ -7285,7 +8436,17 @@ end program test_huge_tiny
 
 
 
+
+@ifinfo
 @node HYPOT
+@end ifinfo
+@ifnotinfo
+@anchor{HYPOT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{HYPOT}
+@end ifnotinfo
 @section @code{HYPOT} --- Euclidean distance function
 @fnindex HYPOT
 @cindex Euclidean distance
@@ -7325,7 +8486,17 @@ end program test_hypot
 
 
 
+
+@ifinfo
 @node IACHAR
+@end ifinfo
+@ifnotinfo
+@anchor{IACHAR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{IACHAR}
+@end ifnotinfo
 @section @code{IACHAR} --- Code in @acronym{ASCII} collating sequence 
 @fnindex IACHAR
 @cindex @acronym{ASCII} collating sequence
@@ -7376,7 +8547,17 @@ and formatted string representations.
 
 
 
+
+@ifinfo
 @node IALL
+@end ifinfo
+@ifnotinfo
+@anchor{IALL}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{IALL}
+@end ifnotinfo
 @section @code{IALL} --- Bitwise AND of array elements
 @fnindex IALL
 @cindex array, AND
@@ -7436,7 +8617,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node IAND
+@end ifinfo
+@ifnotinfo
+@anchor{IAND}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{IAND}
+@end ifnotinfo
 @section @code{IAND} --- Bitwise logical and
 @fnindex IAND
 @fnindex BIAND
@@ -7498,7 +8689,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node IANY
+@end ifinfo
+@ifnotinfo
+@anchor{IANY}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{IANY}
+@end ifnotinfo
 @section @code{IANY} --- Bitwise OR of array elements
 @fnindex IANY
 @cindex array, OR
@@ -7558,7 +8759,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node IARGC
+@end ifinfo
+@ifnotinfo
+@anchor{IARGC}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{IARGC}
+@end ifnotinfo
 @section @code{IARGC} --- Get the number of command line arguments
 @fnindex IARGC
 @cindex command-line arguments
@@ -7602,7 +8813,17 @@ Fortran 2003 functions and subroutines: @ref{GET_COMMAND},
 
 
 
+
+@ifinfo
 @node IBCLR
+@end ifinfo
+@ifnotinfo
+@anchor{IBCLR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{IBCLR}
+@end ifnotinfo
 @section @code{IBCLR} --- Clear bit
 @fnindex IBCLR
 @fnindex BBCLR
@@ -7653,7 +8874,17 @@ The return value is of type @code{INTEGER} and of the same kind as
 
 
 
+
+@ifinfo
 @node IBITS
+@end ifinfo
+@ifnotinfo
+@anchor{IBITS}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{IBITS}
+@end ifnotinfo
 @section @code{IBITS} --- Bit extraction
 @fnindex IBITS
 @fnindex BBITS
@@ -7707,7 +8938,17 @@ The return value is of type @code{INTEGER} and of the same kind as
 
 
 
+
+@ifinfo
 @node IBSET
+@end ifinfo
+@ifnotinfo
+@anchor{IBSET}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{IBSET}
+@end ifnotinfo
 @section @code{IBSET} --- Set bit
 @fnindex IBSET
 @fnindex BBSET
@@ -7757,7 +8998,17 @@ The return value is of type @code{INTEGER} and of the same kind as
 
 
 
+
+@ifinfo
 @node ICHAR
+@end ifinfo
+@ifnotinfo
+@anchor{ICHAR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ICHAR}
+@end ifnotinfo
 @section @code{ICHAR} --- Character-to-integer conversion function
 @fnindex ICHAR
 @cindex conversion, to integer
@@ -7833,7 +9084,17 @@ end program read_val
 
 
 
+
+@ifinfo
 @node IDATE
+@end ifinfo
+@ifnotinfo
+@anchor{IDATE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{IDATE}
+@end ifnotinfo
 @section @code{IDATE} --- Get current local time subroutine (day/month/year) 
 @fnindex IDATE
 @cindex date, current
@@ -7879,19 +9140,23 @@ program test_idate
   print *, tarray(3)
 end program test_idate
 @end smallexample
-
-@item @emph{See also}:
-@ref{DATE_AND_TIME}
 @end table
 
 
+
+
+@ifinfo
 @node IEOR
+@end ifinfo
+@ifnotinfo
+@anchor{IEOR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{IEOR}
+@end ifnotinfo
 @section @code{IEOR} --- Bitwise logical exclusive or
 @fnindex IEOR
-@fnindex BIEOR
-@fnindex IIEOR
-@fnindex JIEOR
-@fnindex KIEOR
 @cindex bitwise logical exclusive or
 @cindex logical exclusive or, bitwise
 
@@ -7938,7 +9203,17 @@ the larger argument.)
 
 
 
+
+@ifinfo
 @node IERRNO
+@end ifinfo
+@ifnotinfo
+@anchor{IERRNO}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{IERRNO}
+@end ifnotinfo
 @section @code{IERRNO} --- Get the last system error number
 @fnindex IERRNO
 @cindex system, error handling
@@ -7970,7 +9245,17 @@ kind.
 
 
 
+
+@ifinfo
 @node IMAGE_INDEX
+@end ifinfo
+@ifnotinfo
+@anchor{IMAGE_INDEX}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{IMAGE_INDEX}
+@end ifnotinfo
 @section @code{IMAGE_INDEX} --- Function that converts a cosubscript to an image index
 @fnindex IMAGE_INDEX
 @cindex coarray, @code{IMAGE_INDEX}
@@ -8014,7 +9299,17 @@ WRITE (*,*) IMAGE_INDEX (array, [2,0,3,1])
 
 
 
-@node INDEX intrinsic
+
+@ifinfo
+@node INDEX
+@end ifinfo
+@ifnotinfo
+@anchor{INDEX}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{INDEX}
+@end ifnotinfo intrinsic
 @section @code{INDEX} --- Position of a substring within a string
 @fnindex INDEX
 @cindex substring position
@@ -8065,7 +9360,17 @@ The return value is of type @code{INTEGER} and of kind @var{KIND}. If
 
 
 
+
+@ifinfo
 @node INT
+@end ifinfo
+@ifnotinfo
+@anchor{INT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{INT}
+@end ifnotinfo
 @section @code{INT} --- Convert to integer type
 @fnindex INT
 @fnindex IFIX
@@ -8130,7 +9435,17 @@ end program
 @end table
 
 
+
+@ifinfo
 @node INT2
+@end ifinfo
+@ifnotinfo
+@anchor{INT2}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{INT2}
+@end ifnotinfo
 @section @code{INT2} --- Convert to 16-bit integer type
 @fnindex INT2
 @fnindex SHORT
@@ -8168,7 +9483,17 @@ The return value is a @code{INTEGER(2)} variable.
 
 
 
+
+@ifinfo
 @node INT8
+@end ifinfo
+@ifnotinfo
+@anchor{INT8}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{INT8}
+@end ifnotinfo
 @section @code{INT8} --- Convert to 64-bit integer type
 @fnindex INT8
 @cindex conversion, to integer
@@ -8203,7 +9528,17 @@ The return value is a @code{INTEGER(8)} variable.
 
 
 
+
+@ifinfo
 @node IOR
+@end ifinfo
+@ifnotinfo
+@anchor{IOR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{IOR}
+@end ifnotinfo
 @section @code{IOR} --- Bitwise logical or
 @fnindex IOR
 @fnindex BIOR
@@ -8256,7 +9591,17 @@ the larger argument.)
 
 
 
+
+@ifinfo
 @node IPARITY
+@end ifinfo
+@ifnotinfo
+@anchor{IPARITY}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{IPARITY}
+@end ifnotinfo
 @section @code{IPARITY} --- Bitwise XOR of array elements
 @fnindex IPARITY
 @cindex array, parity
@@ -8317,7 +9662,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node IRAND
+@end ifinfo
+@ifnotinfo
+@anchor{IRAND}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{IRAND}
+@end ifnotinfo
 @section @code{IRAND} --- Integer pseudo-random number
 @fnindex IRAND
 @cindex random number generation
@@ -8368,7 +9723,17 @@ end program test_irand
 
 
 
+
+@ifinfo
 @node IS_IOSTAT_END
+@end ifinfo
+@ifnotinfo
+@anchor{IS_IOSTAT_END}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{IS_IOSTAT_END}
+@end ifnotinfo
 @section @code{IS_IOSTAT_END} --- Test for end-of-file value
 @fnindex IS_IOSTAT_END
 @cindex @code{IOSTAT}, end of file
@@ -8413,7 +9778,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node IS_IOSTAT_EOR
+@end ifinfo
+@ifnotinfo
+@anchor{IS_IOSTAT_EOR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{IS_IOSTAT_EOR}
+@end ifnotinfo
 @section @code{IS_IOSTAT_EOR} --- Test for end-of-record value
 @fnindex IS_IOSTAT_EOR
 @cindex @code{IOSTAT}, end of record
@@ -8458,7 +9833,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node ISATTY
+@end ifinfo
+@ifnotinfo
+@anchor{ISATTY}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ISATTY}
+@end ifnotinfo
 @section @code{ISATTY} --- Whether a unit is a terminal device.
 @fnindex ISATTY
 @cindex system, terminal
@@ -8500,7 +9885,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node ISHFT
+@end ifinfo
+@ifnotinfo
+@anchor{ISHFT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ISHFT}
+@end ifnotinfo
 @section @code{ISHFT} --- Shift bits
 @fnindex ISHFT
 @fnindex BSHFT
@@ -8554,7 +9949,17 @@ The return value is of type @code{INTEGER} and of the same kind as
 
 
 
+
+@ifinfo
 @node ISHFTC
+@end ifinfo
+@ifnotinfo
+@anchor{ISHFTC}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ISHFTC}
+@end ifnotinfo
 @section @code{ISHFTC} --- Shift bits circularly
 @fnindex ISHFTC
 @fnindex BSHFTC
@@ -8612,7 +10017,17 @@ The return value is of type @code{INTEGER} and of the same kind as
 
 
 
+
+@ifinfo
 @node ISNAN
+@end ifinfo
+@ifnotinfo
+@anchor{ISNAN}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ISNAN}
+@end ifnotinfo
 @section @code{ISNAN} --- Test for a NaN
 @fnindex ISNAN
 @cindex IEEE, ISNAN
@@ -8654,7 +10069,17 @@ end program test_nan
 
 
 
+
+@ifinfo
 @node ITIME
+@end ifinfo
+@ifnotinfo
+@anchor{ITIME}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ITIME}
+@end ifnotinfo
 @section @code{ITIME} --- Get current local time subroutine (hour/minutes/seconds) 
 @fnindex ITIME
 @cindex time, current
@@ -8708,37 +10133,48 @@ end program test_itime
 
 
 
+
+@ifinfo
 @node KILL
+@end ifinfo
+@ifnotinfo
+@anchor{KILL}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{KILL}
+@end ifnotinfo
 @section @code{KILL} --- Send a signal to a process
 @fnindex KILL
 
 @table @asis
 @item @emph{Description}:
 @item @emph{Standard}:
-Sends the signal specified by @var{SIGNAL} to the process @var{PID}.
+Sends the signal specified by @var{SIG} to the process @var{PID}.
 See @code{kill(2)}.
 
-This intrinsic is provided in both subroutine and function forms; however,
-only one form can be used in any given program unit.
+This intrinsic is provided in both subroutine and function forms;
+however, only one form can be used in any given program unit.
 
 @item @emph{Class}:
 Subroutine, function
 
 @item @emph{Syntax}:
 @multitable @columnfractions .80
-@item @code{CALL KILL(C, VALUE [, STATUS])}
-@item @code{STATUS = KILL(C, VALUE)}
+@item @code{CALL KILL(PID, SIG [, STATUS])}
+@item @code{STATUS = KILL(PID, SIG)}
 @end multitable
 
 @item @emph{Arguments}:
 @multitable @columnfractions .15 .70
-@item @var{C} @tab Shall be a scalar @code{INTEGER}, with
-@code{INTENT(IN)}
-@item @var{VALUE} @tab Shall be a scalar @code{INTEGER}, with
-@code{INTENT(IN)}
-@item @var{STATUS} @tab (Optional) status flag of type @code{INTEGER(4)} or
-@code{INTEGER(8)}. Returns 0 on success, or a system-specific error code
-otherwise.
+@item @var{PID} @tab Shall be a scalar @code{INTEGER} with @code{INTENT(IN)}.
+@item @var{SIG} @tab Shall be a scalar @code{INTEGER} with @code{INTENT(IN)}.
+@item @var{STATUS} @tab [Subroutine](Optional)
+Shall be a scalar @code{INTEGER}.
+Returns 0 on success; otherwise a system-specific error code is returned.
+@item @var{STATUS} @tab [Function] The kind type parameter is that of
+@code{pid}.
+Returns 0 on success; otherwise a system-specific error code is returned.
 @end multitable
 
 @item @emph{See also}:
@@ -8747,7 +10183,17 @@ otherwise.
 
 
 
+
+@ifinfo
 @node KIND
+@end ifinfo
+@ifnotinfo
+@anchor{KIND}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{KIND}
+@end ifnotinfo
 @section @code{KIND} --- Kind of an entity
 @fnindex KIND
 @cindex kind
@@ -8790,7 +10236,17 @@ end program test_kind
 
 
 
+
+@ifinfo
 @node LBOUND
+@end ifinfo
+@ifnotinfo
+@anchor{LBOUND}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LBOUND}
+@end ifnotinfo
 @section @code{LBOUND} --- Lower dimension bounds of an array
 @fnindex LBOUND
 @cindex array, lower bound
@@ -8832,7 +10288,17 @@ dimension, the lower bound is taken to be 1.
 
 
 
+
+@ifinfo
 @node LCOBOUND
+@end ifinfo
+@ifnotinfo
+@anchor{LCOBOUND}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LCOBOUND}
+@end ifnotinfo
 @section @code{LCOBOUND} --- Lower codimension bounds of an array
 @fnindex LCOBOUND
 @cindex coarray, lower bound
@@ -8871,7 +10337,17 @@ corresponding to the lower cobound of the array along that codimension.
 
 
 
+
+@ifinfo
 @node LEADZ
+@end ifinfo
+@ifnotinfo
+@anchor{LEADZ}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LEADZ}
+@end ifnotinfo
 @section @code{LEADZ} --- Number of leading zero bits of an integer
 @fnindex LEADZ
 @cindex zero bits
@@ -8912,7 +10388,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node LEN
+@end ifinfo
+@ifnotinfo
+@anchor{LEN}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LEN}
+@end ifnotinfo
 @section @code{LEN} --- Length of a character entity
 @fnindex LEN
 @cindex string, length
@@ -8959,7 +10445,17 @@ The return value is of type @code{INTEGER} and of kind @var{KIND}. If
 
 
 
+
+@ifinfo
 @node LEN_TRIM
+@end ifinfo
+@ifnotinfo
+@anchor{LEN_TRIM}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LEN_TRIM}
+@end ifnotinfo
 @section @code{LEN_TRIM} --- Length of a character entity without trailing blank characters
 @fnindex LEN_TRIM
 @cindex string, length, without trailing whitespace
@@ -8995,7 +10491,17 @@ The return value is of type @code{INTEGER} and of kind @var{KIND}. If
 
 
 
+
+@ifinfo
 @node LGE
+@end ifinfo
+@ifnotinfo
+@anchor{LGE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LGE}
+@end ifnotinfo
 @section @code{LGE} --- Lexical greater than or equal
 @fnindex LGE
 @cindex lexical comparison of strings
@@ -9047,7 +10553,17 @@ otherwise, based on the ASCII ordering.
 
 
 
+
+@ifinfo
 @node LGT
+@end ifinfo
+@ifnotinfo
+@anchor{LGT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LGT}
+@end ifnotinfo
 @section @code{LGT} --- Lexical greater than
 @fnindex LGT
 @cindex lexical comparison of strings
@@ -9099,7 +10615,17 @@ otherwise, based on the ASCII ordering.
 
 
 
+
+@ifinfo
 @node LINK
+@end ifinfo
+@ifnotinfo
+@anchor{LINK}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LINK}
+@end ifnotinfo
 @section @code{LINK} --- Create a hard link
 @fnindex LINK
 @cindex file system, create link
@@ -9142,7 +10668,17 @@ Subroutine, function
 
 
 
+
+@ifinfo
 @node LLE
+@end ifinfo
+@ifnotinfo
+@anchor{LLE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LLE}
+@end ifnotinfo
 @section @code{LLE} --- Lexical less than or equal
 @fnindex LLE
 @cindex lexical comparison of strings
@@ -9194,7 +10730,17 @@ otherwise, based on the ASCII ordering.
 
 
 
+
+@ifinfo
 @node LLT
+@end ifinfo
+@ifnotinfo
+@anchor{LLT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LLT}
+@end ifnotinfo
 @section @code{LLT} --- Lexical less than
 @fnindex LLT
 @cindex lexical comparison of strings
@@ -9246,7 +10792,17 @@ otherwise, based on the ASCII ordering.
 
 
 
+
+@ifinfo
 @node LNBLNK
+@end ifinfo
+@ifnotinfo
+@anchor{LNBLNK}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LNBLNK}
+@end ifnotinfo
 @section @code{LNBLNK} --- Index of the last non-blank character in a string
 @fnindex LNBLNK
 @cindex string, find non-blank character
@@ -9281,7 +10837,17 @@ The return value is of @code{INTEGER(kind=4)} type.
 
 
 
+
+@ifinfo
 @node LOC
+@end ifinfo
+@ifnotinfo
+@anchor{LOC}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LOC}
+@end ifnotinfo
 @section @code{LOC} --- Returns the address of a variable
 @fnindex LOC
 @cindex location of a variable in memory
@@ -9322,7 +10888,17 @@ end program test_loc
 
 
 
+
+@ifinfo
 @node LOG
+@end ifinfo
+@ifnotinfo
+@anchor{LOG}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LOG}
+@end ifnotinfo
 @section @code{LOG} --- Natural logarithm function
 @fnindex LOG
 @fnindex ALOG
@@ -9383,7 +10959,17 @@ end program test_log
 
 
 
+
+@ifinfo
 @node LOG10
+@end ifinfo
+@ifnotinfo
+@anchor{LOG10}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LOG10}
+@end ifnotinfo
 @section @code{LOG10} --- Base 10 logarithm function
 @fnindex LOG10
 @fnindex ALOG10
@@ -9432,7 +11018,17 @@ end program test_log10
 
 
 
+
+@ifinfo
 @node LOG_GAMMA
+@end ifinfo
+@ifnotinfo
+@anchor{LOG_GAMMA}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LOG_GAMMA}
+@end ifnotinfo
 @section @code{LOG_GAMMA} --- Logarithm of the Gamma function
 @fnindex LOG_GAMMA
 @fnindex LGAMMA
@@ -9486,7 +11082,17 @@ Gamma function: @ref{GAMMA}
 
 
 
+
+@ifinfo
 @node LOGICAL
+@end ifinfo
+@ifnotinfo
+@anchor{LOGICAL}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LOGICAL}
+@end ifnotinfo
 @section @code{LOGICAL} --- Convert to logical type
 @fnindex LOGICAL
 @cindex conversion, to logical
@@ -9522,7 +11128,17 @@ kind corresponding to @var{KIND}, or of the default logical kind if
 
 
 
+
+@ifinfo
 @node LONG
+@end ifinfo
+@ifnotinfo
+@anchor{LONG}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LONG}
+@end ifnotinfo
 @section @code{LONG} --- Convert to integer type
 @fnindex LONG
 @cindex conversion, to integer
@@ -9558,7 +11174,17 @@ The return value is a @code{INTEGER(4)} variable.
 
 
 
+
+@ifinfo
 @node LSHIFT
+@end ifinfo
+@ifnotinfo
+@anchor{LSHIFT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LSHIFT}
+@end ifnotinfo
 @section @code{LSHIFT} --- Left shift bits
 @fnindex LSHIFT
 @cindex bits, shift left
@@ -9602,7 +11228,17 @@ The return value is of type @code{INTEGER} and of the same kind as
 
 
 
+
+@ifinfo
 @node LSTAT
+@end ifinfo
+@ifnotinfo
+@anchor{LSTAT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LSTAT}
+@end ifnotinfo
 @section @code{LSTAT} --- Get file status
 @fnindex LSTAT
 @cindex file system, file status
@@ -9648,7 +11284,17 @@ To stat an open file: @ref{FSTAT}, to stat a file: @ref{STAT}
 
 
 
+
+@ifinfo
 @node LTIME
+@end ifinfo
+@ifnotinfo
+@anchor{LTIME}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LTIME}
+@end ifnotinfo
 @section @code{LTIME} --- Convert time to local time info
 @fnindex LTIME
 @cindex time, conversion to local time info
@@ -9704,7 +11350,17 @@ effect, zero if not, and negative if the information is not available.
 
 
 
+
+@ifinfo
 @node MALLOC
+@end ifinfo
+@ifnotinfo
+@anchor{MALLOC}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MALLOC}
+@end ifnotinfo
 @section @code{MALLOC} --- Allocate dynamic memory
 @fnindex MALLOC
 @cindex pointer, cray
@@ -9767,7 +11423,17 @@ end program test_malloc
 
 
 
+
+@ifinfo
 @node MASKL
+@end ifinfo
+@ifnotinfo
+@anchor{MASKL}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MASKL}
+@end ifnotinfo
 @section @code{MASKL} --- Left justified mask
 @fnindex MASKL
 @cindex mask, left justified
@@ -9804,7 +11470,17 @@ default integer kind.
 
 
 
+
+@ifinfo
 @node MASKR
+@end ifinfo
+@ifnotinfo
+@anchor{MASKR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MASKR}
+@end ifnotinfo
 @section @code{MASKR} --- Right justified mask
 @fnindex MASKR
 @cindex mask, right justified
@@ -9841,7 +11517,17 @@ default integer kind.
 
 
 
+
+@ifinfo
 @node MATMUL
+@end ifinfo
+@ifnotinfo
+@anchor{MATMUL}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MATMUL}
+@end ifnotinfo
 @section @code{MATMUL} --- matrix multiplication
 @fnindex MATMUL
 @cindex matrix multiplication
@@ -9870,6 +11556,7 @@ one or two.
 type; otherwise, an array of @code{LOGICAL} type. The rank shall be one
 or two, and the first (or only) dimension of @var{MATRIX_B} shall be
 equal to the last (or only) dimension of @var{MATRIX_A}.
+@var{MATRIX_A} and @var{MATRIX_B} shall not both be rank one arrays.
 @end multitable
 
 @item @emph{Return value}:
@@ -9882,7 +11569,17 @@ for the @code{*} or @code{.AND.} operators.
 
 
 
+
+@ifinfo
 @node MAX
+@end ifinfo
+@ifnotinfo
+@anchor{MAX}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MAX}
+@end ifnotinfo
 @section @code{MAX} --- Maximum value of an argument list
 @fnindex MAX
 @fnindex MAX0
@@ -9935,7 +11632,17 @@ and has the same type and kind as the first argument.
 
 
 
+
+@ifinfo
 @node MAXEXPONENT
+@end ifinfo
+@ifnotinfo
+@anchor{MAXEXPONENT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MAXEXPONENT}
+@end ifnotinfo
 @section @code{MAXEXPONENT} --- Maximum exponent of a real kind
 @fnindex MAXEXPONENT
 @cindex model representation, maximum exponent
@@ -9977,7 +11684,17 @@ end program exponents
 
 
 
+
+@ifinfo
 @node MAXLOC
+@end ifinfo
+@ifnotinfo
+@anchor{MAXLOC}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MAXLOC}
+@end ifnotinfo
 @section @code{MAXLOC} --- Location of the maximum value within an array
 @fnindex MAXLOC
 @cindex array, location of maximum element
@@ -9997,15 +11714,16 @@ and all of the elements of @var{MASK} along a given row are zero, the
 result value for that row is zero.
 
 @item @emph{Standard}:
-Fortran 95 and later
+Fortran 95 and later; @var{ARRAY} of @code{CHARACTER} and the
+@var{KIND} argument are available in Fortran 2003 and later.
 
 @item @emph{Class}:
 Transformational function
 
 @item @emph{Syntax}:
 @multitable @columnfractions .80
-@item @code{RESULT = MAXLOC(ARRAY, DIM [, MASK])}
-@item @code{RESULT = MAXLOC(ARRAY [, MASK])}
+@item @code{RESULT = MAXLOC(ARRAY, DIM [, MASK] [,KIND])}
+@item @code{RESULT = MAXLOC(ARRAY [, MASK] [,KIND])}
 @end multitable
 
 @item @emph{Arguments}:
@@ -10017,6 +11735,8 @@ Transformational function
 inclusive.  It may not be an optional dummy argument.
 @item @var{MASK}  @tab Shall be an array of type @code{LOGICAL},
 and conformable with @var{ARRAY}.
+@item @var{KIND} @tab (Optional) An @code{INTEGER} initialization
+expression indicating the kind parameter of the result.
 @end multitable
 
 @item @emph{Return value}:
@@ -10025,8 +11745,9 @@ equal to the rank of @var{ARRAY}.  If @var{DIM} is present, the result
 is an array with a rank one less than the rank of @var{ARRAY}, and a
 size corresponding to the size of @var{ARRAY} with the @var{DIM}
 dimension removed.  If @var{DIM} is present and @var{ARRAY} has a rank
-of one, the result is a scalar.  In all cases, the result is of default
-@code{INTEGER} type.
+of one, the result is a scalar.   If the optional argument @var{KIND}
+is present, the result is an integer of kind @var{KIND}, otherwise it
+is of default kind.
 
 @item @emph{See also}:
 @ref{MAX}, @ref{MAXVAL}
@@ -10035,7 +11756,17 @@ of one, the result is a scalar.  In all cases, the result is of default
 
 
 
+
+@ifinfo
 @node MAXVAL
+@end ifinfo
+@ifnotinfo
+@anchor{MAXVAL}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MAXVAL}
+@end ifnotinfo
 @section @code{MAXVAL} --- Maximum value of an array
 @fnindex MAXVAL
 @cindex array, maximum value
@@ -10088,7 +11819,17 @@ cases, the result is of the same type and kind as @var{ARRAY}.
 
 
 
+
+@ifinfo
 @node MCLOCK
+@end ifinfo
+@ifnotinfo
+@anchor{MCLOCK}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MCLOCK}
+@end ifnotinfo
 @section @code{MCLOCK} --- Time function
 @fnindex MCLOCK
 @cindex time, clock ticks
@@ -10126,7 +11867,17 @@ the system does not support @code{clock(3)}.
 
 
 
+
+@ifinfo
 @node MCLOCK8
+@end ifinfo
+@ifnotinfo
+@anchor{MCLOCK8}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MCLOCK8}
+@end ifnotinfo
 @section @code{MCLOCK8} --- Time function (64-bit)
 @fnindex MCLOCK8
 @cindex time, clock ticks
@@ -10166,7 +11917,17 @@ the system does not support @code{clock(3)}.
 
 
 
+
+@ifinfo
 @node MERGE
+@end ifinfo
+@ifnotinfo
+@anchor{MERGE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MERGE}
+@end ifnotinfo
 @section @code{MERGE} --- Merge variables
 @fnindex MERGE
 @cindex array, merge arrays
@@ -10202,7 +11963,17 @@ The result is of the same type and type parameters as @var{TSOURCE}.
 
 
 
+
+@ifinfo
 @node MERGE_BITS
+@end ifinfo
+@ifnotinfo
+@anchor{MERGE_BITS}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MERGE_BITS}
+@end ifnotinfo
 @section @code{MERGE_BITS} --- Merge of bits under mask
 @fnindex MERGE_BITS
 @cindex bits, merge
@@ -10239,7 +12010,17 @@ The result is of the same type and kind as @var{I}.
 
 
 
+
+@ifinfo
 @node MIN
+@end ifinfo
+@ifnotinfo
+@anchor{MIN}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MIN}
+@end ifnotinfo
 @section @code{MIN} --- Minimum value of an argument list
 @fnindex MIN
 @fnindex MIN0
@@ -10291,7 +12072,17 @@ and has the same type and kind as the first argument.
 
 
 
+
+@ifinfo
 @node MINEXPONENT
+@end ifinfo
+@ifnotinfo
+@anchor{MINEXPONENT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MINEXPONENT}
+@end ifnotinfo
 @section @code{MINEXPONENT} --- Minimum exponent of a real kind
 @fnindex MINEXPONENT
 @cindex model representation, minimum exponent
@@ -10325,7 +12116,17 @@ See @code{MAXEXPONENT} for an example.
 
 
 
+
+@ifinfo
 @node MINLOC
+@end ifinfo
+@ifnotinfo
+@anchor{MINLOC}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MINLOC}
+@end ifnotinfo
 @section @code{MINLOC} --- Location of the minimum value within an array
 @fnindex MINLOC
 @cindex array, location of minimum element
@@ -10345,26 +12146,29 @@ and all of the elements of @var{MASK} along a given row are zero, the
 result value for that row is zero.
 
 @item @emph{Standard}:
-Fortran 95 and later
+Fortran 95 and later; @var{ARRAY} of @code{CHARACTER} and the
+@var{KIND} argument are available in Fortran 2003 and later.
 
 @item @emph{Class}:
 Transformational function
 
 @item @emph{Syntax}:
 @multitable @columnfractions .80
-@item @code{RESULT = MINLOC(ARRAY, DIM [, MASK])}
-@item @code{RESULT = MINLOC(ARRAY [, MASK])}
+@item @code{RESULT = MINLOC(ARRAY, DIM [, MASK] [,KIND])}
+@item @code{RESULT = MINLOC(ARRAY [, MASK], [,KIND])}
 @end multitable
 
 @item @emph{Arguments}:
 @multitable @columnfractions .15 .70
-@item @var{ARRAY} @tab Shall be an array of type @code{INTEGER} or
-@code{REAL}.
+@item @var{ARRAY} @tab Shall be an array of type @code{INTEGER},
+@code{REAL} or @code{CHARACTER}.
 @item @var{DIM}   @tab (Optional) Shall be a scalar of type
 @code{INTEGER}, with a value between one and the rank of @var{ARRAY},
 inclusive.  It may not be an optional dummy argument.
 @item @var{MASK}  @tab Shall be an array of type @code{LOGICAL},
 and conformable with @var{ARRAY}.
+@item @var{KIND} @tab (Optional) An @code{INTEGER} initialization
+expression indicating the kind parameter of the result.
 @end multitable
 
 @item @emph{Return value}:
@@ -10373,8 +12177,9 @@ equal to the rank of @var{ARRAY}.  If @var{DIM} is present, the result
 is an array with a rank one less than the rank of @var{ARRAY}, and a
 size corresponding to the size of @var{ARRAY} with the @var{DIM}
 dimension removed.  If @var{DIM} is present and @var{ARRAY} has a rank
-of one, the result is a scalar.  In all cases, the result is of default
-@code{INTEGER} type.
+of one, the result is a scalar.  If the optional argument @var{KIND}
+is present, the result is an integer of kind @var{KIND}, otherwise it
+is of default kind.
 
 @item @emph{See also}:
 @ref{MIN}, @ref{MINVAL}
@@ -10383,7 +12188,17 @@ of one, the result is a scalar.  In all cases, the result is of default
 
 
 
+
+@ifinfo
 @node MINVAL
+@end ifinfo
+@ifnotinfo
+@anchor{MINVAL}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MINVAL}
+@end ifnotinfo
 @section @code{MINVAL} --- Minimum value of an array
 @fnindex MINVAL
 @cindex array, minimum value
@@ -10437,7 +12252,17 @@ cases, the result is of the same type and kind as @var{ARRAY}.
 
 
 
+
+@ifinfo
 @node MOD
+@end ifinfo
+@ifnotinfo
+@anchor{MOD}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MOD}
+@end ifnotinfo
 @section @code{MOD} --- Remainder function
 @fnindex MOD
 @fnindex AMOD
@@ -10514,7 +12339,17 @@ end program test_mod
 
 
 
+
+@ifinfo
 @node MODULO
+@end ifinfo
+@ifnotinfo
+@anchor{MODULO}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MODULO}
+@end ifnotinfo
 @section @code{MODULO} --- Modulo function
 @fnindex MODULO
 @cindex modulo
@@ -10574,7 +12409,17 @@ end program
 
 
 
+
+@ifinfo
 @node MOVE_ALLOC
+@end ifinfo
+@ifnotinfo
+@anchor{MOVE_ALLOC}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MOVE_ALLOC}
+@end ifnotinfo
 @section @code{MOVE_ALLOC} --- Move allocation from one object to another
 @fnindex MOVE_ALLOC
 @cindex moving allocation
@@ -10621,7 +12466,17 @@ end program test_move_alloc
 
 
 
+
+@ifinfo
 @node MVBITS
+@end ifinfo
+@ifnotinfo
+@anchor{MVBITS}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{MVBITS}
+@end ifnotinfo
 @section @code{MVBITS} --- Move bits from one integer to another
 @fnindex MVBITS
 @fnindex BMVBITS
@@ -10674,7 +12529,17 @@ same kind as @var{FROM}.
 
 
 
+
+@ifinfo
 @node NEAREST
+@end ifinfo
+@ifnotinfo
+@anchor{NEAREST}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{NEAREST}
+@end ifnotinfo
 @section @code{NEAREST} --- Nearest representable number
 @fnindex NEAREST
 @cindex real number, nearest different
@@ -10721,7 +12586,17 @@ end program test_nearest
 
 
 
+
+@ifinfo
 @node NEW_LINE
+@end ifinfo
+@ifnotinfo
+@anchor{NEW_LINE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{NEW_LINE}
+@end ifnotinfo
 @section @code{NEW_LINE} --- New line character
 @fnindex NEW_LINE
 @cindex newline
@@ -10761,7 +12636,17 @@ end program newline
 
 
 
+
+@ifinfo
 @node NINT
+@end ifinfo
+@ifnotinfo
+@anchor{NINT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{NINT}
+@end ifnotinfo
 @section @code{NINT} --- Nearest whole number
 @fnindex NINT
 @fnindex IDNINT
@@ -10817,7 +12702,17 @@ end program test_nint
 
 
 
+
+@ifinfo
 @node NORM2
+@end ifinfo
+@ifnotinfo
+@anchor{NORM2}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{NORM2}
+@end ifnotinfo
 @section @code{NORM2} --- Euclidean vector norms
 @fnindex NORM2
 @cindex Euclidean vector norm
@@ -10868,7 +12763,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node NOT
+@end ifinfo
+@ifnotinfo
+@anchor{NOT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{NOT}
+@end ifnotinfo
 @section @code{NOT} --- Logical negation
 @fnindex NOT
 @fnindex BNOT
@@ -10918,7 +12823,17 @@ argument.
 
 
 
+
+@ifinfo
 @node NULL
+@end ifinfo
+@ifnotinfo
+@anchor{NULL}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{NULL}
+@end ifnotinfo
 @section @code{NULL} --- Function that returns an disassociated pointer
 @fnindex NULL
 @cindex pointer, status
@@ -10963,7 +12878,17 @@ REAL, POINTER, DIMENSION(:) :: VEC => NULL ()
 
 
 
+
+@ifinfo
 @node NUM_IMAGES
+@end ifinfo
+@ifnotinfo
+@anchor{NUM_IMAGES}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{NUM_IMAGES}
+@end ifnotinfo
 @section @code{NUM_IMAGES} --- Function that returns the number of images
 @fnindex NUM_IMAGES
 @cindex coarray, @code{NUM_IMAGES}
@@ -11020,7 +12945,17 @@ END IF
 
 
 
+
+@ifinfo
 @node OR
+@end ifinfo
+@ifnotinfo
+@anchor{OR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{OR}
+@end ifnotinfo
 @section @code{OR} --- Bitwise logical OR
 @fnindex OR
 @cindex bitwise logical or
@@ -11074,7 +13009,17 @@ Fortran 95 elemental function: @ref{IOR}
 
 
 
+
+@ifinfo
 @node PACK
+@end ifinfo
+@ifnotinfo
+@anchor{PACK}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{PACK}
+@end ifnotinfo
 @section @code{PACK} --- Pack an array into an array of rank one
 @fnindex PACK
 @cindex array, packing
@@ -11142,7 +13087,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node PARITY
+@end ifinfo
+@ifnotinfo
+@anchor{PARITY}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{PARITY}
+@end ifnotinfo
 @section @code{PARITY} --- Reduction with exclusive OR
 @fnindex PARITY
 @cindex Parity
@@ -11194,7 +13149,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node PERROR
+@end ifinfo
+@ifnotinfo
+@anchor{PERROR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{PERROR}
+@end ifnotinfo
 @section @code{PERROR} --- Print system error message
 @fnindex PERROR
 @cindex system, error handling
@@ -11226,7 +13191,17 @@ default kind.
 
 
 
+
+@ifinfo
 @node POPCNT
+@end ifinfo
+@ifnotinfo
+@anchor{POPCNT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{POPCNT}
+@end ifnotinfo
 @section @code{POPCNT} --- Number of bits set
 @fnindex POPCNT
 @cindex binary representation
@@ -11269,7 +13244,17 @@ end program test_population
 @end table
 
 
+
+@ifinfo
 @node POPPAR
+@end ifinfo
+@ifnotinfo
+@anchor{POPPAR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{POPPAR}
+@end ifnotinfo
 @section @code{POPPAR} --- Parity of the number of bits set
 @fnindex POPPAR
 @cindex binary representation
@@ -11315,7 +13300,17 @@ end program test_population
 
 
 
+
+@ifinfo
 @node PRECISION
+@end ifinfo
+@ifnotinfo
+@anchor{PRECISION}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{PRECISION}
+@end ifnotinfo
 @section @code{PRECISION} --- Decimal precision of a real kind
 @fnindex PRECISION
 @cindex model representation, precision
@@ -11360,7 +13355,17 @@ end program prec_and_range
 
 
 
+
+@ifinfo
 @node PRESENT
+@end ifinfo
+@ifnotinfo
+@anchor{PRESENT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{PRESENT}
+@end ifnotinfo
 @section @code{PRESENT} --- Determine whether an optional dummy argument is specified
 @fnindex PRESENT
 
@@ -11403,7 +13408,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node PRODUCT
+@end ifinfo
+@ifnotinfo
+@anchor{PRODUCT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{PRODUCT}
+@end ifnotinfo
 @section @code{PRODUCT} --- Product of array elements
 @fnindex PRODUCT
 @cindex array, product
@@ -11463,7 +13478,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node RADIX
+@end ifinfo
+@ifnotinfo
+@anchor{RADIX}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{RADIX}
+@end ifnotinfo
 @section @code{RADIX} --- Base of a model number
 @fnindex RADIX
 @cindex model representation, base
@@ -11506,7 +13531,17 @@ end program test_radix
 
 
 
+
+@ifinfo
 @node RAN
+@end ifinfo
+@ifnotinfo
+@anchor{RAN}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{RAN}
+@end ifnotinfo
 @section @code{RAN} --- Real pseudo-random number
 @fnindex RAN
 @cindex random number generation
@@ -11529,7 +13564,17 @@ Function
 
 
 
+
+@ifinfo
 @node RAND
+@end ifinfo
+@ifnotinfo
+@anchor{RAND}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{RAND}
+@end ifnotinfo
 @section @code{RAND} --- Real pseudo-random number
 @fnindex RAND
 @cindex random number generation
@@ -11582,7 +13627,17 @@ end program test_rand
 
 
 
+
+@ifinfo
 @node RANDOM_NUMBER
+@end ifinfo
+@ifnotinfo
+@anchor{RANDOM_NUMBER}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{RANDOM_NUMBER}
+@end ifnotinfo
 @section @code{RANDOM_NUMBER} --- Pseudo-random number
 @fnindex RANDOM_NUMBER
 @cindex random number generation
@@ -11631,7 +13686,17 @@ end program
 
 
 
+
+@ifinfo
 @node RANDOM_SEED
+@end ifinfo
+@ifnotinfo
+@anchor{RANDOM_SEED}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{RANDOM_SEED}
+@end ifnotinfo
 @section @code{RANDOM_SEED} --- Initialize a pseudo-random number sequence
 @fnindex RANDOM_SEED
 @cindex random number generation, seeding
@@ -11701,7 +13766,17 @@ end program test_random_seed
 
 
 
+
+@ifinfo
 @node RANGE
+@end ifinfo
+@ifnotinfo
+@anchor{RANGE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{RANGE}
+@end ifnotinfo
 @section @code{RANGE} --- Decimal exponent range
 @fnindex RANGE
 @cindex model representation, range
@@ -11739,7 +13814,17 @@ See @code{PRECISION} for an example.
 
 
 
+
+@ifinfo
 @node RANK
+@end ifinfo
+@ifnotinfo
+@anchor{RANK}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{RANK}
+@end ifnotinfo
 @section @code{RANK} --- Rank of a data object
 @fnindex RANK
 @cindex rank
@@ -11780,7 +13865,17 @@ end program test_rank
 
 
 
+
+@ifinfo
 @node REAL
+@end ifinfo
+@ifnotinfo
+@anchor{REAL}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{REAL}
+@end ifnotinfo
 @section @code{REAL} --- Convert to real type 
 @fnindex REAL
 @fnindex REALPART
@@ -11863,7 +13958,17 @@ end program test_real
 
 
 
+
+@ifinfo
 @node RENAME
+@end ifinfo
+@ifnotinfo
+@anchor{RENAME}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{RENAME}
+@end ifnotinfo
 @section @code{RENAME} --- Rename a file
 @fnindex RENAME
 @cindex file system, rename file
@@ -11906,7 +14011,17 @@ Subroutine, function
 
 
 
+
+@ifinfo
 @node REPEAT
+@end ifinfo
+@ifnotinfo
+@anchor{REPEAT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{REPEAT}
+@end ifnotinfo
 @section @code{REPEAT} --- Repeated string concatenation 
 @fnindex REPEAT
 @cindex string, repeat
@@ -11945,7 +14060,17 @@ end program
 
 
 
+
+@ifinfo
 @node RESHAPE
+@end ifinfo
+@ifnotinfo
+@anchor{RESHAPE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{RESHAPE}
+@end ifnotinfo
 @section @code{RESHAPE} --- Function to reshape an array
 @fnindex RESHAPE
 @cindex array, change dimensions
@@ -11999,7 +14124,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node RRSPACING
+@end ifinfo
+@ifnotinfo
+@anchor{RRSPACING}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{RRSPACING}
+@end ifnotinfo
 @section @code{RRSPACING} --- Reciprocal of the relative spacing
 @fnindex RRSPACING
 @cindex real number, relative spacing
@@ -12036,7 +14171,17 @@ The value returned is equal to
 
 
 
+
+@ifinfo
 @node RSHIFT
+@end ifinfo
+@ifnotinfo
+@anchor{RSHIFT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{RSHIFT}
+@end ifnotinfo
 @section @code{RSHIFT} --- Right shift bits
 @fnindex RSHIFT
 @cindex bits, shift right
@@ -12080,7 +14225,17 @@ The return value is of type @code{INTEGER} and of the same kind as
 
 
 
+
+@ifinfo
 @node SAME_TYPE_AS
+@end ifinfo
+@ifnotinfo
+@anchor{SAME_TYPE_AS}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SAME_TYPE_AS}
+@end ifnotinfo
 @section @code{SAME_TYPE_AS} ---  Query dynamic types for equality
 @fnindex SAME_TYPE_AS
 
@@ -12116,7 +14271,17 @@ only if the dynamic type of A is the same as the dynamic type of B.
 
 
 
+
+@ifinfo
 @node SCALE
+@end ifinfo
+@ifnotinfo
+@anchor{SCALE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SCALE}
+@end ifnotinfo
 @section @code{SCALE} --- Scale a real value
 @fnindex SCALE
 @cindex real number, scale
@@ -12158,7 +14323,17 @@ end program test_scale
 
 
 
+
+@ifinfo
 @node SCAN
+@end ifinfo
+@ifnotinfo
+@anchor{SCAN}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SCAN}
+@end ifnotinfo
 @section @code{SCAN} --- Scan a string for the presence of a set of characters
 @fnindex SCAN
 @cindex string, find subset
@@ -12211,7 +14386,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node SECNDS
+@end ifinfo
+@ifnotinfo
+@anchor{SECNDS}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SECNDS}
+@end ifnotinfo
 @section @code{SECNDS} --- Time function
 @fnindex SECNDS
 @cindex time, elapsed
@@ -12259,7 +14444,17 @@ end program test_secnds
 
 
 
+
+@ifinfo
 @node SECOND
+@end ifinfo
+@ifnotinfo
+@anchor{SECOND}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SECOND}
+@end ifnotinfo
 @section @code{SECOND} --- CPU time function
 @fnindex SECOND
 @cindex time, elapsed
@@ -12303,7 +14498,17 @@ seconds.
 
 
 
+
+@ifinfo
 @node SELECTED_CHAR_KIND
+@end ifinfo
+@ifnotinfo
+@anchor{SELECTED_CHAR_KIND}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SELECTED_CHAR_KIND}
+@end ifnotinfo
 @section @code{SELECTED_CHAR_KIND} --- Choose character kind
 @fnindex SELECTED_CHAR_KIND
 @cindex character kind
@@ -12358,7 +14563,17 @@ end program character_kind
 
 
 
+
+@ifinfo
 @node SELECTED_INT_KIND
+@end ifinfo
+@ifnotinfo
+@anchor{SELECTED_INT_KIND}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SELECTED_INT_KIND}
+@end ifnotinfo
 @section @code{SELECTED_INT_KIND} --- Choose integer kind
 @fnindex SELECTED_INT_KIND
 @cindex integer kind
@@ -12404,7 +14619,17 @@ end program large_integers
 
 
 
+
+@ifinfo
 @node SELECTED_REAL_KIND
+@end ifinfo
+@ifnotinfo
+@anchor{SELECTED_REAL_KIND}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SELECTED_REAL_KIND}
+@end ifnotinfo
 @section @code{SELECTED_REAL_KIND} --- Choose real kind
 @fnindex SELECTED_REAL_KIND
 @cindex real kind
@@ -12480,7 +14705,17 @@ end program real_kinds
 
 
 
+
+@ifinfo
 @node SET_EXPONENT
+@end ifinfo
+@ifnotinfo
+@anchor{SET_EXPONENT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SET_EXPONENT}
+@end ifnotinfo
 @section @code{SET_EXPONENT} --- Set the exponent of the model
 @fnindex SET_EXPONENT
 @cindex real number, set exponent
@@ -12525,7 +14760,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node SHAPE
+@end ifinfo
+@ifnotinfo
+@anchor{SHAPE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SHAPE}
+@end ifnotinfo
 @section @code{SHAPE} --- Determine the shape of an array
 @fnindex SHAPE
 @cindex array, shape
@@ -12574,7 +14819,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node SHIFTA
+@end ifinfo
+@ifnotinfo
+@anchor{SHIFTA}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SHIFTA}
+@end ifnotinfo
 @section @code{SHIFTA} --- Right shift with fill
 @fnindex SHIFTA
 @cindex bits, shift right
@@ -12614,7 +14869,17 @@ The return value is of type @code{INTEGER} and of the same kind as
 
 
 
+
+@ifinfo
 @node SHIFTL
+@end ifinfo
+@ifnotinfo
+@anchor{SHIFTL}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SHIFTL}
+@end ifnotinfo
 @section @code{SHIFTL} --- Left shift
 @fnindex SHIFTL
 @cindex bits, shift left
@@ -12653,7 +14918,17 @@ The return value is of type @code{INTEGER} and of the same kind as
 
 
 
+
+@ifinfo
 @node SHIFTR
+@end ifinfo
+@ifnotinfo
+@anchor{SHIFTR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SHIFTR}
+@end ifnotinfo
 @section @code{SHIFTR} --- Right shift
 @fnindex SHIFTR
 @cindex bits, shift right
@@ -12692,7 +14967,17 @@ The return value is of type @code{INTEGER} and of the same kind as
 
 
 
+
+@ifinfo
 @node SIGN
+@end ifinfo
+@ifnotinfo
+@anchor{SIGN}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SIGN}
+@end ifnotinfo
 @section @code{SIGN} --- Sign copying function
 @fnindex SIGN
 @fnindex ISIGN
@@ -12747,7 +15032,17 @@ end program test_sign
 
 
 
+
+@ifinfo
 @node SIGNAL
+@end ifinfo
+@ifnotinfo
+@anchor{SIGNAL}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SIGNAL}
+@end ifnotinfo
 @section @code{SIGNAL} --- Signal handling subroutine (or function)
 @fnindex SIGNAL
 @cindex system, signal handling
@@ -12805,7 +15100,17 @@ end program test_signal
 
 
 
+
+@ifinfo
 @node SIN
+@end ifinfo
+@ifnotinfo
+@anchor{SIN}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SIN}
+@end ifnotinfo
 @section @code{SIN} --- Sine function 
 @fnindex SIN
 @fnindex DSIN
@@ -12923,7 +15228,17 @@ Radians function: @ref{SIN}
 
 
 
+
+@ifinfo
 @node SINH
+@end ifinfo
+@ifnotinfo
+@anchor{SINH}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SINH}
+@end ifnotinfo
 @section @code{SINH} --- Hyperbolic sine function 
 @fnindex SINH
 @fnindex DSINH
@@ -12973,7 +15288,17 @@ end program test_sinh
 
 
 
+
+@ifinfo
 @node SIZE
+@end ifinfo
+@ifnotinfo
+@anchor{SIZE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SIZE}
+@end ifnotinfo
 @section @code{SIZE} --- Determine the size of an array
 @fnindex SIZE
 @cindex array, size
@@ -13021,7 +15346,17 @@ END PROGRAM
 @end table
 
 
+
+@ifinfo
 @node SIZEOF
+@end ifinfo
+@ifnotinfo
+@anchor{SIZEOF}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SIZEOF}
+@end ifnotinfo
 @section @code{SIZEOF} --- Size in bytes of an expression
 @fnindex SIZEOF
 @cindex expression size
@@ -13074,7 +15409,17 @@ where default @code{REAL} variables are unusually padded.
 @end table
 
 
+
+@ifinfo
 @node SLEEP
+@end ifinfo
+@ifnotinfo
+@anchor{SLEEP}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SLEEP}
+@end ifnotinfo
 @section @code{SLEEP} --- Sleep for the specified number of seconds
 @fnindex SLEEP
 @cindex delayed execution
@@ -13107,7 +15452,17 @@ end
 
 
 
+
+@ifinfo
 @node SPACING
+@end ifinfo
+@ifnotinfo
+@anchor{SPACING}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SPACING}
+@end ifnotinfo
 @section @code{SPACING} --- Smallest distance between two numbers of a given type
 @fnindex SPACING
 @cindex real number, relative spacing
@@ -13152,7 +15507,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node SPREAD
+@end ifinfo
+@ifnotinfo
+@anchor{SPREAD}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SPREAD}
+@end ifnotinfo
 @section @code{SPREAD} --- Add a dimension to an array
 @fnindex SPREAD
 @cindex array, increase dimension
@@ -13201,7 +15566,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node SQRT
+@end ifinfo
+@ifnotinfo
+@anchor{SQRT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SQRT}
+@end ifnotinfo
 @section @code{SQRT} --- Square-root function
 @fnindex SQRT
 @fnindex DSQRT
@@ -13257,7 +15632,17 @@ end program test_sqrt
 
 
 
+
+@ifinfo
 @node SRAND
+@end ifinfo
+@ifnotinfo
+@anchor{SRAND}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SRAND}
+@end ifnotinfo
 @section @code{SRAND} --- Reinitialize the random number generator
 @fnindex SRAND
 @cindex random number generation, seeding
@@ -13307,7 +15692,17 @@ pseudo-random number generators.
 
 
 
+
+@ifinfo
 @node STAT
+@end ifinfo
+@ifnotinfo
+@anchor{STAT}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{STAT}
+@end ifnotinfo
 @section @code{STAT} --- Get file status
 @fnindex STAT
 @cindex file system, file status
@@ -13394,7 +15789,17 @@ To stat an open file: @ref{FSTAT}, to stat a link: @ref{LSTAT}
 
 
 
+
+@ifinfo
 @node STORAGE_SIZE
+@end ifinfo
+@ifnotinfo
+@anchor{STORAGE_SIZE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{STORAGE_SIZE}
+@end ifnotinfo
 @section @code{STORAGE_SIZE} --- Storage size in bits
 @fnindex STORAGE_SIZE
 @cindex storage size
@@ -13427,7 +15832,17 @@ parameters of A.
 
 
 
+
+@ifinfo
 @node SUM
+@end ifinfo
+@ifnotinfo
+@anchor{SUM}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SUM}
+@end ifnotinfo
 @section @code{SUM} --- Sum of array elements
 @fnindex SUM
 @cindex array, sum
@@ -13486,7 +15901,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node SYMLNK
+@end ifinfo
+@ifnotinfo
+@anchor{SYMLNK}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SYMLNK}
+@end ifnotinfo
 @section @code{SYMLNK} --- Create a symbolic link
 @fnindex SYMLNK
 @cindex file system, create link
@@ -13531,7 +15956,17 @@ Subroutine, function
 
 
 
+
+@ifinfo
 @node SYSTEM
+@end ifinfo
+@ifnotinfo
+@anchor{SYSTEM}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SYSTEM}
+@end ifnotinfo
 @section @code{SYSTEM} --- Execute a shell command
 @fnindex SYSTEM
 @cindex system, system call
@@ -13576,7 +16011,17 @@ and should considered in new code for future portability.
 
 
 
+
+@ifinfo
 @node SYSTEM_CLOCK
+@end ifinfo
+@ifnotinfo
+@anchor{SYSTEM_CLOCK}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{SYSTEM_CLOCK}
+@end ifnotinfo
 @section @code{SYSTEM_CLOCK} --- Time function
 @fnindex SYSTEM_CLOCK
 @cindex time, clock ticks
@@ -13653,7 +16098,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node TAN
+@end ifinfo
+@ifnotinfo
+@anchor{TAN}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{TAN}
+@end ifnotinfo
 @section @code{TAN} --- Tangent function
 @fnindex TAN
 @fnindex DTAN
@@ -13756,7 +16211,17 @@ Radians function: @ref{TAN}
 
 
 
+
+@ifinfo
 @node TANH
+@end ifinfo
+@ifnotinfo
+@anchor{TANH}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{TANH}
+@end ifnotinfo
 @section @code{TANH} --- Hyperbolic tangent function 
 @fnindex TANH
 @fnindex DTANH
@@ -13809,7 +16274,17 @@ end program test_tanh
 
 
 
+
+@ifinfo
 @node THIS_IMAGE
+@end ifinfo
+@ifnotinfo
+@anchor{THIS_IMAGE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{THIS_IMAGE}
+@end ifnotinfo
 @section @code{THIS_IMAGE} --- Function that returns the cosubscript index of this image
 @fnindex THIS_IMAGE
 @cindex coarray, @code{THIS_IMAGE}
@@ -13880,7 +16355,17 @@ IF (THIS_IMAGE(HUGE(1)) /= THIS_IMAGE())
 
 
 
+
+@ifinfo
 @node TIME
+@end ifinfo
+@ifnotinfo
+@anchor{TIME}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{TIME}
+@end ifnotinfo
 @section @code{TIME} --- Time function
 @fnindex TIME
 @cindex time, current
@@ -13921,7 +16406,17 @@ The return value is a scalar of type @code{INTEGER(4)}.
 
 
 
+
+@ifinfo
 @node TIME8
+@end ifinfo
+@ifnotinfo
+@anchor{TIME8}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{TIME8}
+@end ifnotinfo
 @section @code{TIME8} --- Time function (64-bit)
 @fnindex TIME8
 @cindex time, current
@@ -13960,7 +16455,17 @@ The return value is a scalar of type @code{INTEGER(8)}.
 
 
 
+
+@ifinfo
 @node TINY
+@end ifinfo
+@ifnotinfo
+@anchor{TINY}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{TINY}
+@end ifnotinfo
 @section @code{TINY} --- Smallest positive number of a real kind
 @fnindex TINY
 @cindex limits, smallest number
@@ -13994,7 +16499,17 @@ See @code{HUGE} for an example.
 
 
 
+
+@ifinfo
 @node TRAILZ
+@end ifinfo
+@ifnotinfo
+@anchor{TRAILZ}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{TRAILZ}
+@end ifnotinfo
 @section @code{TRAILZ} --- Number of trailing zero bits of an integer
 @fnindex TRAILZ
 @cindex zero bits
@@ -14034,7 +16549,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node TRANSFER
+@end ifinfo
+@ifnotinfo
+@anchor{TRANSFER}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{TRANSFER}
+@end ifnotinfo
 @section @code{TRANSFER} --- Transfer bit patterns
 @fnindex TRANSFER
 @cindex bits, move
@@ -14097,7 +16622,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node TRANSPOSE
+@end ifinfo
+@ifnotinfo
+@anchor{TRANSPOSE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{TRANSPOSE}
+@end ifnotinfo
 @section @code{TRANSPOSE} --- Transpose an array of rank two
 @fnindex TRANSPOSE
 @cindex array, transpose
@@ -14130,7 +16665,17 @@ The result has the same type as @var{MATRIX}, and has shape
 
 
 
+
+@ifinfo
 @node TRIM
+@end ifinfo
+@ifnotinfo
+@anchor{TRIM}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{TRIM}
+@end ifnotinfo
 @section @code{TRIM} --- Remove trailing blank characters of a string
 @fnindex TRIM
 @cindex string, remove trailing whitespace
@@ -14171,7 +16716,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node TTYNAM
+@end ifinfo
+@ifnotinfo
+@anchor{TTYNAM}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{TTYNAM}
+@end ifnotinfo
 @section @code{TTYNAM} --- Get the name of a terminal device.
 @fnindex TTYNAM
 @cindex system, terminal
@@ -14218,7 +16773,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node UBOUND
+@end ifinfo
+@ifnotinfo
+@anchor{UBOUND}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{UBOUND}
+@end ifnotinfo
 @section @code{UBOUND} --- Upper dimension bounds of an array
 @fnindex UBOUND
 @cindex array, upper bound
@@ -14261,7 +16826,17 @@ the relevant dimension.
 
 
 
+
+@ifinfo
 @node UCOBOUND
+@end ifinfo
+@ifnotinfo
+@anchor{UCOBOUND}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{UCOBOUND}
+@end ifnotinfo
 @section @code{UCOBOUND} --- Upper codimension bounds of an array
 @fnindex UCOBOUND
 @cindex coarray, upper bound
@@ -14300,7 +16875,17 @@ corresponding to the lower cobound of the array along that codimension.
 
 
 
+
+@ifinfo
 @node UMASK
+@end ifinfo
+@ifnotinfo
+@anchor{UMASK}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{UMASK}
+@end ifnotinfo
 @section @code{UMASK} --- Set the file creation mask
 @fnindex UMASK
 @cindex file system, file creation mask
@@ -14334,7 +16919,17 @@ Subroutine, function
 
 
 
+
+@ifinfo
 @node UNLINK
+@end ifinfo
+@ifnotinfo
+@anchor{UNLINK}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{UNLINK}
+@end ifnotinfo
 @section @code{UNLINK} --- Remove a file from the file system
 @fnindex UNLINK
 @cindex file system, remove file
@@ -14374,7 +16969,17 @@ Subroutine, function
 
 
 
+
+@ifinfo
 @node UNPACK
+@end ifinfo
+@ifnotinfo
+@anchor{UNPACK}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{UNPACK}
+@end ifnotinfo
 @section @code{UNPACK} --- Unpack an array of rank one into an array
 @fnindex UNPACK
 @cindex array, unpacking
@@ -14425,7 +17030,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node VERIFY
+@end ifinfo
+@ifnotinfo
+@anchor{VERIFY}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{VERIFY}
+@end ifnotinfo
 @section @code{VERIFY} --- Scan a string for characters not a given set
 @fnindex VERIFY
 @cindex string, find missing set
@@ -14480,7 +17095,17 @@ END PROGRAM
 
 
 
+
+@ifinfo
 @node XOR
+@end ifinfo
+@ifnotinfo
+@anchor{XOR}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{XOR}
+@end ifnotinfo
 @section @code{XOR} --- Bitwise logical exclusive OR
 @fnindex XOR
 @cindex bitwise logical exclusive or
@@ -14535,7 +17160,17 @@ Fortran 95 elemental function: @ref{IEOR}
 
 
 
-@node Intrinsic Modules
+
+@ifinfo
+@node Intrinsic
+@end ifinfo
+@ifnotinfo
+@anchor{Intrinsic}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{Intrinsic}
+@end ifnotinfo Modules
 @chapter Intrinsic Modules
 @cindex intrinsic Modules
 
@@ -14547,7 +17182,17 @@ Fortran 95 elemental function: @ref{IEOR}
 * OpenACC Module OPENACC::
 @end menu
 
+
+@ifinfo
 @node ISO_FORTRAN_ENV
+@end ifinfo
+@ifnotinfo
+@anchor{ISO_FORTRAN_ENV}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ISO_FORTRAN_ENV}
+@end ifnotinfo
 @section @code{ISO_FORTRAN_ENV}
 @table @asis
 @item @emph{Standard}:
@@ -14665,7 +17310,17 @@ The module also provides the following intrinsic procedures:
 
 
 
+
+@ifinfo
 @node ISO_C_BINDING
+@end ifinfo
+@ifnotinfo
+@anchor{ISO_C_BINDING}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{ISO_C_BINDING}
+@end ifnotinfo
 @section @code{ISO_C_BINDING}
 @table @asis
 @item @emph{Standard}:
@@ -14762,7 +17417,17 @@ Both are equivalent to the value @code{NULL} in C.
 
 
 
-@node IEEE modules
+
+@ifinfo
+@node IEEE
+@end ifinfo
+@ifnotinfo
+@anchor{IEEE}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{IEEE}
+@end ifnotinfo modules
 @section IEEE modules: @code{IEEE_EXCEPTIONS}, @code{IEEE_ARITHMETIC}, and @code{IEEE_FEATURES}
 @table @asis
 @item @emph{Standard}:
@@ -14790,7 +17455,17 @@ with the following options: @code{-fno-unsafe-math-optimizations
 
 
 
-@node OpenMP Modules OMP_LIB and OMP_LIB_KINDS
+
+@ifinfo
+@node OpenMP
+@end ifinfo
+@ifnotinfo
+@anchor{OpenMP}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{OpenMP}
+@end ifnotinfo Modules OMP_LIB and OMP_LIB_KINDS
 @section OpenMP Modules @code{OMP_LIB} and @code{OMP_LIB_KINDS}
 @table @asis
 @item @emph{Standard}:
@@ -14849,7 +17524,17 @@ kind @code{omp_proc_bind_kind}:
 
 
 
-@node OpenACC Module OPENACC
+
+@ifinfo
+@node OpenACC
+@end ifinfo
+@ifnotinfo
+@anchor{OpenACC}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{OpenACC}
+@end ifnotinfo Module OPENACC
 @section OpenACC Module @code{OPENACC}
 @table @asis
 @item @emph{Standard}:

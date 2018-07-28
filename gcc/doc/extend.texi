@@ -1979,6 +1979,8 @@ mentioned in @var{sanitize_option}.  A list of values acceptable by
 @smallexample
 void __attribute__ ((no_sanitize ("alignment", "object-size")))
 f () @{ /* @r{Do something.} */; @}
+void __attribute__ ((no_sanitize ("alignment,object-size")))
+g () @{ /* @r{Do something.} */; @}
 @end smallexample
 
 @item no_sanitize_address
@@ -11187,6 +11189,8 @@ uint64_t __builtin_ppc_get_timebase ();
 unsigned long __builtin_ppc_mftb ();
 double __builtin_unpack_longdouble (long double, int);
 long double __builtin_pack_longdouble (double, double);
+__ibm128 __builtin_unpack_ibm128 (__ibm128, int);
+__ibm128 __builtin_pack_ibm128 (double, double);
 @end smallexample
 
 @code{vec_rsqrt}、@code{__builtin_rsqrt}、および@code{__builtin_rsqrtf}関数は、逆数sqrt推定命令を使用して逆数sqrt機能を実装するための複数の命令を生成する。
@@ -11195,6 +11199,14 @@ long double __builtin_pack_longdouble (double, double);
 
 @code{__builtin_ppc_get_timebase}関数と@code{__builtin_ppc_mftb}関数は、タイムベースレジスタを読み込む命令を生成する。 @code{__builtin_ppc_get_timebase}関数は、複数の命令を生成し、常にタイムベースレジスタの64ビットを返す。@code{__builtin_ppc_mftb}関数は常に1つの命令を生成し、32ビット環境で最上位ワードを投げ捨て、符号なしlongとしてタイムベースレジスタの値を返す。
 
+@code{__builtin_unpack_longdouble}関数は@code{long double}引数とコンパイル時定数0または1をとる。定数が0の場合、@code{long double}内の最初の@code{double}が返され、 それ以外の場合は、2番目の@code{double}が返される。 @code{__builtin_unpack_longdouble}関数は、@code{long double}がIBMの拡張double表現を使用する場合にのみ使用可能である。
+
+@code{__ builtin_pack_longdouble}関数は2つの@code{double}引数をとり、2つの引数を組み合わせた@code{long double}値を返す。 @code{__builtin_pack_longdouble}関数は、@code{long double}がIBMの拡張double表現を使用する場合にのみ使用可能である。
+
+@code{__ibm128}関数は、@code{__ibm128}引数とコンパイル時定数0または1をとる。定数が0の場合、@code{__ ibm128}内の最初の@code{double}が戻される。 さもなければ2番目の@code{double}が返される。
+
+@code{__builtin_pack_ibm128}関数は2つの@code{double}引数をとり、2つの引数を組み合わせた@code{__ibm128}値を返す。
+ 
 128ビット浮動小数点（@code{__float128}）値を効率的に使用するために、64ビットPowerPCファミリのプロセッサに追加の組み込み関数が用意されている。
 
 GCCの以前のバージョンでは、IEEE 128ビット浮動小数点用の「q」組み込み関数がサポートされていた。 これらの関数は、これと同等の 'f128'組み込み関数にマップされるようになった。
@@ -18049,15 +18061,15 @@ C ++のコンセプトは、ジェネリックプログラミングのサポー�
 
 @end table
 
-G ++では、@samp{void *}を返す仮想関数を、異なるポインタ型を返す仮想関数でオーバーライドすることができる。 この共変リターンタイプルールへの拡張は非推奨となり、将来のバージョンから削除される予定である。
+G++では、@samp{void *}を返す仮想関数を、異なるポインタ型を返す仮想関数でオーバーライドすることができる。 この共変リターンタイプルールへの拡張は非推奨となり、将来のバージョンから削除される予定である。
 
 関数ポインタ、関数型宣言子、および標準で許可されていないその他の場所でのデフォルト引数の使用は廃止され、G++の将来のバージョンから削除される。
 
 G++は、浮動小数点リテラルを整数定数式で表現することを可能にする（例：@samp{ enum E @{ e = int(2.2 * 3.7) @} }）この拡張機能は廃止され、将来のバージョンから削除される。
 
-G ++では、const浮動小数点型の静的データメンバをクラス定義の初期化子で宣言できる。 標準では、const整数型とconst列挙型の静的メンバーの初期化子のみが使用できるようになっているので、この拡張は廃止され、将来のバージョンから削除される。
+G++では、const浮動小数点型の静的データメンバをクラス定義の初期化子で宣言できる。 標準では、const整数型とconst列挙型の静的メンバーの初期化子のみが使用できるようになっているので、この拡張は廃止され、将来のバージョンから削除される。
 
-G ++では、属性が後に続く括弧で囲まれた直接イニシャライザ（@：@samp {int f（0）__attribute__（（something）））を許容する。この拡張は、G++ 3.3以降では無視されていて、廃止予定である。
+G++では、属性が後に続く括弧で囲まれた直接イニシャライザ（@samp{int f(0)__attribute__((something))}を許容する。この拡張は、G++ 3.3以降では無視されていて、廃止予定である。
 
 G++では、匿名の構造体および共用体に、非静的なパブリックなデータメンバーではないメンバー（つまり、フィールド）を持たせることができる。 これらの拡張機能は廃止予定である。
 

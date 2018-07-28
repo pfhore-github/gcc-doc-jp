@@ -54,7 +54,12 @@ Texts.  A copy of the license is included in the section entitled
 
 @raisesections
 
+@ifinfo
 @node    Top,       General,         , (dir)
+@end ifinfo
+@ifnotinfo
+@anchor{   Top,       General,         , (dir)}
+@end ifnotinfo
 @comment node-name, next,    previous, up
 
 @ifnottex
@@ -84,7 +89,12 @@ GNAT, The GNU Ada Compiler@*
 @end menu
 
 @c  -------------------------------------------------------------------------
+@ifinfo
 @node    General, Lexical Elements, Top, Top
+@end ifinfo
+@ifnotinfo
+@anchor{   General, Lexical Elements, Top, Top}
+@end ifnotinfo
 @section General
 @c  -------------------------------------------------------------------------
 
@@ -103,7 +113,12 @@ lookup style rules for particular constructs.
 
 
 @c  -------------------------------------------------------------------------
+@ifinfo
 @node    Lexical Elements, Declarations and Types, General, Top
+@end ifinfo
+@ifnotinfo
+@anchor{   Lexical Elements, Declarations and Types, General, Top}
+@end ifnotinfo
 @section Lexical Elements
 @c  -------------------------------------------------------------------------
 @cindex Lexical elements
@@ -309,7 +324,12 @@ sufficient, as comments.
 @end itemize
 
 @c  -------------------------------------------------------------------------
+@ifinfo
 @node    Declarations and Types, Expressions and Names, Lexical Elements,Top
+@end ifinfo
+@ifnotinfo
+@anchor{   Declarations and Types, Expressions and Names, Lexical Elements,Top}
+@end ifnotinfo
 @section Declarations and Types
 @c  -------------------------------------------------------------------------
 @cindex Declarations and Types
@@ -372,7 +392,12 @@ lines, the continuations should be indented from the start of the expression.
 
 
 @c  -------------------------------------------------------------------------
+@ifinfo
 @node    Expressions and Names, Statements, Declarations and Types, Top
+@end ifinfo
+@ifnotinfo
+@anchor{   Expressions and Names, Statements, Declarations and Types, Top}
+@end ifnotinfo
 @section Expressions and Names
 @c  -------------------------------------------------------------------------
 @cindex Expressions and names
@@ -401,7 +426,12 @@ with operators:
 @end itemize
 
 @c  -------------------------------------------------------------------------
+@ifinfo
 @node    Statements, Subprograms, Expressions and Names, Top
+@end ifinfo
+@ifnotinfo
+@anchor{   Statements, Subprograms, Expressions and Names, Top}
+@end ifnotinfo
 @section Statements
 @c  -------------------------------------------------------------------------
 @cindex Statements
@@ -630,7 +660,12 @@ is a blank line before the @code{begin} keyword:
 @end itemize
 
 @c  -------------------------------------------------------------------------
+@ifinfo
 @node    Subprograms, Packages, Statements, Top
+@end ifinfo
+@ifnotinfo
+@anchor{   Subprograms, Packages, Statements, Top}
+@end ifnotinfo
 @section Subprograms
 @c  -------------------------------------------------------------------------
 @cindex Subprograms
@@ -840,7 +875,12 @@ more common in the sources.
 
 
 @c  -------------------------------------------------------------------------
+@ifinfo
 @node    Packages, Program Structure, Subprograms, Top
+@end ifinfo
+@ifnotinfo
+@anchor{   Packages, Program Structure, Subprograms, Top}
+@end ifnotinfo
 @section Packages and Visibility Rules
 @c  -------------------------------------------------------------------------
 @cindex Packages
@@ -903,7 +943,12 @@ package name, indented an extra level and using the parameterless form:
 @end itemize
 
 @c  -------------------------------------------------------------------------
+@ifinfo
 @node    Program Structure, GNU Free Documentation License, Packages, Top
+@end ifinfo
+@ifnotinfo
+@anchor{   Program Structure, GNU Free Documentation License, Packages, Top}
+@end ifnotinfo
 @section Program Structure and Compilation Issues
 @c  -------------------------------------------------------------------------
 @cindex Program structure
@@ -937,14 +982,34 @@ except that they are all lower case.
 @c **********************************
 @c * GNU Free Documentation License *
 @c **********************************
-@node GNU Free Documentation License,Index, Program Structure, Top
+
+@ifinfo
+@node GNU
+@end ifinfo
+@ifnotinfo
+@anchor{GNU}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{GNU}
+@end ifnotinfo Free Documentation License,Index, Program Structure, Top
 @unnumberedsec GNU Free Documentation License
 @set nodefaultgnufreedocumentationlicensenode
 @include fdl.texi
 @c GNU Free Documentation License
 @cindex GNU Free Documentation License
 
-@node Index,,GNU Free Documentation License, Top
+
+@ifinfo
+@node Index
+@end ifinfo
+@ifnotinfo
+@anchor{Index}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{Index}
+@end ifnotinfo,,GNU Free Documentation License, Top
 @unnumberedsec Index
 
 @printindex cp

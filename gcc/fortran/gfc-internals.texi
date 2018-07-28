@@ -1,7 +1,7 @@
 \input texinfo  @c -*-texinfo-*-
 @c %**start of header
 @setfilename gfc-internals.info
-@set copyrights-gfortran 2007-2017
+@set copyrights-gfortran 2007-2018
 
 @include gcc-common.texi
 
@@ -95,7 +95,17 @@ Boston, MA 02110-1301, USA@*
 @c ---------------------------------------------------------------------
 
 @ifnottex
+
+@ifinfo
 @node Top
+@end ifinfo
+@ifnotinfo
+@anchor{Top}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{Top}
+@end ifnotinfo
 @top Introduction
 @cindex Introduction
 
@@ -130,7 +140,17 @@ not accurately reflect the status of the most recent GNU Fortran compiler.
 @c Introduction
 @c ---------------------------------------------------------------------
 
+
+@ifinfo
 @node Introduction
+@end ifinfo
+@ifnotinfo
+@anchor{Introduction}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{Introduction}
+@end ifnotinfo
 @chapter Introduction
 
 @c The following duplicates the text on the TexInfo table of contents.
@@ -158,7 +178,17 @@ compiler.
 @c Code that Interacts with the User
 @c ---------------------------------------------------------------------
 
-@node User Interface
+
+@ifinfo
+@node User
+@end ifinfo
+@ifnotinfo
+@anchor{User}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{User}
+@end ifnotinfo Interface
 @chapter Code that Interacts with the User
 
 @menu
@@ -171,7 +201,17 @@ compiler.
 @c Command-Line Options
 @c ---------------------------------------------------------------------
 
-@node Command-Line Options
+
+@ifinfo
+@node Command
+@end ifinfo
+@ifnotinfo
+@anchor{Command}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{Command}
+@end ifnotinfo-Line Options
 @section Command-Line Options
 
 Command-line options for @command{gfortran} involve four interrelated
@@ -202,7 +242,17 @@ values for the options.
 @c Error Handling
 @c ---------------------------------------------------------------------
 
-@node Error Handling
+
+@ifinfo
+@node Error
+@end ifinfo
+@ifnotinfo
+@anchor{Error}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{Error}
+@end ifnotinfo Handling
 @section Error Handling
 
 The GNU Fortran compiler's parser operates by testing each piece of
@@ -273,7 +323,17 @@ function in @file{error.c}.
 @c Frontend Data Structures
 @c ---------------------------------------------------------------------
 
-@node Frontend Data Structures
+
+@ifinfo
+@node Frontend
+@end ifinfo
+@ifnotinfo
+@anchor{Frontend}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{Frontend}
+@end ifnotinfo Data Structures
 @chapter Frontend Data Structures
 @cindex data structures
 
@@ -292,7 +352,17 @@ structures.
 @c gfc_code
 @c --------
 
+
+@ifinfo
 @node gfc_code
+@end ifinfo
+@ifnotinfo
+@anchor{gfc_code}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{gfc_code}
+@end ifnotinfo
 @section @code{gfc_code}
 @cindex statement chaining
 @tindex @code{gfc_code}
@@ -435,7 +505,17 @@ that may change the value.
 @c gfc_expr
 @c --------
 
+
+@ifinfo
 @node gfc_expr
+@end ifinfo
+@ifnotinfo
+@anchor{gfc_expr}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{gfc_expr}
+@end ifnotinfo
 @section @code{gfc_expr}
 @tindex @code{gfc_expr}
 @tindex @code{struct gfc_expr}
@@ -590,7 +670,17 @@ substring reference as described in the subsection above.
 @c F2003 OOP
 @c ---------------------------------------------------------------------
 
-@node Object Orientation
+
+@ifinfo
+@node Object
+@end ifinfo
+@ifnotinfo
+@anchor{Object}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{Object}
+@end ifnotinfo Orientation
 @chapter Internals of Fortran 2003 OOP Features
 
 @menu
@@ -602,7 +692,17 @@ substring reference as described in the subsection above.
 @c Type-bound procedures
 @c ---------------------
 
-@node Type-bound Procedures
+
+@ifinfo
+@node Type
+@end ifinfo
+@ifnotinfo
+@anchor{Type}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{Type}
+@end ifnotinfo-bound Procedures
 @section Type-bound Procedures
 
 Type-bound procedures are stored in the @code{tb_sym_root} of the namespace
@@ -697,7 +797,17 @@ needs to be done when relevant.
 @c Type-bound operators
 @c --------------------
 
-@node Type-bound Operators
+
+@ifinfo
+@node Type
+@end ifinfo
+@ifnotinfo
+@anchor{Type}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{Type}
+@end ifnotinfo-bound Operators
 @section Type-bound Operators
 
 Type-bound operators are in fact basically just @code{GENERIC} procedure
@@ -729,7 +839,17 @@ further processed.
 @c LibGFortran
 @c ---------------------------------------------------------------------
 
+
+@ifinfo
 @node LibGFortran
+@end ifinfo
+@ifnotinfo
+@anchor{LibGFortran}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{LibGFortran}
+@end ifnotinfo
 @chapter The LibGFortran Runtime Library
 
 @menu
@@ -741,7 +861,17 @@ further processed.
 @c Symbol Versioning
 @c ---------------------------------------------------------------------
 
-@node Symbol Versioning
+
+@ifinfo
+@node Symbol
+@end ifinfo
+@ifnotinfo
+@anchor{Symbol}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{Symbol}
+@end ifnotinfo Versioning
 @section Symbol Versioning
 @comment Based on https://gcc.gnu.org/wiki/SymbolVersioning,
 @comment as of 2006-11-05, written by Janne Blomqvist.
@@ -817,7 +947,17 @@ and @code{VERS_1.2} as well as in @code{VERS_2.0}.
 @c Index
 @c ---------------------------------------------------------------------
 
+
+@ifinfo
 @node Index
+@end ifinfo
+@ifnotinfo
+@anchor{Index}
+@end ifnotinfo
+@end ininfo
+@ifnotinfo
+@anchor{Index}
+@end ifnotinfo
 @unnumbered Index
 
 @printindex cp

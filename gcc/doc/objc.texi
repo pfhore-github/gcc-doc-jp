@@ -256,11 +256,11 @@ Objective-Cコンパイラは、すべての型の型エンコーディングを
 @item ポインタ
 @tab @samp{^}の後ろに参照される型
 @item 配列
-@tab @samp {{}の後に配列の要素数、要素の型、@samp{]}が続く。
+@tab @samp{[}の後に配列の要素数、要素の型、@samp{]}が続く。
 @item 構造体
 @tab @samp{@{}の後ろに構造体の名前（構造体に名前がない場合は@samp{?}）、@samp{=}記号、メンバーの型、@samp{@}}が続く。
 @item 共用体
-@tab @samp{@(}の後ろに構造体の名前（共用体に名前がない場合は@samp{?}）、@samp{=}記号、メンバーの型、@samp{@))}が続く。
+@tab @samp{(}の後ろに構造体の名前（共用体に名前がない場合は@samp{?}）、@samp{=}記号、メンバーの型、@samp{)}が続く。
 @item ベクタ
 @tab @samp{!}の後ろにvector_size（ベクトルを構成するバイト数）、カンマ、ベクトルの整列（バイト単位）、要素の型、@samp{]}が続く。
 @end multitable
@@ -622,7 +622,7 @@ GNU Objective-Cは、高速列挙構文をサポートしている：
   @}
 @end smallexample
 
-@code array}は「高速列挙プロトコル」（下記参照）を実装するObjective-Cオブジェクト（通常は配列、辞書、セットなどのコレクションオブジェクト）である必要がある。 GNUstep BaseやApple Cocoa FoundationなどのFoundationライブラリを使用している場合は、ライブラリ内のすべてのコレクションオブジェクトがこのプロトコルを実装し、このように使用できる。
+@code{array}は「高速列挙プロトコル」（下記参照）を実装するObjective-Cオブジェクト（通常は配列、辞書、セットなどのコレクションオブジェクト）である必要がある。 GNUstep BaseやApple Cocoa FoundationなどのFoundationライブラリを使用している場合は、ライブラリ内のすべてのコレクションオブジェクトがこのプロトコルを実装し、このように使用できる。
 
 上のコードは@code{array}のすべてのオブジェクトを繰り返し処理する。 それぞれに対して、それを@code{object}に代入し、次に@code{something with 'object'}ステートメントを実行する。
 

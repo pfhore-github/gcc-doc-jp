@@ -1,4 +1,4 @@
-@c Copyright (C) 2001-2016 Free Software Foundation, Inc.
+@c Copyright (C) 2001-2018 Free Software Foundation, Inc.
 @c This is part of the GCC manual.
 @c For copying conditions, see the file gcc.texi.
 
@@ -8,7 +8,7 @@
 @c release version (corresponding to ``experimental''/anything else
 @c in gcc/DEV-PHASE).
 
-@set version-GCC 7.2
+@set version-GCC 8.2
 
 @c Common macros to support generating man pages:
 
@@ -23,13 +23,8 @@
 @c Makeinfo handles the above macro OK, TeX needs manual line breaks;
 @c they get lost at some point in handling the macro.  But if @macro is
 @c used here rather than @alias, it produces double line breaks.
-@iftex
-@alias gol = *
-@end iftex
-@ifnottex
 @macro gol
 @end macro
-@end ifnottex
 
 @c For FSF printing, define FSFPRINT.  Also update the ISBN and last
 @c printing date for the manual being printed.

@@ -303,7 +303,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -Wswitch-unreachable  -Wsync-nand 
 -Wsystem-headers  -Wtautological-compare  -Wtrampolines  -Wtrigraphs 
 -Wtype-limits  -Wundef 
--Wuninitialized  -Wunknown-pragmas  -Wunsafe-loop-optimizations 
+-Wuninitialized  -Wunknown-pragmas 
 -Wunsuffixed-float-constants  -Wunused  -Wunused-function 
 -Wunused-label  -Wunused-local-typedefs  -Wunused-macros 
 -Wunused-parameter  -Wno-unused-result 
@@ -2113,6 +2113,10 @@ const/ststic_cast, 前置++/-- テンプレート引数として使われるク�
 関数内で、異なるスコープで宣言されたの同じ名前を持つ複数のエンティティでは、マングリングは
 12回の出現で変化を始める。それは@option{-fnew-inheriting-ctors}を含む。
 
+G++ 8で初めて登場したバージョン12は、x86_64ターゲット上の空のクラスと、削除されたコピー/移動コンストラクタのみを持つクラスの呼び出し規約を修正している。 それは、誤って、削除されたコピーコンストラクタと簡単な移動コンストラクタを持つクラスの呼び出し規約を変更した。
+
+バージョン13は、G++ 8.2ではじめて登場し、バージョン12の偶発的な変更を修正した。
+ 
 @option{-Wabi}も見よ。
 
 @item -fabi-compat-version=@var{n}
@@ -2121,9 +2125,7 @@ const/ststic_cast, 前置++/-- テンプレート引数として使われるク�
 正しくマングルされた名前へのエイリアスを作ることでマングルの変化に対処する。このスイッチはエイリアス
 で使うABIバージョンを指定する。
 
-@option{-fabi-version=0}で（デフォルト）、これはデフォルトを8（GCC5互換）とする。もしほかのABIバージョンが
-明示的に選択されれば、これはデフォルトを0とする。GCC3.2から4.9への互換性のためには、
-@option{-fabi-compat-version=2}を使う。
+@option{-fabi-version=0}で（デフォルト）、これはデフォルトを11（GCC7互換）とする。もしほかのABIバージョンが明示的に選択されれば、これはデフォルトを0とする。GCC3.2から4.9への互換性のためには、@option{-fabi-compat-version=2}を使う。
 
 もしこのオプションが与えられず、@option{-Wabi=@var{n}}がある場合は、そのバージョンが互換エイリアスに使われる。
 もしオプションが@option{-Wabi}（バージョン無しで）といっしょに提供された場合は、このオプションのバージョンが警告
@@ -3339,7 +3341,8 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 -Wsizeof-pointer-div
 -Wsizeof-pointer-memaccess 
 -Wstrict-aliasing  
--Wstrict-overflow=1  
+-Wstrict-overflow=1
+-Wstringop-truncation
 -Wswitch  
 -Wtautological-compare  
 -Wtrigraphs  
@@ -4512,6 +4515,8 @@ however, are not suitable arguments to functions that expect
 such arrays GCC issues warnings unless it can prove that the use is
 safe.  @xref{Common Variable Attributes}.
 
+Option @option{-Wstringop-truncation} is enabled by @option{-Wall}.
+
 @item -Wsuggest-attribute=@r{[}pure@r{|}const@r{|}noreturn@r{|}format@r{|}cold@r{|}malloc@r{]}
 @opindex Wsuggest-attribute=
 @opindex Wno-suggest-attribute=
@@ -4593,7 +4598,8 @@ ocerrideキーワードでマークされていないオーバーライド仮想
 
 @item -Walloc-size-larger-than=@var{n}
 属性@code{alloc_size}で修飾された館数が指定されたバイト数よりも大きいサイズを割り当てようとしたとき及び、サイズ計算の結果が無限精度の整数で@code{SIZE_MAX / 2}を超えるところで警告する。
-オプション引数@var{n}は、キロバイトとキビバイトに@code{kB}と@code{KiB}、メガバイトとメビバイトに@code{MB}と@code{MiB}などのようなバイトの倍数を指定する標準サフィックスのいずれかで終わってもよい。
+オプション引数@var{n}は、キロバイトとキビバイトに@code{kB}と@code{KiB}、メガバイトとメビバイトに@code{MB}と@code{MiB}などのようなバイトの倍数を指定する標準サフィックスのいずれかで終わってもよい。@option{-Walloc-size-greater-than=}@var{PTRDIFF_MAX}はデフォルトで有効になっている。@var{SIZE_MAX}以上の@var{n}を指定することで、オプションで制御される警告を無効にすることができる。
+
 @xref{Function Attributes}.
 
 @item -Walloca
@@ -4970,12 +4976,6 @@ for (SomeIterator i = SomeObj.begin(); i != SomeObj.end(); ++i)
   warning: stack usage might be unbounded
 @end smallexample
 @end itemize
-
-@item -Wunsafe-loop-optimizations
-@opindex Wunsafe-loop-optimizations
-@opindex Wno-unsafe-loop-optimizations
-コンパイラがループの添字について仮定できないためにループを最適化できないならば警告する。
-@option{-funsafe-loop-optimizations}でもしコンパイラがそのような仮定をするならば警告する。
 
 @item -Wno-pedantic-ms-format @r{(MinGWターゲットのみ)}
 @opindex Wno-pedantic-ms-format
@@ -7224,6 +7224,11 @@ for (int i = 0; i < N; i++)
     for (int j = 0; j < N; j++)
       c[i][j] = c[i][j] + a[i][k]*b[k][j];
 @end smallexample
+このフラグは@option{-O3}でデフォルトで有効になる。
+
+@item -floop-unroll-and-jam
+@opindex floop-unroll-and-jam
+実現可能なループでアンロールとジャム変換を適用する。 ループネストでは、外部ループを何らかの要因で展開し、結果として得られる複数の内部ループを融合する。 このフラグはデフォルトで@option {-O3}で有効になっている。
 
 @item -ftree-loop-im
 @opindex ftree-loop-im
@@ -8091,12 +8096,6 @@ RTLループ最適化器でループ不変移動パスを有効にする。レ�
 @item -funswitch-loops
 @opindex funswitch-loops
 ループ不変条件の分岐を、両方の分岐でループの重複させて、ループの外へ移動する。（条件の結果に応じて修正する）
-
-@item -floop-unroll-and-jam
-@opindex floop-unroll-and-jam
-Apply unroll and jam transformations on feasible loops.  In a loop
-nest this unrolls the outer loop by some factor and fuses the resulting
-multiple inner loops.
 
 @item -ffunction-sections
 @itemx -fdata-sections
