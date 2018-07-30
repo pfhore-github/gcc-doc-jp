@@ -32,89 +32,55 @@ included in the gfdl(7) man page.
 @node Gcov
 @chapter @command{gcov}---テストカバレッジプログラム
 
-@command{gcov} is a tool you can use in conjunction with GCC to
-test code coverage in your programs.
+@command{gcov}は、あなたのプログラムでコードカバレッジをテストするためにGCCと併用できるツールである。
 
 @menu
-* Gcov Intro::                  Introduction to gcov.
-* Invoking Gcov::               How to use gcov.
-* Gcov and Optimization::       Using gcov with GCC optimization.
-* Gcov Data Files::             The files used by gcov.
-* Cross-profiling::             Data file relocation.
+* Gcov Intro::                  gcovへの導入
+* Invoking Gcov::               gcovの使い方
+* Gcov and Optimization::       GCC最適化にgcovを使う
+* Gcov Data Files::             gcovによって使われるファイル
+* Cross-profiling::             データファイルの再配置
 @end menu
 
 @node Gcov Intro
-@section Introduction to @command{gcov}
+@section @command{gcov}への導入
 @c man begin DESCRIPTION
 
-@command{gcov} is a test coverage program.  Use it in concert with GCC
-to analyze your programs to help create more efficient, faster running
-code and to discover untested parts of your program.  You can use
-@command{gcov} as a profiling tool to help discover where your
-optimization efforts will best affect your code.  You can also use
-@command{gcov} along with the other profiling tool, @command{gprof}, to
-assess which parts of your code use the greatest amount of computing
-time.
+@command{gcov}はテストカバレッジプログラムである。GCCと連携してプログラムを分析し、より効率的で高速な実行コードを作成し、未テストのプログラム部分を発見するのに役立つ。 @command{gcov}をプロファイリングツールとして使用すると、最適化作業がコードにどのような影響を与えるかを知ることができる。 他のプロファイリングツール@command{gprof}とともに@command{gcov}を使用して、コードのどの部分が最大の計算時間を使用しているかを評価することもできる。
 
-Profiling tools help you analyze your code's performance.  Using a
-profiler such as @command{gcov} or @command{gprof}, you can find out some
-basic performance statistics, such as:
+プロファイリングツールは、コードのパフォーマンスを分析するのに役立つ。 @command{gcov}や@command{gprof}などのプロファイラを使用すると、次のような基本的なパフォーマンス統計を見つけることができる。
 
 @itemize @bullet
 @item
-how often each line of code executes
+各行のコード実行頻度
 
 @item
-what lines of code are actually executed
+実際にどの行のコードが実行されるか
 
 @item
-how much computing time each section of code uses
+コードの各セクションが使用する計算時間
 @end itemize
 
-Once you know these things about how your code works when compiled, you
-can look at each module to see which modules should be optimized.
-@command{gcov} helps you determine where to work on optimization.
+コンパイル時にコードがどのように動作するかを知ったら、各モジュールを調べてどのモジュールを最適化するかを確認できる。 @command{gcov}は、最適化を行う場所を決定するのに役立つ。
 
-Software developers also use coverage testing in concert with
-testsuites, to make sure software is actually good enough for a release.
-Testsuites can verify that a program works as expected; a coverage
-program tests to see how much of the program is exercised by the
-testsuite.  Developers can then determine what kinds of test cases need
-to be added to the testsuites to create both better testing and a better
-final product.
+ソフトウェア開発者は、テストスイートと連携してカバレッジテストを行い、ソフトウェアが実際にリリースに適していることを確認する。 テストスーツは、プログラムが期待どおりに動作することを確認できる。 カバレッジ・プログラムは、プログラムのどれがテストスイートによって行使されているかを調べるためのテストである。 開発者は、より良いテストとより良い最終製品を作成するために、どのような種類のテストケースをテストスイートに追加する必要があるかを判断できる。
 
-You should compile your code without optimization if you plan to use
-@command{gcov} because the optimization, by combining some lines of code
-into one function, may not give you as much information as you need to
-look for `hot spots' where the code is using a great deal of computer
-time.  Likewise, because @command{gcov} accumulates statistics by line (at
-the lowest resolution), it works best with a programming style that
-places only one statement on each line.  If you use complicated macros
-that expand to loops or to other control structures, the statistics are
-less helpful---they only report on the line where the macro call
-appears.  If your complex macros behave like functions, you can replace
-them with inline functions to solve this problem.
+@command{gcov}を使うつもりなら、最適化せずにコードをコンパイルすること。なぜなら、最適化は、コード行を一つの関数にまとめることがあり、コードが大量のコンピュータ時間を使用する「ホットスポット」を探す必要がのに十分な情報を与えないかもしれないからである。 同様に、（最低解像度で）@command{gcov}は行ごとに統計を累積するため、各行に1つのステートメントだけを置くプログラミングスタイルで最も効果的である。 ループやその他の制御構造に拡張する複雑なマクロを使用すると、統計はそれほど有用ではない---マクロ呼び出しが表示される行だけを報告する。 複雑なマクロが関数のように振る舞う場合、それらをインライン関数に置き換えてこの問題を解決することができる。
 
-@command{gcov} creates a logfile called @file{@var{sourcefile}.gcov} which
-indicates how many times each line of a source file @file{@var{sourcefile}.c}
-has executed.  You can use these logfiles along with @command{gprof} to aid
-in fine-tuning the performance of your programs.  @command{gprof} gives
-timing information you can use along with the information you get from
-@command{gcov}.
+@command{gcov}は@file{@var{sourcefile}.gcov}というログファイルを作成する。これはソースファイル@file{@var{sourcefile} .c}の各行が何回実行されたかを示す。これらのログファイルを@command{gprof}とともに使用すると、プログラムのパフォーマンスを微調整するのに役立つ。 @command{gprof}は、@command{gcov}から得た情報とともに使用できるタイミング情報を提供する。
 
-@command{gcov} works only on code compiled with GCC@.  It is not
-compatible with any other profiling or test coverage mechanism.
+@command{gcov}はGCCでコンパイルされたコードでのみ動作する。 他のプロファイリングまたはテストカバレッジメカニズムとの互換性はない。
 
 @c man end
 
 @node Invoking Gcov
-@section Invoking @command{gcov}
+@section @command{gcov}の呼出し
 
 @smallexample
 gcov @r{[}@var{options}@r{]} @var{files}
 @end smallexample
 
-@command{gcov} accepts the following options:
+@command{gcov}は以下のオプションを受け取る
 
 @ignore
 @c man begin SYNOPSIS
@@ -148,44 +114,33 @@ gpl(7), gfdl(7), fsf-funding(7), gcc(1) and the Info entry for @file{gcc}.
 
 @item -a
 @itemx --all-blocks
-Write individual execution counts for every basic block.  Normally gcov
-outputs execution counts only for the main blocks of a line.  With this
-option you can determine if blocks within a single line are not being
-executed.
+基本ブロックごとに個別の実行回数を記述する。 通常、gcovは行のメインブロックに対してのみ実行回数を出力する。 このオプションを使用すると、1行のブロックが実行されていないかどうかを判断できる。
 
 @item -b
 @itemx --branch-probabilities
-Write branch frequencies to the output file, and write branch summary
-info to the standard output.  This option allows you to see how often
-each branch in your program was taken.  Unconditional branches will not
-be shown, unless the @option{-u} option is given.
+出力ファイルにブランチ周波数を書き込み、ブランチサマリー情報を標準出力に書き出す。 このオプションを使用すると、プログラム内の各ブランチの使用頻度を確認できる。 @option{-u}オプションが指定されていない限り、無条件ブランチは表示されない。
 
 @item -c
 @itemx --branch-counts
-Write branch frequencies as the number of branches taken, rather than
-the percentage of branches taken.
+分岐の頻度を、取られた分岐の割合ではなく、分岐の数として書き出す。
 
 @item -d
 @itemx --display-progress
-Display the progress on the standard output.
+進捗状況を標準出力に表示する。
 
 @item -f
 @itemx --function-summaries
-Output summaries for each function in addition to the file level summary.
+ファイルレベルの要約に加えて、各関数の概要を出力する。
 
 @item -h
 @itemx --help
-Display help about using @command{gcov} (on the standard output), and
-exit without doing any further processing.
+（標準出力に）@command{gcov}の使用に関するヘルプを表示し、それ以上の処理を行わずに終了する。
 
 @item -i
 @itemx --intermediate-format
-Output gcov file in an easy-to-parse intermediate text format that can
-be used by @command{lcov} or other tools. The output is a single
-@file{.gcov} file per @file{.gcda} file. No source code is required.
+@command{lcov}や他のツールで使用できる、簡単に解析できる中間テキスト形式のgcovファイルを出力する。 出力は@file{.gcda}ファイルごとに単一の@file{.gcov}ファイルである。 ソースコードは必要ない。
 
-The format of the intermediate @file{.gcov} file is plain text with
-one entry per line
+中間の@file {.gcov}ファイルの形式は、1行に1つのエントリを持つプレーンテキストである
 
 @smallexample
 version:@var{gcc_version}
@@ -194,19 +149,15 @@ function:@var{start_line_number},@var{end_line_number},@var{execution_count},@va
 lcount:@var{line number},@var{execution_count},@var{has_unexecuted_block}
 branch:@var{line_number},@var{branch_coverage_type}
 
-Where the @var{branch_coverage_type} is
-   notexec (Branch not executed)
-   taken (Branch executed and taken)
-   nottaken (Branch executed, but not taken)
+ここで@var{branch_coverage_type}は
+   notexec (分岐は実行されなかった)
+   taken (分岐は実行され、分岐した)
+   nottaken (分岐は実行され、分岐しなかった)
 @end smallexample
 
-There can be multiple @var{file} entries in an intermediate gcov
-file. All entries following a @var{file} pertain to that source file
-until the next @var{file} entry.  If there are multiple functions that
-start on a single line, then corresponding lcount is repeated multiple
-times.
+中間のgcovファイルには複数の@var{file}エントリがある。 @var{file}に続くすべてのエントリは、その次の@var{file}エントリまでそのソースファイルに関係する。 1行で開始する関数が複数ある場合、対応するlcountが複数回繰り返される。
 
-Here is a sample when @option{-i} is used in conjunction with @option{-b} option:
+@option{-i}を@option{-b}オプションと組み合わせて使用する場合のサンプルを次に示す。
 
 @smallexample
 version: 8.1.0 20180103
@@ -252,7 +203,7 @@ lcount:36,1,0
 
 @item -j
 @itemx --human-readable
-Write counts in human readable format (like 24k).
+人間が判読可能なフォーマット（24kなど）でカウントを書き込む。
 
 @item -k
 @itemx --use-colors
