@@ -207,176 +207,93 @@ lcount:36,1,0
 
 @item -k
 @itemx --use-colors
-
-Use colors for lines of code that have zero coverage.  We use red color for
-non-exceptional lines and cyan for exceptional.  Same colors are used for
-basic blocks with @option{-a} option.
+カバレッジがゼロのコード行には色を使用する。 例外でない行は赤、例外はシアンを使用する。 @option{-a}オプションを持つ基本ブロックには同じ色が使われる。
 
 
 @item -l
 @itemx --long-file-names
-Create long file names for included source files.  For example, if the
-header file @file{x.h} contains code, and was included in the file
-@file{a.c}, then running @command{gcov} on the file @file{a.c} will
-produce an output file called @file{a.c##x.h.gcov} instead of
-@file{x.h.gcov}.  This can be useful if @file{x.h} is included in
-multiple source files and you want to see the individual
-contributions.  If you use the @samp{-p} option, both the including
-and included file names will be complete path names.
+インクルードされたソースファイルの長いファイル名を作成する。 たとえば、ヘッダーファイル@file{x.h}がコードを含み、それがファイル@file{a.c}でインクルードされている場合、@file{a.c}ファイルで@command{gcov}を実行すると、@file{x.h.gcov}の代わりに@file{a.c##x.h.gcov}という出力ファイルが生成される。 @file{x.h}が複数のソースファイルに含まれていて、個々の貢献を見たい場合に便利である。 @samp{-p}オプションを使用すると、インクルードファイル名とインクルードファイル名の両方が完全なパス名になる。
 
 @item -m
 @itemx --demangled-names
-Display demangled function names in output. The default is to show
-mangled function names.
+デマングル関数名を出力に表示する。 デフォルトでは、マングルされた関数名が表示される。
 
 @item -n
 @itemx --no-output
-Do not create the @command{gcov} output file.
+@command {gcov}出力ファイルを作成しない。
 
 @item -o @var{directory|file}
 @itemx --object-directory @var{directory}
 @itemx --object-file @var{file}
-Specify either the directory containing the gcov data files, or the
-object path name.  The @file{.gcno}, and
-@file{.gcda} data files are searched for using this option.  If a directory
-is specified, the data files are in that directory and named after the
-input file name, without its extension.  If a file is specified here,
-the data files are named after that file, without its extension.
+gcovデータファイルを含むディレクトリ、またはオブジェクトのパス名を指定する。 このオプションを使用するために、@file{.gcno}および@file{.gcda}データファイルが検索される。 ディレクトリが指定されている場合、データファイルはそのディレクトリにあり、入力ファイル名の後に拡張子は付けられない。ここでファイルを指定すると、データファイルの名前はそのファイルの後に拡張子を付けずに指定される。
 
 @item -p
 @itemx --preserve-paths
-Preserve complete path information in the names of generated
-@file{.gcov} files.  Without this option, just the filename component is
-used.  With this option, all directories are used, with @samp{/} characters
-translated to @samp{#} characters, @file{.} directory components
-removed and unremoveable @file{..}
-components renamed to @samp{^}.  This is useful if sourcefiles are in several
-different directories.
+生成された@file{.gcov}ファイルの名前に完全なパス情報を保持する。 このオプションを指定しないと、ファイル名コンポーネントだけが使用される。 このオプションを使用すると、すべてのディレクトリが使用され、@samp{/}文字は@samp{#}文字に変換され、@ file{.}ディレクトリコンポーネントは削除され、削除不可能な@file{..}コンポーネントは@samp{^}に名前が変更される これは、ソースファイルが複数の異なるディレクトリにある場合に便利である。
 
 @item -r
 @itemx --relative-only
-Only output information about source files with a relative pathname
-(after source prefix elision).  Absolute paths are usually system
-header files and coverage of any inline functions therein is normally
-uninteresting.
+相対パス名を持つソースファイルに関する情報のみを出力する（ソースプレフィックスエリーションの後）。 絶対パスは通常システムヘッダファイルであり、その中のインライン関数のカバレッジは通常は関心がない。
 
 @item -s @var{directory}
 @itemx --source-prefix @var{directory}
-A prefix for source file names to remove when generating the output
-coverage files.  This option is useful when building in a separate
-directory, and the pathname to the source directory is not wanted when
-determining the output file names.  Note that this prefix detection is
-applied before determining whether the source file is absolute.
+出力カバレッジファイルを生成するときに削除するソースファイル名の接頭辞。 このオプションは、別のディレクトリにビルドするときに便利である。出力ファイル名を決定する際には、ソースディレクトリへのパス名は必要ない。 このプレフィックス検出は、ソースファイルが絶対パスかどうかを判断する前に適用されることに注意せよ。
 
 @item -u
 @itemx --unconditional-branches
-When branch probabilities are given, include those of unconditional branches.
-Unconditional branches are normally not interesting.
+分岐確率が与えられるとき、無条件分岐のものを含む。 無条件分岐は通常は関心がない。
 
 @item -v
 @itemx --version
-Display the @command{gcov} version number (on the standard output),
-and exit without doing any further processing.
+@command{gcov}のバージョン番号を（標準出力に）表示し、それ以上の処理をせずに終了する。
 
 @item -w
 @itemx --verbose
-Print verbose informations related to basic blocks and arcs.
+基本ブロックとアークに関連する冗長な情報を出力する。
 
 @item -x
 @itemx --hash-filenames
-By default, gcov uses the full pathname of the source files to to create
-an output filename.  This can lead to long filenames that can overflow
-filesystem limits.  This option creates names of the form
-@file{@var{source-file}##@var{md5}.gcov},
-where the @var{source-file} component is the final filename part and
-the @var{md5} component is calculated from the full mangled name that
-would have been used otherwise.
+デフォルトでは、gcovはソースファイルの完全パス名を使用して出力ファイル名を作成する。 これにより、長いファイル名がファイルシステムの制限をオーバーフローさせる可能性がある。 このオプションは@file{@var{source-file}##@var{md5}.gcov}という形式の名前を作成する。ここで、@var{source-file}コンポーネントは最終的なファイル名部分であり、@ var{md5} コンポーネントは、それ以外の場合に使用されていた完全に変形された名前から計算される。
 
 @end table
 
-@command{gcov} should be run with the current directory the same as that
-when you invoked the compiler.  Otherwise it will not be able to locate
-the source files.  @command{gcov} produces files called
-@file{@var{mangledname}.gcov} in the current directory.  These contain
-the coverage information of the source file they correspond to.
-One @file{.gcov} file is produced for each source (or header) file
-containing code,
-which was compiled to produce the data files.  The @var{mangledname} part
-of the output file name is usually simply the source file name, but can
-be something more complicated if the @samp{-l} or @samp{-p} options are
-given.  Refer to those options for details.
+@command{gcov}は、コンパイラを起動したときと同じカレントディレクトリで実行する必要がある。 そうしないと、ソースファイルを見つけることができなくなる。 @command{gcov}は、現在のディレクトリに@file{@var{mangledname}.gcov}というファイルを生成する。 これらは、対応するソースファイルのカバレッジ情報を含む。 1つの@file{.gcov}ファイルは、データファイルを生成するためにコンパイルされたコードを含むソース（またはヘッダー）ファイルごとに生成される。 出力ファイル名の@var{mangledname}部分は通常は単純にソースファイル名だが、@samp{-l}や@samp{-p}オプションが与えられれば、もっと複雑になることがある。 詳細については、これらのオプションを参照せよ。
 
-If you invoke @command{gcov} with multiple input files, the
-contributions from each input file are summed.  Typically you would
-invoke it with the same list of files as the final link of your executable.
+複数の入力ファイルで@command{gcov}を呼び出すと、各入力ファイルからの貢献が合計される。 通常は、実行可能ファイルの最終リンクと同じファイルリストを使用して呼び出す。
 
-The @file{.gcov} files contain the @samp{:} separated fields along with
-program source code.  The format is
+@file{.gcov}ファイルには、プログラムのソースコードと共に@samp{:}で区切られたフィールドが含まれている。 形式は次のとおりである。
 
 @smallexample
 @var{execution_count}:@var{line_number}:@var{source line text}
 @end smallexample
 
-Additional block information may succeed each line, when requested by
-command line option.  The @var{execution_count} is @samp{-} for lines
-containing no code.  Unexecuted lines are marked @samp{#####} or
-@samp{=====}, depending on whether they are reachable by
-non-exceptional paths or only exceptional paths such as C++ exception
-handlers, respectively. Given @samp{-a} option, unexecuted blocks are
-marked @samp{$$$$$} or @samp{%%%%%}, depending on whether a basic block
-is reachable via non-exceptional or exceptional paths.
-Executed basic blocks having a statement with zero @var{execution_count}
-end with @samp{*} character and are colored with magenta color with @option{-k}
-option.  The functionality is not supported in Ada.
+コマンドラインオプションで要求された場合、追加のブロック情報が各行に続くかもしれない。 @var{execution_count}はコードを含まない行では@samp{-}である。 実行されていない行は、非例外的なパスによって到達可能であるか、C++の例外ハンドラのような例外的なパスのみで到達可能であるかに応じて、@samp{#####}または@samp{=====}とマークされる。 @samp{-a}オプションが指定されていると、実行されていないブロックには、例外的パスまたは例外的パスを介して基本ブロックが到達可能かどうかによって@samp{$$$$$}または@samp{%%%%%}とマークされる。 ゼロの@var{execution_count}である文を持つ実行された基本ブロックはが@samp {*}文字で終わり、@option{-k}オプションではマゼンタ色で色付けされる。 この機能はAdaではサポートされていない。
 
-Note that GCC can completely remove the bodies of functions that are
-not needed -- for instance if they are inlined everywhere.  Such functions
-are marked with @samp{-}, which can be confusing.
-Use the @option{-fkeep-inline-functions} and @option{-fkeep-static-functions}
-options to retain these functions and
-allow gcov to properly show their @var{execution_count}.
+GCCは、必要でない関数の本体を完全に削除することがある（たとえば、どこにでもインライン化されている場合など）。 このような関数は@samp{-}でマークされていて、混乱する可能性がある。 @option{-fkeep-inline-functions}オプションと@option{-fkeep-static-functions}オプションを使用してこれらの関数を保持し、gcovが@var{execution_count}を正しく表示できるようにする。
 
-Some lines of information at the start have @var{line_number} of zero.
-These preamble lines are of the form
+最初の情報行では、@var{line_number}が0になっている。これらのプリアンブルラインは、以下形式である。
 
 @smallexample
 -:0:@var{tag}:@var{value}
 @end smallexample
 
-The ordering and number of these preamble lines will be augmented as
-@command{gcov} development progresses --- do not rely on them remaining
-unchanged.  Use @var{tag} to locate a particular preamble line.
+これらのプリアンブル行の順序と数は、@command{gcov}の開発が進むにつれて増加する---変更されていないままに依存してはならない。 特定のプリアンブル行を見つけるには@var{tag}を使う。
 
-The additional block information is of the form
+付加的なブロック情報は、以下の形式である
 
 @smallexample
 @var{tag} @var{information}
 @end smallexample
 
-The @var{information} is human readable, but designed to be simple
-enough for machine parsing too.
+@var{information}は人間が読める形式だが、マシンの解析にも簡単に使えるように設計されている。
 
-When printing percentages, 0% and 100% are only printed when the values
-are @emph{exactly} 0% and 100% respectively.  Other values which would
-conventionally be rounded to 0% or 100% are instead printed as the
-nearest non-boundary value.
+パーセンテージを出力するとき、0％と100％は値が@emph{正確に}0％と100％のときにのみ表示される。 従来は0％または100％に丸められた他の値は代わりに、最も近い非境界値として出力される。
 
-When using @command{gcov}, you must first compile your program with two
-special GCC options: @samp{-fprofile-arcs -ftest-coverage}.
-This tells the compiler to generate additional information needed by
-gcov (basically a flow graph of the program) and also includes
-additional code in the object files for generating the extra profiling
-information needed by gcov.  These additional files are placed in the
-directory where the object file is located.
+@command{gcov}を使用する場合は、まず2つの特別なGCCオプション@samp{-fprofile-arcs -ftest-coverage}を使用してプログラムをコンパイルする必要がある。 これは、gcov（基本的にはプログラムのフローグラフ）に必要な追加情報を生成するようにコンパイラに指示する。また、gcovに必要な追加のプロファイリング情報を生成するためのオブジェクトファイルにコードを追加する。 これらの追加ファイルは、オブジェクトファイルが置かれているディレクトリに置かれる。
 
-Running the program will cause profile output to be generated.  For each
-source file compiled with @option{-fprofile-arcs}, an accompanying
-@file{.gcda} file will be placed in the object file directory.
+プログラムを実行すると、プロファイル出力が生成される。 @option{-fprofile-arcs}でコンパイルされた各ソースファイルに対して、付随する@file{.gcda}ファイルがオブジェクトファイルディレクトリに配置される。
 
-Running @command{gcov} with your program's source file names as arguments
-will now produce a listing of the code along with frequency of execution
-for each line.  For example, if your program is called @file{tmp.cpp}, this
-is what you see when you use the basic @command{gcov} facility:
+プログラムのソースファイル名を引数として@command{gcov}を実行すると、各行の実行頻度とともにコードのリストが生成されえる。 たとえば、プログラムの名前が@file{tmp.cpp}の場合、これは基本的な@command{gcov}機能を使用するときに表示される。
 
 @smallexample
 $ g++ -fprofile-arcs -ftest-coverage tmp.cpp
@@ -387,8 +304,7 @@ Lines executed:92.86% of 14
 Creating 'tmp.cpp.gcov'
 @end smallexample
 
-The file @file{tmp.cpp.gcov} contains output from @command{gcov}.
-Here is a sample:
+ファイル@file{tmp.cpp.gcov}には、@コマンド{gcov}の出力が含まれている。ここにサンプルがある：
 
 @smallexample
         -:    0:Source:tmp.cpp
@@ -449,13 +365,9 @@ Foo<int>::inc():
         -:   37:@}
 @end smallexample
 
-Note that line 7 is shown in the report multiple times.  First occurrence
-presents total number of execution of the line and the next two belong
-to instances of class Foo constructors.  As you can also see, line 30 contains
-some unexecuted basic blocks and thus execution count has asterisk symbol.
+7行目はレポートに複数回表示されている。 最初の表示は行の総実行回数を表し、次の2つはクラスFooコンストラクタのインスタンスに属す。見たとおり、30行目には未実行の基本ブロックが含まれているため、実行カウントにはアスタリスク記号が付く。
 
-When you use the @option{-a} option, you will get individual block
-counts, and the output looks like this:
+@option{-a}オプションを使用すると、個々のブロック数が取得され、出力は次のようになる。
 
 @smallexample
         -:    0:Source:tmp.cpp
@@ -529,21 +441,12 @@ Foo<int>::inc():
         -:   37:@}
 @end smallexample
 
-In this mode, each basic block is only shown on one line -- the last
-line of the block.  A multi-line block will only contribute to the
-execution count of that last line, and other lines will not be shown
-to contain code, unless previous blocks end on those lines.
-The total execution count of a line is shown and subsequent lines show
-the execution counts for individual blocks that end on that line.  After each
-block, the branch and call counts of the block will be shown, if the
-@option{-b} option is given.
+このモードでは、各基本ブロックは1つの行、つまりブロックの最後の行にのみ表示される。 複数行のブロックはその最後の行の実行カウントにのみ寄与し、前のブロックがそれらの行で終わらない限り、他の行はコードを含むようには表示されない。 行の合計実行カウントが表示され、後続の行はその行で終了する個々のブロックの実行カウントを示す。 各ブロックの後に、@option{-b}オプションが指定されている場合、ブロックの分岐と呼び出しのカウントが表示される。
 
-Because of the way GCC instruments calls, a call count can be shown
-after a line with no individual blocks.
-As you can see, line 33 contains a basic block that was not executed.
+GCCインストルメントが呼び出す方法のため、個々のブロックがない行の後に呼び出しカウントを表示することができる。 見たとおりに、33行目には実行されなかった基本ブロックが含まれている。
 
 @need 450
-When you use the @option{-b} option, your output looks like this:
+@option{-b}オプションを使用すると、出力は次のようになる。
 
 @smallexample
         -:    0:Source:tmp.cpp
@@ -630,45 +533,17 @@ branch  2 taken 0% (throw)
         -:   37:@}
 @end smallexample
 
-For each function, a line is printed showing how many times the function
-is called, how many times it returns and what percentage of the
-function's blocks were executed.
+各関数について、関数が呼び出された回数、関数が返された回数、関数のブロックの何％が実行されたかを示す行が出力される。
 
-For each basic block, a line is printed after the last line of the basic
-block describing the branch or call that ends the basic block.  There can
-be multiple branches and calls listed for a single source line if there
-are multiple basic blocks that end on that line.  In this case, the
-branches and calls are each given a number.  There is no simple way to map
-these branches and calls back to source constructs.  In general, though,
-the lowest numbered branch or call will correspond to the leftmost construct
-on the source line.
+各基本ブロックについて、基本ブロックの最後の行の後に行が出力され、基本ブロックを終了する分岐または呼び出しを記述する。 その行で終わる複数の基本ブロックがある場合、単一のソース行に複数の分岐と呼び出しが表示される。 この場合、ブランチとコールにはそれぞれ番号が割り当てられる。 これらのブランチとコールをソース構造にマップする簡単な方法はない。 しかし、一般的に、番号が最も小さいブランチまたはコールは、ソース行の一番左の構文に対応する。
 
-For a branch, if it was executed at least once, then a percentage
-indicating the number of times the branch was taken divided by the
-number of times the branch was executed will be printed.  Otherwise, the
-message ``never executed'' is printed.
+ブランチの場合、少なくとも1回実行された場合、ブランチが実行された回数を示すパーセンテージがブランチが実行された回数で除算される。 そうでなければ、 「never executed」というメッセージが表示される。
 
-For a call, if it was executed at least once, then a percentage
-indicating the number of times the call returned divided by the number
-of times the call was executed will be printed.  This will usually be
-100%, but may be less for functions that call @code{exit} or @code{longjmp},
-and thus may not return every time they are called.
+呼び出しの場合、少なくとも1回実行された場合、呼び出しが返された回数を呼び出した回数で割った値が出力される。 これは通常100％だが、@code{exit}や@code{longjmp}を呼び出し、したがって呼び出されるたびに返さないかもしれない関数の場合は少なくなる。
 
-The execution counts are cumulative.  If the example program were
-executed again without removing the @file{.gcda} file, the count for the
-number of times each line in the source was executed would be added to
-the results of the previous run(s).  This is potentially useful in
-several ways.  For example, it could be used to accumulate data over a
-number of program runs as part of a test verification suite, or to
-provide more accurate long-term information over a large number of
-program runs.
+実行回数は累積される。 サンプルプログラムが@file{.gcda}ファイルを削除せずに再度実行された場合、ソースの各行が実行された回数のカウントが前の実行の結果に追加される。 これは、いくつかの点で潜在的に有用である。 たとえば、テストベリフィケーションスイートの一部として多数のプログラム実行にデータを蓄積したり、多数のプログラム実行にわたってより正確な長期情報を提供するために使用できる。
 
-The data in the @file{.gcda} files is saved immediately before the program
-exits.  For each source file compiled with @option{-fprofile-arcs}, the
-profiling code first attempts to read in an existing @file{.gcda} file; if
-the file doesn't match the executable (differing number of basic block
-counts) it will ignore the contents of the file.  It then adds in the
-new execution counts and finally writes the data to the file.
+@file{.gcda}ファイルのデータは、プログラムが終了する直前に保存される。 @option{-fprofile-arcs}でコンパイルされたソースファイルごとに、プロファイリングコードはまず既存の@file{.gcda}ファイルを読み込もうとする。 ファイルが実行可能ファイル（基本ブロック数が異なる）と一致しない場合、ファイルの内容は無視される。 その後、新しい実行カウントが追加され、最後にデータがファイルに書き込まれる。
 
 @node Gcov and Optimization
 @section Using @command{gcov} with GCC Optimization
