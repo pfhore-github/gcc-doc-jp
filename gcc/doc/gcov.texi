@@ -580,67 +580,33 @@ else
 @c man end
 
 @node Gcov Data Files
-@section Brief Description of @command{gcov} Data Files
+@section @command{gcov}データファイルの短い説明
 
-@command{gcov} uses two files for profiling.  The names of these files
-are derived from the original @emph{object} file by substituting the
-file suffix with either @file{.gcno}, or @file{.gcda}.  The files
-contain coverage and profile data stored in a platform-independent format.
-The @file{.gcno} files are placed in the same directory as the object
-file.  By default, the @file{.gcda} files are also stored in the same
-directory as the object file, but the GCC @option{-fprofile-dir} option
-may be used to store the @file{.gcda} files in a separate directory.
+@command{gcov}はプロファイリングのために2つのファイルを使う。 これらのファイルの名前は、ファイルの接尾辞を@file{.gcno}または@file{.gcda}に置き換えることによって、元の@emph{object}ファイルから派生する。 ファイルには、プラットフォームに依存しない形式で格納されたカバレッジおよびプロファイルデータが含まれている。 @file{.gcno}ファイルは、オブジェクトファイルと同じディレクトリに置かれる。 デフォルトでは、@file{.gcda}ファイルもオブジェクトファイルと同じディレクトリに格納されるが、GCC @option{-fprofile-dir}オプションは@file{.gcda}ファイルを別のディレクトリに保存するために使用できる。
 
-The @file{.gcno} notes file is generated when the source file is compiled
-with the GCC @option{-ftest-coverage} option.  It contains information to
-reconstruct the basic block graphs and assign source line numbers to
-blocks.
+@file{.gcno}ノートファイルは、ソースファイルがGCC @option{-ftest-coverage}オプションでコンパイルされたときに生成される。 基本ブロックグラフを再構成し、ソース行番号をブロックに割り当てるための情報が含まれている。
 
-The @file{.gcda} count data file is generated when a program containing
-object files built with the GCC @option{-fprofile-arcs} option is executed.
-A separate @file{.gcda} file is created for each object file compiled with
-this option.  It contains arc transition counts, value profile counts, and
-some summary information.
+@file{.gcda}カウントデータファイルは、GCC @option{-fprofile-arcs}オプションでビルドされたオブジェクトファイルを含むプログラムが実行されると生成される。 このオプションでコンパイルされたオブジェクトファイルごとに別の@file{.gcda}ファイルが作成される。 これには、アーク転移カウント、値プロファイルカウント、およびいくつかのサマリー情報が含まれている。
 
-It is not recommended to access the coverage files directly.
-Consumers should use the intermediate format that is provided
-by @command{gcov} tool via @option{--intermediate-format} option.
+カバレッジファイルに直接アクセスすることは推奨されない。 消費者は@command{gcov}ツールで@option{--intermediate-format}オプションで提供される中間形式を使用する必要がある。
 
 @node Cross-profiling
-@section Data File Relocation to Support Cross-Profiling
+@section クロスプロファイルをサポートするためのデータファイルの再配置
 
-Running the program will cause profile output to be generated.  For each
-source file compiled with @option{-fprofile-arcs}, an accompanying @file{.gcda}
-file will be placed in the object file directory. That implicitly requires
-running the program on the same system as it was built or having the same
-absolute directory structure on the target system. The program will try
-to create the needed directory structure, if it is not already present.
+プログラムを実行すると、プロファイル出力が生成される。 @option{-fprofile-arcs}でコンパイルされた各ソースファイルに対して、付随する@file{.gcda}ファイルがオブジェクトファイルディレクトリに配置される。 これは暗黙のうちに、プログラムがビルドされたのと同じシステム上で実行されること、またはターゲットシステム上で同じ絶対ディレクトリ構造を持つことを必要とする。 まだ存在していなければ、プログラムは必要なディレクトリ構造を作成しようとする。
 
-To support cross-profiling, a program compiled with @option{-fprofile-arcs}
-can relocate the data files based on two environment variables:
+クロスプロファイルをサポートするために、@option{-fprofile-arcs}でコンパイルされたプログラムは、2つの環境変数に基づいてデータファイルを再配置できる。
 
 @itemize @bullet
 @item
-GCOV_PREFIX contains the prefix to add to the absolute paths
-in the object file. Prefix can be absolute, or relative.  The
-default is no prefix.
+GCOV_PREFIXには、オブジェクトファイル内の絶対パスに追加する接頭辞が含まれている。 接頭辞は絶対または相対であることができる。 デフォルトでは接頭辞はない。
 
 @item
-GCOV_PREFIX_STRIP indicates the how many initial directory names to strip off
-the hardwired absolute paths. Default value is 0.
+GCOV_PREFIX_STRIPは、固定で書かれた絶対パスを削除する初期ディレクトリ名の数を示す。 デフォルト値は0である。
 
-@emph{Note:} If GCOV_PREFIX_STRIP is set without GCOV_PREFIX is undefined,
- then a relative path is made out of the hardwired absolute paths.
+@emph{注意:} GCOV_PREFIX_STRIPがGCOV_PREFIXを設定せずに設定されている場合、固定で書かれた絶対パスから相対パスが作成される。
 @end itemize
 
-For example, if the object file @file{/user/build/foo.o} was built with
-@option{-fprofile-arcs}, the final executable will try to create the data file
-@file{/user/build/foo.gcda} when running on the target system.  This will
-fail if the corresponding directory does not exist and it is unable to create
-it.  This can be overcome by, for example, setting the environment as
-@samp{GCOV_PREFIX=/target/run} and @samp{GCOV_PREFIX_STRIP=1}.  Such a
-setting will name the data file @file{/target/run/build/foo.gcda}.
+たとえば、オブジェクトファイル@file{/user/build/foo.o}が@option{-fprofile-arcs}でビルドされている場合、最終実行ファイルはターゲットシステムで実行中はデータファイル@file{/user/build/foo.gcda}を作成しようとする。 対応するディレクトリが存在せず、それを作成できない場合、これは失敗する。 これは、たとえば、環境を@samp{GCOV_PREFIX=/target/run}と@samp{GCOV_PREFIX_STRIP=1}に設定することで解決できる。 このような設定では、データファイルの名前は@file{/target/run/build/foo.gcda}となる。
 
-You must move the data files to the expected directory tree in order to
-use them for profile directed optimizations (@option{-fprofile-use}), or to
-use the @command{gcov} tool.
+プロファイル指示最適化（@option{-fprofile-use}）、または@command{gcov}ツールを使用するためには、データファイルを予想されるディレクトリツリーに移動する必要がある。
