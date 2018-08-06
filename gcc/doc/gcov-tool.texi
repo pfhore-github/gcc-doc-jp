@@ -30,83 +30,66 @@ included in the gfdl(7) man page.
 @end ignore
 
 @node Gcov-tool
-@chapter @command{gcov-tool}---an Offline Gcda Profile Processing Tool
+@chapter @command{gcov-tool}---オフラインGcdaプロファイル処理ツール
 
-@command{gcov-tool} is a tool you can use in conjunction with GCC to
-manipulate or process gcda profile files offline.
+@command{gcov-tool}は、GCCと連携してgcdaプロファイルファイルを操作または処理するツールである。
 
 @menu
-* Gcov-tool Intro::             Introduction to gcov-tool.
-* Invoking Gcov-tool::          How to use gcov-tool.
+* Gcov-tool Intro::             gcov-toolへの導入
+* Invoking Gcov-tool::          gcov-toolの使い方
 @end menu
 
 @node Gcov-tool Intro
-@section Introduction to @command{gcov-tool}
+@section @command{gcov-tool}への導入
 @c man begin DESCRIPTION
 
-@command{gcov-tool} is an offline tool to process gcc's gcda profile files.
+@command {gcov-tool}は、gccのgcdaプロファイルファイルを処理するためのオフラインツールである。
 
-Current gcov-tool supports the following functionalities:
+現在のgcov-toolは以下の機能をサポートしている：
 
 @itemize @bullet
 @item
-merge two sets of profiles with weights.
+2つのプロファイルセットを重み付きでマージする。
 
 @item
-read one set of profile and rewrite profile contents. One can scale or
-normalize the count values.
+1組のプロファイルを読み、プロファイルの内容を書き換える。 カウント値をスケーリングまたは正規化することができる。
 @end itemize
 
-Examples of the use cases for this tool are:
+このツールの使用例は次のとおりである。
 @itemize @bullet
 @item
-Collect the profiles for different set of inputs, and use this tool to merge
-them. One can specify the weight to factor in the relative importance of
-each input.
+異なる入力セットのプロファイルを収集し、このツールを使用してそれらをマージする。 それぞれの入力の相対的重要度を考慮する重みを指定することができる。
 
 @item
-Rewrite the profile after removing a subset of the gcda files, while maintaining
-the consistency of the summary and the histogram.
+サマリーとヒストグラムの一貫性を維持しながら、gcdaファイルのサブセットを削除した後でプロファイルを書き換える。
 
 @item
-It can also be used to debug or libgcov code as the tools shares the majority
-code as the runtime library.
+ツールがランタイムライブラリとして多数決コードを共有するので、これをデバッグまたはlibgcovコードに使用することもできる。
 @end itemize
 
-Note that for the merging operation, this profile generated offline may
-contain slight different values from the online merged profile. Here are
-a list of typical differences:
+マージ操作では、オフラインで生成されたこのプロファイルには、オンラインで結合されたプロファイルとは若干異なる値が含まれることに注意せよ。 典型的な違いのリストを以下に示す。
 
 @itemize @bullet
 @item
-histogram difference: This offline tool recomputes the histogram after merging
-the counters. The resulting histogram, therefore, is precise. The online
-merging does not have this capability -- the histogram is merged from two
-histograms and the result is an approximation.
+ヒストグラムの差異：このオフラインツールは、カウンタをマージした後にヒストグラムを再計算する。 したがって、得られるヒストグラムは正確である。 オンラインマージにはこの機能はない。ヒストグラムは2つのヒストグラムからマージされ、結果は近似値である。
 
 @item
-summary checksum difference: Summary checksum uses a CRC32 operation. The value
-depends on the link list order of gcov-info objects. This order is different in
-gcov-tool from that in the online merge. It's expected to have different
-summary checksums. It does not really matter as the compiler does not use this
-checksum anywhere.
+要約チェックサムの相違点：要約チェックサムはCRC32操作を使用する。 値は、gcov-infoオブジェクトのリンクリストの順序に依存する。 この順序は、gcov-toolとオンラインマージの順序が異なる。 異なるサマリーチェックサムを持つことが予想される。 コンパイラがこのチェックサムをどこでも使用しないので、実際には問題ではない。
 
 @item
-value profile counter values difference: Some counter values for value profile
-are runtime dependent, like heap addresses. It's normal to see some difference
-in these kind of counters.
+値プロファイルのカウンタ値の違い：値プロファイルのいくつかのカウンタ値は、ヒープアドレスのようにランタイムに依存する。 これらのカウンターの違いを見るのは正常である。
 @end itemize
 
 @c man end
 
 @node Invoking Gcov-tool
-@section Invoking @command{gcov-tool}
+@section @command{gcov-tool}の呼び出し
 
 @smallexample
 gcov-tool @r{[}@var{global-options}@r{]} SUB_COMMAND @r{[}@var{sub_command-options}@r{]} @var{profile_dir}
 @end smallexample
 
-@command{gcov-tool} accepts the following options:
+@command {gcov-tool}は次のオプションを受け入れる：
 
 @ignore
 @c man begin SYNOPSIS
@@ -142,88 +125,78 @@ gpl(7), gfdl(7), fsf-funding(7), gcc(1), gcov(1) and the Info entry for
 @table @gcctabopt
 @item -h
 @itemx --help
-Display help about using @command{gcov-tool} (on the standard output), and
-exit without doing any further processing.
+@command{gcov-tool}の使用に関するヘルプを（標準出力に）表示し、それ以上の処理をせずに終了する。
 
 @item -v
 @itemx --version
-Display the @command{gcov-tool} version number (on the standard output),
-and exit without doing any further processing.
+@command{gcov-tool}のバージョン番号を（標準出力に）表示し、それ以上の処理をせずに終了する。
 
 @item merge
-Merge two profile directories.
+2つのプロファイルディレクトリをマージする。
 @table @gcctabopt
 
 @item -o @var{directory}
 @itemx --output @var{directory}
-Set the output profile directory. Default output directory name is
+出力プロファイルディレクトリを設定する。 デフォルトの出力ディレクトリ名は
 @var{merged_profile}.
 
 @item -v
 @itemx --verbose
-Set the verbose mode.
+冗長モードを設定する。
 
 @item -w @var{w1},@var{w2}
 @itemx --weight @var{w1},@var{w2}
-Set the merge weights of the @var{directory1} and @var{directory2},
-respectively. The default weights are 1 for both.
+@var {directory1}と@var {directory2}のマージウェイトをそれぞれ設定する。 両方のデフォルトの重みは1である。
 @end table
 
 @item rewrite
-Read the specified profile directory and rewrite to a new directory.
+指定されたプロファイルディレクトリを読み取り、新しいディレクトリに書き換える。
 @table @gcctabopt
 
 @item -n @var{long_long_value}
 @itemx --normalize <long_long_value>
-Normalize the profile. The specified value is the max counter value
-in the new profile.
+プロファイルを標準化する。 指定された値は、新しいプロファイルの最大カウンタ値である。
 
 @item -o @var{directory}
 @itemx --output @var{directory}
-Set the output profile directory. Default output name is @var{rewrite_profile}.
+出力プロファイルディレクトリを設定する。 デフォルトの出力名は@var{rewrite_profile}である。
 
 @item -s @var{float_or_simple-frac_value}
 @itemx --scale @var{float_or_simple-frac_value}
-Scale the profile counters. The specified value can be in floating point value,
-or simple fraction value form, such 1, 2, 2/3, and 5/3.
+プロファイルカウンターをスケールする。 指定された値は、浮動小数点値、または1、2、2/3、および5/3などの単純な分数形式で指定できる。
 
 @item -v
 @itemx --verbose
-Set the verbose mode.
+冗長モードを設定する。
 @end table
 
 @item overlap
-Compute the overlap score between the two specified profile directories.
-The overlap score is computed based on the arc profiles. It is defined as
-the sum of min (p1_counter[i] / p1_sum_all, p2_counter[i] / p2_sum_all),
-for all arc counter i, where p1_counter[i] and p2_counter[i] are two
-matched counters and p1_sum_all and p2_sum_all are the sum of counter
-values in profile 1 and profile 2, respectively.
+指定された2つのプロファイルディレクトリ間の重複スコアを計算する。オーバーラップスコアはアークプロファイルに基づいて計算される。これは、p1_counter[i]とp2_counter[i]が2つの一致カウンタで、p1_sum_allとp2_sum_allがそれぞれプロファイル1とプロファイル2のカウンタ値の合計である、すべてのアークカウンタiのmin (p1_counter[i] / p1_sum_all, p2_counter[i] / p2_sum_all)の合計として定義される。
 
 @table @gcctabopt
 @item -f
 @itemx --function
-Print function level overlap score.
+機能レベルの重複スコアを出力する。
 
 @item -F
 @itemx --fullname
-Print full gcda filename.
+完全なgcdaファイル名を出力する。
 
 @item -h
 @itemx --hotonly
-Only print info for hot objects/functions.
+ホットなオブジェクト/関数の情報のみを出力する。
 
 @item -o
 @itemx --object
-Print object level overlap score.
+オブジェクトレベル重なりスコアを出力する。
 
 @item -t @var{float}
 @itemx --hot_threshold <float>
-Set the threshold for hot counter value.
+ホットカウンタ値のしきい値を設定する。
 
 @item -v
 @itemx --verbose
-Set the verbose mode.
+冗長モードを設定する。
 @end table
 
 @end table
