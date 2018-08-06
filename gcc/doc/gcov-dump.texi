@@ -30,30 +30,29 @@ included in the gfdl(7) man page.
 @end ignore
 
 @node Gcov-dump
-@chapter @command{gcov-dump}---an Offline Gcda and Gcno Profile Dump Tool
+@chapter @command{gcov-dump}---オフラインGcdaおよびGcnoプロファイルダンプツール
 
 @menu
-* Gcov-dump Intro::             Introduction to gcov-dump.
-* Invoking Gcov-dump::          How to use gcov-dump.
+* Gcov-dump Intro::             gcov-dumpへの導入
+* Invoking Gcov-dump::          gcov-dumpの使い方
 @end menu
 
 @node Gcov-dump Intro
-@section Introduction to @command{gcov-dump}
+@section @command{gcov-dump}への導入
 @c man begin DESCRIPTION
 
-@command{gcov-dump} is a tool you can use in conjunction with GCC to
-dump content of gcda and gcno profile files offline.
+@command {gcov-dump}はGCCと連携して、gcdaとgcnoプロファイルファイルの内容をオフラインでダンプするツールである。
 
 @c man end
 
 @node Invoking Gcov-dump
-@section Invoking @command{gcov-dump}
+@section @command{gcov-dump}の呼び出し
 
 @smallexample
 Usage: gcov-dump @r{[}@var{OPTION}@r{]} ... @var{gcovfiles}
 @end smallexample
 
-@command{gcov-dump} accepts the following options:
+@command {gcov-dump}は次のオプションを受け入れる：
 
 @ignore
 @c man begin SYNOPSIS
@@ -69,25 +68,23 @@ gcov-dump [@option{-v}|@option{--version}]
 @table @gcctabopt
 @item -h
 @itemx --help
-Display help about using @command{gcov-dump} (on the standard output), and
-exit without doing any further processing.
+@command{gcov-dump}の使用に関するヘルプを（標準出力に）表示し、それ以上の処理を行わずに終了する。
 
 @item -l
 @itemx --long
-Dump content of records.
+レコードの内容をダンプする。
 
 @item -p
 @itemx --positions
-Dump positions of records.
+レコードの位置をダンプする。
 
 @item -v
 @itemx --version
-Display the @command{gcov-dump} version number (on the standard output),
-and exit without doing any further processing.
+@command{gcov-dump}のバージョン番号を（標準出力に）表示し、それ以上の処理を行わずに終了する。
 
 @item -w
 @itemx --working-sets
-Dump working set computed from summary.
+サマリーから計算されたワーキングセットをダンプする。
 @end table
 
 @c man end
