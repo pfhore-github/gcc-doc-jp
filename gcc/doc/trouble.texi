@@ -126,60 +126,44 @@ RS/6000上のAIXは、米国以外の環境でのサポート（NLS）を提供�
 @cindex incompatibilities of GCC
 @opindex traditional
 
-There are several noteworthy incompatibilities between GNU C and K&R
-(non-ISO) versions of C@.
+GNU CとK＆R（非ISO）バージョンの間には、いくつかの非互換性がある。
 
 @itemize @bullet
 @cindex string constants
 @cindex read-only strings
 @cindex shared strings
 @item
-GCC normally makes string constants read-only.  If several
-identical-looking string constants are used, GCC stores only one
-copy of the string.
+GCCは通常、文字列定数を読み取り専用にする。 同じ見た目の文字列定数が複数使用されている場合、GCCは文字列のコピーを1つだけ格納する。
 
 @cindex @code{mktemp}, and constant strings
-One consequence is that you cannot call @code{mktemp} with a string
-constant argument.  The function @code{mktemp} always alters the
-string its argument points to.
+1つの結果として、文字定数の引数で@code {mktemp}を呼び出すことはできない。 関数@code{mktemp}は、引数が指す文字列を常に変更する。
 
 @cindex @code{sscanf}, and constant strings
 @cindex @code{fscanf}, and constant strings
 @cindex @code{scanf}, and constant strings
-Another consequence is that @code{sscanf} does not work on some very
-old systems when passed a string constant as its format control string
-or input.  This is because @code{sscanf} incorrectly tries to write
-into the string constant.  Likewise @code{fscanf} and @code{scanf}.
+もう1つの結果は、@code{sscanf}は、フォーマット制御文字列または入力として文字列定数を渡すと、非常に古いシステムでは動作しないということである。 これは、@code{sscanf}が文字列定数に誤って書き込もうとするためである。 @code{fscanf}と@code{scanf}も同様。
 
-The solution to these problems is to change the program to use
-@code{char}-array variables with initialization strings for these
-purposes instead of string constants.
+これらの問題を解決するには、文字列定数ではなく、これらの目的のために初期化文字列で@code{char}配列変数を使用するようにプログラムを変更することである。
 
 @item
-@code{-2147483648} is positive.
+@code{-2147483648}は正である。
 
-This is because 2147483648 cannot fit in the type @code{int}, so
-(following the ISO C rules) its data type is @code{unsigned long int}.
-Negating this value yields 2147483648 again.
+これは、2147483648が@code{int}型に収まりきらないためであり、（ISO Cの規則に従って）そのデータ型は@code{unsigned long int}である。 この値を否定すると、再び2147483648が返される。
 
 @item
-GCC does not substitute macro arguments when they appear inside of
-string constants.  For example, the following macro in GCC
+GCCは、文字列定数の内部に現れたときにマクロ引数を置換しない。 たとえば、GCCの次のマクロ
 
 @smallexample
 #define foo(a) "a"
 @end smallexample
 
 @noindent
-will produce output @code{"a"} regardless of what the argument @var{a} is.
+は@var{a}の引数に関係なく、出力@code{"a"}を生成する。
 
 @cindex @code{setjmp} incompatibilities
 @cindex @code{longjmp} incompatibilities
 @item
-When you use @code{setjmp} and @code{longjmp}, the only automatic
-variables guaranteed to remain valid are those declared
-@code{volatile}.  This is a consequence of automatic register
-allocation.  Consider this function:
+@code{setjmp}と@code{longjmp}を使用すると、有効であることが保証されている唯一の自動変数は@code{volatile}と宣言されたものである。 これは自動レジスタ割り付けの結果である。 この関数を考えてみる：
 
 @smallexample
 jmp_buf j;
@@ -198,19 +182,13 @@ foo ()
 @}
 @end smallexample
 
-Here @code{a} may or may not be restored to its first value when the
-@code{longjmp} occurs.  If @code{a} is allocated in a register, then
-its first value is restored; otherwise, it keeps the last value stored
-in it.
+ここで@code{a}は、@code{longjmp}が発生したときに最初の値に復元される場合とされない場合がある。 @code{a}がレジスタに割り当てられている場合、その最初の値が復元される。 それ以外の場合は、最後に保存された値を保持する。
 
 @opindex W
-If you use the @option{-W} option with the @option{-O} option, you will
-get a warning when GCC thinks such a problem might be possible.
+@option{-W}オプションを@option{-O}オプションとともに使用すると、GCCがそのような問題が発生する可能性があると判断した場合に警告が表示される。
 
 @item
-Programs that use preprocessing directives in the middle of macro
-arguments do not work with GCC@.  For example, a program like this
-will not work:
+マクロ引数の途中で前処理ディレクティブを使用するプログラムは、GCCでは動作しない。 たとえば、次のようなプログラムは動作しない。
 
 @smallexample
 @group
@@ -220,42 +198,35 @@ foobar (
 @end group
 @end smallexample
 
-ISO C does not permit such a construct.
+ISO Cはそのような構成を許可していない。
 
 @item
-K&R compilers allow comments to cross over an inclusion boundary
-(i.e.@: started in an include file and ended in the including file).
+K＆Rコンパイラは、コメントがインクルード境界（つまり、インクルードファイルで開始され、そのインクルードファイルで終了する）を横切るのを許可する。
 
 @cindex external declaration scope
 @cindex scope of external declarations
 @cindex declaration scope
 @item
-Declarations of external variables and functions within a block apply
-only to the block containing the declaration.  In other words, they
-have the same scope as any other declaration in the same place.
+ブロック内の外部変数および関数の宣言は、宣言を含むブロックにのみ適用される。 言い換えれば、それらは同じ場所で他の宣言と同じスコープを持っている。
 
-In some other C compilers, an @code{extern} declaration affects all the
-rest of the file even if it happens within a block.
+他のCコンパイラでは、@code{extern}宣言は、ブロック内で発生したとしても残りのすべてのファイルに影響する。
 
 @item
-In traditional C, you can combine @code{long}, etc., with a typedef name,
-as shown here:
+伝統的なCでは、以下に示すように@code{long}などをtypedef名と組み合わせることができる：
 
 @smallexample
 typedef int foo;
 typedef long foo bar;
 @end smallexample
 
-In ISO C, this is not allowed: @code{long} and other type modifiers
-require an explicit @code{int}.
+ISO Cでは、これは許されない：@code{long}と他の型修飾子は明示的な@code{int}を必要とする。
 
 @cindex typedef names as function parameters
 @item
-PCC allows typedef names to be used as function parameters.
+PCCでは、typedef名を関数パラメータとして使用できる。
 
 @item
-Traditional C allows the following erroneous pair of declarations to
-appear together in a given scope:
+伝統的なCでは、次のような誤った宣言のペアを指定のスコープで一緒に表示できる。
 
 @smallexample
 typedef int foo;
@@ -263,27 +234,16 @@ typedef foo foo;
 @end smallexample
 
 @item
-GCC treats all characters of identifiers as significant.  According to
-K&R-1 (2.2), ``No more than the first eight characters are significant,
-although more may be used.''.  Also according to K&R-1 (2.2), ``An
-identifier is a sequence of letters and digits; the first character must
-be a letter.  The underscore _ counts as a letter.'', but GCC also
-allows dollar signs in identifiers.
+GCCは、識別子のすべての文字を有効として扱う。 K＆R-1（2.2）によると、「最初の8文字より後は重要ではないが、使うことはできる。」 また、K＆R-1（2.2）によると、「識別子は文字と数字のシーケンスで、最初の文字は文字でなければならない。下線_は文字としてカウントされる。」しかしGCCでは識別子でドル記号も使用できる。
 
 @cindex whitespace
 @item
-PCC allows whitespace in the middle of compound assignment operators
-such as @samp{+=}.  GCC, following the ISO standard, does not
-allow this.
+PCCでは、@samp{+=}のような複合代入演算子の中間に空白を入れることができる。 GCCは、ISO標準に従って、これを許可していない。
 
 @cindex apostrophes
 @cindex @code{'}
 @item
-GCC complains about unterminated character constants inside of
-preprocessing conditionals that fail.  Some programs have English
-comments enclosed in conditionals that are guaranteed to fail; if these
-comments contain apostrophes, GCC will probably report an error.  For
-example, this code would produce an error:
+GCCは、失敗した前処理条件の中で、終端されていない文字定数について不平を言う。 一部のプログラムでは、条件付きで囲まれた英語のコメントが失敗することが保証されている。 これらのコメントにアポストロフィが含まれていると、GCCはおそらくエラーを報告する。 たとえば、次のコードではエラーが発生する。
 
 @smallexample
 #if 0
@@ -291,117 +251,58 @@ You can't expect this to work.
 #endif
 @end smallexample
 
-The best solution to such a problem is to put the text into an actual
-C comment delimited by @samp{/*@dots{}*/}.
+このような問題に対する最良の解決策は、テキストを@samp{/*@dots{}*/}で区切られた実際のCコメントに入れることである。
 
 @item
-Many user programs contain the declaration @samp{long time ();}.  In the
-past, the system header files on many systems did not actually declare
-@code{time}, so it did not matter what type your program declared it to
-return.  But in systems with ISO C headers, @code{time} is declared to
-return @code{time_t}, and if that is not the same as @code{long}, then
-@samp{long time ();} is erroneous.
+多くのユーザープログラムには、@samp{long time ();}という宣言が含まれている。 以前は、多くのシステムのシステムヘッダファイルは実際に@code{time}を宣言していなかったので、プログラムが返すと宣言したタイプは関係なかった。 しかしISO Cヘッダを持つシステムでは、@code{time}は@code {time_t}を返すと宣言され、それが@code{long}と同じでない場合、@samp{long time();}は間違っている。
 
-The solution is to change your program to use appropriate system headers
-(@code{<time.h>} on systems with ISO C headers) and not to declare
-@code{time} if the system header files declare it, or failing that to
-use @code{time_t} as the return type of @code{time}.
+解決策は、システムヘッダーファイルが宣言しているならば、プログラムが適切なシステムヘッダー（ISO Cヘッダーを持つシステムで@code{<time.h>}）を使用して@code{time}を宣言しないようにプログラムを変更するか、さもなければ@code{time}の戻り値の型として@code {time_t}を使用することである。
 
 @cindex @code{float} as function value type
 @item
-When compiling functions that return @code{float}, PCC converts it to
-a double.  GCC actually returns a @code{float}.  If you are concerned
-with PCC compatibility, you should declare your functions to return
-@code{double}; you might as well say what you mean.
+@code{float}を返す関数をコンパイルするとき、PCCはそれをdoubleに変換する。 GCCは実際に@code{float}を返す。 PCCの互換性に関心がある場合は、@code{double}を返す関数を宣言する必要がある。あなたは同様に何を意図するかを言うべきである。
 
 @cindex structures
 @cindex unions
 @item
-When compiling functions that return structures or unions, GCC
-output code normally uses a method different from that used on most
-versions of Unix.  As a result, code compiled with GCC cannot call
-a structure-returning function compiled with PCC, and vice versa.
+構造体または共用体を返す関数をコンパイルするとき、GCC出力コードは通常、ほとんどのバージョンのUnixで使用されているものとは異なる方法を使用する。 その結果、GCCでコンパイルされたコードは、PCCでコンパイルされた構造体戻り関数を呼び出すことはできず、その逆できない。
 
-The method used by GCC is as follows: a structure or union which is
-1, 2, 4 or 8 bytes long is returned like a scalar.  A structure or union
-with any other size is stored into an address supplied by the caller
-(usually in a special, fixed register, but on some machines it is passed
-on the stack).  The target hook @code{TARGET_STRUCT_VALUE_RTX}
-tells GCC where to pass this address.
+GCCで使用される方法は、次のとおりである。1,2,4または8バイトの長さの構造体または共用体がスカラーのように返される。 他のサイズの構造体または共用体は、呼び出し元によって指定されたアドレスに格納される（通常、特殊な固定レジスタがあるが、一部のマシンではスタックに渡される）。 ターゲットフック@code{TARGET_STRUCT_VALUE_RTX}は、このアドレスをどこに渡すべきかをGCCに伝える。
 
-By contrast, PCC on most target machines returns structures and unions
-of any size by copying the data into an area of static storage, and then
-returning the address of that storage as if it were a pointer value.
-The caller must copy the data from that memory area to the place where
-the value is wanted.  GCC does not use this method because it is
-slower and nonreentrant.
+対照的に、ほとんどのターゲットマシン上のPCCは、静的ストレージの領域にデータをコピーし、そのストレージのアドレスをポインタ値のように返すことによって、任意のサイズの構造体および共用体を返す。 呼び出し元は、そのメモリ領域から値が必要な場所にデータをコピーする必要がある。 この方法は遅く、非リエントラントなので、GCCではこの方法は使用しない。
 
-On some newer machines, PCC uses a reentrant convention for all
-structure and union returning.  GCC on most of these machines uses a
-compatible convention when returning structures and unions in memory,
-but still returns small structures and unions in registers.
+より新しいいくつかのマシンでは、PCCはすべての構造体および共用体が戻ってくるための再入可能な規則を使用する。 これらのマシンの大部分のGCCは構造体と共用体をメモリに戻すときに互換性のある規約を使用するが、小さな構造体と共用体をレジスタに返す。
 
 @opindex fpcc-struct-return
-You can tell GCC to use a compatible convention for all structure and
-union returning with the option @option{-fpcc-struct-return}.
+@option {-fpcc-struct-return}オプションを指定して返されるすべての構造体および共用体に対して、互換性のある規約を使用するようにGCCに指示できる。
 
 @cindex preprocessing tokens
 @cindex preprocessing numbers
 @item
-GCC complains about program fragments such as @samp{0x74ae-0x4000}
-which appear to be two hexadecimal constants separated by the minus
-operator.  Actually, this string is a single @dfn{preprocessing token}.
-Each such token must correspond to one token in C@.  Since this does not,
-GCC prints an error message.  Although it may appear obvious that what
-is meant is an operator and two values, the ISO C standard specifically
-requires that this be treated as erroneous.
+GCCは、@samp{0x74ae-0x4000}のようなマイナス演算子で区切られた2つの16進定数のように見えるプログラムフラグメントについて文句を言う。 実際には、この文字列は単一の@dfn{preprocessing token}（前処理トークン）である。 このような各トークンは、C内の1つのトークンに対応しなければならない。 これはしていないので、GCCはエラーメッセージを表示する。 オペレータと2つの値が意味されていることは明らかだが、ISO C標準では、特にこれが誤ったものとして扱われることを要求している。
 
-A @dfn{preprocessing token} is a @dfn{preprocessing number} if it
-begins with a digit and is followed by letters, underscores, digits,
-periods and @samp{e+}, @samp{e-}, @samp{E+}, @samp{E-}, @samp{p+},
-@samp{p-}, @samp{P+}, or @samp{P-} character sequences.  (In strict C90
-mode, the sequences @samp{p+}, @samp{p-}, @samp{P+} and @samp{P-} cannot
-appear in preprocessing numbers.)
+@dfn{preprocessing token}（前処理トークン）は、数字で始まり、文字、アンダースコア、数字、ピリオド、@samp{e+}、@samp{e-}、@samp{E+}、@samp{E-}、@samp{p+}、@samp{p-}、@samp{P+}、または@samp{P-}の文字シーケンスである。 （厳密なC90モードでは、シーケンス@samp{p+}、@samp{p-}、@samp{P+}と@samp{P-}は前処理番号に現れない）
 
-To make the above program fragment valid, place whitespace in front of
-the minus sign.  This whitespace will end the preprocessing number.
+上記のプログラムフラグメントを有効にするには、空白をマイナス記号の前に置く。 この空白は前処理番号を終了する。
 @end itemize
 
 @node Fixed Headers
-@section Fixed Header Files
+@section 修正されたヘッダファイル
 
-GCC needs to install corrected versions of some system header files.
-This is because most target systems have some header files that won't
-work with GCC unless they are changed.  Some have bugs, some are
-incompatible with ISO C, and some depend on special features of other
-compilers.
+GCCはいくつかのシステムヘッダファイルの修正版をインストールする必要がある。 これは、ほとんどのターゲットシステムには、変更されない限り、GCCで動作しないヘッダファイルがいくつかあるためである。 バグを持つものもあれば、ISO Cと互換性がないものもあれば、他のコンパイラの特殊機能に依存するものもある。
 
-Installing GCC automatically creates and installs the fixed header
-files, by running a program called @code{fixincludes}.  Normally, you
-don't need to pay attention to this.  But there are cases where it
-doesn't do the right thing automatically.
+GCCをインストールすると、@code{fixincludes}というプログラムを実行することによって、固定ヘッダファイルが自動的に作成され、インストールされる。 通常、これに注意する必要はない。 しかし、自動的に正しいことをしないケースがある。
 
 @itemize @bullet
 @item
-If you update the system's header files, such as by installing a new
-system version, the fixed header files of GCC are not automatically
-updated.  They can be updated using the @command{mkheaders} script
-installed in
-@file{@var{libexecdir}/gcc/@var{target}/@var{version}/install-tools/}.
+新しいシステムバージョンをインストールするなど、システムのヘッダーファイルを更新すると、GCCの固定ヘッダーファイルは自動的に更新されない。 @file{@var{libexecdir}/gcc/@var{target}/@var{version}/install-tools/}にインストールされている@command{mkheaders}スクリプトを使用して更新できる。
 
 @item
-On some systems, header file directories contain
-machine-specific symbolic links in certain places.  This makes it
-possible to share most of the header files among hosts running the
-same version of the system on different machine models.
+いくつかのシステムでは、ヘッダーファイルのディレクトリには、特定の場所にマシン固有のシンボリックリンクが含まれている。 これにより、異なるマシンモデル上の同じバージョンのシステムを実行しているホスト間でほとんどのヘッダーファイルを共有することができる。
 
-The programs that fix the header files do not understand this special
-way of using symbolic links; therefore, the directory of fixed header
-files is good only for the machine model used to build it.
+ヘッダーファイルを修正するプログラムは、シンボリックリンクを使用するこの特別な方法を理解していない。 したがって、固定ヘッダファイルのディレクトリは、それを構築するために使用されたマシンモデルに対してのみ有効である。
 
-It is possible to make separate sets of fixed header files for the
-different machine models, and arrange a structure of symbolic links so
-as to use the proper set, but you'll have to do this by hand.
+異なるマシンモデル用の固定ヘッダーファイルを別々に作成し、適切なセットを使用するようにシンボリックリンクの構造を調整することは可能だが、手動で行う必要がある。
 @end itemize
 
 @node Standard Libraries

@@ -304,7 +304,7 @@ Lines executed:92.86% of 14
 Creating 'tmp.cpp.gcov'
 @end smallexample
 
-ファイル@file{tmp.cpp.gcov}には、@コマンド{gcov}の出力が含まれている。ここにサンプルがある：
+ファイル@file{tmp.cpp.gcov}には、@command{gcov}の出力が含まれている。ここにサンプルがある：
 
 @smallexample
         -:    0:Source:tmp.cpp
