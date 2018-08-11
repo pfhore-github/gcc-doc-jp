@@ -373,33 +373,28 @@ AIXでは、GCCは、リンカーが参照されていないシンボルをプ�
 @end itemize
 
 @node C++ Misunderstandings
-@section Common Misunderstandings with GNU C++
+@section GNU C++でのよくある誤解
 
 @cindex misunderstandings in C++
 @cindex surprises in C++
 @cindex C++ misunderstandings
-C++ is a complex language and an evolving one, and its standard
-definition (the ISO C++ standard) was only recently completed.  As a
-result, your C++ compiler may occasionally surprise you, even when its
-behavior is correct.  This section discusses some areas that frequently
-give rise to questions of this sort.
+C ++は複雑な言語であり、進化していて、その標準定義（ISO C ++標準）は最近完成したばかりである。 その結果、あなたのC++コンパイラは、その動作が正しい時でさえあなたを驚かせるかもしれない。 このセクションでは、この種の問題を頻繁に引き起こすいくつかの分野について説明する。
 
 @menu
-* Static Definitions::  Static member declarations are not definitions
-* Name lookup::         Name lookup, templates, and accessing members of base classes
-* Temporaries::         Temporaries may vanish before you expect
-* Copy Assignment::     Copy Assignment operators copy virtual bases twice
+* Static Definitions::  静的メンバ宣言は定義ではない
+* Name lookup::         名前検索、テンプレート、基底クラスのメンバのアクセス
+* Temporaries::         一時値は予期したよりも前に消えるかもしれない
+* Copy Assignment::     コピー代入演算子は仮想基底を２度コピーする
 @end menu
 
 @node Static Definitions
-@subsection Declare @emph{and} Define Static Members
+@subsection 静的メンバの宣言@emph{と}定義
 
 @cindex C++ static data, declaring and defining
 @cindex static data in C++, declaring and defining
 @cindex declaring static data in C++
 @cindex defining static data in C++
-When a class has static data members, it is not enough to @emph{declare}
-the static member; you must also @emph{define} it.  For example:
+クラスに静的データメンバーがある場合、静的メンバーを@emph{宣言}するだけでは不十分である。それを@emph{定義}する必要もある。 例えば：
 
 @smallexample
 class Foo
@@ -410,38 +405,23 @@ class Foo
 @};
 @end smallexample
 
-This declaration only establishes that the class @code{Foo} has an
-@code{int} named @code{Foo::bar}, and a member function named
-@code{Foo::method}.  But you still need to define @emph{both}
-@code{method} and @code{bar} elsewhere.  According to the ISO
-standard, you must supply an initializer in one (and only one) source
-file, such as:
+この宣言は、@code{Foo}クラスが@code{Foo::bar}という名前の@code{int}と@code{Foo::method}という名前のメンバ関数を持つことのみを確立する。 しかし、@emph{メソッド}と@code{bar}を別の場所で定義する必要がある。 ISO標準によると、次のような1つのソースファイルでイニシャライザを指定する必要がある。
 
 @smallexample
 int Foo::bar = 0;
 @end smallexample
 
-Other C++ compilers may not correctly implement the standard behavior.
-As a result, when you switch to @command{g++} from one of these compilers,
-you may discover that a program that appeared to work correctly in fact
-does not conform to the standard: @command{g++} reports as undefined
-symbols any static data members that lack definitions.
+他のC++コンパイラは、標準的な動作を正しく実装していないかもしれない。 結果として、これらのコンパイラの1つから@command{g++}に切り替えると、実際に正常に動作するように見えるプログラムが標準に準拠していないことがわかる。@command{g++}は、定義のない静的データメンバーを未定義シンボルとして報告する。
 
 
 @node Name lookup
-@subsection Name Lookup, Templates, and Accessing Members of Base Classes
+@subsection  名前検索、テンプレート、基底クラスのメンバのアクセス
 
 @cindex base class members
 @cindex two-stage name lookup
 @cindex dependent name lookup
 
-The C++ standard prescribes that all names that are not dependent on
-template parameters are bound to their present definitions when parsing
-a template function or class.@footnote{The C++ standard just uses the
-term ``dependent'' for names that depend on the type or value of
-template parameters.  This shorter term will also be used in the rest of
-this section.}  Only names that are dependent are looked up at the point
-of instantiation.  For example, consider
+C++標準では、テンプレート関数またはクラスの解析時に、テンプレートパラメータに依存しないすべての名前が現在の定義にバインドされていることが規定されている。@footnote{C++標準では、テンプレートパラメータの型または値に依存する名前に"依存している"という用語を使用している。 この短い用語は、このセクションの残りの部分でも使用される。} 依存している名前のみがインスタンス化の時点で参照される。 たとえば、
 
 @smallexample
   void foo(double);
@@ -460,27 +440,13 @@ of instantiation.  For example, consider
   @};
 @end smallexample
 
-Here, the names @code{foo} and @code{N} appear in a context that does
-not depend on the type of @code{T}.  The compiler will thus require that
-they are defined in the context of use in the template, not only before
-the point of instantiation, and will here use @code{::foo(double)} and
-@code{A::N}, respectively.  In particular, it will convert the integer
-value to a @code{double} when passing it to @code{::foo(double)}.
+ここで、@code{foo}と@code{N}という名前は、@code{T}のタイプに依存しないコンテキスト内に現れる。 したがって、コンパイラは、インスタンス化のポイントの前だけでなく、テンプレートでの使用のコンテキストで定義されていることを要求し、ここではそれぞれ、@code{::foo(double)}と@code{A::N}を使用する。  特に、整数値を@code{::foo(double)}に渡すときに整数値を@code {double}に変換する。
 
-Conversely, @code{bar} and the call to @code{foo} in the fourth marked
-line are used in contexts that do depend on the type of @code{T}, so
-they are only looked up at the point of instantiation, and you can
-provide declarations for them after declaring the template, but before
-instantiating it.  In particular, if you instantiate @code{A::f<int>},
-the last line will call an overloaded @code{::foo(int)} if one was
-provided, even if after the declaration of @code{struct A}.
+逆に、@code{bar}と4番目のマーク付き行の@code{foo}への呼び出しは、@code{T}の型に依存するコンテキストで使用されるため、インスタンス化の時点でのみ検索され、 テンプレートを宣言した後、インスタンス化する前に宣言を提供することができる。 特に、@code{A::f<int>}をインスタンス化すると、最後の行は@code{struct A}の宣言の後であっても、オーバーロードされた@code{: foo(int)}が提供されていればそれを呼び出す。
 
-This distinction between lookup of dependent and non-dependent names is
-called two-stage (or dependent) name lookup.  G++ implements it
-since version 3.4.
+従属名と非従属名の参照の区別は、2段階（または依存）の名前参照と呼ばれる。 G++はバージョン3.4からそれを実装している。
 
-Two-stage name lookup sometimes leads to situations with behavior
-different from non-template codes.  The most common is probably this:
+2段階の名前検索では、テンプレート以外のコードとは異なる動作が発生することがある。 最も一般的なのはおそらくこれである：
 
 @smallexample
   template <typename T> struct Base @{
@@ -492,24 +458,11 @@ different from non-template codes.  The most common is probably this:
   @};
 @end smallexample
 
-In @code{get_i()}, @code{i} is not used in a dependent context, so the
-compiler will look for a name declared at the enclosing namespace scope
-(which is the global scope here).  It will not look into the base class,
-since that is dependent and you may declare specializations of
-@code{Base} even after declaring @code{Derived}, so the compiler cannot
-really know what @code{i} would refer to.  If there is no global
-variable @code{i}, then you will get an error message.
+@code{get_i()}では、@code{i}は従属コンテキストでは使用されないので、コンパイラは囲む名前空間スコープ（ここではグローバルスコープ）で宣言された名前を探す。 これは依存しているので、基本クラスを調べない。@code{Derived}を宣言した後でも、@code{Base}の特殊化を宣言することができるので、コンパイラは@code{i}が参照するものを本当に知ることができない。 グローバル変数@code{i}がない場合は、エラーメッセージが表示される。
 
-In order to make it clear that you want the member of the base class,
-you need to defer lookup until instantiation time, at which the base
-class is known.  For this, you need to access @code{i} in a dependent
-context, by either using @code{this->i} (remember that @code{this} is of
-type @code{Derived<T>*}, so is obviously dependent), or using
-@code{Base<T>::i}.  Alternatively, @code{Base<T>::i} might be brought
-into scope by a @code{using}-declaration.
+基本クラスのメンバーが必要であることを明確にするために、基本クラスが分かっているインスタンス化時点までルックアップを延期する必要がある。 このためには、@code{this->i}（@code{this}は@code{Derived<T>*}型であり、明らかに依存していることを思い出す）か、または@code{Base<T>::i}のどちらかを使って、依存コンテキストで@code{i}にアクセスする必要がある。 代わりに、@code{Base<T>::i}を@code{using}宣言でスコープに入れることもできる。
 
-Another, similar example involves calling member functions of a base
-class:
+別の同様の例では、基本クラスのメンバー関数を呼び出すことがある。
 
 @smallexample
   template <typename T> struct Base @{
@@ -521,12 +474,7 @@ class:
   @};
 @end smallexample
 
-Again, the call to @code{f()} is not dependent on template arguments
-(there are no arguments that depend on the type @code{T}, and it is also
-not otherwise specified that the call should be in a dependent context).
-Thus a global declaration of such a function must be available, since
-the one in the base class is not visible until instantiation time.  The
-compiler will consequently produce the following error message:
+ここでも、@code{f()}の呼び出しはテンプレート引数に依存しない（@code{T}の型に依存する引数はなく、呼び出しが依存コンテキストにないはずである）。 したがって、そのような関数のグローバル宣言は、基本クラスのインスタンスがインスタンス化時間まで可視ではないため、利用可能でなければならない。 結果的に、コンパイラは次のエラーメッセージを生成する。
 
 @smallexample
   x.cc: In member function `int Derived<T>::g()':
@@ -536,39 +484,19 @@ compiler will consequently produce the following error message:
      allowing the use of an undeclared name is deprecated)
 @end smallexample
 
-To make the code valid either use @code{this->f()}, or
-@code{Base<T>::f()}.  Using the @option{-fpermissive} flag will also let
-the compiler accept the code, by marking all function calls for which no
-declaration is visible at the time of definition of the template for
-later lookup at instantiation time, as if it were a dependent call.
-We do not recommend using @option{-fpermissive} to work around invalid
-code, and it will also only catch cases where functions in base classes
-are called, not where variables in base classes are used (as in the
-example above).
+コードを有効にするには、@code{this->f()}または@code{Base<T>::f()}を使用する。 @option{-fpermissive}フラグを使用すると、インスタンス化時に後で参照するためのテンプレートの定義時に、宣言が表示されていないすべての関数呼び出しを、依存呼び出しかのようにマーキングすることによって、コンパイラにコードを受け付けることができる。 無効なコードを回避するために@option{-fpermissive}を使用することはお勧めできません。また、上記の例のように、基本クラスの変数が使用される場所ではなく、基本クラスの関数が呼び出されるケースだけを検出する。
 
-Note that some compilers (including G++ versions prior to 3.4) get these
-examples wrong and accept above code without an error.  Those compilers
-do not implement two-stage name lookup correctly.
+いくつかのコンパイラ（3.4より前のG++バージョンを含む）では、これらの例が間違っていて、上記のコードをエラーなく受け入れることに注意せよ。 これらのコンパイラは、2段階の名前検索を正しく実装していない。
 
 
 @node Temporaries
-@subsection Temporaries May Vanish Before You Expect
+@subsection 一時値はあなたが期待する前に消えるかもしれない
 
 @cindex temporaries, lifetime of
 @cindex portions of temporary objects, pointers to
-It is dangerous to use pointers or references to @emph{portions} of a
-temporary object.  The compiler may very well delete the object before
-you expect it to, leaving a pointer to garbage.  The most common place
-where this problem crops up is in classes like string classes,
-especially ones that define a conversion function to type @code{char *}
-or @code{const char *}---which is one reason why the standard
-@code{string} class requires you to call the @code{c_str} member
-function.  However, any class that returns a pointer to some internal
-structure is potentially subject to this problem.
+一時オブジェクトの@emph{部分}へのポインタや参照を使うのは危険である。 コンパイラは、予期する前にオブジェクトをすっかり削除し、ポインタをゴミとして残すかもしれない。 この問題が発生する最も一般的な場所は、文字列クラスのようなクラスである。特に、@code{char *}や@code{const char *}を入力する変換関数を定義するものである。これが、標準@code{string}クラスでは、@code{c_str}メンバ関数を呼び出す必要がある理由のひとつである。 しかし、内部構造体へのポインタを返すクラスであれば、この問題が発生する可能性がある。
 
-For example, a program may use a function @code{strfunc} that returns
-@code{string} objects, and another function @code{charfunc} that
-operates on pointers to @code{char}:
+例えば、プログラムは@code{string}オブジェクトを返す関数@code{strfunc}と、@code{char}へのポインタで動作する別の関数@code{charfunc}を使うかもしれない
 
 @smallexample
 string strfunc ();
@@ -586,21 +514,11 @@ f ()
 @end smallexample
 
 @noindent
-In this situation, it may seem reasonable to save a pointer to the C
-string returned by the @code{c_str} member function and use that rather
-than call @code{c_str} repeatedly.  However, the temporary string
-created by the call to @code{strfunc} is destroyed after @code{p} is
-initialized, at which point @code{p} is left pointing to freed memory.
+このような状況では、@code{c_str}メンバ関数から返されたC文字列へのポインタを保存し、@code{c_str}を繰り返し呼び出すのではなく、そのポインタを使用するのが妥当と思われるかもしれない。 しかし、@code {strfunc}の呼び出しによって作成された一時的な文字列は、@code{p}が初期化された後に破棄される。
 
-Code like this may run successfully under some other compilers,
-particularly obsolete cfront-based compilers that delete temporaries
-along with normal local variables.  However, the GNU C++ behavior is
-standard-conforming, so if your program depends on late destruction of
-temporaries it is not portable.
+このようなコードは、通常のローカル変数とともに一時値を削除する、古くなったcfrontベースのコンパイラなど、他のコンパイラでは正常に動作する可能性がある。 しかし、GNU C++の動作は標準に準拠しているので、プログラムが一時的なものの遅い破壊に依存している場合、移植性がない。
 
-The safe way to write such code is to give the temporary a name, which
-forces it to remain until the end of the scope of the name.  For
-example:
+そのようなコードを書くための安全な方法は、一時的な名前を付けることで名前のスコープの終わりまでそれを強制的に残すことである。 例えば：
 
 @smallexample
 const string& tmp = strfunc ();
@@ -608,12 +526,9 @@ charfunc (tmp.c_str ());
 @end smallexample
 
 @node Copy Assignment
-@subsection Implicit Copy-Assignment for Virtual Bases
+@subsection 仮想基底の暗黙のコピー代入
 
-When a base class is virtual, only one subobject of the base class
-belongs to each full object.  Also, the constructors and destructors are
-invoked only once, and called from the most-derived class.  However, such
-objects behave unspecified when being assigned.  For example:
+基本クラスが仮想の場合、基本クラスの1つのサブオブジェクトのみが各完全オブジェクトに属する。 また、コンストラクタとデストラクタは一度だけ呼び出され、最も派生したクラスから呼び出される。 ただし、そのようなオブジェクトは代入時には未規定の振る舞いをする。 例えば：
 
 @smallexample
 struct Base@{
@@ -645,22 +560,11 @@ void func(Derived &d1, Derived &d2)
 @}
 @end smallexample
 
-The C++ standard specifies that @samp{Base::Base} is only called once
-when constructing or copy-constructing a Derived object.  It is
-unspecified whether @samp{Base::operator=} is called more than once when
-the implicit copy-assignment for Derived objects is invoked (as it is
-inside @samp{func} in the example).
+C ++標準では、@samp{Base::Base}はDerivedオブジェクトを構築またはコピーするときに一度しか呼び出されないことを指定している。 例の@samp{func}の中にあるように、派生オブジェクトの暗黙のコピー代入が呼び出されたときに、@samp{Base::operator=}が複数回呼び出されるかどうかは不明である。
 
-G++ implements the ``intuitive'' algorithm for copy-assignment: assign all
-direct bases, then assign all members.  In that algorithm, the virtual
-base subobject can be encountered more than once.  In the example, copying
-proceeds in the following order: @samp{val}, @samp{name} (via
-@code{strdup}), @samp{bval}, and @samp{name} again.
+G++は、コピー割り当てのための「直感的な」アルゴリズムを実装している。すべての直接基底を代入し、すべてのメンバーを代入する。 このアルゴリズムでは、仮想基底のサブオブジェクトに複数回出会う可能性がある。 この例では、@samp{val}、@samp{name}（@code{strdup}経由で）、@samp{bval}、@samp{name}の順にコピーが進行する。
 
-If application code relies on copy-assignment, a user-defined
-copy-assignment operator removes any uncertainties.  With such an
-operator, the application can define whether and how the virtual base
-subobject is assigned.
+アプリケーションコードがコピー代入に依存する場合、ユーザ定義のコピー代入演算子は不確実性を取り除く。 このような演算子を使用すると、アプリケーションは仮想基底サブオブジェクトの割り当ての有無とその方法を定義できる。
 
 @node Non-bugs
 @section Certain Changes We Don't Want to Make
