@@ -567,195 +567,94 @@ G++は、コピー割り当てのための「直感的な」アルゴリズム�
 アプリケーションコードがコピー代入に依存する場合、ユーザ定義のコピー代入演算子は不確実性を取り除く。 このような演算子を使用すると、アプリケーションは仮想基底サブオブジェクトの割り当ての有無とその方法を定義できる。
 
 @node Non-bugs
-@section Certain Changes We Don't Want to Make
+@section 私たちがしたくない変更
 
-This section lists changes that people frequently request, but which
-we do not make because we think GCC is better without them.
+このセクションでは、人々が頻繁に要求するが、GCCにない方がよいと考えているため、私たちは行っていない変更をリストアップしている。
 
 @itemize @bullet
 @item
-Checking the number and type of arguments to a function which has an
-old-fashioned definition and no prototype.
+昔ながらの定義を持ち、プロトタイプを持たない関数の引数の数と型を調べる。
 
-Such a feature would work only occasionally---only for calls that appear
-in the same file as the called function, following the definition.  The
-only way to check all calls reliably is to add a prototype for the
-function.  But adding a prototype eliminates the motivation for this
-feature.  So the feature is not worthwhile.
+このような機能は、定義に続いて、呼び出された関数と同じファイルに表示される呼び出しに対してのみ、ときどき動作する。 すべての呼び出しを確実にチェックする唯一の方法は、関数のプロトタイプを追加することである。 しかし、プロトタイプを追加することで、この機能の動機づけがなくなる。 だからこの機能は価値がない。
 
 @item
-Warning about using an expression whose type is signed as a shift count.
+型がシフト・カウントとして符号付きの式を使用することについての警告。
 
-Shift count operands are probably signed more often than unsigned.
-Warning about this would cause far more annoyance than good.
-
-@item
-Warning about assigning a signed value to an unsigned variable.
-
-Such assignments must be very common; warning about them would cause
-more annoyance than good.
+おそらく、シフト・カウント・オペランドは、符号なしよりも符号ありのほうが多い。これについての警告は、善よりもはるかに面倒を引き起こすであろう。
 
 @item
-Warning when a non-void function value is ignored.
+符号なしの値に符号付きの値を代入することについての警告。
 
-C contains many standard functions that return a value that most
-programs choose to ignore.  One obvious example is @code{printf}.
-Warning about this practice only leads the defensive programmer to
-clutter programs with dozens of casts to @code{void}.  Such casts are
-required so frequently that they become visual noise.  Writing those
-casts becomes so automatic that they no longer convey useful
-information about the intentions of the programmer.  For functions
-where the return value should never be ignored, use the
-@code{warn_unused_result} function attribute (@pxref{Function
-Attributes}).
+そのような代入は間違いなく非常にありふれている。 それらについての警告は善よりも迷惑を引き起こすであろう。
+
+@item
+非void関数の値が無視されるときの警告。
+
+Cには、ほとんどのプログラムが無視する値を返す多くの標準関数が含まれている。 1つの明白な例は@code{printf}である。 この実例についての警告は、防御プログラマーが何十回も@code{void}にキャストしてプログラムを乱雑にしてなるだけである。そのようなキャストは非常に頻繁に必要とされ、視覚的ノイズとなる。 これらのキャストを書くことはとても自動化され、プログラマーの意図についての有益な情報をもはや伝えない。 戻り値を決して無視すべきではない関数の場合、@code{warn_unused_result}関数属性（@pxref {Function Attributes}）を使うこと。
 
 @item
 @opindex fshort-enums
-Making @option{-fshort-enums} the default.
+@option {-fshort-enums}をデフォルトにする。
 
-This would cause storage layout to be incompatible with most other C
-compilers.  And it doesn't seem very important, given that you can get
-the same result in other ways.  The case where it matters most is when
-the enumeration-valued object is inside a structure, and in that case
-you can specify a field width explicitly.
+これにより、ストレージレイアウトは他のほとんどのCコンパイラと互換性がなくなる。 同じ結果を他の方法で得ることができるので、それは非常に重要とは思われない。 最も重要なのは、列挙型オブジェクトが構造体の内部にある場合である。この場合、フィールド幅を明示的に指定できる。
 
 @item
-Making bit-fields unsigned by default on particular machines where ``the
-ABI standard'' says to do so.
+「ABI標準」がそうするように言われている特定のマシンでは、デフォルトでビットフィールドを符号なしにする。
 
-The ISO C standard leaves it up to the implementation whether a bit-field
-declared plain @code{int} is signed or not.  This in effect creates two
-alternative dialects of C@.
+ISO C標準は、@code{int}が明示的に宣言されているビットフィールドが符号付きかどうかを実装に任せる。 これは事実上、Cの2つの代替変種を生成する。
 
 @opindex fsigned-bitfields
 @opindex funsigned-bitfields
-The GNU C compiler supports both dialects; you can specify the signed
-dialect with @option{-fsigned-bitfields} and the unsigned dialect with
-@option{-funsigned-bitfields}.  However, this leaves open the question of
-which dialect to use by default.
+GNU Cコンパイラは両方の変種をサポートしている。 @option{-fsigned-bitfields}と@option{-funsigned-bitfields}で符号の変種を指定することができる。 しかし、これはデフォルトでどの変種を使うべきかという疑問を残す。
 
-Currently, the preferred dialect makes plain bit-fields signed, because
-this is simplest.  Since @code{int} is the same as @code{signed int} in
-every other context, it is cleanest for them to be the same in bit-fields
-as well.
+現在のところ、この変種の方が単純なので、プレーンなビットフィールドは符号つきにする。 @code{int}は他のすべてのコンテキストで@code{signed int}と同じなので、ビットフィールドでも同じであることが最もきれいである。
 
-Some computer manufacturers have published Application Binary Interface
-standards which specify that plain bit-fields should be unsigned.  It is
-a mistake, however, to say anything about this issue in an ABI@.  This is
-because the handling of plain bit-fields distinguishes two dialects of C@.
-Both dialects are meaningful on every type of machine.  Whether a
-particular object file was compiled using signed bit-fields or unsigned
-is of no concern to other object files, even if they access the same
-bit-fields in the same data structures.
+いくつかのコンピュータ製造業者は、プレーンビットフィールドが符号なしであるべきであることを指定するアプリケーションバイナリインタフェース規格を公開している。 しかし、ABIでこの問題について何か言っているのは間違いである。 これは、単純なビットフィールドの扱いがCの2つの変種を区別するためである。どちらの変種も、あらゆるタイプのマシンで意味がある。 同じデータ構造内の同じビットフィールドにアクセスしても、特定のオブジェクトファイルが符号付きビットフィールドを使用してコンパイルされたか、符号なしででされたかは無関係である。
 
-A given program is written in one or the other of these two dialects.
-The program stands a chance to work on most any machine if it is
-compiled with the proper dialect.  It is unlikely to work at all if
-compiled with the wrong dialect.
+与えられたプログラムは、これら2つの変種の一方または他方に書き込まれる。 このプログラムは、適切な変種でコンパイルされている場合、ほとんどのマシンで動作する可能性がある。 間違った方言でコンパイルすると、まったく動作しない可能性がある。
 
-Many users appreciate the GNU C compiler because it provides an
-environment that is uniform across machines.  These users would be
-inconvenienced if the compiler treated plain bit-fields differently on
-certain machines.
+GNU Cコンパイラは、マシン間で統一された環境を提供するため、多くのユーザがGNU Cコンパイラを高く評価している。 これらのユーザは、コンパイラが特定のマシン上でプレーンビットフィールドを別々に扱う場合には不便である。
 
-Occasionally users write programs intended only for a particular machine
-type.  On these occasions, the users would benefit if the GNU C compiler
-were to support by default the same dialect as the other compilers on
-that machine.  But such applications are rare.  And users writing a
-program to run on more than one type of machine cannot possibly benefit
-from this kind of compatibility.
+ユーザーは、特定のマシンタイプのみを対象としたプログラムを作成することがある。 このような場合、GNU Cコンパイラが、デフォルトで、そのマシン上の他のコンパイラと同じ変種をサポートしていれば、ユーザは利益を得るだろう。 しかし、そのようなアプリケーションはまれである。 また、複数のタイプのマシンで動作するプログラムを作成しているユーザーは、この種の互換性の恩恵を受けることはできない。
 
-This is why GCC does and will treat plain bit-fields in the same
-fashion on all types of machines (by default).
+このため、GCCは（デフォルトで）すべてのタイプのマシンで同じ方法でプレーンビットフィールドを処理する。
 
-There are some arguments for making bit-fields unsigned by default on all
-machines.  If, for example, this becomes a universal de facto standard,
-it would make sense for GCC to go along with it.  This is something
-to be considered in the future.
+ビットフィールドをデフォルトですべてのマシンで符号なしにするための引数がいくつかある。 例えば、これが普遍的なデファクトスタンダードになった場合、GCCがそれに沿って進むことは理にかなっている。 これは将来考えられるものである。
 
-(Of course, users strongly concerned about portability should indicate
-explicitly in each bit-field whether it is signed or not.  In this way,
-they write programs which have the same meaning in both C dialects.)
+（もちろん、移植性を強く心配しているユーザは、各ビットフィールドに、符号ありかどうかを明示的に示す必要がある。こうして、両方のC言語で同じ意味を持つプログラムを作成する。）
 
 @item
 @opindex ansi
 @opindex std
-Undefining @code{__STDC__} when @option{-ansi} is not used.
+@option {-ansi}が使用されていない場合は、@code {__ STDC__}の定義を解除する。
 
-Currently, GCC defines @code{__STDC__} unconditionally.  This provides
-good results in practice.
+現在、GCCは無条件に@code{__STDC__}を定義している。 これは、実際に良好な結果をもたらす。
 
-Programmers normally use conditionals on @code{__STDC__} to ask whether
-it is safe to use certain features of ISO C, such as function
-prototypes or ISO token concatenation.  Since plain @command{gcc} supports
-all the features of ISO C, the correct answer to these questions is
-``yes''.
+プログラマは、通常、関数プロトタイプやISOトークン連結など、ISO Cの特定の機能を使用するのが安全かどうかを尋ねるために、@code{__ STDC__}の条件を使用する。素の@command{gcc}はISO Cのすべての機能をサポートしているので、これらの質問に対する正解は「はい」である。
 
-Some users try to use @code{__STDC__} to check for the availability of
-certain library facilities.  This is actually incorrect usage in an ISO
-C program, because the ISO C standard says that a conforming
-freestanding implementation should define @code{__STDC__} even though it
-does not have the library facilities.  @samp{gcc -ansi -pedantic} is a
-conforming freestanding implementation, and it is therefore required to
-define @code{__STDC__}, even though it does not come with an ISO C
-library.
+一部のユーザーは、@code{__STDC__}を使用して、特定のライブラリ機能の可用性をチェックしようとする。 これは、実際にはISO Cプログラムで誤った使い方である。ISO C標準では、ライブラリー機能を持たないにもかかわらず、適合する自立実装で@code{__STDC__}を定義する必要があるためである。 @samp{gcc -ansi -pedantic}は準拠した自立実装であるため、ISO Cライブラリが付属していないにもかかわらず、@code{__STDC__}を定義する必要がある。
 
-Sometimes people say that defining @code{__STDC__} in a compiler that
-does not completely conform to the ISO C standard somehow violates the
-standard.  This is illogical.  The standard is a standard for compilers
-that claim to support ISO C, such as @samp{gcc -ansi}---not for other
-compilers such as plain @command{gcc}.  Whatever the ISO C standard says
-is relevant to the design of plain @command{gcc} without @option{-ansi} only
-for pragmatic reasons, not as a requirement.
+時々ISO C標準に完全に準拠していないコンパイラで@code {__ STDC__}を定義すると、何らかの形で規格に違反してしまうことがあると言われる。 これは非合理である。 標準は@samp{gcc -ansi}のようなISO Cをサポートすると主張するコンパイラの標準であり、プレーン@command {gcc}のような他のコンパイラのものではないということになる。ISO C標準が言うことは何でも、@option{-ansi}のない単純な@command{gcc}の設計に関係していて、要求ではない。
 
-GCC normally defines @code{__STDC__} to be 1, and in addition
-defines @code{__STRICT_ANSI__} if you specify the @option{-ansi} option,
-or a @option{-std} option for strict conformance to some version of ISO C@.
-On some hosts, system include files use a different convention, where
-@code{__STDC__} is normally 0, but is 1 if the user specifies strict
-conformance to the C Standard.  GCC follows the host convention when
-processing system include files, but when processing user files it follows
-the usual GNU C convention.
+GCCは通常、@code{__STDC__}を1と定義し、ISO Cのあるバージョンに厳密に準拠させるために@option{-ansi}オプションまたは@option{-std}オプションを指定する場合は@code{__STRICT_ANSI__}を定義する。いくつかのホストでは、システムインクルードファイルでは、@code{__ STDC__}は通常0であるが、ユーザーがC標準に厳密に準拠していると指定した場合は1である。 GCCはシステムインクルードファイルを処理する際にホスト規約に従うが、ユーザファイルを処理するときは通常のGNU C規約に従う。
 
 @item
-Undefining @code{__STDC__} in C++.
+C++で@code{__STDC__}の定義を解除する。
 
-Programs written to compile with C++-to-C translators get the
-value of @code{__STDC__} that goes with the C compiler that is
-subsequently used.  These programs must test @code{__STDC__}
-to determine what kind of C preprocessor that compiler uses:
-whether they should concatenate tokens in the ISO C fashion
-or in the traditional fashion.
+C++からCへの変換プログラムでコンパイルするために書かれたプログラムは、後で使用されるCコンパイラに付属する@code{__STDC__}の値を取得する。 これらのプログラムは、コンパイラがどのような種類のCプリプロセッサを使用するかを決定するために@code{__STDC__}をテストしなければならない：ISO C形式または従来の形式でトークンを連結する必要があるかどうか。
 
-These programs work properly with GNU C++ if @code{__STDC__} is defined.
-They would not work otherwise.
+これらのプログラムは、@code{__STDC__}が定義されている場合、GNU C++で適切に動作する。そうでなければ働かない。
 
-In addition, many header files are written to provide prototypes in ISO
-C but not in traditional C@.  Many of these header files can work without
-change in C++ provided @code{__STDC__} is defined.  If @code{__STDC__}
-is not defined, they will all fail, and will all need to be changed to
-test explicitly for C++ as well.
+さらに、ISO Cではプロトタイプを提供するために多くのヘッダファイルが記述されているが、従来のCではプロトタイプを提供していない。これらのヘッダファイルの多くは、@code{__ STDC__}が定義されていればC++で変更することなく動作する。 @code{__STDC__}が定義されていない場合、それらはすべて失敗し、C++のために明示的にテストするために変更する必要がある。
 
 @item
-Deleting ``empty'' loops.
+「空の」ループを削除する。
 
-Historically, GCC has not deleted ``empty'' loops under the
-assumption that the most likely reason you would put one in a program is
-to have a delay, so deleting them will not make real programs run any
-faster.
+歴史的に、GCCは、あなたがプログラムに入れようとするもっともらしい理由が遅延であり、それらを削除しても、実際のプログラムを速く走らせることはできないと仮定して、 「空の」ループを削除していない。
 
-However, the rationale here is that optimization of a nonempty loop
-cannot produce an empty one. This held for carefully written C compiled
-with less powerful optimizers but is not always the case for carefully
-written C++ or with more powerful optimizers.
-Thus GCC will remove operations from loops whenever it can determine
-those operations are not externally visible (apart from the time taken
-to execute them, of course).  In case the loop can be proved to be finite,
-GCC will also remove the loop itself.
+しかしながら、ここでの理論的根拠は、空でないループの最適化が空ではないことである。 これは、より強力ではないオプティマイザでコンパイルされた慎重に書かれたCで保持されるが、注意深く書かれたC++やより強力なオプティマイザで常にそうとは限らない。 したがって、GCCは、それらの操作が外部から見ることができないと判断できるときはいつでもループから操作を削除する（もちろんそれらを実行するのに時間は別である）。 ループが有限であることが証明できる場合、GCCはループ自体も削除する。
 
-Be aware of this when performing timing tests, for instance the
-following loop can be completely removed, provided
-@code{some_expression} can provably not change any global state.
+タイミングテストを実行するときに注意せよ。例えば、@code{some_expression}がどのようなグローバル状態も変更しないので、次のループは完全に削除される。
 
 @smallexample
 @{
@@ -767,17 +666,14 @@ following loop can be completely removed, provided
 @}
 @end smallexample
 
-Even though @code{sum} is accumulated in the loop, no use is made of
-that summation, so the accumulation can be removed.
+ループ内に@code{sum}が累積されていても、その集計は使用されないので、加算を削除することができる。
 
 @item
-Making side effects happen in the same order as in some other compiler.
+他のコンパイラと同じ順序で副作用を起こす。
 
 @cindex side effects, order of evaluation
 @cindex order of evaluation, side effects
-It is never safe to depend on the order of evaluation of side effects.
-For example, a function call like this may very well behave differently
-from one compiler to another:
+副作用の評価の順序に依存することは決して安全ではない。 たとえば、このような関数呼び出しでは、あるコンパイラと別のコンパイラで異なる動作をする可能性がある。
 
 @smallexample
 void func (int, int);
@@ -786,68 +682,38 @@ int i = 2;
 func (i++, i++);
 @end smallexample
 
-There is no guarantee (in either the C or the C++ standard language
-definitions) that the increments will be evaluated in any particular
-order.  Either increment might happen first.  @code{func} might get the
-arguments @samp{2, 3}, or it might get @samp{3, 2}, or even @samp{2, 2}.
+インクリメントが特定の順序で評価されることは保証されていない（CまたはC++標準言語定義のいずれかでも）。 いずれかのインクリメントが最初に起こるかもしれない。 @code{func}は引数@samp{2,3}を得るかもしれないし、@samp{3,2}、あるいは@samp{2,2}を得るかもしれない。
 
 @item
-Making certain warnings into errors by default.
+既定では、特定の警告にエラーが発生させる。
 
-Some ISO C testsuites report failure when the compiler does not produce
-an error message for a certain program.
+一部のISO Cテストスイートでは、コンパイラが特定のプログラムのエラーメッセージを生成しない場合にエラーが報告される。
 
 @opindex pedantic-errors
-ISO C requires a ``diagnostic'' message for certain kinds of invalid
-programs, but a warning is defined by GCC to count as a diagnostic.  If
-GCC produces a warning but not an error, that is correct ISO C support.
-If testsuites call this ``failure'', they should be run with the GCC
-option @option{-pedantic-errors}, which will turn these warnings into
-errors.
+ISO Cでは、特定の種類の無効なプログラムに対しては「診断」メッセージが必要だが、警告はGCCによって診断としてカウントするように定義されている。 GCCが警告を出してもエラーは発生しない場合、それは正しいISO Cのサポートである。 テストスイートがこの「失敗」を呼び出す場合は、GCCオプションの@option{-pedantic-errors}を実行して、これらの警告をエラーにする必要がある。
 
 @end itemize
 
 @node Warnings and Errors
-@section Warning Messages and Error Messages
+@section 警告メッセージとエラーメッセージ
 
 @cindex error messages
 @cindex warnings vs errors
 @cindex messages, warning and error
-The GNU compiler can produce two kinds of diagnostics: errors and
-warnings.  Each kind has a different purpose:
+GNUコンパイラは、エラーと警告という2種類の診断を生成することができる。 それぞれの種類は異なる目的を持っている：
 
 @itemize @w{}
 @item
-@dfn{Errors} report problems that make it impossible to compile your
-program.  GCC reports errors with the source file name and line
-number where the problem is apparent.
+@dfn{Errors}（エラー）はプログラムをコンパイルできない問題を報告する。 GCCは、問題が明らかなソースファイル名と行番号でエラーを報告する。
 
 @item
-@dfn{Warnings} report other unusual conditions in your code that
-@emph{may} indicate a problem, although compilation can (and does)
-proceed.  Warning messages also report the source file name and line
-number, but include the text @samp{warning:} to distinguish them
-from error messages.
+@dfn{Warnings}（警告）は、コード内で問題を示す@emph{可能性がある}がコンパイルは続行できる（そして実行する）他の異常な状態を報告する。 警告メッセージはソースファイル名と行番号も報告するが、エラーメッセージと区別するために@samp{warning:}というテキストを含む。
 @end itemize
 
-Warnings may indicate danger points where you should check to make sure
-that your program really does what you intend; or the use of obsolete
-features; or the use of nonstandard features of GNU C or C++.  Many
-warnings are issued only if you ask for them, with one of the @option{-W}
-options (for instance, @option{-Wall} requests a variety of useful
-warnings).
+警告は、あなたのプログラムがあなたが意図したことを本当にしていることを確認するためにチェックすべき危険点を示すかもしれない。 または古くなった機能の使用、及びGNU CまたはC++の非標準機能を使用する場合。 @option{-Wall}がさまざまな有用な警告を要求するなど、@option{-W}オプションの1つを使用すると、多くの警告が発行される。
 
 @opindex pedantic
 @opindex pedantic-errors
-GCC always tries to compile your program if possible; it never
-gratuitously rejects a program whose meaning is clear merely because
-(for instance) it fails to conform to a standard.  In some cases,
-however, the C and C++ standards specify that certain extensions are
-forbidden, and a diagnostic @emph{must} be issued by a conforming
-compiler.  The @option{-pedantic} option tells GCC to issue warnings in
-such cases; @option{-pedantic-errors} says to make them errors instead.
-This does not mean that @emph{all} non-ISO constructs get warnings
-or errors.
+可能であれば、GCCは常にあなたのプログラムをコンパイルしようとする。意味が明確なプログラムを（例えば）単にそれが規格に準拠していないために無償で拒絶することは決してない。 しかし、場合によっては、CおよびC++標準では、特定の拡張が禁止されていることを指定しており、適合するコンパイラによって診断を発行する@emph{必要がある}。  @option{-pedantic}オプションは、このような場合に警告を出すようにGCCに指示する。 @option{-pedantic-errors}は、それらの代わりにエラーを出すと言う。 これは、@ emph{すべての}非ISO構造が警告またはエラーを受け取ることを意味しない。
 
-@xref{Warning Options,,Options to Request or Suppress Warnings}, for
-more detail on these and related command-line options.
+これらとそれに関連したコマンドラインオプションの詳細は@xref{Warning Options,,Options to Request or Suppress Warnings}
