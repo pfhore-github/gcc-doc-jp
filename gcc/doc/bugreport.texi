@@ -3,86 +3,63 @@
 @c For copying conditions, see the file gcc.texi.
 
 @node Bugs
-@chapter Reporting Bugs
+@chapter バグの報告
 @cindex bugs
 @cindex reporting bugs
 
-Your bug reports play an essential role in making GCC reliable.
+あなたのバグレポートは、GCCを信頼できるものにするために不可欠な役割を果たす。
 
-When you encounter a problem, the first thing to do is to see if it is
-already known.  @xref{Trouble}.  If it isn't known, then you should
-report the problem.
+問題が発生したときには、まずそれが既知かどうかを確認することである。 @xref{Trouble}。 それが未知の場合は、問題を報告する必要がある。
 
 @menu
-* Criteria:  Bug Criteria.   Have you really found a bug?
-* Reporting: Bug Reporting.  How to report a bug effectively.
+* Criteria:  バグの基準。本当にバグを見つけたのか？
+* Reporting: バグの報告。バグを効果的に報告する方法。
 @end menu
 
 @node Bug Criteria
-@section Have You Found a Bug?
+@section バグを見つけたのか？
 @cindex bug criteria
 
-If you are not sure whether you have found a bug, here are some guidelines:
+あなたがバグを見つけたかどうか分からない場合は、いくつかのガイドラインがある：
 
 @itemize @bullet
 @cindex fatal signal
 @cindex core dump
 @item
-If the compiler gets a fatal signal, for any input whatever, that is a
-compiler bug.  Reliable compilers never crash.
+コンパイラが致命的なシグナルを受け取った場合、どのような入力に対しても、それはコンパイラのバグである。 信頼性の高いコンパイラは決してクラッシュしない。
 
 @cindex invalid assembly code
 @cindex assembly code, invalid
 @item
-If the compiler produces invalid assembly code, for any input whatever
-(except an @code{asm} statement), that is a compiler bug, unless the
-compiler reports errors (not just warnings) which would ordinarily
-prevent the assembler from being run.
+コンパイラが無効なアセンブリコードを生成した場合（@code{asm}文を除く）、通常は（警告だけでなく）アセンブラの実行を妨げるエラーをコンパイラが報告しない限り、コンパイラのバグである。
 
 @cindex undefined behavior
 @cindex undefined function value
 @cindex increment operators
 @item
-If the compiler produces valid assembly code that does not correctly
-execute the input source code, that is a compiler bug.
+コンパイラが入力ソースコードを正しく実行しない有効なアセンブリコードを生成すると、それはコンパイラのバグである。
 
-However, you must double-check to make sure, because you may have a
-program whose behavior is undefined, which happened by chance to give
-the desired results with another C or C++ compiler.
+ただし、別のCまたはC++コンパイラで希望の結果を得るために、偶然に起こった、動作が未定義のプログラムがある可能性があるため、再確認する必要がある。
 
-For example, in many nonoptimizing compilers, you can write @samp{x;}
-at the end of a function instead of @samp{return x;}, with the same
-results.  But the value of the function is undefined if @code{return}
-is omitted; it is not a bug when GCC produces different results.
+例えば、多くの非最適化コンパイラでは、@samp{return x;}の代わりに関数の最後に@samp{x;}を書くことができる。 しかし、@code{return}を省略すると、関数の値は未定義である。 GCCが異なる結果を出すときはバグではない。
 
-Problems often result from expressions with two increment operators,
-as in @code{f (*p++, *p++)}.  Your previous compiler might have
-interpreted that expression the way you intended; GCC might
-interpret it another way.  Neither compiler is wrong.  The bug is
-in your code.
+問題は、@code{f(*p++、*p++)}のように2つのインクリメント演算子を使用した式に起因することがよくある。 以前のコンパイラは、あなたが意図した方法でその式を解釈しているかもしれない。 GCCはそれを別の方法で解釈するかもしれない。 どちらのコンパイラも間違っていない。 バグはあなたのコードにある。
 
-After you have localized the error to a single source line, it should
-be easy to check for these things.  If your program is correct and
-well defined, you have found a compiler bug.
+エラーを単一のソース行にローカライズした後で、これらのことを確認するのは簡単である。 プログラムが正しく定義されていれば、コンパイラのバグが見つかったことになる。
 
 @item
-If the compiler produces an error message for valid input, that is a
-compiler bug.
+コンパイラが有効な入力に対してエラーメッセージを出すと、これはコンパイラのバグである。
 
 @cindex invalid input
 @item
-If the compiler does not produce an error message for invalid input,
-that is a compiler bug.  However, you should note that your idea of
-``invalid input'' might be someone else's idea of ``an extension'' or
-``support for traditional practice''.
+コンパイラが無効な入力に対してエラーメッセージを生成しない場合、これはコンパイラのバグである。 しかし、あなたは「無効な入力」という考え方は、他の人の「拡張」や「伝統的な実態のサポート」の考え方かもしれないことに注意せよ。
 
 @item
-If you are an experienced user of one of the languages GCC supports, your
-suggestions for improvement of GCC are welcome in any case.
+あなたがGCCがサポートしている言語の経験豊富なユーザーならば、どんな場合でもGCCの改善提案は歓迎される。
 @end itemize
 
 @node Bug Reporting
 @section How and Where to Report Bugs
 @cindex compiler bugs, reporting
 
-Bugs should be reported to the bug database at @value{BUGURL}.
+バグは@value{BUGURL}でのバグデータベースで報告されるべきである。
