@@ -3,25 +3,16 @@
 @c For copying conditions, see the file gcc.texi.
 
 @node Service
-@chapter How To Get Help with GCC
+@chapter GCCの助けを得る方法
 
-If you need help installing, using or changing GCC, there are two
-ways to find it:
+GCCのインストール、使用、または変更に関するヘルプが必要な場合は、見つける方法が2つある。
 
 @itemize @bullet
 @item
-Send a message to a suitable network mailing list.  First try
-@email{gcc-help@@gcc.gnu.org} (for help installing or using GCC), and if
-that brings no response, try @email{gcc@@gcc.gnu.org}.  For help
-changing GCC, ask @email{gcc@@gcc.gnu.org}.  If you think you have found
-a bug in GCC, please report it following the instructions at
-@pxref{Bug Reporting}.
+適切なネットワークメーリングリストにメッセージを送信する。まず、@email{gcc-help@@gcc.gnu.org} （GCCのインストールや使用に関するヘルプ）を試すこと。応答がない場合は、@email {gcc@@gcc.gnu.org}を試してみる。 GCCの変更については、@email{gcc@@gcc.gnu.org}に尋ねること。 GCCのバグを発見したと思われる場合は、@pxref{Bug Reporting}の指示に従って報告すること。
 
 @item
-Look in the service directory for someone who might help you for a fee.
-The service directory is found at
-@uref{http://www.fsf.org/resources/service}.
+手数料を払って手伝ってくれる人がいるかどうかサービスディレクトリを調べてること。サービスディレクトリは@uref{http://www.fsf.org/resources/service}.
 @end itemize
 
-For further information, see
-@uref{http://gcc.gnu.org/faq.html#support}.
+詳細は、次を参照せよ。@uref{http://gcc.gnu.org/faq.html#support}.
