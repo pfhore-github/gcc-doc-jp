@@ -3,15 +3,11 @@
 @c For copying conditions, see the file gcc.texi.
 
 @node Contributing
-@chapter Contributing to GCC Development
+@chapter GCCの開発に貢献する
 
-If you would like to help pretest GCC releases to assure they work well,
-current development sources are available by SVN (see
-@uref{http://gcc.gnu.org/svn.html}).  Source and binary snapshots are
-also available for FTP; see @uref{http://gcc.gnu.org/snapshots.html}.
+GCCのリリースがうまく動作することを確認するために、GCCのリリースを事前に助けたいのであれば、現在の開発ソースはSVNから入手できる（@uref{http://gcc.gnu.org/svn.html}参照）。 ソースとバイナリのスナップショットはFTPでも利用できる。 @uref{http://gcc.gnu.org/snapshots.html}を参照。。
 
-If you would like to work on improvements to GCC, please read the
-advice at these URLs:
+GCCの改善に取り組みたい場合は、次のURLのアドバイスを読んでください：
 
 @smallexample
 @uref{http://gcc.gnu.org/contribute.html}
@@ -19,6 +15,4 @@ advice at these URLs:
 @end smallexample
 
 @noindent
-for information on how to make useful contributions and avoid
-duplication of effort.  Suggested projects are listed at
-@uref{http://gcc.gnu.org/projects/}.
+有益な貢献をし、重複した作業を避ける方法については、 提案されたプロジェクトは@uref{http://gcc.gnu.org/projects/}.
