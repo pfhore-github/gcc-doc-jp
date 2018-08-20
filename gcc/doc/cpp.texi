@@ -1,6 +1,8 @@
-\input texinfo
+\input texinfo-ja @c -*- texinfo -*-
 @setfilename cpp.info
 @settitle The C Preprocessor
+@documentlanguage jp
+@documentencoding UTF-8
 @setchapternewpage off
 @c @smallbook
 @c @cropmarks
@@ -70,9 +72,7 @@ This manual contains no Invariant Sections.  The Front-Cover Texts are
 @ifnottex
 @node Top
 @top
-The C preprocessor implements the macro language used to transform C,
-C++, and Objective-C programs before they are compiled.  It can also be
-useful on its own.
+Cプリプロセッサは、コンパイルされる前に、C、C ++、およびObjective-Cプログラムを変換するために使用されるマクロ言語を実装する。 それはまた、それ自身で役に立つかもしれない。
 
 @menu
 * Overview::
@@ -96,14 +96,14 @@ useful on its own.
 @detailmenu
  --- The Detailed Node Listing ---
 
-Overview
+概略
 
 * Character sets::
 * Initial processing::
 * Tokenization::
 * The preprocessing language::
 
-Header Files
+ヘッダファイル
 
 * Include Syntax::
 * Include Operation::
@@ -114,7 +114,7 @@ Header Files
 * Wrapper Headers::
 * System Headers::
 
-Macros
+マクロ
 
 * Object-like Macros::
 * Function-like Macros::
@@ -127,14 +127,14 @@ Macros
 * Directives Within Macro Arguments::
 * Macro Pitfalls::
 
-Predefined Macros
+定義済みマクロ
 
 * Standard Predefined Macros::
 * Common Predefined Macros::
 * System-specific Predefined Macros::
 * C++ Named Operators::
 
-Macro Pitfalls
+マクロの落とし穴
 
 * Misnesting::
 * Operator Precedence Problems::
@@ -144,13 +144,13 @@ Macro Pitfalls
 * Argument Prescan::
 * Newlines in Arguments::
 
-Conditionals
+条件
 
 * Conditional Uses::
 * Conditional Syntax::
 * Deleted Code::
 
-Conditional Syntax
+条件の構文
 
 * Ifdef::
 * If::
@@ -158,13 +158,13 @@ Conditional Syntax
 * Else::
 * Elif::
 
-Implementation Details
+条件の詳細
 
 * Implementation-defined behavior::
 * Implementation limits::
 * Obsolete Features::
 
-Obsolete Features
+時代遅れの機能
 
 * Obsolete Features::
 
@@ -177,54 +177,19 @@ Obsolete Features
 @node Overview
 @chapter Overview
 @c man begin DESCRIPTION
-The C preprocessor, often known as @dfn{cpp}, is a @dfn{macro processor}
-that is used automatically by the C compiler to transform your program
-before compilation.  It is called a macro processor because it allows
-you to define @dfn{macros}, which are brief abbreviations for longer
-constructs.
+@dfn{cpp}と呼ばれることが多いCプリプロセッサは、コンパイル前にプログラムを変換するためにCコンパイラによって自動的に使用される@dfn{macro processor}（マクロプロセッサ）である。 @dfn{macros}を定義することができるので、これはマクロプロセッサと呼ばれる。これは長い後続の略語である。
 
-The C preprocessor is intended to be used only with C, C++, and
-Objective-C source code.  In the past, it has been abused as a general
-text processor.  It will choke on input which does not obey C's lexical
-rules.  For example, apostrophes will be interpreted as the beginning of
-character constants, and cause errors.  Also, you cannot rely on it
-preserving characteristics of the input which are not significant to
-C-family languages.  If a Makefile is preprocessed, all the hard tabs
-will be removed, and the Makefile will not work.
+Cプリプロセッサは、C、C++、およびObjective-Cソースコードでのみ使用されることを意図している。 これまでは一般的なテキストプロセッサとして濫用されてきた。それはCの字句規則に従わない入力を詰まらせる。 たとえば、アポストロフィは文字定数の先頭と解釈され、エラーが発生する。 また、C-ファミリー言語にとって重要ではない入力の特性を保持することはできない。 Makefileが前処理されていると、すべてのハードタブが削除され、Makefileは機能しない。
 
-Having said that, you can often get away with using cpp on things which
-are not C@.  Other Algol-ish programming languages are often safe
-(Pascal, Ada, etc.) So is assembly, with caution.  @option{-traditional-cpp}
-mode preserves more white space, and is otherwise more permissive.  Many
-of the problems can be avoided by writing C or C++ style comments
-instead of native language comments, and keeping macros simple.
+そうは言っても、C言語以外のものでcppを使うことはできる。他のAlgol風プログラミング言語はしばしば安全である（Pascal、Adaなど）。 @option{-traditional-cpp}モードは、より多くの空白を保存するが、そうでなければより許容する。 ネイティブ言語コメントの代わりにCまたはC++スタイルのコメントを記述し、マクロをシンプルに保つことで、多くの問題を回避できる。
 
-Wherever possible, you should use a preprocessor geared to the language
-you are writing in.  Modern versions of the GNU assembler have macro
-facilities.  Most high level programming languages have their own
-conditional compilation and inclusion mechanism.  If all else fails,
-try a true general text processor, such as GNU M4.
+可能であれば、あなたが書いている言語に合わせたプリプロセッサを使うべきである。現代版のGNUアセンブラにはマクロ機能がある。 ほとんどの高水準プログラミング言語は、独自の条件付きコンパイルおよびインクルードメカニズムを備えている。 それ以外の場合は、GNU M4などの一般的なテキストプロセッサを試すこと。
 
-C preprocessors vary in some details.  This manual discusses the GNU C
-preprocessor, which provides a small superset of the features of ISO
-Standard C@.  In its default mode, the GNU C preprocessor does not do a
-few things required by the standard.  These are features which are
-rarely, if ever, used, and may cause surprising changes to the meaning
-of a program which does not expect them.  To get strict ISO Standard C,
-you should use the @option{-std=c90}, @option{-std=c99},
-@option{-std=c11} or @option{-std=c17} options, depending
-on which version of the standard you want.  To get all the mandatory
-diagnostics, you must also use @option{-pedantic}.  @xref{Invocation}.
+Cプリプロセッサは、いくつかの詳細が異なる。 このマニュアルでは、ISO標準Cの機能の小さなスーパーセットを提供するGNU Cプリプロセッサについて説明する。デフォルトモードでは、GNU Cプリプロセッサは標準で必要とされるいくつかのことを行わない。 これらは、これまで使用されていたことはめったにない機能であり、期待していないプログラムの意味に驚くような変化を引き起こす可能性がある。 厳密なISO標準Cを取得するには、次のようにあなたが望む標準のバージョンに応じて@option{-std=c90}、@option{-std=c99}、@option{-std=c11}または@option{-std=c17}オプションを使用する必要がある。すべての必須診断を取得するには、@option{-pedantic}も使用する必要がある。@xref{Invocation}.
 
-This manual describes the behavior of the ISO preprocessor.  To
-minimize gratuitous differences, where the ISO preprocessor's
-behavior does not conflict with traditional semantics, the
-traditional preprocessor should behave the same way.  The various
-differences that do exist are detailed in the section @ref{Traditional
-Mode}.
+このマニュアルでは、ISOプリプロセッサの動作について説明する。 相違点を最小限に抑えるために、ISOプリプロセッサの動作が従来のセマンティクスと競合しない場合、従来のプリプロセッサは同じように動作する必要がある。 存在する様々な相違点については、@ref{Traditional Mode}の節で詳しく説明する。
 
-For clarity, unless noted otherwise, references to @samp{CPP} in this
-manual refer to GNU CPP@.
+わかりやすくするために、特に明記しない限り、このマニュアルの@samp{CPP}はGNU CPPを参照する。
 @c man end
 
 @menu
@@ -235,50 +200,19 @@ manual refer to GNU CPP@.
 @end menu
 
 @node Character sets
-@section Character sets
+@section 文字集合
 
-Source code character set processing in C and related languages is
-rather complicated.  The C standard discusses two character sets, but
-there are really at least four.
+Cおよび関連する言語でのソースコードの文字セット処理はかなり複雑である。 C標準では2つの文字セットについて説明しているが、実際には少なくとも4つある。
 
-The files input to CPP might be in any character set at all.  CPP's
-very first action, before it even looks for line boundaries, is to
-convert the file into the character set it uses for internal
-processing.  That set is what the C standard calls the @dfn{source}
-character set.  It must be isomorphic with ISO 10646, also known as
-Unicode.  CPP uses the UTF-8 encoding of Unicode.
+CPPに入力されたファイルは、まったくどんな文字セットである可能性もある。 CPPの最初のアクションは、行境界を探す前に、ファイルを内部処理に使用する文字セットに変換することである。 そのセットは、C標準が@dfn{source}文字セットと呼ぶものである。それはUnicodeとも呼ばれるISO 10646と同形でなければならない。 CPPはUnicodeのUTF-8エンコーディングを使用する。
 
-The character sets of the input files are specified using the
-@option{-finput-charset=} option.
+入力ファイルの文字セットは、@option{-finput-charset=}オプションを使用して指定する。
 
-All preprocessing work (the subject of the rest of this manual) is
-carried out in the source character set.  If you request textual
-output from the preprocessor with the @option{-E} option, it will be
-in UTF-8.
+すべての前処理作業（このマニュアルの残りの部分）は、ソースキャラクタセットで実行される。 @option{-E}オプションを使用してプリプロセッサからのテキスト出力を要求すると、UTF-8になる。
 
-After preprocessing is complete, string and character constants are
-converted again, into the @dfn{execution} character set.  This
-character set is under control of the user; the default is UTF-8,
-matching the source character set.  Wide string and character
-constants have their own character set, which is not called out
-specifically in the standard.  Again, it is under control of the user.
-The default is UTF-16 or UTF-32, whichever fits in the target's
-@code{wchar_t} type, in the target machine's byte
-order.@footnote{UTF-16 does not meet the requirements of the C
-standard for a wide character set, but the choice of 16-bit
-@code{wchar_t} is enshrined in some system ABIs so we cannot fix
-this.}  Octal and hexadecimal escape sequences do not undergo
-conversion; @t{'\x12'} has the value 0x12 regardless of the currently
-selected execution character set.  All other escapes are replaced by
-the character in the source character set that they represent, then
-converted to the execution character set, just like unescaped
-characters.
+前処理が完了した後、文字列定数と文字定数は再び@dfn{execution}文字セットに変換される。この文字セットはユーザーの制御下にある。デフォルトはUTF-8で、ソース文字セットと一致する。ワイド文字列と文字定数には独自の文字セットがあり、標準では特に呼び出されない。再び、それはユーザの制御下にある。デフォルトはUTF-16またはUTF-32のいずれかで、ターゲットマシンのバイト順序でターゲットの@code {wchar_t}タイプに適合する。@footnote{UTF-16はワイド文字セットのC標準の要件を満たしていないが、16ビットの@code {wchar_t}の選択は、いくつかのシステムABIに託されているので、これを修正することはできない。} 8進および16進エスケープシーケンスは変換されない。 @t{'\x12'}は、現在選択されている実行文字セットに関係なく、値0x12を持つ。他のすべてのエスケープは、エスケープされていない文字のように、それらが表すソース文字セットの文字に置き換えられ、実行文字セットに変換される。
 
-In identifiers, characters outside the ASCII range can only be
-specified with the @samp{\u} and @samp{\U} escapes, not used
-directly.  If strict ISO C90 conformance is specified with an option
-such as @option{-std=c90}, or @option{-fno-extended-identifiers} is
-used, then those escapes are not permitted in identifiers.
+識別子では、ASCII範囲外の文字は@samp{\u}と@samp{\U}エスケープでしか指定できず、直接使用することはできない。 @option{-std=c90}のようなオプションで厳密なISO C90準拠が指定されている場合、または@option{-fno-extended-identifiers}が使用されている場合、これらのエスケープは識別子では許可されない。
 
 @node Initial processing
 @section Initial processing
