@@ -215,107 +215,60 @@ CPPに入力されたファイルは、まったくどんな文字セットで�
 識別子では、ASCII範囲外の文字は@samp{\u}と@samp{\U}エスケープでしか指定できず、直接使用することはできない。 @option{-std=c90}のようなオプションで厳密なISO C90準拠が指定されている場合、または@option{-fno-extended-identifiers}が使用されている場合、これらのエスケープは識別子では許可されない。
 
 @node Initial processing
-@section Initial processing
+@section 初期処理
 
-The preprocessor performs a series of textual transformations on its
-input.  These happen before all other processing.  Conceptually, they
-happen in a rigid order, and the entire file is run through each
-transformation before the next one begins.  CPP actually does them
-all at once, for performance reasons.  These transformations correspond
-roughly to the first three ``phases of translation'' described in the C
-standard.
+プリプロセッサは、その入力に対して一連のテキスト変換を実行する。 これらは他のすべての処理の前に行われる。 概念的には、これらは厳密な順序で行われ、ファイル全体が次の変換が始まる前に各変換を通じて実行される。 パフォーマンス上の理由から、CPPは実際にそれらを一度にすべて実行する。 これらの変換は、C標準で記述されている最初の3つの「翻訳の段階」にほぼ対応している。
 
 @enumerate
 @item
 @cindex line endings
-The input file is read into memory and broken into lines.
+入力ファイルはメモリに読み込まれ、行に分割される。
 
-Different systems use different conventions to indicate the end of a
-line.  GCC accepts the ASCII control sequences @kbd{LF}, @kbd{@w{CR
-LF}} and @kbd{CR} as end-of-line markers.  These are the canonical
-sequences used by Unix, DOS and VMS, and the classic Mac OS (before
-OSX) respectively.  You may therefore safely copy source code written
-on any of those systems to a different one and use it without
-conversion.  (GCC may lose track of the current line number if a file
-doesn't consistently use one convention, as sometimes happens when it
-is edited on computers with different conventions that share a network
-file system.)
+異なるシステムでは、行の終わりを示すために異なる規則が使用される。 GCCは、@kbd{LF}、@ kbd{@w{CR LF}}と@kbd{CR}のASCII制御シーケンスを行末マーカーとして受け入れる。 これらはUnix、DOS、VMS、そして古典的なMac OS（OSXの前）で使われている標準的なシーケンスである。 したがって、これらのシステムのいずれかで書かれたソースコードを別のものに安全にコピーし、変換せずに使用することができる。 （ネットワークファイルシステムを共有する異なる規則を持つコンピュータ上で編集されたときに起こるように、ファイルが1つの規則を一貫して使用しない場合、GCCは現在の行番号のトラックを失う可能性がある）。
 
-If the last line of any input file lacks an end-of-line marker, the end
-of the file is considered to implicitly supply one.  The C standard says
-that this condition provokes undefined behavior, so GCC will emit a
-warning message.
+入力ファイルの最後の行に行末マーカーがない場合、ファイルの終わりは暗黙的に改行とみなされる。 Cの標準では、この状態は未定義の動作を引き起こすので、GCCは警告メッセージを出力する。
 
 @item
 @cindex trigraphs
-@anchor{trigraphs}If trigraphs are enabled, they are replaced by their
-corresponding single characters.  By default GCC ignores trigraphs,
-but if you request a strictly conforming mode with the @option{-std}
-option, or you specify the @option{-trigraphs} option, then it
-converts them.
+@anchor{trigraphs}トライグラフを有効にすると、対応する単一の文字に置き換えられる。 デフォルトでは、GCCはトライグラフを無視するが、@option{-std}オプションで厳密に準拠したモードを要求した場合、または@option{-trigraphs}オプションを指定した場合は変換される。
 
-These are nine three-character sequences, all starting with @samp{??},
-that are defined by ISO C to stand for single characters.  They permit
-obsolete systems that lack some of C's punctuation to use C@.  For
-example, @samp{??/} stands for @samp{\}, so @t{'??/n'} is a character
-constant for a newline.
+これらは9の3文字のシーケンスで、すべてが@samp{??}で始まり、ISO Cで単一文字を表すように定義されている。 それらはCの句読点のいくつかが欠けている古いシステムではCを使うためのものである。 たとえば、@samp{??/}は@samp{\}を表す。したがって、@t{'??/n'}は改行の文字定数である。
 
-Trigraphs are not popular and many compilers implement them
-incorrectly.  Portable code should not rely on trigraphs being either
-converted or ignored.  With @option{-Wtrigraphs} GCC will warn you
-when a trigraph may change the meaning of your program if it were
-converted.  @xref{Wtrigraphs}.
+トライグラフは普及してなく、多くのコンパイラが誤って実装している。 移植可能なコードは、変換されたか無視されたトリグラフに依存するべきではない。@option{-Wtrigraphs}を使うと、変換されたプログラムの意味をトリグラフが変えることがあるときにGCCが警告する。 @xref{Wtrigraphs}。
 
-In a string constant, you can prevent a sequence of question marks
-from being confused with a trigraph by inserting a backslash between
-the question marks, or by separating the string literal at the
-trigraph and making use of string literal concatenation.  @t{"(??\?)"}
-is the string @samp{(???)}, not @samp{(?]}.  Traditional C compilers
-do not recognize these idioms.
+文字列定数では、一連の疑問符が疑問符の間にバックスラッシュを挿入するか、または文字列リテラル連結を使用して文字列リテラルを分離することによって、一連の疑問符がトリグラフと混同されるのを防ぐことができる。 @t["(??\?)"}は@samp{(???)}ではなく@samp{(???)}という文字列である。伝統的なCコンパイラはこれらのイディオムを認識しない。
 
-The nine trigraphs and their replacements are
+9つのトライグラフとそれらの置換は、
 
 @smallexample
-Trigraph:       ??(  ??)  ??<  ??>  ??=  ??/  ??'  ??!  ??-
-Replacement:      [    ]    @{    @}    #    \    ^    |    ~
+トライグラフ:       ??(  ??)  ??<  ??>  ??=  ??/  ??'  ??!  ??-
+置換:                        [    ]    @{    @}    #    \    ^    |    ~
 @end smallexample
 
 @item
 @cindex continued lines
 @cindex backslash-newline
-Continued lines are merged into one long line.
+継続された行は1つの長い行にマージされる。
 
-A continued line is a line which ends with a backslash, @samp{\}.  The
-backslash is removed and the following line is joined with the current
-one.  No space is inserted, so you may split a line anywhere, even in
-the middle of a word.  (It is generally more readable to split lines
-only at white space.)
+継続行はバックスラッシュ@samp{\}で終わる行である。 バックスラッシュが削除され、次の行が現在の行と結合される。 スペースは挿入されないので、単語の途中であってもどこでも行を分割できる。 （一般に、空白でのみ行を分割する方が読みやすくなる。）
 
-The trailing backslash on a continued line is commonly referred to as a
-@dfn{backslash-newline}.
+継続行の末尾にあるバックスラッシュは、通常、@dfn{backslash-newline}（バックスラッシュ・改行）と呼ばれる。
 
-If there is white space between a backslash and the end of a line, that
-is still a continued line.  However, as this is usually the result of an
-editing mistake, and many compilers will not accept it as a continued
-line, GCC will warn you about it.
+バックスラッシュと行末の間に空白がある場合でも、それは継続行である。 しかし、これは通常編集ミスの結果であり、多くのコンパイラは継続行として受け付けないので、GCCはそれについて警告する。
 
 @item
 @cindex comments
 @cindex line comments
 @cindex block comments
-All comments are replaced with single spaces.
+すべてのコメントは1つのスペースで置き換えられる。
 
-There are two kinds of comments.  @dfn{Block comments} begin with
-@samp{/*} and continue until the next @samp{*/}.  Block comments do not
-nest:
+コメントには2種類ある。 @dfn{Block comments}（ブロックコメント）は@samp{/*}で始まり、次の@samp{*/}まで続く。 ブロックコメントは入れ子にならない：
 
 @smallexample
 /* @r{this is} /* @r{one comment} */ @r{text outside comment}
 @end smallexample
 
-@dfn{Line comments} begin with @samp{//} and continue to the end of the
-current line.  Line comments do not nest either, but it does not matter,
-because they would end in the same place anyway.
+@dfn{Line comments}（行コメント）は@samp{//}で始まり、現在の行の最後まで続く。 行コメントも入れ子にならないが、いずれにせよ同じ場所で終わるので問題はない。
 
 @smallexample
 // @r{this is} // @r{one comment}
@@ -323,7 +276,7 @@ because they would end in the same place anyway.
 @end smallexample
 @end enumerate
 
-It is safe to put line comments inside block comments, or vice versa.
+ブロックコメントの中に行コメントを入れることは安全であり、逆もまた同様である。
 
 @smallexample
 @group
@@ -336,8 +289,7 @@ It is safe to put line comments inside block comments, or vice versa.
 @end group
 @end smallexample
 
-But beware of commenting out one end of a block comment with a line
-comment.
+しかし、行コメントでブロックコメントの一端をコメントアウトすることに注意せよ。
 
 @smallexample
 @group
@@ -346,20 +298,11 @@ comment.
 @end group
 @end smallexample
 
-Comments are not recognized within string literals.
-@t{@w{"/* blah */"}} is the string constant @samp{@w{/* blah */}}, not
-an empty string.
+コメントは文字列リテラル内では認識されない。 @t{@w{"/ * blah * /"}}は空文字列ではなく、文字列定数@samp{@w{/ * blah * /}}である。
 
-Line comments are not in the 1989 edition of the C standard, but they
-are recognized by GCC as an extension.  In C++ and in the 1999 edition
-of the C standard, they are an official part of the language.
+行コメントは1989年版のC標準には含まれていないが、GCCでは拡張機能として認識されている。 C++および1999年版のC標準では、これらは言語の公式な部分である。
 
-Since these transformations happen before all other processing, you can
-split a line mechanically with backslash-newline anywhere.  You can
-comment out the end of a line.  You can continue a line comment onto the
-next line with backslash-newline.  You can even split @samp{/*},
-@samp{*/}, and @samp{//} onto multiple lines with backslash-newline.
-For example:
+これらの変換は他のすべての処理の前に行われるので、バックスラッシュ改行を使って機械的に行を分割することができる。 行末をコメントアウトすることができる。 バックスラッシュ改行で次の行に行コメントを続けることができる。 @samp{/*}、@samp{*/}、および@samp{//}をバックスラッシュ改行で複数の行に分割することさえできる。 例えば：
 
 @smallexample
 @group
@@ -374,13 +317,9 @@ O 10\
 @end smallexample
 
 @noindent
-is equivalent to @code{@w{#define FOO 1020}}.  All these tricks are
-extremely confusing and should not be used in code intended to be
-readable.
+は@code{@w{#define FOO 1020}}と同等である。 これらのすべてのトリックは非常に混乱させるので、読みやすいコードでは使用すべきではない。
 
-There is no way to prevent a backslash at the end of a line from being
-interpreted as a backslash-newline.  This cannot affect any correct
-program, however.
+行末のバックスラッシュがバックスラッシュ改行として解釈されないようにする方法はない。 しかし、これは正しいプログラムには影響しない。
 
 @node Tokenization
 @section Tokenization
