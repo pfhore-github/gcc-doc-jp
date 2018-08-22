@@ -322,28 +322,15 @@ O 10\
 行末のバックスラッシュがバックスラッシュ改行として解釈されないようにする方法はない。 しかし、これは正しいプログラムには影響しない。
 
 @node Tokenization
-@section Tokenization
+@section トークン化
 
 @cindex tokens
 @cindex preprocessing tokens
-After the textual transformations are finished, the input file is
-converted into a sequence of @dfn{preprocessing tokens}.  These mostly
-correspond to the syntactic tokens used by the C compiler, but there are
-a few differences.  White space separates tokens; it is not itself a
-token of any kind.  Tokens do not have to be separated by white space,
-but it is often necessary to avoid ambiguities.
+テキスト変換が終了すると、入力ファイルは@dfn{preprocessing tokens}（前処理トークン）のシーケンスに変換される。 これらは主にCコンパイラで使用される構文トークンに対応するが、いくつかの違いがある。 空白はトークンを区切る。 それはそれ自身がいかなる種類のトークンでもない。 トークンは空白で区切る必要はないんが、しばしばあいまいさを避ける必要がある。
 
-When faced with a sequence of characters that has more than one possible
-tokenization, the preprocessor is greedy.  It always makes each token,
-starting from the left, as big as possible before moving on to the next
-token.  For instance, @code{a+++++b} is interpreted as
-@code{@w{a ++ ++ + b}}, not as @code{@w{a ++ + ++ b}}, even though the
-latter tokenization could be part of a valid C program and the former
-could not.
+1つ以上の可能なトークン化を有する一連の文字に直面するとき、プリプロセッサは貪欲である。 左から順に、各トークンをできるだけ大きくしてから次のトークンに移る。 たとえば、@code{a+++++b}は@code{@w{a ++ + ++ b}}ではなく、@code{@w{a ++ +++ b}}と解釈される。 後者のトークン化は有効なCプログラムの一部であり、前者のトークン化は不可能であったにもかかわらず。
 
-Once the input file is broken into tokens, the token boundaries never
-change, except when the @samp{##} preprocessing operator is used to paste
-tokens together.  @xref{Concatenation}.  For example,
+入力ファイルがトークンに分割されると、@samp{##}前処理演算子を使用してトークンを貼り付けるときを除いて、トークンの境界は決して変更されない。 @xref{Concatenation}。 例えば、
 
 @smallexample
 @group
@@ -355,101 +342,40 @@ foo()baz
 @end group
 @end smallexample
 
-The compiler does not re-tokenize the preprocessor's output.  Each
-preprocessing token becomes one compiler token.
+コンパイラはプリプロセッサの出力を再トークン化しない。 各前処理トークンは1つのコンパイラー・トークンになる。
 
 @cindex identifiers
-Preprocessing tokens fall into five broad classes: identifiers,
-preprocessing numbers, string literals, punctuators, and other.  An
-@dfn{identifier} is the same as an identifier in C: any sequence of
-letters, digits, or underscores, which begins with a letter or
-underscore.  Keywords of C have no significance to the preprocessor;
-they are ordinary identifiers.  You can define a macro whose name is a
-keyword, for instance.  The only identifier which can be considered a
-preprocessing keyword is @code{defined}.  @xref{Defined}.
+前処理トークンは、識別子、前処理番号、文字列リテラル、句読子などの5つの広いクラスに分類される。 @dfn{識別子}は、Cの識別子と同じである。文字またはアンダースコアで始まる、文字や数字、またはアンダースコアの任意のシーケンス。Cのキーワードはプリプロセッサにとって意味がない。 それらは通常の識別子である。 たとえば、名前がキーワードであるマクロを定義することができる。 前処理キーワードとみなせる唯一の識別子は@code{defined}である。  @xref{Defined}.
 
-This is mostly true of other languages which use the C preprocessor.
-However, a few of the keywords of C++ are significant even in the
-preprocessor.  @xref{C++ Named Operators}.
+これは、Cプリプロセッサを使用する他の言語にも当てはまる。 しかし、C++のキーワードのいくつかは、プリプロセッサでも意味を持つ。 @xref{C++ Named Operators}.
 
-In the 1999 C standard, identifiers may contain letters which are not
-part of the ``basic source character set'', at the implementation's
-discretion (such as accented Latin letters, Greek letters, or Chinese
-ideograms).  This may be done with an extended character set, or the
-@samp{\u} and @samp{\U} escape sequences.  GCC only accepts such
-characters in the @samp{\u} and @samp{\U} forms.
+1999年のC標準では、識別子には、実装の裁量で（アクセント付きのラテン文字、ギリシャ文字、中国語の表意文字など）、「基本的なソース文字セット」の一部ではない文字を含めることができる。 これは、拡張文字セット、または@samp{\u}と@samp{\U}エスケープシーケンスで行うことができる。 GCCは@samp{\u}と@samp{\U}形式の文字しか受け付けない。
 
-As an extension, GCC treats @samp{$} as a letter.  This is for
-compatibility with some systems, such as VMS, where @samp{$} is commonly
-used in system-defined function and object names.  @samp{$} is not a
-letter in strictly conforming mode, or if you specify the @option{-$}
-option.  @xref{Invocation}.
+拡張として、GCCは@samp{$}を文字として扱う。 これは、システム定義関数やオブジェクト名で@samp{$}がよく使用されるVMSなどのシステムとの互換性のためである。 @samp{$}は厳密に準拠したモードの文字ではなく、@option{-$}オプションを指定した場合には使用できない。@xref{Invocation}.
 
 @cindex numbers
 @cindex preprocessing numbers
-A @dfn{preprocessing number} has a rather bizarre definition.  The
-category includes all the normal integer and floating point constants
-one expects of C, but also a number of other things one might not
-initially recognize as a number.  Formally, preprocessing numbers begin
-with an optional period, a required decimal digit, and then continue
-with any sequence of letters, digits, underscores, periods, and
-exponents.  Exponents are the two-character sequences @samp{e+},
-@samp{e-}, @samp{E+}, @samp{E-}, @samp{p+}, @samp{p-}, @samp{P+}, and
-@samp{P-}.  (The exponents that begin with @samp{p} or @samp{P} are 
-used for hexadecimal floating-point constants.)
+@dfn{前処理数}はかなり奇妙な定義をしている。 このカテゴリには、Cで期待されるすべての通常の整数と浮動小数点定数が含まれるが、最初は数として認識されない数多くのものも含まれる。 正式には、前処理数は任意のピリオド、必要な10進数で始まり、文字、数字、下線、ピリオド、および指数の任意のシーケンスで続行される。 指数は、2文字のシーケンス@samp{e+}、@samp{e-}、@samp{E+}、@samp{E-}、@samp{p+}、@samp{p-}、@samp{P+}、および@samp{P-}である。 （@samp{p}または@samp{P}で始まる指数は、16進浮動小数点定数に使用される）。
 
-The purpose of this unusual definition is to isolate the preprocessor
-from the full complexity of numeric constants.  It does not have to
-distinguish between lexically valid and invalid floating-point numbers,
-which is complicated.  The definition also permits you to split an
-identifier at any position and get exactly two tokens, which can then be
-pasted back together with the @samp{##} operator.
+この珍しい定義の目的は、プリプロセッサを完全な数値定数から分離することである。 字句的に有効な浮動小数点数と無効な浮動小数点数を区別する必要はなく、それは複雑である。 この定義では、識別子を任意の位置に分割し、ちょうど2つのトークンを取得し、@samp{##}演算子と一緒に貼り付けることもできる。
 
-It's possible for preprocessing numbers to cause programs to be
-misinterpreted.  For example, @code{0xE+12} is a preprocessing number
-which does not translate to any valid numeric constant, therefore a
-syntax error.  It does not mean @code{@w{0xE + 12}}, which is what you
-might have intended.
+前処理している数字によってプログラムが誤って解釈される可能性がある。 たとえば、@code{0xE+12}は有効な数値定数に変換されない前処理番号なので、構文エラーである。あなたが意図しているかもしれない@code{@w{0xE + 12}}を意味するものではない。
 
 @cindex string literals
 @cindex string constants
 @cindex character constants
 @cindex header file names
 @c the @: prevents makeinfo from turning '' into ".
-@dfn{String literals} are string constants, character constants, and
-header file names (the argument of @samp{#include}).@footnote{The C
-standard uses the term @dfn{string literal} to refer only to what we are
-calling @dfn{string constants}.}  String constants and character
-constants are straightforward: @t{"@dots{}"} or @t{'@dots{}'}.  In
-either case embedded quotes should be escaped with a backslash:
-@t{'\'@:'} is the character constant for @samp{'}.  There is no limit on
-the length of a character constant, but the value of a character
-constant that contains more than one character is
-implementation-defined.  @xref{Implementation Details}.
+@dfn{String literal}は文字列定数、文字定数、ヘッダファイル名（@samp{#include}の引数）である。@footnote{C標準では@dfn{string literal}という用語を使って、@dfn{string constants}を呼び出すものだけを参照している。}文字列定数と文字定数は簡単である。@t{"@dots{}"}か@t{'@dots{}'}である。 どちらの場合でも、埋め込み引用符はバックスラッシュでエスケープする必要がありる。@t{'\'@:'}は@samp {'}の文字定数である。 文字定数の長さに制限はないが、複数の文字を含む文字定数の値は実装定義である。 @xref{Implementation Details}.
 
-Header file names either look like string constants, @t{"@dots{}"}, or are
-written with angle brackets instead, @t{<@dots{}>}.  In either case,
-backslash is an ordinary character.  There is no way to escape the
-closing quote or angle bracket.  The preprocessor looks for the header
-file in different places depending on which form you use.  @xref{Include
-Operation}.
+ヘッダーファイル名は、文字列定数のように見えるが、@t{"@dots{}"}か、かわりに山カッコで書かれている。 どちらの場合でも、バックスラッシュは普通の文字である。 閉じクォートや角括弧をエスケープする方法はない。 プリプロセッサは、使用するフォームに応じて異なる場所でヘッダファイルを探す。@xref{Include Operation}.
 
-No string literal may extend past the end of a line.  You may use continued
-lines instead, or string constant concatenation.
+文字列リテラルは、行末を越えてはならない。 継続行を使用するか、文字列定数連結を使用する。
 
 @cindex punctuators
 @cindex digraphs
 @cindex alternative tokens
-@dfn{Punctuators} are all the usual bits of punctuation which are
-meaningful to C and C++.  All but three of the punctuation characters in
-ASCII are C punctuators.  The exceptions are @samp{@@}, @samp{$}, and
-@samp{`}.  In addition, all the two- and three-character operators are
-punctuators.  There are also six @dfn{digraphs}, which the C++ standard
-calls @dfn{alternative tokens}, which are merely alternate ways to spell
-other punctuators.  This is a second attempt to work around missing
-punctuation in obsolete systems.  It has no negative side effects,
-unlike trigraphs, but does not cover as much ground.  The digraphs and
-their corresponding normal punctuators are:
+@dfn{句読点}は、CやC ++にとって意味のある句読点の通常のビットである。 ASCIIの句読点文字のうち3つを除くすべてがCの句読点である。 例外は@samp{@@}、@samp{$}、@samp{`}である。 さらに、2文字と3文字の演算子はすべて句読点である。 C++標準が@dfn{alternative tokens}と呼ぶ6つの@dfn{digraphs}もある。これは単に他の句読点を綴る代わりの方法である。 これは時代遅れのシステムでの句読点の欠落を回避するための2番目の試みである。 それは、trigraphsとは異なり、否定的な副作用はないが、多くの地面をカバーしていない。二重グラフとそれに対応する通常の句読点は次のとおりである。
 
 @smallexample
 Digraph:        <%  %>  <:  :>  %:  %:%:
@@ -457,22 +383,9 @@ Punctuator:      @{   @}   [   ]   #    ##
 @end smallexample
 
 @cindex other tokens
-Any other single character is considered ``other''.  It is passed on to
-the preprocessor's output unmolested.  The C compiler will almost
-certainly reject source code containing ``other'' tokens.  In ASCII, the
-only other characters are @samp{@@}, @samp{$}, @samp{`}, and control
-characters other than NUL (all bits zero).  (Note that @samp{$} is
-normally considered a letter.)  All characters with the high bit set
-(numeric range 0x7F--0xFF) are also ``other'' in the present
-implementation.  This will change when proper support for international
-character sets is added to GCC@.
+他の単一の文字は「その他」とみなされる。 unmolestedプリプロセッサの出力に渡されます。 Cコンパイラは「他の」トークンを含むソースコードをほぼ確実に拒否する。 ASCIIでは、他の文字は@samp{@@}、@samp{$}、@samp{`}、NUL以外の制御文字（全ビット0）のみである。 （通常、@samp{$}は文字と見なされることに注意せよ。）上位ビットがセットされたすべての文字（数値範囲0x7F - 0xFF）も現在の実装では 「その他」である。 これは、国際文字セットの適切なサポートがGCCに追加されたときに変更される。
 
-NUL is a special case because of the high probability that its
-appearance is accidental, and because it may be invisible to the user
-(many terminals do not display NUL at all).  Within comments, NULs are
-silently ignored, just as any other character would be.  In running
-text, NUL is considered white space.  For example, these two directives
-have the same meaning.
+NULは、その外観が偶発的である可能性が高く、ユーザが見えない（多くの端末がNULを全く表示しない）可能性が高いため、特別なケースである。 コメント内では、他の文字と同じようにNULも暗黙のうちに無視される。 実行中のテキストでは、NULは空白と見なされる。 たとえば、これらの2つのディレクティブは同じ意味を持つ。
 
 @smallexample
 #define X^@@1
@@ -480,9 +393,7 @@ have the same meaning.
 @end smallexample
 
 @noindent
-(where @samp{^@@} is ASCII NUL)@.  Within string or character constants,
-NULs are preserved.  In the latter two cases the preprocessor emits a
-warning message.
+（@samp{^@@}はASCII NULである。） 文字列定数または文字定数内では、NULは保持される。 後者の2つのケースでは、プリプロセッサは警告メッセージを出力する。
 
 @node The preprocessing language
 @section The preprocessing language
