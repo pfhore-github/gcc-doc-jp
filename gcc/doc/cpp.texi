@@ -236,7 +236,7 @@ CPPに入力されたファイルは、まったくどんな文字セットで�
 
 トライグラフは普及してなく、多くのコンパイラが誤って実装している。 移植可能なコードは、変換されたか無視されたトリグラフに依存するべきではない。@option{-Wtrigraphs}を使うと、変換されたプログラムの意味をトリグラフが変えることがあるときにGCCが警告する。 @xref{Wtrigraphs}。
 
-文字列定数では、一連の疑問符が疑問符の間にバックスラッシュを挿入するか、または文字列リテラル連結を使用して文字列リテラルを分離することによって、一連の疑問符がトリグラフと混同されるのを防ぐことができる。 @t["(??\?)"}は@samp{(???)}ではなく@samp{(???)}という文字列である。伝統的なCコンパイラはこれらのイディオムを認識しない。
+文字列定数では、一連の疑問符が疑問符の間にバックスラッシュを挿入するか、または文字列リテラル連結を使用して文字列リテラルを分離することによって、一連の疑問符がトリグラフと混同されるのを防ぐことができる。 @t["(??\?)"]は@samp{(???)}ではなく@samp{(???)}という文字列である。伝統的なCコンパイラはこれらのイディオムを認識しない。
 
 9つのトライグラフとそれらの置換は、
 
@@ -396,76 +396,44 @@ NULは、その外観が偶発的である可能性が高く、ユーザが見�
 （@samp{^@@}はASCII NULである。） 文字列定数または文字定数内では、NULは保持される。 後者の2つのケースでは、プリプロセッサは警告メッセージを出力する。
 
 @node The preprocessing language
-@section The preprocessing language
+@section プリプロセス言語
 @cindex directives
 @cindex preprocessing directives
 @cindex directive line
 @cindex directive name
 
-After tokenization, the stream of tokens may simply be passed straight
-to the compiler's parser.  However, if it contains any operations in the
-@dfn{preprocessing language}, it will be transformed first.  This stage
-corresponds roughly to the standard's ``translation phase 4'' and is
-what most people think of as the preprocessor's job.
+トークン化の後、トークンのストリームは単純にコンパイラのパーサに直接渡されるかもしれない。 しかし、@dfn{プリプロセス言語}に何らかの操作が含まれていると、それが最初に変換される。 この段階は、標準の「翻訳フェーズ4 」にほぼ対応していて、ほとんどの人がプリプロセッサの仕事と考えるものである。
 
-The preprocessing language consists of @dfn{directives} to be executed
-and @dfn{macros} to be expanded.  Its primary capabilities are:
+前処理言語は、実行される@dfn{ディレクティブ}と展開される@dfn{マクロ}で構成される。 主な機能は次のとおりである。
 
 @itemize @bullet
 @item
-Inclusion of header files.  These are files of declarations that can be
-substituted into your program.
+ヘッダーファイルのインクルード。 これらは、プログラムに置換可能な宣言ファイルである。
 
 @item
-Macro expansion.  You can define @dfn{macros}, which are abbreviations
-for arbitrary fragments of C code.  The preprocessor will replace the
-macros with their definitions throughout the program.  Some macros are
-automatically defined for you.
+マクロ展開。 @dfn{マクロ}は、Cコードの任意のフラグメントの略語を定義することができる。 プリプロセッサは、マクロ全体をプログラム全体の定義に置き換える。 一部のマクロは自動的に定義される。
 
 @item
-Conditional compilation.  You can include or exclude parts of the
-program according to various conditions.
+条件付きコンパイル。 さまざまな条件に従ってプログラムの一部を含めるか除外することができる。
 
 @item
-Line control.  If you use a program to combine or rearrange source files
-into an intermediate file which is then compiled, you can use line
-control to inform the compiler where each source line originally came
-from.
+行制御。 プログラムを使用してソースファイルを中間ファイルに結合または再編成してコンパイルした場合は、行制御を使用して、元のソース行がどこから来たのかをコンパイラに知らせることができる
 
 @item
-Diagnostics.  You can detect problems at compile time and issue errors
-or warnings.
+診断。 コンパイル時に問題を検出し、エラーまたは警告を出すことができる。
 @end itemize
 
-There are a few more, less useful, features.
+いくつか、あまり有用でない機能がいくつかある。
 
-Except for expansion of predefined macros, all these operations are
-triggered with @dfn{preprocessing directives}.  Preprocessing directives
-are lines in your program that start with @samp{#}.  Whitespace is
-allowed before and after the @samp{#}.  The @samp{#} is followed by an
-identifier, the @dfn{directive name}.  It specifies the operation to
-perform.  Directives are commonly referred to as @samp{#@var{name}}
-where @var{name} is the directive name.  For example, @samp{#define} is
-the directive that defines a macro.
+定義済みマクロの展開を除いて、これらの操作はすべて@dfn{プリプロセスディレクティブ}でトリガされる。 前処理指令は@samp{#}で始まるプログラム内の行である。 @samp{＃}の前後に空白を入れることができる。 @samp{＃}には識別子@dfn{指令名}が続く。 それは実行する操作を指定する。 ディレクティブは通常@samp{#@var{name}}と呼ばれ、@var{name}はディレクティブ名である。 たとえば、@samp{#define}はマクロを定義するディレクティブである。
 
-The @samp{#} which begins a directive cannot come from a macro
-expansion.  Also, the directive name is not macro expanded.  Thus, if
-@code{foo} is defined as a macro expanding to @code{define}, that does
-not make @samp{#foo} a valid preprocessing directive.
+ディレクティブを開始する@samp{#}は、マクロ展開から始めることはできない。 また、ディレクティブ名はマクロ展開されない。 したがって、@code{foo}が@code{define}に展開されるマクロとして定義されていても、@samp{#foo}を有効な前処理指令にはしない。
 
-The set of valid directive names is fixed.  Programs cannot define new
-preprocessing directives.
+有効なディレクティブ名のセットは固定されている。 プログラムは新しい前処理指令を定義することはできない。
 
-Some directives require arguments; these make up the rest of the
-directive line and must be separated from the directive name by
-whitespace.  For example, @samp{#define} must be followed by a macro
-name and the intended expansion of the macro.
+命令の中には引数が必要なものがある。 これらはディレクティブ行の残りの部分を構成し、空白でディレクティブ名と区切らなければならない。 たとえば、@samp{#define}の後ろにマクロ名とマクロの展開を続けなければならない。
 
-A preprocessing directive cannot cover more than one line.  The line
-may, however, be continued with backslash-newline, or by a block comment
-which extends past the end of the line.  In either case, when the
-directive is processed, the continuations have already been merged with
-the first line to make one long line.
+前処理ディレクティブは複数の行を覆うことはできない。 しかし、行は、バックスラッシュ改行、または行末を越えるブロックコメントによって継続される。 いずれの場合も、ディレクティブが処理されると、継続はすでに1行目とマージされて1つの長い行になる。
 
 @node Header Files
 @chapter Header Files
