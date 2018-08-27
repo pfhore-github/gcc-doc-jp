@@ -436,44 +436,25 @@ NULは、その外観が偶発的である可能性が高く、ユーザが見�
 前処理ディレクティブは複数の行を覆うことはできない。 しかし、行は、バックスラッシュ改行、または行末を越えるブロックコメントによって継続される。 いずれの場合も、ディレクティブが処理されると、継続はすでに1行目とマージされて1つの長い行になる。
 
 @node Header Files
-@chapter Header Files
+@chapter ヘッダファイル
 
 @cindex header file
-A header file is a file containing C declarations and macro definitions
-(@pxref{Macros}) to be shared between several source files.  You request
-the use of a header file in your program by @dfn{including} it, with the
-C preprocessing directive @samp{#include}.
+ヘッダファイルは、複数のソースファイル間で共有されるC宣言とマクロ定義（@pxref{Macros}）を含むファイルである。Cプリプロセスディレクティブ@samp{#include}で、それを@dfn{インクルードする}ことによってプログラム内でヘッダファイルを使うように要求する。
 
-Header files serve two purposes.
+ヘッダーファイルには2つの目的がある。
 
 @itemize @bullet
 @item
 @cindex system header files
-System header files declare the interfaces to parts of the operating
-system.  You include them in your program to supply the definitions and
-declarations you need to invoke system calls and libraries.
+システムヘッダファイルは、オペレーティングシステムの各部へのインタフェースを宣言する。 システムコールとライブラリを呼び出すために必要な定義と宣言を提供するために、これらをプログラムに含める。
 
 @item
-Your own header files contain declarations for interfaces between the
-source files of your program.  Each time you have a group of related
-declarations and macro definitions all or most of which are needed in
-several different source files, it is a good idea to create a header
-file for them.
+独自のヘッダファイルには、プログラムのソースファイル間のインタフェースの宣言が含まれている。 関連する宣言とマクロ定義のグループがある場合、そのすべてまたは大部分が複数の異なるソースファイルで必要になるたびに、そのためのヘッダーファイルを作成するのはいい考えである。
 @end itemize
 
-Including a header file produces the same results as copying the header
-file into each source file that needs it.  Such copying would be
-time-consuming and error-prone.  With a header file, the related
-declarations appear in only one place.  If they need to be changed, they
-can be changed in one place, and programs that include the header file
-will automatically use the new version when next recompiled.  The header
-file eliminates the labor of finding and changing all the copies as well
-as the risk that a failure to find one copy will result in
-inconsistencies within a program.
+ヘッダーファイルを含めると、ヘッダーファイルを必要とする各ソースファイルにコピーするのと同じ結果が得られる。 そのようなコピーは時間がかかり、エラーを起こしやすい。 ヘッダーファイルでは、関連する宣言が1つの場所にのみ現れる。 変更が必要な場合は、1か所で変更することができ、ヘッダーファイルを含むプログラムは、次回の再コンパイル時に新しいバージョンを自動的に使用する。 ヘッダーファイルは、すべてのコピーを見つけて変更する労力と、1つのコピーが見つからないとプログラム内で矛盾が生じるというリスクを排除する。
 
-In C, the usual convention is to give header files names that end with
-@file{.h}.  It is most portable to use only letters, digits, dashes, and
-underscores in header file names, and at most one dot.
+Cでは、通常、@file{.h}で終わるヘッダファイル名を与えるのが一般的である。 ヘッダーファイル名には、英字、数字、ダッシュ、アンダースコアのみを使用し、ドットは最大１つしか使用ないのが最も移植性が高い。
 
 @menu
 * Include Syntax::
