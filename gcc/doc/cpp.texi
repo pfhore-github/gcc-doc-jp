@@ -468,60 +468,36 @@ Cでは、通常、@file{.h}で終わるヘッダファイル名を与えるの�
 @end menu
 
 @node Include Syntax
-@section Include Syntax
+@section Include構文
 
 @findex #include
-Both user and system header files are included using the preprocessing
-directive @samp{#include}.  It has two variants:
+ユーザーとシステムの両方のヘッダーファイルは、@samp{#include}というプリプロセスディレクティブを使用してインクルードされる。 それには2つの変種がある：
 
 @table @code
 @item #include <@var{file}>
-This variant is used for system header files.  It searches for a file
-named @var{file} in a standard list of system directories.  You can prepend
-directories to this list with the @option{-I} option (@pxref{Invocation}).
+この変形は、システムヘッダファイルに使用される。 システムディレクトリの標準リストで@var{file}という名前のファイルを検索する。 @option{-I}オプション（@pxref{Invocation}）を使用して、このリストにディレクトリを追加することができる。
 
 @item #include "@var{file}"
-This variant is used for header files of your own program.  It
-searches for a file named @var{file} first in the directory containing
-the current file, then in the quote directories and then the same
-directories used for @code{<@var{file}>}.  You can prepend directories
-to the list of quote directories with the @option{-iquote} option.
+この変種はあなた自身のプログラムのヘッダファイルに使われる。 現在のファイルを含むディレクトリの最初の@var{file}という名前のファイルを検索し、その後、引用符のディレクトリで@code{<var {file}>}のディレクトリと同じディレクトリを検索する。 @option{-iquote}オプションを使用して、ディレクトリを引用符のディレクトリの先頭に追加することができる。
 @end table
 
-The argument of @samp{#include}, whether delimited with quote marks or
-angle brackets, behaves like a string constant in that comments are not
-recognized, and macro names are not expanded.  Thus, @code{@w{#include
-<x/*y>}} specifies inclusion of a system header file named @file{x/*y}.
+@samp{#include}の引数は、引用符または山括弧で区切られていても、コメントが認識されず、マクロ名が展開されないという文字定数のように動作する。 したがって、@code{@w{#include <x/*y>}}は、@file{x/*y}というシステムヘッダファイルのインクルードを指定する。
 
-However, if backslashes occur within @var{file}, they are considered
-ordinary text characters, not escape characters.  None of the character
-escape sequences appropriate to string constants in C are processed.
-Thus, @code{@w{#include "x\n\\y"}} specifies a filename containing three
-backslashes.  (Some systems interpret @samp{\} as a pathname separator.
-All of these also interpret @samp{/} the same way.  It is most portable
-to use only @samp{/}.)
+しかし、バックスラッシュが@var{file}の中で発生すると、エスケープ文字ではなく普通のテキスト文字とみなされる。 Cの文字列定数に適した文字エスケープシーケンスは処理されない。 したがって、@code{@w{#include "x¥n¥¥y"}}は3つのバックスラッシュを含むファイル名を指定する。 （システムによっては、@samp{\}をパス名の区切りとして解釈するものがある。 これらのすべては同じ方法で@samp{/}も解釈する。 @samp {/}だけを使うのが最も移植性がある。）
 
-It is an error if there is anything (other than comments) on the line
-after the file name.
+ファイル名の後に（コメント以外の）行に何かがあると、エラーである。
 
 @node Include Operation
-@section Include Operation
+@section Include操作
 
-The @samp{#include} directive works by directing the C preprocessor to
-scan the specified file as input before continuing with the rest of the
-current file.  The output from the preprocessor contains the output
-already generated, followed by the output resulting from the included
-file, followed by the output that comes from the text after the
-@samp{#include} directive.  For example, if you have a header file
-@file{header.h} as follows,
+@samp{#include}ディレクティブは、指定されたファイルを入力としてスキャンしてから、現在のファイルの残りの部分を続行するようにCプリプロセッサに指示して動作する。 プリプロセッサからの出力には、すでに生成された出力と、インクルードされたファイルからの出力と、@samp{#include}ディレクティブの後のテキストからの出力が続く。 たとえば、次のようにヘッダファイル@file {header.h}がある場合、
 
 @smallexample
 char *test (void);
 @end smallexample
 
 @noindent
-and a main program called @file{program.c} that uses the header file,
-like this,
+このようなヘッダファイルを使用する@file{program.c}と呼ばれる以下のメインプログラムは、
 
 @smallexample
 int x;
@@ -535,8 +511,7 @@ main (void)
 @end smallexample
 
 @noindent
-the compiler will see the same token stream as it would if
-@file{program.c} read
+コンパイラは@file {program.c}が以下を読んだ場合と同じトークンストリームを見るだろう。
 
 @smallexample
 int x;
@@ -549,23 +524,11 @@ main (void)
 @}
 @end smallexample
 
-Included files are not limited to declarations and macro definitions;
-those are merely the typical uses.  Any fragment of a C program can be
-included from another file.  The include file could even contain the
-beginning of a statement that is concluded in the containing file, or
-the end of a statement that was started in the including file.  However,
-an included file must consist of complete tokens.  Comments and string
-literals which have not been closed by the end of an included file are
-invalid.  For error recovery, they are considered to end at the end of
-the file.
+インクルードされたファイルは、宣言とマクロ定義に限定されない。 それらは典型的な用途にすぎない。 Cプログラムのフラグメントは、別のファイルからインクルードすることができる。 インクルードファイルには、インクルードファイルで終わるステートメントの先頭、インクルードファイルで開始されたステートメントの末尾まで含めることもできる。 ただし、インクルードされたファイルは完全なトークンで構成する必要がある。 インクルードファイルの最後で閉じられていないコメントと文字列リテラルは無効である。 エラーリカバリの場合、ファイルの最後に終了するとみなされる。
 
-To avoid confusion, it is best if header files contain only complete
-syntactic units---function declarations or definitions, type
-declarations, etc.
+混乱を避けるために、ヘッダーファイルに完全な構文単位（関数の宣言や定義、型宣言など）しか含まれていない方が良いだろう。
 
-The line following the @samp{#include} directive is always treated as a
-separate line by the C preprocessor, even if the included file lacks a
-final newline.
+@samp{#include}ディレクティブに続く行は、インクルードされたファイルに最終改行がない場合でも、Cプリプロセッサによって常に別の行として扱われる。
 
 @node Search Path
 @section Search Path
