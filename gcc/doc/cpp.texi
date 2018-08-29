@@ -531,65 +531,33 @@ main (void)
 @samp{#include}ディレクティブに続く行は、インクルードされたファイルに最終改行がない場合でも、Cプリプロセッサによって常に別の行として扱われる。
 
 @node Search Path
-@section Search Path
+@section 検索パス
 
-By default, the preprocessor looks for header files included by the quote
-form of the directive @code{@w{#include "@var{file}"}} first relative to
-the directory of the current file, and then in a preconfigured list 
-of standard system directories.  
-For example, if @file{/usr/include/sys/stat.h} contains
-@code{@w{#include "types.h"}}, GCC looks for @file{types.h} first in
-@file{/usr/include/sys}, then in its usual search path.
+デフォルトでは、プリプロセッサは、ディレクティブ@code{@w{#include "@var{file}"}}のクオート形式によってインクルードされたヘッダファイルでは、まず現在のファイルのディレクトリに対して探し、次にあらかじめ設定された標準システムディレクトリのリスト内を探す。たとえば、@file{/usr/include/sys/stat.h}に@code{@w{#include "types.h"}}が含まれている場合、GCCは最初に@file{/usr/include/sys}を探し、それからいつもの検索パスを探す。
 
-For the angle-bracket form @code{@w{#include <@var{file}>}}, the
-preprocessor's default behavior is to look only in the standard system
-directories.  The exact search directory list depends on the target
-system, how GCC is configured, and where it is installed.  You can
-find the default search directory list for your version of CPP by
-invoking it with the @option{-v} option.  For example,
+角括弧の形式の@code{@w{#include <@var {file}>}}の場合、プリプロセッサのデフォルト動作は標準のシステムディレクトリだけである。 正確な検索ディレクトリのリストは、ターゲットシステム、GCCの設定方法、およびインストール先によって異なる。 @option{-v}オプションを使用してCPPを呼び出すことによって、CPPのデフォルトの検索ディレクトリリストを見つけることができる。 例えば、
 
 @smallexample
 cpp -v /dev/null -o /dev/null
 @end smallexample
 
-There are a number of command-line options you can use to add
-additional directories to the search path.  
-The most commonly-used option is @option{-I@var{dir}}, which causes 
-@var{dir} to be searched after the current directory (for the quote 
-form of the directive) and ahead of the standard system directories.
-You can specify multiple @option{-I} options on the command line, 
-in which case the directories are searched in left-to-right order.
+検索パスに追加のディレクトリを追加するために使用できるいくつかのコマンドラインオプションがある。 最も一般的に使用されるオプションは@option{-I @var{dir}}である。これにより、@var{dir}が現在のディレクトリ（ディレクティブの見積もり形式）の後ろで標準システムディレクトリより先に検索される。 コマンドラインで複数の@option{-I}オプションを指定できる。この場合、ディレクトリは左から右の順に検索される。
 
-If you need separate control over the search paths for the quote and 
-angle-bracket forms of the @samp{#include} directive, you can use the
-@option{-iquote} and/or @option{-isystem} options instead of @option{-I}.
-@xref{Invocation}, for a detailed description of these options, as 
-well as others that are less generally useful.
+@samp{#include}ディレクティブの引用符と角括弧の形式の検索パスを個別に制御する必要がある場合は、@option{-I}の代わりに@option{-iquote}や@option{-isystem}オプションを使うことができる。 これらのオプションの詳細な説明だけでなく、それほど一般的ではない他のものについては、@xref{Invocation}を参照せよ。
 
-If you specify other options on the command line, such as @option{-I},
-that affect where the preprocessor searches for header files, the
-directory list printed by the @option{-v} option reflects the actual
-search path used by the preprocessor.
+プリプロセッサがヘッダファイルを検索する場所に影響を与える@option{-I}などのコマンドラインで他のオプションを指定した場合、@option{-v}オプションで表示されるディレクトリリストは、プリプロセッサで使用されている実際の検索パスを反映する。
 
-Note that you can also prevent the preprocessor from searching any of
-the default system header directories with the @option{-nostdinc}
-option.  This is useful when you are compiling an operating system
-kernel or some other program that does not use the standard C library
-facilities, or the standard C library itself.
+プリプロセッサがデフォルトのシステムヘッダディレクトリを@option{-nostdinc}オプションで検索しないようにすることもできる。 これは、標準Cライブラリ機能を使用しないオペレーティングシステムカーネルまたはその他のプログラムをコンパイルする場合や、標準Cライブラリ自体をコンパイルする場合に便利である。
 
 @node Once-Only Headers
-@section Once-Only Headers
+@section 一度だけのヘッダ
 @cindex repeated inclusion
 @cindex including just once
 @cindex wrapper @code{#ifndef}
 
-If a header file happens to be included twice, the compiler will process
-its contents twice.  This is very likely to cause an error, e.g.@: when the
-compiler sees the same structure definition twice.  Even if it does not,
-it will certainly waste time.
+ヘッダーファイルが2回インクルードされた場合、コンパイラはその内容を2回処理する。 これは、コンパイラーが同じ構造定義を2回見た場合など、エラーを引き起こす可能性が非常に高くなる。 たとえそれがなくても、確かに時間を無駄にするだろう。
 
-The standard way to prevent this is to enclose the entire real contents
-of the file in a conditional, like this:
+これを防ぐ標準的な方法は、ファイルの実内容全体を次のように条件付きで囲むことである。
 
 @smallexample
 @group
@@ -603,64 +571,31 @@ of the file in a conditional, like this:
 @end group
 @end smallexample
 
-This construct is commonly known as a @dfn{wrapper #ifndef}.
-When the header is included again, the conditional will be false,
-because @code{FILE_FOO_SEEN} is defined.  The preprocessor will skip
-over the entire contents of the file, and the compiler will not see it
-twice.
+この構造体は一般に@dfn{wrapper #ifndef}と呼ばれる。 @code{FILE_FOO_SEEN}が定義されているため、ヘッダーが再び含まれると、条件はfalseになる。 プリプロセッサはファイルの内容全体をスキップし、コンパイラはそれを2度見ることはない。
 
-CPP optimizes even further.  It remembers when a header file has a
-wrapper @samp{#ifndef}.  If a subsequent @samp{#include} specifies that
-header, and the macro in the @samp{#ifndef} is still defined, it does
-not bother to rescan the file at all.
+CPPはさらに最適化する。 ヘッダファイルにラッパー@samp{#ifndef}があるときを覚えている。 後続の@samp{#include}がそのヘッダを指定し、@samp{#ifndef}のマクロがまだ定義されている場合、わざわざファイルを再スキャンしない。
 
-You can put comments outside the wrapper.  They will not interfere with
-this optimization.
+コメントはラッパーの外に置くことができる。それらはこの最適化を妨げない。
 
 @cindex controlling macro
 @cindex guard macro
-The macro @code{FILE_FOO_SEEN} is called the @dfn{controlling macro} or
-@dfn{guard macro}.  In a user header file, the macro name should not
-begin with @samp{_}.  In a system header file, it should begin with
-@samp{__} to avoid conflicts with user programs.  In any kind of header
-file, the macro name should contain the name of the file and some
-additional text, to avoid conflicts with other header files.
+@code{FILE_FOO_SEEN}マクロは@dfn{制御マクロ}または@dfn{ガードマクロ}と呼ばれる。 ユーザーヘッダーファイルでは、マクロ名は@samp{_}で始めるべきではない。 システムヘッダファイルでは、ユーザプログラムとの衝突を避けるために@samp{__}で始まる必要がある。 どのような種類のヘッダーファイルでも、他のヘッダーファイルとの競合を避けるために、マクロ名にはファイルの名前と追加のテキストが含まれている必要がある。
 
 @node Alternatives to Wrapper #ifndef
-@section Alternatives to Wrapper #ifndef
+@section ラッパ#ifndefの代替
 
-CPP supports two more ways of indicating that a header file should be
-read only once.  Neither one is as portable as a wrapper @samp{#ifndef}
-and we recommend you do not use them in new programs, with the caveat
-that @samp{#import} is standard practice in Objective-C.
+CPPは、ヘッダーファイルを1回だけ読み取る必要があることを示す2つの方法をさらにサポートしている。 どちらもラッパー@samp {#ifndef}と同じ移植性はない。新しいプログラムでは使用しないことを推奨する。Objective-Cでは@samp{#import}が標準的な方法である。
 
 @findex #import
-CPP supports a variant of @samp{#include} called @samp{#import} which
-includes a file, but does so at most once.  If you use @samp{#import}
-instead of @samp{#include}, then you don't need the conditionals
-inside the header file to prevent multiple inclusion of the contents.
-@samp{#import} is standard in Objective-C, but is considered a
-deprecated extension in C and C++.
+CPPは@samp{#include}のファイルを多くて1回だけインクルードする@samp{#import}と呼ばれる亜種をサポートしている。 @samp{#include}の代わりに@samp{#import}を使用すると、複数のコンテンツが含まれないようにするヘッダファイル内に条件文は必要ない。 @samp{#import}はObjective-Cでは標準だが、CおよびC ++では廃止予定の拡張と見なされる。
 
-@samp{#import} is not a well designed feature.  It requires the users of
-a header file to know that it should only be included once.  It is much
-better for the header file's implementor to write the file so that users
-don't need to know this.  Using a wrapper @samp{#ifndef} accomplishes
-this goal.
+@samp{#import}はうまく設計された機能ではない。 ヘッダーファイルのユーザーは、ヘッダーファイルを1回だけ含める必要があることを知る必要がある。 ヘッダーファイルの実装者がファイルを書き込むほうが、ユーザーがこれを知る必要はないので好ましい。 ラッパー@samp{#ifndef}を使用すると、この目標を達成できる。
 
-In the present implementation, a single use of @samp{#import} will
-prevent the file from ever being read again, by either @samp{#import} or
-@samp{#include}.  You should not rely on this; do not use both
-@samp{#import} and @samp{#include} to refer to the same header file.
+現在の実装では、@samp {#import}を1回使用すると、@samp{#import}または@samp{#include}のいずれかによって、ファイルが再び読み取られることがなくなる。これに頼るべきではない。 同じヘッダファイルを参照するために@samp{#import}と@samp{#include}の両方を使用してはならない。
 
-Another way to prevent a header file from being included more than once
-is with the @samp{#pragma once} directive.  If @samp{#pragma once} is
-seen when scanning a header file, that file will never be read again, no
-matter what.
+@samp{#pragma once}ディレクティブを使用する、ヘッダーファイルが2回以上含まれないようにするもう1つの方法がある。 ヘッダファイルをスキャンするときに@samp{#pragma once}が見つかった場合、そのファイルが何であれ再読されなくなる。
 
-@samp{#pragma once} does not have the problems that @samp{#import} does,
-but it is not recognized by all preprocessors, so you cannot rely on it
-in a portable program.
+@samp{#pragma once}は@samp {#import}のような問題はないが、すべてのプリプロセッサでは認識されないので、移植可能なプログラムではそれに頼ることはできない。
 
 @node Computed Includes
 @section Computed Includes
