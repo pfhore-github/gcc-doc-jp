@@ -598,14 +598,11 @@ CPPは@samp{#include}のファイルを多くて1回だけインクルードす�
 @samp{#pragma once}は@samp {#import}のような問題はないが、すべてのプリプロセッサでは認識されないので、移植可能なプログラムではそれに頼ることはできない。
 
 @node Computed Includes
-@section Computed Includes
+@section 計算インクルード
 @cindex computed includes
 @cindex macros in include
 
-Sometimes it is necessary to select one of several different header
-files to be included into your program.  They might specify
-configuration parameters to be used on different sorts of operating
-systems, for instance.  You could do this with a series of conditionals,
+場合によっては、プログラムに組み込むいくつかの異なるヘッダーファイルの1つを選択する必要がある。 たとえば、さまざまな種類のオペレーティングシステムで使用される構成パラメータを指定する場合がある。 一連の条件付きでこれを行うことができるが、
 
 @smallexample
 #if SYSTEM_1
@@ -617,10 +614,7 @@ systems, for instance.  You could do this with a series of conditionals,
 #endif
 @end smallexample
 
-That rapidly becomes tedious.  Instead, the preprocessor offers the
-ability to use a macro for the header name.  This is called a
-@dfn{computed include}.  Instead of writing a header name as the direct
-argument of @samp{#include}, you simply put a macro name there instead:
+それは急速に退屈になる。 代わりに、プリプロセッサはヘッダー名にマクロを使用する機能を提供する。 これは@dfn{計算インクルード}と呼ばれる。 @samp{#include}の直接引数としてヘッダ名を書くのではなく、その代わりにマクロ名を入れるだけである：
 
 @smallexample
 #define SYSTEM_H "system_1.h"
@@ -629,27 +623,13 @@ argument of @samp{#include}, you simply put a macro name there instead:
 @end smallexample
 
 @noindent
-@code{SYSTEM_H} will be expanded, and the preprocessor will look for
-@file{system_1.h} as if the @samp{#include} had been written that way
-originally.  @code{SYSTEM_H} could be defined by your Makefile with a
-@option{-D} option.
+@code {SYSTEM_H}は展開され、プリプロセッサは@samp{#include}が元のように書かれているかのように@file{system_1.h}を探す。 @code{SYSTEM_H}はMakefileによって@option{-D}オプションで定義できる。
 
-You must be careful when you define the macro.  @samp{#define} saves
-tokens, not text.  The preprocessor has no way of knowing that the macro
-will be used as the argument of @samp{#include}, so it generates
-ordinary tokens, not a header name.  This is unlikely to cause problems
-if you use double-quote includes, which are close enough to string
-constants.  If you use angle brackets, however, you may have trouble.
+マクロを定義するときは注意が必要である。 @samp{#define}はテキストではなくトークンを保存する。 プリプロセッサはマクロが@samp{#include}の引数として使われることを知る方法がないので、ヘッダ名ではなく普通のトークンを生成する。 文字列定数に十分近い二重引用符を使用するなら、これが問題になることはまずない。 ただし、角カッコを使用すると、問題が発生する可能性がある。
 
-The syntax of a computed include is actually a bit more general than the
-above.  If the first non-whitespace character after @samp{#include} is
-not @samp{"} or @samp{<}, then the entire line is macro-expanded
-like running text would be.
+計算インクルードの構文は、実際には上記より少し一般的である。 @samp{#include}の後の最初の空白以外の文字が@samp{"}や@samp{<}でない場合、実行中のテキストのように行全体がマクロ展開される。
 
-If the line expands to a single string constant, the contents of that
-string constant are the file to be included.  CPP does not re-examine the
-string for embedded quotes, but neither does it process backslash
-escapes in the string.  Therefore
+行が単一の文字列定数に展開される場合、その文字列定数の内容はインクルードされるファイルになる。 CPPは埋め込み引用符の文字列を再検査しないが、文字列のバックスラッシュエスケープも処理しない。 したがって、
 
 @smallexample
 #define HEADER "a\"b"
@@ -657,113 +637,54 @@ escapes in the string.  Therefore
 @end smallexample
 
 @noindent
-looks for a file named @file{a\"b}.  CPP searches for the file according
-to the rules for double-quoted includes.
+は@file{a\"b}という名前のファイルを探す。CPPは二重引用符の規則に従ってファイルを検索する。
 
-If the line expands to a token stream beginning with a @samp{<} token
-and including a @samp{>} token, then the tokens between the @samp{<} and
-the first @samp{>} are combined to form the filename to be included.
-Any whitespace between tokens is reduced to a single space; then any
-space after the initial @samp{<} is retained, but a trailing space
-before the closing @samp{>} is ignored.  CPP searches for the file
-according to the rules for angle-bracket includes.
+@samp{<}トークンで始まり、@samp{>}トークンを含むトークンストリームに展開すると、@samp{<}と最初の@samp {>}のトークンが含まれるファイル名の形式へと結合される。 トークン間の任意の空白は、単一のスペースに縮小される。 最初の@samp{<}の後のスペースはすべて保持されるが、閉じる@samp{>}の前のスペースは無視される。 CPPは、角括弧の規則に従ってファイルを検索する。
 
-In either case, if there are any tokens on the line after the file name,
-an error occurs and the directive is not processed.  It is also an error
-if the result of expansion does not match either of the two expected
-forms.
+どちらの場合も、ファイル名の後に行にトークンがあると、エラーが発生し、ディレクティブは処理されない。 展開の結果が2つの予想される形式のいずれとも一致しない場合は、エラーである。
 
-These rules are implementation-defined behavior according to the C
-standard.  To minimize the risk of different compilers interpreting your
-computed includes differently, we recommend you use only a single
-object-like macro which expands to a string constant.  This will also
-minimize confusion for people reading your program.
+これらのルールは、C標準に従った実装定義の動作である。 異なるコンパイラが計算されたインクルードを異なる方法で解釈するリスクを最小限に抑えるため、文字列定数に展開されるオブジェクトのようなマクロを1つだけ使用することを推奨する。 これにより、あなたのプログラムを読んでいる人の混乱も最小限に抑えられる。
 
 @node Wrapper Headers
-@section Wrapper Headers
+@section ラッパヘッダ
 @cindex wrapper headers
 @cindex overriding a header file
 @findex #include_next
 
-Sometimes it is necessary to adjust the contents of a system-provided
-header file without editing it directly.  GCC's @command{fixincludes}
-operation does this, for example.  One way to do that would be to create
-a new header file with the same name and insert it in the search path
-before the original header.  That works fine as long as you're willing
-to replace the old header entirely.  But what if you want to refer to
-the old header from the new one?
+場合によっては、システム提供のヘッダーファイルの内容を直接編集せずに調整する必要があることもある。 GCCの@command{fixincludes}操作ではこれが実行される。 これを行う1つの方法は、同じ名前の新しいヘッダーファイルを作成し、元のヘッダーの前の検索パスに挿入することである。 古いヘッダーを完全に置き換えることができれば、うまく動作する。 しかし、新しいヘッダーの古いヘッダーを参照したい場合はどうすればよいだろうか？
 
-You cannot simply include the old header with @samp{#include}.  That
-will start from the beginning, and find your new header again.  If your
-header is not protected from multiple inclusion (@pxref{Once-Only
-Headers}), it will recurse infinitely and cause a fatal error.
+古いヘッダに単に@samp{#include}を含めることはできない。 それは最初から始まり、あなたの新しいヘッダーを再び見つける。 ヘッダーが複数のインクルード（@pxref{Once-Only Headers}）から保護されていない場合、無限に再帰的に発生し、致命的なエラーが発生する。
 
-You could include the old header with an absolute pathname:
+あなたは絶対パス名で古いヘッダーを含めることができる：
 @smallexample
 #include "/usr/include/old-header.h"
 @end smallexample
 @noindent
-This works, but is not clean; should the system headers ever move, you
-would have to edit the new headers to match.
+これは機能しますが、きれいではない。 システムヘッダーが移動した場合は、新しいヘッダーを編集して一致させる必要がある。
 
-There is no way to solve this problem within the C standard, but you can
-use the GNU extension @samp{#include_next}.  It means, ``Include the
-@emph{next} file with this name''.  This directive works like
-@samp{#include} except in searching for the specified file: it starts
-searching the list of header file directories @emph{after} the directory
-in which the current file was found.
+Cの標準でこの問題を解決する方法はないが、GNU拡張@samp{#include_next}を使用することができる。それは、「この名前の@emph{次の}ファイル」を意味する。このディレクティブは、指定されたファイルを検索する以外は@samp{#include}のように動作する。現在のファイルが見つかったディレクトリのヘッダファイルディレクトリ@emph{後で}検索を開始する。
 
-Suppose you specify @option{-I /usr/local/include}, and the list of
-directories to search also includes @file{/usr/include}; and suppose
-both directories contain @file{signal.h}.  Ordinary @code{@w{#include
-<signal.h>}} finds the file under @file{/usr/local/include}.  If that
-file contains @code{@w{#include_next <signal.h>}}, it starts searching
-after that directory, and finds the file in @file{/usr/include}.
+@option{-I/usr/local/include}を指定し、検索するディレクトリのリストに@file{/usr/include}も含まれているとする。 両方のディレクトリに@file{signal.h}が含まれているとする。 普通の@code{@w{#include <signal.h>}}は、@file{/usr/local/include}以下のファイルを探す。 そのファイルに@code{@w{#include_next <signal.h>}}が含まれていれば、そのディレクトリの後ろで検索を開始し、@file{/usr/include}にあるファイルを探す。
 
-@samp{#include_next} does not distinguish between @code{<@var{file}>}
-and @code{"@var{file}"} inclusion, nor does it check that the file you
-specify has the same name as the current file.  It simply looks for the
-file named, starting with the directory in the search path after the one
-where the current file was found.
+@samp{#include_next}は@code{<@var{file}>}と@code{"@var{file}"}のインクルードを区別せず、指定したファイルが現在のファイルと同じ名前をしていしたかどうかもチェックしない。 現在のファイルが見つかったディレクトリの後ろにある検索パスのディレクトリから始まる、名前の付いたファイルを探す。
 
-The use of @samp{#include_next} can lead to great confusion.  We
-recommend it be used only when there is no other alternative.  In
-particular, it should not be used in the headers belonging to a specific
-program; it should be used only to make global corrections along the
-lines of @command{fixincludes}.
+@samp{#include_next}を使用すると、大きな混乱を招く可能性がある。 他の方法がない場合にのみ使用することを推奨する。 特に、特定のプログラムに属するヘッダーでは使用すべきではない。 @command{fixincludes}の行に沿って大域的な修正を行う場合にのみ使用すること。
 
 @node System Headers
-@section System Headers
+@section システムヘッダ
 @cindex system header files
 
-The header files declaring interfaces to the operating system and
-runtime libraries often cannot be written in strictly conforming C@.
-Therefore, GCC gives code found in @dfn{system headers} special
-treatment.  All warnings, other than those generated by @samp{#warning}
-(@pxref{Diagnostics}), are suppressed while GCC is processing a system
-header.  Macros defined in a system header are immune to a few warnings
-wherever they are expanded.  This immunity is granted on an ad-hoc
-basis, when we find that a warning generates lots of false positives
-because of code in macros defined in system headers.
+オペレーティングシステムやランタイムライブラリへのインタフェースを宣言するヘッダファイルは、しばしば厳密に準拠したC言語で記述することはできない。したがって、GCCは@dfn{システムヘッダ}の特別な扱いにあるコードを提供する。 @samp{#warning}（@pxref{Diagnostics}）によって生成された警告以外のすべての警告は、GCCがシステムヘッダを処理している間は表示されない。 システムヘッダに定義されたマクロは、どこに展開されているかにかかわらず、いくつかの警告の影響を受けない。 この免責は、システムヘッダーで定義されたマクロのコードのために、警告が誤検出を多く生成することが判明した場合、アドホックベースで付与される。
 
-Normally, only the headers found in specific directories are considered
-system headers.  These directories are determined when GCC is compiled.
-There are, however, two ways to make normal headers into system headers:
+通常、特定のディレクトリにあるヘッダーだけがシステムヘッダーと見なされる。これらのディレクトリは、GCCのコンパイル時に決定される。しかし、通常のヘッダーをシステムヘッダーにする2つの方法がある。
 
 @itemize @bullet
 @item
-Header files found in directories added to the search path with the 
-@option{-isystem} and @option{-idirafter} command-line options are 
-treated as system headers for the purposes of diagnostics.
+@option{-isystem}および@option {-idirafter}コマンドラインオプションを使用して検索パスに追加されたディレクトリにあるヘッダファイルは、診断目的でシステムヘッダとして扱われる。
 
 @item
 @findex #pragma GCC system_header
-There is also a directive, @code{@w{#pragma GCC system_header}}, which
-tells GCC to consider the rest of the current include file a system
-header, no matter where it was found.  Code that comes before the
-@samp{#pragma} in the file is not affected.  @code{@w{#pragma GCC
-system_header}} has no effect in the primary source file.
-@end itemize
+@code{@w{#pragma GCC system_header}}の指示文もある。これはGCCに現在のインクルードファイルの残りの部分をシステムヘッダと、見つかった場所に関係なく解釈する。 ファイル内の@samp{#pragma}より前にあるコードは影響を受けない。 @code{@w{#pragma GCC system_header}}はプライマリソースファイルには影響しない。
 
 @node Macros
 @chapter Macros
