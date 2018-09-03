@@ -687,21 +687,11 @@ Cの標準でこの問題を解決する方法はないが、GNU拡張@samp{#inc
 @code{@w{#pragma GCC system_header}}の指示文もある。これはGCCに現在のインクルードファイルの残りの部分をシステムヘッダと、見つかった場所に関係なく解釈する。 ファイル内の@samp{#pragma}より前にあるコードは影響を受けない。 @code{@w{#pragma GCC system_header}}はプライマリソースファイルには影響しない。
 
 @node Macros
-@chapter Macros
+@chapter マクロ
 
-A @dfn{macro} is a fragment of code which has been given a name.
-Whenever the name is used, it is replaced by the contents of the macro.
-There are two kinds of macros.  They differ mostly in what they look
-like when they are used.  @dfn{Object-like} macros resemble data objects
-when used, @dfn{function-like} macros resemble function calls.
+@dfn{マクロ}は名前を与えられたコードの断片である。 名前が使用されるたびに、マクロの内容に置き換えられる。 マクロには2種類ある。それらは、使用されるときのように見えるかが主に異なる。 @dfn{オブジェクト風}マクロはデータオブジェクトに似ているが、@dfn{関数風}マクロは関数呼び出しに似ている。
 
-You may define any valid identifier as a macro, even if it is a C
-keyword.  The preprocessor does not know anything about keywords.  This
-can be useful if you wish to hide a keyword such as @code{const} from an
-older compiler that does not understand it.  However, the preprocessor
-operator @code{defined} (@pxref{Defined}) can never be defined as a
-macro, and C++'s named operators (@pxref{C++ Named Operators}) cannot be
-macros when you are compiling C++.
+有効な識別子は、Cキーワードであっても、マクロとして定義することができる。 プリプロセッサはキーワードについて何も知らない。これは、@code{const}のようなキーワードを理解できない古いコンパイラから隠す場合に便利である。 ただし、プリプロセッサ演算子@code{defined}（@pxref{Defined}）はマクロとして決して定義することはできず、C ++をコンパイルするときにはC++の名前付き演算子（@pxref{C ++ Named Operators}）はマクロにはならない。
 
 @menu
 * Object-like Macros::
@@ -717,52 +707,37 @@ macros when you are compiling C++.
 @end menu
 
 @node Object-like Macros
-@section Object-like Macros
+@section オブジェクト風マクロ
 @cindex object-like macro
 @cindex symbolic constants
 @cindex manifest constants
 
-An @dfn{object-like macro} is a simple identifier which will be replaced
-by a code fragment.  It is called object-like because it looks like a
-data object in code that uses it.  They are most commonly used to give
-symbolic names to numeric constants.
+@dfn{オブジェクト風マクロ}はコードフラグメントに置き換えられる単純な識別子である。 それはそれを使用するコードのデータオブジェクトのように見えるので、オブジェクト風と呼ばれる。 これらは最も一般的には、数値定数に記号名を付けるために使用される。
 
 @findex #define
-You create macros with the @samp{#define} directive.  @samp{#define} is
-followed by the name of the macro and then the token sequence it should
-be an abbreviation for, which is variously referred to as the macro's
-@dfn{body}, @dfn{expansion} or @dfn{replacement list}.  For example,
+マクロは@samp{#define}ディレクティブで作成する。 @samp{#define}の後ろにはマクロの名前が続き、次に略語の元であるはずのトークンシーケンスが来て、それはマクロの@dfn{本体}、@dfn{展開}や@dfn{置換リスト}などとして参照される。 例えば、
 
 @smallexample
 #define BUFFER_SIZE 1024
 @end smallexample
 
 @noindent
-defines a macro named @code{BUFFER_SIZE} as an abbreviation for the
-token @code{1024}.  If somewhere after this @samp{#define} directive
-there comes a C statement of the form
+はトークン@code{1024}の略語として@code{BUFFER_SIZE}という名前のマクロを定義する。 この@samp{#define}ディレクティブの後のどこかに、以下の形のCステートメントが来たら
 
 @smallexample
 foo = (char *) malloc (BUFFER_SIZE);
 @end smallexample
 
 @noindent
-then the C preprocessor will recognize and @dfn{expand} the macro
-@code{BUFFER_SIZE}.  The C compiler will see the same tokens as it would
-if you had written
+Cプリプロセッサはマクロ@code{BUFFER_SIZE}を認識して@dfn{展開}する。 Cコンパイラは、以下のように書いたのと同じトークンを見るだろう。
 
 @smallexample
 foo = (char *) malloc (1024);
 @end smallexample
 
-By convention, macro names are written in uppercase.  Programs are
-easier to read when it is possible to tell at a glance which names are
-macros.
+慣例により、マクロ名は大文字で書かれている。 どの名前がマクロであるかを一目で確認することができるので、プログラムを読みやすくなる。
 
-The macro's body ends at the end of the @samp{#define} line.  You may
-continue the definition onto multiple lines, if necessary, using
-backslash-newline.  When the macro is expanded, however, it will all
-come out on one line.  For example,
+マクロの本体は@samp{#define}行の最後で終わる。 必要に応じて、バックスラッシュ改行を使用して複数の行に定義を続けることができる。 ただし、マクロを展開すると、すべて1行に出力される。 例えば、
 
 @smallexample
 #define NUMBERS 1, \
@@ -773,17 +748,11 @@ int x[] = @{ NUMBERS @};
 @end smallexample
 
 @noindent
-The most common visible consequence of this is surprising line numbers
-in error messages.
+これの最も一般的な目に見える結果は、エラーメッセージの驚くべき行番号である。
 
-There is no restriction on what can go in a macro body provided it
-decomposes into valid preprocessing tokens.  Parentheses need not
-balance, and the body need not resemble valid C code.  (If it does not,
-you may get error messages from the C compiler when you use the macro.)
+有効な前処理トークンに分解されるならば、マクロ本体に何が入ることができるかに制限はない。 括弧はバランスを取る必要はなく、本体は有効なCコードに似る必要はない。 （そうでなければ、マクロを使用するとCコンパイラからエラーメッセージが出る可能性がある）。
 
-The C preprocessor scans your program sequentially.  Macro definitions
-take effect at the place you write them.  Therefore, the following input
-to the C preprocessor
+Cプリプロセッサは、プログラムを順番にスキャンする。 マクロ定義は、作成した場所で有効になる。 したがって、Cプリプロセッサへの次の入力は
 
 @smallexample
 foo = X;
@@ -792,16 +761,14 @@ bar = X;
 @end smallexample
 
 @noindent
-produces
+以下を生成する。
 
 @smallexample
 foo = X;
 bar = 4;
 @end smallexample
 
-When the preprocessor expands a macro name, the macro's expansion
-replaces the macro invocation, then the expansion is examined for more
-macros to expand.  For example,
+プリプロセッサがマクロ名を展開すると、そのマクロの展開がマクロの呼び出しを置き換え、次に展開されてより多くのマクロが展開される。 例えば、
 
 @smallexample
 @group
@@ -814,20 +781,11 @@ TABLESIZE
 @end smallexample
 
 @noindent
-@code{TABLESIZE} is expanded first to produce @code{BUFSIZE}, then that
-macro is expanded to produce the final result, @code{1024}.
+@code{TABLESIZE}は最初に展開されて@code{BUFSIZE}を生成し、そのマクロは最後の結果である@code{1024}を生成するように展開される。
 
-Notice that @code{BUFSIZE} was not defined when @code{TABLESIZE} was
-defined.  The @samp{#define} for @code{TABLESIZE} uses exactly the
-expansion you specify---in this case, @code{BUFSIZE}---and does not
-check to see whether it too contains macro names.  Only when you
-@emph{use} @code{TABLESIZE} is the result of its expansion scanned for
-more macro names.
+@code{TABLESIZE}が定義されたときに、@code{BUFSIZE}が定義されていないことに注意せよ。 @code{TABLESIZE}の@samp{#define}は、指定した展開（この場合は@code{BUFSIZE}）をそのまま使用し、マクロ名が含まれているかどうかをチェックしない。 あなたが@code{TABLESIZE}を@emph{使った}ときだけ、その拡張の結果がより多くのマクロ名のためにスキャンされる。
 
-This makes a difference if you change the definition of @code{BUFSIZE}
-at some point in the source file.  @code{TABLESIZE}, defined as shown,
-will always expand using the definition of @code{BUFSIZE} that is
-currently in effect:
+これは、ソースファイルのある時点で@code{BUFSIZE}の定義を変更すると違いがある。 表示されているように定義された@code{TABLESIZE}は、現在有効な@code{BUFSIZE}の定義を使用して常に展開されます：
 
 @smallexample
 #define BUFSIZE 1020
@@ -837,21 +795,15 @@ currently in effect:
 @end smallexample
 
 @noindent
-Now @code{TABLESIZE} expands (in two stages) to @code{37}.
+@code{TABLESIZE}は（2段階で）@code{37}に展開される。
 
-If the expansion of a macro contains its own name, either directly or
-via intermediate macros, it is not expanded again when the expansion is
-examined for more macros.  This prevents infinite recursion.
-@xref{Self-Referential Macros}, for the precise details.
+マクロの展開に直接または中間のマクロを使用して自分の名前が含まれている場合は、さらにマクロの展開を調べるときには再び展開されまない。 これにより、無限の再帰が防止される。詳細は@xref{Self-Referential Macros}を参照せよ。
 
 @node Function-like Macros
-@section Function-like Macros
+@section 関数風マクロ
 @cindex function-like macros
 
-You can also define macros whose use looks like a function call.  These
-are called @dfn{function-like macros}.  To define a function-like macro,
-you use the same @samp{#define} directive, but you put a pair of
-parentheses immediately after the macro name.  For example,
+関数呼び出しのように見えるマクロを定義することもできる。 これらは@dfn{関数風マクロ}と呼ばれる。 関数風マクロを定義するには、同じ@samp{#define}疑似命令を使用するが、マクロ名の直後に括弧を入れる。 例えば、
 
 @smallexample
 #define lang_init()  c_init()
@@ -859,10 +811,7 @@ lang_init()
      @expansion{} c_init()
 @end smallexample
 
-A function-like macro is only expanded if its name appears with a pair
-of parentheses after it.  If you write just the name, it is left alone.
-This can be useful when you have a function and a macro of the same
-name, and you wish to use the function sometimes.
+関数風マクロは、その名前の後ろに一対のカッコがある場合にのみ展開される。 名前だけを書くと、それは放置される。 これは、関数と同じ名前のマクロがあり、その関数を時々使用したいときに便利である。
 
 @smallexample
 extern void foo(void);
@@ -872,14 +821,9 @@ extern void foo(void);
   funcptr = foo;
 @end smallexample
 
-Here the call to @code{foo()} will use the macro, but the function
-pointer will get the address of the real function.  If the macro were to
-be expanded, it would cause a syntax error.
+ここで@code{foo()}の呼び出しはマクロを使用するが、関数ポインタは実関数のアドレスを取得する。 マクロを展開していたら、構文エラーが発生するだろう。
 
-If you put spaces between the macro name and the parentheses in the
-macro definition, that does not define a function-like macro, it defines
-an object-like macro whose expansion happens to begin with a pair of
-parentheses.
+マクロ定義内のマクロ名とかっこの間にスペースを入れると、関数風マクロは定義されず、オブジェクト風マクロが定義される。そのマクロ展開はカッコで始まる。
 
 @smallexample
 #define lang_init ()    c_init()
@@ -887,10 +831,7 @@ lang_init()
      @expansion{} () c_init()()
 @end smallexample
 
-The first two pairs of parentheses in this expansion come from the
-macro.  The third is the pair that was originally after the macro
-invocation.  Since @code{lang_init} is an object-like macro, it does not
-consume those parentheses.
+この展開の括弧の最初の2つのペアはマクロから来ている。 3番目はマクロ呼び出しの元々だったペアである。 @code{lang_init}はオブジェクト風マクロなので、それらの括弧は消費しない。
 
 @node Macro Arguments
 @section Macro Arguments
