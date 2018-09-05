@@ -910,26 +910,15 @@ foo(bar)        @expansion{} bar, "x"
 @end smallexample
 
 @node Stringizing
-@section Stringizing
+@section 文字列化
 @cindex stringizing
 @cindex @samp{#} operator
 
-Sometimes you may want to convert a macro argument into a string
-constant.  Parameters are not replaced inside string constants, but you
-can use the @samp{#} preprocessing operator instead.  When a macro
-parameter is used with a leading @samp{#}, the preprocessor replaces it
-with the literal text of the actual argument, converted to a string
-constant.  Unlike normal parameter replacement, the argument is not
-macro-expanded first.  This is called @dfn{stringizing}.
+場合によっては、マクロ引数を文字列定数に変換することができる。 パラメータは文字列定数内では置き換えられないが、代わりに@samp{#}前処理演算子を使用することができる。 @samp{＃}の後ろにマクロパラメータを使用すると、プリプロセッサはそれを実際の引数のリテラルテキストに置き換え、文字列定数に変換する。 通常のパラメータ置換とは異なり、引数は最初にマクロ展開されない。 これは@dfn{文字列化}と呼ばれる。
 
-There is no way to combine an argument with surrounding text and
-stringize it all together.  Instead, you can write a series of adjacent
-string constants and stringized arguments.  The preprocessor
-replaces the stringized arguments with string constants.  The C
-compiler then combines all the adjacent string constants into one
-long string.
+引数を周囲のテキストと組み合わせて、それをすべて一緒に文字列化する方法はない。 代わりに、一連の隣接する文字列定数と文字列化された引数を書くことができる。 プリプロセッサは文字列化された引数を文字列定数に置き換える。 次に、Cコンパイラは、隣接するすべての文字列定数を1つの長い文字列に結合する。
 
-Here is an example of a macro definition that uses stringizing:
+文字列化を使用するマクロ定義の例を次に示す。
 
 @smallexample
 @group
@@ -944,35 +933,17 @@ WARN_IF (x == 0);
 @end smallexample
 
 @noindent
-The argument for @code{EXP} is substituted once, as-is, into the
-@code{if} statement, and once, stringized, into the argument to
-@code{fprintf}.  If @code{x} were a macro, it would be expanded in the
-@code{if} statement, but not in the string.
+@code{EXP}の引数は、現状の@code{if}文に一度代入され、一度文字列化されて@code{fprintf}の引数に代入される。 @code{x}がマクロの場合、@code{if}文で展開されるが、文字列には展開されない。
 
-The @code{do} and @code{while (0)} are a kludge to make it possible to
-write @code{WARN_IF (@var{arg});}, which the resemblance of
-@code{WARN_IF} to a function would make C programmers want to do; see
-@ref{Swallowing the Semicolon}.
+@code{do}と@code{while(0)}は、@code{WARN_IF}をCプログラマが望んでいるであろう関数と似せるように、@code{WARN_IF (@var{arg});}と書くことを可能にするための厄介なものである。 @ref{Swallowing the Semicolon}を参照せよ。
 
-Stringizing in C involves more than putting double-quote characters
-around the fragment.  The preprocessor backslash-escapes the quotes
-surrounding embedded string constants, and all backslashes within string and
-character constants, in order to get a valid C string constant with the
-proper contents.  Thus, stringizing @code{@w{p = "foo\n";}} results in
-@t{@w{"p = \"foo\\n\";"}}.  However, backslashes that are not inside string
-or character constants are not duplicated: @samp{\n} by itself
-stringizes to @t{"\n"}.
+Cでの文字列化は、フラグメントの前後に二重引用符を入れること以上のことである。 プリプロセッサは、適切な内容の有効なC文字列定数を得るために、埋め込み文字列定数を囲む引用符と、文字列定数と文字定数の中のすべてのバックスラッシュをバックスラッシュでエスケープする。 したがって、@code{@w{p = "foo\n";}}の文字列化は@t{@w{"p = \"foo\\n\";"}}になる。 しかし、文字列や文字定数の中にいないバックスラッシュは複製されない。@samp{\n}自体は@t{"\n"}に文字列化される。
 
-All leading and trailing whitespace in text being stringized is
-ignored.  Any sequence of whitespace in the middle of the text is
-converted to a single space in the stringized result.  Comments are
-replaced by whitespace long before stringizing happens, so they
-never appear in stringized text.
+文字列化されたテキストの先頭と末尾のすべての空白は無視される。 テキストの途中の空白のシーケンスは、文字列化された結果の単一のスペースに変換される。 コメントは、文字列化が起こるずっと前に空白文字に置き換えられているので、文字列化されたテキストには表示されない。
 
-There is no way to convert a macro argument into a character constant.
+マクロ引数を文字定数に変換する方法はない。
 
-If you want to stringize the result of expansion of a macro argument,
-you have to use two levels of macros.
+マクロ引数の展開結果を文字列化する場合は、2つのレベルのマクロを使用する必要がある。
 
 @smallexample
 #define xstr(s) str(s)
@@ -986,11 +957,7 @@ xstr (foo)
      @expansion{} "4"
 @end smallexample
 
-@code{s} is stringized when it is used in @code{str}, so it is not
-macro-expanded first.  But @code{s} is an ordinary argument to
-@code{xstr}, so it is completely macro-expanded before @code{xstr}
-itself is expanded (@pxref{Argument Prescan}).  Therefore, by the time
-@code{str} gets to its argument, it has already been macro-expanded.
+@code{s}は@code{str}で使用されているときには文字列化されているため、最初にマクロ展開されない。 しかし、@code{s}は@code{xstr}の普通の引数なので、@code{xstr}自体が展開される前に完全にマクロ展開される（@pxref{Argument Prescan}）。 したがって、@code{str}がその引数に到達するまでには、すでにマクロ展開されている。
 
 @node Concatenation
 @section Concatenation
