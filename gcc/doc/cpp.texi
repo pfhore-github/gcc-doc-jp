@@ -685,6 +685,7 @@ Cの標準でこの問題を解決する方法はないが、GNU拡張@samp{#inc
 @item
 @findex #pragma GCC system_header
 @code{@w{#pragma GCC system_header}}の指示文もある。これはGCCに現在のインクルードファイルの残りの部分をシステムヘッダと、見つかった場所に関係なく解釈する。 ファイル内の@samp{#pragma}より前にあるコードは影響を受けない。 @code{@w{#pragma GCC system_header}}はプライマリソースファイルには影響しない。
+@end itemize
 
 @node Macros
 @chapter マクロ
@@ -834,29 +835,16 @@ lang_init()
 この展開の括弧の最初の2つのペアはマクロから来ている。 3番目はマクロ呼び出しの元々だったペアである。 @code{lang_init}はオブジェクト風マクロなので、それらの括弧は消費しない。
 
 @node Macro Arguments
-@section Macro Arguments
+@section マクロ引数
 @cindex arguments
 @cindex macros with arguments
 @cindex arguments in macro definitions
 
-Function-like macros can take @dfn{arguments}, just like true functions.
-To define a macro that uses arguments, you insert @dfn{parameters}
-between the pair of parentheses in the macro definition that make the
-macro function-like.  The parameters must be valid C identifiers,
-separated by commas and optionally whitespace.
+関数風マクロは、真の関数と同様に@dfn{引数}をとることができる。 引数を使用するマクロを定義するには、@dfn{パラメータ}をマクロ定義の中のカッコの間に挿入する。 パラメータは、オプションで空白を含むカンマで区切られた有効なC識別子でなければならない。
 
-To invoke a macro that takes arguments, you write the name of the macro
-followed by a list of @dfn{actual arguments} in parentheses, separated
-by commas.  The invocation of the macro need not be restricted to a
-single logical line---it can cross as many lines in the source file as
-you wish.  The number of arguments you give must match the number of
-parameters in the macro definition.  When the macro is expanded, each
-use of a parameter in its body is replaced by the tokens of the
-corresponding argument.  (You need not use all of the parameters in the
-macro body.)
+引数を取るマクロを呼び出すには、マクロ名の後ろに括弧内にコンマで区切られた@dfn{実際の引数}のリストを書く。 マクロの呼び出しは、単一の論理行に限定する必要はない。ソースファイル内の行数を自由に変更できる。 引数の数は、マクロ定義内のパラメータの数と一致する必要がある。 マクロが展開されると、本体の各パラメータの使用は、対応する引数のトークンに置き換えられる。 （マクロ本体ですべてのパラメータを使用する必要はない）。
 
-As an example, here is a macro that computes the minimum of two numeric
-values, as it is defined in many C programs, and some uses.
+たとえば、多くのCプログラムで定義されているように、2つの数値の最小値を計算するマクロと、いくつかの用途がある。
 
 @smallexample
 #define min(X, Y)  ((X) < (Y) ? (X) : (Y))
@@ -866,42 +854,27 @@ values, as it is defined in many C programs, and some uses.
 @end smallexample
 
 @noindent
-(In this small example you can already see several of the dangers of
-macro arguments.  @xref{Macro Pitfalls}, for detailed explanations.)
+（この小さな例では、マクロ引数のいくつかの危険性を既に知ることができる。詳細は@xref{Macro Pitfalls}を参照せよ）。
 
-Leading and trailing whitespace in each argument is dropped, and all
-whitespace between the tokens of an argument is reduced to a single
-space.  Parentheses within each argument must balance; a comma within
-such parentheses does not end the argument.  However, there is no
-requirement for square brackets or braces to balance, and they do not
-prevent a comma from separating arguments.  Thus,
+各引数の先頭と末尾の空白は削除され、引数のトークン間の空白はすべて1つの空白に縮小される。 各引数の中のカッコは均衡していなければならない。 そのようなカッコ内のカンマは引数を終了しない。 ただし、角括弧または中括弧がバランスする必要はなく、カンマで引数を区切ることも防がない。 したがって、
 
 @smallexample
 macro (array[x = y, x + 1])
 @end smallexample
 
 @noindent
-passes two arguments to @code{macro}: @code{array[x = y} and @code{x +
-1]}.  If you want to supply @code{array[x = y, x + 1]} as an argument,
-you can write it as @code{array[(x = y, x + 1)]}, which is equivalent C
-code.
+は@code{array[x = y}と@code{x + 1]}の2つの引数を@code{macro}に渡す。 引数として@code{array[x = y, x + 1]}を指定したい場合は、等価のCコードである@code{array[(x = y, x + 1)]}と書くことができる。
 
-All arguments to a macro are completely macro-expanded before they are
-substituted into the macro body.  After substitution, the complete text
-is scanned again for macros to expand, including the arguments.  This rule
-may seem strange, but it is carefully designed so you need not worry
-about whether any function call is actually a macro invocation.  You can
-run into trouble if you try to be too clever, though.  @xref{Argument
-Prescan}, for detailed discussion.
+マクロへのすべての引数は、マクロ本体に代入される前に完全にマクロ展開される。 置換後、引数を含むマクロが展開されるように、テキスト全体が再度スキャンされる。 このルールは奇妙に見えるかもしれないが、注意深く設計されているので、関数呼び出しが実際にマクロ呼び出しであるかどうかを心配する必要はない。しかし、あなたはあまりにも賢くなろうとすると、困ってしまうことがある。 詳細は@xref{Argument Prescan}を参照せよ。
 
-For example, @code{min (min (a, b), c)} is first expanded to
+例えば、@code{min (min (a, b), c)}は最初に
 
 @smallexample
   min (((a) < (b) ? (a) : (b)), (c))
 @end smallexample
 
 @noindent
-and then to
+へと展開され、それから以下のように展開される
 
 @smallexample
 @group
@@ -912,14 +885,10 @@ and then to
 @end smallexample
 
 @noindent
-(Line breaks shown here for clarity would not actually be generated.)
+（分かりやすくするため、ここに示した改行は実際には生成されない）。
 
 @cindex empty macro arguments
-You can leave macro arguments empty; this is not an error to the
-preprocessor (but many macros will then expand to invalid code).
-You cannot leave out arguments entirely; if a macro takes two arguments,
-there must be exactly one comma at the top level of its argument list.
-Here are some silly examples using @code{min}:
+マクロ引数は空のままにすることができる。 これはプリプロセッサのエラーではない（ただし、多くのマクロは無効なコードに展開される）。引数を完全に省略することはできない。 マクロが2つの引数を取る場合は、その引数リストの最上位に1つのカンマが正確になければならない。 @code{min}を使ったいくつかのばかげた例がある：
 
 @smallexample
 min(, b)        @expansion{} ((   ) < (b) ? (   ) : (b))
@@ -931,15 +900,9 @@ min()      @error{} macro "min" requires 2 arguments, but only 1 given
 min(,,)    @error{} macro "min" passed 3 arguments, but takes just 2
 @end smallexample
 
-Whitespace is not a preprocessing token, so if a macro @code{foo} takes
-one argument, @code{@w{foo ()}} and @code{@w{foo ( )}} both supply it an
-empty argument.  Previous GNU preprocessor implementations and
-documentation were incorrect on this point, insisting that a
-function-like macro that takes a single argument be passed a space if an
-empty argument was required.
+空白は前処理トークンではないので、マクロ@code{foo}が1つの引数を取る場合、@code{@w{foo ()}}と@code{@w{foo ( )}}は空の引数を与える。 以前のGNUプリプロセッサの実装とドキュメントは、この時点では間違っていた。空の引数が必要な場合には、単一の引数を取る関数型マクロがスペースを渡すことを主張していた。
 
-Macro parameters appearing inside string literals are not replaced by
-their corresponding actual arguments.
+文字列リテラル内に現れるマクロパラメータは、対応する実際の引数に置き換えられない。
 
 @smallexample
 #define foo(x) x, "x"
