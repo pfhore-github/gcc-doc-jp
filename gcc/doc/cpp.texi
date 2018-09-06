@@ -960,53 +960,21 @@ xstr (foo)
 @code{s}は@code{str}で使用されているときには文字列化されているため、最初にマクロ展開されない。 しかし、@code{s}は@code{xstr}の普通の引数なので、@code{xstr}自体が展開される前に完全にマクロ展開される（@pxref{Argument Prescan}）。 したがって、@code{str}がその引数に到達するまでには、すでにマクロ展開されている。
 
 @node Concatenation
-@section Concatenation
+@section 連結
 @cindex concatenation
 @cindex token pasting
 @cindex token concatenation
 @cindex @samp{##} operator
 
-It is often useful to merge two tokens into one while expanding macros.
-This is called @dfn{token pasting} or @dfn{token concatenation}.  The
-@samp{##} preprocessing operator performs token pasting.  When a macro
-is expanded, the two tokens on either side of each @samp{##} operator
-are combined into a single token, which then replaces the @samp{##} and
-the two original tokens in the macro expansion.  Usually both will be
-identifiers, or one will be an identifier and the other a preprocessing
-number.  When pasted, they make a longer identifier.  This isn't the
-only valid case.  It is also possible to concatenate two numbers (or a
-number and a name, such as @code{1.5} and @code{e3}) into a number.
-Also, multi-character operators such as @code{+=} can be formed by
-token pasting.
+マクロを展開しながら2つのトークンを1つにマージすると便利なことがよくある。 これは@dfn{トークン貼り付け}または@dfn{トークン連結}と呼ばれる。 @samp{##}前処理演算子は、トークン貼り付けを実行する。 マクロが展開されると、各@samp{##}演算子の両側にある2つのトークンが1つのトークンに結合され、@samp{##}と2つの元のトークンがマクロ展開に置き換えられる。 通常、どちらも識別子である。さもなければ一方は識別子になり、もう一方は前処理番号になる。 ペーストすると、より長い識別子が作成される。これは唯一の有効なケースではない。 2つの数字（または@code{1.5}や@code{e3}などの数字と名前）を数字に連結することもできる。 また、@code{+=}のような複数文字の演算子は、トークンの貼り付けによって形成することができる。
 
-However, two tokens that don't together form a valid token cannot be
-pasted together.  For example, you cannot concatenate @code{x} with
-@code{+} in either order.  If you try, the preprocessor issues a warning
-and emits the two tokens.  Whether it puts white space between the
-tokens is undefined.  It is common to find unnecessary uses of @samp{##}
-in complex macros.  If you get this warning, it is likely that you can
-simply remove the @samp{##}.
+ただし、一緒に有効なトークンを構成しない2つのトークンを貼り付けることはできない。 たとえば、@code{x}をどちらの順序でも@code{+}に連結することはできない。 試行すると、プリプロセッサは警告を出して2つのトークンを発行する。 トークン間に空白を入れるかどうかは不定である。 複雑なマクロで@samp {##}を不必要に使用するのはよくあることである。 この警告が表示された場合は、単に@samp{##}を削除することができる。
 
-Both the tokens combined by @samp{##} could come from the macro body,
-but you could just as well write them as one token in the first place.
-Token pasting is most useful when one or both of the tokens comes from a
-macro argument.  If either of the tokens next to an @samp{##} is a
-parameter name, it is replaced by its actual argument before @samp{##}
-executes.  As with stringizing, the actual argument is not
-macro-expanded first.  If the argument is empty, that @samp{##} has no
-effect.
+@samp{##}で結合されたトークンはどちらもマクロ本体から来る可能性があるが、最初のトークンとして書き込むこともできる。 トークンの貼り付けは、トークンの一方または両方がマクロ引数から来た場合に最も便利である。 @samp{##}の隣にあるトークンのいずれかがパラメータ名である場合、@samp{##}が実行される前にその実際の引数に置き換えられる。 文字列化の場合と同様に、実際の引数は最初にマクロ展開されない。 引数が空の場合、@samp{##}は効果がない。
 
-Keep in mind that the C preprocessor converts comments to whitespace
-before macros are even considered.  Therefore, you cannot create a
-comment by concatenating @samp{/} and @samp{*}.  You can put as much
-whitespace between @samp{##} and its operands as you like, including
-comments, and you can put comments in arguments that will be
-concatenated.  However, it is an error if @samp{##} appears at either
-end of a macro body.
+Cプリプロセッサは、マクロが考慮される前にコメントを空白に変換することに注意せよ。 したがって、@samp{/}と@samp {*}を連結してコメントを作成することはできない。 @samp{##}とそのオペランドの間に、コメントを含めてたくさんの空白を入れることができる。また、連結する引数にコメントを入れることができる。 しかし、@samp{##}がマクロ本体のどちらかの端に現れるとエラーになる。
 
-Consider a C program that interprets named commands.  There probably
-needs to be a table of commands, perhaps an array of structures declared
-as follows:
+名前付きコマンドを解釈するCプログラムを考える。 おそらく、次のように宣言された構造体の配列のようなコマンドの表が必要である。
 
 @smallexample
 @group
@@ -1027,11 +995,7 @@ struct command commands[] =
 @end group
 @end smallexample
 
-It would be cleaner not to have to give each command name twice, once in
-the string constant and once in the function name.  A macro which takes the
-name of a command as an argument can make this unnecessary.  The string
-constant can be created with stringizing, and the function name by
-concatenating the argument with @samp{_command}.  Here is how it is done:
+各コマンド名を文字列定数に1回、関数名に1回ずつ指定する必要はない。 コマンドの名前を引数とするマクロは、これを不要にすることができる。 文字列定数は文字列で作成でき、関数名は引数を@samp{_command}で連結して作成できる。 ここでそれが行われるやり方である：
 
 @smallexample
 #define COMMAND(NAME)  @{ #NAME, NAME ## _command @}
@@ -1045,80 +1009,54 @@ struct command commands[] =
 @end smallexample
 
 @node Variadic Macros
-@section Variadic Macros
+@section 可変長マクロ
 @cindex variable number of arguments
 @cindex macros with variable arguments
 @cindex variadic macros
 
-A macro can be declared to accept a variable number of arguments much as
-a function can.  The syntax for defining the macro is similar to that of
-a function.  Here is an example:
+マクロは関数のように可変長の引数を受け入れるように宣言することができる。 マクロを定義する構文は、関数の構文に似ている。 次に例を示す。
 
 @smallexample
 #define eprintf(@dots{}) fprintf (stderr, __VA_ARGS__)
 @end smallexample
 
-This kind of macro is called @dfn{variadic}.  When the macro is invoked,
-all the tokens in its argument list after the last named argument (this
-macro has none), including any commas, become the @dfn{variable
-argument}.  This sequence of tokens replaces the identifier
-@code{@w{__VA_ARGS__}} in the macro body wherever it appears.  Thus, we
-have this expansion:
+この種のマクロは@dfn{可変長}と呼ばれる。 マクロが呼び出されると、最後に指定された引数（このマクロではなし）の後の引数リストのすべてのトークンは、カンマを含めて@dfn{可変引数}になる。 この一連のトークンは、マクロ本体の識別子@code{@w{__VA_ARGS__}}をどこにでも置き換える。 したがって、私たちはこのように展開する：
 
 @smallexample
 eprintf ("%s:%d: ", input_file, lineno)
      @expansion{}  fprintf (stderr, "%s:%d: ", input_file, lineno)
 @end smallexample
 
-The variable argument is completely macro-expanded before it is inserted
-into the macro expansion, just like an ordinary argument.  You may use
-the @samp{#} and @samp{##} operators to stringize the variable argument
-or to paste its leading or trailing token with another token.  (But see
-below for an important special case for @samp{##}.)
+可変引数は、通常の引数と同様に、マクロ展開に挿入される前に完全にマクロ展開される。 @samp{#}と@samp{##}演算子を使用して可変引数を文字列化するか、先頭または末尾のトークンを別のトークンに貼り付けることができる。 （しかし、@samp{##}の重要な特別なケースについては以下を参照せよ）。
 
-If your macro is complicated, you may want a more descriptive name for
-the variable argument than @code{@w{__VA_ARGS__}}.  CPP permits
-this, as an extension.  You may write an argument name immediately
-before the @samp{@dots{}}; that name is used for the variable argument.
-The @code{eprintf} macro above could be written
+マクロが複雑な場合は、@code{@w{__VA_ARGS__}}よりも可変引数の方がわかりやすい名前が必要な場合がある。 CPPはこれを拡張として許可する。 @samp{@dots{}}の直前に引数名を書くことができる。 その名前は可変引数に使用される。 上記の@code{eprintf}マクロをこの拡張で次のように書くことができる。
 
 @smallexample
 #define eprintf(args@dots{}) fprintf (stderr, args)
 @end smallexample
 
 @noindent
-using this extension.  You cannot use @code{@w{__VA_ARGS__}} and this
-extension in the same macro.
+同じマクロで@code{@w{__VA_ARGS__}}とこの拡張を使うことはできない。
 
-You can have named arguments as well as variable arguments in a variadic
-macro.  We could define @code{eprintf} like this, instead:
+可変引数マクロで可変引数だけでなく名前付き引数もを持つことができる。 代わりに以下のように@code {eprintf}を定義することができる：
 
 @smallexample
 #define eprintf(format, @dots{}) fprintf (stderr, format, __VA_ARGS__)
 @end smallexample
 
 @noindent
-This formulation looks more descriptive, but historically it was less
-flexible: you had to supply at least one argument after the format
-string.  In standard C, you could not omit the comma separating the
-named argument from the variable arguments.  (Note that this
-restriction has been lifted in C++2a, and never existed in GNU C; see
-below.)
+この定式化はよりわかりやすいように見えるが、歴史的には柔軟性がより少なかった。書式文字列の後に少なくとも1つの引数を指定する必要があった。 標準Cでは、名前付き引数と可変引数を区切るカンマを省略できなかった。 （この制限はC++2aで解消されていて、GNU Cには存在しなかったことに注意せよ;下記参照）。
 
-Furthermore, if you left the variable argument empty, you would have
-gotten a syntax error, because there would have been an extra comma
-after the format string.
+さらに、可変引数を空のままにしておくと、書式文字列の後に余分なカンマがあるため、構文エラーが発生する。
 
 @smallexample
 eprintf("success!\n", );
      @expansion{} fprintf(stderr, "success!\n", );
 @end smallexample
 
-This has been fixed in C++2a, and GNU CPP also has a pair of
-extensions which deal with this problem.
+これはC++2aで修正されていて、GNU CPPにもこの問題に対処する拡張機能がある。
 
-First, in GNU CPP, and in C++ beginning in C++2a, you are allowed to
-leave the variable argument out entirely:
+まず、GNU CPPとC++2aで始まるC++では、可変引数を完全に空にしておくことができる：
 
 @smallexample
 eprintf ("success!\n")
@@ -1126,34 +1064,23 @@ eprintf ("success!\n")
 @end smallexample
 
 @noindent
-Second, C++2a introduces the @code{@w{__VA_OPT__}} function macro.
-This macro may only appear in the definition of a variadic macro.  If
-the variable argument has any tokens, then a @code{@w{__VA_OPT__}}
-invocation expands to its argument; but if the variable argument does
-not have any tokens, the @code{@w{__VA_OPT__}} expands to nothing:
+次に、C++2aは@code{@w{__VA_OPT__}}関数マクロを導入した。 このマクロは、可変長マクロの定義にのみ現れる。 変数の引数にトークンがある場合、@code{@w{__VA_OPT__}}の呼び出しは引数に展開される。 可変引数にトークンがない場合、@code{@w{__VA_OPT__}}は何も展開しない：
 
 @smallexample
 #define eprintf(format, @dots{}) \
   fprintf (stderr, format __VA_OPT__(,) __VA_ARGS__)
 @end smallexample
 
-@code{@w{__VA_OPT__}} is also available in GNU C and GNU C++.
+@code{@w{__VA_OPT__}}は、GNU CとGNU C++でも利用できる。
 
-Historically, GNU CPP has also had another extension to handle the
-trailing comma: the @samp{##} token paste operator has a special
-meaning when placed between a comma and a variable argument.  Despite
-the introduction of @code{@w{__VA_OPT__}}, this extension remains
-supported in GNU CPP, for backward compatibility.  If you write
+歴史的に、GNU CPPには、後続のカンマを扱うための別の拡張もあった。@samp{##}トークンペースト演算子は、コンマと可変引数の間に置かれたときに特別な意味を持つ。 @code{@w{__VA_OPT__}}の導入にもかかわらず、この拡張機能は下位互換性のためにGNU CPPでサポートされている。 こう書くなら
 
 @smallexample
 #define eprintf(format, @dots{}) fprintf (stderr, format, ##__VA_ARGS__)
 @end smallexample
 
 @noindent
-and the variable argument is left out when the @code{eprintf} macro is
-used, then the comma before the @samp{##} will be deleted.  This does
-@emph{not} happen if you pass an empty argument, nor does it happen if
-the token preceding @samp{##} is anything other than a comma.
+そして@code{eprintf}マクロが使用されているときに可変引数が指定されていない場合、@samp{##}の前のコンマは削除される。 空の引数を渡すなら起こ@emph{らず}、@samp{##}の前のトークンがカンマ以外の場合も起こらない。
 
 @smallexample
 eprintf ("success!\n")
@@ -1161,29 +1088,13 @@ eprintf ("success!\n")
 @end smallexample
 
 @noindent
-The above explanation is ambiguous about the case where the only macro
-parameter is a variable arguments parameter, as it is meaningless to
-try to distinguish whether no argument at all is an empty argument or
-a missing argument.  
-CPP retains the comma when conforming to a specific C
-standard.  Otherwise the comma is dropped as an extension to the standard.
+上記の説明は、引数が空の引数か欠けている引数かを区別しようとする意味がないので、唯一のマクロパラメータが可変の引数パラメータである場合についてはあいまいである。 CPPは特定のC標準に準拠している場合はカンマを保持する。 それ以外の場合は、標準への拡張子としてカンマが削除される。
 
-The C standard 
-mandates that the only place the identifier @code{@w{__VA_ARGS__}}
-can appear is in the replacement list of a variadic macro.  It may not
-be used as a macro name, macro argument name, or within a different type
-of macro.  It may also be forbidden in open text; the standard is
-ambiguous.  We recommend you avoid using it except for its defined
-purpose.
+Cの標準では、識別子@code{@w{__ VA_ARGS__}}が現れる唯一の場所は可変長マクロの置換リストにあることを要求している。 マクロ名、マクロ引数名、または別の種類のマクロ内で使用することはできない。 オープンテキストでも禁止されているかもしれない。 標準はあいまいである。 定義された目的以外には使用しないことを推奨する。
 
-Likewise, C++ forbids @code{@w{__VA_OPT__}} anywhere outside the
-replacement list of a variadic macro.
+同様に、C ++は可変長マクロの置換リストの外のどこにでも@code{@w {__ VA_OPT__}}を禁じる。
 
-Variadic macros became a standard part of the C language with C99.  
-GNU CPP previously supported them
-with a named variable argument
-(@samp{args@dots{}}, not @samp{@dots{}} and @code{@w{__VA_ARGS__}}), which
-is still supported for backward compatibility.
+可変長マクロは、C99のC言語の標準部分になった。 GNU CPPはこれまで、@samp{@dots {}}や@code{@w{__ VA_ARGS__}}ではなく、名前の変更可能な引数（@samp{args @dots{}}）をサポートしていた。
 
 @node Predefined Macros
 @section Predefined Macros
