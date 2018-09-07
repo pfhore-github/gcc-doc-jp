@@ -1097,15 +1097,12 @@ Cの標準では、識別子@code{@w{__ VA_ARGS__}}が現れる唯一の場所�
 可変長マクロは、C99のC言語の標準部分になった。 GNU CPPはこれまで、@samp{@dots {}}や@code{@w{__ VA_ARGS__}}ではなく、名前の変更可能な引数（@samp{args @dots{}}）をサポートしていた。
 
 @node Predefined Macros
-@section Predefined Macros
+@section 定義済みマクロ
 
 @cindex predefined macros
-Several object-like macros are predefined; you use them without
-supplying their definitions.  They fall into three classes: standard,
-common, and system-specific.
+いくつかのオブジェクト風マクロがあらかじめ定義されている。 定義を提供せずにそれらを使用する。 標準、共通、システム固有の3つのクラスに分類される。
 
-In C++, there is a fourth category, the named operators.  They act like
-predefined macros, but you cannot undefine them.
+C++には、名前付き演算子の4つ目のカテゴリがある。 定義済みマクロのように動作するが、マクロを定義解除することはできない。
 
 @menu
 * Standard Predefined Macros::
@@ -1115,34 +1112,20 @@ predefined macros, but you cannot undefine them.
 @end menu
 
 @node Standard Predefined Macros
-@subsection Standard Predefined Macros
+@subsection 標準の定義済みマクロ
 @cindex standard predefined macros.
 
-The standard predefined macros are specified by the relevant
-language standards, so they are available with all compilers that
-implement those standards.  Older compilers may not provide all of
-them.  Their names all start with double underscores.
+標準の定義済みマクロは、関連する言語標準によって指定されているため、これらの標準を実装するすべてのコンパイラで使用できる。 古いコンパイラはそれらのすべてを提供するわけではない。 それらの名前はすべて二重のアンダースコアで始まる。
 
 @table @code
 @item __FILE__
-This macro expands to the name of the current input file, in the form of
-a C string constant.  This is the path by which the preprocessor opened
-the file, not the short name specified in @samp{#include} or as the
-input file name argument.  For example,
-@code{"/usr/local/include/myheader.h"} is a possible expansion of this
-macro.
+このマクロは、Cの文字列定数の形で現在の入力ファイルの名前に展開される。 これは、プリプロセッサが@samp{#include}で指定された短い名前ではなく、入力ファイル名の引数としてファイルを開いたパスである。 たとえば、このマクロの拡張子は@code{"/usr/local/include/myheader.h"}である。
 
 @item __LINE__
-This macro expands to the current input line number, in the form of a
-decimal integer constant.  While we call it a predefined macro, it's
-a pretty strange macro, since its ``definition'' changes with each
-new line of source code.
+このマクロは、現在の入力行番号に10進整数定数の形式で展開される。 定義済みマクロと呼ばれているが、新しい定義のソースコードごとに「定義」が変わるので、かなり奇妙なマクロである。
 @end table
 
-@code{__FILE__} and @code{__LINE__} are useful in generating an error
-message to report an inconsistency detected by the program; the message
-can state the source line at which the inconsistency was detected.  For
-example,
+@code{__FILE__}と@code{__LINE__}は、プログラムによって検出された不一致を報告するエラーメッセージを生成するのに便利である。 メッセージは、矛盾が検出されたソース行を示すことができる。 例えば、
 
 @smallexample
 fprintf (stderr, "Internal error: "
@@ -1151,108 +1134,49 @@ fprintf (stderr, "Internal error: "
          length, __FILE__, __LINE__);
 @end smallexample
 
-An @samp{#include} directive changes the expansions of @code{__FILE__}
-and @code{__LINE__} to correspond to the included file.  At the end of
-that file, when processing resumes on the input file that contained
-the @samp{#include} directive, the expansions of @code{__FILE__} and
-@code{__LINE__} revert to the values they had before the
-@samp{#include} (but @code{__LINE__} is then incremented by one as
-processing moves to the line after the @samp{#include}).
+@samp{#include}ディレクティブはインクルードされたファイルに対応するように@code{__FILE__}と@code {__LINE__}の展開を変更する。 そのファイルの最後に@samp{#include}ディレクティブを含む入力ファイルで処理が再開されると、@code{__FILE__}と@code{__LINE__}の展開が@samp{#include}の前に戻される。（しかし@code{__ LINE__}は@samp {#include}の後の行に処理が移るにつれて1だけインクリメントされる）。
 
-A @samp{#line} directive changes @code{__LINE__}, and may change
-@code{__FILE__} as well.  @xref{Line Control}.
+@samp{#line}ディレクティブは@code{__LINE__}を変更し、@code{__ FILE__}も変更する可能性がある。@xref{Line Control}。
 
-C99 introduced @code{__func__}, and GCC has provided @code{__FUNCTION__}
-for a long time.  Both of these are strings containing the name of the
-current function (there are slight semantic differences; see the GCC
-manual).  Neither of them is a macro; the preprocessor does not know the
-name of the current function.  They tend to be useful in conjunction
-with @code{__FILE__} and @code{__LINE__}, though.
+C99は@code{__func__}を導入し、GCCは@code{__FUNCTION__}を長年提供している。 どちらも現在の関数の名前を含む文字列である（わずかな意味の違いがある; GCCのマニュアルを参照せよ）。 どちらもマクロではない。 プリプロセッサは現在の関数の名前を知らない。 しかし、@code{__ FILE__}や@code {__ LINE__}と組み合わせて使うと便利である。
 
 @table @code
 
 @item __DATE__
-This macro expands to a string constant that describes the date on which
-the preprocessor is being run.  The string constant contains eleven
-characters and looks like @code{@w{"Feb 12 1996"}}.  If the day of the
-month is less than 10, it is padded with a space on the left.
+このマクロは、プリプロセッサが実行されている日付を表す文字列定数に展開される。 文字列定数は11文字を含み、@code{@w{"Feb 12 1996"}}のように見える。 月の日が10未満の場合は、左側のスペースが埋められる。
 
-If GCC cannot determine the current date, it will emit a warning message
-(once per compilation) and @code{__DATE__} will expand to
-@code{@w{"??? ?? ????"}}.
+GCCが現在の日付を判断できない場合、警告メッセージが表示され（コンパイルごとに1回）、@code{__DATE__}は{@w{"??? ?? ????"}}に展開される。
 
 @item __TIME__
-This macro expands to a string constant that describes the time at
-which the preprocessor is being run.  The string constant contains
-eight characters and looks like @code{"23:59:01"}.
+このマクロは、プリプロセッサが実行されている時間を表す文字列定数に展開される。 文字列定数は8文字を含み、@code{"23:59:01"}のように見える。
 
-If GCC cannot determine the current time, it will emit a warning message
-(once per compilation) and @code{__TIME__} will expand to
-@code{"??:??:??"}.
+GCCが現在の時刻を判断できない場合、警告メッセージ（コンパイルごとに1回）が出力され、@code{__TIME__}は@code{"??:??:??"}に展開される。
 
 @item __STDC__
-In normal operation, this macro expands to the constant 1, to signify
-that this compiler conforms to ISO Standard C@.  If GNU CPP is used with
-a compiler other than GCC, this is not necessarily true; however, the
-preprocessor always conforms to the standard unless the
-@option{-traditional-cpp} option is used.
+通常の操作では、このマクロは定数1に展開され、このコンパイラがISO標準Cに準拠していることを示す。 GCC以外のコンパイラでGNU CPPを使用する場合、これは必ずしも真実ではない。 ただし、@option{-traditional-cpp}オプションを使用しない限り、プリプロセッサは常に標準に準拠している。
 
-This macro is not defined if the @option{-traditional-cpp} option is used.
+このマクロは、@option {-traditional-cpp}オプションが使用されている場合は定義されていない。
 
-On some hosts, the system compiler uses a different convention, where
-@code{__STDC__} is normally 0, but is 1 if the user specifies strict
-conformance to the C Standard.  CPP follows the host convention when
-processing system header files, but when processing user files
-@code{__STDC__} is always 1.  This has been reported to cause problems;
-for instance, some versions of Solaris provide X Windows headers that
-expect @code{__STDC__} to be either undefined or 1.  @xref{Invocation}.
+一部のホストでは、システムコンパイラは@code{__ STDC__}が通常0である別の規則を使用するが、ユーザーがC標準に厳密に準拠していると指定した場合は1になる。 CPPはシステムのヘッダファイルを処理する際にホスト規約に従うが、ユーザファイルの処理時には@code{__STDC__}は常に1である。これは問題を引き起こすと報告されている。 たとえば、Solarisの一部のバージョンでは、@code{__ STDC__}が未定義または1であると予想されるX Windowsヘッダを提供している。 @xref{Invocation}.
 
 @item __STDC_VERSION__
-This macro expands to the C Standard's version number, a long integer
-constant of the form @code{@var{yyyy}@var{mm}L} where @var{yyyy} and
-@var{mm} are the year and month of the Standard version.  This signifies
-which version of the C Standard the compiler conforms to.  Like
-@code{__STDC__}, this is not necessarily accurate for the entire
-implementation, unless GNU CPP is being used with GCC@.
+このマクロは、@code{@var{yyyy}@var{mm}L}という形式の長い整数定数であるC標準のバージョン番号に展開される。ここで、@var{yyyy}と@var{mm}は標準バージョンの年と月である。 これは、コンパイラが準拠しているC標準のバージョンを示している。 @code{__STDC__}と同様、GCCでGNU CPPを使用していない限り、実装全体では必ずしも正確ではない。
 
-The value @code{199409L} signifies the 1989 C standard as amended in
-1994, which is the current default; the value @code{199901L} signifies
-the 1999 revision of the C standard; the value @code{201112L}
-signifies the 2011 revision of the C standard; the value
-@code{201710L} signifies the 2017 revision of the C standard (which is
-otherwise identical to the 2011 version apart from correction of
-defects).
+値@code{199409L}は、1994年に修正された1989 C標準を意味し、現在のデフォルトである。 値@code{199901L}は1999年のC標準の改訂を意味する。 値@code{201112L}はC標準の2011改訂版を表している。 値@code{201710L}は、C標準の2017改訂版を表す（欠陥の修正以外では2011年版と同じである）。
 
-This macro is not defined if the @option{-traditional-cpp} option is
-used, nor when compiling C++ or Objective-C@.
+このマクロは、@option{-traditional-cpp}オプションが使用されている場合、またはC++またはObjective-Cのコンパイル時には定義されない。
 
 @item __STDC_HOSTED__
-This macro is defined, with value 1, if the compiler's target is a
-@dfn{hosted environment}.  A hosted environment has the complete
-facilities of the standard C library available.
+コンパイラのターゲットが@dfn{ホスト環境}の場合、このマクロは値1で定義される。 ホスト環境には、標準Cライブラリの完全な機能がある。
 
 @item __cplusplus
-This macro is defined when the C++ compiler is in use.  You can use
-@code{__cplusplus} to test whether a header is compiled by a C compiler
-or a C++ compiler.  This macro is similar to @code{__STDC_VERSION__}, in
-that it expands to a version number.  Depending on the language standard
-selected, the value of the macro is
-@code{199711L} for the 1998 C++ standard,
-@code{201103L} for the 2011 C++ standard,
-@code{201402L} for the 2014 C++ standard,
-@code{201703L} for the 2017 C++ standard,
-or an unspecified value strictly larger than @code{201703L} for the
-experimental languages enabled by @option{-std=c++2a} and
-@option{-std=gnu++2a}.
+このマクロは、C++コンパイラが使用されているときに定義される。 @code{__ cplusplus}を使用して、ヘッダがCコンパイラとC++コンパイラのどちらによってコンパイルされているかどうかをテストすることができる。 このマクロは、バージョン番号に展開される点で@code{__STDC_VERSION__}に似ている。 選択された言語標準に応じて、マクロの値は、1998 C++標準の場合は@code{199711L}、2011 C++標準の場合は@code{201103L}、2014 C++標準の場合は@code{201402L}、2017 C++標準の場合は@code{201703L }、または@option {-std=c++2a}および@option{-std=gnu++2a}で有効になっている実験的言語の場合は、@code{201703L}より厳密に大きい不特定の値である。
 
 @item __OBJC__
-This macro is defined, with value 1, when the Objective-C compiler is in
-use.  You can use @code{__OBJC__} to test whether a header is compiled
-by a C compiler or an Objective-C compiler.
+Objective-Cコンパイラが使用されている場合、このマクロは値1で定義される。 @code{__OBJC__}を使用して、ヘッダがCコンパイラとObjective-Cコンパイラのどちらによってコンパイルされているかどうかをテストすることができる。
 
 @item __ASSEMBLER__
-This macro is defined with value 1 when preprocessing assembly
-language.
+このマクロは、アセンブリ言語を前処理するときに値1で定義される。
 
 @end table
 
