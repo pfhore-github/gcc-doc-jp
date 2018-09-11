@@ -1526,44 +1526,19 @@ GCCが現在の日付を判断できない場合、警告メッセージ（コ�
 @end table
 
 @node System-specific Predefined Macros
-@subsection System-specific Predefined Macros
+@subsection システム固有の定義済みマクロ
 
 @cindex system-specific predefined macros
 @cindex predefined macros, system-specific
 @cindex reserved namespace
 
-The C preprocessor normally predefines several macros that indicate what
-type of system and machine is in use.  They are obviously different on
-each target supported by GCC@.  This manual, being for all systems and
-machines, cannot tell you what their names are, but you can use
-@command{cpp -dM} to see them all.  @xref{Invocation}.  All system-specific
-predefined macros expand to a constant value, so you can test them with
-either @samp{#ifdef} or @samp{#if}.
+Cプリプロセッサは通常、どのタイプのシステムとマシンが使用されているかを示すいくつかのマクロを事前に定義している。 それらは明らかにGCCによってサポートされている各ターゲットで異なる。 このマニュアルでは、すべてのシステムとマシンで使用されている名前を出すことはできないが、@command{cpp -dM}を使ってそれらのすべてを見ることができる。 @xref{Invocation}。 システム固有の定義済みマクロはすべて定数値に展開されるため、@samp{#ifdef}または@samp{#if}のいずれかを使用してテストできる。
 
-The C standard requires that all system-specific macros be part of the
-@dfn{reserved namespace}.  All names which begin with two underscores,
-or an underscore and a capital letter, are reserved for the compiler and
-library to use as they wish.  However, historically system-specific
-macros have had names with no special prefix; for instance, it is common
-to find @code{unix} defined on Unix systems.  For all such macros, GCC
-provides a parallel macro with two underscores added at the beginning
-and the end.  If @code{unix} is defined, @code{__unix__} will be defined
-too.  There will never be more than two underscores; the parallel of
-@code{_mips} is @code{__mips__}.
+C標準では、すべてのシステム固有のマクロが@dfn{予約済み名前空間}の一部であることが必要である。 2つのアンダースコア、またはアンダースコアと大文字で始まるすべての名前は、コンパイラとライブラリが望むように使用するために予約されている。 しかし、歴史的にシステム特有のマクロは特別な接頭辞を持たない名前を持っていた。 たとえば、Unixシステムで@code{unix}が定義されているのが一般的である。 このようなすべてのマクロでは、GCCは最初と最後に2つのアンダースコアが追加された並列マクロを提供しる。 @code{unix}が定義されている場合、@code{__unix__}も定義される。 二つ以上のアンダースコアはない。 @code{_mips}のパラレルは@code{__mips__}である。
 
-When the @option{-ansi} option, or any @option{-std} option that
-requests strict conformance, is given to the compiler, all the
-system-specific predefined macros outside the reserved namespace are
-suppressed.  The parallel macros, inside the reserved namespace, remain
-defined.
+厳密な適合を要求する@option{-ansi}オプションまたは@option{-std}オプションがコンパイラに渡されると、予約された名前空間外のすべてのシステム固有の事前定義されたマクロは抑制される。 予約された名前空間内の並列マクロは定義されたままである。
 
-We are slowly phasing out all predefined macros which are outside the
-reserved namespace.  You should never use them in new programs, and we
-encourage you to correct older code to use the parallel macros whenever
-you find it.  We don't recommend you use the system-specific macros that
-are in the reserved namespace, either.  It is better in the long run to
-check specifically for features you need, using a tool such as
-@command{autoconf}.
+予約された名前空間の外にあるすべての定義済みマクロを少しずつ段階的に削除している。 新しいプログラムでは決して使用すべきでない。古いコードを見つけたら、いつでも並列マクロを使用するように修正することを推奨する。 予約済みの名前空間にあるシステム固有のマクロを使用することも推奨はしない。 長期的には、@command{autoconf}のようなツールを使って、必要な機能を具体的にチェックする方が良いだろう。
 
 @node C++ Named Operators
 @subsection C++ Named Operators
