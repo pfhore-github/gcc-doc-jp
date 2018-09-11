@@ -1541,20 +1541,14 @@ C標準では、すべてのシステム固有のマクロが@dfn{予約済み�
 予約された名前空間の外にあるすべての定義済みマクロを少しずつ段階的に削除している。 新しいプログラムでは決して使用すべきでない。古いコードを見つけたら、いつでも並列マクロを使用するように修正することを推奨する。 予約済みの名前空間にあるシステム固有のマクロを使用することも推奨はしない。 長期的には、@command{autoconf}のようなツールを使って、必要な機能を具体的にチェックする方が良いだろう。
 
 @node C++ Named Operators
-@subsection C++ Named Operators
+@subsection C++名前付き演算子
 @cindex named operators
 @cindex C++ named operators
 @cindex @file{iso646.h}
 
-In C++, there are eleven keywords which are simply alternate spellings
-of operators normally written with punctuation.  These keywords are
-treated as such even in the preprocessor.  They function as operators in
-@samp{#if}, and they cannot be defined as macros or poisoned.  In C, you
-can request that those keywords take their C++ meaning by including
-@file{iso646.h}.  That header defines each one as a normal object-like
-macro expanding to the appropriate punctuator.
+C++には、11個のキーワードがある。これらのキーワードは、通常、句読点で書かれた演算子の代わりのスペルである。 これらのキーワードは、プリプロセッサでも同様に扱われる。 それらは@samp{#if}の演算子として機能し、マクロまたは中毒として定義することはできない。 Cでは、@file{iso646.h}をインクルードすることによって、それらのキーワードがC++の意味を持つことを要求できる。 そのヘッダーは、それぞれを適切な句読点に展開する通常のオブジェクトのようなマクロとして定義する。
 
-These are the named operators and their corresponding punctuators:
+これらは、名前付き演算子と対応する句読点である。
 
 @multitable {Named Operator} {Punctuator}
 @item Named Operator @tab Punctuator
