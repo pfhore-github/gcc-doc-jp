@@ -1181,46 +1181,25 @@ Objective-Cコンパイラが使用されている場合、このマクロは値
 @end table
 
 @node Common Predefined Macros
-@subsection Common Predefined Macros
+@subsection 共通定義済みマクロ
 @cindex common predefined macros
 
-The common predefined macros are GNU C extensions.  They are available
-with the same meanings regardless of the machine or operating system on
-which you are using GNU C or GNU Fortran.  Their names all start with
-double underscores.
+一般的に定義されているマクロはGNU Cの拡張である。 それらは、GNU CまたはGNU Fortranを使用しているマシンまたはオペレーティングシステムに関係なく、同じ意味で使用できる。 それらの名前はすべて二重のアンダースコアで始まる。
 
 @table @code
 
 @item __COUNTER__
-This macro expands to sequential integral values starting from 0.  In
-conjunction with the @code{##} operator, this provides a convenient means to
-generate unique identifiers.  Care must be taken to ensure that
-@code{__COUNTER__} is not expanded prior to inclusion of precompiled headers
-which use it.  Otherwise, the precompiled headers will not be used.
+このマクロは0から始まる連続整数値に展開される。これは@code{##}演算子と組み合わせて、一意の識別子を生成する便利な手段を提供する。 @code{__ COUNTER__}がそれを使用するプリコンパイルされたヘッダをインクルードする前に展開されないように注意する必要がある。 そうしないと、プリコンパイルされたヘッダーは使用されない。
 
 @item __GFORTRAN__
-The GNU Fortran compiler defines this.
+GNU Fortranコンパイラはこれを定義している。
 
 @item __GNUC__
 @itemx __GNUC_MINOR__
 @itemx __GNUC_PATCHLEVEL__
-These macros are defined by all GNU compilers that use the C
-preprocessor: C, C++, Objective-C and Fortran.  Their values are the major
-version, minor version, and patch level of the compiler, as integer
-constants.  For example, GCC version @var{x}.@var{y}.@var{z}
-defines @code{__GNUC__} to @var{x}, @code{__GNUC_MINOR__} to @var{y},
-and @code{__GNUC_PATCHLEVEL__} to @var{z}.  These
-macros are also defined if you invoke the preprocessor directly.
+これらのマクロは、Cプリプロセッサを使用するすべてのGNUコンパイラ、C、C++、Objective-C、Fortranで定義されている。 それらの値は、整数定数として、コンパイラのメジャーバージョン、マイナーバージョン、およびパッチレベルである。 たとえば、GCCのバージョン@var{x}.@var{y}.@ var{z}は@code{__GNUC__}を@var{x}に、@code{__GNUC_MINOR__}を@var{y}に、@code{__GNUC_PATCHLEVEL__}を@var {z}に変換する。 これらのマクロは、プリプロセッサを直接呼び出す場合にも定義される。
 
-If all you need to know is whether or not your program is being compiled
-by GCC, or a non-GCC compiler that claims to accept the GNU C dialects,
-you can simply test @code{__GNUC__}.  If you need to write code
-which depends on a specific version, you must be more careful.  Each
-time the minor version is increased, the patch level is reset to zero;
-each time the major version is increased, the
-minor version and patch level are reset.  If you wish to use the
-predefined macros directly in the conditional, you will need to write it
-like this:
+あなたのプログラムがGCCかGNU Cの方言を受け入れると主張するGCC以外のコンパイラによってコンパイルされているかどうかを知る必要がある場合は、単に@code{__GNUC__}をテストできる。 特定のバージョンに依存するコードを記述する必要がある場合は、さらに注意する必要がある。 マイナーバージョンを増やすたびに、パッチレベルはゼロにリセットされる。 メジャーバージョンを増やすたびに、マイナーバージョンとパッチレベルがリセットされる。 条件付きマクロで直接使用する場合は、次のように記述する必要がある。
 
 @smallexample
 /* @r{Test for GCC > 3.2.0} */
@@ -1231,8 +1210,7 @@ like this:
 @end smallexample
 
 @noindent
-Another approach is to use the predefined macros to
-calculate a single number, then compare that against a threshold:
+もう1つのアプローチは、あらかじめ定義されたマクロを使用して1つの数値を計算し、それをしきい値と比較することである。
 
 @smallexample
 #define GCC_VERSION (__GNUC__ * 10000 \
@@ -1244,101 +1222,54 @@ calculate a single number, then compare that against a threshold:
 @end smallexample
 
 @noindent
-Many people find this form easier to understand.
+多くの人がこのフォームを理解しやすくしている。
 
 @item __GNUG__
-The GNU C++ compiler defines this.  Testing it is equivalent to
-testing @code{@w{(__GNUC__ && __cplusplus)}}.
+GNU C++コンパイラはこれを定義している。 これをテストすることは、@code{@w{(__GNUC__ && __cplusplus)}}をテストするのと同じである。
 
 @item __STRICT_ANSI__
-GCC defines this macro if and only if the @option{-ansi} switch, or a
-@option{-std} switch specifying strict conformance to some version of ISO C
-or ISO C++, was specified when GCC was invoked.  It is defined to @samp{1}.
-This macro exists primarily to direct GNU libc's header files to use only
-definitions found in standard C.
+GCCが呼び出されたときに、@option{-ansi}スイッチ、またはISO CまたはISO C++のいくつかのバージョンに厳密に準拠している@option{-std}スイッチが指定されている場合にのみ、このマクロが定義される。 @samp{1}と定義されている。 このマクロは、主にGNU libcのヘッダファイルに標準Cで定義されている定義のみを使用するように指示する。
 
 @item __BASE_FILE__
-This macro expands to the name of the main input file, in the form
-of a C string constant.  This is the source file that was specified
-on the command line of the preprocessor or C compiler.
+このマクロは、Cの文字列定数の形式でメイン入力ファイルの名前に展開される。 これは、プリプロセッサまたはCコンパイラのコマンドラインで指定されたソースファイルである。
 
 @item __INCLUDE_LEVEL__
-This macro expands to a decimal integer constant that represents the
-depth of nesting in include files.  The value of this macro is
-incremented on every @samp{#include} directive and decremented at the
-end of every included file.  It starts out at 0, its value within the
-base file specified on the command line.
+このマクロは、インクルードファイルのネストの深さを表す10進整数定数に展開される。 このマクロの値は、@samp{#include}指令ごとにインクリメントされ、インクルードされているファイルの最後にデクリメントされる。 コマンドラインで指定されたベースファイル内の値0から開始する。
 
 @item __ELF__
-This macro is defined if the target uses the ELF object format.
+このマクロは、ターゲットがELFオブジェクト形式を使用する場合に定義される。
 
 @item __VERSION__
-This macro expands to a string constant which describes the version of
-the compiler in use.  You should not rely on its contents having any
-particular form, but it can be counted on to contain at least the
-release number.
+このマクロは、使用中のコンパイラのバージョンを示す文字列定数に展開される。 値が特定の形式を持つ内容であるち頼るべきではないが、少なくともリリース番号を含れているだろう。
 
 @item __OPTIMIZE__
 @itemx __OPTIMIZE_SIZE__
 @itemx __NO_INLINE__
-These macros describe the compilation mode.  @code{__OPTIMIZE__} is
-defined in all optimizing compilations.  @code{__OPTIMIZE_SIZE__} is
-defined if the compiler is optimizing for size, not speed.
-@code{__NO_INLINE__} is defined if no functions will be inlined into
-their callers (when not optimizing, or when inlining has been
-specifically disabled by @option{-fno-inline}).
+これらのマクロは、コンパイルモードを表している。 @code{__OPTIMIZE__}はすべての最適化コンパイルで定義されている。 @code{__OPTIMIZE_SIZE__}は、コンパイラが速度ではなくサイズを最適化する場合に定義される。 @code{__NO_INLINE__}は、呼び出し元に関数がインライン化されない場合（最適化されていない場合、または@option{-fno-inline}によってインライン展開が特に無効になっている場合）に定義される。
 
-These macros cause certain GNU header files to provide optimized
-definitions, using macros or inline functions, of system library
-functions.  You should not use these macros in any way unless you make
-sure that programs will execute with the same effect whether or not they
-are defined.  If they are defined, their value is 1.
+これらのマクロは、特定のGNUヘッダファイルに、システムライブラリ関数のマクロまたはインライン関数を使って最適化された定義を提供する。 これらのマクロは、プログラムが定義されているかどうかにかかわらず同じ効果で実行されることを確認しない限り、使用するべきではない。 定義されている場合、その値は1である。
 
 @item __GNUC_GNU_INLINE__
-GCC defines this macro if functions declared @code{inline} will be
-handled in GCC's traditional gnu90 mode.  Object files will contain
-externally visible definitions of all functions declared @code{inline}
-without @code{extern} or @code{static}.  They will not contain any
-definitions of any functions declared @code{extern inline}.
+GCCは、@code{inline}と宣言された関数がGCCの伝統的なgnu90モードで扱われるなら、このマクロを定義する。 オブジェクトファイルには、@code{extern}や@code{static}を使わずに、@code{inline}で宣言されたすべての関数の外部で定義された定義が含まれる。 @code{extern inline}と宣言された関数の定義は含まれない。
 
 @item __GNUC_STDC_INLINE__
-GCC defines this macro if functions declared @code{inline} will be
-handled according to the ISO C99 or later standards.  Object files will contain
-externally visible definitions of all functions declared @code{extern
-inline}.  They will not contain definitions of any functions declared
-@code{inline} without @code{extern}.
+GCCは、@code{inline}と宣言された関数がISO C99以降の規格に従って処理される場合、このマクロを定義する。 オブジェクトファイルには、@code{extern inline}と宣言されたすべての関数の外部から見える定義が含まれる。 @code{extern}なしで@code{inline}と宣言された関数の定義は含まれない。
 
-If this macro is defined, GCC supports the @code{gnu_inline} function
-attribute as a way to always get the gnu90 behavior.
+このマクロが定義されている場合、GCCは常にgnu90の動作を得るための@code{gnu_inline}関数属性をサポートしている。
 
 @item __CHAR_UNSIGNED__
-GCC defines this macro if and only if the data type @code{char} is
-unsigned on the target machine.  It exists to cause the standard header
-file @file{limits.h} to work correctly.  You should not use this macro
-yourself; instead, refer to the standard macros defined in @file{limits.h}.
+GCCは、データ型@code{char}がターゲットマシン上で符号なしである場合に限り、このマクロを定義する。 これは、標準のヘッダファイル@file{limits.h}を正しく動作させるために存在する。 このマクロは自分で使用するべきではない。 代わりに、@file{limits.h}で定義された標準マクロを参照すること。
 
 @item __WCHAR_UNSIGNED__
-Like @code{__CHAR_UNSIGNED__}, this macro is defined if and only if the
-data type @code{wchar_t} is unsigned and the front-end is in C++ mode.
+@code{__ CHAR_UNSIGNED__}のように、このマクロはデータ型@code{wchar_t}が符号なしで、フロントエンドがC++モードの場合にのみ定義される。
 
 @item __REGISTER_PREFIX__
-This macro expands to a single token (not a string constant) which is
-the prefix applied to CPU register names in assembly language for this
-target.  You can use it to write assembly that is usable in multiple
-environments.  For example, in the @code{m68k-aout} environment it
-expands to nothing, but in the @code{m68k-coff} environment it expands
-to a single @samp{%}.
+このマクロは、このターゲットのアセンブリ言語でCPUレジスタ名に適用される接頭辞である単一のトークン（文字列定数ではない）に展開される。 これを使用して、複数の環境で使用可能なアセンブリを記述できる。 たとえば、@code{m68k-aout}環境では何も展開されないが、@code{m68k-coff}環境では単一の@samp{％}に展開される。
 
 @item __USER_LABEL_PREFIX__
-This macro expands to a single token which is the prefix applied to
-user labels (symbols visible to C code) in assembly.  For example, in
-the @code{m68k-aout} environment it expands to an @samp{_}, but in the
-@code{m68k-coff} environment it expands to nothing.
+このマクロは、アセンブリ内のユーザーラベル（Cコードから見えるシンボル）に適用されるプレフィックスである単一のトークンに展開される。 たとえば、@code{m68k-aout}環境では@samp {_}に展開されるが、@code{m68k-coff}環境では何も展開されない。
 
-This macro will have the correct definition even if
-@option{-f(no-)underscores} is in use, but it will not be correct if
-target-specific options that adjust this prefix are used (e.g.@: the
-OSF/rose @option{-mno-underscores} option).
+このマクロは、@option{-f(no-)underscores}が使用されていても正しい定義を持つが、この接頭辞を調整するターゲット固有のオプションが使用されていると正しくない（例えば：OSF/rose @option{-mno-underscores}オプション）。
 
 @item __SIZE_TYPE__
 @itemx __PTRDIFF_TYPE__
@@ -1373,6 +1304,7 @@ OSF/rose @option{-mno-underscores} option).
 @itemx __UINT_FAST64_TYPE__
 @itemx __INTPTR_TYPE__
 @itemx __UINTPTR_TYPE__
+これらのマクロは、それぞれ
 These macros are defined to the correct underlying types for the
 @code{size_t}, @code{ptrdiff_t}, @code{wchar_t}, @code{wint_t},
 @code{intmax_t}, @code{uintmax_t}, @code{sig_atomic_t}, @code{int8_t},
@@ -1383,19 +1315,10 @@ These macros are defined to the correct underlying types for the
 @code{uint_least32_t}, @code{uint_least64_t}, @code{int_fast8_t},
 @code{int_fast16_t}, @code{int_fast32_t}, @code{int_fast64_t},
 @code{uint_fast8_t}, @code{uint_fast16_t}, @code{uint_fast32_t},
-@code{uint_fast64_t}, @code{intptr_t}, and @code{uintptr_t} typedefs,
-respectively.  They exist to make the standard header files
-@file{stddef.h}, @file{stdint.h}, and @file{wchar.h} work correctly.
-You should not use these macros directly; instead, include the
-appropriate headers and use the typedefs.  Some of these macros may
-not be defined on particular systems if GCC does not provide a
-@file{stdint.h} header on those systems.
+@code{uint_fast64_t}, @code{intptr_t}, @code{uintptr_t}のtypedefの正しい基本タイプに定義されている。@file{stddef.h}、@file{stdint.h}、@file{wchar.h}の標準ヘッダファイルを正しく動作させるために存在する。 これらのマクロは直接使用するべきではない。 代わりに、適切なヘッダーを組み込み、typedefを使用すること。 GCCがこれらのシステムで@file{stdint.h}ヘッダーを提供しない場合、これらのマクロの一部は特定のシステムで定義されないことがある。
 
 @item __CHAR_BIT__
-Defined to the number of bits used in the representation of the
-@code{char} data type.  It exists to make the standard header given
-numerical limits work correctly.  You should not use
-this macro directly; instead, include the appropriate headers.
+@code{char}データ型の表現に使用されるビット数で定義される。 数値制限が与えられた標準ヘッダーを正しく動作させるために存在する。 このマクロは直接使用するべきではない。 代わりに、適切なヘッダーを含めること。
 
 @item __SCHAR_MAX__
 @itemx __WCHAR_MAX__
@@ -1438,8 +1361,7 @@ this macro directly; instead, include the appropriate headers.
 @itemx __WCHAR_MIN__
 @itemx __WINT_MIN__
 @itemx __SIG_ATOMIC_MIN__
-Defined to the maximum value of the @code{signed char}, @code{wchar_t},
-@code{signed short},
+@code{signed char}, @code{wchar_t}, @code{signed short},
 @code{signed int}, @code{signed long}, @code{signed long long},
 @code{wint_t}, @code{size_t}, @code{ptrdiff_t},
 @code{intmax_t}, @code{uintmax_t}, @code{sig_atomic_t}, @code{int8_t},
@@ -1450,13 +1372,8 @@ Defined to the maximum value of the @code{signed char}, @code{wchar_t},
 @code{uint_least32_t}, @code{uint_least64_t}, @code{int_fast8_t},
 @code{int_fast16_t}, @code{int_fast32_t}, @code{int_fast64_t},
 @code{uint_fast8_t}, @code{uint_fast16_t}, @code{uint_fast32_t},
-@code{uint_fast64_t}, @code{intptr_t}, and @code{uintptr_t} types and
-to the minimum value of the @code{wchar_t}, @code{wint_t}, and
-@code{sig_atomic_t} types respectively.  They exist to make the
-standard header given numerical limits work correctly.  You should not
-use these macros directly; instead, include the appropriate headers.
-Some of these macros may not be defined on particular systems if GCC
-does not provide a @file{stdint.h} header on those systems.
+@code{uint_fast64_t}, @code{intptr_t}, @code{uintptr_t}の型の最大値と、@code{wchar_t}, @code{wint_t}, 
+@code {sig_atomic_t}の最大値と最小値にそれぞれ定義されている。 数値制限が与えられた標準ヘッダを正しく動作させるために存在する。 これらのマクロは直接使用するべきではない。 代わりに、適切なヘッダーを含めること。 GCCがこれらのシステムで@file{stdint.h}ヘッダーを提供しない場合、これらのマクロの一部は特定のシステムで定義されないことがある。
 
 @item __INT8_C
 @itemx __INT16_C
@@ -1468,12 +1385,7 @@ does not provide a @file{stdint.h} header on those systems.
 @itemx __UINT64_C
 @itemx __INTMAX_C
 @itemx __UINTMAX_C
-Defined to implementations of the standard @file{stdint.h} macros with
-the same names without the leading @code{__}.  They exist the make the
-implementation of that header work correctly.  You should not use
-these macros directly; instead, include the appropriate headers.  Some
-of these macros may not be defined on particular systems if GCC does
-not provide a @file{stdint.h} header on those systems.
+先行する@code{__}のない同じ名前の標準の@file{stdint.h}マクロの実装に定義されている。 それらは、そのヘッダーの実装が正しく動作するように存在する。 これらのマクロは直接使用するべきではない。 代わりに、適切なヘッダーを含めること。 GCCがこれらのシステムで@file{stdint.h}ヘッダーを提供しない場合、これらのマクロの一部は特定のシステムで定義されないことがある。
 
 @item __SCHAR_WIDTH__
 @itemx __SHRT_WIDTH__
@@ -1495,12 +1407,7 @@ not provide a @file{stdint.h} header on those systems.
 @itemx __INT_FAST64_WIDTH__
 @itemx __INTPTR_WIDTH__
 @itemx __INTMAX_WIDTH__
-Defined to the bit widths of the corresponding types.  They exist to
-make the implementations of @file{limits.h} and @file{stdint.h} behave
-correctly.  You should not use these macros directly; instead, include
-the appropriate headers.  Some of these macros may not be defined on
-particular systems if GCC does not provide a @file{stdint.h} header on
-those systems.
+対応する型のビット幅に定義される。 @file{limits.h}と@file{stdint.h}の実装を正しく動作させるために存在する。 これらのマクロは直接使用するべきではない。 代わりに、適切なヘッダーを含めること。 GCCがこれらのシステムで@file{stdint.h}ヘッダーを提供しない場合、これらのマクロの一部は特定のシステムで定義されないことがある。
 
 @item __SIZEOF_INT__
 @itemx __SIZEOF_LONG__
@@ -1514,29 +1421,17 @@ those systems.
 @itemx __SIZEOF_WCHAR_T__
 @itemx __SIZEOF_WINT_T__
 @itemx __SIZEOF_PTRDIFF_T__
-Defined to the number of bytes of the C standard data types: @code{int},
+C標準データ型のバイト数を定義する。 @code{int},
 @code{long}, @code{long long}, @code{short}, @code{void *}, @code{float},
-@code{double}, @code{long double}, @code{size_t}, @code{wchar_t}, @code{wint_t}
-and @code{ptrdiff_t}.
+@code{double}, @code{long double}, @code{size_t}, @code{wchar_t}, @code{wint_t}, @code{ptrdiff_t}.
 
 @item __BYTE_ORDER__
 @itemx __ORDER_LITTLE_ENDIAN__
 @itemx __ORDER_BIG_ENDIAN__
-@itemx __ORDER_PDP_ENDIAN__
-@code{__BYTE_ORDER__} is defined to one of the values
-@code{__ORDER_LITTLE_ENDIAN__}, @code{__ORDER_BIG_ENDIAN__}, or
-@code{__ORDER_PDP_ENDIAN__} to reflect the layout of multi-byte and
-multi-word quantities in memory.  If @code{__BYTE_ORDER__} is equal to
-@code{__ORDER_LITTLE_ENDIAN__} or @code{__ORDER_BIG_ENDIAN__}, then
-multi-byte and multi-word quantities are laid out identically: the
-byte (word) at the lowest address is the least significant or most
-significant byte (word) of the quantity, respectively.  If
-@code{__BYTE_ORDER__} is equal to @code{__ORDER_PDP_ENDIAN__}, then
-bytes in 16-bit words are laid out in a little-endian fashion, whereas
-the 16-bit subwords of a 32-bit quantity are laid out in big-endian
-fashion.
+@itemx __ORDER_PDP_ENDIAN_
+@code{__BYTE_ORDER__}は、メモリ内のマルチバイトおよびマルチワード量のレイアウトを反映するために、@code{__ORDER_LITTLE_ENDIAN__}、@code{__ORDER_BIG_ENDIAN__}、または@code{__ORDER_PDP_ENDIAN__}のいずれかの値に定義されている。 @code{__BYTE_ORDER__}が@code{__ORDER_LITTLE_ENDIAN__}または@code{__ORDER_BIG_ENDIAN__}と等しい場合、マルチバイト数とマルチワード数は同じように配置される。最下位アドレスのバイト（ワード）は、量の最下位バイトまたは最上位バイト（ワード）である。@code {__ BYTE_ORDER__}が@code {__ ORDER_PDP_ENDIAN__}の場合、16ビットワードのバイトはリトルエンディアン形式で配置され、32ビットの16ビットサブワードはビッグエンディアン形式で配置される。
 
-You should use these macros for testing like this:
+次のようなテストのためにこれらのマクロを使うべきである：
 
 @smallexample
 /* @r{Test for a little-endian machine} */
@@ -1544,114 +1439,70 @@ You should use these macros for testing like this:
 @end smallexample
 
 @item __FLOAT_WORD_ORDER__
-@code{__FLOAT_WORD_ORDER__} is defined to one of the values
-@code{__ORDER_LITTLE_ENDIAN__} or @code{__ORDER_BIG_ENDIAN__} to reflect
-the layout of the words of multi-word floating-point quantities.
+@code{__FLOAT_WORD_ORDER__}は、マルチワード浮動小数点数のワードのレイアウトを反映するために、@code{__ORDER_LITTLE_ENDIAN__}または@code{__ORDER_BIG_ENDIAN__}の値の1つに定義されている。
 
 @item __DEPRECATED
-This macro is defined, with value 1, when compiling a C++ source file
-with warnings about deprecated constructs enabled.  These warnings are
-enabled by default, but can be disabled with @option{-Wno-deprecated}.
+このマクロは、廃止予定の構造が有効になっていることを警告するC++ソースファイルをコンパイルするときに、値1で定義される。 これらの警告はデフォルトで有効になっているが、@option{-Wno-deprecated}で無効にすることができる。
 
 @item __EXCEPTIONS
-This macro is defined, with value 1, when compiling a C++ source file
-with exceptions enabled.  If @option{-fno-exceptions} is used when
-compiling the file, then this macro is not defined.
+このマクロは、例外を有効にしてC ++ソースファイルをコンパイルするときに、値1で定義される。 ファイルをコンパイルするときに@option{-fno-exceptions}を使用すると、このマクロは定義されない。
 
 @item __GXX_RTTI
-This macro is defined, with value 1, when compiling a C++ source file
-with runtime type identification enabled.  If @option{-fno-rtti} is
-used when compiling the file, then this macro is not defined.
+このマクロは、ランタイム・タイプ識別を有効にしてC ++ソース・ファイルをコンパイルするときに、値1で定義される。 ファイルをコンパイルするときに@option{-fno-rtti}を使用すると、このマクロは定義されない。
 
 @item __USING_SJLJ_EXCEPTIONS__
-This macro is defined, with value 1, if the compiler uses the old
-mechanism based on @code{setjmp} and @code{longjmp} for exception
-handling.
+コンパイラが例外処理のために@code{setjmp}と@code{longjmp}に基づく古い機構を使用する場合、このマクロは値1で定義される。
 
 @item __GXX_EXPERIMENTAL_CXX0X__
-This macro is defined when compiling a C++ source file with the option
-@option{-std=c++0x} or @option{-std=gnu++0x}. It indicates that some
-features likely to be included in C++0x are available. Note that these
-features are experimental, and may change or be removed in future
-versions of GCC.
+このマクロは、オプション@option{-std=c++0x}または@option{-std=gnu++0x}を使用してC ++ソースファイルをコンパイルするときに定義される。 これは、C++0xに含まれる可能性のある機能が利用可能であることを示している。 これらの機能は実験的なものであり、GCCの将来のバージョンで変更されるか、または削除される可能性があることに注意せよ。
 
 @item __GXX_WEAK__
-This macro is defined when compiling a C++ source file.  It has the
-value 1 if the compiler will use weak symbols, COMDAT sections, or
-other similar techniques to collapse symbols with ``vague linkage''
-that are defined in multiple translation units.  If the compiler will
-not collapse such symbols, this macro is defined with value 0.  In
-general, user code should not need to make use of this macro; the
-purpose of this macro is to ease implementation of the C++ runtime
-library provided with G++.
+このマクロは、C++ソースファイルをコンパイルするときに定義される。 コンパイラが弱いシンボル、COMDATセクション、または他の同様の手法を使用して、複数の翻訳単位で定義された「曖昧なリンケージ」でシンボルを崩壊させる場合、値は1である。 コンパイラがそのようなシンボルを崩壊させない場合、このマクロは値0で定義される。一般に、ユーザコードはこのマクロを使用する必要はない。 このマクロの目的は、G++で提供されるC ++ランタイムライブラリの実装を容易にすることである。
 
 @item __NEXT_RUNTIME__
-This macro is defined, with value 1, if (and only if) the NeXT runtime
-(as in @option{-fnext-runtime}) is in use for Objective-C@.  If the GNU
-runtime is used, this macro is not defined, so that you can use this
-macro to determine which runtime (NeXT or GNU) is being used.
+Objective-CでNeXTランタイム（@option{-fnext-runtime}のように）が使用されている場合、このマクロは値1で定義される。 GNUランタイムが使用されている場合、このマクロは定義されていないため、このマクロを使用してどのランタイム（NeXTまたはGNU）が使用されているかを判断できる。
 
 @item __LP64__
 @itemx _LP64
-These macros are defined, with value 1, if (and only if) the compilation
-is for a target where @code{long int} and pointer both use 64-bits and
-@code{int} uses 32-bit.
+これらのマクロは、コンパイルが@code{long int}とポインタが両方とも64ビットを使用し、@code{int}が32ビットを使用するターゲット用である場合にのみ、値1で定義される。
 
 @item __SSP__
-This macro is defined, with value 1, when @option{-fstack-protector} is in
-use.
+このマクロは、@option {-fstack-protector}が使用されているときに値1で定義される。
 
 @item __SSP_ALL__
-This macro is defined, with value 2, when @option{-fstack-protector-all} is
-in use.
+このマクロは、@option{-fstack-protector-all}が使用されているときに値2で定義される。
 
 @item __SSP_STRONG__
-This macro is defined, with value 3, when @option{-fstack-protector-strong} is
-in use.
+このマクロは、@option{-fstack-protector-strong}が使用されているときに値3で定義される。
 
 @item __SSP_EXPLICIT__
-This macro is defined, with value 4, when @option{-fstack-protector-explicit} is
-in use.
+このマクロは、@option {-fstack-protector-explicit}が使用されているときに値4で定義される。
 
 @item __SANITIZE_ADDRESS__
-This macro is defined, with value 1, when @option{-fsanitize=address}
-or @option{-fsanitize=kernel-address} are in use.
+このマクロは、@option{-fsanitize = address}または@option{-fsanitize = kernel-address}が使用されているときに値1で定義される。
 
 @item __SANITIZE_THREAD__
-This macro is defined, with value 1, when @option{-fsanitize=thread} is in use.
+このマクロは、@option {-fsanitize = thread}が使用されているときに値1で定義される。
 
 @item __TIMESTAMP__
-This macro expands to a string constant that describes the date and time
-of the last modification of the current source file. The string constant
-contains abbreviated day of the week, month, day of the month, time in
-hh:mm:ss form, year and looks like @code{@w{"Sun Sep 16 01:03:52 1973"}}.
-If the day of the month is less than 10, it is padded with a space on the left.
+このマクロは、現在のソースファイルの最終変更日時を表す文字列定数に展開される。 文字列定数には、省略された週、月、日、hh:mm:ss形式の時刻、年含まれ、@code{@w{"Sun Sep 16 01:03:52 1973"}}のようになる。 月の日が10未満の場合は、左側のスペースが埋められる。
 
-If GCC cannot determine the current date, it will emit a warning message
-(once per compilation) and @code{__TIMESTAMP__} will expand to
-@code{@w{"??? ??? ?? ??:??:?? ????"}}.
+GCCが現在の日付を判断できない場合、警告メッセージ（コンパイルごとに1回）が出力され、@code {__ TIMESTAMP__}は@code{@w{"??? ??? ?? ??:??:?? ????"}}に展開される。
 
 @item __GCC_HAVE_SYNC_COMPARE_AND_SWAP_1
 @itemx __GCC_HAVE_SYNC_COMPARE_AND_SWAP_2
 @itemx __GCC_HAVE_SYNC_COMPARE_AND_SWAP_4
 @itemx __GCC_HAVE_SYNC_COMPARE_AND_SWAP_8
 @itemx __GCC_HAVE_SYNC_COMPARE_AND_SWAP_16
-These macros are defined when the target processor supports atomic compare
-and swap operations on operands 1, 2, 4, 8 or 16 bytes in length, respectively.
+これらのマクロは、ターゲットプロセッサがオペランド1,2,4,8または16バイトのアトミック比較およびスワップ操作をそれぞれサポートする場合に定義される。
 
 @item __GCC_HAVE_DWARF2_CFI_ASM
-This macro is defined when the compiler is emitting DWARF CFI directives
-to the assembler.  When this is defined, it is possible to emit those same
-directives in inline assembly.
+このマクロは、コンパイラがDWARF CFIディレクティブをアセンブラに発行しているときに定義される。 これが定義されている場合、インラインアセンブリで同じディレクティブを発行することができる。
 
 @item __FP_FAST_FMA
 @itemx __FP_FAST_FMAF
 @itemx __FP_FAST_FMAL
-These macros are defined with value 1 if the backend supports the
-@code{fma}, @code{fmaf}, and @code{fmal} builtin functions, so that
-the include file @file{math.h} can define the macros
-@code{FP_FAST_FMA}, @code{FP_FAST_FMAF}, and @code{FP_FAST_FMAL}
-for compatibility with the 1999 C standard.
+バックエンドが@code{fma}、@code{fmaf}、@code{fmal}組み込み関数をサポートしている場合、これらのマクロは値1で定義され、インクルードファイル@file{math.h} 1999 C標準との互換性のために、@code{FP_FAST_FMA}、@code{FP_FAST_FMAF}、および@code{FP_FAST_FMAL}マクロが定義されている。
 
 @item __FP_FAST_FMAF16
 @itemx __FP_FAST_FMAF32
@@ -1660,51 +1511,18 @@ for compatibility with the 1999 C standard.
 @itemx __FP_FAST_FMAF32X
 @itemx __FP_FAST_FMAF64X
 @itemx __FP_FAST_FMAF128X
-These macros are defined with the value 1 if the backend supports the
-@code{fma} functions using the additional @code{_Float@var{n}} and
-@code{_Float@var{n}x} types that are defined in ISO/IEC TS
-18661-3:2015.  The include file @file{math.h} can define the
-@code{FP_FAST_FMAF@var{n}} and @code{FP_FAST_FMAF@var{n}x} macros if
-the user defined @code{__STDC_WANT_IEC_60559_TYPES_EXT__} before
-including @file{math.h}.
+これらのマクロは、バックエンドがISO/ IEC TS 18661-3：2015で定義されている追加の@code{_Float@var{n}}型と@code{_Float@var{n}x}型を使用して@code{fma}関数をサポートする場合、値1で定義される。 インクルードファイル@file {math.h}は、ユーザーが@file{math.h}をインクルードする前に@code{__STDC_WANT_IEC_60559_TYPES_EXT__}を定義した場合、@code{FP_FAST_FMAF@var{n}}マクロと@code{FP_FAST_FMAF@var{n}x}マクロが定義されうる。
 
 @item __GCC_IEC_559
-This macro is defined to indicate the intended level of support for
-IEEE 754 (IEC 60559) floating-point arithmetic.  It expands to a
-nonnegative integer value.  If 0, it indicates that the combination of
-the compiler configuration and the command-line options is not
-intended to support IEEE 754 arithmetic for @code{float} and
-@code{double} as defined in C99 and C11 Annex F (for example, that the
-standard rounding modes and exceptions are not supported, or that
-optimizations are enabled that conflict with IEEE 754 semantics).  If
-1, it indicates that IEEE 754 arithmetic is intended to be supported;
-this does not mean that all relevant language features are supported
-by GCC.  If 2 or more, it additionally indicates support for IEEE
-754-2008 (in particular, that the binary encodings for quiet and
-signaling NaNs are as specified in IEEE 754-2008).
+このマクロは、IEEE 754（IEC 60559）浮動小数点演算のサポートレベルを示すために定義されている。 それは非負の整数値に展開される。 0の場合、コンパイラの設定とコマンドラインオプションの組み合わせは、C99およびC11 Annex Fで定義されている@code{float}および@code {double}のIEEE 754算術をサポートするものではないことを示している（たとえば、 標準の丸めモードと例外がサポートされていないか、またはIEEE 754セマンティクスと競合する最適化が有効になっているなそ）。 1の場合、IEEE 754の算術演算がサポートされることを示している。 これは、関連するすべての言語機能がGCCによってサポートされていることを意味するものではない。 2以上の場合、IEEE 754-2008のサポートを追加的に示している（特に、シグナリングNaNを静かにするためのバイナリエンコーディングはIEEE 754-2008で指定されている）。.
 
-This macro does not indicate the default state of command-line options
-that control optimizations that C99 and C11 permit to be controlled by
-standard pragmas, where those standards do not require a particular
-default state.  It does not indicate whether optimizations respect
-signaling NaN semantics (the macro for that is
-@code{__SUPPORT_SNAN__}).  It does not indicate support for decimal
-floating point or the IEEE 754 binary16 and binary128 types.
+このマクロは、C99およびC11が標準のプラグマによって制御されることを許可する最適化を制御するコマンドラインオプションのデフォルト状態を示していない。これらの標準では、特定のデフォルト状態は必要ない。 最適化がシグナリングNaNセマンティクス（そのマクロは@code{__SUPPORT_SNAN__}）を尊重するかどうかを示すものではない。 10進浮動小数点、またはIEEE 754のbinary16およびbinary128型のサポートを示すものではない。
 
 @item __GCC_IEC_559_COMPLEX
-This macro is defined to indicate the intended level of support for
-IEEE 754 (IEC 60559) floating-point arithmetic for complex numbers, as
-defined in C99 and C11 Annex G.  It expands to a nonnegative integer
-value.  If 0, it indicates that the combination of the compiler
-configuration and the command-line options is not intended to support
-Annex G requirements (for example, because @option{-fcx-limited-range}
-was used).  If 1 or more, it indicates that it is intended to support
-those requirements; this does not mean that all relevant language
-features are supported by GCC.
+このマクロは、C99およびC11 Annex Gで定義されている複素数のIEEE 754（IEC 60559）浮動小数点演算のサポートレベルを示すために定義されている。負ではない整数値に展開される。 0の場合は、コンパイラの設定とコマンドラインオプションの組み合わせがAnnex Gの要件をサポートするものではないことを示す（たとえば、@option{-fcx-limited-range}が使用されたため）。 1以上の場合は、これらの要件をサポートすることを意図していることを示している。 これは、関連するすべての言語機能がGCCによってサポートされていることを意味するものではない。
 
 @item __NO_MATH_ERRNO__
-This macro is defined if @option{-fno-math-errno} is used, or enabled
-by another option such as @option{-ffast-math} or by default.
+このマクロは、@option {-fno-math-errno}が使用されている場合、または@option{-ffast-math}のような別のオプションによって、またはデフォルトで有効になっている場合に定義される。
 @end table
 
 @node System-specific Predefined Macros
