@@ -1566,17 +1566,12 @@ C++には、11個のキーワードがある。これらのキーワードは、
 @end multitable
 
 @node Undefining and Redefining Macros
-@section Undefining and Redefining Macros
+@section マクロの未定義化と再定義
 @cindex undefining macros
 @cindex redefining macros
 @findex #undef
 
-If a macro ceases to be useful, it may be @dfn{undefined} with the
-@samp{#undef} directive.  @samp{#undef} takes a single argument, the
-name of the macro to undefine.  You use the bare macro name, even if the
-macro is function-like.  It is an error if anything appears on the line
-after the macro name.  @samp{#undef} has no effect if the name is not a
-macro.
+マクロが有用でなくなるならば、マクロは@samp{#undef}ディレクティブで@dfn{未定義}になることができる。 @samp{#undef}は単一の引数、つまり未定義のマクロの名前をとる。 マクロが関数的なものであっても、裸のマクロ名を使用する。 マクロ名の後に行に何かが現れるとエラーになる。 名前がマクロでない場合、@samp{#undef}は効果がない。
 
 @smallexample
 #define FOO 4
@@ -1585,31 +1580,25 @@ x = FOO;        @expansion{} x = 4;
 x = FOO;        @expansion{} x = FOO;
 @end smallexample
 
-Once a macro has been undefined, that identifier may be @dfn{redefined}
-as a macro by a subsequent @samp{#define} directive.  The new definition
-need not have any resemblance to the old definition.
+マクロが定義されていない場合、その識別子は後続の@samp{#define}ディレクティブによってマクロとして@dfn{再定義}することができる。 新しい定義は、古い定義と似ている必要はない。
 
-However, if an identifier which is currently a macro is redefined, then
-the new definition must be @dfn{effectively the same} as the old one.
-Two macro definitions are effectively the same if:
+しかし、現在マクロである識別子が再定義された場合、新しい定義は古いものと@dfn{実質的に同じ}でなければならない。 次の場合、2つのマクロ定義は事実上同じである：
 @itemize @bullet
-@item Both are the same type of macro (object- or function-like).
-@item All the tokens of the replacement list are the same.
-@item If there are any parameters, they are the same.
-@item Whitespace appears in the same places in both.  It need not be
-exactly the same amount of whitespace, though.  Remember that comments
-count as whitespace.
+@item 両方がマクロの同じ型である（オブジェクト風か関数風か）
+@item 置換リストのすべてのトークンは同じである。
+@item パラメータがあるならば、それらが同じである。
+@item 空白は両方の同じ場所に表示される。 しかし、必ずしも同じ量の空白である必要はない。 コメントは空白として数えることを思い出すこと。
 @end itemize
 
 @noindent
-These definitions are effectively the same:
+これらの定義は事実上同じである：
 @smallexample
 #define FOUR (2 + 2)
 #define FOUR         (2    +    2)
 #define FOUR (2 /* @r{two} */ + 2)
 @end smallexample
 @noindent
-but these are not:
+しかし以下は違う：
 @smallexample
 #define FOUR (2 + 2)
 #define FOUR ( 2+2 )
@@ -1617,12 +1606,7 @@ but these are not:
 #define FOUR(score,and,seven,years,ago) (2 + 2)
 @end smallexample
 
-If a macro is redefined with a definition that is not effectively the
-same as the old one, the preprocessor issues a warning and changes the
-macro to use the new definition.  If the new definition is effectively
-the same, the redefinition is silently ignored.  This allows, for
-instance, two different headers to define a common macro.  The
-preprocessor will only complain if the definitions do not match.
+既存のマクロと実質的に同じではない定義でマクロが再定義された場合、プリプロセッサは警告を発行して新しい定義を使用するようにマクロを変更する。 新しい定義が事実上同じ場合、再定義は暗黙のうちに無視されます。 これは、例えば、2つの異なるヘッダが共通のマクロを定義することを可能にする。 プリプロセッサは、定義が一致しない場合にのみ文句を言う。
 
 @node Directives Within Macro Arguments
 @section Directives Within Macro Arguments
