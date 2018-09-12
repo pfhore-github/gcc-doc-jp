@@ -1609,20 +1609,12 @@ x = FOO;        @expansion{} x = FOO;
 既存のマクロと実質的に同じではない定義でマクロが再定義された場合、プリプロセッサは警告を発行して新しい定義を使用するようにマクロを変更する。 新しい定義が事実上同じ場合、再定義は暗黙のうちに無視されます。 これは、例えば、2つの異なるヘッダが共通のマクロを定義することを可能にする。 プリプロセッサは、定義が一致しない場合にのみ文句を言う。
 
 @node Directives Within Macro Arguments
-@section Directives Within Macro Arguments
+@section マクロ引数内のディレクティブ
 @cindex macro arguments and directives
 
-Occasionally it is convenient to use preprocessor directives within
-the arguments of a macro.  The C and C++ standards declare that
-behavior in these cases is undefined.  GNU CPP
-processes arbitrary directives within macro arguments in
-exactly the same way as it would have processed the directive were the
-function-like macro invocation not present.
+場合によっては、マクロの引数内でプリプロセッサディレクティブを使用すると便利である。 CおよびC++標準では、これらの場合の動作が定義されていないと宣言している。 GNU CPPは、関数風マクロ呼び出しは存在しないときのディレクティブを処理したのとまったく同じ方法でマクロ引数内の任意のディレクティブを処理する。
 
-If, within a macro invocation, that macro is redefined, then the new
-definition takes effect in time for argument pre-expansion, but the
-original definition is still used for argument replacement.  Here is a
-pathological example:
+マクロの呼び出し内でそのマクロが再定義された場合、新しい定義は引数の展開前に有効になるが、元の定義は引き続き引数の置換に使用される。 病理学的な例がある：
 
 @smallexample
 #define f(x) x x
@@ -1633,14 +1625,13 @@ f)
 @end smallexample
 
 @noindent
-which expands to
+は上で説明したような意味で以下に展開される
 
 @smallexample
 1 2 1 2
 @end smallexample
 
 @noindent
-with the semantics described above.
 
 @node Macro Pitfalls
 @section Macro Pitfalls
