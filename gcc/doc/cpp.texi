@@ -1634,13 +1634,11 @@ f)
 @noindent
 
 @node Macro Pitfalls
-@section Macro Pitfalls
+@section マクロの落とし穴
 @cindex problems with macros
 @cindex pitfalls of macros
 
-In this section we describe some special rules that apply to macros and
-macro expansion, and point out certain cases in which the rules have
-counter-intuitive consequences that you must watch out for.
+このセクションでは、マクロとマクロ展開に適用される特別な規則をいくつか説明し、注意が必要な反直感的な結果がある特定のケースを指摘する。
 
 @menu
 * Misnesting::
@@ -1653,13 +1651,9 @@ counter-intuitive consequences that you must watch out for.
 @end menu
 
 @node Misnesting
-@subsection Misnesting
+@subsection ネストの非対応
 
-When a macro is called with arguments, the arguments are substituted
-into the macro body and the result is checked, together with the rest of
-the input file, for more macro calls.  It is possible to piece together
-a macro call coming partially from the macro body and partially from the
-arguments.  For example,
+引数を指定してマクロを呼び出すと、引数はマクロ本体に代入され、残りの入力ファイルとともに結果がチェックされ、より多くのマクロ呼び出しが行われる。 部分的にマクロ本体から来て、引数から部分的に来るマクロ呼び出しを一緒にまとめることは可能である。 例えば、
 
 @smallexample
 #define twice(x) (2*(x))
@@ -1669,10 +1663,7 @@ call_with_1 (twice)
      @expansion{} (2*(1))
 @end smallexample
 
-Macro definitions do not have to have balanced parentheses.  By writing
-an unbalanced open parenthesis in a macro body, it is possible to create
-a macro call that begins inside the macro body but ends outside of it.
-For example,
+マクロ定義にはバランスのとれた括弧が必要ではない。 アンバランスな括弧をマクロ本体に書き込むことで、マクロ本体内で始まり、その外側で終わるマクロ呼び出しを作成することができる。 例えば、
 
 @smallexample
 #define strange(file) fprintf (file, "%s %d",
@@ -1681,30 +1672,22 @@ strange(stderr) p, 35)
      @expansion{} fprintf (stderr, "%s %d", p, 35)
 @end smallexample
 
-The ability to piece together a macro call can be useful, but the use of
-unbalanced open parentheses in a macro body is just confusing, and
-should be avoided.
+マクロ呼び出しをまとめる機能は便利だが、マクロ本体でアンバランスな開きカッコを使用するのは混乱するだけなので、避けるべきである。
 
 @node Operator Precedence Problems
-@subsection Operator Precedence Problems
+@subsection 演算子の優先順位の問題
 @cindex parentheses in macro bodies
 
-You may have noticed that in most of the macro definition examples shown
-above, each occurrence of a macro argument name had parentheses around
-it.  In addition, another pair of parentheses usually surround the
-entire macro definition.  Here is why it is best to write macros that
-way.
+上に示したマクロ定義の例の大部分で、マクロ引数名のそれぞれにはカッコが付いていたことにきついたかもしれない。 さらに、通常、もう1組のカッコがマクロ定義全体を囲む。これがマクロを書くのが最善の方法である。
 
-Suppose you define a macro as follows,
+次のようにマクロを定義したとすると、
 
 @smallexample
 #define ceil_div(x, y) (x + y - 1) / y
 @end smallexample
 
 @noindent
-whose purpose is to divide, rounding up.  (One use for this operation is
-to compute how many @code{int} objects are needed to hold a certain
-number of @code{char} objects.)  Then suppose it is used as follows:
+この目的は除算をしてから切り上げることである。 （この操作の1つの用途は、特定の数の@code{char}オブジェクトを保持するために必要な@code{int}オブジェクトの数を計算することである）。次に、以下のように使われると
 
 @smallexample
 a = ceil_div (b & c, sizeof (int));
@@ -1712,59 +1695,49 @@ a = ceil_div (b & c, sizeof (int));
 @end smallexample
 
 @noindent
-This does not do what is intended.  The operator-precedence rules of
-C make it equivalent to this:
+これは意図したことをしない。 Cの演算子優先ルールは、これと同じになる：
 
 @smallexample
 a = (b & (c + sizeof (int) - 1)) / sizeof (int);
 @end smallexample
 
 @noindent
-What we want is this:
+私たちが欲しいのはこれである：
 
 @smallexample
 a = ((b & c) + sizeof (int) - 1)) / sizeof (int);
 @end smallexample
 
 @noindent
-Defining the macro as
+マクロを次のように定義すると
 
 @smallexample
 #define ceil_div(x, y) ((x) + (y) - 1) / (y)
 @end smallexample
 
 @noindent
-provides the desired result.
+望んだ結果を得る。
 
-Unintended grouping can result in another way.  Consider @code{sizeof
-ceil_div(1, 2)}.  That has the appearance of a C expression that would
-compute the size of the type of @code{ceil_div (1, 2)}, but in fact it
-means something very different.  Here is what it expands to:
+意図しないグループ分けが別の方法で起こる可能性がある。 @code{sizeof ceil_div(1,2)}を考える。 これは、@code{ceil_div(1, 2)}の型のサイズを計算するC式のようにみえるが、実際それは非常に異なるものを意味している。 ここにそれがどう展開するかがある：
 
 @smallexample
 sizeof ((1) + (2) - 1) / (2)
 @end smallexample
 
 @noindent
-This would take the size of an integer and divide it by two.  The
-precedence rules have put the division outside the @code{sizeof} when it
-was intended to be inside.
+これは整数の大きさをとり、2で割ったものである。 優先順位のルールは、内部にあることを意図したときに除算を@code {sizeof}の外に置いている。
 
-Parentheses around the entire macro definition prevent such problems.
-Here, then, is the recommended way to define @code{ceil_div}:
+マクロ定義全体のかっこは、このような問題を防ぐ。 ここでは、これが@code{ceil_div}を定義するための推奨される方法である：
 
 @smallexample
 #define ceil_div(x, y) (((x) + (y) - 1) / (y))
 @end smallexample
 
 @node Swallowing the Semicolon
-@subsection Swallowing the Semicolon
+@subsection セミコロンをのみこむ
 @cindex semicolons (after macro calls)
 
-Often it is desirable to define a macro that expands into a compound
-statement.  Consider, for example, the following macro, that advances a
-pointer (the argument @code{p} says where to find it) across whitespace
-characters:
+しばしば、複合文に展開されるマクロを定義することが望まれる。 たとえば、次のマクロを考えてみる。空白文字をまたいだポインタ（引数@code{p}はどこにあるのかを示す）を進める。
 
 @smallexample
 #define SKIP_SPACES(p, limit)  \
@@ -1775,19 +1748,11 @@ characters:
 @end smallexample
 
 @noindent
-Here backslash-newline is used to split the macro definition, which must
-be a single logical line, so that it resembles the way such code would
-be laid out if not part of a macro definition.
+ここで、バックスラッシュ・改行は、マクロ定義を分割するために使用される。マクロ定義は、マクロ定義の一部ではない場合にそのようなコードがレイアウトされる方法に似ているように、単一の論理行でなければならない。
 
-A call to this macro might be @code{SKIP_SPACES (p, lim)}.  Strictly
-speaking, the call expands to a compound statement, which is a complete
-statement with no need for a semicolon to end it.  However, since it
-looks like a function call, it minimizes confusion if you can use it
-like a function call, writing a semicolon afterward, as in
-@code{SKIP_SPACES (p, lim);}
+このマクロの呼び出しは、@code{SKIP_SPACES(p、lim)}となる。 厳密に言えば、呼び出しは複合ステートメントに展開される。複合ステートメントは、セミコロンを終了する必要がない完全なステートメントである。 しかし、関数呼び出しのように見えるので、関数呼び出しのように使うことができ、後で@code{SKIP_SPACES(p、lim);}のようにセミコロンを書くと混乱が最小限に抑えられる。
 
-This can cause trouble before @code{else} statements, because the
-semicolon is actually a null statement.  Suppose you write
+これは、セミコロンが実際にはヌルステートメントであるため、@code{else}ステートメントの前に問題を引き起こす可能性がある。こう書いたとする。
 
 @smallexample
 if (*p != 0)
@@ -1796,12 +1761,9 @@ else @dots{}
 @end smallexample
 
 @noindent
-The presence of two statements---the compound statement and a null
-statement---in between the @code{if} condition and the @code{else}
-makes invalid C code.
+@code{if}条件と@code{else}の間に2つのステートメント---複合ステートメントとヌルステートメント---が存在すると、無効なCコードになる。
 
-The definition of the macro @code{SKIP_SPACES} can be altered to solve
-this problem, using a @code{do @dots{} while} statement.  Here is how:
+マクロの定義@code{SKIP_SPACES}は、この問題を解決するために@code{do @dots{} while}ステートメントを使用して変更することができる。 方法は次のとおりである。
 
 @smallexample
 #define SKIP_SPACES(p, limit)     \
@@ -1812,55 +1774,45 @@ do @{ char *lim = (limit);         \
 while (0)
 @end smallexample
 
-Now @code{SKIP_SPACES (p, lim);} expands into
+今、@code{SKIP_SPACES(p、lim);}は以下のように展開される
 
 @smallexample
 do @{@dots{}@} while (0);
 @end smallexample
 
 @noindent
-which is one statement.  The loop executes exactly once; most compilers
-generate no extra code for it.
+これは1つのステートメントである。 ループは正確に1回実行される。 ほとんどのコンパイラはそれのための特別なコードを生成しない。
 
 @node Duplication of Side Effects
-@subsection Duplication of Side Effects
+@subsection 副作用の重複
 
 @cindex side effects (in macro arguments)
 @cindex unsafe macros
-Many C programs define a macro @code{min}, for ``minimum'', like this:
+多くのCプログラムは、以下のように、「最小」のマクロ@code{min}を定義している。
 
 @smallexample
 #define min(X, Y)  ((X) < (Y) ? (X) : (Y))
 @end smallexample
 
-When you use this macro with an argument containing a side effect,
-as shown here,
+ここに示すように、このマクロに副作用を含む引数を使用すると、
 
 @smallexample
 next = min (x + y, foo (z));
 @end smallexample
 
 @noindent
-it expands as follows:
+次のように展開される。
 
 @smallexample
 next = ((x + y) < (foo (z)) ? (x + y) : (foo (z)));
 @end smallexample
 
 @noindent
-where @code{x + y} has been substituted for @code{X} and @code{foo (z)}
-for @code{Y}.
+ここで@code{X}は@code{x + y}に、@code{Y}は@code{foo(z)}に置き換えられている。
 
-The function @code{foo} is used only once in the statement as it appears
-in the program, but the expression @code{foo (z)} has been substituted
-twice into the macro expansion.  As a result, @code{foo} might be called
-two times when the statement is executed.  If it has side effects or if
-it takes a long time to compute, the results might not be what you
-intended.  We say that @code{min} is an @dfn{unsafe} macro.
+関数@code{foo}はプログラム中に現れている文の中で一度だけ使われるが、式@code{foo(z)}はマクロ展開に2回代入されている。 その結果、文が実行されるときに@code{foo}が2回呼び出されることがある。 副作用がある場合や、計算に時間がかかる場合、結果は意図したとおりではない可能性がある。 @code{min}は@dfn{安全でない}マクロである。
 
-The best solution to this problem is to define @code{min} in a way that
-computes the value of @code{foo (z)} only once.  The C language offers
-no standard way to do this, but it can be done with GNU extensions as
+この問題に対する最良の解決策は、@code{foo(z)}の値を1回だけ計算する方法で@code{min}を定義することである。 C言語はこれを行う標準的な方法を提供していないが、次のようにGNU拡張で行うことができる：
 follows:
 
 @smallexample
@@ -1870,17 +1822,9 @@ follows:
    (x_ < y_) ? x_ : y_; @})
 @end smallexample
 
-The @samp{(@{ @dots{} @})} notation produces a compound statement that
-acts as an expression.  Its value is the value of its last statement.
-This permits us to define local variables and assign each argument to
-one.  The local variables have underscores after their names to reduce
-the risk of conflict with an identifier of wider scope (it is impossible
-to avoid this entirely).  Now each argument is evaluated exactly once.
+@samp{(@{ @dots{} @})}表記法は、式として機能する複合文を生成する。 その値は最後のステートメントの値である。 これにより、ローカル変数を定義し、各引数を1つに割り当てることができる。 ローカル変数は名前の後にアンダースコアを付けて、より広いスコープの識別子との衝突のリスクを低減する（これを完全に避けることは不可能である）。 各引数は正確に1回だけ評価される。
 
-If you do not wish to use GNU C extensions, the only solution is to be
-careful when @emph{using} the macro @code{min}.  For example, you can
-calculate the value of @code{foo (z)}, save it in a variable, and use
-that variable in @code{min}:
+GNU C拡張機能を使用したくない場合は、唯一の解決法はマクロ@code{min}を@emph{使用する}ときに注意することである。 たとえば、@code{foo(z)}の値を計算し、変数に保存し、その変数を@code{min}に使用することができる。
 
 @smallexample
 @group
@@ -1894,59 +1838,37 @@ that variable in @code{min}:
 @end smallexample
 
 @noindent
-(where we assume that @code{foo} returns type @code{int}).
+（ここでは、@code{foo}が@code{int}型を返すと仮定する）。
 
 @node Self-Referential Macros
-@subsection Self-Referential Macros
+@subsection 自己参照マクロ
 @cindex self-reference
 
-A @dfn{self-referential} macro is one whose name appears in its
-definition.  Recall that all macro definitions are rescanned for more
-macros to replace.  If the self-reference were considered a use of the
-macro, it would produce an infinitely large expansion.  To prevent this,
-the self-reference is not considered a macro call.  It is passed into
-the preprocessor output unchanged.  Consider an example:
+@dfn {self-referential}マクロはその名前がその定義に現れるものである。 すべてのマクロ定義が、より多くのマクロを置き換えるために再スキャンされることを思い出すこと。 自己参照がマクロの使用と見なされた場合、マクロ参照は無限に展開される。 これを防ぐために、自己参照はマクロ呼び出しと見なされない。 プリプロセッサの出力にそのまま渡される。 例を考える：
 
 @smallexample
 #define foo (4 + foo)
 @end smallexample
 
 @noindent
-where @code{foo} is also a variable in your program.
+ここで@code{foo}はプログラム内の変数でもある。
 
-Following the ordinary rules, each reference to @code{foo} will expand
-into @code{(4 + foo)}; then this will be rescanned and will expand into
-@code{(4 + (4 + foo))}; and so on until the computer runs out of memory.
+通常の規則に従って、@code{foo}への各参照は@code {(4 + foo)}に展開される。 これは再スキャンされ、@code{(4 +(4 + foo))}に展開される。 コンピュータがメモリ不足になるまで続く。
 
-The self-reference rule cuts this process short after one step, at
-@code{(4 + foo)}.  Therefore, this macro definition has the possibly
-useful effect of causing the program to add 4 to the value of @code{foo}
-wherever @code{foo} is referred to.
+自己参照ルールは、このプロセスを@code {(4 + foo)}で1ステップ後に短縮する。 したがって、このマクロ定義は、@code{foo}が参照されているところで、プログラムに4を@code{foo}の値に追加させる有用な効果がある。
 
-In most cases, it is a bad idea to take advantage of this feature.  A
-person reading the program who sees that @code{foo} is a variable will
-not expect that it is a macro as well.  The reader will come across the
-identifier @code{foo} in the program and think its value should be that
-of the variable @code{foo}, whereas in fact the value is four greater.
+ほとんどの場合、この機能を利用することは悪い考えである。 @code{foo}が変数であると見なすプログラムを読んでいる人は、マクロであるとは思わないだろう。 読者はプログラム中の識別子@code{foo}を見つけ、その値は変数@code{foo}の値であるべきだと思うが、実際には値は4大きい。
 
-One common, useful use of self-reference is to create a macro which
-expands to itself.  If you write
+自己参照の一般的で有用な使用法の1つは、マクロ自身を展開するマクロを作成することである。このように書くならば
 
 @smallexample
 #define EPERM EPERM
 @end smallexample
 
 @noindent
-then the macro @code{EPERM} expands to @code{EPERM}.  Effectively, it is
-left alone by the preprocessor whenever it's used in running text.  You
-can tell that it's a macro with @samp{#ifdef}.  You might do this if you
-want to define numeric constants with an @code{enum}, but have
-@samp{#ifdef} be true for each constant.
+マクロ@code{EPERM}は@code{EPERM}に展開される。 効果的には、実行中のテキストで使用されるときはいつでもプリプロセッサによって単独で残される。 それは@samp{#ifdef}ができるマクロであると言うことができる。 数値定数を@code{enum}で定義したいが、@samp{#ifdef}を各定数に対して真にしたい場合は、これを行うかもしれない。
 
-If a macro @code{x} expands to use a macro @code{y}, and the expansion of
-@code{y} refers to the macro @code{x}, that is an @dfn{indirect
-self-reference} of @code{x}.  @code{x} is not expanded in this case
-either.  Thus, if we have
+マクロ@code{x}がマクロ@code{y}を使用するように展開し、@code{y}の展開がマクロ@code{x}を参照する場合、それは@code{x}の@dfn{間接自己参照}である。 この場合でも@code {x}は展開されない。 したがって、もし我々が
 
 @smallexample
 #define x (4 + y)
@@ -1954,7 +1876,7 @@ either.  Thus, if we have
 @end smallexample
 
 @noindent
-then @code{x} and @code{y} expand as follows:
+と書くならば、@code{x}と@code{y}は以下のように展開される。
 
 @smallexample
 @group
@@ -1967,63 +1889,32 @@ y    @expansion{} (2 * x)
 @end smallexample
 
 @noindent
-Each macro is expanded when it appears in the definition of the other
-macro, but not when it indirectly appears in its own definition.
+各マクロは、他のマクロの定義に現れたときに展開されるが、それ自身の定義に間接的に現れるときは展開されない。
 
 @node Argument Prescan
-@subsection Argument Prescan
+@subsection 引数の前スキャン
 @cindex expansion of arguments
 @cindex macro argument expansion
 @cindex prescan of macro arguments
 
-Macro arguments are completely macro-expanded before they are
-substituted into a macro body, unless they are stringized or pasted
-with other tokens.  After substitution, the entire macro body, including
-the substituted arguments, is scanned again for macros to be expanded.
-The result is that the arguments are scanned @emph{twice} to expand
-macro calls in them.
+マクロ引数は、マクロボディに代入される前に完全にマクロ展開されるが、他のトークンで文字列化されたり貼り付けられたりしている場合を除く。 置換後、置換された引数を含むマクロ本体全体が再度走査され、マクロが展開される。 その結果、引数はマクロ呼び出しを展開するために@emph{二度}スキャンされる。
 
-Most of the time, this has no effect.  If the argument contained any
-macro calls, they are expanded during the first scan.  The result
-therefore contains no macro calls, so the second scan does not change
-it.  If the argument were substituted as given, with no prescan, the
-single remaining scan would find the same macro calls and produce the
-same results.
+ほとんどの場合、これは効果がない。 引数にマクロ呼び出しが含まれている場合、引数は最初のスキャン時に展開される。 したがって、結果にはマクロ呼び出しが含まれないため、2回目のスキャンではマクロ呼び出しは変更されない。 引数が前スキャンなしで与えられたように置換された場合、残りの1回のスキャンで同じマクロ呼び出しが検出され、同じ結果が得られる。
 
-You might expect the double scan to change the results when a
-self-referential macro is used in an argument of another macro
-(@pxref{Self-Referential Macros}): the self-referential macro would be
-expanded once in the first scan, and a second time in the second scan.
-However, this is not what happens.  The self-references that do not
-expand in the first scan are marked so that they will not expand in the
-second scan either.
+他のマクロの引数に自己参照マクロ（@pxref {Self-Referential Macros}）を使用すると、二重スキャンで結果が変わることが予想されるかもしれない。自己参照マクロは最初のスキャンで一度展開され、 2回目のスキャンでは2回目である。 しかし、これは起こることではない。 最初のスキャンで展開されない自己参照は、2番目のスキャンでも展開されないようにマークされる。
 
-You might wonder, ``Why mention the prescan, if it makes no difference?
-And why not skip it and make the preprocessor faster?''  The answer is
-that the prescan does make a difference in three special cases:
+「もし違いがないならば、なぜ前スキャンについて述べるのか？それをスキップしてプリプロセッサを速くしないのはなぜか？」と考えるかもしれない。 答えは、前スキャンが3つの特殊なケースで違いを生むことである。
 
 @itemize @bullet
 @item
-Nested calls to a macro.
+マクロへの入れ子の呼び出し。
 
-We say that @dfn{nested} calls to a macro occur when a macro's argument
-contains a call to that very macro.  For example, if @code{f} is a macro
-that expects one argument, @code{f (f (1))} is a nested pair of calls to
-@code{f}.  The desired expansion is made by expanding @code{f (1)} and
-substituting that into the definition of @code{f}.  The prescan causes
-the expected result to happen.  Without the prescan, @code{f (1)} itself
-would be substituted as an argument, and the inner use of @code{f} would
-appear during the main scan as an indirect self-reference and would not
-be expanded.
+@dfn{入れ子の}マクロの呼び出しは、マクロの引数にそのマクロへの呼び出しが含まれている場合に発生する。 たとえば、@code{f}が1つの引数を必要とするマクロである場合、@code{f(f(1))}は@code{f}への呼び出しのネストされたペアである。 望ましい展開は、@code{f(1)}を展開し、それを@code{f}の定義に置き換えることによって行われる。前スキャンによって予想される結果を生じる。 前スキャンがなければ、@code{f(1)}自体が引数として代入され、@code{f}の内部使用は間接的な自己参照としてメインスキャン中に現れ、展開されない。
 
 @item
-Macros that call other macros that stringize or concatenate.
+文字列化または連結する他のマクロを呼び出すマクロ。
 
-If an argument is stringized or concatenated, the prescan does not
-occur.  If you @emph{want} to expand a macro, then stringize or
-concatenate its expansion, you can do that by causing one macro to call
-another macro that does the stringizing or concatenation.  For
-instance, if you have
+引数が文字列化または連結されている場合、前スキャンは発生しない。 @emph{マクロ}を展開し、そのマクロ展開を文字列化または連結したい場合は、あるマクロが文字列化または連結を行う別のマクロを呼び出すようにする。 たとえば、もし
 
 @smallexample
 #define AFTERX(x) X_ ## x
@@ -2032,15 +1923,12 @@ instance, if you have
 #define BUFSIZE TABLESIZE
 @end smallexample
 
-then @code{AFTERX(BUFSIZE)} expands to @code{X_BUFSIZE}, and
-@code{XAFTERX(BUFSIZE)} expands to @code{X_1024}.  (Not to
-@code{X_TABLESIZE}.  Prescan always does a complete expansion.)
+ならば、@code{AFTERX(BUFSIZE)}は@code{X_BUFSIZE}へと展開され、@code{XAFTERX(BUFSIZE)}は@code{X_1024}へと展開される。 (@code{X_TABLESIZE}へは展開されない。前スキャンは常に完全な展開を行う。）
 
 @item
-Macros used in arguments, whose expansions contain unshielded commas.
+引数に使用されるマクロで、その拡張には守られていないコンマが含まれる。
 
-This can cause a macro expanded on the second scan to be called with the
-wrong number of arguments.  Here is an example:
+これにより、2番目のスキャンで展開されたマクロが間違った数の引数で呼び出される可能性がある。 次に例を示す。
 
 @smallexample
 #define foo  a,b
@@ -2048,12 +1936,7 @@ wrong number of arguments.  Here is an example:
 #define lose(x) (1 + (x))
 @end smallexample
 
-We would like @code{bar(foo)} to turn into @code{(1 + (foo))}, which
-would then turn into @code{(1 + (a,b))}.  Instead, @code{bar(foo)}
-expands into @code{lose(a,b)}, and you get an error because @code{lose}
-requires a single argument.  In this case, the problem is easily solved
-by the same parentheses that ought to be used to prevent misnesting of
-arithmetic operations:
+@code{bar(foo)}を@code{(1 +(foo))}に変えて、@code{(1+(a,b))}に変えたいだろう。 代わりに@code{bar(foo)}は@code{lose(a,b)}に展開され、@code{lose}には1つの引数が必要なのでエラーが発生する。 この場合、問題は、算術演算の誤ったネスティングを防ぐために使用されるべきである同じカッコで簡単に解決される。
 
 @smallexample
 #define foo (a,b)
@@ -2061,22 +1944,17 @@ arithmetic operations:
 #define bar(x) lose((x))
 @end smallexample
 
-The extra pair of parentheses prevents the comma in @code{foo}'s
-definition from being interpreted as an argument separator.
+余分な括弧の組は、@code {foo}の定義中のコンマが引数の区切りとして解釈されないようにする。
 
 @end itemize
 
 @node Newlines in Arguments
-@subsection Newlines in Arguments
+@subsection 引数での改行
 @cindex newlines in macro arguments
 
-The invocation of a function-like macro can extend over many logical
-lines.  However, in the present implementation, the entire expansion
-comes out on one line.  Thus line numbers emitted by the compiler or
-debugger refer to the line the invocation started on, which might be
-different to the line containing the argument causing the problem.
+関数に似たマクロの呼び出しは、多くの論理行にまたがる可能性がある。 しかし、現在の実装では、展開全体が1行になる。 したがって、コンパイラーまたはデバッガーによって発行される行番号は、呼び出しを開始した行を参照する。これは、問題の原因となっている引き数を含む行とは異なる場合がある。
 
-Here is an example illustrating this:
+これを説明する例を次に示す。
 
 @smallexample
 #define ignore_second_arg(a,b,c) a; c
@@ -2087,11 +1965,9 @@ ignore_second_arg (foo (),
 @end smallexample
 
 @noindent
-The syntax error triggered by the tokens @code{syntax error} results in
-an error message citing line three---the line of ignore_second_arg---
-even though the problematic code comes from line five.
+トークン@code{syntax error}によって引き起こされた構文エラーは、問題のコードが5行目から来ていても、3行--- ignore_second_argの行---を引用するエラーメッセージになる。
 
-We consider this a bug, and intend to fix it in the near future.
+私たちはこれをバグとみなし、近い将来に修正しようとしている。
 
 @node Conditionals
 @chapter Conditionals
