@@ -2330,27 +2330,16 @@ strrchr(some_string, 'h');
 @end ftable
 
 @node Other Directives
-@chapter Other Directives
+@chapter 他のディレクティブ
 
 @findex #ident
 @findex #sccs
-The @samp{#ident} directive takes one argument, a string constant.  On
-some systems, that string constant is copied into a special segment of
-the object file.  On other systems, the directive is ignored.  The
-@samp{#sccs} directive is a synonym for @samp{#ident}.
+@samp{#ident}ディレクティブは1つの引数、文字列定数をとる。 一部のシステムでは、その文字列定数がオブジェクトファイルの特別なセグメントにコピーされる。 他のシステムでは、このディレクティブは無視される。 @samp{#sccs}ディレクティブは@samp{#ident}の同義語である。
 
-These directives are not part of the C standard, but they are not
-official GNU extensions either.  What historical information we have
-been able to find, suggests they originated with System V@.
+これらの指令はC標準の一部ではないが、公式のGNU拡張でもない。 私たちが発見した歴史的な情報は、System Vの起源であることを示唆している。
 
 @cindex null directive
-The @dfn{null directive} consists of a @samp{#} followed by a newline,
-with only whitespace (including comments) in between.  A null directive
-is understood as a preprocessing directive but has no effect on the
-preprocessor output.  The primary significance of the existence of the
-null directive is that an input line consisting of just a @samp{#} will
-produce no output, rather than a line of output containing just a
-@samp{#}.  Supposedly some old C programs contain such lines.
+@dfn{nullディレクティブ}は、@samp{＃}の後に改行が続き、その間に空白（コメントを含む）のみが含まれている。 nullディレクティブは前処理ディレクティブと解釈されるが、プリプロセッサ出力には影響しない。 nullディレクティブが存在する主な意味は、単に@samp{＃}からなる入力行では、@samp{＃}を含む出力行ではなく、出力が生成されないことである。 おそらく古いCプログラムにはこのような行が含まれている。
 
 @node Preprocessor Output
 @chapter Preprocessor Output
