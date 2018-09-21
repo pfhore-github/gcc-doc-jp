@@ -2127,7 +2127,7 @@ Cプリプロセッサの条件式は@dfn {条件付き命令}で始まる： @s
 @end smallexample
 
 @noindent
-は@code{BUFSIZE> = 1024}}に単純化することができる。なぜなら、@code{BUFSIZE}が定義されていないと、値がゼロであると解釈されるからである。
+は@code{BUFSIZE> = 1024}に単純化することができる。なぜなら、@code{BUFSIZE}が定義されていないと、値がゼロであると解釈されるからである。
 
 マクロ展開の結果として@code{defined}演算子が現れた場合、Cの標準では動作は未定義であると言う。 GNU cppはそれを本物の@code{defined}演算子として扱い、通常の評価をする。 コマンドラインオプション@option{-Wpedantic}を使用する場合は、他のコンパイラがこれを別々に処理する可能性があるため、コードがこの機能を使用する場所を警告する。 警告は@option{-Wextra}によっても有効になり、@option{-Wexpansion-to-defined}で個別に有効にすることもできる。
 
@@ -2201,20 +2201,15 @@ Cプリプロセッサの条件式は@dfn {条件付き命令}で始まる： @s
 Cコードではないコメントに@code {#if 0}を使用してはならない。 代わりに実際のコメントを使用すること。 @code{#if 0}の内部は、完全なトークンで構成されていなければならない。 特に、一重引用符はバランスをとる必要がある。 コメントにはアンバランスな一重引用符（英語ではアポストロフィとして知られている）が含まれていることがよくある。 これらは@code{#if 0}を混乱させる。 @samp{/*}は混乱しない。
 
 @node Diagnostics
-@chapter Diagnostics
+@chapter 診断
 @cindex diagnostic
 @cindex reporting errors
 @cindex reporting warnings
 
 @findex #error
-The directive @samp{#error} causes the preprocessor to report a fatal
-error.  The tokens forming the rest of the line following @samp{#error}
-are used as the error message.
+@samp{#error}命令は、プリプロセッサに致命的エラーを報告させる。 @samp{#error}に続く行の残りの部分を形成するトークンは、エラーメッセージとして使用される。
 
-You would use @samp{#error} inside of a conditional that detects a
-combination of parameters which you know the program does not properly
-support.  For example, if you know that the program will not run
-properly on a VAX, you might write
+プログラムが正しくサポートしていないことを知っているパラメータの組み合わせを検出する条件の中で@samp{#error}を使用する。 たとえば、プログラムがVAX上で正しく実行されないことがわかっている場合は、
 
 @smallexample
 @group
@@ -2224,9 +2219,7 @@ properly on a VAX, you might write
 @end group
 @end smallexample
 
-If you have several configuration parameters that must be set up by
-the installation in a consistent way, you can use conditionals to detect
-an inconsistency and report it with @samp{#error}.  For example,
+一貫性のある方法でインストールで設定する必要のあるいくつかの設定パラメータがある場合は、条件を使用して矛盾を検出し、@samp{#error}で報告できる。 例えば、
 
 @smallexample
 #if !defined(FOO) && defined(BAR)
@@ -2235,128 +2228,67 @@ an inconsistency and report it with @samp{#error}.  For example,
 @end smallexample
 
 @findex #warning
-The directive @samp{#warning} is like @samp{#error}, but causes the
-preprocessor to issue a warning and continue preprocessing.  The tokens
-following @samp{#warning} are used as the warning message.
+@samp{#warning}命令は@samp{#error}に似ているが、プリプロセッサに警告を出して前処理を続行させる。 @samp{#warning}に続くトークンは、警告メッセージとして使用される。
 
-You might use @samp{#warning} in obsolete header files, with a message
-directing the user to the header file which should be used instead.
+廃止されたヘッダファイルで@samp{#warning}を使用し、その代わりに使用されるヘッダファイルにユーザを誘導するメッセージを表示することができる。
 
-Neither @samp{#error} nor @samp{#warning} macro-expands its argument.
-Internal whitespace sequences are each replaced with a single space.
-The line must consist of complete tokens.  It is wisest to make the
-argument of these directives be a single string constant; this avoids
-problems with apostrophes and the like.
+@samp{#error}も@samp{#warning}も引数をマクロ展開しない。 内部空白シーケンスはそれぞれ1つのスペースに置き換えられる。 行は完全なトークンで構成されていなければならない。 これらのディレクティブの引数を単一の文字列定数にすることが最も賢明である。 これにより、アポストロフィなどの問題が回避される。
 
 @node Line Control
-@chapter Line Control
+@chapter 行制御
 @cindex line control
 
-The C preprocessor informs the C compiler of the location in your source
-code where each token came from.  Presently, this is just the file name
-and line number.  All the tokens resulting from macro expansion are
-reported as having appeared on the line of the source file where the
-outermost macro was used.  We intend to be more accurate in the future.
+Cプリプロセッサは、各トークンがどこから来たかをソースコード内の場所をCコンパイラに通知する。 現在のところ、これはファイル名と行番号である。 マクロ展開の結果として得られるすべてのトークンは、最も外側のマクロが使用されたソースファイルの行に現れたと報告される。 私たちは将来、より正確になるつもりである。
 
-If you write a program which generates source code, such as the
-@command{bison} parser generator, you may want to adjust the preprocessor's
-notion of the current file name and line number by hand.  Parts of the
-output from @command{bison} are generated from scratch, other parts come
-from a standard parser file.  The rest are copied verbatim from
-@command{bison}'s input.  You would like compiler error messages and
-symbolic debuggers to be able to refer to @code{bison}'s input file.
+@command{bison}パーサジェネレータのようなソースコードを生成するプログラムを書く場合、プリプロセッサの現在のファイル名と行番号の概念を手動で調整することができる。 @command{bison}の出力の一部は最初から生成され、他の部分は標準パーサーファイルから生成される。 残りは@command{bison}の入力からそのままコピーされる。 コンパイラエラーメッセージとシンボリックデバッガが@code{bison}の入力ファイルを参照できるようにしたいとする。
 
 @findex #line
-@command{bison} or any such program can arrange this by writing
-@samp{#line} directives into the output file.  @samp{#line} is a
-directive that specifies the original line number and source file name
-for subsequent input in the current preprocessor input file.
-@samp{#line} has three variants:
+@command{bison}やそのようなプログラムは、@samp{#line}指示文を出力ファイルに書き込むことでこれを手配できる。 @samp{#line}は、現在のプリプロセッサ入力ファイルの後続入力の元の行番号とソースファイル名を指定する指令である。 @samp{#line}には3つのバリエーションがある：
 
 @table @code
 @item #line @var{linenum}
-@var{linenum} is a non-negative decimal integer constant.  It specifies
-the line number which should be reported for the following line of
-input.  Subsequent lines are counted from @var{linenum}.
+@var{linenum}は、負でない10進整数定数である。これは、次の入力行について報告される行番号を指定する。 後続の行は、@var{linenum}から数えられる。
 
 @item #line @var{linenum} @var{filename}
-@var{linenum} is the same as for the first form, and has the same
-effect.  In addition, @var{filename} is a string constant.  The
-following line and all subsequent lines are reported to come from the
-file it specifies, until something else happens to change that.
-@var{filename} is interpreted according to the normal rules for a string
-constant: backslash escapes are interpreted.  This is different from
-@samp{#include}.
+@var{linenum}は最初の形式と同じで、同じ効果がある。 さらに、@var{filename}は文字列定数である。 次の行とそれに続くすべての行は、別の行がそれを変更するまで、指定されたファイルから来たと報告される。 @var{filename}は、文字列定数の通常の規則に従って解釈される。バックスラッシュエスケープが解釈される。 これは@samp{#include}とは異なる。
 
 @item #line @var{anything else}
-@var{anything else} is checked for macro calls, which are expanded.
-The result should match one of the above two forms.
+@var {anything else}は展開されたマクロ呼び出しをチェックする。 結果は、上記の2つの形式のいずれかと一致する必要がある。
 @end table
 
-@samp{#line} directives alter the results of the @code{__FILE__} and
-@code{__LINE__} predefined macros from that point on.  @xref{Standard
-Predefined Macros}.  They do not have any effect on @samp{#include}'s
-idea of the directory containing the current file.
+@samp{#line}ディレクティブは、あらかじめ定義された@code{__FILE__}マクロと@code{__LINE__}マクロの結果を変更する。@xref{Standard Predefined Macros}。 @samp{#include}の現在のファイルを含むディレクトリの考え方には何の影響もない。
 
 @node Pragmas
-@chapter Pragmas
+@chapter プラグマ
 
-The @samp{#pragma} directive is the method specified by the C standard
-for providing additional information to the compiler, beyond what is
-conveyed in the language itself.  The forms of this directive
-(commonly known as @dfn{pragmas}) specified by C standard are prefixed with 
-@code{STDC}.  A C compiler is free to attach any meaning it likes to other 
-pragmas.  All GNU-defined, supported pragmas have been given a
-@code{GCC} prefix.
+@samp{#pragma}ディレクティブは、言語自体で伝えられるものを超えて、コンパイラに追加情報を提供するためのC標準で指定された方法である。 C標準で指定されているこのディレクティブの形式（一般に@dfn{プラグマ}と呼ばれる）には@code {STDC}という接頭辞が付く。 Cコンパイラは、好きな意味を他のプラグマに自由に付けることができる。 すべてのGNU定義のサポートされているプラグマには@code{GCC}という接頭辞が付いている。
 
 @cindex @code{_Pragma}
-C99 introduced the @code{@w{_Pragma}} operator.  This feature addresses a
-major problem with @samp{#pragma}: being a directive, it cannot be
-produced as the result of macro expansion.  @code{@w{_Pragma}} is an
-operator, much like @code{sizeof} or @code{defined}, and can be embedded
-in a macro.
+C99は@code{@w{_Pragma}}演算子を導入した。 この機能は、@samp{#pragma}の大きな問題に対処する。ディレクティブなので、マクロ展開の結果として生成することはできない。 @code{@w{_Pragma}}は、@ code{sizeof}や@code{defined}とよく似た演算子で、マクロに埋め込むことができる。
 
-Its syntax is @code{@w{_Pragma (@var{string-literal})}}, where
-@var{string-literal} can be either a normal or wide-character string
-literal.  It is destringized, by replacing all @samp{\\} with a single
-@samp{\} and all @samp{\"} with a @samp{"}.  The result is then
-processed as if it had appeared as the right hand side of a
-@samp{#pragma} directive.  For example,
+構文は@code{@w{_Pragma(@var{string-literal})}}である。@var{string-literal}は通常の文字列リテラルまたはワイド文字の文字列リテラルのどちらでもよい。 すべての@samp{\\}を単一の@samp{\}と置き換え、すべての@samp{\"}を@samp{"}に置き換えることによって、それは非文字列化される。 結果は@samp{#pragma}ディレクティブの右側に現れたかのように処理される。例えば、
 
 @smallexample
 _Pragma ("GCC dependency \"parse.y\"")
 @end smallexample
 
 @noindent
-has the same effect as @code{#pragma GCC dependency "parse.y"}.  The
-same effect could be achieved using macros, for example
+は@code{#pragma GCC dependency "parse.y"}と同じ効果がある。 マクロを使用して同じ効果を達成することもできる。
 
 @smallexample
 #define DO_PRAGMA(x) _Pragma (#x)
 DO_PRAGMA (GCC dependency "parse.y")
 @end smallexample
 
-The standard is unclear on where a @code{_Pragma} operator can appear.
-The preprocessor does not accept it within a preprocessing conditional
-directive like @samp{#if}.  To be safe, you are probably best keeping it
-out of directives other than @samp{#define}, and putting it on a line of
-its own.
+標準では、@code{_Pragma}演算子がどこに現れるかは不明である。 プリプロセッサは@samp{#if}のような前処理条件ディレクティブ内でプリプロセッサを受け付けない。 安全のためには、おそらく@samp{#define}以外のディレクティブを避けて、それを独自の行に置くのが最良である。
 
-This manual documents the pragmas which are meaningful to the
-preprocessor itself.  Other pragmas are meaningful to the C or C++
-compilers.  They are documented in the GCC manual.
+このマニュアルでは、プリプロセッサそのものに意味のあるプラグマについて説明する。 他のプラグマは、CまたはC++コンパイラとって意味がある。 それらはGCCマニュアルに記載されている。
 
-GCC plugins may provide their own pragmas.
+GCCプラグインは独自のプラグマを提供することがある。
 
 @ftable @code
 @item #pragma GCC dependency
-@code{#pragma GCC dependency} allows you to check the relative dates of
-the current file and another file.  If the other file is more recent than
-the current file, a warning is issued.  This is useful if the current
-file is derived from the other file, and should be regenerated.  The
-other file is searched for using the normal include search path.
-Optional trailing text can be used to give more information in the
-warning message.
+@code{#pragma GCC dependency}では、現在のファイルと別のファイルの相対日付を調べることができる。 他のファイルが現在のファイルより新しい場合、警告が発行される。 これは、現在のファイルが他のファイルから派生し、再生成する必要がある場合に便利である。 他のファイルは、通常のインクルード検索パスを使用して検索される。 オプションの末尾のテキストを使用して、警告メッセージの詳細を指定できる。
 
 @smallexample
 #pragma GCC dependency "parse.y"
@@ -2364,12 +2296,7 @@ warning message.
 @end smallexample
 
 @item #pragma GCC poison
-Sometimes, there is an identifier that you want to remove completely
-from your program, and make sure that it never creeps back in.  To
-enforce this, you can @dfn{poison} the identifier with this pragma.
-@code{#pragma GCC poison} is followed by a list of identifiers to
-poison.  If any of those identifiers appears anywhere in the source
-after the directive, it is a hard error.  For example,
+場合によっては、あなたのプログラムから完全に削除したい識別子がある。これを強制するために、このプラグマで識別子を@dfn{有害化}することができる。 @code{#pragma GCC poison}の後には、毒の識別子のリストが続く。 これらの識別子のいずれかがディレクティブの後にソースのどこに現れても、それはハードエラーである。 例えば、
 
 @smallexample
 #pragma GCC poison printf sprintf fprintf
@@ -2377,14 +2304,11 @@ sprintf(some_string, "hello");
 @end smallexample
 
 @noindent
-will produce an error.
+はエラーを発する。
 
-If a poisoned identifier appears as part of the expansion of a macro
-which was defined before the identifier was poisoned, it will @emph{not}
-cause an error.  This lets you poison an identifier without worrying
-about system headers defining macros that use it.
+有害化された識別子が、識別子が有害化される前に定義されたマクロの展開の一部として表示される場合、エラーは発生し@emph{ない}。 これにより、識別子を使用するマクロを定義しているシステムヘッダについて心配することなく、識別子に害を与えることができる。
 
-For example,
+例えば
 
 @smallexample
 #define strrchr rindex
@@ -2393,21 +2317,15 @@ strrchr(some_string, 'h');
 @end smallexample
 
 @noindent
-will not produce an error.
+はエラーを発しない。
 
 @item #pragma GCC system_header
-This pragma takes no arguments.  It causes the rest of the code in the
-current file to be treated as if it came from a system header.
+このプラグマは引数をとらない。 現在のファイルの残りのコードは、あたかもシステムヘッダから来たものとして扱われる。
 @xref{System Headers}.
 
 @item #pragma GCC warning
 @itemx #pragma GCC error
-@code{#pragma GCC warning "message"} causes the preprocessor to issue
-a warning diagnostic with the text @samp{message}.  The message
-contained in the pragma must be a single string literal.  Similarly,
-@code{#pragma GCC error "message"} issues an error message.  Unlike
-the @samp{#warning} and @samp{#error} directives, these pragmas can be
-embedded in preprocessor macros using @samp{_Pragma}.
+@code{#pragma GCC warning "message"}は、プリプロセッサに@samp{message}というテキストで警告診断を発行させる。 プラグマに含まれるメッセージは、単一の文字列リテラルでなければならない。 同様に、@code{#pragma GCC error "message"}はエラーメッセージを出す。 @samp{#warning}および@samp{#error}ディレクティブとは異なり、これらのプラグマは@samp{_Pragma}を使用してプリプロセッサマクロに埋め込むことができる。
 
 @end ftable
 
