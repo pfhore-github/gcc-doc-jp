@@ -2342,83 +2342,46 @@ strrchr(some_string, 'h');
 @dfn{nullディレクティブ}は、@samp{＃}の後に改行が続き、その間に空白（コメントを含む）のみが含まれている。 nullディレクティブは前処理ディレクティブと解釈されるが、プリプロセッサ出力には影響しない。 nullディレクティブが存在する主な意味は、単に@samp{＃}からなる入力行では、@samp{＃}を含む出力行ではなく、出力が生成されないことである。 おそらく古いCプログラムにはこのような行が含まれている。
 
 @node Preprocessor Output
-@chapter Preprocessor Output
+@chapter プリプロセッサの出力
 
-When the C preprocessor is used with the C, C++, or Objective-C
-compilers, it is integrated into the compiler and communicates a stream
-of binary tokens directly to the compiler's parser.  However, it can
-also be used in the more conventional standalone mode, where it produces
-textual output.
+CプリプロセッサをC、C++、またはObjective-Cコンパイラとともに使用すると、コンパイラに統合され、バイナリトークンのストリームを直接コンパイラのパーサーに伝える。 ただし、より一般的なスタンドアロンモード（テキスト出力を生成する）で使用することもできる。
 @c FIXME: Document the library interface.
 
 @cindex output format
-The output from the C preprocessor looks much like the input, except
-that all preprocessing directive lines have been replaced with blank
-lines and all comments with spaces.  Long runs of blank lines are
-discarded.
+Cプリプロセッサからの出力は入力とよく似ているが、すべての前処理ディレクティブ行が空白行で、すべてのコメントがスペースで置き換えられている。 長い行の空白行は破棄される。
 
-The ISO standard specifies that it is implementation defined whether a
-preprocessor preserves whitespace between tokens, or replaces it with
-e.g.@: a single space.  In GNU CPP, whitespace between tokens is collapsed
-to become a single space, with the exception that the first token on a
-non-directive line is preceded with sufficient spaces that it appears in
-the same column in the preprocessed output that it appeared in the
-original source file.  This is so the output is easy to read.
-CPP does not insert any
-whitespace where there was none in the original source, except where
-necessary to prevent an accidental token paste.
+ISO標準は、プリプロセッサがトークン間の空白を保存するか、それを例えば単一のスペースで置き換えるかを実装が定義することを指定する。 GNU CPPでは、非指向性の行の最初のトークンの前に、非ディレクティブ行の最初のトークンの前には、元のソースファイルに現れた前処理された出力の同じ列に表示される十分なスペースがあることを除いて、トークン間の空白が折りたたまれて単一のスペースになる。 これは、出力が読みやすくなるようにするためである。 CPPは、偶発的なトークンペーストを防止するために必要な場合を除いて、元のソースに何もなかった空白を挿入しない。
 
 @cindex linemarkers
-Source file name and line number information is conveyed by lines
-of the form
+ソースファイル名と行番号情報は以下の形式の行で伝えられる。
 
 @smallexample
 # @var{linenum} @var{filename} @var{flags}
 @end smallexample
 
 @noindent
-These are called @dfn{linemarkers}.  They are inserted as needed into
-the output (but never within a string or character constant).  They mean
-that the following line originated in file @var{filename} at line
-@var{linenum}.  @var{filename} will never contain any non-printing
-characters; they are replaced with octal escape sequences.
+これらは@dfn{行マーカー}と呼ばれる。 これらは、必要に応じて出力に挿入される（ただし、文字列定数または文字定数内には挿入されない）。 これは、次の行が@var{linenum}行のファイル@var{filename}に由来することを意味する。 @var{filename}には印刷されない文字は含まれない。 それらは8進エスケープシーケンスに置き換えられる。
 
-After the file name comes zero or more flags, which are @samp{1},
-@samp{2}, @samp{3}, or @samp{4}.  If there are multiple flags, spaces
-separate them.  Here is what the flags mean:
+ファイル名の後に@samp{1}、@samp{2}、@samp{3}、@samp{4}のフラグが0個以上ある場合。 複数のフラグがある場合は、スペースで区切られる。 フラグの意味は次のとおりである。
 
 @table @samp
 @item 1
-This indicates the start of a new file.
+これは、新しいファイルの開始を示す。
 @item 2
-This indicates returning to a file (after having included another file).
+これは、ファイルに戻ったことを示す（別のファイルを組み込んだ後）。
 @item 3
-This indicates that the following text comes from a system header file,
-so certain warnings should be suppressed.
+これは、次のテキストがシステムヘッダファイルから来ることを示しているため、特定の警告を抑制する必要がある。
 @item 4
-This indicates that the following text should be treated as being
-wrapped in an implicit @code{extern "C"} block.
+これは、次のテキストが暗黙の@code{extern "C"}ブロックで囲まれているものとして扱われるべきであることを示す。
 @c maybe cross reference NO_IMPLICIT_EXTERN_C
 @end table
 
-As an extension, the preprocessor accepts linemarkers in non-assembler
-input files.  They are treated like the corresponding @samp{#line}
-directive, (@pxref{Line Control}), except that trailing flags are
-permitted, and are interpreted with the meanings described above.  If
-multiple flags are given, they must be in ascending order.
+拡張として、プリプロセッサは、アセンブラ以外の入力ファイルで行マーカを受け入れる。 それらは対応する@samp{#line}指令（@pxref{Line Control}）のように扱われるが、末尾のフラグが許され、上記の意味で解釈される。 複数のフラグが指定されている場合は、昇順でなければならない。
 
-Some directives may be duplicated in the output of the preprocessor.
-These are @samp{#ident} (always), @samp{#pragma} (only if the
-preprocessor does not handle the pragma itself), and @samp{#define} and
-@samp{#undef} (with certain debugging options).  If this happens, the
-@samp{#} of the directive will always be in the first column, and there
-will be no space between the @samp{#} and the directive name.  If macro
-expansion happens to generate tokens which might be mistaken for a
-duplicated directive, a space will be inserted between the @samp{#} and
-the directive name.
+プリプロセッサの出力には、いくつかの指令が重複することがある。 これらは@samp{#ident}（常に）、@samp{#pragma}（プリプロセッサがプラグマ自体を処理しない場合のみ）、@samp{#define}および@samp{#undef}（特定のデバッグオプション ）。 この場合、ディレクティブの@samp{#}は常に最初のカラムにあり、@samp{＃}とディレクティブ名の間にスペースはない。 重複したディレクティブと誤っている可能性のあるトークンをマクロ展開すると、@samp{＃}とディレクティブ名の間にスペースが挿入される。
 
 @node Traditional Mode
-@chapter Traditional Mode
+@chapter 伝統モード
 
 Traditional (pre-standard) C preprocessing is rather different from
 the preprocessing specified by the standard.  When the preprocessor 
