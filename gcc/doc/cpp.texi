@@ -2381,25 +2381,13 @@ ISO標準は、プリプロセッサがトークン間の空白を保存する�
 プリプロセッサの出力には、いくつかの指令が重複することがある。 これらは@samp{#ident}（常に）、@samp{#pragma}（プリプロセッサがプラグマ自体を処理しない場合のみ）、@samp{#define}および@samp{#undef}（特定のデバッグオプション ）。 この場合、ディレクティブの@samp{#}は常に最初のカラムにあり、@samp{＃}とディレクティブ名の間にスペースはない。 重複したディレクティブと誤っている可能性のあるトークンをマクロ展開すると、@samp{＃}とディレクティブ名の間にスペースが挿入される。
 
 @node Traditional Mode
-@chapter 伝統モード
+@chapter 従来モード
 
-Traditional (pre-standard) C preprocessing is rather different from
-the preprocessing specified by the standard.  When the preprocessor 
-is invoked with the 
-@option{-traditional-cpp} option, it attempts to emulate a traditional
-preprocessor.  
+従来の（標準前の）Cプリプロセスは、標準で指定されたプリプロセスとはかなり異なる。 プリプロセッサを@option{-traditional-cpp}オプションで起動すると、プリプロセッサは従来のプリプロセッサをエミュレートしようとする。
 
-This mode is not useful for compiling C code with GCC, 
-but is intended for use with non-C preprocessing applications.  Thus
-traditional mode semantics are supported only when invoking
-the preprocessor explicitly, and not in the compiler front ends.
+このモードは、GCCを使用してCコードをコンパイルするのには便利ではないが、非Cプリプロセスアプリケーションでの使用を意図している。 したがって、従来のモードセマンティクスは、プリプロセッサを明示的に呼び出すときにのみサポートされ、コンパイラフロントエンドではサポートされない。
 
-The implementation does not correspond precisely to the behavior of
-early pre-standard versions of GCC, nor to any true traditional preprocessor.
-After all, inconsistencies among traditional implementations were a
-major motivation for C standardization.  However, we intend that it
-should be compatible with true traditional preprocessors in all ways
-that actually matter.
+この実装は、GCCの早期プレスタンダードバージョンの動作や真の従来のプリプロセッサの動作に正確には対応していない。 結局のところ、従来の実装間の不一致がCの標準化の大きな動機となっていた。 しかし、実際に重要なすべての点で、真の従来のプリプロセッサと互換性があるはずである。
 
 @menu
 * Traditional lexical analysis::
@@ -2409,63 +2397,39 @@ that actually matter.
 @end menu
 
 @node Traditional lexical analysis
-@section Traditional lexical analysis
+@section 従来の字句解析
 
-The traditional preprocessor does not decompose its input into tokens
-the same way a standards-conforming preprocessor does.  The input is
-simply treated as a stream of text with minimal internal form.
+従来のプリプロセッサは、標準準拠のプリプロセッサと同じようには入力をトークンに分解しない。 入力は、内部形式が最小のテキストストリームとして扱われる。
 
-This implementation does not treat trigraphs (@pxref{trigraphs})
-specially since they were an invention of the standards committee.  It
-handles arbitrarily-positioned escaped newlines properly and splices
-the lines as you would expect; many traditional preprocessors did not
-do this.
+この実装では、トリグラフ（@pxref {trigraphs}）は、標準委員会の発明であるために特別に取り扱っていない。 任意に配置されたエスケープされた改行を適切に処理し、期待通りに行をスプライスする。 多くの従来のプリプロセッサはこれをしなかった。
 
-The form of horizontal whitespace in the input file is preserved in
-the output.  In particular, hard tabs remain hard tabs.  This can be
-useful if, for example, you are preprocessing a Makefile.
+入力ファイル内の水平空白の形式は、出力に保存される。 特に、硬いタブは硬いタブのままである。 これは、たとえば、Makefileをプリプロセスしている場合などに便利である。
 
-Traditional CPP only recognizes C-style block comments, and treats the
-@samp{/*} sequence as introducing a comment only if it lies outside
-quoted text.  Quoted text is introduced by the usual single and double
-quotes, and also by an initial @samp{<} in a @code{#include}
-directive.
+従来のCPPはCスタイルのブロックコメントだけを認識し、@samp{/*}シーケンスは引用されたテキストの外にある場合にのみコメントを挿入するものとして扱う。 クォートされたテキストは、通常の一重引用符と二重引用符、および@code{#include}ディレクティブの最初の@samp{<}によって導入される。
 
-Traditionally, comments are completely removed and are not replaced
-with a space.  Since a traditional compiler does its own tokenization
-of the output of the preprocessor, this means that comments can
-effectively be used as token paste operators.  However, comments
-behave like separators for text handled by the preprocessor itself,
-since it doesn't re-lex its input.  For example, in
+従来は、コメントは完全に削除され、スペースで置き換えられない。 従来のコンパイラはプリプロセッサの出力を独自のトークン化しているため、トークンペースト演算子としてコメントを効果的に使用できる。 ただし、コメントはプリプロセッサ自体が扱うテキストの区切り文字のように振る舞う。なぜなら、コメントは入力を再解析しないからである。 たとえば、
 
 @smallexample
 #if foo/**/bar
 @end smallexample
 
 @noindent
-@samp{foo} and @samp{bar} are distinct identifiers and expanded
-separately if they happen to be macros.  In other words, this
-directive is equivalent to
+は@samp{foo}と@samp{bar}は別個の識別子であり、マクロである場合は別々に展開される。 言い換えれば、この指令は
 
 @smallexample
 #if foo bar
 @end smallexample
 
 @noindent
-rather than
+と等価であって、以下ではない
 
 @smallexample
 #if foobar
 @end smallexample
 
-Generally speaking, in traditional mode an opening quote need not have
-a matching closing quote.  In particular, a macro may be defined with
-replacement text that contains an unmatched quote.  Of course, if you
-attempt to compile preprocessed output containing an unmatched quote
-you will get a syntax error.
+一般的に言えば、従来モードでは、開始クォートには一致する終了クォートを付ける必要はない。 特に、不一致の引用を含む置換テキストでマクロを定義することができる。 もちろん、一致しない引用符を含むプリプロセスされた出力をコンパイルしようとすると、構文エラーが発生する。
 
-However, all preprocessing directives other than @code{#define}
-require matching quotes.  For example:
+しかし、@ code {#define}以外のすべての前処理ディレクティブは、引用符を一致させる必要がある。 例えば：
 
 @smallexample
 #define m This macro's fine and has an unmatched quote
@@ -2475,46 +2439,20 @@ require matching quotes.  For example:
 #include <stdio.h
 @end smallexample
 
-Just as for the ISO preprocessor, what would be a closing quote can be
-escaped with a backslash to prevent the quoted text from closing.
+ISOプリプロセッサの場合と同様に、引用符で囲まれたテキストを閉じるのを防ぐために、引用符となるものをバックスラッシュでエスケープすることができる。
 
 @node Traditional macros
-@section Traditional macros
+@section 従来のマクロ
 
-The major difference between traditional and ISO macros is that the
-former expand to text rather than to a token sequence.  CPP removes
-all leading and trailing horizontal whitespace from a macro's
-replacement text before storing it, but preserves the form of internal
-whitespace.
+従来のマクロとISOマクロの主な違いは、前者がトークンシーケンスではなくテキストに展開されることである。 CPPは、格納する前に、マクロの置換テキストから前後の水平空白をすべて削除するが、内部空白の形式は保持する。
 
-One consequence is that it is legitimate for the replacement text to
-contain an unmatched quote (@pxref{Traditional lexical analysis}).  An
-unclosed string or character constant continues into the text
-following the macro call.  Similarly, the text at the end of a macro's
-expansion can run together with the text after the macro invocation to
-produce a single token.
+1つの結果は、置換テキストが不一致の引用符を含むことが正当であることである（@pxref{Traditional lexical analysis}）。 閉じられていない文字列または文字定数は、マクロ呼び出しの後のテキストに続く。 同様に、マクロの展開の最後にあるテキストは、マクロ呼び出しの後のテキストと共に実行され、単一のトークンを生成することができる。
 
-Normally comments are removed from the replacement text after the
-macro is expanded, but if the @option{-CC} option is passed on the
-command-line comments are preserved.  (In fact, the current
-implementation removes comments even before saving the macro
-replacement text, but it careful to do it in such a way that the
-observed effect is identical even in the function-like macro case.)
+マクロが展開された後は、通常、コメントは置換テキストから削除されるが、@option{-CC}オプションが渡された場合、コマンドラインコメントは保持される。 （現行の実装では、マクロ置換テキストを保存する前にコメントを削除しているが、関数のようなマクロの場合でも、観察された効果が同じであるように注意せよ）。
 
-The ISO stringizing operator @samp{#} and token paste operator
-@samp{##} have no special meaning.  As explained later, an effect
-similar to these operators can be obtained in a different way.  Macro
-names that are embedded in quotes, either from the main file or after
-macro replacement, do not expand.
+ISO文字列化演算子@samp{＃}とトークンペースト演算子@samp{##}は特別な意味を持たない。 後述するように、これらの演算子と同様の効果を別の方法で得ることができる。 メインファイルからまたはマクロ置換後に引用符で埋め込まれたマクロ名は展開されない。
 
-CPP replaces an unquoted object-like macro name with its replacement
-text, and then rescans it for further macros to replace.  Unlike
-standard macro expansion, traditional macro expansion has no provision
-to prevent recursion.  If an object-like macro appears unquoted in its
-replacement text, it will be replaced again during the rescan pass,
-and so on @emph{ad infinitum}.  GCC detects when it is expanding
-recursive macros, emits an error message, and continues after the
-offending macro invocation.
+CPPは、引用符で囲まれていないオブジェクトのようなマクロ名をその置換テキストに置き換え、それを再スキャンして置き換えるマクロを探す。 標準のマクロ展開とは異なり、従来のマクロ展開では再帰を防ぐ手段はない。 オブジェクトのようなマクロが置換テキストに引用符で囲まれていないように見える場合は、再スキャンパス中に再度置換され、@emph{無限に}置換される。 GCCは、再帰マクロを展開しているときにそれを検出し、エラーメッセージを出し、問題のあるマクロ呼び出しのあとで処理を続行する。
 
 @smallexample
 #define PLUS +
@@ -2523,38 +2461,20 @@ INC(foo);
      @expansion{} ++foo;
 @end smallexample
 
-Function-like macros are similar in form but quite different in
-behavior to their ISO counterparts.  Their arguments are contained
-within parentheses, are comma-separated, and can cross physical lines.
-Commas within nested parentheses are not treated as argument
-separators.  Similarly, a quote in an argument cannot be left
-unclosed; a following comma or parenthesis that comes before the
-closing quote is treated like any other character.  There is no
-facility for handling variadic macros.
+関数風マクロは、形式は似ているが、ISOの動作とはまったく異なる。 それらの引数はカッコで囲まれ、カンマで区切られ、物理的な行を横切ることができる。 ネストしたカッコ内のカンマは、引数の区切りとして扱われない。 同様に、引数の引用符は閉じられないままにすることはできない。 閉じ引用符の前に来る次のカンマまたは括弧は、他の文字と同様に扱われる。 可変マクロを扱う機能はない。
 
-This implementation removes all comments from macro arguments, unless
-the @option{-C} option is given.  The form of all other horizontal
-whitespace in arguments is preserved, including leading and trailing
-whitespace.  In particular
+@option{-C}オプションが指定されていない限り、この実装はマクロ引数からすべてのコメントを削除する。 引数の中の他のすべての水平空白の形式は、先頭と末尾の空白を含めて保持される。 特に
 
 @smallexample
 f( )
 @end smallexample
 
 @noindent
-is treated as an invocation of the macro @samp{f} with a single
-argument consisting of a single space.  If you want to invoke a
-function-like macro that takes no arguments, you must not leave any
-whitespace between the parentheses.
+は単一の空白を含む引数での@samp{f}マクロの呼び出しとして処理される。 引数をとらない関数のようなマクロを呼び出す場合は、かっこの間に空白を入れてはいけない。
 
-If a macro argument crosses a new line, the new line is replaced with
-a space when forming the argument.  If the previous line contained an
-unterminated quote, the following line inherits the quoted state.
+マクロ引数が新しい行と交差する場合、新しい行は引数を形成するときにスペースで置き換えられる。 前の行に終わりのない引用符が含まれていた場合、次の行は引用された状態を継承する。
 
-Traditional preprocessors replace parameters in the replacement text
-with their arguments regardless of whether the parameters are within
-quotes or not.  This provides a way to stringize arguments.  For
-example
+従来のプリプロセッサは、パラメータが引用符で囲まれているかどうかにかかわらず、置換テキストのパラメータを引数で置き換える。 これは、引数を文字列化する方法を提供する。 例えば
 
 @smallexample
 #define str(x) "x"
@@ -2563,9 +2483,7 @@ str(/* @r{A comment} */some text )
 @end smallexample
 
 @noindent
-Note that the comment is removed, but that the trailing space is
-preserved.  Here is an example of using a comment to effect token
-pasting.
+コメントは削除されるが、末尾のスペースは保持される。 トークンの貼り付けを行うためにコメントを使用する例を次に示す。
 
 @smallexample
 #define suffix(x) foo_/**/x
@@ -2574,84 +2492,51 @@ suffix(bar)
 @end smallexample
 
 @node Traditional miscellany
-@section Traditional miscellany
+@section 従来の寄せ集め
 
-Here are some things to be aware of when using the traditional
-preprocessor.
+従来のプリプロセッサを使用する際に注意すべき点がいくつかある。
 
 @itemize @bullet
 @item
-Preprocessing directives are recognized only when their leading
-@samp{#} appears in the first column.  There can be no whitespace
-between the beginning of the line and the @samp{#}, but whitespace can
-follow the @samp{#}.
+プリプロセスディレクティブは、先頭の@samp{＃}が最初の列に表示されている場合にのみ認識される。 行の先頭と@samp{＃}の間には空白は入れられないが、@samp{＃}の後に置くことはできる。
 
 @item
-A true traditional C preprocessor does not recognize @samp{#error} or
-@samp{#pragma}, and may not recognize @samp{#elif}.  CPP supports all
-the directives in traditional mode that it supports in ISO mode,
-including extensions, with the exception that the effects of
-@samp{#pragma GCC poison} are undefined.
+真の従来のCプリプロセッサは@samp{#error}や@samp{#pragma}を認識せず、@ samp{#elif}を認識しないかもしれない。 CPPは、@samp{#pragma GCC poison}の効果が定義されていないことを除いて、拡張を含む、ISOモードでサポートされている従来のモードのすべてのディレクティブをサポートしている。
 
 @item
-__STDC__ is not defined.
+__STDC__は定義されていない、
 
 @item
-If you use digraphs the behavior is undefined.
+ダイグラフを使用する場合、その動作は未定義である。
 
 @item
-If a line that looks like a directive appears within macro arguments,
-the behavior is undefined.
+ディレクティブのように見える行がマクロ引数内に現れた場合の動作は未定義である。
 
 @end itemize
 
 @node Traditional warnings
-@section Traditional warnings
-You can request warnings about features that did not exist, or worked
-differently, in traditional C with the @option{-Wtraditional} option.
-GCC does not warn about features of ISO C which you must use when you
-are using a conforming compiler, such as the @samp{#} and @samp{##}
-operators.
+@section 従来の警告
+従来のCでは、@option{-Wtraditional}オプションを使用して、存在しなかった機能や別の方法で動作していた機能に関する警告を要求できる。 GCCは、@samp{＃}や@samp{##}のようなコンパイラを使用しているときに使用しなければならないISO Cの機能について警告しない。
 
-Presently @option{-Wtraditional} warns about:
+現在のところ、@ option{-Wtraditional}は次のことについて警告している：
 
 @itemize @bullet
 @item
-Macro parameters that appear within string literals in the macro body.
-In traditional C macro replacement takes place within string literals,
-but does not in ISO C@.
+マクロ本体の文字列リテラル内に現れるマクロパラメーター。 従来のCでは、マクロ置換は文字列リテラル内で行われるが、ISO Cでは行われない。
 
 @item
-In traditional C, some preprocessor directives did not exist.
-Traditional preprocessors would only consider a line to be a directive
-if the @samp{#} appeared in column 1 on the line.  Therefore
-@option{-Wtraditional} warns about directives that traditional C
-understands but would ignore because the @samp{#} does not appear as the
-first character on the line.  It also suggests you hide directives like
-@samp{#pragma} not understood by traditional C by indenting them.  Some
-traditional implementations would not recognize @samp{#elif}, so it
-suggests avoiding it altogether.
+従来のCでは、いくつかのプリプロセッサディレクティブが存在しなかった。 従来のプリプロセッサは、@samp{＃}がその行の第1列に現れた場合にのみ、その行を指令とみなす。 したがって、@option{-Wtraditional}は従来のCが理解できるが、@samp{＃}が行の最初の文字として表示されないので無視するディレクティブについて警告する。 @samp{#pragma}のようなディレクティブは、従来のCでインデントされても理解できないことを示唆している。 従来の実装の中には@samp{#elif}を認識しないものもあるので、それを避けることを推奨する。
 
 @item
-A function-like macro that appears without an argument list.  In some
-traditional preprocessors this was an error.  In ISO C it merely means
-that the macro is not expanded.
+引数リストなしで表示される関数のようなマクロ。 一部の従来のプリプロセッサでは、これがエラーだった。 ISO Cでは、単にマクロが展開されていないことを意味する。
 
 @item
-The unary plus operator.  This did not exist in traditional C@.
+単項プラス演算子。 これは従来のCには存在しなかった。
 
 @item
-The @samp{U} and @samp{LL} integer constant suffixes, which were not
-available in traditional C@.  (Traditional C does support the @samp{L}
-suffix for simple long integer constants.)  You are not warned about
-uses of these suffixes in macros defined in system headers.  For
-instance, @code{UINT_MAX} may well be defined as @code{4294967295U}, but
-you will not be warned if you use @code{UINT_MAX}.
+@samp{U}と@samp{LL}の整数定数の接尾辞は、従来のCでは利用できなかった。 （従来のCは、単純なlong整数定数の@samp{L}接尾辞はサポートしている。）システムヘッダーで定義されているマクロでは、これらの接尾辞の使用について警告は表示されない。 例えば、@code{UINT_MAX}は@code{4294967295U}として定義されているかもしれないが、@code{UINT_MAX}を使用しても警告されない。
 
-You can usually avoid the warning, and the related warning about
-constants which are so large that they are unsigned, by writing the
-integer constant in question in hexadecimal, with no U suffix.  Take
-care, though, because this gives the wrong result in exotic cases.
+問題の整数定数を16進数でU接尾辞をつけずに書くことによって、通常は警告とそれに付随していないほど大きな定数に関する警告を避けることができる。 しかし、これはエキゾチックな場合に間違った結果をもたらすので注意すること。
 @end itemize
 
 @node Implementation Details
