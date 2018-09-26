@@ -2540,14 +2540,11 @@ __STDC__は定義されていない、
 @end itemize
 
 @node Implementation Details
-@chapter Implementation Details
+@chapter 実装の詳細
 
-Here we document details of how the preprocessor's implementation
-affects its user-visible behavior.  You should try to avoid undue
-reliance on behavior described here, as it is possible that it will
-change subtly in future implementations.
+ここでは、プリプロセッサの実装がユーザに見える動作にどのように影響するかについて詳しく説明する。 将来の実装で微妙に変化する可能性があるため、ここで説明した動作に過度の依存を避けるべきである。
 
-Also documented here are obsolete features still supported by CPP@.
+また、CPPでサポートされている旧式の機能もここに記載されている。
 
 @menu
 * Implementation-defined behavior::
@@ -2556,251 +2553,158 @@ Also documented here are obsolete features still supported by CPP@.
 @end menu
 
 @node Implementation-defined behavior
-@section Implementation-defined behavior
+@section 実装定義の振る舞い
 @cindex implementation-defined behavior
 
-This is how CPP behaves in all the cases which the C standard
-describes as @dfn{implementation-defined}.  This term means that the
-implementation is free to do what it likes, but must document its choice
-and stick to it.
+これは、CPPが@dfn{実装定義}と記述しているすべてのケースでCPPがどのように動作するかを示している。 この用語は、実装が好きなことを自由に行うことできるが、その選択肢を文書化してそれに固執する必要がありことを意味する。
 @c FIXME: Check the C++ standard for more implementation-defined stuff.
 
 @itemize @bullet
 @need 1000
-@item The mapping of physical source file multi-byte characters to the
-execution character set.
+@item 物理的なソースファイルのマルチバイト文字の実行文字セットへのマッピング。
 
-The input character set can be specified using the
-@option{-finput-charset} option, while the execution character set may
-be controlled using the @option{-fexec-charset} and
-@option{-fwide-exec-charset} options.
+入力文字セットは@option{-finput-charset}オプションを使用して指定でき、実行文字セットは@option{-fexec-charset}および@option{-fwide-exec-charset}オプションを使用して制御できる。
 
-@item Identifier characters.
+@item 識別子文字
 @anchor{Identifier characters}
 
-The C and C++ standards allow identifiers to be composed of @samp{_}
-and the alphanumeric characters.  C++ also allows universal character
-names.  C99 and later C standards permit both universal character
-names and implementation-defined characters.
+CおよびC++標準では、識別子を@samp{_}と英数字で構成することができる。 C++では、ユニバーサル文字の名前も使用できる。 C99以降のC標準では、普遍的な文字名と実装定義文字の両方が許可されている。
 
-GCC allows the @samp{$} character in identifiers as an extension for
-most targets.  This is true regardless of the @option{std=} switch,
-since this extension cannot conflict with standards-conforming
-programs.  When preprocessing assembler, however, dollars are not
-identifier characters by default.
+GCCでは、識別子内の@samp{$}文字をほとんどのターゲットの拡張として使用できる。 これは、@option{std =}スイッチに関係なく、この拡張が標準準拠のプログラムと競合しないので当てはまる。 ただし、アセンブラをプリプロセスする場合、ドルはデフォルトで識別子文字ではない。
 
-Currently the targets that by default do not permit @samp{$} are AVR,
-IP2K, MMIX, MIPS Irix 3, ARM aout, and PowerPC targets for the AIX
-operating system.
+現在、デフォルトで@samp{$}を許可しないターゲットは、AVR、IP2K、MMIX、MIPS Irix 3、ARM aout、およびAIXオペレーティングシステムのPowerPCターゲットである。
 
-You can override the default with @option{-fdollars-in-identifiers} or
-@option{fno-dollars-in-identifiers}.  @xref{fdollars-in-identifiers}.
+デフォルトは、@option{-fdollars-in-identifiers}または@option{fno-dollars-in-identifiers}で上書きできる。 @xref{fdollars-in-identifiers}
 
-@item Non-empty sequences of whitespace characters.
+@item 空白文字の空でない列
 
-In textual output, each whitespace sequence is collapsed to a single
-space.  For aesthetic reasons, the first token on each non-directive
-line of output is preceded with sufficient spaces that it appears in the
-same column as it did in the original source file.
+テキスト出力では、各空白シーケンスは1つのスペースに縮小される。 審美的な理由から、出力の各非指示行の最初のトークンの前には、元のソースファイルと同じ列に表示される十分なスペースがある。
 
-@item The numeric value of character constants in preprocessor expressions.
+@item プリプロセッサ式の文字定数の数値。
 
-The preprocessor and compiler interpret character constants in the
-same way; i.e.@: escape sequences such as @samp{\a} are given the
-values they would have on the target machine.
+プリプロセッサとコンパイラは同じ方法で文字定数を解釈する。 すなわち、@samp{\a}のようなエスケープシーケンスには、ターゲットマシン上での値が与えられる。
 
-The compiler evaluates a multi-character character constant a character
-at a time, shifting the previous value left by the number of bits per
-target character, and then or-ing in the bit-pattern of the new
-character truncated to the width of a target character.  The final
-bit-pattern is given type @code{int}, and is therefore signed,
-regardless of whether single characters are signed or not.
-If there are more
-characters in the constant than would fit in the target @code{int} the
-compiler issues a warning, and the excess leading characters are
-ignored.
+コンパイラは、一度に複数文字の文字定数を評価し、前の値をターゲット文字あたりのビット数だけシフトしてから、新しい文字のビットパターンをターゲット文字の幅に合わせて論理和を取る。 最終的なビットパターンは@code{int}型で与えられる。したがって、単一の文字が符号ありかどうかにかかわらず、符号ありになる。 定数の中にターゲットの@code{int}よりも多くの文字があると、コンパイラは警告を出し、余分な先頭の文字は無視される。
 
-For example, @code{'ab'} for a target with an 8-bit @code{char} would be
-interpreted as @w{@samp{(int) ((unsigned char) 'a' * 256 + (unsigned char)
-'b')}}, and @code{'\234a'} as @w{@samp{(int) ((unsigned char) '\234' *
-256 + (unsigned char) 'a')}}.
+例えば、8ビットの@code{char}を持つターゲットの@code{'ab'}は@w{@samp{(int) ((unsigned char) 'a' * 256 + (unsigned char)'b')}}となり、@code{'\234a'}は@w{@samp{(int) ((unsigned char) '\234' * 256 + (unsigned char) 'a')}}に変換される。
+@item ソースファイル挿入
 
-@item Source file inclusion.
+プリプロセッサがヘッダファイルをどのように配置するかについては、@ref{Include Operation}.
 
-For a discussion on how the preprocessor locates header files,
-@ref{Include Operation}.
-
-@item Interpretation of the filename resulting from a macro-expanded
-@samp{#include} directive.
+@item マクロ展開された@samp {#include}ディレクティブの結果としてのファイル名の解釈。
 
 @xref{Computed Includes}.
 
-@item Treatment of a @samp{#pragma} directive that after macro-expansion
-results in a standard pragma.
+@item マクロ展開が標準プラグマを生じた後の@samp{#pargma}の扱い
 
-No macro expansion occurs on any @samp{#pragma} directive line, so the
-question does not arise.
+どんな@samp{#pragma}指令行でもマクロ展開が起こらないので、問題は発生しない。
 
-Note that GCC does not yet implement any of the standard
-pragmas.
+GCCはまだ標準プラグマを実装していないことに注意せよ。
 
 @end itemize
 
 @node Implementation limits
-@section Implementation limits
+@section 実装の制限
 @cindex implementation limits
 
-CPP has a small number of internal limits.  This section lists the
-limits which the C standard requires to be no lower than some minimum,
-and all the others known.  It is intended that there should be as few limits
-as possible.  If you encounter an undocumented or inconvenient limit,
-please report that as a bug.  @xref{Bugs, , Reporting Bugs, gcc, Using
-the GNU Compiler Collection (GCC)}.
+CPPには少数の内部制限がある。 このセクションでは、C標準が最小限以上になることを要求する制限と、その他すべての既知の制限をリストしている。 可能な限りの制限は少なくすべきである。 文書化されていないまたは不都合な制限に遭遇した場合は、バグとして報告してください。 @xref{Bugs, , Reporting Bugs, gcc, Using the GNU Compiler Collection (GCC)}.
 
-Where we say something is limited @dfn{only by available memory}, that
-means that internal data structures impose no intrinsic limit, and space
-is allocated with @code{malloc} or equivalent.  The actual limit will
-therefore depend on many things, such as the size of other things
-allocated by the compiler at the same time, the amount of memory
-consumed by other processes on the same computer, etc.
+何かが@dfn{利用可能なメモリのみで制限されている}と言うと、内部データ構造は本質的な制限を課さず、スペースは@code{malloc}か同等のもので割り当てられる。 したがって、実際の制限は、コンパイラによって同時に割り当てられる他のもののサイズ、同じコンピュータ上の他のプロセスによって消費されるメモリ量など、多くのものに依存する。
 
 @itemize @bullet
 
-@item Nesting levels of @samp{#include} files.
+@item @samp{#include}ファイルのネストレベル。
 
-We impose an arbitrary limit of 200 levels, to avoid runaway recursion.
-The standard requires at least 15 levels.
+暴走の再帰を避けるために、200レベルの任意の制限を課している。 標準は少なくとも15レベルが必要である。
 
-@item Nesting levels of conditional inclusion.
+@item 条件インクルードのネストレベル
 
-The C standard mandates this be at least 63.  CPP is limited only by
-available memory.
+C標準はこれを少なくとも63にすることを要求している。CPPは利用可能なメモリによってのみ制限される。
 
-@item Levels of parenthesized expressions within a full expression.
+@item 完全な式の中のカッコで囲まれた式のレベル。
 
-The C standard requires this to be at least 63.  In preprocessor
-conditional expressions, it is limited only by available memory.
+C標準ではこれを少なくとも63にする必要がある。プリプロセッサの条件式では、使用可能なメモリによってのみ制限される。
 
-@item Significant initial characters in an identifier or macro name.
+@item 識別子またはマクロ名に重要な初期文字。
 
-The preprocessor treats all characters as significant.  The C standard
-requires only that the first 63 be significant.
+プリプロセッサはすべての文字を重要なものとして扱う。 C標準では、最初の63文字だけが重要であることが必要である。
 
-@item Number of macros simultaneously defined in a single translation unit.
+@item 1つの翻訳単位で同時に定義されたマクロの数。
 
-The standard requires at least 4095 be possible.  CPP is limited only
-by available memory.
+標準では、少なくとも4095を可能にする必要がある。 CPPは利用可能なメモリによってのみ制限される。
 
-@item Number of parameters in a macro definition and arguments in a macro call.
+@item マクロ定義のパラメータ数とマクロ呼び出しの引数
 
-We allow @code{USHRT_MAX}, which is no smaller than 65,535.  The minimum
-required by the standard is 127.
+65,535以上の@code {USHRT_MAX}を許可する。 標準で要求される最小値は127である。
 
-@item Number of characters on a logical source line.
+@item 論理ソース行の文字数。
 
-The C standard requires a minimum of 4096 be permitted.  CPP places
-no limits on this, but you may get incorrect column numbers reported in
-diagnostics for lines longer than 65,535 characters.
+Cの標準では、最低4096を許可する必要がある。 CPPはこれに制限を設けていないが、65,535文字を超える行の診断で不正な列番号が報告されることがある。
 
-@item Maximum size of a source file.
+@item ソースファイルの最大サイズ。
 
-The standard does not specify any lower limit on the maximum size of a
-source file.  GNU cpp maps files into memory, so it is limited by the
-available address space.  This is generally at least two gigabytes.
-Depending on the operating system, the size of physical memory may or
-may not be a limitation.
+標準では、ソースファイルの最大サイズの下限は指定されていない。 GNU cppはファイルをメモリにマップするので、使用可能なアドレス空間によって制限される。 これは一般に少なくとも2ギガバイトである。 オペレーティングシステムによっては、物理メモリのサイズが制限される場合もあれば、制限されない場合もある。
 
 @end itemize
 
 @node Obsolete Features
-@section Obsolete Features
+@section 廃止された機能
 
-CPP has some features which are present mainly for compatibility with
-older programs.  We discourage their use in new code.  In some cases,
-we plan to remove the feature in a future version of GCC@.
+CPPには、主に古いプログラムとの互換性のために存在するいくつかの機能がある。 新しいコードでの使用は推奨しない。 場合によっては、GCCの将来のバージョンでこの機能を削除する予定である。
 
-@subsection Assertions
+@subsection アサーション
 @cindex assertions
 
-@dfn{Assertions} are a deprecated alternative to macros in writing
-conditionals to test what sort of computer or system the compiled
-program will run on.  Assertions are usually predefined, but you can
-define them with preprocessing directives or command-line options.
+@dfn{アサーション}は、コンパイルされたプログラムがどのような種類のコンピュータやシステムを実行するのかをテストするために、条件文を書く際に推奨されないマクロである。 アサーションは通常は事前定義されているが、プリプロセスディレクティブまたはコマンドラインオプションを使用してアサーションを定義できる。
 
-Assertions were intended to provide a more systematic way to describe
-the compiler's target system and we added them for compatibility with
-existing compilers.  In practice they are just as unpredictable as the
-system-specific predefined macros.  In addition, they are not part of
-any standard, and only a few compilers support them.
-Therefore, the use of assertions is @strong{less} portable than the use
-of system-specific predefined macros.  We recommend you do not use them at
-all.
+アサーションは、コンパイラのターゲットシステムをより体系的に説明するためのもので、既存のコンパイラとの互換性のために追加した。 実際には、システム固有の定義済みマクロほど予測できない。 さらに、それらは標準の一部ではなく、ほんのわずかのコンパイラでサポートされている。 したがって、アサーションの使用は、システム固有の定義済みマクロの使用よりも移植性が@strong{低く}なる。 それらはまったく使用しないことを推奨する。
 
 @cindex predicates
-An assertion looks like this:
+アサーションはこのようになる
 
 @smallexample
 #@var{predicate} (@var{answer})
 @end smallexample
 
 @noindent
-@var{predicate} must be a single identifier.  @var{answer} can be any
-sequence of tokens; all characters are significant except for leading
-and trailing whitespace, and differences in internal whitespace
-sequences are ignored.  (This is similar to the rules governing macro
-redefinition.)  Thus, @code{(x + y)} is different from @code{(x+y)} but
-equivalent to @code{@w{( x + y )}}.  Parentheses do not nest inside an
-answer.
+@var{predicate}は単一の識別子でなければならない。 @var{answer}にはトークンの任意のシーケンスを指定できる。 先頭と末尾の空白を除いてすべての文字が重要であり、内部の空白シーケンスの違いは無視される。 （これはマクロの再定義を支配する規則に似ている）。したがって、@code{(x + y)}は@code{(x+y)}と異なりますが、@code{@w{( x + y )}}と同じである。 括弧は答えの中に入れ子にならない。
 
 @cindex testing predicates
-To test an assertion, you write it in an @samp{#if}.  For example, this
-conditional succeeds if either @code{vax} or @code{ns16000} has been
-asserted as an answer for @code{machine}.
+アサーションをテストするには、@samp{#if}に記述する。 たとえば、@code{vax}または@code{ns16000}のいずれかが@code{machine}の答えとしてアサートされている場合、この条件は成功する。
 
 @smallexample
 #if #machine (vax) || #machine (ns16000)
 @end smallexample
 
 @noindent
-You can test whether @emph{any} answer is asserted for a predicate by
-omitting the answer in the conditional:
+@emph{任意}の答えが述語に対してアサートされているかどうかは、条件付きで答えを省略することでテストできる。
 
 @smallexample
 #if #machine
 @end smallexample
 
 @findex #assert
-Assertions are made with the @samp{#assert} directive.  Its sole
-argument is the assertion to make, without the leading @samp{#} that
-identifies assertions in conditionals.
+アサーションは@samp{#assert}ディレクティブで行う。 その唯一の引数は、アサーションを条件付きのアサーションを識別する先頭の@samp{＃}なしにする。
 
 @smallexample
 #assert @var{predicate} (@var{answer})
 @end smallexample
 
 @noindent
-You may make several assertions with the same predicate and different
-answers.  Subsequent assertions do not override previous ones for the
-same predicate.  All the answers for any given predicate are
-simultaneously true.
+同じ述語と異なる答えでいくつかのアサーションを作ることができる。 後続のアサーションは、同じ述語の前のアサーションを上書きしない。 与えられた述語のすべての回答は同時に真である。
 
 @cindex assertions, canceling
 @findex #unassert
-Assertions can be canceled with the @samp{#unassert} directive.  It
-has the same syntax as @samp{#assert}.  In that form it cancels only the
-answer which was specified on the @samp{#unassert} line; other answers
-for that predicate remain true.  You can cancel an entire predicate by
-leaving out the answer:
+アサーションは@samp{#unassert}ディレクティブで取り消すことができる。 @samp{#assert}と同じ構文である。 この形式では、@samp{#unassert}行で指定された回答のみが取り消される。 その述語に対する他の答えは真である。 答えを残して、述部全体を取り消すことができる。
 
 @smallexample
 #unassert @var{predicate}
 @end smallexample
 
 @noindent
-In either form, if no such assertion has been made, @samp{#unassert} has
-no effect.
+どちらの形式でも、そのようなアサーションが作成されていない場合、@samp{#unassert}は効果がない。
 
-You can also make or cancel assertions using command-line options.
+また、コマンドラインオプションを使用してアサーションを作成または取り消すこともできる。
 @xref{Invocation}.
 
 @node Invocation
