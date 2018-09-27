@@ -2708,25 +2708,15 @@ CPPには、主に古いプログラムとの互換性のために存在する�
 @xref{Invocation}.
 
 @node Invocation
-@chapter Invocation
+@chapter 呼び出し
 @cindex invocation
 @cindex command line
 
-Most often when you use the C preprocessor you do not have to invoke it
-explicitly: the C compiler does so automatically.  However, the
-preprocessor is sometimes useful on its own.  You can invoke the 
-preprocessor either with the @command{cpp} command, or via @command{gcc -E}.
-In GCC, the preprocessor is actually integrated with the compiler
-rather than a separate program, and both of these commands invoke
-GCC and tell it to stop after the preprocessing phase.
+ほとんどの場合、Cプリプロセッサを使用するときは、明示的に呼び出す必要はない。Cコンパイラは自動的にそうする。 ただし、プリプロセッサは単独では便利なことがある。 プリプロセッサを起動するには、@command{cpp}コマンドまたは@command{gcc -E}コマンドを使用する。 GCCでは、プリプロセッサは実際には別のプログラムではなくコンパイラと統合されており、これらのコマンドは両方ともGCCを呼び出し、前処理フェーズ後に停止するよう指示する。
 
-The @command{cpp} options listed here are also accepted by
-@command{gcc} and have the same meaning.  Likewise the @command{cpp}
-command accepts all the usual @command{gcc} driver options, although those
-pertaining to compilation phases after preprocessing are ignored.
+ここにリストされている@command{cpp}オプションは@command{gcc}でも受け入れられ、同じ意味を持つ。 同様に、@command{cpp}コマンドは通常の@command{gcc}ドライバオプションをすべて受け付けるが、前処理後のコンパイルフェーズに関するものは無視される。
 
-Only options specific to preprocessing behavior are documented here.
-Refer to the GCC manual for full documentation of other driver options.
+プリプロセスの振る舞いに固有のオプションのみがここに記述されている。 その他のドライバオプションの詳細については、GCCのマニュアルを参照せよ。
 
 @ignore
 @c man begin SYNOPSIS
@@ -2737,40 +2727,24 @@ cpp [@option{-D}@var{macro}[=@var{defn}]@dots{}] [@option{-U}@var{macro}]
     [@option{-MT} @var{target}@dots{}]
     @var{infile} [[@option{-o}] @var{outfile}]
 
-Only the most useful options are given above; see below for a more
-complete list of preprocessor-specific options.  
-In addition, @command{cpp} accepts most @command{gcc} driver options, which
-are not listed here.  Refer to the GCC documentation for details.
+上で最も有用なオプションだけが与えられている。 プリプロセッサ固有のオプションの完全なリストについては、以下を参照せよ。 さらに、@command{cpp}はほとんどの@command{gcc}ドライバオプションを受け入れるが、ここには記載されていない。 詳細については、GCCのドキュメントを参照せよ。
 @c man end
 @c man begin SEEALSO
-gpl(7), gfdl(7), fsf-funding(7),
-gcc(1), and the Info entries for @file{cpp} and @file{gcc}.
+gpl(7)、gfdl(7)、fsf-funding(7)、
+gcc(1)及び、@file{cpp}と@file{gcc}のInfo項目
 @c man end
 @end ignore
 
 @c man begin OPTIONS
-The @command{cpp} command expects two file names as arguments, @var{infile} and
-@var{outfile}.  The preprocessor reads @var{infile} together with any
-other files it specifies with @samp{#include}.  All the output generated
-by the combined input files is written in @var{outfile}.
+@command{cpp}コマンドは、引数として2つのファイル名@var{infile}と@var{outfile}を想定している。 プリプロセッサは@var {infile}を@samp{#include}で指定した他のファイルと一緒に読み込む。 結合された入力ファイルによって生成されたすべての出力は、@var{outfile}に書き込まれる。
 
-Either @var{infile} or @var{outfile} may be @option{-}, which as
-@var{infile} means to read from standard input and as @var{outfile}
-means to write to standard output.  If either file is omitted, it
-means the same as if @option{-} had been specified for that file.
-You can also use the @option{-o @var{outfile}} option to specify the 
-output file.
+@var{infile}または@var{outfile}は、@option{-}にすることができ、@var{infile}は標準入力からの読み込みを意味し、@var{outfile}は標準出力への書き出しを意味する。 いずれかのファイルが省略されている場合は、そのファイルに@option{-}が指定されているのと同じ意味である。 @option{-o @var{outfile}}オプションを使用して出力ファイルを指定することもできる。
 
-Unless otherwise noted, or the option ends in @samp{=}, all options
-which take an argument may have that argument appear either immediately
-after the option, or with a space between option and argument:
-@option{-Ifoo} and @option{-I foo} have the same effect.
+特に明記しているか、オプションが@samp{=}で終わっているのでなければ、引数をとるすべてのオプションは、その引数の直後、またはオプションと引数の間のスペースがあってもよい。@option{-Ifoo}と@option{-I foo}は同じ効果がある。
 
 @cindex grouping options
 @cindex options, grouping
-Many options have multi-letter names; therefore multiple single-letter
-options may @emph{not} be grouped: @option{-dM} is very different from
-@w{@samp{-d -M}}.
+多くのオプションは複数文字の名前を持っている。 複数の一文字オプションはグループ化され@emph{ない}： @option{-dM}は@w{@samp {-d -M}}と非常に異なる。
 
 @cindex options
 
@@ -2782,19 +2756,13 @@ options may @emph{not} be grouped: @option{-dM} is very different from
 @c man end
 
 @node Environment Variables
-@chapter Environment Variables
+@chapter 環境変数
 @cindex environment variables
 @c man begin ENVIRONMENT
 
-This section describes the environment variables that affect how CPP
-operates.  You can use them to specify directories or prefixes to use
-when searching for include files, or to control dependency output.
+このセクションでは、CPPの動作に影響を与える環境変数について説明する。 これらを使用して、インクルードファイルの検索時や依存関係出力の制御時に使用するディレクトリや接頭辞を指定することができる。
 
-Note that you can also specify places to search using options such as
-@option{-I}, and control dependency output with options like
-@option{-M} (@pxref{Invocation}).  These take precedence over
-environment variables, which in turn take precedence over the
-configuration of GCC@.
+@option{-I}などのオプションを使用して検索する場所を指定したり、@option{-M}（@pxref{Invocation}）などのオプションを使用して依存関係の出力を制御することもできる。 これらは環境変数よりも優先され、環境変数はGCCの設定よりも優先される。
 
 @include cppenv.texi
 @c man end
