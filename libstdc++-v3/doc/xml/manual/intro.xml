@@ -8,7 +8,7 @@
 <?dbhtml filename="intro.html"?>
 
 <info><title>
-  Introduction
+  導入
   <indexterm><primary>Introduction</primary></indexterm>
 </title>
   <keywordset>
@@ -19,12 +19,12 @@
 
 
 <!-- Chapter 01 : Status -->
-<chapter xml:id="manual.intro.status" xreflabel="Status"><info><title>Status</title></info>
+<chapter xml:id="manual.intro.status" xreflabel="Status"><info><title>ステータス</title></info>
   <?dbhtml filename="status.html"?>
   
 
   <!-- Section 01 : Implementation Status -->
-  <section xml:id="manual.intro.status.iso" xreflabel="Status"><info><title>Implementation Status</title></info>
+  <section xml:id="manual.intro.status.iso" xreflabel="Status"><info><title>実装ステータス</title></info>
     
 
     <!-- Section 01.1 : Status C++ 1998 -->

@@ -11,15 +11,14 @@
 
 
 <section xml:id="iso.1998.status" xreflabel="Implementation Status">
-<info><title>Implementation Status</title></info>  
+<info><title>実装ステータス</title></info>  
 
 <para>
-This status table is based on the table of contents of ISO/IEC 14882:2003.
+このステータステーブルは、ISO / IEC 14882：2003の目次に基づいている。
 </para>
 
 <para>
-This page describes the C++ support in mainline GCC SVN, not in any
-particular release.
+このページでは、特定のリリースではなく、メインラインのGCC SVNでのC++のサポートについて説明する。
 </para>
 
 <!-- Status is Yes or No, Broken/Partial-->
@@ -32,7 +31,7 @@ particular release.
       <?dbhtml bgcolor="#B0B0B0" ?>
 -->
 <table frame="all" xml:id="table.cxx98_status">
-  <title>C++ 1998/2003 Implementation Status</title>
+  <title>C++ 1998/2003 実装ステータス</title>
 
 <tgroup cols="4" align="left" colsep="0" rowsep="1">
 <colspec colname="c1"/>
@@ -41,10 +40,10 @@ particular release.
 <colspec colname="c4"/>
   <thead>
     <row>
-      <entry>Section</entry>
-      <entry>Description</entry>
-      <entry>Status</entry>
-      <entry>Comments</entry>
+      <entry>節</entry>
+      <entry>描写</entry>
+      <entry>ステータス</entry>
+      <entry>コメント</entry>
     </row>
   </thead>
 
@@ -54,37 +53,37 @@ particular release.
 	<emphasis>18</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Language support</emphasis>
+	<emphasis>言語サポート</emphasis>
       </entry>
     </row>
 
     <row>
       <entry>18.1</entry>
-      <entry>Types</entry>
+      <entry>型</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.2</entry>
-      <entry>Implementation properties</entry>
+      <entry>実装プロパティ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.2.1</entry>
-      <entry>Numeric Limits</entry>
+      <entry>数の制限</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>18.2.1.1</entry>
-      <entry>Class template <code>numeric_limits</code></entry>
+      <entry>クラステンプレート<code>numeric_limits</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.2.1.2</entry>
-      <entry><code>numeric_limits</code> members</entry>
+      <entry><code>numeric_limits</code> メンバ</entry>
       <entry>Y</entry>
     </row>
     <row>
@@ -99,73 +98,73 @@ particular release.
     </row>
     <row>
       <entry>18.2.1.5</entry>
-      <entry><code>numeric_limits</code> specializations</entry>
+      <entry><code>numeric_limits</code> 特殊化</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.2.2</entry>
-      <entry>C Library</entry>
+      <entry>C ライブラリ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.3</entry>
-      <entry>Start and termination</entry>
+      <entry>開始と終了</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.4</entry>
-      <entry>Dynamic memory management</entry>
+      <entry>動的メモリ管理</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.5</entry>
-      <entry>Type identification</entry>
+      <entry>型識別</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>18.5.1</entry>
-      <entry>Class type_info</entry>
+      <entry>type_infoクラス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.5.2</entry>
-      <entry>Class bad_cast</entry>
+      <entry>bad_castクラス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.5.3</entry>
-      <entry>Class bad_typeid</entry>
+      <entry>bad_typeidクラス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.6</entry>
-      <entry>Exception handling</entry>
+      <entry>例外処理</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>18.6.1</entry>
-      <entry>Class exception</entry>
+      <entry>exceptionクラス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.6.2</entry>
-      <entry>Violation exception-specifications</entry>
+      <entry>例外指定違反</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.6.3</entry>
-      <entry>Abnormal termination</entry>
+      <entry>異常終了</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -177,7 +176,7 @@ particular release.
     </row>
     <row>
       <entry>18.7</entry>
-      <entry>Other runtime support</entry>
+      <entry>他のランタイムサポート</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -186,24 +185,24 @@ particular release.
 	<emphasis>19</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Diagnostics</emphasis>
+	<emphasis>診断</emphasis>
       </entry>
     </row>
     <row>
       <entry>19.1</entry>
-      <entry>Exception classes</entry>
+      <entry>例外クラス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>19.2</entry>
-      <entry>Assertions</entry>
+      <entry>アサーション</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>19.3</entry>
-      <entry>Error numbers</entry>
+      <entry>エラー番号</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -212,24 +211,24 @@ particular release.
 	<emphasis>20</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>General utilities</emphasis>
+	<emphasis>汎用ユーティリティ</emphasis>
       </entry>
     </row>
     <row>
       <entry>20.1</entry>
-      <entry>Requirements</entry>
+      <entry>要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
    <row>
       <entry>20.2</entry>
-      <entry>Utility components</entry>
+      <entry>ユーティリティ部品</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.2.1</entry>
-      <entry>Operators</entry>
+      <entry>演算子</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -241,85 +240,85 @@ particular release.
     </row>
    <row>
       <entry>20.3</entry>
-      <entry>Function objects</entry>
+      <entry>関数オブジェクト</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.3.1</entry>
-      <entry>Base</entry>
+      <entry>基底</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.3.2</entry>
-      <entry>Arithmetic operation</entry>
+      <entry>算術演算</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.3.3</entry>
-      <entry>Comparisons</entry>
+      <entry>比較</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.3.4</entry>
-      <entry>Logical operations</entry>
+      <entry>論理演算</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.3.5</entry>
-      <entry>Negators</entry>
+      <entry>否定</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.3.6</entry>
-      <entry>Binders</entry>
+      <entry>バインダ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.3.7</entry>
-      <entry>Adaptors for pointers to functions</entry>
+      <entry>関数へのポインタのアダプタ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.3.8</entry>
-      <entry>Adaptors for pointers to members</entry>
+      <entry>メンバへのポインタのアダプタ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.4</entry>
-      <entry>Memory</entry>
+      <entry>メモリ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.4.1</entry>
-      <entry>The default allocator</entry>
+      <entry>デフォルトのアロケータ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.4.2</entry>
-      <entry>Raw storage iterator</entry>
+      <entry>生領域のイテレータ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.4.3</entry>
-      <entry>Temporary buffers</entry>
+      <entry>一時バッファ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.4.4</entry>
-      <entry>Specialized algorithms</entry>
+      <entry>特化アルゴリズム</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -343,13 +342,13 @@ particular release.
     </row>
     <row>
       <entry>20.4.5</entry>
-      <entry>Class template <code>auto_ptr</code></entry>
+      <entry>クラステンプレート<code>auto_ptr</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.4.6</entry>
-      <entry>C library</entry>
+      <entry>C ライブラリ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -358,18 +357,18 @@ particular release.
 	<emphasis>21</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Strings</emphasis>
+	<emphasis>文字列</emphasis>
       </entry>
     </row>
     <row>
       <entry>21.1</entry>
-      <entry>Character traits</entry>
+      <entry>文字特性</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>21.1.1</entry>
-      <entry>Character traits requirements</entry>
+      <entry>文字特性の要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -381,57 +380,57 @@ particular release.
     </row>
     <row>
       <entry>21.1.3</entry>
-      <entry><code>char_traits</code> specializations</entry>
+      <entry><code>char_traits</code>特殊化</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>21.1.3.1</entry>
-      <entry>struct <code>char_traits&lt;char&gt;</code></entry>
+      <entry>構造体 <code>char_traits&lt;char&gt;</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>21.1.3.2</entry>
-      <entry>struct <code>char_traits&lt;wchar_t&gt;</code></entry>
+      <entry>構造体 <code>char_traits&lt;wchar_t&gt;</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>21.2</entry>
-      <entry>String classes</entry>
+      <entry>文字列クラス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>21.3</entry>
-      <entry>Class template <code>basic_string</code></entry>
+      <entry>クラステンプレート <code>basic_string</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>21.4</entry>
-      <entry>Null-terminated sequence utilities</entry>
+      <entry>null終端列のユーティリティ</entry>
       <entry>Y</entry>
-      <entry>C library dependency</entry>
+      <entry>C ライブラリ依存</entry>
     </row>
     <row>
       <entry>
       	<emphasis>22</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Localization</emphasis>
+	<emphasis>地域化</emphasis>
       </entry>
     </row>
     <row>
       <entry>22.1</entry>
-      <entry>Locales</entry>
+      <entry>ロケール</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>22.1.1</entry>
-      <entry>Class <code>locale</code></entry>
+      <entry>クラス <code>locale</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -443,25 +442,25 @@ particular release.
     </row>
     <row>
       <entry>22.1.3</entry>
-      <entry>Convenience interfaces</entry>
+      <entry>変換インターフェース</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>22.1.3.1</entry>
-      <entry>Character classification</entry>
+      <entry>文字分類</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.1.3.2</entry>
-      <entry>Character conversions</entry>
+      <entry>文字変換</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.2</entry>
-      <entry>Standard locale categories</entry>
+      <entry>標準ロケールカテゴリー</entry>
       <entry/>
       <entry/>
     </row>
@@ -473,7 +472,7 @@ particular release.
     </row>
     <row>
       <entry>22.2.2</entry>
-      <entry>Numeric</entry>
+      <entry>数値</entry>
       <entry/>
       <entry/>
     </row>
@@ -503,7 +502,7 @@ particular release.
     </row>
     <row>
       <entry>22.2.5</entry>
-      <entry>Time</entry>
+      <entry>時間</entry>
       <entry/>
       <entry/>
     </row>
@@ -533,7 +532,7 @@ particular release.
     </row>
     <row>
       <entry>22.2.6</entry>
-      <entry>Monetary</entry>
+      <entry>金銭</entry>
       <entry/>
       <entry/>
     </row>
@@ -569,13 +568,13 @@ particular release.
     </row>
     <row>
       <entry>22.2.8</entry>
-      <entry>Program-defined facets</entry>
+      <entry>プログラム定義の面</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.3</entry>
-      <entry>C Library Locales</entry>
+      <entry>Cライブラリロケール</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -584,96 +583,96 @@ particular release.
 	<emphasis>23</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Containers</emphasis>
+	<emphasis>コンテナ</emphasis>
       </entry>
     </row>
     <row>
       <entry>23.1</entry>
-      <entry>Container requirements</entry>
+      <entry>コンテナの要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.2</entry>
-      <entry>Sequence containers</entry>
+      <entry>列コンテナ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>23.2.1</entry>
-      <entry>Class template <code>deque</code></entry>
+      <entry>クラステンプレート<code>deque</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.2.2</entry>
-      <entry>Class template <code>list</code></entry>
+      <entry>クラステンプレート<code>list</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.2.3</entry>
-      <entry>Adaptors</entry>
+      <entry>アダプタ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>23.2.3.1</entry>
-      <entry>Class template <code>queue</code></entry>
+      <entry>クラステンプレート <code>queue</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.2.3.2</entry>
-      <entry>Class template <code>priority_queue</code></entry>
+      <entry>クラステンプレート <code>priority_queue</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.2.3.3</entry>
-      <entry>Class template <code>stack</code></entry>
+      <entry>クラステンプレート <code>stack</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.2.4</entry>
-      <entry>Class template <code>vector</code></entry>
+      <entry>クラステンプレート <code>vector</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.2.5</entry>
-      <entry>Class <code>vector&lt;bool&gt;</code></entry>
+      <entry>クラス <code>vector&lt;bool&gt;</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.3</entry>
-      <entry>Associative containers</entry>
+      <entry>連想コンテナ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>23.3.1</entry>
-      <entry>Class template <code>map</code></entry>
+      <entry>クラステンプレート <code>map</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.3.2</entry>
-      <entry>Class template <code>multimap</code></entry>
+      <entry>クラステンプレート<code>multimap</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.3.3</entry>
-      <entry>Class template <code>set</code></entry>
+      <entry>クラステンプレート <code>set</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.3.4</entry>
-      <entry>Class template <code>multiset</code></entry>
+      <entry>クラステンプレート <code>multiset</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -682,72 +681,72 @@ particular release.
 	<emphasis>24</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Iterators</emphasis>
+	<emphasis>イテレータ</emphasis>
       </entry>
     </row>
     <row>
       <entry>24.1</entry>
-      <entry>Requirements</entry>
+      <entry>要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.2</entry>
-      <entry>Header <code>&lt;iterator&gt;</code> synopsis</entry>
+      <entry>ヘッダ <code>&lt;iterator&gt;</code> 梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.3</entry>
-      <entry>Iterator primitives</entry>
+      <entry>イテレータのプリミティブ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.4</entry>
-      <entry>Predefined iterators and Iterator adaptors</entry>
+      <entry>事前に定義されたイテレータとイテレータアダプタ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>24.4.1</entry>
-      <entry>Reverse iterators</entry>
+      <entry>反転イテレータ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.4.2</entry>
-      <entry>Insert iterators</entry>
+      <entry>挿入イテレータ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.5</entry>
-      <entry>Stream iterators</entry>
+      <entry>ストリームイテレータ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>24.5.1</entry>
-      <entry>Class template <code>istream_iterator</code></entry>
+      <entry>クラステンプレート <code>istream_iterator</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.5.2</entry>
-      <entry>Class template <code>ostream_iterator</code></entry>
+      <entry>クラステンプレート <code>ostream_iterator</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.5.3</entry>
-      <entry>Class template <code>istreambuf_iterator</code></entry>
+      <entry>クラステンプレート <code>istreambuf_iterator</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.5.4</entry>
-      <entry>Class template <code>ostreambuf_iterator</code></entry>
+      <entry>クラステンプレート <code>ostreambuf_iterator</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -756,30 +755,30 @@ particular release.
 	<emphasis>25</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Algorithms</emphasis>
+	<emphasis>アルゴリズム</emphasis>
       </entry>
     </row>
     <row>
       <entry>25.1</entry>
-      <entry>Non-modifying sequence operations</entry>
+      <entry>非修正列操作</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>25.2</entry>
-      <entry>Mutating sequence operations</entry>
+      <entry>変更列操作</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>25.3</entry>
-      <entry>Sorting and related operations</entry>
+      <entry>並べ替えと関連の操作</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>25.4</entry>
-      <entry>C library algorithms</entry>
+      <entry>Cライブラリアルゴリズム</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -788,84 +787,84 @@ particular release.
       <emphasis>26</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Numerics</emphasis>
+	<emphasis>数値</emphasis>
       </entry>
     </row>
     <row>
       <entry>26.1</entry>
-      <entry>Numeric type requirements</entry>
+      <entry>数値型の要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.2</entry>
-      <entry>Complex numbers</entry>
+      <entry>複素数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.3</entry>
-      <entry>Numeric arrays</entry>
+      <entry>数値配列</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>26.3.1</entry>
-      <entry>Header <code>&lt;valarray&gt;</code> synopsis</entry>
+      <entry>ヘッダ <code>&lt;valarray&gt;</code> の梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.3.2</entry>
-      <entry>Class template <code>valarray</code></entry>
+      <entry>クラステンプレート <code>valarray</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.3.3</entry>
-      <entry><code>valarray</code> non-member operations</entry>
+      <entry><code>valarray</code>非メンバ操作</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.3.4</entry>
-      <entry>Class <code>slice</code></entry>
+      <entry>クラス <code>slice</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.3.5</entry>
-      <entry>Class template <code>slice_array</code></entry>
+      <entry>クラステンプレート <code>slice_array</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.3.6</entry>
-      <entry>Class <code>gslice</code></entry>
+      <entry>クラス <code>gslice</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.3.7</entry>
-      <entry>Class template <code>gslice_array</code></entry>
+      <entry>クラステンプレート <code>gslice_array</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.3.8</entry>
-      <entry>Class template <code>mask_array</code></entry>
+      <entry>クラステンプレート <code>mask_array</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.3.9</entry>
-      <entry>Class template <code>indirect_array</code></entry>
+      <entry>クラステンプレート <code>indirect_array</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.4</entry>
-      <entry>Generalized numeric operations</entry>
+      <entry>汎用数値操作</entry>
       <entry/>
       <entry/>
     </row>
@@ -901,7 +900,7 @@ particular release.
     </row>
     <row>
       <entry>26.5</entry>
-      <entry>C Library</entry>
+      <entry>C ライブラリ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -910,116 +909,116 @@ particular release.
 	<emphasis>27</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Input/output</emphasis>
+	<emphasis>入力/出力</emphasis>
       </entry>
     </row>
     <row>
       <entry>27.1</entry>
-      <entry>Requirements</entry>
+      <entry>要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.2</entry>
-      <entry>Forward declarations</entry>
+      <entry>前方宣言</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.3</entry>
-      <entry>Standard iostream objects</entry>
+      <entry>標準iostreamオブジェクト</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.3.1</entry>
-      <entry>Narrow stream objects</entry>
+      <entry>ナロー・ストリーム・オブジェクト</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.3.2</entry>
-      <entry>Wide stream objects</entry>
+      <entry>ワイド・ストリーム・オブジェクト</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.4</entry>
-      <entry>Iostreams base classes</entry>
+      <entry>Iostreams基底クラス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.5</entry>
-      <entry>Stream buffers</entry>
+      <entry>ストリームバッファ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.6</entry>
-      <entry>Formatting and manipulators</entry>
+      <entry>書式化とマニピュレータ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.7</entry>
-      <entry>String-based streams</entry>
+      <entry>文字列ベースのストリーム</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.8</entry>
-      <entry>File-based streams</entry>
+      <entry>ファイルベースのストリーム</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>
-      	<emphasis>Appendix D</emphasis>
+      	<emphasis>付録 D</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Compatibility features</emphasis>
+	<emphasis>互換機能</emphasis>
       </entry>
     </row>
     <row>
       <entry>D.1</entry>
-      <entry>Increment operator with bool operand</entry>
+      <entry>boolのインクリメント演算子</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>D.2</entry>
-      <entry><code>static</code> keyword</entry>
+      <entry><code>static</code> キーワード</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>D.3</entry>
-      <entry>Access declarations</entry>
+      <entry>アクセス宣言</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>D.4</entry>
-      <entry>Implicit conversion from const strings</entry>
+      <entry>const文字列からの暗黙の変換</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>D.5</entry>
-      <entry>C standard library headers</entry>
+      <entry>C 標準ライブラリヘッダ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>D.6</entry>
-      <entry>Old iostreams members</entry>
+      <entry>古い iostreams メンバ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>D.7</entry>
-      <entry>char* streams</entry>
+      <entry>char* ストリーム</entry>
       <entry/>
       <entry/>
     </row>
@@ -1033,7 +1032,7 @@ particular release.
   
 
    <para>
-     The ISO standard defines the following phrase:
+   ISO規格は、以下のフレーズを定義している。
    </para>
    <blockquote>
      <variablelist>
