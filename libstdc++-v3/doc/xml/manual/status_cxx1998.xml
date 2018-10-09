@@ -11,14 +11,14 @@
 
 
 <section xml:id="iso.1998.status" xreflabel="Implementation Status">
-<info><title>À‘•ƒXƒe[ƒ^ƒX</title></info>  
+<info><title>å®Ÿè£…ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹</title></info>  
 
 <para>
-‚±‚ÌƒXƒe[ƒ^ƒXƒe[ƒuƒ‹‚ÍAISO / IEC 14882F2003‚Ì–ÚŸ‚ÉŠî‚Ã‚¢‚Ä‚¢‚éB
+ã“ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ†ãƒ¼ãƒ–ãƒ«ã¯ã€ISO / IEC 14882ï¼š2003ã®ç›®æ¬¡ã«åŸºã¥ã„ã¦ã„ã‚‹ã€‚
 </para>
 
 <para>
-‚±‚Ìƒy[ƒW‚Å‚ÍA“Á’è‚ÌƒŠƒŠ[ƒX‚Å‚Í‚È‚­AƒƒCƒ“ƒ‰ƒCƒ“‚ÌGCC SVN‚Å‚ÌC++‚ÌƒTƒ|[ƒg‚É‚Â‚¢‚Äà–¾‚·‚éB
+ã“ã®ãƒšãƒ¼ã‚¸ã§ã¯ã€ç‰¹å®šã®ãƒªãƒªãƒ¼ã‚¹ã§ã¯ãªãã€ãƒ¡ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³ã®GCC SVNã§ã®C++ã®ã‚µãƒãƒ¼ãƒˆã«ã¤ã„ã¦èª¬æ˜ã™ã‚‹ã€‚
 </para>
 
 <!-- Status is Yes or No, Broken/Partial-->
@@ -31,7 +31,7 @@
       <?dbhtml bgcolor="#B0B0B0" ?>
 -->
 <table frame="all" xml:id="table.cxx98_status">
-  <title>C++ 1998/2003 À‘•ƒXƒe[ƒ^ƒX</title>
+  <title>C++ 1998/2003 å®Ÿè£…ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹</title>
 
 <tgroup cols="4" align="left" colsep="0" rowsep="1">
 <colspec colname="c1"/>
@@ -40,10 +40,10 @@
 <colspec colname="c4"/>
   <thead>
     <row>
-      <entry>ß</entry>
-      <entry>•`Ê</entry>
-      <entry>ƒXƒe[ƒ^ƒX</entry>
-      <entry>ƒRƒƒ“ƒg</entry>
+      <entry>ç¯€</entry>
+      <entry>æå†™</entry>
+      <entry>ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹</entry>
+      <entry>ã‚³ãƒ¡ãƒ³ãƒˆ</entry>
     </row>
   </thead>
 
@@ -53,37 +53,37 @@
 	<emphasis>18</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Œ¾ŒêƒTƒ|[ƒg</emphasis>
+	<emphasis>è¨€èªã‚µãƒãƒ¼ãƒˆ</emphasis>
       </entry>
     </row>
 
     <row>
       <entry>18.1</entry>
-      <entry>Œ^</entry>
+      <entry>å‹</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.2</entry>
-      <entry>À‘•ƒvƒƒpƒeƒB</entry>
+      <entry>å®Ÿè£…ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.2.1</entry>
-      <entry>”‚Ì§ŒÀ</entry>
+      <entry>æ•°ã®åˆ¶é™</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>18.2.1.1</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg<code>numeric_limits</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ<code>numeric_limits</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.2.1.2</entry>
-      <entry><code>numeric_limits</code> ƒƒ“ƒo</entry>
+      <entry><code>numeric_limits</code> ãƒ¡ãƒ³ãƒ</entry>
       <entry>Y</entry>
     </row>
     <row>
@@ -98,73 +98,73 @@
     </row>
     <row>
       <entry>18.2.1.5</entry>
-      <entry><code>numeric_limits</code> “Áê‰»</entry>
+      <entry><code>numeric_limits</code> ç‰¹æ®ŠåŒ–</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.2.2</entry>
-      <entry>C ƒ‰ƒCƒuƒ‰ƒŠ</entry>
+      <entry>C ãƒ©ã‚¤ãƒ–ãƒ©ãƒª</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.3</entry>
-      <entry>ŠJn‚ÆI—¹</entry>
+      <entry>é–‹å§‹ã¨çµ‚äº†</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.4</entry>
-      <entry>“®“Iƒƒ‚ƒŠŠÇ—</entry>
+      <entry>å‹•çš„ãƒ¡ãƒ¢ãƒªç®¡ç†</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.5</entry>
-      <entry>Œ^¯•Ê</entry>
+      <entry>å‹è­˜åˆ¥</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>18.5.1</entry>
-      <entry>type_infoƒNƒ‰ƒX</entry>
+      <entry>type_infoã‚¯ãƒ©ã‚¹</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.5.2</entry>
-      <entry>bad_castƒNƒ‰ƒX</entry>
+      <entry>bad_castã‚¯ãƒ©ã‚¹</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.5.3</entry>
-      <entry>bad_typeidƒNƒ‰ƒX</entry>
+      <entry>bad_typeidã‚¯ãƒ©ã‚¹</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.6</entry>
-      <entry>—áŠOˆ—</entry>
+      <entry>ä¾‹å¤–å‡¦ç†</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>18.6.1</entry>
-      <entry>exceptionƒNƒ‰ƒX</entry>
+      <entry>exceptionã‚¯ãƒ©ã‚¹</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.6.2</entry>
-      <entry>—áŠOw’èˆá”½</entry>
+      <entry>ä¾‹å¤–æŒ‡å®šé•å</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.6.3</entry>
-      <entry>ˆÙíI—¹</entry>
+      <entry>ç•°å¸¸çµ‚äº†</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -176,7 +176,7 @@
     </row>
     <row>
       <entry>18.7</entry>
-      <entry>‘¼‚Ìƒ‰ƒ“ƒ^ƒCƒ€ƒTƒ|[ƒg</entry>
+      <entry>ä»–ã®ãƒ©ãƒ³ã‚¿ã‚¤ãƒ ã‚µãƒãƒ¼ãƒˆ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -185,24 +185,24 @@
 	<emphasis>19</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>f’f</emphasis>
+	<emphasis>è¨ºæ–­</emphasis>
       </entry>
     </row>
     <row>
       <entry>19.1</entry>
-      <entry>—áŠOƒNƒ‰ƒX</entry>
+      <entry>ä¾‹å¤–ã‚¯ãƒ©ã‚¹</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>19.2</entry>
-      <entry>ƒAƒT[ƒVƒ‡ƒ“</entry>
+      <entry>ã‚¢ã‚µãƒ¼ã‚·ãƒ§ãƒ³</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>19.3</entry>
-      <entry>ƒGƒ‰[”Ô†</entry>
+      <entry>ã‚¨ãƒ©ãƒ¼ç•ªå·</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -211,24 +211,24 @@
 	<emphasis>20</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>”Ä—pƒ†[ƒeƒBƒŠƒeƒB</emphasis>
+	<emphasis>æ±ç”¨ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£</emphasis>
       </entry>
     </row>
     <row>
       <entry>20.1</entry>
-      <entry>—v‹</entry>
+      <entry>è¦æ±‚</entry>
       <entry>Y</entry>
       <entry/>
     </row>
    <row>
       <entry>20.2</entry>
-      <entry>ƒ†[ƒeƒBƒŠƒeƒB•”•i</entry>
+      <entry>ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£éƒ¨å“</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.2.1</entry>
-      <entry>‰‰Zq</entry>
+      <entry>æ¼”ç®—å­</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -240,85 +240,85 @@
     </row>
    <row>
       <entry>20.3</entry>
-      <entry>ŠÖ”ƒIƒuƒWƒFƒNƒg</entry>
+      <entry>é–¢æ•°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.3.1</entry>
-      <entry>Šî’ê</entry>
+      <entry>åŸºåº•</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.3.2</entry>
-      <entry>Zp‰‰Z</entry>
+      <entry>ç®—è¡“æ¼”ç®—</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.3.3</entry>
-      <entry>”äŠr</entry>
+      <entry>æ¯”è¼ƒ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.3.4</entry>
-      <entry>˜_—‰‰Z</entry>
+      <entry>è«–ç†æ¼”ç®—</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.3.5</entry>
-      <entry>”Û’è</entry>
+      <entry>å¦å®š</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.3.6</entry>
-      <entry>ƒoƒCƒ“ƒ_</entry>
+      <entry>ãƒã‚¤ãƒ³ãƒ€</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.3.7</entry>
-      <entry>ŠÖ”‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ÌƒAƒ_ƒvƒ^</entry>
+      <entry>é–¢æ•°ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã®ã‚¢ãƒ€ãƒ—ã‚¿</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.3.8</entry>
-      <entry>ƒƒ“ƒo‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ÌƒAƒ_ƒvƒ^</entry>
+      <entry>ãƒ¡ãƒ³ãƒã¸ã®ãƒã‚¤ãƒ³ã‚¿ã®ã‚¢ãƒ€ãƒ—ã‚¿</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.4</entry>
-      <entry>ƒƒ‚ƒŠ</entry>
+      <entry>ãƒ¡ãƒ¢ãƒª</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.4.1</entry>
-      <entry>ƒfƒtƒHƒ‹ƒg‚ÌƒAƒƒP[ƒ^</entry>
+      <entry>ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.4.2</entry>
-      <entry>¶—Ìˆæ‚ÌƒCƒeƒŒ[ƒ^</entry>
+      <entry>ç”Ÿé ˜åŸŸã®ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.4.3</entry>
-      <entry>ˆêƒoƒbƒtƒ@</entry>
+      <entry>ä¸€æ™‚ãƒãƒƒãƒ•ã‚¡</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.4.4</entry>
-      <entry>“Á‰»ƒAƒ‹ƒSƒŠƒYƒ€</entry>
+      <entry>ç‰¹åŒ–ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ </entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -342,13 +342,13 @@
     </row>
     <row>
       <entry>20.4.5</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg<code>auto_ptr</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ<code>auto_ptr</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.4.6</entry>
-      <entry>C ƒ‰ƒCƒuƒ‰ƒŠ</entry>
+      <entry>C ãƒ©ã‚¤ãƒ–ãƒ©ãƒª</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -357,18 +357,18 @@
 	<emphasis>21</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>•¶š—ñ</emphasis>
+	<emphasis>æ–‡å­—åˆ—</emphasis>
       </entry>
     </row>
     <row>
       <entry>21.1</entry>
-      <entry>•¶š“Á«</entry>
+      <entry>æ–‡å­—ç‰¹æ€§</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>21.1.1</entry>
-      <entry>•¶š“Á«‚Ì—v‹</entry>
+      <entry>æ–‡å­—ç‰¹æ€§ã®è¦æ±‚</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -380,57 +380,57 @@
     </row>
     <row>
       <entry>21.1.3</entry>
-      <entry><code>char_traits</code>“Áê‰»</entry>
+      <entry><code>char_traits</code>ç‰¹æ®ŠåŒ–</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>21.1.3.1</entry>
-      <entry>\‘¢‘Ì <code>char_traits&lt;char&gt;</code></entry>
+      <entry>æ§‹é€ ä½“ <code>char_traits&lt;char&gt;</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>21.1.3.2</entry>
-      <entry>\‘¢‘Ì <code>char_traits&lt;wchar_t&gt;</code></entry>
+      <entry>æ§‹é€ ä½“ <code>char_traits&lt;wchar_t&gt;</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>21.2</entry>
-      <entry>•¶š—ñƒNƒ‰ƒX</entry>
+      <entry>æ–‡å­—åˆ—ã‚¯ãƒ©ã‚¹</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>21.3</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg <code>basic_string</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ <code>basic_string</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>21.4</entry>
-      <entry>nullI’[—ñ‚Ìƒ†[ƒeƒBƒŠƒeƒB</entry>
+      <entry>nullçµ‚ç«¯åˆ—ã®ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£</entry>
       <entry>Y</entry>
-      <entry>C ƒ‰ƒCƒuƒ‰ƒŠˆË‘¶</entry>
+      <entry>C ãƒ©ã‚¤ãƒ–ãƒ©ãƒªä¾å­˜</entry>
     </row>
     <row>
       <entry>
       	<emphasis>22</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>’nˆæ‰»</emphasis>
+	<emphasis>åœ°åŸŸåŒ–</emphasis>
       </entry>
     </row>
     <row>
       <entry>22.1</entry>
-      <entry>ƒƒP[ƒ‹</entry>
+      <entry>ãƒ­ã‚±ãƒ¼ãƒ«</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>22.1.1</entry>
-      <entry>ƒNƒ‰ƒX <code>locale</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ <code>locale</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -442,25 +442,25 @@
     </row>
     <row>
       <entry>22.1.3</entry>
-      <entry>•ÏŠ·ƒCƒ“ƒ^[ƒtƒF[ƒX</entry>
+      <entry>å¤‰æ›ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>22.1.3.1</entry>
-      <entry>•¶š•ª—Ş</entry>
+      <entry>æ–‡å­—åˆ†é¡</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.1.3.2</entry>
-      <entry>•¶š•ÏŠ·</entry>
+      <entry>æ–‡å­—å¤‰æ›</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.2</entry>
-      <entry>•W€ƒƒP[ƒ‹ƒJƒeƒSƒŠ[</entry>
+      <entry>æ¨™æº–ãƒ­ã‚±ãƒ¼ãƒ«ã‚«ãƒ†ã‚´ãƒªãƒ¼</entry>
       <entry/>
       <entry/>
     </row>
@@ -472,7 +472,7 @@
     </row>
     <row>
       <entry>22.2.2</entry>
-      <entry>”’l</entry>
+      <entry>æ•°å€¤</entry>
       <entry/>
       <entry/>
     </row>
@@ -502,7 +502,7 @@
     </row>
     <row>
       <entry>22.2.5</entry>
-      <entry>ŠÔ</entry>
+      <entry>æ™‚é–“</entry>
       <entry/>
       <entry/>
     </row>
@@ -532,7 +532,7 @@
     </row>
     <row>
       <entry>22.2.6</entry>
-      <entry>‹à‘K</entry>
+      <entry>é‡‘éŠ­</entry>
       <entry/>
       <entry/>
     </row>
@@ -568,13 +568,13 @@
     </row>
     <row>
       <entry>22.2.8</entry>
-      <entry>ƒvƒƒOƒ‰ƒ€’è‹`‚Ì–Ê</entry>
+      <entry>ãƒ—ãƒ­ã‚°ãƒ©ãƒ å®šç¾©ã®é¢</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.3</entry>
-      <entry>Cƒ‰ƒCƒuƒ‰ƒŠƒƒP[ƒ‹</entry>
+      <entry>Cãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ­ã‚±ãƒ¼ãƒ«</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -583,96 +583,96 @@
 	<emphasis>23</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>ƒRƒ“ƒeƒi</emphasis>
+	<emphasis>ã‚³ãƒ³ãƒ†ãƒŠ</emphasis>
       </entry>
     </row>
     <row>
       <entry>23.1</entry>
-      <entry>ƒRƒ“ƒeƒi‚Ì—v‹</entry>
+      <entry>ã‚³ãƒ³ãƒ†ãƒŠã®è¦æ±‚</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.2</entry>
-      <entry>—ñƒRƒ“ƒeƒi</entry>
+      <entry>åˆ—ã‚³ãƒ³ãƒ†ãƒŠ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>23.2.1</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg<code>deque</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ<code>deque</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.2.2</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg<code>list</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ<code>list</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.2.3</entry>
-      <entry>ƒAƒ_ƒvƒ^</entry>
+      <entry>ã‚¢ãƒ€ãƒ—ã‚¿</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>23.2.3.1</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg <code>queue</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ <code>queue</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.2.3.2</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg <code>priority_queue</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ <code>priority_queue</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.2.3.3</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg <code>stack</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ <code>stack</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.2.4</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg <code>vector</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ <code>vector</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.2.5</entry>
-      <entry>ƒNƒ‰ƒX <code>vector&lt;bool&gt;</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ <code>vector&lt;bool&gt;</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.3</entry>
-      <entry>˜A‘zƒRƒ“ƒeƒi</entry>
+      <entry>é€£æƒ³ã‚³ãƒ³ãƒ†ãƒŠ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>23.3.1</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg <code>map</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ <code>map</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.3.2</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg<code>multimap</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ<code>multimap</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.3.3</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg <code>set</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ <code>set</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.3.4</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg <code>multiset</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ <code>multiset</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -681,72 +681,72 @@
 	<emphasis>24</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>ƒCƒeƒŒ[ƒ^</emphasis>
+	<emphasis>ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿</emphasis>
       </entry>
     </row>
     <row>
       <entry>24.1</entry>
-      <entry>—v‹</entry>
+      <entry>è¦æ±‚</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.2</entry>
-      <entry>ƒwƒbƒ_ <code>&lt;iterator&gt;</code> [ŠT</entry>
+      <entry>ãƒ˜ãƒƒãƒ€ <code>&lt;iterator&gt;</code> æ¢—æ¦‚</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.3</entry>
-      <entry>ƒCƒeƒŒ[ƒ^‚ÌƒvƒŠƒ~ƒeƒBƒu</entry>
+      <entry>ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã®ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.4</entry>
-      <entry>–‘O‚É’è‹`‚³‚ê‚½ƒCƒeƒŒ[ƒ^‚ÆƒCƒeƒŒ[ƒ^ƒAƒ_ƒvƒ^</entry>
+      <entry>äº‹å‰ã«å®šç¾©ã•ã‚ŒãŸã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã¨ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã‚¢ãƒ€ãƒ—ã‚¿</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>24.4.1</entry>
-      <entry>”½“]ƒCƒeƒŒ[ƒ^</entry>
+      <entry>åè»¢ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.4.2</entry>
-      <entry>‘}“üƒCƒeƒŒ[ƒ^</entry>
+      <entry>æŒ¿å…¥ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.5</entry>
-      <entry>ƒXƒgƒŠ[ƒ€ƒCƒeƒŒ[ƒ^</entry>
+      <entry>ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>24.5.1</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg <code>istream_iterator</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ <code>istream_iterator</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.5.2</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg <code>ostream_iterator</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ <code>ostream_iterator</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.5.3</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg <code>istreambuf_iterator</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ <code>istreambuf_iterator</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.5.4</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg <code>ostreambuf_iterator</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ <code>ostreambuf_iterator</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -755,30 +755,30 @@
 	<emphasis>25</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>ƒAƒ‹ƒSƒŠƒYƒ€</emphasis>
+	<emphasis>ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ </emphasis>
       </entry>
     </row>
     <row>
       <entry>25.1</entry>
-      <entry>”ñC³—ñ‘€ì</entry>
+      <entry>éä¿®æ­£åˆ—æ“ä½œ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>25.2</entry>
-      <entry>•ÏX—ñ‘€ì</entry>
+      <entry>å¤‰æ›´åˆ—æ“ä½œ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>25.3</entry>
-      <entry>•À‚×‘Ö‚¦‚ÆŠÖ˜A‚Ì‘€ì</entry>
+      <entry>ä¸¦ã¹æ›¿ãˆã¨é–¢é€£ã®æ“ä½œ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>25.4</entry>
-      <entry>Cƒ‰ƒCƒuƒ‰ƒŠƒAƒ‹ƒSƒŠƒYƒ€</entry>
+      <entry>Cãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ </entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -787,84 +787,84 @@
       <emphasis>26</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>”’l</emphasis>
+	<emphasis>æ•°å€¤</emphasis>
       </entry>
     </row>
     <row>
       <entry>26.1</entry>
-      <entry>”’lŒ^‚Ì—v‹</entry>
+      <entry>æ•°å€¤å‹ã®è¦æ±‚</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.2</entry>
-      <entry>•¡‘f”</entry>
+      <entry>è¤‡ç´ æ•°</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.3</entry>
-      <entry>”’l”z—ñ</entry>
+      <entry>æ•°å€¤é…åˆ—</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>26.3.1</entry>
-      <entry>ƒwƒbƒ_ <code>&lt;valarray&gt;</code> ‚Ì[ŠT</entry>
+      <entry>ãƒ˜ãƒƒãƒ€ <code>&lt;valarray&gt;</code> ã®æ¢—æ¦‚</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.3.2</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg <code>valarray</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ <code>valarray</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.3.3</entry>
-      <entry><code>valarray</code>”ñƒƒ“ƒo‘€ì</entry>
+      <entry><code>valarray</code>éãƒ¡ãƒ³ãƒæ“ä½œ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.3.4</entry>
-      <entry>ƒNƒ‰ƒX <code>slice</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ <code>slice</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.3.5</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg <code>slice_array</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ <code>slice_array</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.3.6</entry>
-      <entry>ƒNƒ‰ƒX <code>gslice</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ <code>gslice</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.3.7</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg <code>gslice_array</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ <code>gslice_array</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.3.8</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg <code>mask_array</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ <code>mask_array</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.3.9</entry>
-      <entry>ƒNƒ‰ƒXƒeƒ“ƒvƒŒ[ƒg <code>indirect_array</code></entry>
+      <entry>ã‚¯ãƒ©ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ <code>indirect_array</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.4</entry>
-      <entry>”Ä—p”’l‘€ì</entry>
+      <entry>æ±ç”¨æ•°å€¤æ“ä½œ</entry>
       <entry/>
       <entry/>
     </row>
@@ -900,7 +900,7 @@
     </row>
     <row>
       <entry>26.5</entry>
-      <entry>C ƒ‰ƒCƒuƒ‰ƒŠ</entry>
+      <entry>C ãƒ©ã‚¤ãƒ–ãƒ©ãƒª</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -909,116 +909,116 @@
 	<emphasis>27</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>“ü—Í/o—Í</emphasis>
+	<emphasis>å…¥åŠ›/å‡ºåŠ›</emphasis>
       </entry>
     </row>
     <row>
       <entry>27.1</entry>
-      <entry>—v‹</entry>
+      <entry>è¦æ±‚</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.2</entry>
-      <entry>‘O•ûéŒ¾</entry>
+      <entry>å‰æ–¹å®£è¨€</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.3</entry>
-      <entry>•W€iostreamƒIƒuƒWƒFƒNƒg</entry>
+      <entry>æ¨™æº–iostreamã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.3.1</entry>
-      <entry>ƒiƒ[EƒXƒgƒŠ[ƒ€EƒIƒuƒWƒFƒNƒg</entry>
+      <entry>ãƒŠãƒ­ãƒ¼ãƒ»ã‚¹ãƒˆãƒªãƒ¼ãƒ ãƒ»ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.3.2</entry>
-      <entry>ƒƒCƒhEƒXƒgƒŠ[ƒ€EƒIƒuƒWƒFƒNƒg</entry>
+      <entry>ãƒ¯ã‚¤ãƒ‰ãƒ»ã‚¹ãƒˆãƒªãƒ¼ãƒ ãƒ»ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.4</entry>
-      <entry>IostreamsŠî’êƒNƒ‰ƒX</entry>
+      <entry>IostreamsåŸºåº•ã‚¯ãƒ©ã‚¹</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.5</entry>
-      <entry>ƒXƒgƒŠ[ƒ€ƒoƒbƒtƒ@</entry>
+      <entry>ã‚¹ãƒˆãƒªãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.6</entry>
-      <entry>‘®‰»‚Æƒ}ƒjƒsƒ…ƒŒ[ƒ^</entry>
+      <entry>æ›¸å¼åŒ–ã¨ãƒãƒ‹ãƒ”ãƒ¥ãƒ¬ãƒ¼ã‚¿</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.7</entry>
-      <entry>•¶š—ñƒx[ƒX‚ÌƒXƒgƒŠ[ƒ€</entry>
+      <entry>æ–‡å­—åˆ—ãƒ™ãƒ¼ã‚¹ã®ã‚¹ãƒˆãƒªãƒ¼ãƒ </entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.8</entry>
-      <entry>ƒtƒ@ƒCƒ‹ƒx[ƒX‚ÌƒXƒgƒŠ[ƒ€</entry>
+      <entry>ãƒ•ã‚¡ã‚¤ãƒ«ãƒ™ãƒ¼ã‚¹ã®ã‚¹ãƒˆãƒªãƒ¼ãƒ </entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>
-      	<emphasis>•t˜^ D</emphasis>
+      	<emphasis>ä»˜éŒ² D</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>ŒİŠ·‹@”\</emphasis>
+	<emphasis>äº’æ›æ©Ÿèƒ½</emphasis>
       </entry>
     </row>
     <row>
       <entry>D.1</entry>
-      <entry>bool‚ÌƒCƒ“ƒNƒŠƒƒ“ƒg‰‰Zq</entry>
+      <entry>boolã®ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆæ¼”ç®—å­</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>D.2</entry>
-      <entry><code>static</code> ƒL[ƒ[ƒh</entry>
+      <entry><code>static</code> ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>D.3</entry>
-      <entry>ƒAƒNƒZƒXéŒ¾</entry>
+      <entry>ã‚¢ã‚¯ã‚»ã‚¹å®£è¨€</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>D.4</entry>
-      <entry>const•¶š—ñ‚©‚ç‚ÌˆÃ–Ù‚Ì•ÏŠ·</entry>
+      <entry>constæ–‡å­—åˆ—ã‹ã‚‰ã®æš—é»™ã®å¤‰æ›</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>D.5</entry>
-      <entry>C •W€ƒ‰ƒCƒuƒ‰ƒŠƒwƒbƒ_</entry>
+      <entry>C æ¨™æº–ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ˜ãƒƒãƒ€</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>D.6</entry>
-      <entry>ŒÃ‚¢ iostreams ƒƒ“ƒo</entry>
+      <entry>å¤ã„ iostreams ãƒ¡ãƒ³ãƒ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>D.7</entry>
-      <entry>char* ƒXƒgƒŠ[ƒ€</entry>
+      <entry>char* ã‚¹ãƒˆãƒªãƒ¼ãƒ </entry>
       <entry/>
       <entry/>
     </row>
@@ -1032,128 +1032,77 @@
   
 
    <para>
-   ISO‹KŠi‚ÍAˆÈ‰º‚ÌƒtƒŒ[ƒY‚ğ’è‹`‚µ‚Ä‚¢‚éB
+   ISOè¦æ ¼ã¯ã€ä»¥ä¸‹ã®ãƒ•ãƒ¬ãƒ¼ã‚ºã‚’å®šç¾©ã—ã¦ã„ã‚‹ã€‚
    </para>
    <blockquote>
      <variablelist>
      <varlistentry>
        <term>
-	 <code>[1.3.5] implementation-defined behavior</code>
+	 <code>[1.3.5] å®Ÿè£…å®šç¾©ã®æŒ¯ã‚‹èˆã„</code>
        </term>
        <listitem>
 	 <para>
-	 Behavior, for a well-formed program construct and correct data, that
-	 depends on the implementation <emphasis>and that each implementation
-	 shall document</emphasis>.
+	 ååˆ†ã«æˆç«‹ã—ãŸãƒ—ãƒ­ã‚°ãƒ©ãƒ æ§‹æˆã¨æ­£ã—ã„ãƒ‡ãƒ¼ã‚¿ã®ãŸã‚ã®å®Ÿè£…ã§ã‚ã‚Šã€<emphasis>å„å®Ÿè£…ãŒæ–‡æ›¸åŒ–ã—ãªã‘ã‚Œã°ãªã‚‰ãªã„</emphasis>å‹•ä½œ
 	 </para>
        </listitem>
      </varlistentry>
      </variablelist>
    </blockquote>
    <para>
-     We do so here, for the C++ library only.  Behavior of the
-     compiler, linker, runtime loader, and other elements of "the
-     implementation" are documented elsewhere.  Everything listed
-     in Annex B, Implementation Qualities, are also part of the
-     compiler, not the library.
+   ã“ã“ã§ã¯ã€C ++ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã«ã¤ã„ã¦ã®ã¿èª¬æ˜ã™ã‚‹ã€‚ ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ã€ãƒªãƒ³ã‚«ã€å®Ÿè¡Œæ™‚ãƒ­ãƒ¼ãƒ€ã€ãŠã‚ˆã³ "å®Ÿè£…"ã®ãã®ä»–ã®è¦ç´ ã®å‹•ä½œã¯ã€ä»–ã®å ´æ‰€ã§æ–‡æ›¸åŒ–ã•ã‚Œã¦ã„ã‚‹ã€‚ é™„å±æ›¸Bã€Implementation Qualitiesã«ãƒªã‚¹ãƒˆã•ã‚Œã¦ã„ã‚‹ã™ã¹ã¦ã®ã‚‚ã®ã‚‚ã€ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã§ã¯ãªãã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ã®ä¸€éƒ¨ã§ã‚ã‚‹ã€‚
    </para>
    <para>
-     For each entry, we give the section number of the standard, when
-     applicable.  This list is probably incomplet and inkorrekt.
+   è©²å½“ã™ã‚‹å ´åˆã¯ã€å„ã‚¨ãƒ³ãƒˆãƒªã«ã¤ã„ã¦ã€æ¨™æº–ã®ã‚»ã‚¯ã‚·ãƒ§ãƒ³ç•ªå·ã‚’æŒ‡å®šã—ã¾ã™ã€‚ ã“ã®ãƒªã‚¹ãƒˆã¯ãŠãã‚‰ãä¸å®Œå…¨ã§ä¸æ­£ç¢ºã§ã‚ã‚‹ã€‚
    </para>
    <para>
-     <emphasis>[1.9]/11 #3</emphasis> If <code>isatty(3)</code> is true, then
-      interactive stream support is implied.
+     <emphasis>[1.9]/11 #3</emphasis> ã‚‚ã— <code>isatty(3)</code>ãŒçœŸãªã‚‰ã°ã€ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒ†ã‚£ãƒ–ã‚¹ãƒˆãƒªãƒ¼ãƒ ã®ã‚µãƒãƒ¼ãƒˆãŒæš—ç¤ºã•ã‚Œã‚‹ã€‚
    </para>
    <para>
-     <emphasis>[17.4.4.5]</emphasis> Non-reentrant functions are probably best
-      discussed in the various sections on multithreading (see above).
+     <emphasis>[17.4.4.5]</emphasis>ãŠãã‚‰ãã€ãƒªã‚¨ãƒ³ãƒˆãƒ©ãƒ³ãƒˆã§ãªã„é–¢æ•°ã¯ã€ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ï¼ˆä¸Šè¨˜ã‚’å‚ç…§ï¼‰ã®ã•ã¾ã–ã¾ãªã‚»ã‚¯ã‚·ãƒ§ãƒ³ã§æœ€ã‚‚ã‚ˆãèª¬æ˜ã•ã‚Œã¦ã„ã‚‹ã€‚
    </para>
    <!-- [17.4.4.8]/3 says any function that doesn't have an exception-spec
 	can throw whatever we want; see also its footnote.  Let's list those
 	in the sections where the function itself occurs.
    -->
-   <para><emphasis>[18.1]/4</emphasis> The type of <code>NULL</code> is described
-      under <link linkend="std.support.types.null">Support</link>.
+   <para><emphasis>[18.1]/4</emphasis>  <code>NULL</code> ã®å‹ã¯<link linkend="std.support.types.null">Support</link>ã§èª¬æ˜ã•ã‚Œã¦ã„ã‚‹ã€‚
    </para>
-   <para><emphasis>[18.3]/8</emphasis> Even though it's listed in the library
-      sections, libstdc++ has zero control over what the cleanup code hands
-      back to the runtime loader.  Talk to the compiler people.  :-)
+   <para><emphasis>[18.3]/8</emphasis> ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚»ã‚¯ã‚·ãƒ§ãƒ³ã«ãƒªã‚¹ãƒˆã•ã‚Œã¦ã„ã‚‹ãŒã€libstdc++ã¯ã€ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒƒãƒ—ã‚³ãƒ¼ãƒ‰ãŒå®Ÿè¡Œæ™‚ãƒ­ãƒ¼ãƒ€ãƒ¼ã«è¿”ã™ã‚‚ã®ã‚’åˆ¶å¾¡ã—ãªã„ã€‚ ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ã®äººã«è©±ã™ã“ã¨ã€‚  :-)
    </para>
    <para><emphasis>[18.4.2.1]/5</emphasis> (bad_alloc),
       <emphasis>[18.5.2]/5</emphasis> (bad_cast),
       <emphasis>[18.5.3]/5</emphasis> (bad_typeid),
       <emphasis>[18.6.1]/8</emphasis> (exception),
-      <emphasis>[18.6.2.1]/5</emphasis> (bad_exception):  The <code>what()</code>
-      member function of class <code>std::exception</code>, and these other
-      classes publicly derived from it, returns the name of the
-      class, e.g. <literal>"std::bad_alloc"</literal>.
+      <emphasis>[18.6.2.1]/5</emphasis> (bad_exception): ã‚¯ãƒ©ã‚¹<code>std::exception</code>ã®<code>what()</code>ãƒ¡ãƒ³ãƒãƒ¼é–¢æ•°ã¨ãã‚Œã‹ã‚‰ä¸€èˆ¬ã«æ´¾ç”Ÿã—ãŸä»–ã®ã‚¯ãƒ©ã‚¹ã¯ã€ã‚¯ãƒ©ã‚¹ã®åå‰ã€ä¾‹ãˆã°ã€<literal>"std::bad_alloc"</literal>ã‚’è¿”ã™ã€‚
    </para>
-   <para><emphasis>[18.5.1]/7</emphasis> The return value of
-      <code>std::type_info::name()</code> is the mangled type name.
-      You will need to call <code>c++filt</code> and pass the names as
-      command-line parameters to demangle them, or call a
-      <link linkend="manual.ext.demangle">runtime demangler function</link>.
+   <para><emphasis>[18.5.1]/7</emphasis> <code>std::type_info::name()</code>ã®æˆ»ã‚Šå€¤ã¯ã€ãƒãƒ³ã‚°ãƒ«ã•ã‚ŒãŸå‹åã§ã‚ã‚‹ã€‚<code>c++filt</code>ã‚’å‘¼ã³å‡ºã—ã€åå‰ã‚’ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã¨ã—ã¦æ¸¡ã—ãŸã‚Šã€<link linkend="manual.ext.demangle">ãƒ©ãƒ³ã‚¿ã‚¤ãƒ ãƒ‡ãƒãƒ³ã‚°ãƒ«é–¢æ•°</link>ã‚’å‘¼ã³å‡ºã—ãŸã‚Šã—ã¦ãã‚Œã‚‰ã‚’ãƒ‡ãƒãƒ³ã‚°ãƒ«ã™ã‚‹å¿…è¦ãŒã‚ã‚‹ã€‚
    </para>
-   <para><emphasis>[20.1.5]/5</emphasis> <emphasis>"Implementors are encouraged to
-      supply libraries that can accept allocators that encapsulate more
-      general memory models and that support non-equal instances.  In such
-      implementations, any requirements imposed on allocators by containers
-      beyond those requirements that appear in Table 32, and the semantics
-      of containers and algorithms when allocator instances compare
-      non-equal, are implementation-defined."</emphasis>  There is experimental
-      support for non-equal allocators in the standard containers in C++98
-      mode. There are no additional requirements on allocators. It is undefined
-      behaviour to swap two containers if their allocators are not equal.
-   </para>
+   <para><emphasis>[20.1.5]/5</emphasis> <emphasis>ã€Œå®Ÿè£…è€…ã¯ã€ã‚ˆã‚Šä¸€èˆ¬çš„ãªãƒ¡ãƒ¢ãƒªãƒ¢ãƒ‡ãƒ«ã‚’ã‚«ãƒ—ã‚»ãƒ«åŒ–ã—ã€ç­‰ã—ããªã„ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ã‚µãƒãƒ¼ãƒˆã™ã‚‹ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã‚’å—ã‘å…¥ã‚Œã‚‹ã“ã¨ãŒã§ãã‚‹ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚’æä¾›ã™ã‚‹ã“ã¨ãŒå¥¨åŠ±ã•ã‚Œã‚‹ã€‚ ãã®ã‚ˆã†ãªå®Ÿè£…ã§ã¯ã€è¡¨32ã«ç¤ºã™è¦ä»¶ã‚’è¶…ãˆã‚‹ã‚³ãƒ³ãƒ†ãƒŠã«ã‚ˆã£ã¦ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã«èª²ã›ã‚‰ã‚ŒãŸè¦ä»¶ã€ãŠã‚ˆã³ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãŒéç­‰ä¾¡ã§ã‚ã‚‹å ´åˆã®ã‚³ãƒ³ãƒ†ãƒŠãŠã‚ˆã³ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ã®ã‚»ãƒãƒ³ãƒ†ã‚£ã‚¯ã‚¹ãŒå®Ÿè£…å®šç¾©ã•ã‚Œã¦ã„ã‚‹ã€‚"</emphasis>C++98ãƒ¢ãƒ¼ãƒ‰ã®æ¨™æº–ã‚³ãƒ³ãƒ†ãƒŠã§ã¯ã€ç­‰ã—ããªã„ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ãŒå®Ÿé¨“çš„ã«ã‚µãƒãƒ¼ãƒˆã•ã‚Œã¦ã„ã‚‹ã€‚ ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã«ã¯è¿½åŠ ã®è¦ä»¶ã¯ãªã„ã€‚ ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ãŒç­‰ã—ããªã„å ´åˆã€2ã¤ã®ã‚³ãƒ³ãƒ†ãƒŠã‚’ã‚¹ãƒ¯ãƒƒãƒ—ã™ã‚‹ã“ã¨ã¯æœªå®šç¾©ã®å‹•ä½œã§ã‚ã‚‹ã€‚   </para>
    <para><emphasis>[21.1.3.1]/3,4</emphasis>,
       <emphasis>[21.1.3.2]/2</emphasis>,
       <emphasis>[21.3]/6 basic_string::iterator, basic_string::const_iterator</emphasis>,
       <emphasis>[23.*]'s foo::iterator</emphasis>,
       <emphasis>[27.*]'s foo::*_type</emphasis>,
       <emphasis>others...</emphasis>
-      Nope, these types are called implementation-defined because you
-      shouldn't be taking advantage of their underlying types.  Listing them
-      here would defeat the purpose.  :-)
+      ã„ã„ãˆã€ã“ã‚Œã‚‰ã®å‹ã¯ã€åŸºã«ãªã‚‹å‹ã‚’åˆ©ç”¨ã—ã¦ã¯ãªã‚‰ãªã„ãŸã‚ã€å®Ÿè£…å®šç¾©ã¨å‘¼ã°ã‚Œã‚‹ã€‚ ã“ã“ã«ãƒªã‚¹ãƒˆã™ã‚‹ã“ã¨ã¯ç›®çš„ã‚’ç ´ã‚‹ã ã‚ã†ã€‚  :-)
    </para>
-   <para><emphasis>[21.1.3.1]/5</emphasis> I don't really know about
-      the <type>mbstate_t</type> stuff... see
-      the <link linkend="std.localization.facet.codecvt"><code>codecvt</code>
-      notes</link> for what does exist.
+   <para><emphasis>[21.1.3.1]/5</emphasis>ç§ã¯æœ¬å½“ã«<type>mbstate_t</type>ã«ã¤ã„ã¦ã¯çŸ¥ã‚‰ãªã„...å­˜åœ¨ã™ã‚‹ã‚‚ã®ã®<link linkend="std.localization.facet.codecvt"><code>codecvt</code> æ³¨é‡ˆ</link>ã‚’è¦‹ã‚ˆã€‚
    </para>
-   <para><emphasis>[22.*]</emphasis> Anything and everything we have on locale
-      implementation will be described under
-      <link linkend="std.localization.locales.locale">Localization</link>.
+   <para><emphasis>[22.*]</emphasis> ãƒ­ã‚±ãƒ¼ãƒ«ã‚’å®Ÿè£…ã™ã‚‹ä¸Šã§ä½•ãŒã‚ã£ã¦ã‚‚ã€ãã‚Œã«ã¤ã„ã¦ã¯<link linkend="std.localization.locales.locale">Localization</link>ã§èª¬æ˜ã—ã¾ã™ã€‚
+      .
    </para>
-   <para><emphasis>[23.*]</emphasis> All of the containers in this clause
-     define <type>size_type</type> as <type>std::size_t</type> and
-     <type>difference_type</type> as <type>std::ptrdiff_t</type>.
+   <para><emphasis>[23.*]</emphasis> ã“ã®å¥ã®ã™ã¹ã¦ã®ã‚³ãƒ³ãƒ†ãƒŠã¯ã€ <type>size_type</type>ã‚’<type>std::size_t</type> ã¨ã—ã¦ã€ <type>difference_type</type>ã‚’<type>std::ptrdiff_t</type>ã¨ã—ã¦å®šç¾©ã™ã‚‹ã€‚
    </para>
-   <para><emphasis>[26.2.8]/9</emphasis> I have no idea what
-      <code>complex&lt;T&gt;</code>'s <code>pow(0,0)</code> returns.
-   </para>
-   <para><emphasis>[27.4.2.4]/2</emphasis> Calling
-      <code>std::ios_base::sync_with_stdio</code> after I/O has already been
-      performed on the standard stream objects will
-      flush the buffers, and <!-- this line might go away -->
-      destroy and recreate the underlying buffer instances.  Whether or not
-      the previously-written I/O is destroyed in this process depends mostly
-      on the <code>--enable-libio</code> choice:  for stdio, if the written
-      data is already in the stdio buffer, the data may be completely safe!
+   <para><emphasis>[26.2.8]/9</emphasis>ç§ã¯<code>complex&lt;T&gt;</ code>ã®<code>pow(0,0)</code>ãŒä½•ã‚’è¿”ã™ã®ã‹è¦‹å½“ãŒã¤ã‹ãªã„ã€‚    </para>
+   <para><emphasis>[27.4.2.4]/2</emphasis>I/OãŒã™ã§ã«æ¨™æº–ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§å®Ÿè¡Œã•ã‚ŒãŸå¾Œã«<code>std::ios_base::sync_with_stdio</ code>ã‚’å‘¼ã³å‡ºã™ã¨ã€ãƒãƒƒãƒ•ã‚¡ãŒãƒ•ãƒ©ãƒƒã‚·ãƒ¥ã•ã‚Œã€<!-- this line might go away -->åŸºåº•ã®ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãŒç ´æ£„ã•ã‚Œã€å†ä½œæˆã•ã‚Œã‚‹ã€‚ ã“ã®ãƒ—ãƒ­ã‚»ã‚¹ã§ä»¥å‰ã«æ›¸ãè¾¼ã¾ã‚ŒãŸI/OãŒç ´æ£„ã•ã‚Œã‚‹ã‹ã©ã†ã‹ã¯ã€ä¸»ã«<code>--enable-libio</code>ã®é¸æŠã«ä¾å­˜ã™ã‚‹ã€‚stdioã§ã¯ã€æ›¸ãè¾¼ã¾ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ãŒstdioãƒãƒƒãƒ•ã‚¡ã«æ—¢ã«ã‚ã‚‹å ´åˆã€ å®Œå…¨ã«å®‰å…¨ã§ã‚ã‚‹ï¼
    </para>
    <para><emphasis>[27.6.1.1.2]</emphasis>,
-      <emphasis>[27.6.2.3]</emphasis> The I/O sentry ctor and dtor can perform
-      additional work than the minimum required.  We are not currently taking
-      advantage of this yet.
+      <emphasis>[27.6.2.3]</emphasis> I/Oç›£è¦–ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã¨ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã¯ã€å¿…è¦æœ€ä½é™ã®ä½œæ¥­ã‚’å®Ÿè¡Œã§ãã‚‹ã€‚ ç§ãŸã¡ã¯ç¾åœ¨ã€ã¾ã ã“ã‚Œã‚’åˆ©ç”¨ã—ã¦ã„ãªã„ã€‚
    </para>
    <para><emphasis>[27.7.1.3]/16</emphasis>,
       <emphasis>[27.8.1.4]/10</emphasis>
-      The effects of <code>pubsetbuf/setbuf</code> are described in the
-      <link linkend="std.io">Input and Output</link> chapter.
+      <code>pubsetbuf/setbuf</code>ã®åŠ¹æœã«ã¤ã„ã¦ã¯ã€<link linkend="std.io">å…¥åŠ›ã¨å‡ºåŠ›</link>ã®ç« ã‚’å‚ç…§ã›ã‚ˆã€‚
    </para>
-   <para><emphasis>[27.8.1.4]/16</emphasis> Calling <code>fstream::sync</code> when
-      a get area exists will... whatever <code>fflush()</code> does, I think.
-   </para>
+   <para><emphasis>[27.8.1.4]/16</emphasis>get areaãŒå­˜åœ¨ã™ã‚‹ã¨ãã«ã€<code>fstream::sync</code>ã‚’å‘¼ã¶ã¨ã€...<code>fflush()</ code>ã®ã‚ˆã†ã«ãªã‚‹ã€ã¨æ€ã†ã€‚</para>
 
 </section>
 
