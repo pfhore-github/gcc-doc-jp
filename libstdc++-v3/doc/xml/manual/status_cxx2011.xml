@@ -11,24 +11,15 @@
 
 <para>
 <anchor xml:id="status.iso.200x" /> <!-- preserve links to old section ID -->
-This table is based on the table of contents of ISO/IEC
-JTC1 SC22 WG21 Doc No: N3290 Date: 2011-04-11
-Final Draft International Standard, Standard for Programming Language C++
+この表は、ISO / IEC JTC1 SC22 WG21 文書番号：N3290日付：2011-04-11最終規格Draft International Standard、Programming Language C ++の目次に基づいている。
 </para>
 
 <para>
-In this implementation the <literal>-std=gnu++11</literal> or
-<literal>-std=c++11</literal> flag must be used to enable language
-and library
-features. See <link linkend="manual.intro.using.flags">dialect</link>
-options. The pre-defined symbol
-<constant>__cplusplus</constant> is used to check for the
-presence of the required flag.
+この実装では、言語とライブラリの機能を有効にするには、<literal>-std=gnu++11</literal>および <literal>-std=c++11</literal>フラグを使用する必要がある。 <link linkend = "manual.intro.using.flags">変種</link>オプションを参照せよ。 事前定義されたシンボル<constant>__cplusplus</constant>は、必須フラグの存在をチェックするために使用される。
 </para>
 
 <para>
-This page describes the C++11 support in mainline GCC SVN, not in any
-particular release.
+このページでは、特定のリリースではなく、メインラインのGCC SVNでのC++11のサポートについて説明する。
 </para>
 
 <!-- Status is Yes or No, Broken/Partial-->
@@ -41,7 +32,7 @@ particular release.
       <?dbhtml bgcolor="#B0B0B0" ?>
 -->
 <table frame="all" xml:id="table.cxx11_status">
-<title>C++ 2011 Implementation Status</title>
+<title>C++ 2011 実装ステータス</title>
 
 <tgroup cols="4" align="left" colsep="0" rowsep="1">
 <colspec colname="c1"/>
