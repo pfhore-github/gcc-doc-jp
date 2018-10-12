@@ -1092,8 +1092,8 @@
    </para>
    <para><emphasis>[23.*]</emphasis> この句のすべてのコンテナは、 <type>size_type</type>を<type>std::size_t</type> として、 <type>difference_type</type>を<type>std::ptrdiff_t</type>として定義する。
    </para>
-   <para><emphasis>[26.2.8]/9</emphasis>私は<code>complex&lt;T&gt;</ code>の<code>pow(0,0)</code>が何を返すのか見当がつかない。    </para>
-   <para><emphasis>[27.4.2.4]/2</emphasis>I/Oがすでに標準ストリームオブジェクトで実行された後に<code>std::ios_base::sync_with_stdio</ code>を呼び出すと、バッファがフラッシュされ、<!-- this line might go away -->基底のバッファインスタンスが破棄され、再作成される。 このプロセスで以前に書き込まれたI/Oが破棄されるかどうかは、主に<code>--enable-libio</code>の選択に依存する。stdioでは、書き込まれたデータがstdioバッファに既にある場合、 完全に安全である！
+   <para><emphasis>[26.2.8]/9</emphasis>私は<code>complex&lt;T&gt;</code>の<code>pow(0,0)</code>が何を返すのか見当がつかない。    </para>
+   <para><emphasis>[27.4.2.4]/2</emphasis>I/Oがすでに標準ストリームオブジェクトで実行された後に<code>std::ios_base::sync_with_stdio</code>を呼び出すと、バッファがフラッシュされ、<!-- this line might go away -->基底のバッファインスタンスが破棄され、再作成される。 このプロセスで以前に書き込まれたI/Oが破棄されるかどうかは、主に<code>--enable-libio</code>の選択に依存する。stdioでは、書き込まれたデータがstdioバッファに既にある場合、 完全に安全である！
    </para>
    <para><emphasis>[27.6.1.1.2]</emphasis>,
       <emphasis>[27.6.2.3]</emphasis> I/O監視コンストラクタとデストラクタは、必要最低限の作業を実行できる。 私たちは現在、まだこれを利用していない。
@@ -1102,7 +1102,7 @@
       <emphasis>[27.8.1.4]/10</emphasis>
       <code>pubsetbuf/setbuf</code>の効果については、<link linkend="std.io">入力と出力</link>の章を参照せよ。
    </para>
-   <para><emphasis>[27.8.1.4]/16</emphasis>get areaが存在するときに、<code>fstream::sync</code>を呼ぶと、...<code>fflush()</ code>のようになる、と思う。</para>
+   <para><emphasis>[27.8.1.4]/16</emphasis>get areaが存在するときに、<code>fstream::sync</code>を呼ぶと、...<code>fflush()</code>のようになる、と思う。</para>
 
 </section>
 

@@ -41,10 +41,10 @@
 <colspec colname="c4"/>
   <thead>
     <row>
-      <entry>Section</entry>
-      <entry>Description</entry>
-      <entry>Status</entry>
-      <entry>Comments</entry>
+      <entry>節</entry>
+      <entry>説明</entry>
+      <entry>ステータス</entry>
+      <entry>コメント</entry>
     </row>
   </thead>
 
@@ -55,44 +55,44 @@
 	<emphasis>18</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Language support</emphasis>
+	<emphasis>言語サポート</emphasis>
       </entry>
     </row>
 
     <row>
       <entry>18.1</entry>
-      <entry>General</entry>
+      <entry>一般</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.2</entry>
-      <entry>Types</entry>
+      <entry>型</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.3</entry>
-      <entry>Implementation properties</entry>
+      <entry>実装プロパティ</entry>
       <entry/>
       <entry/>
     </row>
 
     <row>
       <entry>18.3.2</entry>
-      <entry>Numeric Limits</entry>
+      <entry>数値の制限</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>18.3.2.3</entry>
-      <entry>Class template <code>numeric_limits</code></entry>
+      <entry>クラステンプレート<code>numeric_limits</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.3.2.4</entry>
-      <entry><code>numeric_limits</code> members</entry>
+      <entry><code>numeric_limits</code>メンバ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -112,88 +112,88 @@
     </row>
     <row>
       <entry>18.3.2.7</entry>
-      <entry><code>numeric_limits</code> specializations</entry>
+      <entry><code>numeric_limits</code> 特殊化</entry>
       <entry>Y</entry>
       <entry/>
     </row>
 
     <row>
       <entry>18.3.3</entry>
-      <entry>C Library</entry>
+      <entry>C ライブラリ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
 
     <row>
       <entry>18.4</entry>
-      <entry>Integer types</entry>
+      <entry>整数型</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>18.4.1</entry>
-      <entry>Header <code>&lt;cstdint&gt;</code> synopsis</entry>
+      <entry>ヘッダ <code>&lt;cstdint&gt;</code> 梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#B0B0B0" ?>
       <entry>18.5</entry>
-      <entry>Start and termination</entry>
+      <entry>開始と終了</entry>
       <entry>Partial</entry>
-      <entry>C library dependency for quick_exit, at_quick_exit</entry>
+      <entry>quick_exit、at_quick_exitのためにCライブラリに依存</entry>
     </row>
     <row>
       <entry>18.6</entry>
-      <entry>Dynamic memory management</entry>
+      <entry>動的メモリ管理</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.7</entry>
-      <entry>Type identification</entry>
+      <entry>型識別</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>18.7.1</entry>
-      <entry>Class type_info</entry>
+      <entry>クラス type_info</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.7.2</entry>
-      <entry>Class bad_cast</entry>
+      <entry>クラス bad_cast</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.7.3</entry>
-      <entry>Class bad_typeid</entry>
+      <entry>クラス bad_typeid</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.8</entry>
-      <entry>Exception handling</entry>
+      <entry>例外処理</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>18.8.1</entry>
-      <entry>Class exception</entry>
+      <entry>クラス exception</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.8.2</entry>
-      <entry>Class bad_exception</entry>
+      <entry>クラス bad_exception</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.8.3</entry>
-      <entry>Abnormal termination</entry>
+      <entry>異常終了</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -205,7 +205,7 @@
     </row>
     <row>
       <entry>18.8.5</entry>
-      <entry>Exception Propagation</entry>
+      <entry>例外伝搬</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -217,31 +217,31 @@
     </row>
     <row>
       <entry>18.9</entry>
-      <entry>Initializer lists</entry>
+      <entry>初期化リスト</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>18.9.1</entry>
-      <entry>Initializer list constructors</entry>
+      <entry>初期化リストコンストラクタ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.9.2</entry>
-      <entry>Initializer list access</entry>
+      <entry>初期化リストアクセス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.9.3</entry>
-      <entry>Initializer list range access</entry>
+      <entry>初期化リスト範囲アクセス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>18.10</entry>
-      <entry>Other runtime support</entry>
+      <entry>他のランタイムサポート</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -250,66 +250,66 @@
 	<emphasis>19</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Diagnostics</emphasis>
+	<emphasis>診断</emphasis>
       </entry>
     </row>
     <row>
       <entry>19.1</entry>
-      <entry>General</entry>
+      <entry>一般</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>19.2</entry>
-      <entry>Exception classes</entry>
+      <entry>例外クラス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>19.3</entry>
-      <entry>Assertions</entry>
+      <entry>アサーション</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>19.4</entry>
-      <entry>Error numbers</entry>
+      <entry>エラー番号</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>19.5</entry>
-      <entry>System error support</entry>
+      <entry>システムエラーサポート</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>19.5.1</entry>
-      <entry>Class <code>error_category</code></entry>
+      <entry>クラス <code>error_category</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>19.5.2</entry>
-      <entry>Class <code>error_code</code></entry>
+      <entry>クラス <code>error_code</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>19.5.3</entry>
-      <entry>Class <code>error_condition</code></entry>
+      <entry>クラス <code>error_condition</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>19.5.4</entry>
-      <entry>Comparison operators</entry>
+      <entry>比較演算子</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>19.5.5</entry>
-      <entry>Class <code>system_error</code></entry>
+      <entry>クラス <code>system_error</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -318,24 +318,24 @@
 	<emphasis>20</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>General utilities</emphasis>
+	<emphasis>汎用ユーティリティ</emphasis>
       </entry>
     </row>
     <row>
       <entry>20.1</entry>
-      <entry>General</entry>
+      <entry>一般</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.2</entry>
-      <entry>Utility components</entry>
+      <entry>ユーティリティ部品</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.2.1</entry>
-      <entry>Operators</entry>
+      <entry>演算子</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -347,19 +347,19 @@
     </row>
     <row>
       <entry>20.2.3</entry>
-      <entry><code>forward</code> and <code>move</code> helpers</entry>
+      <entry><code>forward</code> と <code>move</code>ヘルパ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.2.4</entry>
-      <entry>Function template <code>declval</code></entry>
+      <entry>関数テンプレート<code>declval</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.3</entry>
-      <entry>Pairs</entry>
+      <entry>対</entry>
       <entry/>
       <entry/>
     </row>
