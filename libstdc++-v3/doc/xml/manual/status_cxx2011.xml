@@ -365,61 +365,61 @@
     </row>
     <row>
       <entry>20.3.1</entry>
-      <entry>In general</entry>
+      <entry>一般</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.3.2</entry>
-      <entry>Class template <code>pair</code></entry>
+      <entry>クラステンプレート<code>pair</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.3.3</entry>
-      <entry>Specialized algorithms</entry>
+      <entry>特殊化アルゴリズム</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.3.4</entry>
-      <entry>Tuple-like access to <code>pair</code></entry>
+      <entry><code>pair</code>へのタプル風のアクセス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.3.5</entry>
-      <entry>Piecewise construction</entry>
+      <entry>部品単位の構築</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.4</entry>
-      <entry>Tuples</entry>
+      <entry>タプル</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.4.1</entry>
-      <entry>In general</entry>
+      <entry>一般</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.4.2</entry>
-      <entry>Class template <code>tuple</code></entry>
+      <entry>クラステンプレート<code>tuple</code></entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.4.2.1</entry>
-      <entry>Construction</entry>
+      <entry>構築</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.4.2.2</entry>
-      <entry>Assignment</entry>
+      <entry>代入</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -431,109 +431,109 @@
     </row>
     <row>
       <entry>20.4.2.4</entry>
-      <entry>Tuple creation functions</entry>
+      <entry>Tuple 生成関数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.4.2.5</entry>
-      <entry>Tuple helper classes</entry>
+      <entry>Tuple ヘルパークラス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.4.2.6</entry>
-      <entry>Element access</entry>
+      <entry>要素アクセス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.4.2.7</entry>
-      <entry>Relational operators</entry>
+      <entry>関係演算子</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.4.2.8</entry>
-      <entry>Tuple traits</entry>
+      <entry>Tuple の特性</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.4.2.9</entry>
-      <entry>Tuple specialized algorithms</entry>
+      <entry>Tuple の特殊化アルゴリズム</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.5</entry>
-      <entry>Class template <code>bitset</code></entry>
+      <entry>クラステンプレート <code>bitset</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.5.1</entry>
-      <entry><code>bitset</code> constructors</entry>
+      <entry><code>bitset</code> コンストラクタ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.5.2</entry>
-      <entry><code>bitset</code> members</entry>
+      <entry><code>bitset</code> メンバ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.5.3</entry>
-      <entry><code>bitset</code> hash support</entry>
+      <entry><code>bitset</code> ハッシュサポート</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.5.4</entry>
-      <entry><code>bitset</code> operators</entry>
+      <entry><code>bitset</code> 演算子</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.6</entry>
-      <entry>Memory</entry>
+      <entry>メモリ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.6.1</entry>
-      <entry>In general</entry>
+      <entry>一般</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.6.2</entry>
-      <entry>Header <code>&lt;memory&gt;</code> synopsis</entry>
+      <entry>ヘッダ <code>&lt;memory&gt;</code> 梗概</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.6.3</entry>
-      <entry>Pointer traits</entry>
+      <entry>ポインタ特性</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.6.4</entry>
-      <entry>Pointer safety</entry>
+      <entry>ポインタ安全性</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.6.5</entry>
-      <entry>Align</entry>
+      <entry>アラインメント</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.6.6</entry>
-      <entry>Allocator argument tag</entry>
+      <entry>アロケータ引数タグ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -545,31 +545,31 @@
     </row>
     <row>
       <entry>20.6.8</entry>
-      <entry>Allocator traits</entry>
+      <entry>アロケーター特性</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.6.9</entry>
-      <entry>The default allocator</entry>
+      <entry>デフォルトアロケーター</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.6.10</entry>
-      <entry>Raw storage iterator</entry>
+      <entry>生領域イテレータ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.6.11</entry>
-      <entry>Temporary buffers</entry>
+      <entry>一時バッファ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.6.12</entry>
-      <entry>Specialized algorithms</entry>
+      <entry>特殊化アルゴリズム</entry>
       <entry/>
       <entry/>
     </row>
@@ -599,317 +599,316 @@
     </row>
     <row>
       <entry>20.6.13</entry>
-      <entry>C library</entry>
+      <entry>C ライブラリ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.7</entry>
-      <entry>Smart pointers</entry>
+      <entry>スマートポインタ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.7.1</entry>
-      <entry>Class template <code>unique_ptr</code></entry>
+      <entry>クラステンプレート<code>unique_ptr</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.7.2</entry>
-      <entry>Shared-ownership pointers</entry>
+      <entry>共有所有のポインタ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.7.2.1</entry>
-      <entry>Class <code>bad_weak_ptr</code></entry>
+      <entry>クラス <code>bad_weak_ptr</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.7.2.2</entry>
-      <entry>Class template <code>shared_ptr</code></entry>
+      <entry>クラステンプレート<code>shared_ptr</code></entry>
       <entry>Y</entry>
       <entry>
-	  Uses code from
-	  <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.boost.org/libs/smart_ptr/shared_ptr.htm">boost::shared_ptr</link>.
+	  <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.boost.org/libs/smart_ptr/shared_ptr.htm">boost::shared_ptr</link>のコードを使用
       </entry>
     </row>
     <row>
       <entry>20.7.2.3</entry>
-      <entry>Class template <code>weak_ptr</code></entry>
+      <entry>クラステンプレート<code>weak_ptr</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.7.2.4</entry>
-      <entry>Class template <code>emable_shared_from_this</code></entry>
+      <entry>クラステンプレート<code>emable_shared_from_this</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.7.2.5</entry>
-      <entry><code>shared_ptr</code> atomic access</entry>
+      <entry><code>shared_ptr</code>アトミックアクセス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.7.2.6</entry>
-      <entry>Smart pointer hash support</entry>
+      <entry>スマートポインタハッシュサポート</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.8</entry>
-      <entry>Function objects</entry>
+      <entry>関数オブジェクト</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.8.1</entry>
-      <entry>Definitions</entry>
+      <entry>定義</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.8.2</entry>
-      <entry>Requirements</entry>
+      <entry>要求</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.8.3</entry>
-      <entry>Class template <code>reference_wrapper</code></entry>
+      <entry>クラステンプレート<code>reference_wrapper</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.8.4</entry>
-      <entry>Arithmetic operation</entry>
+      <entry>算術演算</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.8.5</entry>
-      <entry>Comparisons</entry>
+      <entry>比較</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.8.6</entry>
-      <entry>Logical operations</entry>
+      <entry>論理演算子</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.8.7</entry>
-      <entry>Bitwise operations</entry>
+      <entry>ビット単位操作</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.8.8</entry>
-      <entry>Negators</entry>
+      <entry>否定</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.8.9</entry>
-      <entry>Function template <code>bind</code></entry>
+      <entry>関数テンプレート <code>bind</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.8.10</entry>
-      <entry>Function template <code>mem_fn</code></entry>
+      <entry>関数テンプレート<code>mem_fn</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.8.11</entry>
-      <entry>Polymorphic function wrappers</entry>
+      <entry>多相関数ラッパ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.8.11.1</entry>
-      <entry>Class <code>bad_function_call</code></entry>
+      <entry>クラス <code>bad_function_call</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#B0B0B0" ?>
       <entry>20.8.11.2</entry>
-      <entry>Class template <code>function</code></entry>
-      <entry>Partial</entry>
-      <entry>Missing allocator support</entry>
+      <entry>クラステンプレート<code>function</code></entry>
+      <entry>一部</entry>
+      <entry>アロケータサポート欠落</entry>
     </row>
     <row>
       <entry>20.8.12</entry>
-      <entry>Class template <code>hash</code></entry>
+      <entry>クラステンプレート<code>hash</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.9</entry>
-      <entry>Metaprogramming and type traits</entry>
+      <entry>メタプログラミングと型特性</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.9.1</entry>
-      <entry>Requirements</entry>
+      <entry>要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.9.2</entry>
-      <entry>Header <code>&lt;type_traits&gt;</code> synopsis</entry>
+      <entry>ヘッダ <code>&lt;type_traits&gt;</code> 梗概</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.9.3</entry>
-      <entry>Helper classes</entry>
+      <entry>ヘルパクラス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.9.4</entry>
-      <entry>Unary Type Traits</entry>
+      <entry>単項型特性</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.9.4.1</entry>
-      <entry>Primary type categories</entry>
+      <entry>主要型カテゴリ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.9.4.2</entry>
-      <entry>Composite type traits</entry>
+      <entry>複合型特性</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.9.4.3</entry>
-      <entry>Type properties</entry>
+      <entry>型プロパティ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.9.5</entry>
-      <entry>Type property queries</entry>
+      <entry>型プロパティ要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.9.6</entry>
-      <entry>Relationships between types</entry>
+      <entry>型同士の関係</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.9.7</entry>
-      <entry>Transformations between types</entry>
+      <entry>型間の変換</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.9.7.1</entry>
-      <entry>Const-volatile modifications</entry>
+      <entry>Const-volatile 修正</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.9.7.2</entry>
-      <entry>Reference modifications</entry>
+      <entry>参照修正</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.9.7.3</entry>
-      <entry>Sign modifications</entry>
+      <entry>符号修正</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.9.7.4</entry>
-      <entry>Array modifications</entry>
+      <entry>配列修正</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.9.7.5</entry>
-      <entry>Pointer modifications</entry>
+      <entry>ポインタ修正</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.9.7.6</entry>
-      <entry>Other transformations</entry>
+      <entry>他の変換</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.10</entry>
-      <entry>Compile-time rational arithmetic</entry>
+      <entry>コンパイル時有理数算術</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.10.1</entry>
-      <entry>In general</entry>
+      <entry>一般</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.10.2</entry>
-      <entry>Header <code>&lt;ratio&gt;</code> synopsis</entry>
+      <entry>ヘッダ <code>&lt;ratio&gt;</code> 梗概</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.10.3</entry>
-      <entry>Class template <code>ratio</code></entry>
+      <entry>クラステンプレート<code>ratio</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.10.4</entry>
-      <entry>Arithmetic on <code>ratio</code>s</entry>
+      <entry><code>ratio</code>での算術</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.10.5</entry>
-      <entry>Comparison of <code>ratio</code>s</entry>
+      <entry><code>ratio</code>での比較</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.10.6</entry>
-      <entry>SI types for <code>ratio</code></entry>
+      <entry><code>ratio</code>用のSI型</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.11</entry>
-      <entry>Time utilities</entry>
+      <entry>時間ユーティリティ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.11.3</entry>
-      <entry>Clock requirements</entry>
+      <entry>クロックの要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.11.4</entry>
-      <entry>Time-related traits</entry>
+      <entry>時間関連の特性</entry>
       <entry/>
       <entry/>
     </row>
@@ -927,91 +926,91 @@
     </row>
     <row>
       <entry>20.11.4.3</entry>
-      <entry>Specializations of <code>common_type</code></entry>
+      <entry><code>common_type</code>の特殊化</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.11.5</entry>
-      <entry>Class template <code>duration</code></entry>
+      <entry>クラステンプレート<code>duration</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.11.6</entry>
-      <entry>Class template <code>time_point</code></entry>
+      <entry>クラステンプレート<code>time_point</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.11.7</entry>
-      <entry>Clocks</entry>
+      <entry>時計</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.11.7.1</entry>
-      <entry>Class <code>system_clock</code></entry>
+      <entry>クラス <code>system_clock</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.11.7.2</entry>
-      <entry>Class <code>steady_clock</code></entry>
+      <entry>クラス <code>steady_clock</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.11.7.3</entry>
-      <entry>Class <code>high_resolution_clock</code></entry>
+      <entry>クラス <code>high_resolution_clock</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.11.8</entry>
-      <entry>Date and time functions</entry>
+      <entry>日時関数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.12</entry>
-      <entry>Scoped allocator adaptor</entry>
+      <entry>スコープ付きアロケーターアダプター</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.12.1</entry>
-      <entry>Header <code>&lt;scoped_allocator&gt;</code> synopsis</entry>
+      <entry>ヘッダ <code>&lt;scoped_allocator&gt;</code> 梗概</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>20.12.2</entry>
-      <entry>Scoped allocator adaptor member types</entry>
+      <entry>スコープ付きアロケーターアダプターメンバ型</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.12.3</entry>
-      <entry>Scoped allocator adaptor constructors</entry>
+      <entry>スコープ付きアロケーターアダプターコンストラクタ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.12.4</entry>
-      <entry>Scoped allocator adaptor members</entry>
+      <entry>スコープ付きアロケーターアダプターメンバ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.12.5</entry>
-      <entry>Scoped allocator operators</entry>
+      <entry>スコープ付きアロケータ演算子</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>20.13</entry>
-      <entry>Class <code>type_index</code></entry>
+      <entry>クラス <code>type_index</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -1020,36 +1019,36 @@
 	<emphasis>21</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Strings</emphasis>
+	<emphasis>文字列</emphasis>
       </entry>
     </row>
     <row>
       <entry>21.1</entry>
-      <entry>General</entry>
+      <entry>一般</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>21.2</entry>
-      <entry>Character traits</entry>
+      <entry>文字特性</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>21.2.1</entry>
-      <entry>Character traits requirements</entry>
+      <entry>文字特性の要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>21.2.2</entry>
-      <entry>traits typedefs</entry>
+      <entry>特性 typedefs</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>21.2.3</entry>
-      <entry><code>char_traits</code> specializations</entry>
+      <entry><code>char_traits</code> 特殊化</entry>
       <entry/>
       <entry/>
     </row>
@@ -1079,35 +1078,35 @@
     </row>
     <row>
       <entry>21.3</entry>
-      <entry>String classes</entry>
+      <entry>文字列クラス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>21.4</entry>
-      <entry>Class template <code>basic_string</code></entry>
+      <entry>クラステンプレート<code>basic_string</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>21.5</entry>
-      <entry>Numeric Conversions</entry>
+      <entry>数値変換</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>21.6</entry>
-      <entry>Hash support</entry>
+      <entry>ハッシュサポート</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#B0B0B0" ?>
       <entry>21.7</entry>
-      <entry>Null-terminated sequence utilities</entry>
+      <entry>Null終端列のユーティリティ</entry>
       <entry>Partial</entry>
-      <entry>C library dependency.
-      Missing <filename class="headerfile">&lt;cuchar&gt;</filename>
+      <entry>Cライブラリ依存。
+      <filename class="headerfile">&lt;cuchar&gt;</filename>欠落
       </entry>
     </row>
     <row>
@@ -1115,90 +1114,90 @@
       	<emphasis>22</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Localization</emphasis>
+	<emphasis>地域化</emphasis>
       </entry>
     </row>
     <row>
       <entry>22.1</entry>
-      <entry>General</entry>
+      <entry>一般</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.2</entry>
-      <entry>Header <code>&lt;locale&gt;</code> synopsis</entry>
+      <entry>ヘッダ <code>&lt;locale&gt;</code> 梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.3</entry>
-      <entry>Locales</entry>
+      <entry>ロケール</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>22.3.1</entry>
-      <entry>Class <code>locale</code></entry>
+      <entry>クラス <code>locale</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.3.2</entry>
-      <entry><code>locale</code> globals</entry>
+      <entry><code>locale</code> グローバル変数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.3.3</entry>
-      <entry>Convenience interfaces</entry>
+      <entry>利便性インターフェース</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>22.3.3.1</entry>
-      <entry>Character classification</entry>
+      <entry>文字の分類</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.3.3.2</entry>
-      <entry>Conversions</entry>
+      <entry>変換</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>22.3.3.2.1</entry>
-      <entry>Character conversions</entry>
+      <entry>文字変換</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.3.3.2.2</entry>
-      <entry><code>string</code> conversions</entry>
+      <entry><code>string</code> 変換</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.3.3.2.3</entry>
-      <entry>Buffer conversions</entry>
+      <entry>バッファ変換</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.4</entry>
-      <entry>Standard <code>locale</code> categories</entry>
+      <entry>標準 <code>locale</code>カテゴリー</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>22.4.1</entry>
-      <entry>The <code>ctype</code> category</entry>
+      <entry> <code>ctype</code> カテゴリー</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.4.2</entry>
-      <entry>The numeric category</entry>
+      <entry>数値カテゴリー</entry>
       <entry/>
       <entry/>
     </row>
@@ -1216,97 +1215,97 @@
     </row>
     <row>
       <entry>22.4.3</entry>
-      <entry>The numeric punctuation facet</entry>
+      <entry>数値の句読点</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.4.4</entry>
-      <entry>The collate category</entry>
+      <entry>照合カテゴリー</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.4.5</entry>
-      <entry>The time category</entry>
+      <entry>時間カテゴリー</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>22.4.5.1</entry>
-      <entry>Class template <code>time_get</code></entry>
+      <entry>クラステンプレート<code>time_get</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.4.5.2</entry>
-      <entry>Class template <code>time_get_byname</code></entry>
+      <entry>クラステンプレート<code>time_get_byname</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.4.5.3</entry>
-      <entry>Class template <code>time_put</code></entry>
+      <entry>クラステンプレート<code>time_put</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.4.5.3</entry>
-      <entry>Class template <code>time_put_byname</code></entry>
+      <entry>クラステンプレート<code>time_put_byname</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.4.6</entry>
-      <entry>The monetary category</entry>
+      <entry>金銭カテゴリー</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>22.4.6.1</entry>
-      <entry>Class template <code>money_get</code></entry>
+      <entry>クラステンプレート<code>money_get</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.4.6.2</entry>
-      <entry>Class template <code>money_put</code></entry>
+      <entry>クラステンプレート<code>money_put</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.4.6.3</entry>
-      <entry>Class template <code>money_punct</code></entry>
+      <entry>クラステンプレート<code>money_punct</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.4.6.4</entry>
-      <entry>Class template <code>money_punct_byname</code></entry>
+      <entry>クラステンプレート<code>money_punct_byname</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.4.7</entry>
-      <entry>The message retrieval category</entry>
+      <entry>メッセージ検索カテゴリー</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.4.8</entry>
-      <entry>Program-defined facets</entry>
+      <entry>プログラム定義のファセット</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.5</entry>
-      <entry>Standard code conversion facets</entry>
+      <entry>標準コード変換ファセット</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>22.6</entry>
-      <entry>C Library Locales</entry>
+      <entry>Cライブラリロケール</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -1315,174 +1314,174 @@
 	<emphasis>23</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Containers</emphasis>
+	<emphasis>コンテナ</emphasis>
       </entry>
     </row>
     <row>
       <entry>23.1</entry>
-      <entry>General</entry>
+      <entry>一般</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>23.2</entry>
-      <entry>Container requirements</entry>
+      <entry>コンテナの要求</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>23.2.1</entry>
-      <entry>General container requirements</entry>
+      <entry>一般的なコンテナの要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.2.2</entry>
-      <entry>Container data races</entry>
+      <entry>コンテナのデータ競合</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.2.3</entry>
-      <entry>Sequence containers</entry>
+      <entry>シーケンスコンテナ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.2.4</entry>
-      <entry>Associative containers</entry>
+      <entry>連想コンテナ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.2.5</entry>
-      <entry>Unordered associative containers</entry>
+      <entry>順序なし連想コンテナ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.3</entry>
-      <entry>Sequence containers</entry>
+      <entry>シーケンスコンテナ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>23.3.2</entry>
-      <entry>Class template <code>array</code></entry>
+      <entry>クラステンプレート<code>array</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.3.3</entry>
-      <entry>Class template <code>deque</code></entry>
+      <entry>クラステンプレート<code>deque</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.3.4</entry>
-      <entry>Class template <code>forward_list</code></entry>
+      <entry>クラステンプレート<code>forward_list</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.3.5</entry>
-      <entry>Class template <code>list</code></entry>
+      <entry>クラステンプレート<code>list</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.3.6</entry>
-      <entry>Class template <code>vector</code></entry>
+      <entry>クラステンプレート<code>vector</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.3.7</entry>
-      <entry>Class <code>vector&lt;bool&gt;</code></entry>
+      <entry>クラス<code>vector&lt;bool&gt;</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.4</entry>
-      <entry>Associative containers</entry>
+      <entry>連想コンテナ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>23.4.4</entry>
-      <entry>Class template <code>map</code></entry>
+      <entry>クラステンプレート<code>map</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.4.5</entry>
-      <entry>Class template <code>multimap</code></entry>
+      <entry>クラステンプレート<code>multimap</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.4.6</entry>
-      <entry>Class template <code>set</code></entry>
+      <entry>クラステンプレート<code>set</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.4.7</entry>
-      <entry>Class template <code>multiset</code></entry>
+      <entry>クラステンプレート<code>multiset</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.5</entry>
-      <entry>Unordered associative containers</entry>
+      <entry>順序なし連想コンテナ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>23.5.4</entry>
-      <entry>Class template <code>unordered_map</code></entry>
+      <entry>クラステンプレート<code>unordered_map</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.5.5</entry>
-      <entry>Class template <code>unordered_multimap</code></entry>
+      <entry>クラステンプレート<code>unordered_multimap</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.5.6</entry>
-      <entry>Class template <code>unordered_set</code></entry>
+      <entry>クラステンプレート<code>unordered_set</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.5.7</entry>
-      <entry>Class template <code>unordered_multiset</code></entry>
+      <entry>クラステンプレート<code>unordered_multiset</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.6</entry>
-      <entry>Container adaptors</entry>
+      <entry>コンテナアダプタ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>23.6.1</entry>
-      <entry>Class template <code>queue</code></entry>
+      <entry>クラステンプレート<code>queue</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.6.2</entry>
-      <entry>Class template <code>priority_queue</code></entry>
+      <entry>クラステンプレート<code>priority_queue</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>23.6.3</entry>
-      <entry>Class template <code>stack</code></entry>
+      <entry>クラステンプレート<code>stack</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -1491,90 +1490,90 @@
 	<emphasis>24</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Iterators</emphasis>
+	<emphasis>イテレータ</emphasis>
       </entry>
     </row>
     <row>
       <entry>24.1</entry>
-      <entry>General</entry>
+      <entry>一般</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.2</entry>
-      <entry>Iterator requirements</entry>
+      <entry>イテレータ要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.3</entry>
-      <entry>Header <code>&lt;iterator&gt;</code> synopsis</entry>
+      <entry>ヘッダ <code>&lt;iterator&gt;</code> 梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.4</entry>
-      <entry>Iterator primitives</entry>
+      <entry>イテレータプリミティブ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.5</entry>
-      <entry>Iterator adaptors</entry>
+      <entry>イテレータアダプタ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>24.5.1</entry>
-      <entry>Reverse iterators</entry>
+      <entry>逆イテレータ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.5.2</entry>
-      <entry>Insert iterators</entry>
+      <entry>挿入イテレータ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.5.3</entry>
-      <entry>Move iterators</entry>
+      <entry>ムーブイテレータ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.6</entry>
-      <entry>Stream iterators</entry>
+      <entry>ストリームイテレータ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>24.6.1</entry>
-      <entry>Class template <code>istream_iterator</code></entry>
+      <entry>クラステンプレート<code>istream_iterator</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.6.2</entry>
-      <entry>Class template <code>ostream_iterator</code></entry>
+      <entry>クラステンプレート<code>ostream_iterator</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.6.3</entry>
-      <entry>Class template <code>istreambuf_iterator</code></entry>
+      <entry>クラステンプレート<code>istreambuf_iterator</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.6.4</entry>
-      <entry>Class template <code>ostreambuf_iterator</code></entry>
+      <entry>クラステンプレート<code>ostreambuf_iterator</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>24.6.5</entry>
-      <entry>range access</entry>
+      <entry>範囲アクセス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -1583,36 +1582,36 @@
 	<emphasis>25</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Algorithms</emphasis>
+	<emphasis>アルゴリズム</emphasis>
       </entry>
     </row>
     <row>
       <entry>25.1</entry>
-      <entry>General</entry>
+      <entry>一般</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>25.2</entry>
-      <entry>Non-modifying sequence operations</entry>
+      <entry>非修正列操作</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>25.3</entry>
-      <entry>Mutating sequence operations</entry>
+      <entry>修正列操作</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>25.4</entry>
-      <entry>Sorting and related operations</entry>
+      <entry>ソートと比較操作</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>25.5</entry>
-      <entry>C library algorithms</entry>
+      <entry>C ライブラリアルゴリズム</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -1621,360 +1620,360 @@
       <emphasis>26</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Numerics</emphasis>
+	<emphasis>数値</emphasis>
       </entry>
     </row>
     <row>
       <entry>26.1</entry>
-      <entry>General</entry>
+      <entry>一般</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.2</entry>
-      <entry>Numeric type requirements</entry>
+      <entry>数値型要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.3</entry>
-      <entry>The floating-point environment</entry>
+      <entry>浮動小数点環境</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.4</entry>
-      <entry>Complex numbers</entry>
+      <entry>複素数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5</entry>
-      <entry>Random number generation</entry>
+      <entry>乱数生成</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>26.5.1</entry>
-      <entry>Requirements</entry>
+      <entry>要求</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>26.5.2</entry>
-      <entry>Header <code>&lt;random&gt;</code> synopsis</entry>
+      <entry>ヘッダ <code>&lt;random&gt;</code> 梗概</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>26.5.3</entry>
-      <entry>Random number engine class templates</entry>
+      <entry>乱数エンジンクラステンプレート</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>26.5.3.1</entry>
-      <entry>Class template <code>linear_congruential_engine</code></entry>
+      <entry>クラステンプレート<code>linear_congruential_engine</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.3.2</entry>
-      <entry>Class template <code>mersenne_twister_engine</code></entry>
+      <entry>クラステンプレート<code>mersenne_twister_engine</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.3.3</entry>
-      <entry>Class template <code>subtract_with_carry_engine</code></entry>
+      <entry>クラステンプレート<code>subtract_with_carry_engine</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.4</entry>
-      <entry>Random number engine adaptor class templates</entry>
+      <entry>乱数エンジンアダプタクラステンプレート</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>26.5.4.2</entry>
-      <entry>Class template <code>discard_block_engine</code></entry>
+      <entry>クラステンプレート<code>discard_block_engine</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.4.3</entry>
-      <entry>Class template <code>independent_bits_engine</code></entry>
+      <entry>クラステンプレート<code>independent_bits_engine</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.4.4</entry>
-      <entry>Class template <code>shuffle_order_engine</code></entry>
+      <entry>クラステンプレート<code>shuffle_order_engine</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.5</entry>
-      <entry>Engines and engine adaptors with predefined parameters</entry>
+      <entry>事前定義されたパラメータ付きのエンジンとエンジンアダプタ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.6</entry>
-      <entry>Class <code>random_device</code></entry>
+      <entry>クラス <code>random_device</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.7</entry>
-      <entry>Utilities</entry>
+      <entry>ユーティリティ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>26.5.7.1</entry>
-      <entry>Class <code>seed_seq</code></entry>
+      <entry>クラス <code>seed_seq</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.7.2</entry>
-      <entry>Function template <code>generate_canonical</code></entry>
+      <entry>関数テンプレート<code>generate_canonical</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8</entry>
-      <entry>Random number distribution class templates</entry>
+      <entry>乱数分布クラステンプレート</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.2</entry>
-      <entry>Uniform distributions</entry>
+      <entry>一様分布</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.2.1</entry>
-      <entry>Class template <code>uniform_int_distribution</code></entry>
+      <entry>クラステンプレート<code>uniform_int_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.2.2</entry>
-      <entry>Class template <code>uniform_real_distribution</code></entry>
+      <entry>クラステンプレート<code>uniform_real_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.3</entry>
-      <entry>Bernoulli distributions</entry>
+      <entry>ベルヌーイ分布</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.3.1</entry>
-      <entry>Class <code>bernoulli_distribution</code></entry>
+      <entry>クラス <code>bernoulli_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.3.2</entry>
-      <entry>Class template <code>binomial_distribution</code></entry>
+      <entry>クラステンプレート<code>binomial_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.3.3</entry>
-      <entry>Class template <code>geometric_distribution</code></entry>
+      <entry>クラステンプレート<code>geometric_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.3.4</entry>
-      <entry>Class template <code>negative_binomial_distribution</code></entry>
+      <entry>クラステンプレート<code>negative_binomial_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.4</entry>
-      <entry>Poisson distributions</entry>
+      <entry>ポワソン分布</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.4.1</entry>
-      <entry>Class template <code>poisson_distribution</code></entry>
+      <entry>クラステンプレート<code>poisson_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.4.2</entry>
-      <entry>Class template <code>exponential_distribution</code></entry>
+      <entry>クラステンプレート<code>exponential_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.4.3</entry>
-      <entry>Class template <code>gamma_distribution</code></entry>
+      <entry>クラステンプレート<code>gamma_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.4.4</entry>
-      <entry>Class template <code>weibull_distribution</code></entry>
+      <entry>クラステンプレート<code>weibull_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.4.5</entry>
-      <entry>Class template <code>extreme_value_distribution</code></entry>
+      <entry>クラステンプレート<code>extreme_value_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.5</entry>
-      <entry>Normal distributions</entry>
+      <entry>正規分布</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.5.1</entry>
-      <entry>Class template <code>normal_distribution</code></entry>
+      <entry>クラステンプレート<code>normal_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.5.2</entry>
-      <entry>Class template <code>lognormal_distribution</code></entry>
+      <entry>クラステンプレート<code>lognormal_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.5.3</entry>
-      <entry>Class template <code>chi_squared_distribution</code></entry>
+      <entry>クラステンプレート<code>chi_squared_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.5.4</entry>
-      <entry>Class template <code>cauchy_distribution</code></entry>
+      <entry>クラステンプレート<code>cauchy_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.5.5</entry>
-      <entry>Class template <code>fisher_f_distribution</code></entry>
+      <entry>クラステンプレート<code>fisher_f_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.5.6</entry>
-      <entry>Class template <code>student_t_distribution</code></entry>
+      <entry>クラステンプレート<code>student_t_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.6</entry>
-      <entry>Sampling distributions</entry>
+      <entry>サンプリング分布</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.6.1</entry>
-      <entry>Class template <code>discrete_distribution</code></entry>
+      <entry>クラステンプレート<code>discrete_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.6.2</entry>
-      <entry>Class template <code>piecewise_constant_distribution</code></entry>
+      <entry>クラステンプレート<code>piecewise_constant_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.5.8.6.3</entry>
-      <entry>Class template <code>piecewise_linear_distribution</code></entry>
+      <entry>クラステンプレート<code>piecewise_linear_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.6</entry>
-      <entry>Numeric arrays</entry>
+      <entry>数値配列</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>26.6.1</entry>
-      <entry>Header <code>&lt;valarray&gt;</code> synopsis</entry>
+      <entry>ヘッダ <code>&lt;valarray&gt;</code> 梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.6.2</entry>
-      <entry>Class template <code>valarray</code></entry>
+      <entry>クラステンプレート<code>valarray</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.6.3</entry>
-      <entry><code>valarray</code> non-member operations</entry>
+      <entry><code>valarray</code>非メンバ操作</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.6.4</entry>
-      <entry>Class <code>slice</code></entry>
+      <entry>クラス <code>slice</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.6.5</entry>
-      <entry>Class template <code>slice_array</code></entry>
+      <entry>クラステンプレート<code>slice_array</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.6.6</entry>
-      <entry>The <code>gslice</code> class</entry>
+      <entry><code>gslice</code>クラス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.6.7</entry>
-      <entry>Class template <code>gslice_array</code></entry>
+      <entry>クラステンプレート<code>gslice_array</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.6.8</entry>
-      <entry>Class template <code>mask_array</code></entry>
+      <entry>クラステンプレート<code>mask_array</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.6.9</entry>
-      <entry>Class template <code>indirect_array</code></entry>
+      <entry>クラステンプレート<code>indirect_array</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.6.10</entry>
-      <entry><code>valarray</code> range access</entry>
+      <entry><code>valarray</code>範囲アクセス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>26.7</entry>
-      <entry>Generalized numeric operations</entry>
+      <entry>一般数値操作</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>26.7.1</entry>
-      <entry>Header <code>&lt;numeric&gt;</code> synopsis</entry>
+      <entry>ヘッダ<code>&lt;numeric&gt;</code> 梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -2010,7 +2009,7 @@
     </row>
     <row>
       <entry>26.8</entry>
-      <entry>C Library</entry>
+      <entry>C ライブラリ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -2019,79 +2018,79 @@
 	<emphasis>27</emphasis>
       </entry>
       <entry namest="c2" nameend="c4" align="left">
-	<emphasis>Input/output library</emphasis>
+	<emphasis>入出力ライブラリ</emphasis>
       </entry>
     </row>
     <row>
       <entry>27.1</entry>
-      <entry>General</entry>
+      <entry>一般</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.2</entry>
-      <entry>Iostreams requirements</entry>
+      <entry>IOストリーム要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.2.1</entry>
-      <entry>Imbue Limitations</entry>
+      <entry>Imbue 制限</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.2.2</entry>
-      <entry>Positioning Type Limitations</entry>
+      <entry>位置型の制限</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#B0B0B0" ?>
       <entry>27.2.3</entry>
-      <entry>Thread safety</entry>
+      <entry>スレッド安全性</entry>
       <entry>Partial</entry>
       <entry/>
     </row>
     <row>
       <entry>27.3</entry>
-      <entry>Forward declarations</entry>
+      <entry>前方宣言</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.4</entry>
-      <entry>Standard iostream objects</entry>
+      <entry>標準 iostream オブジェクト</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.4.1</entry>
-      <entry>Overview</entry>
+      <entry>概略</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.4.2</entry>
-      <entry>Narrow stream objects</entry>
+      <entry>ナローストリームオブジェクト</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.4.3</entry>
-      <entry>Wide stream objects</entry>
+      <entry>ワイドストリームオブジェクト</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.5</entry>
-      <entry>Iostreams base classes</entry>
+      <entry>Iostream基底クラス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>27.6</entry>
-      <entry>Stream buffers</entry>
+      <entry>ストリームバッファ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -2160,26 +2159,26 @@
     <row>
       <?dbhtml bgcolor="#B0B0B0" ?>
       <entry>28.7</entry>
-      <entry>Class template <code>regex_traits</code></entry>
+      <entry>クラステンプレート<code>regex_traits</code></entry>
       <entry>Partial</entry>
       <entry><code>transform_primary</code> is not correctly implemented</entry>
       <entry/>
     </row>
     <row>
       <entry>28.8</entry>
-      <entry>Class template <code>basic_regex</code></entry>
+      <entry>クラステンプレート<code>basic_regex</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>28.9</entry>
-      <entry>Class template <code>sub_match</code></entry>
+      <entry>クラステンプレート<code>sub_match</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>28.10</entry>
-      <entry>Class template <code>match_results</code></entry>
+      <entry>クラステンプレート<code>match_results</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -2359,13 +2358,13 @@
     </row>
     <row>
       <entry>30.4.2.1</entry>
-      <entry>Class template <code>lock_guard</code></entry>
+      <entry>クラステンプレート<code>lock_guard</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>30.4.2.2</entry>
-      <entry>Class template <code>unique_lock</code></entry>
+      <entry>クラステンプレート<code>unique_lock</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -2443,19 +2442,19 @@
     </row>
     <row>
       <entry>30.6.5</entry>
-      <entry>Class template <code>promise</code></entry>
+      <entry>クラステンプレート<code>promise</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>30.6.6</entry>
-      <entry>Class template <code>future</code></entry>
+      <entry>クラステンプレート<code>future</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>30.6.7</entry>
-      <entry>Class template <code>shared_future</code></entry>
+      <entry>クラステンプレート<code>shared_future</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -2467,7 +2466,7 @@
     </row>
     <row>
       <entry>30.6.9</entry>
-      <entry>Class template <code>packaged_task</code></entry>
+      <entry>クラステンプレート<code>packaged_task</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
