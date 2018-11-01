@@ -2551,102 +2551,79 @@
 
 <section xml:id="iso.2011.specific" xreflabel="Implementation Specific"><info><title>Implementation Specific Behavior</title></info>
 
-   <para>For behaviour which is also specified by the 1998 and 2003 standards,
-      see <link linkend="iso.1998.specific">C++ 1998/2003 Implementation
-      Specific Behavior</link>. This section only documents behaviour which
-      is new in the 2011 standard.
+   <para>1998年と2003年の標準でも指定されている動作については、<link linkend="iso.1998.specific">C++ 1998/2003 Implementation Specific Behavior</link>を参照せよ。このセクションでは、2011年標準で新たに追加された動作のみを説明する。
    </para>
 
    <para>
       <emphasis>17.6.5.12 [res.on.exception.handling]</emphasis>
-      There are no implementation-defined exception classes, only standard
-      exception classes (or classes derived from them) will be thrown.
+      実装定義の例外クラスは存在せず、標準例外クラス（またはそれから派生したクラス）のみがスローされる。
    </para>
 
    <para>
       <emphasis>17.6.5.14 [value.error.codes]</emphasis>
-      The <classname>error_category</classname> for errors originating outside
-      the OS, and the possible error code values for each error category,
-      should be documented here.
+      OS外で発生するエラーの<classname>error_category</classname>、および各エラーカテゴリの可能性のあるエラーコード値はここに記録されるべきである。
    </para>
 
    <para>
       <emphasis>18.6.2.2 [new.badlength]</emphasis>
-      <function>what()</function> returns
-      <literal>"std::bad_array_new_length"</literal>.
+      <function>what()</function>は<literal>"std::bad_array_new_length"</literal>を返す。
    </para>
 
    <para>
       <emphasis>20.6.9.1 [allocator.member]/5</emphasis>
-      Over-aligned types are not supported by
-      <classname>std::allocator</classname>.
+      超過にアラインメントされた型は<classname>std::allocator</classname>ではサポートされていない。.
    </para>
 
    <para>
       <emphasis>20.7.2.2.1 [util.smartptr.shared.const]</emphasis>
-      When a <classname>shared_ptr</classname> constructor fails
-      <classname>bad_alloc</classname> (or types derived from it) will
-      be thrown, or when an allocator is passed to the constructor then any
-      exceptions thrown by the allocator.
+      <classname>shared_ptr</classname>コンストラクタが失敗したときは<classname>bad_alloc</classname>（またはそれから派生した型）をスローし、またはアロケータがコンストラクタに渡されたときにアロケータによってスローされた例外がスローされる。
    </para>
 
    <para>
       <emphasis>20.7.2.0 [util.smartptr.weakptr]</emphasis>
-      <code>what()</code> returns <literal>"bad_weak_ptr"</literal>.
+      <code>what()</code>は<literal>"bad_weak_ptr"</literal>を返す。
    </para>
 
    <para>
-      <emphasis>20.8.9.1.3 [func.bind.place]/1</emphasis> There are 29
-      placeholders defined and the placeholder types are
-      <literal>CopyAssignable</literal>.
+      <emphasis>20.8.9.1.3 [func.bind.place]/1</emphasis>29個のプレースホルダが定義されており、プレースホルダ型は
+      <literal>CopyAssignable</literal>である。
    </para>
 
    <para>
       <emphasis>20.11.7.1 [time.clock.system]/3, /4</emphasis>
-      Time point values are truncated to <code>time_t</code> values.
-      There is no loss of precision for conversions in the other direction.
+      時点の値は<code>time_t</code>の値に切り捨てられる。他の方向への変換の精度は失われない。
    </para>
 
    <para>
       <emphasis>20.15.7 [meta.trans]/2</emphasis>
-      <classname>aligned_storage</classname> does not support extended
-      alignment.
+      <classname>aligned_storage</classname>は拡張アラインメントをサポートしない。
    </para>
 
    <para>
       <emphasis>21.2.3.2 [char.traits.specializations.char16_t]</emphasis>,
       <emphasis>21.2.3.3 [char.traits.specializations.char32_t]</emphasis>
-      The types <classname>u16streampos</classname> and
-      <classname>u32streampos</classname> are both synonyms for
-      <classname>fpos&lt;mbstate_t&gt;</classname>.
-      The function <function>eof</function> returns <code>int_type(-1)</code>.
-      <function>char_traits&lt;char16_t&gt;::to_int_type</function> will
-      transform the "noncharacter" U+FFFF to U+FFFD (REPLACEMENT CHARACTER).
-      This is done to ensure that <function>to_int_type</function> never
-      returns the same value as <function>eof</function>, which is U+FFFF.
+      型<classname>u16streampos</classname>と<classname>u32streampos</classname>は、<classname>fpos＆lt;mbstate_t＆gt;</classname>の同義語である。関数<function>eof</function>は、<code>int_type(-1)</code>を返す。 <function> char_traits＆lt;char16_t＆gt;::to_int_type</function>は、「非文字」U+FFFFをU+FFFD（置換文字）に変換する。 これは、<function>to_int_type</ function>が<function>eof</function>（U+FFFF）と同じ値を返さないようにするためである。
    </para>
 
    <para>
       <emphasis>22.3.1 [locale]</emphasis>
-      There is one global locale for the whole program, not per-thread.
+      スレッド全体ではなく、プログラム全体のグローバルロケールが1つある。
    </para>
 
    <para>
       <emphasis>22.4.5.1.2 [locale.time.get.virtuals]</emphasis>,
       <emphasis>22.4.5.3.2 [locale.time.put.virtuals]</emphasis>
-      Additional supported formats should be documented here.
+      サポートされているその他の形式については、ここで文書化されるべきである。
    </para>
 
    <para>
       <emphasis> 22.4.7.1.2 [locale.messages.virtuals]</emphasis>
-      The mapping should be documented here.
+      マッピングはここで文書化されるべきである。
    </para>
 
    <para>
       <emphasis>23.3.2.1 [array.overview]</emphasis>
-      <classname>array&lt;T, N&gt;::iterator</classname> is <code>T*</code> and
-      <classname>array&lt;T, N&gt;::const_iterator</classname> is
-      <code>const T*</code>.
+      <classname>array&lt;T, N&gt;::iterator</classname>は<code>T*</code>であり、<classname>array&lt;T, N&gt;::const_iterator</classname>は<code>const T*</code>である。
    </para>
 
    <para>
@@ -2654,61 +2631,39 @@
       <emphasis>23.5.5.2 [unord.multimap.cnstr]</emphasis>,
       <emphasis>23.5.6.2 [unord.set.cnstr]</emphasis>,
       <emphasis>23.5.7.2 [unord.multiset.cnstr]</emphasis>
-      The default minimal bucket count is 0 for the default constructors, range
-      constructors and initializer-list constructors.
+      デフォルトのコンストラクター、レンジコンストラクター、イニシャライザーリストコンストラクターのデフォルトの最小バケットカウントは0である。
    </para>
 
    <para>
       <emphasis>25.3.12 [alg.random.shuffle]</emphasis>
-      The two-argument overload of <function>random_shuffle</function>
-      uses <function>rand</function> as the source of randomness.
+      <function>random_shuffle</function>の2引数オーバーロードは乱数源として<function>rand</function>を使う。
    </para>
 
    <para>
       <emphasis>26.5.5 [rand.predef]</emphasis>
-      The type <classname>default_random_engine</classname> is a synonym for
-      <classname>minstd_rand0</classname>.
+      型<classname>default_random_engine</classname>はminstd_rand0の同義語である。
    </para>
 
    <para>
       <emphasis> 26.5.6 [rand.device] </emphasis>
-      The default <code>token</code> argument to the
-      <classname>random_device</classname> constructor is
-      <literal>"default"</literal>. Other valid arguments are
-      <literal>"/dev/random"</literal> and <literal>"/dev/urandom"</literal>,
-      which determine the character special file to read random bytes from.
-      The <literal>"default"</literal> token will read bytes from a hardware
-      RNG if available (currently this only supports the IA-32 RDRAND
-      instruction) otherwise it is equivalent to
-      <literal>"/dev/urandom"</literal>.
-      An exception of type <classname>runtime_error</classname> will be
-      thrown if a <classname>random_device</classname> object cannot open
-      or read from the source of random bytes.
+      <classname>random_device</classname>コンストラクタのデフォルトの<code>token</code>引数は、<literal>"default"</literal>である。他の有効な引数は、ランダムなバイトを読み込む文字特殊ファイルを決定する <literal>"/dev/random"</literal>と<literal>"/dev/urandom"</literal>である。<literal>"default"</literal>トークンは、ハードウェアRNGからバイトを読み込み（現在はIA-32 RDRAND命令のみをサポートしている）、さもなければ<literal>"/dev/urandom"</literal>と等価である。<classname>random_device</classname>オブジェクトがランダムバイトのソースをオープンまたは読み込めない場合、<classname>runtime_error</classname>型の例外がスローされる。
    </para>
 
    <para>
       <emphasis>26.5.8.1 [rand.dist.general]</emphasis>
-      The algorithms used by the distributions should be documented here.
+分布で使用されているアルゴリズムは、ここで文書化されるべきである。
    </para>
 
    <para>
-      <emphasis>26.8 [c.math]</emphasis> Whether the
-      <function>rand</function> function introduces data races depends on
-      the C library as the function is not provided by libstdc++.
+      <emphasis>26.8 [c.math]</emphasis> <function>rand</ function>関数がデータ競合を導入するかどうかは、関数がlibstdc++によって提供されていないため、Cライブラリによって異なる。
    </para>
 
    <para>
-      <emphasis>27.8.2.1 [stringbuf.cons]</emphasis>
-      Whether the sequence pointers are copied by the
-      <classname>basic_stringbuf</classname> move constructor should be
-      documented here.
+      <emphasis>27.8.2.1 [stringbuf.cons]</emphasis>シーケンスポインタが<classname>basic_stringbuf</classname>移動コンストラクタによってコピーされるかどうかは、ここで文書化されるべきである。
    </para>
 
    <para>
-      <emphasis>27.9.1.2 [filebuf.cons]</emphasis>
-      Whether the sequence pointers are copied by the
-      <classname>basic_filebuf</classname> move constructor should be
-      documented here.
+      <emphasis>27.9.1.2 [filebuf.cons]</emphasis>シーケンスポインタが<classname>basic_filebuf</classname>移動コンストラクタによってコピーされるかどうかは、ここで文書化されるべきである。
    </para>
 
    <para>
@@ -2716,61 +2671,40 @@
       <emphasis> 28.5.2 [re.matchflag] </emphasis>,
       <emphasis> 28.5.3 [re.err] </emphasis>
       <code>syntax_option_type</code>, <code>match_flag_type</code>
-      and <code>error_type</code> are unscoped enumeration types.
+      そして <code>error_type</code>はスコープなしの列挙型である。
    </para>
 
    <para>
       <emphasis>28.7 [re.traits]</emphasis>
-      The <literal>blank</literal> character class corresponds to the
-      <code>ctype_base::blank</code> mask.
+      <literal>blank</literal>文字クラスは<code>ctype_base::blank</code>マスクに対応する。
    </para>
 
    <para>
       <emphasis>29.4 [atomics.lockfree]</emphasis>
-      The values of the <code>ATOMIC_xxx_LOCK_FREE</code> macros depend on
-      the target and cannot be listed here.
+      <code>ATOMIC_xxx_LOCK_FREE</code>マクロの値はターゲットに依存し、ここで一覧にすることができない。
    </para>
 
    <para>
       <emphasis>30.2.3 [thread.req.native]/1</emphasis>
-      <classname>native_handle_type</classname> and
-      <methodname>native_handle</methodname> are provided. The handle types
-      are defined in terms of the Gthreads abstraction layer, although this
-      is subject to change at any time. Any use of
-      <classname>native_handle</classname> is inherently non-portable and
-      not guaranteed to work between major releases of GCC.
+      <classname>native_handle_type</classname>と<methodname>native_handle</methodname>が提供される。 ハンドル型は、Gthreads抽象レイヤーの観点から定義されるが、これはいつでも変更される可能性がある。 <classname>native_handle</ classname>の使用は、本質的に移植性がなく、GCCのメジャーリリース間での動作を保証されていない。
       <itemizedlist>
-         <listitem><para><classname>thread</classname>: The native handle type is
-            a typedef for <code>__gthread_t</code> i.e. <code>pthread_t</code>
-            when GCC is configured with the <literal>posix</literal> thread
-            model. The value of the native handle is undefined for a thread
-            which is not joinable.
+         <listitem><para><classname>thread</classname>:GCCが<literal>posix</ literal>スレッドモデルで構成されている場合、ネイティブハンドルタイプは<code>__gthread_t</ code>、つまり<code>pthread_t</code>のtypedefである。 合流不可能のスレッドのネイティブハンドルの値は未定義である。
          </para></listitem>
-         <listitem><para><classname>mutex</classname> and
+         <listitem><para><classname>mutex</classname> と
             <classname>timed_mutex</classname>:
-            The native handle type is <code>__gthread_mutex_t*</code> i.e.
-            <code>pthread_mutex_t*</code> for the <literal>posix</literal>
-            thread model.
+            <literal>posix</literal>スレッドモデルのネイティブハンドルタイプは、<code>__gthread_mutex_t *</code>、つまり<code>pthread_mutex_t *</code>である。
          </para></listitem>
-         <listitem><para><classname>recursive_mutex</classname> and
-         <classname>recursive_timed_mutex</classname>:
-            The native handle type is <code>__gthread_recursive_mutex_t*</code>
-            i.e. <code>pthread_mutex_t*</code> for the <literal>posix</literal>
-            thread model.
+         <listitem><para><classname>recursive_mutex</classname>と<classname>recursive_timed_mutex</classname>:
+            <literal>posix</literal>スレッドモデルのネイティブハンドルタイプは、<code>__ gthread_recursive_mutex_t * </code>、つまり<code>pthread_mutex_t *</ code>である。
          </para></listitem>
-         <listitem><para><classname>condition_variable</classname>: The native
-            handle type is <code>__gthread_cond_t*</code> i.e.
-            <code>pthread_cond_t*</code> for the <literal>posix</literal>
-            thread model.
+         <listitem><para><classname>condition_variable</classname>:<literal>posix</literal>スレッドモデルのネイティブハンドルタイプは、<code>__gthread_cond_t *</code>、つまり<code>pthread_cond_t *</code>である。
          </para></listitem>
       </itemizedlist>
    </para>
 
    <para>
       <emphasis>30.6.1 [futures.overview]/2</emphasis>
-      <code>launch</code> is a scoped enumeration type with
-      overloaded operators to support bitmask operations. There are no
-      additional bitmask elements defined.
+      <code>launch</code>はビットマスク操作をサポートするオーバーロードされた演算子を持つスコープ付きの列挙型である。 追加のビットマスク要素は定義されていません。
    </para>
 
 </section>
