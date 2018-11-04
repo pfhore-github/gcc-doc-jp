@@ -2602,7 +2602,7 @@
    <para>
       <emphasis>21.2.3.2 [char.traits.specializations.char16_t]</emphasis>,
       <emphasis>21.2.3.3 [char.traits.specializations.char32_t]</emphasis>
-      型<classname>u16streampos</classname>と<classname>u32streampos</classname>は、<classname>fpos＆lt;mbstate_t＆gt;</classname>の同義語である。関数<function>eof</function>は、<code>int_type(-1)</code>を返す。 <function> char_traits＆lt;char16_t＆gt;::to_int_type</function>は、「非文字」U+FFFFをU+FFFD（置換文字）に変換する。 これは、<function>to_int_type</ function>が<function>eof</function>（U+FFFF）と同じ値を返さないようにするためである。
+      型<classname>u16streampos</classname>と<classname>u32streampos</classname>は、<classname>fpos＆lt;mbstate_t＆gt;</classname>の同義語である。関数<function>eof</function>は、<code>int_type(-1)</code>を返す。 <function> char_traits＆lt;char16_t＆gt;::to_int_type</function>は、「非文字」U+FFFFをU+FFFD（置換文字）に変換する。 これは、<function>to_int_type</function>が<function>eof</function>（U+FFFF）と同じ値を返さないようにするためである。
    </para>
 
    <para>
@@ -2655,7 +2655,7 @@
    </para>
 
    <para>
-      <emphasis>26.8 [c.math]</emphasis> <function>rand</ function>関数がデータ競合を導入するかどうかは、関数がlibstdc++によって提供されていないため、Cライブラリによって異なる。
+      <emphasis>26.8 [c.math]</emphasis> <function>rand</function>関数がデータ競合を導入するかどうかは、関数がlibstdc++によって提供されていないため、Cライブラリによって異なる。
    </para>
 
    <para>
@@ -2686,16 +2686,16 @@
 
    <para>
       <emphasis>30.2.3 [thread.req.native]/1</emphasis>
-      <classname>native_handle_type</classname>と<methodname>native_handle</methodname>が提供される。 ハンドル型は、Gthreads抽象レイヤーの観点から定義されるが、これはいつでも変更される可能性がある。 <classname>native_handle</ classname>の使用は、本質的に移植性がなく、GCCのメジャーリリース間での動作を保証されていない。
+      <classname>native_handle_type</classname>と<methodname>native_handle</methodname>が提供される。 ハンドル型は、Gthreads抽象レイヤーの観点から定義されるが、これはいつでも変更される可能性がある。 <classname>native_handle</classname>の使用は、本質的に移植性がなく、GCCのメジャーリリース間での動作を保証されていない。
       <itemizedlist>
-         <listitem><para><classname>thread</classname>:GCCが<literal>posix</ literal>スレッドモデルで構成されている場合、ネイティブハンドルタイプは<code>__gthread_t</ code>、つまり<code>pthread_t</code>のtypedefである。 合流不可能のスレッドのネイティブハンドルの値は未定義である。
+         <listitem><para><classname>thread</classname>:GCCが<literal>posix</literal>スレッドモデルで構成されている場合、ネイティブハンドルタイプは<code>__gthread_t</code>、つまり<code>pthread_t</code>のtypedefである。 合流不可能のスレッドのネイティブハンドルの値は未定義である。
          </para></listitem>
          <listitem><para><classname>mutex</classname> と
             <classname>timed_mutex</classname>:
             <literal>posix</literal>スレッドモデルのネイティブハンドルタイプは、<code>__gthread_mutex_t *</code>、つまり<code>pthread_mutex_t *</code>である。
          </para></listitem>
          <listitem><para><classname>recursive_mutex</classname>と<classname>recursive_timed_mutex</classname>:
-            <literal>posix</literal>スレッドモデルのネイティブハンドルタイプは、<code>__ gthread_recursive_mutex_t * </code>、つまり<code>pthread_mutex_t *</ code>である。
+            <literal>posix</literal>スレッドモデルのネイティブハンドルタイプは、<code>__ gthread_recursive_mutex_t * </code>、つまり<code>pthread_mutex_t *</code>である。
          </para></listitem>
          <listitem><para><classname>condition_variable</classname>:<literal>posix</literal>スレッドモデルのネイティブハンドルタイプは、<code>__gthread_cond_t *</code>、つまり<code>pthread_cond_t *</code>である。
          </para></listitem>
