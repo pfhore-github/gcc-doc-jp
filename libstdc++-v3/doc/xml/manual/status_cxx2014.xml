@@ -244,7 +244,7 @@
 
 
 <table frame="all" xml:id="table.ts_status">
-<title>C++ Technical Specifications Implementation Status</title>
+<title>C++ 技術仕様実装ステータス</title>
 
 <tgroup cols="4" align="left" colsep="0" rowsep="1">
 <colspec colname="c1"/>
@@ -253,10 +253,10 @@
 <colspec colname="c4"/>
   <thead>
     <row>
-      <entry>Paper</entry>
-      <entry>Title</entry>
-      <entry>Status</entry>
-      <entry>Comments</entry>
+      <entry>論文</entry>
+      <entry>タイトル</entry>
+      <entry>ステータス</entry>
+      <entry>コメント</entry>
     </row>
   </thead>
 
@@ -269,9 +269,9 @@
 	  N3662
 	</link>
       </entry>
-      <entry>C++ Dynamic Arrays</entry>
+      <entry>C++ 動的配列</entry>
       <entry>N</entry>
-      <entry>Array Extensions TS</entry>
+      <entry>配列拡張TS</entry>
     </row>
 
     <row>
@@ -280,9 +280,9 @@
 	  N3793
 	</link>
       </entry>
-      <entry>A proposal to add a utility class to represent optional objects</entry>
+      <entry>オプションのオブジェクトを表現するユーティリティクラスを追加する提案</entry>
       <entry>Y</entry>
-      <entry>Library Fundamentals TS</entry>
+      <entry>ライブラリ基礎TS</entry>
     </row>
 
     <row>
@@ -291,9 +291,9 @@
 	  N3804
 	</link>
       </entry>
-      <entry>Any library proposal</entry>
+      <entry>Any ライブラリ提案</entry>
       <entry>Y</entry>
-      <entry>Library Fundamentals TS</entry>
+      <entry>ライブラリ基礎TS</entry>
     </row>
 
     <row>
@@ -303,9 +303,9 @@
 	  N3866
 	</link>
       </entry>
-      <entry>Invocation type traits, but dropping function_call_operator.</entry>
+      <entry>型特性の呼び出し、ただしfunction_call_operatorは除く</entry>
       <entry>N</entry>
-      <entry>Library Fundamentals TS</entry>
+      <entry>ライブラリ基礎TS</entry>
     </row>
 
     <row>
@@ -314,9 +314,9 @@
 	  N3905
 	</link>
       </entry>
-      <entry>Faster string searching (Boyer-Moore et al.)</entry>
+      <entry>より高速な文字列検索 (Boyer-Mooreなど)</entry>
       <entry>Y</entry>
-      <entry>Library Fundamentals TS</entry>
+      <entry>ライブラリ基礎 TS</entry>
     </row>
 
     <row>
@@ -325,9 +325,9 @@
 	  N3915
 	</link>
       </entry>
-      <entry>apply() call a function with arguments from a tuple</entry>
+      <entry>tupleからの引数でのapply()関数の呼び出し</entry>
       <entry>Y</entry>
-      <entry>Library Fundamentals TS</entry>
+      <entry>ライブラリ基礎 TS</entry>
     </row>
 
     <row>
@@ -337,9 +337,9 @@
 	  N3916
 	</link>
       </entry>
-      <entry>Polymorphic memory resources</entry>
-      <entry>Partial</entry>
-      <entry>Library Fundamentals TS</entry>
+      <entry>多態メモリーリソース</entry>
+      <entry>一部</entry>
+      <entry>ライブラリ基礎TS</entry>
     </row>
 
     <row>
@@ -348,9 +348,9 @@
 	  N3920
 	</link>
       </entry>
-      <entry>Extending shared_ptr to support arrays</entry>
+      <entry>shared_ptrを配列をサポートするように拡張</entry>
       <entry>Y</entry>
-      <entry>Library Fundamentals TS</entry>
+      <entry>ライブラリ基礎 TS</entry>
     </row>
 
     <row>
@@ -359,9 +359,9 @@
 	  N3921
 	</link>
       </entry>
-      <entry><code>string_view</code>: a non-owning reference to a string</entry>
+      <entry><code>string_view</code>: 文字列への非所有参照</entry>
       <entry>Y</entry>
-      <entry>Library Fundamentals TS</entry>
+      <entry>ライブラリ基礎 TS</entry>
     </row>
 
     <row>
@@ -370,9 +370,9 @@
 	  N3925
 	</link>
       </entry>
-      <entry>A sample proposal</entry>
+      <entry>sample 提案</entry>
       <entry>Y</entry>
-      <entry>Library Fundamentals TS</entry>
+      <entry>ライブラリ基礎 TS</entry>
     </row>
 
     <row>
@@ -381,9 +381,9 @@
 	  N3932
 	</link>
       </entry>
-      <entry>Variable Templates For Type Traits</entry>
+      <entry>型特性への変数テンプレート</entry>
       <entry>Y</entry>
-      <entry>Library Fundamentals TS</entry>
+      <entry>ライブラリ基礎 TS</entry>
     </row>
 
     <row>
@@ -392,7 +392,7 @@
 	  N4100
 	</link>
       </entry>
-      <entry>File System</entry>
+      <entry>ファイルシステム</entry>
       <entry>Y</entry>
       <entry>
 	Link with
