@@ -10,33 +10,20 @@
 </info>
 
 <para>
-In this implementation the <literal>-std=gnu++17</literal> or
-<literal>-std=c++17</literal> flag must be used to enable language
-and library
-features. See <link linkend="manual.intro.using.flags">dialect</link>
-options. The pre-defined symbol
-<constant>__cplusplus</constant> is used to check for the
-presence of the required flag.
+この実装では言語とライブラリの機能を有効化するためには<literal>-std=gnu++17</literal>または<literal>-std=c++17</literal>フラグを使わなければならない。<link linkend="manual.intro.using.flags">dialect</link>オプションを見よ。事前定義されたシンボル<constant>__cplusplus</constant>は要求されたフラグの存在をチェックするために使われる。
 </para>
 
 <para>
-This section describes the C++17 and library TS support in mainline GCC SVN,
-not in any particular release.
+このセクションでは、特定のリリースではなく、メインラインGCC SVNでのC++17およびライブラリTSのサポートについて説明する。
 </para>
 
 <para>
-The following table lists new library features that have been accepted into
-the C++17 working draft. The "Proposal" column provides a link to the
-ISO C++ committee proposal that describes the feature, while the "Status"
-column indicates the first version of GCC that contains an implementation of
-this feature (if it has been implemented).
-The "SD-6 Feature Test" column shows the corresponding macro or header from
-<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations">SD-6:
-Feature-testing recommendations for C++</link>.
+次の表は、C ++ 17の作業草案に受け入れられた新しいライブラリ機能の一覧である。 「提案」列は、その機能を説明するISO C ++委員会の提案へのリンクを提供し、「ステータス」列は、この機能の実装を含むGCCの最初のバージョンを示す（実装されている場合）。
+「SD-6機能テスト」列には、対応するマクロまたはヘッダーが<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations">SD-6:Feature-testing recommendations for C++</link>からのものであることを示す。
 </para>
 
 <table frame="all" xml:id="table.cxx17_status">
-<title>C++ 2017 Implementation Status</title>
+<title>C++ 2017実装ステータス</title>
 
 <tgroup cols="4" align="left" colsep="0" rowsep="1">
 <colspec colname="c1"/>
@@ -45,9 +32,9 @@ Feature-testing recommendations for C++</link>.
 <colspec colname="c4"/>
   <thead>
     <row>
-      <entry>Library Feature</entry>
-      <entry>Proposal</entry>
-      <entry>Status</entry>
+      <entry>ライブラリ機能</entry>
+      <entry>提案</entry>
+      <entry>ステータス</entry>
       <entry>SD-6 Feature Test</entry>
     </row>
   </thead>
@@ -69,7 +56,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Core Issue 1776: Replacement of class objects containing reference members</entry>
+      <entry> Core Issue 1776: 参照メンバを含むクラスオブジェクトの置換</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0137r1.html">
 	P0137R1
@@ -80,7 +67,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry>Wording for <code>std::uncaught_exceptions</code></entry>
+      <entry><code>std::uncaught_exceptions</code>の用語</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/JTC1/sc22/WG21/docs/papers/2014/n4259.pdf">
 	  N4259
@@ -91,7 +78,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Variant: a type-safe union for C++17 </entry>
+      <entry> Variant: C++17用型安全共用体</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0088r3.html">
 	P0088R3
@@ -105,7 +92,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Library Fundamentals V1 TS Components: <code>optional</code> </entry>
+      <entry> ライブラリ基本V1 TS 構成要素 <code>optional</code> </entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0220r1.html">
 	P0220R1
@@ -114,12 +101,12 @@ Feature-testing recommendations for C++</link>.
       <entry align="center"> 7.1 </entry>
       <entry> <code>__has_include(&lt;optional&gt;)</code>,
               <code>__cpp_lib_optional >= 201603</code>
-              (since 7.3, see Note 1)
+              (7.3以降、Note 1参照)
       </entry>
     </row>
 
     <row>
-      <entry> Library Fundamentals V1 TS Components: <code>any</code> </entry>
+      <entry>ライブラリ基本V1 TS 構成要素： <code>any</code> </entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0220r1.html">
 	P0220R1
@@ -128,12 +115,12 @@ Feature-testing recommendations for C++</link>.
       <entry align="center"> 7.1 </entry>
       <entry> <code>__has_include(&lt;any&gt;)</code>,
               <code>__cpp_lib_any >= 201603</code>
-              (since 7.3, see Note 1)
+              (7.3以降、Note 1参照)
       </entry>
     </row>
 
     <row>
-      <entry> Library Fundamentals V1 TS Components: <code>string_view</code> </entry>
+      <entry> ライブラリ基本V1 TS 構成要素：<code>string_view</code> </entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0220r1.html">
 	P0220R1
@@ -142,13 +129,13 @@ Feature-testing recommendations for C++</link>.
       <entry align="center"> 7.1 </entry>
       <entry> <code>__has_include(&lt;string_view&gt;)</code>,
               <code>__cpp_lib_string_view >= 201603</code>
-              (since 7.3, see Note 1)
+              (7.3以降、Note 1参照)
       </entry>
     </row>
 
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
-      <entry> Library Fundamentals V1 TS Components: <code>memory_resource</code> </entry>
+      <entry> ライブラリ基本V1 TS 構成要素： <code>memory_resource</code> </entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0220r1.html">
 	P0220R1
@@ -161,7 +148,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Library Fundamentals V1 TS Components: <code>apply</code> </entry>
+      <entry> ライブラリ基本V1 TS 構成要素： <code>apply</code> </entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0220r1.html">
 	P0220R1
@@ -172,7 +159,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Library Fundamentals V1 TS Components: <code>shared_ptr&lt;T[]&gt;</code> </entry>
+      <entry> ライブラリ基本V1 TS 構成要素： <code>shared_ptr&lt;T[]&gt;</code> </entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0220r1.html">
 	P0220R1
@@ -183,7 +170,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Library Fundamentals V1 TS Components: Searchers </entry>
+      <entry> ライブラリ基本V1 TS 構成要素： 検索 </entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0220r1.html">
 	P0220R1
@@ -194,7 +181,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Library Fundamentals V1 TS Components: Sampling </entry>
+      <entry> ライブラリ基本V1 TS 構成要素：サンプリング </entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0220r1.html">
 	P0220R1
@@ -205,7 +192,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Constant View: A proposal for a <code>std::as_const</code> helper function template	</entry>
+      <entry> 定数ビュー：<code>std::as_const</code>ヘルパー関数テンプレートの提案</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="">
 	P0007R1
@@ -216,7 +203,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Improving pair and tuple </entry>
+      <entry> ペアとタプルの改良</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4387">
 	N4387
@@ -227,7 +214,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> <code>make_from_tuple</code>: apply for construction </entry>
+      <entry> <code>make_from_tuple</code>: 構築用のapply</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0209r2.pdf">
 	P0209R2
@@ -240,32 +227,31 @@ Feature-testing recommendations for C++</link>.
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>
-        Removing <code>auto_ptr</code>, <code>random_shuffle()</code>,
-        And Old <code>&lt;functional&gt;</code> Stuff
+        <code>auto_ptr</code>, <code>random_shuffle()</code>, <code>&lt;functional&gt;</code>関連の削除
       </entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4190.htm">
 	  N4190
 	</link>
       </entry>
-      <entry align="center">No (kept for backwards compatibility)</entry>
+      <entry align="center">No (互換性のために維持されている)</entry>
       <entry/>
     </row>
 
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
-      <entry> Deprecating Vestigial Library Parts in C++17 </entry>
+      <entry> C++17での残存ライブラリ部品の非推奨</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0174r2.html">
 	P0174R2
 	</link>
       </entry>
-      <entry align="center"> No  (kept for backwards compatibility)</entry>
+      <entry align="center"> No  (互換性のために維持されている)</entry>
       <entry/>
     </row>
 
     <row>
-      <entry> Making <code>std::owner_less</code> more flexible </entry>
+      <entry><code>std::owner_less</code>により柔軟性をもたせる</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0074r0.html">
 	P0074R0
@@ -276,7 +262,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> <code>std::addressof</code> should be constexpr </entry>
+      <entry> <code>std::addressof</code>はconstexprであるべき</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0304r0.html#2296">
 	LWG2296
@@ -287,7 +273,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Safe conversions in <code>unique_ptr&lt;T[]&gt;</code> </entry>
+      <entry> <code>unique_ptr&lt;T[]&gt;</code>での安全な変換 </entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4089.pdf">
 	N4089
@@ -298,7 +284,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> LWG 2228: Missing SFINAE rule in unique_ptr templated assignment </entry>
+      <entry> LWG 2228: unique_ptrテンプレート代入での抜けていたSFINAE規則</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4366.html">
 	  N4366
@@ -309,7 +295,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Re-enabling <code>shared_from_this</code></entry>
+      <entry> <code>shared_from_this</code>の最有効化</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0033r1.html">
 	P0033R1
@@ -320,7 +306,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> A proposal to add <code>invoke</code> function template </entry>
+      <entry> <code>invoke</code>関数テンプレートを追加する提案</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4169.html">
 	N4169
@@ -331,7 +317,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry>TriviallyCopyable <code>reference_wrapper</code> </entry>
+      <entry>自明的にコピー可能な <code>reference_wrapper</code> </entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4277.html">
 	  N4277
@@ -342,7 +328,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Adopt <code>not_fn</code> from Library Fundamentals 2 for C++17 </entry>
+      <entry>C++17用ライブラリ基本2からの<code>not_fn</code>の採用</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0005r4.html">
 	P0005R4
@@ -353,7 +339,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Fixes for <code>not_fn</code> </entry>
+      <entry> <code>not_fn</code>の修正 </entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0358r1.html">
 	P0358R1
@@ -364,7 +350,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Fixing a design mistake in the searchers interface in Library Fundamentals </entry>
+      <entry>ライブラリ基本のサーチャーインターフェースでのデザインミスの修正 </entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0253r1.pdf">
 	P0253R1
@@ -375,7 +361,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Extending memory management tools </entry>
+      <entry> メモリー管理ツールの拡張</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0040r3.html">
 	P0040R3
@@ -397,7 +383,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry>Transformation Trait Alias <code>void_t</code></entry>
+      <entry>変換特性別名<code>void_t</code></entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/JTC1/sc22/WG21/docs/papers/2014/n3911.pdf">
 	  N3911
@@ -408,7 +394,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Wording for <code>bool_constant</code>, revision 1 </entry>
+      <entry> <code>bool_constant</code>の用語第1版</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4389.html">
 	  N4389
@@ -419,7 +405,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Adopt Type Traits Variable Templates from Library Fundamentals TS for C++17</entry>
+      <entry> ライブラリ基本TSのC++用変数テンプレートの使用する</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0006r0.html">
 	P0006R0
@@ -430,7 +416,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Logical Operator Type Traits</entry>
+      <entry> 論理演算子型特性</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0013r1.html">
 	P0013R1
@@ -441,7 +427,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Adding [nothrow-]swappable traits </entry>
+      <entry> （例外を投げない）swap可能な特性の追加</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0185r1.html">
 	P0185R1
@@ -452,7 +438,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> <code>is_callable</code>, the missing INVOKE related trait</entry>
+      <entry> <code>is_callable</code>、抜けていたINVOOKE関連の特性</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0077r2.html">
 	P0077R2
@@ -474,7 +460,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Polishing <code>&lt;chrono&gt;</code> </entry>
+      <entry>  <code>&lt;chrono&gt;</code>の改良</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0092r1.html">
 	P0092R1
@@ -485,7 +471,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Adding more constexpr to <code>&lt;chrono&gt;</code> </entry>
+      <entry><code>&lt;chrono&gt;</code>へのより多くのconstexprの追加 </entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0505r0.html">
 	P0505R0
@@ -498,7 +484,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Constexpr for <code>std::char_traits</code> </entry>
+      <entry><code>std::char_traits</code>用のconstexpr </entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0426r1.html">
 	P0426R1
@@ -509,7 +495,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Integrating <code>std::string_view</code> and <code>std::string</code> </entry>
+      <entry> <code>std::string_view</code>と <code>std::string</code>の統合 </entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0254r2.pdf">
 	P0254R2
@@ -520,7 +506,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Give 'std::string' a non-const '.data()' member function </entry>
+      <entry>  'std::string'に非const'.data()'メンバ関数の追加</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0272r1.html">
 	P0272R1
@@ -531,7 +517,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry>Cleaning-up noexcept in the Library</entry>
+      <entry>ライブラリでのnoexcpetの整理</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4258.pdf">
 	  N4258
@@ -542,7 +528,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry>Contiguous Iterators </entry>
+      <entry>連続イテレータ</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4284.html">
 	  N4284
@@ -553,7 +539,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Minimal incomplete type support for standard containers </entry>
+      <entry> 標準コンテナの非完全型の最小サポート </entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4510.html">
 	N4510
@@ -566,7 +552,7 @@ Feature-testing recommendations for C++</link>.
     </row>
 
     <row>
-      <entry> Emplace return type </entry>
+      <entry> Emplaceの戻り型</entry>
       <entry>
 	<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0084r2.pdf">
 	P0084R2
