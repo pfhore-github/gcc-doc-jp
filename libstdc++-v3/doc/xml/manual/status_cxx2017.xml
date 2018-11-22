@@ -792,7 +792,7 @@ Note 3: 数学的な特殊関数は、GCC 7.1以降のC++17モードで有効に
 </para>
 
 <table frame="all" xml:id="table.cxx17_ts_status">
-<title>C++ Technical Specifications Implementation Status</title>
+<title>C++技術仕様実装ステータス</title>
 
 <tgroup cols="4" align="left" colsep="0" rowsep="1">
 <colspec colname="c1"/>
@@ -801,10 +801,10 @@ Note 3: 数学的な特殊関数は、GCC 7.1以降のC++17モードで有効に
 <colspec colname="c4"/>
   <thead>
     <row>
-      <entry>Paper</entry>
-      <entry>Title</entry>
-      <entry>Status</entry>
-      <entry>Comments</entry>
+      <entry>論文</entry>
+      <entry>タイトル</entry>
+      <entry>ステータス</entry>
+      <entry>コメント</entry>
     </row>
   </thead>
 
@@ -816,7 +816,7 @@ Note 3: 数学的な特殊関数は、GCC 7.1以降のC++17モードで有効に
 	  N4076
 	</link>
       </entry>
-      <entry>A generalized callable negator</entry>
+      <entry>汎用呼び出し可能否定</entry>
       <entry>Y</entry>
       <entry>Library Fundamentals 2 TS</entry>
     </row>
@@ -827,7 +827,7 @@ Note 3: 数学的な特殊関数は、GCC 7.1以降のC++17モードで有効に
 	  N4273
 	</link>
       </entry>
-      <entry>Uniform Container Erasure</entry>
+      <entry>汎用コンテナ削除</entry>
       <entry>Y</entry>
       <entry>Library Fundamentals 2 TS</entry>
     </row>
@@ -838,7 +838,7 @@ Note 3: 数学的な特殊関数は、GCC 7.1以降のC++17モードで有効に
 	  N4061
 	</link>
       </entry>
-      <entry>Greatest Common Divisor and Least Common Multiple</entry>
+      <entry>最大公約数と最小公倍数</entry>
       <entry>Y</entry>
       <entry>Library Fundamentals 2 TS</entry>
     </row>
@@ -849,7 +849,7 @@ Note 3: 数学的な特殊関数は、GCC 7.1以降のC++17モードで有効に
 	  N4066
 	</link>
       </entry>
-      <entry>Delimited iterators</entry>
+      <entry>区切り付きイテレータ</entry>
       <entry>Y</entry>
       <entry>Library Fundamentals 2 TS</entry>
     </row>
@@ -860,7 +860,7 @@ Note 3: 数学的な特殊関数は、GCC 7.1以降のC++17モードで有効に
 	  N4282
 	</link>
       </entry>
-      <entry>The World's Dumbest Smart Pointer</entry>
+      <entry>世界で最も単純なスマートポインタ</entry>
       <entry>Y</entry>
       <entry>Library Fundamentals 2 TS</entry>
     </row>
@@ -872,7 +872,7 @@ Note 3: 数学的な特殊関数は、GCC 7.1以降のC++17モードで有効に
 	  N4388
 	</link>
       </entry>
-      <entry>Const-Propagating Wrapper</entry>
+      <entry>const伝搬ラッパ</entry>
       <entry>Y</entry>
       <entry>Library Fundamentals 2 TS</entry>
     </row>
@@ -883,7 +883,7 @@ Note 3: 数学的な特殊関数は、GCC 7.1以降のC++17モードで有効に
 	  N4391
 	</link>
       </entry>
-      <entry> <code>make_array</code>, revision 4 </entry>
+      <entry> <code>make_array</code>第4版</entry>
       <entry>Y</entry>
       <entry>Library Fundamentals 2 TS</entry>
     </row>
@@ -894,7 +894,7 @@ Note 3: 数学的な特殊関数は、GCC 7.1以降のC++17モードで有効に
 	  N4502
 	</link>
       </entry>
-      <entry> Support for the C++ Detection Idiom, V2 </entry>
+      <entry> C++検知イディオムのサポート V2</entry>
       <entry>Y</entry>
       <entry>Library Fundamentals 2 TS</entry>
     </row>
@@ -905,7 +905,7 @@ Note 3: 数学的な特殊関数は、GCC 7.1以降のC++17モードで有効に
 	  N4519
 	</link>
       </entry>
-      <entry> Source-Code Information Capture </entry>
+      <entry> ソースコード情報取得</entry>
       <entry>Y</entry>
       <entry>Library Fundamentals 2 TS</entry>
     </row>
@@ -917,7 +917,7 @@ Note 3: 数学的な特殊関数は、GCC 7.1以降のC++17モードで有効に
 	  N4521
 	</link>
       </entry>
-      <entry> Merge Fundamentals V1 into V2 </entry>
+      <entry>マージ基礎をV1からV2へ</entry>
       <entry>N</entry>
       <entry>Library Fundamentals 2 TS</entry>
     </row>
@@ -928,7 +928,7 @@ Note 3: 数学的な特殊関数は、GCC 7.1以降のC++17モードで有効に
 	  P0013R1
 	</link>
       </entry>
-      <entry>Logical Operator Type Traits (revision 1)</entry>
+      <entry>論理演算子型特性（第1版）</entry>
       <entry>Y</entry>
       <entry>Library Fundamentals 2 TS</entry>
     </row>
@@ -939,7 +939,7 @@ Note 3: 数学的な特殊関数は、GCC 7.1以降のC++17モードで有効に
 	  N4531
 	</link>
       </entry>
-      <entry>std::rand replacement, revision 3</entry>
+      <entry>std::randの置換、第3版</entry>
       <entry>Y</entry>
       <entry>Library Fundamentals 2 TS</entry>
     </row>
@@ -950,107 +950,84 @@ Note 3: 数学的な特殊関数は、GCC 7.1以降のC++17モードで有効に
 
 <section xml:id="iso.2017.specific" xreflabel="Implementation Specific"><info><title>Implementation Specific Behavior</title></info>
 
-   <para>For behaviour which is also specified by previous standards,
-      see <link linkend="iso.1998.specific">C++ 1998/2003 Implementation
-      Specific Behavior</link> and <link linkend="iso.2011.specific">C++
-      2011 Implementation Specific Behavior</link>. This section only
-      documents behaviour which is new in the 2017 standard.
-   </para>
+   <para>以前の標準でも指定されている動作については、<link linkend="iso.1998.specific"> C++1998/2003実装固有動作</link>および<link linkend="iso.2011.specific">C++2011実装固有動作</link>を参照せよ。 このセクションでは、2017標準で新たに追加された動作のみを説明する。   </para>
 
    <para>
       <emphasis>23.6.5 [optional.bad_optional_access]</emphasis>
-      <code>what()</code> returns <literal>"bad optional access"</literal>.
+      <code>what()</code>は<literal>"bad optional access"</literal>を返す。
    </para>
 
    <para>
       <emphasis>23.7.3 [variant.variant]</emphasis>
-      Whether <classname>variant</classname> supports over-aligned types
-      should be documented here.
+      <classname>variant</classname>がアラインを超えた型をサポートするかはここに文書化されるべきである。
    </para>
 
    <para>
       <emphasis>23.7.10 [variant.bad.access]</emphasis>
-      <code>what()</code> returns <literal>"Unexpected index"</literal>.
+      <code>what()</code>は<literal>"Unexpected index"</literal>を返す。
    </para>
 
    <para>
       <emphasis>23.12.5.2 [memory.resource.pool.options]</emphasis>
-      The limits for maximum number of blocks and largest allocation size
-      supported by <classname>pool_options</classname> should be documented
-      here.
+      <classname>pool_options</classname>によってサポートされる最大ブロック数と最大割当サイズの限界はここで文書化されるべきである。
    </para>
 
    <para>
       <emphasis>23.12.6.1 [memory.resource.monotonic.buffer.ctor]</emphasis>
-      The default <code>next_buffer_size</code> and growth factor should
-      be documented here.
+      デフォルトの<code>next_buffer_size</code>と拡大係数はここで文書化されるべきである。
    </para>
 
    <para>
       <emphasis>23.15.4.3 [meta.unary.prop]</emphasis>
-      The predicate condition for
-      <code>has_unique_object_representations</code> is true for all scalar
-      types except floating point types.
+      <code>has_unique_object_representations</code>の述部条件は、浮動小数点型を除くすべてのスカラー型に対して真である。
    </para>
 
    <para>
       <emphasis>23.19.3 [execpol.type],
       28.4.3 [algorithms.parallel.exec]</emphasis>
-      There are no implementation-defined execution policies.
+      実装定義の実行ポリシーはない。
    </para>
 
    <para>
       <emphasis>24.4.2 [string.view.template]</emphasis>
-      <classname>basic_string_view&lt;C, T&gt;::iterator</classname> is
-      <code>C*</code> and
-      <classname>basic_string_view&lt;C, T&gt;::const_iterator</classname> is
-      <code>const C*</code>.
+      <classname>basic_string_view&lt;C, T&gt;::iterator</classname>は<code>C*</code>であり、
+      <classname>basic_string_view&lt;C, T&gt;::const_iterator</classname>は<code>const C*</code>である。
    </para>
 
 
    <para>
       <emphasis>28.4.3 [algorithms.parallel.exec]</emphasis>
-      Threads of execution created by <classname>std::thread</classname>
-      provide concurrent forward progress guarantees, so threads of execution
-      implicitly created by the library will provide parallel forward
-      progress guarantees.
+      <classname>std::thread</classname>によって作成された実行スレッドは、並行進行保証を提供するので、ライブラリによって暗黙的に作成された実行スレッドは、並列進行保証を提供する。
    </para>
 
    <para>
       <emphasis>29.4.1 [cfenv.syn]</emphasis>
-      The effects of the <filename>&lt;cfenv&gt;</filename> functions
-      depends on whether the <code>FENV_ACCESS</code> pragma is supported,
-      and on the C library that provides the header.
+      <filename>＆lt;cfenv&gt;</filename>関数の効果は、<code>FENV_ACCESS</code>プラグマがサポートされているかどうかと、ヘッダーを提供するCライブラリで異なる。
    </para>
 
    <para>
       <emphasis>29.6.9 [c.math.rand]</emphasis>
-      Whether the <function>rand</function> function may introduce data
-      races depends on the target C library that provides the function.
+      <function>rand</function>関数がデータ競合を導入するかどうかは、その関数を提供するターゲットCライブラリに依存する。
    </para>
 
    <para>
       <emphasis>29.9.5 [sf.cmath]</emphasis>
-      The effect of calling the mathematical special functions with large
-      inputs should be documented here.
+      大きな入力を持つ数学的な特殊関数を呼び出す効果は、ここで文書化されるべきである。
    </para>
 
    <para>
       <emphasis>30.10.2.1 [fs.conform.9945]</emphasis>
-      The behavior of the filesystem library implementation will depend on
-      the target operating system. Some features will not be not supported
-      on some targets.
+      ファイルシステム・ライブラリーの実装の動作は、ターゲット・オペレーティング・システムによって異なる。 一部の機能は一部のターゲットではサポートされない。
    </para>
 
    <para>
       <emphasis>30.10.5 [fs.filesystem.syn]</emphasis>
-      The clock used for file times is
-      <classname>std::chrono::system_clock</classname>.
+ファイル時間に使用される時計は、<classname>std::chrono::system_clock</ classname>である。
    </para>
 
    <para>
       <emphasis>30.10.7.1 [fs.path.generic]</emphasis>
-      dot-dot in the root-directory refers to the root-directory itself.
+      ルートディレクトリのドットドットは、ルートディレクトリ自体を参照する。
    </para>
 
 
