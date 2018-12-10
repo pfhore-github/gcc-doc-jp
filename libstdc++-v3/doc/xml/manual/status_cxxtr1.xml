@@ -10,20 +10,17 @@
 </info>
 
 <para>
-This table is based on the table of contents of ISO/IEC DTR 19768
-Doc No: N1836=05-0096 Date: 2005-06-24
-Draft Technical Report on C++ Library Extensions
+この表は、ISO / IEC DTR 19768の以下の目次に基づいている
+文書番号：N1836=05-0096日付：2005-06-24
+C++ライブラリ拡張に関するテクニカルレポート草案
 </para>
 
 <para>
-In this implementation the header names are prefixed by
-<code>tr1/</code>, for instance <code>&lt;tr1/functional&gt;</code>,
-<code>&lt;tr1/memory&gt;</code>, and so on.
+この実装では、ヘッダー名の先頭に<code>&lt;tr1/function&gt;</code>、<code>&lt;tr1/memory&gt;</code>などの<code>tr1/</code>という接頭辞が付く。
 </para>
 
 <para>
-This page describes the TR1 support in mainline GCC SVN, not in any particular
-release.
+このページでは、特定のリリースではなく、メインラインGCC SVNのTR1サポートについて説明する。
 </para>
 
 <!-- Status is Yes or No, Broken/Partial-->
@@ -36,7 +33,7 @@ release.
       <?dbhtml bgcolor="#B0B0B0" ?>
 -->
 <table frame="all" xml:id="table.tr1_status">
-<title>C++ TR1 Implementation Status</title>
+<title>C++ TR1 実装ステータス</title>
 
 <tgroup cols="4" align="left" colsep="0" rowsep="1">
 <colspec colname="c1"/>
@@ -46,10 +43,10 @@ release.
 
   <thead>
     <row>
-      <entry>Section</entry>
-      <entry>Description</entry>
-      <entry>Status</entry>
-      <entry>Comments</entry>
+      <entry>節</entry>
+      <entry>説明</entry>
+      <entry>ステータス</entry>
+      <entry>コメント</entry>
     </row>
   </thead>
   <tbody>
@@ -59,114 +56,113 @@ release.
     </row>
     <row>
       <entry>2.1</entry>
-      <entry>Reference wrappers</entry>
+      <entry>参照ラッパ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>2.1.1</entry>
-      <entry>Additions to header <code>&lt;functional&gt;</code> synopsis</entry>
+      <entry><code>&lt;functional&gt;</code>ヘッダへの追加の梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.1.2</entry>
-      <entry>Class template <code>reference_wrapper</code></entry>
+      <entry>クラステンプレート <code>reference_wrapper</code></entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>2.1.2.1</entry>
-      <entry><code>reference_wrapper</code> construct/copy/destroy</entry>
+      <entry><code>reference_wrapper</code>構築・コピー・破壊</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.1.2.2</entry>
-      <entry><code>reference_wrapper</code> assignment</entry>
+      <entry><code>reference_wrapper</code> 代入</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.1.2.3</entry>
-      <entry><code>reference_wrapper</code> access</entry>
+      <entry><code>reference_wrapper</code> アクセス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.1.2.4</entry>
-      <entry><code>reference_wrapper</code> invocation</entry>
+      <entry><code>reference_wrapper</code> 呼び出し</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.1.2.5</entry>
-      <entry><code>reference_wrapper</code> helper functions</entry>
+      <entry><code>reference_wrapper</code> ヘルパー関数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.2</entry>
-      <entry>Smart pointers</entry>
+      <entry>スマートポインタ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>2.2.1</entry>
-      <entry>Additions to header <code>&lt;memory&gt;</code> synopsis</entry>
+      <entry>ヘッダ<code>&lt;memory&gt;</code>への追加の梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.2.2</entry>
-      <entry>Class <code>bad_weak_ptr</code></entry>
+      <entry>クラス <code>bad_weak_ptr</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.2.3</entry>
-      <entry>Class template <code>shared_ptr</code></entry>
+      <entry>クラステンプレート <code>shared_ptr</code></entry>
       <entry/>
       <entry>
 	<para>
-	  Uses code from
-	  <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.boost.org/libs/smart_ptr/shared_ptr.htm">boost::shared_ptr</link>.
+	  <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.boost.org/libs/smart_ptr/shared_ptr.htm">boost::shared_ptr</link>からのコードを使用
 	</para>
       </entry>
     </row>
     <row>
       <entry>2.2.3.1</entry>
-      <entry><code>shared_ptr</code> constructors</entry>
+      <entry><code>shared_ptr</code> コンストラクタ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.2.3.2</entry>
-      <entry><code>shared_ptr</code> destructor</entry>
+      <entry><code>shared_ptr</code> デストラクタ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.2.3.3</entry>
-      <entry><code>shared_ptr</code> assignment</entry>
+      <entry><code>shared_ptr</code> 代入</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.2.3.4</entry>
-      <entry><code>shared_ptr</code> modifiers</entry>
+      <entry><code>shared_ptr</code> モディファイア</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.2.3.5</entry>
-      <entry><code>shared_ptr</code> observers</entry>
+      <entry><code>shared_ptr</code> オブサーバー</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.2.3.6</entry>
-      <entry><code>shared_ptr</code> comparison</entry>
+      <entry><code>shared_ptr</code> 比較</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -178,13 +174,13 @@ release.
     </row>
     <row>
       <entry>2.2.3.8</entry>
-      <entry><code>shared_ptr</code> specialized algorithms</entry>
+      <entry><code>shared_ptr</code> 特殊化アルゴリズム</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.2.3.9</entry>
-      <entry><code>shared_ptr</code> casts</entry>
+      <entry><code>shared_ptr</code> キャスト</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -196,762 +192,762 @@ release.
     </row>
     <row>
       <entry>2.2.4</entry>
-      <entry>Class template <code>weak_ptr</code></entry>
+      <entry>クラステンプレート <code>weak_ptr</code></entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>2.2.4.1</entry>
-      <entry><code>weak_ptr</code> constructors</entry>
+      <entry><code>weak_ptr</code> コンストラクタ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.2.4.2</entry>
-      <entry><code>weak_ptr</code> destructor</entry>
+      <entry><code>weak_ptr</code> デストラクタ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.2.4.3</entry>
-      <entry><code>weak_ptr</code> assignment</entry>
+      <entry><code>weak_ptr</code> 代入</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.2.4.4</entry>
-      <entry><code>weak_ptr</code> modifiers</entry>
+      <entry><code>weak_ptr</code> モディファイア</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.2.4.5</entry>
-      <entry><code>weak_ptr</code> observers</entry>
+      <entry><code>weak_ptr</code> オブザーバー</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.2.4.6</entry>
-      <entry><code>weak_ptr</code> comparison</entry>
+      <entry><code>weak_ptr</code> 比較</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.2.4.7</entry>
-      <entry><code>weak_ptr</code> specialized algorithms</entry>
+      <entry><code>weak_ptr</code>特殊化アルゴリズム</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>2.2.5</entry>
-      <entry>Class template <code>enable_shared_from_this</code></entry>
+      <entry>クラステンプレート <code>enable_shared_from_this</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry><emphasis>3</emphasis></entry>
-      <entry namest="c2" nameend="c4" align="left"><emphasis>Function Objects</emphasis></entry>
+      <entry namest="c2" nameend="c4" align="left"><emphasis>関数オブジェクト</emphasis></entry>
     </row>
     <row>
       <entry>3.1</entry>
-      <entry>Definitions</entry>
+      <entry>定義</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>3.2</entry>
-      <entry>Additions to <code>&lt;functional&gt; synopsis</code></entry>
+      <entry><code>&lt;functional&gt; </code>への追加の梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>3.3</entry>
-      <entry>Requirements</entry>
+      <entry>要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>3.4</entry>
-      <entry>Function return types</entry>
+      <entry>関数戻り値型</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>3.5</entry>
-      <entry>Function template <code>mem_fn</code></entry>
+      <entry>関数テンプレート<code>mem_fn</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>3.6</entry>
-      <entry>Function object binders</entry>
+      <entry>関数オブジェクトバインダ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>3.6.1</entry>
-      <entry>Class template <code>is_bind_expression</code></entry>
+      <entry>クラステンプレート <code>is_bind_expression</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>3.6.2</entry>
-      <entry>Class template <code>is_placeholder</code></entry>
+      <entry>クラステンプレート <code>is_placeholder</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>3.6.3</entry>
-      <entry>Function template <code>bind</code></entry>
+      <entry>関数テンプレート <code>bind</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>3.6.4</entry>
-      <entry>Placeholders</entry>
+      <entry>プレースホルダー</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>3.7</entry>
-      <entry>Polymorphic function wrappers</entry>
+      <entry>多態関数ラッパ</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>3.7.1</entry>
-      <entry>Class <code>bad_function_call</code></entry>
+      <entry>クラス <code>bad_function_call</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>3.7.1.1</entry>
-      <entry><code>bad_function_call</code> constructor</entry>
+      <entry><code>bad_function_call</code> コンストラクタ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>3.7.2</entry>
-      <entry>Class template <code>function</code></entry>
+      <entry>クラステンプレート <code>function</code></entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>3.7.2.1</entry>
-      <entry><code>function</code> construct/copy/destroy</entry>
+      <entry><code>function</code> 構築・コピー・破壊</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>3.7.2.2</entry>
-      <entry><code>function</code> modifiers</entry>
+      <entry><code>function</code> モディファイア</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>3.7.2.3</entry>
-      <entry><code>function</code> capacity</entry>
+      <entry><code>function</code> 容量</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>3.7.2.4</entry>
-      <entry><code>function</code> invocation</entry>
+      <entry><code>function</code> 呼び出し</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>3.7.2.5</entry>
-      <entry><code>function</code> target access</entry>
+      <entry><code>function</code> ターゲットアクセス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>3.7.2.6</entry>
-      <entry>undefined operators</entry>
+      <entry>未定義の演算子</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>3.7.2.7</entry>
-      <entry>null pointer comparison operators</entry>
+      <entry>nullポインタ比較演算子</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>3.7.2.8</entry>
-      <entry>specialized algorithms</entry>
+      <entry>特殊化アルゴリズム</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry><emphasis>4</emphasis></entry>
-      <entry namest="c2" nameend="c4" align="left"><emphasis>Metaprogramming and type traits</emphasis></entry>
+      <entry namest="c2" nameend="c4" align="left"><emphasis>メタプログラミングと型特性</emphasis></entry>
     </row>
     <row>
       <entry>4.1</entry>
-      <entry>Requirements</entry>
+      <entry>要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>4.2</entry>
-      <entry>Header <code>&lt;type_traits&gt;</code> synopsis</entry>
+      <entry>ヘッダ <code>&lt;type_traits&gt;</code>梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>4.3</entry>
-      <entry>Helper classes</entry>
+      <entry>ヘルパクラス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>4.4</entry>
-      <entry>General Requirements</entry>
+      <entry>一般要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>4.5</entry>
-      <entry>Unary Type Traits</entry>
+      <entry>単項型特性</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>4.5.1</entry>
-      <entry>Primary Type Categories</entry>
+      <entry>主要型カテゴリー</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>4.5.2</entry>
-      <entry>Composite type traits</entry>
+      <entry>複合型特性</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>4.5.3</entry>
-      <entry>Type properties</entry>
+      <entry>型プロパティ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>4.6</entry>
-      <entry>Relationships between types</entry>
+      <entry>型同士の関係</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>4.7</entry>
-      <entry>Transformations between types</entry>
+      <entry>型間の変換</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>4.7.1</entry>
-      <entry>Const-volatile modifications</entry>
+      <entry>Const-volatile 修正</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>4.7.2</entry>
-      <entry>Reference modifications</entry>
+      <entry>参照修正</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>4.7.3</entry>
-      <entry>Array modifications</entry>
+      <entry>配列修正</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>4.7.4</entry>
-      <entry>Pointer modifications</entry>
+      <entry>ポインタ修正</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>4.8</entry>
-      <entry>Other transformations</entry>
+      <entry>他の変換</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>4.9</entry>
-      <entry>Implementation requirements</entry>
+      <entry>実装要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry><emphasis>5</emphasis></entry>
-      <entry namest="c2" nameend="c4" align="left"><emphasis>Numerical Facilities</emphasis></entry>
+      <entry namest="c2" nameend="c4" align="left"><emphasis>数値機能</emphasis></entry>
     </row>
     <row>
       <entry>5.1</entry>
-      <entry>Random number generation</entry>
+      <entry>乱数生成</entry>
       <entry/>
       <entry/>
     </row>
     <row>
       <entry>5.1.1</entry>
-      <entry>Requirements</entry>
+      <entry>要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.2</entry>
-      <entry>Header <code>&lt;random&gt;</code> synopsis</entry>
+      <entry>ヘッダ <code>&lt;random&gt;</code> 梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.3</entry>
-      <entry>Class template <code>variate_generator</code></entry>
+      <entry>クラステンプレート <code>variate_generator</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.4</entry>
-      <entry>Random number engine class templates</entry>
+      <entry>乱数エンジンクラステンプレート</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.4.1</entry>
-      <entry>Class template <code>linear_congruential</code></entry>
+      <entry>クラステンプレート <code>linear_congruential</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.4.2</entry>
-      <entry>Class template <code>mersenne_twister</code></entry>
+      <entry>クラステンプレート <code>mersenne_twister</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.4.3</entry>
-      <entry>Class template <code>subtract_with_carry</code></entry>
+      <entry>クラステンプレート <code>subtract_with_carry</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.4.4</entry>
-      <entry>Class template <code>subtract_with_carry_01</code></entry>
+      <entry>クラステンプレート <code>subtract_with_carry_01</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.4.5</entry>
-      <entry>Class template <code>discard_block</code></entry>
+      <entry>クラステンプレート <code>discard_block</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.4.6</entry>
-      <entry>Class template <code>xor_combine</code></entry>
+      <entry>クラステンプレート <code>xor_combine</code></entry>
       <entry>Y</entry>
       <entry>operator()() per N2079</entry>
     </row>
     <row>
       <entry>5.1.5</entry>
-      <entry>Engines with predefined parameters</entry>
+      <entry>定義済みパラメータつきエンジン</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.6</entry>
-      <entry>Class <code>random_device</code></entry>
+      <entry>クラス <code>random_device</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.7</entry>
-      <entry>Random distribution class templates</entry>
+      <entry>乱数分布クラステンプレート</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.7.1</entry>
-      <entry>Class template <code>uniform_int</code></entry>
+      <entry>クラステンプレート <code>uniform_int</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.7.2</entry>
-      <entry>Class <code>bernoulli_distribution</code></entry>
+      <entry>クラス <code>bernoulli_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.7.3</entry>
-      <entry>Class template <code>geometric_distribution</code></entry>
+      <entry>クラステンプレート <code>geometric_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.7.4</entry>
-      <entry>Class template <code>poisson_distribution</code></entry>
+      <entry>クラステンプレート <code>poisson_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.7.5</entry>
-      <entry>Class template <code>binomial_distribution</code></entry>
+      <entry>クラステンプレート <code>binomial_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.7.6</entry>
-      <entry>Class template <code>uniform_real</code></entry>
+      <entry>クラステンプレート <code>uniform_real</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.7.7</entry>
-      <entry>Class template <code>exponential_distribution</code></entry>
+      <entry>クラステンプレート <code>exponential_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.7.8</entry>
-      <entry>Class template <code>normal_distribution</code></entry>
+      <entry>クラステンプレート <code>normal_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.1.7.9</entry>
-      <entry>Class template <code>gamma_distribution</code></entry>
+      <entry>クラステンプレート <code>gamma_distribution</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2</entry>
-      <entry>Mathematical special functions</entry>
+      <entry>数学特殊関数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1</entry>
-      <entry>Additions to header <code>&lt;cmath&gt;</code> synopsis</entry>
+      <entry>ヘッダ <code>&lt;cmath&gt;</code>への追加の梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.1</entry>
-      <entry>associated Laguerre polynomials</entry>
+      <entry>ラゲール陪多項式</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.2</entry>
-      <entry>associated Legendre functions</entry>
+      <entry>ラゲール陪関数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.3</entry>
-      <entry>beta function</entry>
+      <entry>ベータ関数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.4</entry>
-      <entry>(complete) elliptic integral of the first kind</entry>
+      <entry>(完全) 第1種楕円積分</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.5</entry>
-      <entry>(complete) elliptic integral of the second kind</entry>
+      <entry>(完全) 第二種楕円積分</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.6</entry>
-      <entry>(complete) elliptic integral of the third kind</entry>
+      <entry>(完全) 第三種楕円積分</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.7</entry>
-      <entry>confluent hypergeometric functions</entry>
+      <entry>合流超幾何関数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.8</entry>
-      <entry>regular modified cylindrical Bessel functions</entry>
+      <entry>正則変形円柱ベッセル関数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.9</entry>
-      <entry>cylindrical Bessel functions (of the first kind)</entry>
+      <entry>（第1種）円柱ベッセル関数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.10</entry>
-      <entry>irregular modified cylindrical Bessel functions</entry>
+      <entry>非正則変形円柱ベッセル関数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.11</entry>
-      <entry>cylindrical Neumann functions</entry>
+      <entry>円柱ノイマン関数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.12</entry>
-      <entry>(incomplete) elliptic integral of the first kind</entry>
+      <entry>(不完全) 第1種楕円積分</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.13</entry>
-      <entry>(incomplete) elliptic integral of the second kind</entry>
+      <entry>(不完全) 第2種楕円積分</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.14</entry>
-      <entry>(incomplete) elliptic integral of the third kind</entry>
+      <entry>(不完全) 第3種楕円積分</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.15</entry>
-      <entry>exponential integral</entry>
+      <entry>指数積分</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.16</entry>
-      <entry>Hermite polynomials</entry>
+      <entry>エルミート多項式</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.17</entry>
-      <entry>hypergeometric functions</entry>
+      <entry>超幾何関数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.18</entry>
-      <entry>Laguerre polynomials</entry>
+      <entry>ラゲール多項式</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.19</entry>
-      <entry>Legendre polynomials</entry>
+      <entry>ルジャンドル多項式</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.20</entry>
-      <entry>Riemann zeta function</entry>
+      <entry>リーマンゼータ関数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.21</entry>
-      <entry>spherical Bessel functions (of the first kind)</entry>
+      <entry>（第１種）球ベッセル関数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.22</entry>
-      <entry>spherical associated Legendre functions</entry>
+      <entry>球ルジャンドル陪関数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.1.23</entry>
-      <entry>spherical Neumann functions</entry>
+      <entry>球ノイマン関数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>5.2.2</entry>
-      <entry>Additions to header <code>&lt;math.h&gt;</code> synopsis</entry>
+      <entry>ヘッダ<code>&lt;math.h&gt;</code>への追加の梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry><emphasis>6</emphasis></entry>
-      <entry namest="c2" nameend="c4" align="left"><emphasis>Containers</emphasis></entry>
+      <entry namest="c2" nameend="c4" align="left"><emphasis>コンテナ</emphasis></entry>
     </row>
     <row>
       <entry>6.1</entry>
-      <entry>Tuple types</entry>
+      <entry>タプル型</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.1.1</entry>
-      <entry>Header <code>&lt;tuple&gt;</code> synopsis</entry>
+      <entry>ヘッダ<code>&lt;tuple&gt;</code>梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.1.2</entry>
-      <entry>Additions to header <code>&lt;utility&gt;</code> synopsis</entry>
+      <entry>ヘッダ<code>&lt;utility&gt;</code>への追加の梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.1.3</entry>
-      <entry>Class template <code>tuple</code></entry>
+      <entry>クラステンプレート <code>tuple</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.1.3.1</entry>
-      <entry>Construction</entry>
+      <entry>構築</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.1.3.2</entry>
-      <entry>Tuple creation functions</entry>
+      <entry>タプル生成関数</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.1.3.3</entry>
-      <entry>Tuple helper classes</entry>
+      <entry>タプルヘルパクラス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.1.3.4</entry>
-      <entry>Element access</entry>
+      <entry>要素アクセス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.1.3.5</entry>
-      <entry>Relational operators</entry>
+      <entry>比較演算子</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.1.4</entry>
-      <entry>Pairs</entry>
+      <entry>ペア</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.2</entry>
-      <entry>Fixed size array</entry>
+      <entry>固定サイズ配列</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.2.1</entry>
-      <entry>Header <code>&lt;array&gt;</code> synopsis</entry>
+      <entry>ヘッダ <code>&lt;array&gt;</code> 梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.2.2</entry>
-      <entry>Class template <code>array</code></entry>
+      <entry>クラステンプレート <code>array</code></entry>
       <entry>Y</entry>
 
       <entry/>
     </row>
     <row>
       <entry>6.2.2.1</entry>
-      <entry><code>array</code> constructors, copy, and assignment</entry>
+      <entry><code>array</code> コンストラクタ、コピー、代入</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.2.2.2</entry>
-      <entry><code>array</code> specialized algorithms</entry>
+      <entry><code>array</code> 特殊化アルゴリズム</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.2.2.3</entry>
-      <entry><code>array</code> size</entry>
+      <entry><code>array</code>サイズ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.2.2.4</entry>
-      <entry>Zero sized <code>array</code>s</entry>
+      <entry>サイズなし<code>array</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.2.2.5</entry>
-      <entry>Tuple interface to class template <code>array</code></entry>
+      <entry>クラステンプレート<code>array</code>へのタプルインターフェース</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.3</entry>
-      <entry>Unordered associative containers</entry>
+      <entry>非順序連想コンテナ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.3.1</entry>
-      <entry>Unordered associative container requirements</entry>
+      <entry>非順序連想コンテナ要求</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.3.1.1</entry>
-      <entry>Exception safety guarantees</entry>
+      <entry>例外安全保障</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.3.2</entry>
-      <entry>Additions to header <code>&lt;functional&gt;</code> synopsis</entry>
+      <entry>ヘッダ<code>&lt;functional&gt;</code>への追加の梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.3.3</entry>
-      <entry>Class template <code>hash</code></entry>
+      <entry>クラステンプレート <code>hash</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.3.4</entry>
-      <entry>Unordered associative container classes</entry>
+      <entry>非順序連想コンテナクラス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.3.4.1</entry>
-      <entry>Header <code>&lt;unordered_set&gt;</code> synopsis</entry>
+      <entry>ヘッダ <code>&lt;unordered_set&gt;</code> 梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.3.4.2</entry>
-      <entry>Header <code>&lt;unordered_map&gt;</code> synopsis</entry>
+      <entry>ヘッダ <code>&lt;unordered_map&gt;</code> 梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.3.4.3</entry>
-      <entry>Class template <code>unordered_set</code></entry>
+      <entry>クラステンプレート <code>unordered_set</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.3.4.3.1</entry>
-      <entry><code>unordered_set</code> constructors</entry>
+      <entry><code>unordered_set</code> コンストラクタ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -963,19 +959,19 @@ release.
     </row>
     <row>
       <entry>6.3.4.4</entry>
-      <entry>Class template <code>unordered_map</code></entry>
+      <entry>クラステンプレート <code>unordered_map</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.3.4.4.1</entry>
-      <entry><code>unordered_map</code> constructors</entry>
+      <entry><code>unordered_map</code> コンストラクタ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.3.4.4.2</entry>
-      <entry><code>unordered_map</code> element access</entry>
+      <entry><code>unordered_map</code>要素アクセス</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -987,13 +983,13 @@ release.
     </row>
     <row>
       <entry>6.3.4.5</entry>
-      <entry>Class template <code>unordered_multiset</code></entry>
+      <entry>クラステンプレート <code>unordered_multiset</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.3.4.5.1</entry>
-      <entry><code>unordered_multiset</code> constructors</entry>
+      <entry><code>unordered_multiset</code> コンストラクタ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -1005,13 +1001,13 @@ release.
     </row>
     <row>
       <entry>6.3.4.6</entry>
-      <entry>Class template <code>unordered_multimap</code></entry>
+      <entry>クラステンプレート <code>unordered_multimap</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>6.3.4.6.1</entry>
-      <entry><code>unordered_multimap</code> constructors</entry>
+      <entry><code>unordered_multimap</code> コンストラクタ</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -1023,110 +1019,110 @@ release.
     </row>
     <row>
       <entry><emphasis>7</emphasis></entry>
-      <entry namest="c2" nameend="c4" align="left"><emphasis>Regular Expressions</emphasis></entry>
+      <entry namest="c2" nameend="c4" align="left"><emphasis>正規表現</emphasis></entry>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.1</entry>
-      <entry>Definitions</entry>
+      <entry>定義</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.2</entry>
-      <entry>Requirements</entry>
+      <entry>要求</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.3</entry>
-      <entry>Regular expressions summary</entry>
+      <entry>正規表現要約</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.4</entry>
-      <entry>Header <code>&lt;regex&gt;</code> synopsis</entry>
+      <entry>ヘッダ <code>&lt;regex&gt;</code> 梗概</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.5</entry>
-      <entry>Namespace <code>tr1::regex_constants</code></entry>
+      <entry>名前空間 <code>tr1::regex_constants</code></entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.5.1</entry>
-      <entry>Bitmask Type <code>syntax_option_type</code></entry>
+      <entry>ビットマスク型<code>syntax_option_type</code></entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.5.2</entry>
-      <entry>Bitmask Type <code>regex_constants::match_flag_type</code></entry>
+      <entry>ビットマスク型 <code>regex_constants::match_flag_type</code></entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.5.3</entry>
-      <entry>Implementation defined <code>error_type</code></entry>
+      <entry>実装定義の<code>error_type</code></entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.6</entry>
-      <entry>Class <code>regex_error</code></entry>
+      <entry>クラス <code>regex_error</code></entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.7</entry>
-      <entry>Class template <code>regex_traits</code></entry>
+      <entry>クラステンプレート <code>regex_traits</code></entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.8</entry>
-      <entry>Class template <code>basic_regex</code></entry>
+      <entry>クラステンプレート <code>basic_regex</code></entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.8.1</entry>
-      <entry><code>basic_regex</code> constants</entry>
+      <entry><code>basic_regex</code> 定数</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.8.2</entry>
-      <entry><code>basic_regex</code> constructors</entry>
+      <entry><code>basic_regex</code> コンストラクタ</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.8.3</entry>
-      <entry><code>basic_regex</code> assign</entry>
+      <entry><code>basic_regex</code> 代入</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.8.4</entry>
-      <entry><code>basic_regex</code> constant operations</entry>
+      <entry><code>basic_regex</code>定数操作</entry>
       <entry>N</entry>
       <entry/>
     </row>
@@ -1147,49 +1143,49 @@ release.
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.8.7</entry>
-      <entry><code>basic_regex</code> non-member functions</entry>
+      <entry><code>basic_regex</code>非メンバ関数</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.8.7.1</entry>
-      <entry><code>basic_regex</code> non-member swap</entry>
+      <entry><code>basic_regex</code> 非メンバswap</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.9</entry>
-      <entry>Class template <code>sub_match</code></entry>
+      <entry>クラステンプレート <code>sub_match</code></entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.9.1</entry>
-      <entry><code>sub_match</code> members</entry>
+      <entry><code>sub_match</code> メンバ</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.9.2</entry>
-      <entry><code>sub_match</code> non-member operators</entry>
+      <entry><code>sub_match</code>非メンバ演算子</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.10</entry>
-      <entry>Class template <code>match_results</code></entry>
+      <entry>クラステンプレート <code>match_results</code></entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.10.1</entry>
-      <entry><code>match_results</code> constructors</entry>
+      <entry><code>match_results</code> コンストラクタ</entry>
       <entry>N</entry>
       <entry/>
     </row>
@@ -1203,21 +1199,21 @@ release.
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.10.3</entry>
-      <entry><code>match_results</code> element access</entry>
+      <entry><code>match_results</code>要素アクセス</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.10.4</entry>
-      <entry><code>match_results</code> formatting</entry>
+      <entry><code>match_results</code> 書式化</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.10.5</entry>
-      <entry><code>match_results</code> allocator</entry>
+      <entry><code>match_results</code> アロケータ</entry>
       <entry>N</entry>
       <entry/>
     </row>
@@ -1231,14 +1227,14 @@ release.
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.11</entry>
-      <entry>Regular expression algorithms</entry>
+      <entry>正規表現アルゴリズム</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.11.1</entry>
-      <entry>exceptions</entry>
+      <entry>例外</entry>
       <entry>N</entry>
       <entry/>
     </row>
@@ -1266,310 +1262,310 @@ release.
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.12</entry>
-      <entry>Regular expression Iterators</entry>
+      <entry>正規表現イテレータ</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.12.1</entry>
-      <entry>Class template <code>regex_iterator</code></entry>
+      <entry>クラステンプレート <code>regex_iterator</code></entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.12.1.1</entry>
-      <entry><code>regex_iterator</code> constructors</entry>
+      <entry><code>regex_iterator</code> コンストラクタ</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.12.1.2</entry>
-      <entry><code>regex_iterator</code> comparisons</entry>
+      <entry><code>regex_iterator</code> 比較</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.12.1.3</entry>
-      <entry><code>regex_iterator</code> dereference</entry>
+      <entry><code>regex_iterator</code> 被参照</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.12.1.4</entry>
-      <entry><code>regex_iterator</code> increment</entry>
+      <entry><code>regex_iterator</code> インクリメント</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.12.2</entry>
-      <entry>Class template <code>regex_token_iterator</code></entry>
+      <entry>クラステンプレート <code>regex_token_iterator</code></entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.12.2.1</entry>
-      <entry><code>regex_token_iterator</code> constructors</entry>
+      <entry><code>regex_token_iterator</code> コンストラクタ</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.12.2.2</entry>
-      <entry><code>regex_token_iterator</code> comparisons</entry>
+      <entry><code>regex_token_iterator</code> 比較</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.12.2.3</entry>
-      <entry><code>regex_token_iterator</code> dereference</entry>
+      <entry><code>regex_token_iterator</code> 被参照</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.12.2.4</entry>
-      <entry><code>regex_token_iterator</code> increment</entry>
+      <entry><code>regex_token_iterator</code> インクリメント</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>7.13</entry>
-      <entry>Modified ECMAScript regular expression grammar</entry>
+      <entry>修正ECMAScript正規表現文法</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <entry><emphasis>8</emphasis></entry>
-      <entry namest="c2" nameend="c4" align="left"><emphasis>C Compatibility</emphasis></entry>
+      <entry namest="c2" nameend="c4" align="left"><emphasis>C 互換性</emphasis></entry>
     </row>
     <row>
       <entry>8.1</entry>
-      <entry>Additions to header <code>&lt;complex&gt;</code></entry>
+      <entry><code>&lt;complex&gt;</code>ヘッダへの追加</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.1.1</entry>
-      <entry>Synopsis</entry>
+      <entry>梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.1.2</entry>
-      <entry>Function <code>acos</code></entry>
+      <entry>関数 <code>acos</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.1.3</entry>
-      <entry>Function <code>asin</code></entry>
+      <entry>関数 <code>asin</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.1.4</entry>
-      <entry>Function <code>atan</code></entry>
+      <entry>関数 <code>atan</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.1.5</entry>
-      <entry>Function <code>acosh</code></entry>
+      <entry>関数 <code>acosh</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.1.6</entry>
-      <entry>Function <code>asinh</code></entry>
+      <entry>関数 <code>asinh</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.1.7</entry>
-      <entry>Function <code>atanh</code></entry>
+      <entry>関数 <code>atanh</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.1.8</entry>
-      <entry>Function <code>fabs</code></entry>
+      <entry>関数 <code>fabs</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.1.9</entry>
-      <entry>Additional Overloads</entry>
+      <entry>追加のオーバーロード</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>8.2</entry>
-      <entry>Header <code>&lt;ccomplex&gt;</code></entry>
+      <entry>ヘッダ <code>&lt;ccomplex&gt;</code></entry>
       <entry>N</entry>
       <entry>DR 551</entry>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>8.3</entry>
-      <entry>Header <code>&lt;complex.h&gt;</code></entry>
+      <entry>ヘッダ <code>&lt;complex.h&gt;</code></entry>
       <entry>N</entry>
       <entry>DR 551</entry>
     </row>
     <row>
       <entry>8.4</entry>
-      <entry>Additions to header <code>&lt;cctype&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;cctype&gt;</code>への追加</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.4.1</entry>
-      <entry>Synopsis</entry>
+      <entry>梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.4.2</entry>
-      <entry>Function <code>isblank</code></entry>
+      <entry>関数 <code>isblank</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.5</entry>
-      <entry>Additions to header <code>&lt;ctype.h&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;ctype.h&gt;</code>への追加</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.6</entry>
-      <entry>Header <code>&lt;cfenv&gt;</code></entry>
+      <entry>ヘッダ <code>&lt;cfenv&gt;</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.6.1</entry>
-      <entry>Synopsis</entry>
+      <entry>梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.6.2</entry>
-      <entry>Definitions</entry>
+      <entry>定義</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.7</entry>
-      <entry>Header <code>&lt;fenv.h&gt;</code></entry>
+      <entry>ヘッダ <code>&lt;fenv.h&gt;</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.8</entry>
-      <entry>Additions to header <code>&lt;cfloat&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;cfloat&gt;</code>への追加</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.9</entry>
-      <entry>Additions to header <code>&lt;float.h&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;float.h&gt;</code>への追加</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>8.10</entry>
-      <entry>Additions to header <code>&lt;ios&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;ios&gt;</code>への追加</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>8.10.1</entry>
-      <entry>Synopsis</entry>
+      <entry>梗概</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>8.10.2</entry>
-      <entry>Function <code>hexfloat</code></entry>
+      <entry>関数 <code>hexfloat</code></entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <entry>8.11</entry>
-      <entry>Header <code>&lt;cinttypes&gt;</code></entry>
+      <entry>ヘッダ <code>&lt;cinttypes&gt;</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.11.1</entry>
-      <entry>Synopsis</entry>
+      <entry>梗概</entry>
       <entry>Y</entry>
       <entry>DR 557</entry>
     </row>
     <row>
       <entry>8.11.2</entry>
-      <entry>Definitions</entry>
+      <entry>定義</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.12</entry>
-      <entry>Header <code>&lt;inttypes.h&gt;</code></entry>
+      <entry>ヘッダ <code>&lt;inttypes.h&gt;</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.13</entry>
-      <entry>Additions to header <code>&lt;climits&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;climits&gt;</code>への追加</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.14</entry>
-      <entry>Additions to header <code>&lt;limits.h&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;limits.h&gt;</code>への追加</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <?dbhtml bgcolor="#C8B0B0" ?>
       <entry>8.15</entry>
-      <entry>Additions to header <code>&lt;locale&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;locale&gt;</code>への追加</entry>
       <entry>N</entry>
       <entry/>
     </row>
     <row>
       <entry>8.16</entry>
-      <entry>Additions to header <code>&lt;cmath&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;cmath&gt;</code>への追加</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.16.1</entry>
-      <entry>Synopsis</entry>
+      <entry>梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.16.2</entry>
-      <entry>Definitions</entry>
+      <entry>定義</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.16.3</entry>
-      <entry>Function template definitions</entry>
+      <entry>関数テンプレート定義</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -1581,73 +1577,73 @@ release.
     </row>
     <row>
       <entry>8.17</entry>
-      <entry>Additions to header <code>&lt;math.h&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;math.h&gt;</code>への追加</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.18</entry>
-      <entry>Additions to header <code>&lt;cstdarg&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;cstdarg&gt;</code>への追加</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.19</entry>
-      <entry>Additions to header <code>&lt;stdarg.h&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;stdarg.h&gt;</code>への追加</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.20</entry>
-      <entry>The header <code>&lt;cstdbool&gt;</code></entry>
+      <entry>ヘッダ <code>&lt;cstdbool&gt;</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.21</entry>
-      <entry>The header <code>&lt;stdbool.h&gt;</code></entry>
+      <entry>ヘッダ <code>&lt;stdbool.h&gt;</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.22</entry>
-      <entry>The header <code>&lt;cstdint&gt;</code></entry>
+      <entry>ヘッダ <code>&lt;cstdint&gt;</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.22.1</entry>
-      <entry>Synopsis</entry>
+      <entry>梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.22.2</entry>
-      <entry>Definitions</entry>
+      <entry>定義</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.23</entry>
-      <entry>The header <code>&lt;stdint.h&gt;</code></entry>
+      <entry>ヘッダ <code>&lt;stdint.h&gt;</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.24</entry>
-      <entry>Additions to header <code>&lt;cstdio&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;cstdio&gt;</code>への追加</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.24.1</entry>
-      <entry>Synopsis</entry>
+      <entry>梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.24.2</entry>
-      <entry>Definitions</entry>
+      <entry>定義</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -1659,79 +1655,79 @@ release.
     </row>
     <row>
       <entry>8.24.4</entry>
-      <entry>Additions to header <code>&lt;stdio.h&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;stdio.h&gt;</code>への追加</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.25</entry>
-      <entry>Additions to header <code>&lt;cstdlib&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;cstdlib&gt;</code>への追加</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.25.1</entry>
-      <entry>Synopsis</entry>
+      <entry>梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.25.2</entry>
-      <entry>Definitions</entry>
+      <entry>定義</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.25.3</entry>
-      <entry>Function <code>abs</code></entry>
+      <entry>関数 <code>abs</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.25.4</entry>
-      <entry>Function <code>div</code></entry>
+      <entry>関数 <code>div</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.26</entry>
-      <entry>Additions to header <code>&lt;stdlib.h&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;stdlib.h&gt;</code>への追加</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.27</entry>
-      <entry>Header <code>&lt;ctgmath&gt;</code></entry>
+      <entry>ヘッダ <code>&lt;ctgmath&gt;</code></entry>
       <entry>Y</entry>
       <entry>DR 551</entry>
     </row>
     <row>
       <entry>8.28</entry>
-      <entry>Header <code>&lt;tgmath.h&gt;</code></entry>
+      <entry>ヘッダ <code>&lt;tgmath.h&gt;</code></entry>
       <entry>Y</entry>
       <entry>DR 551</entry>
     </row>
     <row>
       <entry>8.29</entry>
-      <entry>Additions to header <code>&lt;ctime&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;ctime&gt;</code>への追加</entry>
       <entry>Y</entry>
       <entry>C library dependency</entry>
     </row>
     <row>
       <entry>8.30</entry>
-      <entry>Additions to header <code>&lt;cwchar&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;cwchar&gt;</code>への追加</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.30.1</entry>
-      <entry>Synopsis</entry>
+      <entry>梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.30.2</entry>
-      <entry>Definitions</entry>
+      <entry>定義</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -1743,31 +1739,31 @@ release.
     </row>
     <row>
       <entry>8.31</entry>
-      <entry>Additions to header <code>&lt;wchar.h&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;wchar.h&gt;</code>への追加</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.32</entry>
-      <entry>Additions to header <code>&lt;cwctype&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;cwctype&gt;</code>への追加</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.32.1</entry>
-      <entry>Synopsis</entry>
+      <entry>梗概</entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.32.2</entry>
-      <entry>Function <code>iswblank</code></entry>
+      <entry>関数 <code>iswblank</code></entry>
       <entry>Y</entry>
       <entry/>
     </row>
     <row>
       <entry>8.33</entry>
-      <entry>Additions to header <code>&lt;wctype.h&gt;</code></entry>
+      <entry>ヘッダ<code>&lt;wctype.h&gt;</code>への追加</entry>
       <entry>Y</entry>
       <entry/>
     </row>
@@ -1775,18 +1771,14 @@ release.
 </tgroup>
 </table>
 
-<section xml:id="iso.tr1.specific" xreflabel="Implementation Specific"><info><title>Implementation Specific Behavior</title></info>
+<section xml:id="iso.tr1.specific" xreflabel="Implementation Specific"><info><title>実装指定の振る舞い</title></info>
 
-   <para>For behaviour which is specified by the 1998 and 2003 standards,
-      see <link linkend="iso.1998.specific">C++ 1998/2003 Implementation
-      Specific Behavior</link>. This section documents behaviour which
-      is required by TR1.
+   <para>1998年と2003年の標準で規定されている動作については、<link linkend="iso.1998.specific">C ++ 1998/2003実装固有の動作</ link>を参照せよ。 このセクションでは、TR1が要求する動作について説明する。
    </para>
 
    <para>
-     <emphasis>3.6.4 [tr.func.bind.place]/1</emphasis> There are 29
-     placeholders defined and the placeholder types are
-     <literal>Assignable</literal>.
+     <emphasis>3.6.4 [tr.func.bind.place]/1</emphasis> 29個のプレースホルダが定義されており、プレースホルダタイプは
+     <literal>Assignable</literal>である。
    </para>
 
 </section>
