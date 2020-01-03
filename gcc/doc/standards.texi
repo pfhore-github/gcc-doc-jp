@@ -36,6 +36,8 @@
 @cindex C1X
 @cindex ISO C17
 @cindex C17
+@cindex ISO C2X
+@cindex C2X
 @cindex Technical Corrigenda
 @cindex TC1
 @cindex Technical Corrigendum 1
@@ -84,6 +86,8 @@ GCCは、訂正されてないバージョンをサポートしない。
 @dfn{C11}として知られているC標準の第4のバージョンは、9899:2011でISO/IECとして2011年に発表された。
 （開発においてある間、この標準的な版の草案は@dfn{C1X}と呼ばれた。）
 GCCはこの標準に対するかなり完全な支持をする。そして、@option{-std=c11}または@option{-std=iso9899:2011}で使用可能にされる。統合された修正版は@dfn{C17}と呼ばれ、@option{-std=c17}または@option{-std=iso9899:2017}でサポートされている。 訂正は@option{-std=c11}でも適用され、オプション間の唯一の違いは@code{__STDC_VERSION__}の値である。
+
+@dfn{C2X}として知られるC標準のさらなるバージョンが開発中です。これに対する実験的で不完全なサポートは、@option {-std=c2x}で有効になります。
 
 GCCはデフォルトで、まれにC標準と衝突するC言語への拡張を提供する。
 @xref{C Extensions,,C言語族への拡張}。あるC99標準の一部の機能はC90モードの拡張と認められ、
@@ -151,12 +155,6 @@ GCCでこの標準を選ぶために、オプション@option{-std=c++14}を使�
 
 C++言語は2017年にさらに改訂され、ISO/IEC 14882：2017が発行された。 これはC++17と呼ばれ、出版前はしばしばC++1zと呼ばれていた。 GCCは、新しい仕様のすべての変更をサポートしている。 詳細は@uref{https://gcc.gnu.org/projects/@/cxx-status.html#cxx1z}を見よ。C++のこの変種を選択するためには@option{-std=c++17}オプションを使用する。
 
-GCCはC++ Concepts技術仕様（ISO/IEC TS 19217:2015）もサポートする。そして、それはテンプレートの制約を定義し、
-テンプレートの引数をチェックして制約に基づいてオーバーロードや特殊化をすることを可能にする。
-ISO C++標準の次の改訂に対応する実験的なC++1zモードに、C++Conceptに対するサポートは含まれる。
-そして、2017年に発表されることになっている。GCCでC++1zサポートを使用可能にするために、
-オプション@option{-std=c++17}または@option{-std=c++1z}を使う。
-
 C++標準に関する詳細な情報は、@uref{http://www.open-std.org/jtc1/sc22/wg21/}でISO C++委員会
 のウェブサイトで利用可能である。
 
@@ -180,7 +178,7 @@ GCCは「伝統的な」Objective-C（別名「Objective-C 1.0」）をサポー
 
 GCCはGNU Objective-Cランタイムライブラリをデフォルトで使用する。そして、それはGCCの一部で、アップル・システム上で使われるApple/NeXT Objective-Cランタイムライブラリと同じでない。このマニュアルで文書化されるいくつかの違いがある。オプション@option{-fgnu-runtime}と@option{-fnext-runtime}でGNU Objective-Cランタイムライブラリで働く生成の出力とApple/NeXT Objective-Cランタイムライブラリで働く出力の間で切り替えることができる。
 
-Objective-Cまたは客観的なC++のための形式的書面にした基準はない。伝統的なObjective-C (1.0)に関する信頼すべきマニュアルは、「オブジェクト指向プログラミングとObjective-C言語」である：
+Objective-CまたはObjectiveC++のための形式的書面にした基準はない。伝統的なObjective-C (1.0)に関する信頼すべきマニュアルは、「オブジェクト指向プログラミングとObjective-C言語」である：
 @uref{http://www.gnustep.org/@/resources/@/documentation/@/ObjectivCBook.pdf}はオリジナルのNeXTstepの文書である。
 
 Objective-Cの例外と同期化の構文（すなわち、キーワード@code{@@try}, @code{@@throw}, @code{@@catch}, @code{@@finally}, 
@@ -214,6 +212,10 @@ GCCは、HSA Programmer's Reference Manualバージョン1.0.1で説明されて
 バイナリ表現（BRIG）をコンパイルできます。
 この機能は、gccがサポートするプロセッサ用のHSAランタイムAPIのHSAILファイナライズ拡張機能を実装するために使用されます。
 HSA標準は@uref {http://www.hsafoundation.com/standards/}で自由に入手可能です。
+
+@section D language
+
+GCCはD 2.0プログラミング言語をサポートしています。 D言語自体は現在、@uref{https://dlang.org/spec/spec.html}で説明されている参照実装とサポート言語仕様によって定義されています。
 
 @section 他の言語への参照
 

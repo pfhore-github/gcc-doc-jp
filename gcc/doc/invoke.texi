@@ -1,4 +1,4 @@
-@c Copyright (C) 1988-2018 Free Software Foundation, Inc.
+@c Copyright (C) 1988-2020 Free Software Foundation, Inc.
 @c This is part of the GCC manual.
 @c For copying conditions, see the file gcc.texi.
 
@@ -8,7 +8,7 @@
 @c man end
 
 @c man begin COPYRIGHT
-Copyright @copyright{} 1988-2018 Free Software Foundation, Inc.
+Copyright @copyright{} 1988-2020 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -111,6 +111,9 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 @option{-Wformat}など。それらの大抵は肯定形と否定形を持つ。@option{-ffoo}の否定形は@option{-fno-foo}である。
 このマニュアルはそれらの形の、デフォルトでない方のみを記述する。
 
+一部のオプションは、オプション名からスペースまたは等号（@samp{=}）で区切られた1つ以上の引数を取ります。
+特に記載がない限り、引数は数値または文字列のいずれかです。 数値引数は通常、小さな符号なし10進数または16進数の整数でなければなりません。16進引数は@samp{0x}プレフィックスで始まる必要があります。 ある種のサイズしきい値を指定するオプションの引数は、キロバイトとキビバイトの@code{kB}と@code{KiB}など、複数のバイトを指定するバイトサイズサフィックスが後に続く任意の大きな10進または16進整数です。メガバイトとメビバイトの場合は@code{MB}と@code{MiB}、ギガバイトとギギバイトの場合は@code{GB}と@code{GiB}などです。  このような引数は、次のテキストで@var{byte-size}で指定されます。 2進および10進のバイトサイズプレフィックスの完全なリストと説明については、NIST、IEC、およびその他の関連する国内および国際規格を参照してください。
+
 @c man end
 
 @xref{Option Index}はGCCはオプションの索引である
@@ -163,7 +166,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -fpermitted-flt-eval-methods=@var{standard} 
 -aux-info @var{filename}  -fallow-parameterless-variadic-functions 
 -fno-asm  -fno-builtin  -fno-builtin-@var{function}  -fgimple
--fhosted  -ffreestanding  -fopenacc  -fopenmp  -fopenmp-simd 
+-fhosted  -ffreestanding  -fopenacc  -fopenacc-dim=@var{geom} -fopenmp  -fopenmp-simd 
 -fms-extensions  -fplan9-extensions  -fsso-struct=@var{endianness} 
 -fallow-single-precision  -fcond-mismatch  -flax-vector-conversions 
 -fsigned-bitfields  -fsigned-char 
@@ -172,12 +175,11 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 @item C++言語オプション
 @xref{C++ Dialect Options,,C++変種を制御するオプション}.
 @gccoptlist{-fabi-version=@var{n}  -fno-access-control 
--faligned-new=@var{n}  -fargs-in-order=@var{n}  -fcheck-new 
+-faligned-new=@var{n}  -fargs-in-order=@var{n}  -fchar8_t  -fcheck-new 
 -fconstexpr-depth=@var{n}  -fconstexpr-loop-limit=@var{n} 
--ffriend-injection 
--fno-elide-constructors 
+-fconstexpr-ops-limit=@var{n} -fno-elide-constructors 
 -fno-enforce-eh-specs 
--ffor-scope  -fno-for-scope  -fno-gnu-keywords 
+-fno-gnu-keywords 
 -fno-implicit-templates 
 -fno-implicit-inline-templates 
 -fno-implement-inlines  -fms-extensions 
@@ -195,13 +197,17 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -fvisibility-ms-compat 
 -fext-numeric-literals 
 -Wabi=@var{n}  -Wabi-tag  -Wconversion-null  -Wctor-dtor-privacy 
--Wdelete-non-virtual-dtor  -Wliteral-suffix  -Wmultiple-inheritance 
+-Wdelete-non-virtual-dtor  -Wdeprecated-copy  -Wdeprecated-copy-dtor 
+-Wliteral-suffix 
+-Wmultiple-inheritance  -Wno-init-list-lifetime 
 -Wnamespaces  -Wnarrowing 
--Wnoexcept  -Wnoexcept-type  -Wclass-memaccess
--Wnon-virtual-dtor  -Wreorder  -Wregister
+-Wpessimizing-move  -Wredundant-move 
+-Wnoexcept  -Wnoexcept-type  -Wclass-memaccess 
+-Wnon-virtual-dtor  -Wreorder  -Wregister 
 -Weffc++  -Wstrict-null-sentinel  -Wtemplates 
 -Wno-non-template-friend  -Wold-style-cast 
 -Woverloaded-virtual  -Wno-pmf-conversions 
+-Wno-class-conversion  -Wno-terminate 
 -Wsign-promo  -Wvirtual-inheritance}
 
 @item Objective-CとObjective-C++言語オプション
@@ -231,61 +237,70 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 @gccoptlist{-fmessage-length=@var{n}  
 -fdiagnostics-show-location=@r{[}once@r{|}every-line@r{]}  
 -fdiagnostics-color=@r{[}auto@r{|}never@r{|}always@r{]}  
+-fdiagnostics-format=@r{[}text@r{|}json@r{]}  
 -fno-diagnostics-show-option  -fno-diagnostics-show-caret 
+-fno-diagnostics-show-labels  -fno-diagnostics-show-line-numbers 
+-fdiagnostics-minimum-margin-width=@var{width} 
 -fdiagnostics-parseable-fixits  -fdiagnostics-generate-patch 
-+ -fdiagnostics-show-template-tree -fno-elide-type
+-fdiagnostics-show-template-tree  -fno-elide-type 
 -fno-show-column}
 
 @item 警告オプション
 @xref{Warning Options,,警告の要求・抑制をするオプション}.
 @gccoptlist{-fsyntax-only  -fmax-errors=@var{n}  -Wpedantic 
 -pedantic-errors 
--w  -Wextra  -Wall  -Waddress  -Waggregate-return  
--Walloc-zero  -Walloc-size-larger-than=@var{n}
--Walloca  -Walloca-larger-than=@var{n} 
+-w  -Wextra  -Wall  -Waddress  -Waddress-of-packed-member 
+-Waggregate-return  -Waligned-new 
+-Walloc-zero  -Walloc-size-larger-than=@var{byte-size} 
+-Walloca  -Walloca-larger-than=@var{byte-size} 
 -Wno-aggressive-loop-optimizations  -Warray-bounds  -Warray-bounds=@var{n} 
--Wno-attributes  -Wbool-compare  -Wbool-operation 
+-Wno-attributes  -Wattribute-alias=@var{n}  
+-Wbool-compare  -Wbool-operation 
 -Wno-builtin-declaration-mismatch 
 -Wno-builtin-macro-redefined  -Wc90-c99-compat  -Wc99-c11-compat 
--Wc++-compat  -Wc++11-compat  -Wc++14-compat 
--Wcast-align  -Wcast-align=strict  -Wcast-function-type  -Wcast-qual 
--Wchar-subscripts  -Wchkp  -Wcatch-value  -Wcatch-value=@var{n}
--Wclobbered  -Wcomment  -Wconditionally-supported
+-Wc++-compat  -Wc++11-compat  -Wc++14-compat  -Wc++17-compat  
+-Wcast-align  -Wcast-align=strict  -Wcast-function-type  -Wcast-qual  
+-Wchar-subscripts  -Wcatch-value  -Wcatch-value=@var{n} 
+-Wclobbered  -Wcomment  -Wconditionally-supported 
 -Wconversion  -Wcoverage-mismatch  -Wno-cpp  -Wdangling-else  -Wdate-time 
 -Wdelete-incomplete 
+-Wno-attribute-warning 
 -Wno-deprecated  -Wno-deprecated-declarations  -Wno-designated-init 
 -Wdisabled-optimization 
 -Wno-discarded-qualifiers  -Wno-discarded-array-qualifiers 
 -Wno-div-by-zero  -Wdouble-promotion 
 -Wduplicated-branches  -Wduplicated-cond 
 -Wempty-body  -Wenum-compare  -Wno-endif-labels  -Wexpansion-to-defined 
--Werror  -Werror=*  -Wextra-semi  -Wfatal-errors
--Wfloat-equal  -Wformat  -Wformat=2
+-Werror  -Werror=*  -Wextra-semi  -Wfatal-errors 
+-Wfloat-equal  -Wformat  -Wformat=2 
 -Wno-format-contains-nul  -Wno-format-extra-args  
--Wformat-nonliteral -Wformat-overflow=@var{n} 
+-Wformat-nonliteral  -Wformat-overflow=@var{n} 
 -Wformat-security  -Wformat-signedness  -Wformat-truncation=@var{n} 
 -Wformat-y2k  -Wframe-address 
--Wframe-larger-than=@var{len}  -Wno-free-nonheap-object  -Wjump-misses-init 
--Wif-not-aligned
+-Wframe-larger-than=@var{byte-size}  -Wno-free-nonheap-object 
+-Wjump-misses-init 
+-Whsa  -Wif-not-aligned 
 -Wignored-qualifiers  -Wignored-attributes  -Wincompatible-pointer-types 
 -Wimplicit  -Wimplicit-fallthrough  -Wimplicit-fallthrough=@var{n} 
 -Wimplicit-function-declaration  -Wimplicit-int 
 -Winit-self  -Winline  -Wno-int-conversion  -Wint-in-bool-context 
 -Wno-int-to-pointer-cast  -Winvalid-memory-model  -Wno-invalid-offsetof 
--Winvalid-pch  -Wlarger-than=@var{len} 
+-Winvalid-pch  -Wlarger-than=@var{byte-size} 
 -Wlogical-op  -Wlogical-not-parentheses  -Wlong-long 
 -Wmain  -Wmaybe-uninitialized  -Wmemset-elt-size  -Wmemset-transposed-args 
--Wmisleading-indentation  -Wmissing-attributes -Wmissing-braces
--Wmissing-field-initializers  -Wmissing-include-dirs 
--Wno-multichar  -Wmultistatement-macros  -Wnonnull  -Wnonnull-compare
+-Wmisleading-indentation  -Wmissing-attributes  -Wmissing-braces 
+-Wmissing-field-initializers  -Wmissing-format-attribute 
+-Wmissing-include-dirs  -Wmissing-noreturn  -Wmissing-profile 
+-Wno-multichar  -Wmultistatement-macros  -Wnonnull  -Wnonnull-compare 
 -Wnormalized=@r{[}none@r{|}id@r{|}nfc@r{|}nfkc@r{]} 
 -Wnull-dereference  -Wodr  -Wno-overflow  -Wopenmp-simd  
 -Woverride-init-side-effects  -Woverlength-strings 
--Wpacked  -Wpacked-bitfield-compat -Wpacked-not-aligned -Wpadded
+-Wpacked  -Wpacked-bitfield-compat -Wpacked-not-aligned  -Wpadded 
 -Wparentheses  -Wno-pedantic-ms-format 
 -Wplacement-new  -Wplacement-new=@var{n} 
 -Wpointer-arith  -Wpointer-compare  -Wno-pointer-to-int-cast 
--Wno-pragmas  -Wredundant-decls  -Wrestrict  -Wno-return-local-addr 
+-Wno-pragmas  -Wno-prio-ctor-dtor  -Wredundant-decls 
+-Wrestrict  -Wno-return-local-addr 
 -Wreturn-type  -Wsequence-point  -Wshadow  -Wno-shadow-ivar 
 -Wshadow=global,  -Wshadow=local,  -Wshadow=compatible-local 
 -Wshift-overflow  -Wshift-overflow=@var{n} 
@@ -293,12 +308,11 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -Wsign-compare  -Wsign-conversion  -Wfloat-conversion 
 -Wno-scalar-storage-order  -Wsizeof-pointer-div 
 -Wsizeof-pointer-memaccess  -Wsizeof-array-argument 
--Wstack-protector  -Wstack-usage=@var{len}  -Wstrict-aliasing 
+-Wstack-protector  -Wstack-usage=@var{byte-size}  -Wstrict-aliasing 
 -Wstrict-aliasing=n  -Wstrict-overflow  -Wstrict-overflow=@var{n} 
--Wstringop-overflow=@var{n} -Wstringop-truncation
+-Wstringop-overflow=@var{n}  -Wstringop-truncation  -Wsubobject-linkage 
 -Wsuggest-attribute=@r{[}pure@r{|}const@r{|}noreturn@r{|}format@r{|}malloc@r{]} 
 -Wsuggest-final-types   -Wsuggest-final-methods  -Wsuggest-override 
--Wmissing-format-attribute  -Wsubobject-linkage 
 -Wswitch  -Wswitch-bool  -Wswitch-default  -Wswitch-enum 
 -Wswitch-unreachable  -Wsync-nand 
 -Wsystem-headers  -Wtautological-compare  -Wtrampolines  -Wtrigraphs 
@@ -311,8 +325,9 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -Wunused-const-variable  -Wunused-const-variable=@var{n} 
 -Wunused-but-set-parameter  -Wunused-but-set-variable 
 -Wuseless-cast  -Wvariadic-macros  -Wvector-operation-performance 
--Wvla  -Wvla-larger-than=@var{n}  -Wvolatile-register-var  -Wwrite-strings 
--Wzero-as-null-pointer-constant  -Whsa}
+-Wvla  -Wvla-larger-than=@var{byte-size}  -Wvolatile-register-var 
+-Wwrite-strings 
+-Wzero-as-null-pointer-constant}
 
 @item CとObjective-C専用の警告オプション
 @gccoptlist{-Wbad-function-cast  -Wmissing-declarations 
@@ -323,7 +338,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 
 @item デバッグオプション
 @xref{Debugging Options,,あなたのプログラムをデバッグするためのオプション}.
-@gccoptlist{-g  -g@var{level}  -gdwarf  -gdwarf-@var{version}
+@gccoptlist{-g  -g@var{level}  -gdwarf  -gdwarf-@var{version} 
 -ggdb  -grecord-gcc-switches  -gno-record-gcc-switches 
 -gstabs  -gstabs+  -gstrict-dwarf  -gno-strict-dwarf 
 -gas-loc-support  -gno-as-loc-support 
@@ -334,17 +349,22 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -ginternal-reset-location-views  -gno-internal-reset-location-views 
 -ginline-points  -gno-inline-points 
 -gvms  -gxcoff  -gxcoff+  -gz@r{[}=@var{type}@r{]} 
+-gsplit-dwarf  -gdescribe-dies  -gno-describe-dies 
 -fdebug-prefix-map=@var{old}=@var{new}  -fdebug-types-section 
 -fno-eliminate-unused-debug-types 
+-femit-struct-debug-baseonly  -femit-struct-debug-reduced 
+-femit-struct-debug-detailed@r{[}=@var{spec-list}@r{]} 
 -feliminate-unused-debug-symbols  -femit-class-debug-always 
 -fno-merge-debug-strings  -fno-dwarf2-cfi-asm 
 -fvar-tracking  -fvar-tracking-assignments}
 
 @item 最適化オプション
 @xref{Optimize Options,,最適化を制御するオプション}.
-@gccoptlist{-faggressive-loop-optimizations  -falign-functions[=@var{n}] 
--falign-jumps[=@var{n}] 
--falign-labels[=@var{n}]  -falign-loops[=@var{n}] 
+@gccoptlist{-faggressive-loop-optimizations 
+-falign-functions[=@var{n}[:@var{m}:[@var{n2}[:@var{m2}]]]] 
+-falign-jumps[=@var{n}[:@var{m}:[@var{n2}[:@var{m2}]]]] 
+-falign-labels[=@var{n}[:@var{m}:[@var{n2}[:@var{m2}]]]] 
+-falign-loops[=@var{n}[:@var{m}:[@var{n2}[:@var{m2}]]]] 
 -fassociative-math  -fauto-profile  -fauto-profile[=@var{path}] 
 -fauto-inc-dec  -fbranch-probabilities 
 -fbranch-target-load-optimize  -fbranch-target-load-optimize2 
@@ -364,9 +384,10 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -fif-conversion2  -findirect-inlining 
 -finline-functions  -finline-functions-called-once  -finline-limit=@var{n} 
 -finline-small-functions  -fipa-cp  -fipa-cp-clone 
--fipa-bit-cp -fipa-vrp 
--fipa-pta  -fipa-profile  -fipa-pure-const  -fipa-reference  -fipa-icf 
--fira-algorithm=@var{algorithm} 
+-fipa-bit-cp  -fipa-vrp  -fipa-pta  -fipa-profile  -fipa-pure-const 
+-fipa-reference  -fipa-reference-addressable 
+-fipa-stack-alignment  -fipa-icf  -fira-algorithm=@var{algorithm} 
+-flive-patching=@var{level} 
 -fira-region=@var{region}  -fira-hoist-pressure 
 -fira-loop-pressure  -fno-ira-share-save-slots 
 -fno-ira-share-spill-slots 
@@ -394,7 +415,8 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -freorder-blocks-algorithm=@var{algorithm} 
 -freorder-blocks-and-partition  -freorder-functions 
 -frerun-cse-after-loop  -freschedule-modulo-scheduled-loops 
--frounding-math  -fsched2-use-superblocks  -fsched-pressure 
+-frounding-math  -fsave-optimization-record 
+-fsched2-use-superblocks  -fsched-pressure 
 -fsched-spec-load  -fsched-spec-load-dangerous 
 -fsched-stalled-insns-dep[=@var{n}]  -fsched-stalled-insns[=@var{n}] 
 -fsched-group-heuristic  -fsched-critical-path-heuristic 
@@ -419,7 +441,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -ftree-loop-ivcanon  -ftree-loop-linear  -ftree-loop-optimize 
 -ftree-loop-vectorize 
 -ftree-parallelize-loops=@var{n}  -ftree-pre  -ftree-partial-pre  -ftree-pta 
--ftree-reassoc  -ftree-sink  -ftree-slsr  -ftree-sra 
+-ftree-reassoc  -ftree-scev-cprop  -ftree-sink  -ftree-slsr  -ftree-sra 
 -ftree-switch-conversion  -ftree-tail-merge 
 -ftree-ter  -ftree-vectorize  -ftree-vrp  -funconstrained-commons 
 -funit-at-a-time  -funroll-all-loops  -funroll-loops 
@@ -432,21 +454,14 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 @item プログラム計装オプション
 @xref{Instrumentation Options,,プログラム計装オプション}.
 @gccoptlist{-p  -pg  -fprofile-arcs  --coverage  -ftest-coverage 
--fprofile-abs-path
+-fprofile-abs-path 
 -fprofile-dir=@var{path}  -fprofile-generate  -fprofile-generate=@var{path} 
+-fprofile-update=@var{method}  -fprofile-filter-files=@var{regex} 
+-fprofile-exclude-files=@var{regex} 
 -fsanitize=@var{style}  -fsanitize-recover  -fsanitize-recover=@var{style} 
 -fasan-shadow-offset=@var{number}  -fsanitize-sections=@var{s1},@var{s2},... 
 -fsanitize-undefined-trap-on-error  -fbounds-check 
--fcheck-pointer-bounds  -fchkp-check-incomplete-type 
--fchkp-first-field-has-own-bounds  -fchkp-narrow-bounds 
--fchkp-narrow-to-innermost-array  -fchkp-optimize 
--fchkp-use-fast-string-functions  -fchkp-use-nochk-string-functions 
--fchkp-use-static-bounds  -fchkp-use-static-const-bounds 
--fchkp-treat-zero-dynamic-size-as-infinite  -fchkp-check-read 
--fchkp-check-read  -fchkp-check-write  -fchkp-store-bounds 
--fchkp-instrument-calls  -fchkp-instrument-marked-only 
--fchkp-use-wrappers  -fchkp-flexible-struct-trailing-arrays
--fcf-protection=@r{[}full@r{|}branch@r{|}return@r{|}none@r{]}
+-fcf-protection=@r{[}full@r{|}branch@r{|}return@r{|}none@r{]} 
 -fstack-protector  -fstack-protector-all  -fstack-protector-strong 
 -fstack-protector-explicit  -fstack-check 
 -fstack-limit-register=@var{reg}  -fstack-limit-symbol=@var{sym} 
@@ -465,9 +480,9 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -dD  -dI  -dM  -dN  -dU 
 -fdebug-cpp  -fdirectives-only  -fdollars-in-identifiers  
 -fexec-charset=@var{charset}  -fextended-identifiers  
--finput-charset=@var{charset} -fmacro-prefix-map=@var{old}=@var{new}  
+-finput-charset=@var{charset}  -fmacro-prefix-map=@var{old}=@var{new}  
 -fno-canonical-system-headers  -fpch-deps  -fpch-preprocess  
--fpreprocessed -ftabstop=@var{width}  -ftrack-macro-expansion  
+-fpreprocessed  -ftabstop=@var{width}  -ftrack-macro-expansion  
 -fwide-exec-charset=@var{charset}  -fworking-directory 
 -H  -imacros @var{file}  -include @var{file} 
 -M  -MD  -MF  -MG  -MM  -MMD  -MP  -MQ  -MT 
@@ -483,10 +498,11 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 @item リンカオプション
 @xref{Link Options,,リンクのオプション}.
 @gccoptlist{@var{object-file-name}  -fuse-ld=@var{linker}  -l@var{library} 
--nostartfiles  -nodefaultlibs  -nostdlib  -pie  -pthread  -rdynamic 
--s  -static -static-pie -static-libgcc  -static-libstdc++
+-nostartfiles  -nodefaultlibs  -nolibc  -nostdlib 
+-e @var{entry}  --entry=@var{entry} 
+-pie  -pthread  -r  -rdynamic 
+-s  -static  -static-pie  -static-libgcc  -static-libstdc++ 
 -static-libasan  -static-libtsan  -static-liblsan  -static-libubsan 
--static-libmpx  -static-libmpxwrappers 
 -shared  -shared-libgcc  -symbolic 
 -T @var{script}  -Wl,@var{option}  -Xlinker @var{option} 
 -u @var{symbol}  -z @var{keyword}}
@@ -501,6 +517,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -iwithprefix @var{dir}  -iwithprefixbefore @var{dir}  
 -L@var{dir}  -no-canonical-prefixes  --no-sysroot-suffix 
 -nostdinc  -nostdinc++  --sysroot=@var{dir}}
+
 
 @item コード生成オプション
 @xref{Code Gen Options,,コード生成規約オプション}.
@@ -531,17 +548,17 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -fdisable-rtl-@var{pass-name}=@var{range-list} 
 -fdisable-tree-@var{pass_name} 
 -fdisable-tree-@var{pass-name}=@var{range-list} 
+-fdump-debug  -fdump-earlydebug 
 -fdump-noaddr  -fdump-unnumbered  -fdump-unnumbered-links 
--fdump-class-hierarchy@r{[}-@var{n}@r{]} 
+-fdump-final-insns@r{[}=@var{file}@r{]} 
 -fdump-ipa-all  -fdump-ipa-cgraph  -fdump-ipa-inline 
--fdump-lang-all @gol
--fdump-lang-@var{switch} @gol
--fdump-lang-@var{switch}-@var{options} @gol
--fdump-lang-@var{switch}-@var{options}=@var{filename} @gol
+-fdump-lang-all 
+-fdump-lang-@var{switch} 
+-fdump-lang-@var{switch}-@var{options} 
+-fdump-lang-@var{switch}-@var{options}=@var{filename} 
 -fdump-passes 
 -fdump-rtl-@var{pass}  -fdump-rtl-@var{pass}=@var{filename} 
 -fdump-statistics 
--fdump-final-insns@r{[}=@var{file}@r{]}
 -fdump-tree-all 
 -fdump-tree-@var{switch} 
 -fdump-tree-@var{switch}-@var{options} 
@@ -574,16 +591,19 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 @gccoptlist{-mabi=@var{name}  -mbig-endian  -mlittle-endian 
 -mgeneral-regs-only 
 -mcmodel=tiny  -mcmodel=small  -mcmodel=large 
--mstrict-align 
--momit-leaf-frame-pointer @gol
+-mstrict-align  -mno-strict-align 
+-momit-leaf-frame-pointer 
 -mtls-dialect=desc  -mtls-dialect=traditional 
 -mtls-size=@var{size} 
 -mfix-cortex-a53-835769  -mfix-cortex-a53-843419 
--mlow-precision-recip-sqrt  -mlow-precision-sqrt  -mlow-precision-div
+-mlow-precision-recip-sqrt  -mlow-precision-sqrt  -mlow-precision-div 
 -mpc-relative-literal-loads 
--msign-return-address=@var{scope} @gol
--march=@var{name}  -mcpu=@var{name}  -mtune=@var{name} 
--moverride=@var{string}  -mverbose-cost-dump}
+-msign-return-address=@var{scope} 
+-mbranch-protection=@var{none}|@var{standard}|@var{pac-ret}[+@var{leaf}]|@var{bti} 
+-march=@var{name}  -mcpu=@var{name}  -mtune=@var{name}  
+-moverride=@var{string}  -mverbose-cost-dump 
+-mstack-protector-guard=@var{guard} -mstack-protector-guard-reg=@var{sysreg} 
+-mstack-protector-guard-offset=@var{offset} -mtrack-speculation }
 
 @emph{Adapteva Epiphany Options}
 @gccoptlist{-mhalf-reg-file  -mprefer-short-insn-regs 
@@ -593,34 +613,38 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -mfp-mode=@var{mode}  -mvect-double  -max-vect-align=@var{num} 
 -msplit-vecmove-early  -m1reg-@var{reg}}
 
+@emph{AMD GCN Options}
+@gccoptlist{-march=@var{gpu} -mtune=@var{gpu} -mstack-size=@var{bytes}}
+
 @emph{ARC Options}
-@gccoptlist{-mbarrel-shifter -mjli-always
+@gccoptlist{-mbarrel-shifter  -mjli-always 
 -mcpu=@var{cpu}  -mA6  -mARC600  -mA7  -mARC700 
 -mdpfp  -mdpfp-compact  -mdpfp-fast  -mno-dpfp-lrsr 
 -mea  -mno-mpy  -mmul32x16  -mmul64  -matomic 
 -mnorm  -mspfp  -mspfp-compact  -mspfp-fast  -msimd  -msoft-float  -mswap 
 -mcrc  -mdsp-packa  -mdvbf  -mlock  -mmac-d16  -mmac-24  -mrtsc  -mswape 
 -mtelephony  -mxy  -misize  -mannotate-align  -marclinux  -marclinux_prof 
--mlong-calls  -mmedium-calls  -msdata 
--mrgf-banked-regs -mlpc-width=@var{width} -G @var{num} 
+-mlong-calls  -mmedium-calls  -msdata  -mirq-ctrl-saved 
+-mrgf-banked-regs  -mlpc-width=@var{width}  -G @var{num} 
 -mvolatile-cache  -mtp-regno=@var{regno} 
 -malign-call  -mauto-modify-reg  -mbbit-peephole  -mno-brcc 
 -mcase-vector-pcrel  -mcompact-casesi  -mno-cond-exec  -mearly-cbranchsi 
 -mexpand-adddi  -mindexed-loads  -mlra  -mlra-priority-none 
--mlra-priority-compact mlra-priority-noncompact  -mno-millicode 
+-mlra-priority-compact mlra-priority-noncompact  -mmillicode 
 -mmixed-code  -mq-class  -mRcq  -mRcw  -msize-level=@var{level} 
--mtune=@var{cpu}  -mmultcost=@var{num} 
+-mtune=@var{cpu}  -mmultcost=@var{num}  -mcode-density-frame 
 -munalign-prob-threshold=@var{probability}  -mmpy-option=@var{multo} 
- -mdiv-rem  -mcode-density  -mll64  -mfpu=@var{fpu} -mrf16}
+-mdiv-rem  -mcode-density  -mll64  -mfpu=@var{fpu}  -mrf16  -mbranch-index}
 
 @emph{ARM Options}
 @gccoptlist{-mapcs-frame  -mno-apcs-frame 
 -mabi=@var{name} 
 -mapcs-stack-check  -mno-apcs-stack-check 
 -mapcs-reentrant  -mno-apcs-reentrant 
--mbe8 -mbe32 
+-mgeneral-regs-only 
 -msched-prolog  -mno-sched-prolog 
 -mlittle-endian  -mbig-endian 
+-mbe8  -mbe32 
 -mfloat-abi=@var{name} 
 -mfp16-format=@var{name}
 -mthumb-interwork  -mno-thumb-interwork 
@@ -633,7 +657,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -mpic-register=@var{reg} 
 -mnop-fun-dllimport 
 -mpoke-function-name 
--mthumb  -marm -mflip-thumb
+-mthumb  -marm  -mflip-thumb 
 -mtpcs-frame  -mtpcs-leaf-frame 
 -mcaller-super-interworking  -mcallee-super-interworking 
 -mtp=@var{name}  -mtls-dialect=@var{dialect} 
@@ -653,7 +677,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -mbranch-cost=@var{cost} 
 -mcall-prologues  -mgas-isr-prologues  -mint8 
 -mn_flash=@var{size}  -mno-interrupts 
--mmain-is-OS_task -mrelax  -mrmw  -mstrict-X  -mtiny-stack 
+-mmain-is-OS_task  -mrelax  -mrmw  -mstrict-X  -mtiny-stack 
 -mfract-convert-truncate 
 -mshort-calls  -nodevicelib 
 -Waddr-space-convert  -Wmisspelled-isr}
@@ -687,6 +711,16 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -mcr16cplus  -mcr16c 
 -msim  -mint32  -mbit-ops
 -mdata-model=@var{model}}
+
+@emph{C-SKY Options}
+@gccoptlist{-march=@var{arch}  -mcpu=@var{cpu} 
+-mbig-endian  -EB  -mlittle-endian  -EL 
+-mhard-float  -msoft-float  -mfpu=@var{fpu}  -mdouble-float  -mfdivdu 
+-melrw  -mistack  -mmp  -mcp  -mcache  -msecurity  -mtrust 
+-mdsp  -medsp  -mvdsp 
+-mdiv  -msmart  -mhigh-registers  -manchor 
+-mpushpop  -mmultiple-stld  -mconstpool  -mstack-size  -mccrt 
+-mbranch-cost=@var{n}  -mcse-cc  -msched-prolog}
 
 @emph{Darwin Options}
 @gccoptlist{-all_load  -allowable_client  -arch  -arch_errors_fatal 
@@ -845,7 +879,8 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -mmemcpy  -mxl-soft-mul  -mxl-soft-div  -mxl-barrel-shift 
 -mxl-pattern-compare  -mxl-stack-check  -mxl-gp-opt  -mno-clearbss 
 -mxl-multiply-high  -mxl-float-convert  -mxl-float-sqrt 
--mbig-endian  -mlittle-endian  -mxl-reorder  -mxl-mode-@var{app-model}}
+-mbig-endian  -mlittle-endian  -mxl-reorder  -mxl-mode-@var{app-model} 
+-mpic-data-is-text-relative}
 
 @emph{MIPS Options}
 @gccoptlist{-EL  -EB  -march=@var{arch}  -mtune=@var{arch} 
@@ -865,8 +900,13 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -meva  -mno-eva 
 -mvirt  -mno-virt 
 -mxpa  -mno-xpa 
+-mcrc  -mno-crc 
+-mginv  -mno-ginv 
 -mmicromips  -mno-micromips 
 -mmsa  -mno-msa 
+-mloongson-mmi  -mno-loongson-mmi 
+-mloongson-ext  -mno-loongson-ext 
+-mloongson-ext2  -mno-loongson-ext2 
 -mfpu=@var{fpu-type} 
 -msmartmips  -mno-smartmips 
 -mpaired-single  -mno-paired-single  -mdmx  -mno-mdmx 
@@ -886,6 +926,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -mmad  -mno-mad  -mimadd  -mno-imadd  -mfused-madd  -mno-fused-madd  -nocpp 
 -mfix-24k  -mno-fix-24k 
 -mfix-r4000  -mno-fix-r4000  -mfix-r4400  -mno-fix-r4400 
+-mfix-r5900  -mno-fix-r5900 
 -mfix-r10000  -mno-fix-r10000  -mfix-rm7000  -mno-fix-rm7000 
 -mfix-vr4120  -mno-fix-vr4120 
 -mfix-vr4130  -mno-fix-vr4130  -mfix-sb1  -mno-fix-sb1 
@@ -894,7 +935,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -mcompact-branches=@var{policy} 
 -mfp-exceptions  -mno-fp-exceptions 
 -mvr4130-align  -mno-vr4130-align  -msynci  -mno-synci 
--mlxc1-sxc1 -mno-lxc1-sxc1 -mmadd4 -mno-madd4 
+-mlxc1-sxc1  -mno-lxc1-sxc1  -mmadd4  -mno-madd4 
 -mrelax-pic-calls  -mno-relax-pic-calls  -mmcount-ra-address 
 -mframe-header-opt  -mno-frame-header-opt}
 
@@ -938,7 +979,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 
 @emph{Nios II Options}
 @gccoptlist{-G @var{num}  -mgpopt=@var{option}  -mgpopt  -mno-gpopt 
--mgprel-sec=@var{regexp} -mr0rel-sec=@var{regexp} 
+-mgprel-sec=@var{regexp}  -mr0rel-sec=@var{regexp} 
 -mel  -meb 
 -mno-bypass-cache  -mbypass-cache 
 -mno-cache-volatile  -mcache-volatile 
@@ -952,13 +993,15 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 @emph{Nvidia PTX Options}
 @gccoptlist{-m32  -m64  -mmainkernel  -moptimize}
 
+@emph{OpenRISC Options}
+@gccoptlist{-mboard=@var{name}  -mnewlib  -mhard-mul  -mhard-div 
+-msoft-mul  -msoft-div 
+-mcmov  -mror  -msext  -msfimm  -mshftimm}
+
 @emph{PDP-11 Options}
 @gccoptlist{-mfpu  -msoft-float  -mac0  -mno-ac0  -m40  -m45  -m10 
--mbcopy  -mbcopy-builtin  -mint32  -mno-int16 
--mint16  -mno-int32  -mfloat32  -mno-float64 
--mfloat64  -mno-float32  -mabshi  -mno-abshi 
--mbranch-expensive  -mbranch-cheap 
--munix-asm  -mdec-asm}
+-mint32  -mno-int16  -mint16  -mno-int32 
+-msplit  -munix-asm  -mdec-asm  -mgnu-asm  -mlra}
 
 @emph{picoChip Options}
 @gccoptlist{-mae=@var{ae_type}  -mvliw-lookahead=@var{N} 
@@ -966,46 +1009,6 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 
 @emph{PowerPC Options}
 See RS/6000 and PowerPC Options.
-
-@emph{PowerPC SPE Options}
-@gccoptlist{-mcpu=@var{cpu-type} @gol
--mtune=@var{cpu-type} @gol
--mmfcrf  -mno-mfcrf  -mpopcntb  -mno-popcntb @gol
--mfull-toc   -mminimal-toc  -mno-fp-in-toc  -mno-sum-in-toc @gol
--m32  -mxl-compat  -mno-xl-compat @gol
--malign-power  -malign-natural @gol
--msoft-float  -mhard-float  -mmultiple  -mno-multiple @gol
--msingle-float  -mdouble-float @gol
--mupdate  -mno-update @gol
--mavoid-indexed-addresses  -mno-avoid-indexed-addresses @gol
--mstrict-align  -mno-strict-align  -mrelocatable @gol
--mno-relocatable  -mrelocatable-lib  -mno-relocatable-lib @gol
--mtoc  -mno-toc  -mlittle  -mlittle-endian  -mbig  -mbig-endian @gol
--msingle-pic-base @gol
--mprioritize-restricted-insns=@var{priority} @gol
--msched-costly-dep=@var{dependence_type} @gol
--minsert-sched-nops=@var{scheme} @gol
--mcall-sysv  -mcall-netbsd @gol
--maix-struct-return  -msvr4-struct-return @gol
--mabi=@var{abi-type}  -msecure-plt  -mbss-plt @gol
--mblock-move-inline-limit=@var{num} @gol
--misel  -mno-isel @gol
--misel=yes  -misel=no @gol
--mspe  -mno-spe @gol
--mspe=yes  -mspe=no @gol
--mfloat-gprs=yes  -mfloat-gprs=no  -mfloat-gprs=single  -mfloat-gprs=double @gol
--mprototype  -mno-prototype @gol
--msim  -mmvme  -mads  -myellowknife  -memb  -msdata @gol
--msdata=@var{opt}  -mvxworks  -G @var{num} @gol
--mrecip  -mrecip=@var{opt}  -mno-recip  -mrecip-precision @gol
--mno-recip-precision @gol
--mpointers-to-nested-functions  -mno-pointers-to-nested-functions @gol
--msave-toc-indirect  -mno-save-toc-indirect @gol
--mcompat-align-parm  -mno-compat-align-parm @gol
--mfloat128  -mno-float128 @gol
--mgnu-attribute  -mno-gnu-attribute @gol
--mstack-protector-guard=@var{guard} -mstack-protector-guard-reg=@var{reg} @gol
--mstack-protector-guard-offset=@var{offset}}
 
 @emph{RISC-V Options}
 @gccoptlist{-mbranch-cost=@var{N-instruction} 
@@ -1017,10 +1020,12 @@ See RS/6000 and PowerPC Options.
 -mtune=@var{processor-string} 
 -mpreferred-stack-boundary=@var{num} 
 -msmall-data-limit=@var{N-bytes} 
--mstrict-align -mno-strict-align
--mcmodel=medlow -mcmodel=medany
+-msave-restore  -mno-save-restore 
+-mstrict-align  -mno-strict-align 
+-mcmodel=medlow  -mcmodel=medany 
 -mexplicit-relocs  -mno-explicit-relocs 
--mrelax -mno-relax }
+-mrelax  -mno-relax 
+-mriscv-attribute  -mmo-riscv-attribute}
 
 @emph{RL78 Options}
 @gccoptlist{-msim  -mmul=none  -mmul=g13  -mmul=g14  -mallregs 
@@ -1042,28 +1047,28 @@ See RS/6000 and PowerPC Options.
 -m64  -m32  -mxl-compat  -mno-xl-compat  -mpe 
 -malign-power  -malign-natural 
 -msoft-float  -mhard-float  -mmultiple  -mno-multiple 
--msingle-float  -mdouble-float  -msimple-fpu 
 -mupdate  -mno-update 
 -mavoid-indexed-addresses  -mno-avoid-indexed-addresses 
 -mfused-madd  -mno-fused-madd  -mbit-align  -mno-bit-align 
 -mstrict-align  -mno-strict-align  -mrelocatable 
 -mno-relocatable  -mrelocatable-lib  -mno-relocatable-lib 
 -mtoc  -mno-toc  -mlittle  -mlittle-endian  -mbig  -mbig-endian 
--mdynamic-no-pic  -maltivec  -mswdiv  -msingle-pic-base 
+-mdynamic-no-pic  -mswdiv  -msingle-pic-base 
 -mprioritize-restricted-insns=@var{priority} 
 -msched-costly-dep=@var{dependence_type} 
 -minsert-sched-nops=@var{scheme} 
 -mcall-aixdesc  -mcall-eabi  -mcall-freebsd  
 -mcall-linux  -mcall-netbsd  -mcall-openbsd  
 -mcall-sysv  -mcall-sysv-eabi  -mcall-sysv-noeabi 
--mtraceback=@var{traceback_type} -maix-struct-return  -msvr4-struct-return 
+-mtraceback=@var{traceback_type} 
+-maix-struct-return  -msvr4-struct-return 
 -mabi=@var{abi-type}  -msecure-plt  -mbss-plt 
+-mlongcall  -mno-longcall  -mpltseq  -mno-pltseq  
 -mblock-move-inline-limit=@var{num} 
 -mblock-compare-inline-limit=@var{num} 
 -mblock-compare-inline-loop-limit=@var{num} 
--mstring-compare-inline-limit=@var{num} -misel  -mno-isel 
--misel=yes  -misel=no 
--mpaired 
+-mstring-compare-inline-limit=@var{num} 
+-misel  -mno-isel 
 -mvrsave  -mno-vrsave 
 -mmulhw  -mno-mulhw 
 -mdlmzb  -mno-dlmzb 
@@ -1157,7 +1162,7 @@ See RS/6000 and PowerPC Options.
 -muser-mode  -mno-user-mode 
 -mv8plus  -mno-v8plus  -mvis  -mno-vis 
 -mvis2  -mno-vis2  -mvis3  -mno-vis3 
--mvis4 -mno-vis4 -mvis4b -mno-vis4b 
+-mvis4  -mno-vis4  -mvis4b  -mno-vis4b 
 -mcbcond  -mno-cbcond  -mfmaf  -mno-fmaf  -mfsmuld  -mno-fsmuld  
 -mpopc  -mno-popc  -msubxc  -mno-subxc 
 -mfix-at697f  -mfix-ut699  -mfix-ut700  -mfix-gr712rc 
@@ -1227,18 +1232,20 @@ See RS/6000 and PowerPC Options.
 -mincoming-stack-boundary=@var{num} 
 -mcld  -mcx16  -msahf  -mmovbe  -mcrc32 
 -mrecip  -mrecip=@var{opt} 
--mvzeroupper  -mprefer-avx128 -mprefer-vector-width=@var{opt} 
+-mvzeroupper  -mprefer-avx128  -mprefer-vector-width=@var{opt} 
 -mmmx  -msse  -msse2  -msse3  -mssse3  -msse4.1  -msse4.2  -msse4  -mavx 
 -mavx2  -mavx512f  -mavx512pf  -mavx512er  -mavx512cd  -mavx512vl 
 -mavx512bw  -mavx512dq  -mavx512ifma  -mavx512vbmi  -msha  -maes 
--mpclmul  -mfsgsbase  -mrdrnd  -mf16c  -mfma -mpconfig -mwbnoinvd 
--mprefetchwt1  -mclflushopt  -mxsavec  -mxsaves 
+-mpclmul  -mfsgsbase  -mrdrnd  -mf16c  -mfma  -mpconfig  -mwbnoinvd  
+-mptwrite  -mprefetchwt1  -mclflushopt  -mclwb  -mxsavec  -mxsaves 
 -msse4a  -m3dnow  -m3dnowa  -mpopcnt  -mabm  -mbmi  -mtbm  -mfma4  -mxop 
--mlzcnt  -mbmi2  -mfxsr  -mxsave  -mxsaveopt  -mrtm  -mlwp  -mmpx  
--mmwaitx  -mclzero  -mpku  -mthreads -mgfni  -mvaes  
--mshstk -mforce-indirect-call -mavx512vbmi2 
--mvpclmulqdq -mavx512bitalg -mmovdiri -mmovdir64b -mavx512vpopcntdq 
--mms-bitfields  -mno-align-stringops  -minline-all-stringops 
+-madx  -mlzcnt  -mbmi2  -mfxsr  -mxsave  -mxsaveopt  -mrtm  -mhle  -mlwp 
+-mmwaitx  -mclzero  -mpku  -mthreads  -mgfni  -mvaes  -mwaitpkg 
+-mshstk -mmanual-endbr -mforce-indirect-call  -mavx512vbmi2 
+-mvpclmulqdq  -mavx512bitalg  -mmovdiri  -mmovdir64b  -mavx512vpopcntdq 
+-mavx5124fmaps  -mavx512vnni  -mavx5124vnniw  -mprfchw  -mrdpid 
+-mrdseed  -msgx 
+-mcldemote  -mms-bitfields  -mno-align-stringops  -minline-all-stringops 
 -minline-stringops-dynamically  -mstringop-strategy=@var{alg} 
 -mmemcpy-strategy=@var{strategy}  -mmemset-strategy=@var{strategy} 
 -mpush-args  -maccumulate-outgoing-args  -m128bit-long-double 
@@ -1250,13 +1257,14 @@ See RS/6000 and PowerPC Options.
 -mcmodel=@var{code-model}  -mabi=@var{name}  -maddress-mode=@var{mode} 
 -m32  -m64  -mx32  -m16  -miamcu  -mlarge-data-threshold=@var{num} 
 -msse2avx  -mfentry  -mrecord-mcount  -mnop-mcount  -m8bit-idiv 
+-minstrument-return=@var{type} -mfentry-name=@var{name} -mfentry-section=@var{name} 
 -mavx256-split-unaligned-load  -mavx256-split-unaligned-store 
 -malign-data=@var{type}  -mstack-protector-guard=@var{guard} 
 -mstack-protector-guard-reg=@var{reg} 
 -mstack-protector-guard-offset=@var{offset} 
--mstack-protector-guard-symbol=@var{symbol} -mmitigate-rop 
--mgeneral-regs-only -mcall-ms2sysv-xlogues 
--mindirect-branch=@var{choice} -mfunction-return=@var{choice} 
+-mstack-protector-guard-symbol=@var{symbol} 
+-mgeneral-regs-only  -mcall-ms2sysv-xlogues 
+-mindirect-branch=@var{choice}  -mfunction-return=@var{choice} 
 -mindirect-branch-register}
 
 @emph{x86 Windows Options}
@@ -1359,7 +1367,7 @@ Ada specへと(@option{-fdump-ada-spec}スイッチ経由で)変換すべきC, C
 @itemx @var{file}.fpp
 @itemx @var{file}.FPP
 @itemx @var{file}.FTN
-（伝統的なプリプロセスでプリプロセスをしなければならないFortranソースコード）
+（伝統的なプリプリプロセッサで）プリプロセスをしなければならないFortranソースコード
 
 @item @var{file}.f90
 @itemx @var{file}.f95
@@ -1371,13 +1379,22 @@ Ada specへと(@option{-fdump-ada-spec}スイッチ経由で)変換すべきC, C
 @itemx @var{file}.F95
 @itemx @var{file}.F03
 @itemx @var{file}.F08
-（伝統的なプリプロセスで)プリプロセスをしなければならない自由形式Fortranソースコード
+（伝統的なプリプリプロセッサで）プリプロセスをしなければならない自由形式Fortranソースコード
 
 @item @var{file}.go
 Goソースコード
 
 @item @var{file}.brig
 BRIGファイル(HSAILのバイナリ表現)
+
+@item @var{file}.d
+Dのソースコード。
+
+@item @var{file}.di
+Dのインターフェースファイル。
+
+@item @var{file}.dd
+Dのドキュメントコード（Ddoc）。
 
 @item @var{file}.ads
 ライブラリユニット宣言（パッケージ宣言、サブプログラム、汎用、汎用特定化）を含むAdaソースコード、
@@ -1389,9 +1406,6 @@ BRIGファイル(HSAILのバイナリ表現)
 @dfn{ボディ}と呼ばれる。
 
 @c GCCはまだ含まれていない元の拡張子を知っている。
-@c Pascal:
-@c @var{file}.p
-@c @var{file}.pas
 @c Ratfor:
 @c @var{file}.r
 
@@ -1413,8 +1427,7 @@ BRIGファイル(HSAILのバイナリ表現)
 @table @gcctabopt
 @item -x @var{language}
 入力ファイルが従う@var{language}(言語)を（コンパイラに拡張子に基づいて選択させるのではなく）
-明示的にシチエする。このオプションは次の@option{-x}オプションまでのすべてのファイル
-に適用される。可能な@var{langage}の値は
+明示的に指定する。このオプションは次の@option{-x}オプションまでのすべてのファイルに適用される。可能な@var{langage}の値は
 @smallexample
 c  c-header  cpp-output
 c++  c++-header  c++-cpp-output
@@ -1422,6 +1435,7 @@ objective-c  objective-c-header  objective-c-cpp-output
 objective-c++ objective-c++-header objective-c++-cpp-output
 assembler  assembler-with-cpp
 ada
+d
 f77  f77-cpp-input f95  f95-cpp-input
 go
 brig
@@ -1650,7 +1664,7 @@ GNAT ユーザガイド}で、この機能の詳細の文書が提供される�
 
 @item -fdump-go-spec=@var{file}
 @opindex fdump-go-spec
-どんな言語の入力ファイルについてはでも、@var{file}で対応するGo宣言を生成する。
+どんな言語の入力ファイルについてに対しても、@var{file}で対応するGo宣言を生成する。
 これは、Go @code{const}、@code{type}、@code{var}とある他の言語で書かれるコードに
 Goインターフェースを書き始める役に立つ方法であるかもしれない@code{func}宣言を生成する。
 
@@ -1761,11 +1775,10 @@ ISO C11、ISO C標準の2011版である。この標準は、剰余のバグ、�
 @itemx c18
 @itemx iso9899:2017
 @itemx iso9899:2018
-ISO C17, the 2017 revision of the ISO C standard (expected to be
-published in 2018).  This standard is
-same as C11 except for corrections of defects (all of which are also
-applied with @option{-std=c11}) and a new value of
-@code{__STDC_VERSION__}, and so is supported to the same extent as C11.
+ISO C17、ISO C標準の2017年改訂版（2018年に公開）。 この標準は、欠陥の修正（すべて@option{-std=c11}で適用される）と@code{__STDC_VERSION__}の新しい値を除いてC11と同じであり、C11と同じ範囲でサポートされます。
+
+@item c2x
+ISO C標準の次のバージョン、まだ開発中です。 このバージョンのサポートは実験的で不完全です。
 
 @item gnu90
 @itemx gnu89
@@ -1782,6 +1795,9 @@ ISO C11のGNU変種。名前@samp{gnu1x}は非推奨である。
 @item gnu17
 @itemx gnu18
 ISO C17のGNU変種。これはCコードのデフォルトである。
+
+@item gnu2x
+まだ開発中のISO C標準の次のバージョン、およびGNU拡張機能。 このバージョンのサポートは実験的で不完全です。
 
 @item c++98
 @itemx c++03
@@ -1816,7 +1832,7 @@ ISO C17のGNU変種。これはCコードのデフォルトである。
 @option{-std=c++17}のGNU変種。名前@samp{gnu++1z}は非推奨である。
 
 @item c++2a
-ISO C++標準の次の改定であり、とりあえず、2020年の間計画される。サポートは非常に実験的で、ほぼ間違いなく将来のリリースにおいて非互換の方向で変わる。
+ISO C++標準の次の改定であり、とりあえず、2020年の間で計画される。サポートは非常に実験的で、ほぼ間違いなく将来のリリースにおいて非互換の方向で変わる。
 
 @item gnu++2a
 @option{-std=c++2a}のGNU変種。サポートは非常に実験的で、ほぼ間違いなく将来のリリースにおいて非互換の方向で変わる。
@@ -2089,7 +2105,7 @@ ABIはABIのバグが修正されるとG++の異なるバージョンでは変�
 
 バージョン２はG++3.4で初めて現れ、G++4.9までのデフォルトであった。
 
-バージョン3はテンプレート引数と仕手の定数アドレスのマングルでの誤りを修正する。
+バージョン3はテンプレート引数としての定数アドレスのマングルでの誤りを修正する。
 
 バージョン4は、G++ 4.5で最初に現れ、ベクタ型の標準マングルを実装する。
 
@@ -2142,7 +2158,7 @@ G++ 8で初めて登場したバージョン12は、x86_64ターゲット上の�
 その関数で提供されているを指定するために使うことができるが、殆どのユーザはデフォルトの@code{alignof(std::max_align_t)}
 を上書きする必要はないだろう。
 
-This flag is enabled by default for @option{-std=c++17}.
+このフラグは@option {-std=c++17}でデフォルトで有効になっています。
 
 @item -fcheck-new
 @opindex fcheck-new
@@ -17474,9 +17490,9 @@ others.
 The @option{-mcpu} options automatically enable or disable the
 following options:
 
-@gccoptlist{-mhard-float  -mmfcrf  -mmultiple @gol
--mpopcntb -mpopcntd @gol
--msingle-float -mdouble-float @gol
+@gccoptlist{-mhard-float  -mmfcrf  -mmultiple 
+-mpopcntb -mpopcntd 
+-msingle-float -mdouble-float 
 -mfloat128}
 
 The particular options set for any particular CPU varies between

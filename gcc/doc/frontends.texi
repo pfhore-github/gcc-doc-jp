@@ -1,4 +1,4 @@
-@c Copyright (C) 1988-2018 Free Software Foundation, Inc.
+@c Copyright (C) 1988-2020 Free Software Foundation, Inc.
 @c This is part of the GCC manual.
 @c For copying conditions, see the file gcc.texi.
 
@@ -9,13 +9,14 @@
 @cindex GNU Compiler Collection
 @cindex GNU C Compiler
 @cindex Ada
+@cindex D
 @cindex Fortran
 @cindex Go
 @cindex Objective-C
 @cindex Objective-C++
 GCCは、「GNUコンパイラ・コレクション」を表す。GCCは、いくつかの主要なプログラミング言語の
 コンパイラの統合した配布である。これらの言語は、C、C++、Objective-C、Objective-C++、
-Fortran、Ada、GoとBRIG(HSAIL)を現在含む。
+Fortran、Ada、D、GoとBRIG(HSAIL)を現在含む。
 
 省略形@dfn{GCC}は、一般的に複数の意味を持つ。現在の公式意味は「GNUコンパイラ・コレクション」である。そして、それは一般的にツールの完全なセットに言及する。
 名前は歴史的には「GNU Cコンパイラ」を表し、強調がCプログラムをコンパイルすることにあるとき、この使用はまだ一般的である。最後に、その名前はGCCの@dfn{言語から独立した}構成要素について話すときにも使われる。すべてのサポートされた言語のためもののコンパイラで分配されるコード。
@@ -24,9 +25,8 @@ GCCの言語から独立した構成要素は、いろいろなプロセッサ�
 
 @cindex COBOL
 @cindex Mercury
-@cindex Pascal
 特定の言語に特有であるコンパイラの部分は、「フロントエンド」と呼ばれる。GCCの統合化コンポーネントであるフロントエンドに加えて、別に維持されるいくつかの他のフロントエンドがある。
-これらは、例えばPascal、Mercury、COBOLのような言語をサポートする。これらを使うために、それらは本来のGCCと共に構築されなければならない。
+これらは、例えばMercury、COBOLのような言語をサポートする。これらを使うために、それらは本来のGCCと共に構築されなければならない。
 
 @cindex C++
 @cindex G++
