@@ -2184,8 +2184,14 @@ C++11定数式関数の最大入れ子評価深さを@var{n}にセットする�
 
 @item -fconstexpr-loop-limit=@var{n}
 @opindex fconstexpr-loop-limit
-C++14constexpr関数でのループの繰り返し吸うの最大値を@var{n}に指定する。制限値は定数式評価中の
+C++14constexpr関数でのループの繰り返し数の最大値を@var{n}に指定する。制限値は定数式評価中の
 無限ループの検出に必要である。デフォルトは262144(1<<18)である。
+
+@item -fconstexpr-ops-limit=@var{n}
+@opindex fconstexpr-ops-limit
+単一のconstexpr評価中の操作の最大数を設定します。
+単一のループの反復回数が上記の制限で制限されている場合でも、複数のネストされたループがあり、それぞれに多くの反復があり、上記の制限よりも小さい場合、またはループの本体内またはさらにループの評価が必要な式が多すぎると、結果のconstexpr評価に時間がかかりすぎる可能性があります。
+デフォルトは33554432（1 << 25）です。
 
 @item -fdeduce-init-list
 @opindex fdeduce-init-list
@@ -2205,15 +2211,6 @@ void f()
 
 この推論はC++11標準で元々提案された意味へのありうる拡張として実装されたが、最終標準の一部ではなかったので、
 デフォルトで無効にされた。このオプションは非推奨であり、G++の将来のバージョンでは削除されるかもしれない。
-
-@item -ffriend-injection
-@opindex ffriend-injection
-フレンド関数を、宣言されている関数のスコープの外側から見えるようにそれを囲んでいる名前空間に注入する。
-フレンド関数はそのように働くように古い注釈付きC++リファレンス・マニュアルには記述されていた。しかし、
-ISO C++では囲んでいるスコープで宣言されていないフレンド関数は引数依存検索でのみ見つけることができる。
-GCCのデフォルトは標準の振る舞いである。
-
-このオプションは廃止予定であり、削除されるだろう。
 
 @item -fno-elide-constructors
 @opindex fno-elide-constructors
@@ -2245,16 +2242,6 @@ C++11とOpneMPは@code{thread_local}と@code{threadprivate}変数が動的に（
 シンボルエイリアスをサポートしているターゲットでは、デフォルトは@option{-fextern-tls-init}である。シンボルエイリアスを
 サポートしていないターゲットでは、デフォルトは@option{-fno-extern-tls-init}である。
 
-@item -ffor-scope
-@itemx -fno-for-scope
-@opindex ffor-scope
-@opindex fno-for-scope
-@option{-ffor-scope}が指定されると、@i{for-初期化文}で宣言された変数のスコープはC++標準で指定されたように、
-@code{for}ループ自身に制限される。もし@option{-fno-for-scope}が指定されると、古いバージョンG+＋や、
-他の（伝統的な）C++の実装のように、@i{for-初期化文}で宣言された変数のスコープは取り囲むスコープの終わりまで拡張される。
-
-このオプションは廃止予定であり、関連した非標準の機能は削除されるだろう。
-
 @item -fno-gnu-keywords
 @opindex fno-gnu-keywords
 @code{typeof}をキーワードとして認識せず、この語を識別子として使えるようにする。代わりにキーワード@code{__typeof__}を使うことができる。
@@ -2262,7 +2249,7 @@ C++11とOpneMPは@code{thread_local}と@code{threadprivate}変数が動的に（
 
 @item -fno-implicit-templates
 @opindex fno-implicit-templates
-暗黙のうちに（すなわち、使うことで）実体化される非インラインテンプレートのコードを生成しない。。明示的な実体化のみコードを生成する。
+暗黙のうちに（すなわち、使うことで）実体化される非インラインテンプレートのコードを生成しない。明示的な実体化のみコードを生成する。このオプションを使用する場合は、リンク時に未定義のシンボルを取得しないように、必要なすべての明示的なインスタンス化を含めるようにコードを構造化する必要があります。
 詳しい情報は@xref{Template Instantiation}。
 
 @item -fno-implicit-inline-templates
@@ -2333,7 +2320,9 @@ Instantiation}。
 C++実行時型識別の機能(@code{dynamic_cast}と@code{typeid})で使うための仮想関数のある全クラスについての情報の出力を無効にする。
 もし言語のこれらの機能を使わないならば、このフラグを使うことで空間を少し節約できる。例外の扱いも同じ情報を使うが、G++は必要に応じて
 生成することに注意する。実行時型情報を使わないキャストでは@code{dynamic_cast}演算子はまだ使用可能である。すなわち、@code{void*}や
-曖昧でない基底クラスへのキャスト
+曖昧でない基底クラスへのキャスト。
+
+@option{-frtti}でコンパイルされたコードと@option{-fno-rtti}でコンパイルされたコードを混在させることはできません。 たとえば、@option {-fno-rtti}でコンパイルされたクラスが@option{-frtti}でコンパイルされたクラスのベースとして使用されている場合、プログラムはリンクに失敗することがあります。
 
 @item -fsized-deallocation
 @opindex fsized-deallocation
@@ -2343,7 +2332,7 @@ void operator delete (void *, std::size_t) noexcept;
 void operator delete[] (void *, std::size_t) noexcept;
 @end smallexample
 を有効にする。これは、例えば、解放をより速くするためにオブジェクトのサイズを使うユーザ定義の置換解放関数に役立つ。
-@option{-std=c++13}以上ではデフォルトで有効である。フラグ@option{-Wsized-deallocation}は定義を加えたいかもしれない場所について警告する。
+@option{-std=c++14}以上ではデフォルトで有効である。フラグ@option{-Wsized-deallocation}は定義を加えたいかもしれない場所について警告する。
 
 @item -fstrict-enums
 @opindex fstrict-enums
@@ -2479,12 +2468,12 @@ void n (S<N>) @{2@}
 @code{__attribute ((vector_size))}を使って宣言されたSIMDベクタ型は異なるサイズのベクタを取るオーバーロードができない
 非標準のやり方でマングルされた
 
-マングルは @option{-fabi-version=4}で変わった。
+マングルは@option{-fabi-version=4}で変わった。
 
 @item
 @code{__attribute ((const))}と@code{noreturn}は型修飾子としてマングルされ、素の宣言の@code{decltype}は折りたたまれた。
 
-これらノンマングルの問題は@option{-fabi-version=5}で修正された。
+これらのマングルの問題は@option{-fabi-version=5}で修正された。
 
 @item
 可変長引数関数に渡されるスコープの列挙は非スコープの列挙のように格上げされ、@code{va_arg}が文句を言う。多くのターゲットでは、@code{int}より小さな
@@ -2519,7 +2508,7 @@ void n (S<N>) @{2@}
 
 @end itemize
 
-psABI関連の変更についても警告する。現時点での既知のpsABIの変更はいかを含む。
+psABI関連の変更についても警告する。現時点での既知のpsABIの変更は以下を含む。
 
 @itemize @bullet
 
@@ -2556,10 +2545,44 @@ privateでないメソッドがあり、少なくとも1つコンストラクタ
 @code{delete}が仮想関数と非仮想のデストラクタを持つクラスのインスタンスを破壊するために使われた時に警告する。もし基底クラスが仮想デストラクタを
 持っていないなら、基底クラスへのポインタを通して派生クラスのインスタンスを削除するのは安全ではない。この警告は@option{-Wall}で有効になる。
 
+@item -Wdeprecated-copy @r{(C++とObjective-C++専用)}
+@opindex Wdeprecated-copy
+@opindex Wno-deprecated-copy
+C++11以降で、クラスにユーザー指定のコピーコンストラクターまたはコピー割り当て演算子がある場合、コピーコンストラクターまたはコピー割り当て演算子の暗黙的な宣言は廃止されることを警告します。 この警告は@option{-Wextra}によって有効にされます。 @option{-Wdeprecated-copy-dtor}を使用すると、クラスにユーザー指定のデストラクタがある場合も非推奨になります。
+
+@item -Wno-init-list-lifetime @r{(C++とObjective-C++専用)}
+@opindex Winit-list-lifetime
+@opindex Wno-init-list-lifetime
+@code{std::initializer_list}を使用して、ぶら下がりポインターになる可能性があるときに、警告しない。 @code{initializer_list}の基礎となる配列は通常のC++一時オブジェクトのように処理されるため、配列へのポインタを配列の有効期間の終了後も誤って保持するのは簡単です。 例えば：
+
+@itemize @bullet
+@item
+関数が一時的な@code{initializer_list}またはローカルの@code{initializer_list}変数を返す場合、配列の有効期間はreturnステートメントの終わりで終了するため、返される値にはぶら下がりポインターがあります。
+
+@item
+new式が@code{initializer_list}を作成する場合、配列は囲まれた完全式の終わりまでしか存続しないため、ヒープ内の@code{initializer_list}にはぶら下がりポインターがあります。
+
+@item
+@code{initializer_list}変数が中括弧で囲まれた初期化子リストから代入されると、割り当ての右側に作成された一時配列は完全表現の最後までしか存続しないため、次のステートメントで@code{initializer_list}変数には、ぶら下がりポインターがあります。
+
+@smallexample
+// liの最初の基礎となる配列は、liと同じだけ長く存続します。
+std::initializer_list<int> li = @{ 1,2,3 @};
+// 代入はliを一時配列を指すように変更します。
+li = @{ 4, 5 @};
+// 今や一時値は消え、liはぶら下がりポインタです
+int i = li.begin()[0] // 未定義の振る舞い
+@end smallexample
+
+@item
+リストコンストラクターが@code{initializer_list}引数から@code{begin}ポインターを格納する場合、これは配列の寿命を延長しません。したがって、クラス変数が一時的な@code{initializer_list}から構築される場合、ポインター変数宣言文の終わりまでぶら下がります。
+
+@end itemize
+
 @item -Wliteral-suffix @r{(C++とObjective-C++専用)}
 @opindex Wliteral-suffix
 @opindex Wno-literal-suffix
-文字列が文字定数にアンダースコアで始まらないユーザ定義接尾辞が続くときに警告する。合致する警告として、GCCはそのような接尾辞を、
+文字列または文字定数にアンダースコアで始まらないユーザ定義接尾辞が続くときに警告する。合致する警告として、GCCはそのような接尾辞を、
 @code{<inttypes.h>}からの書式マクロを使うコードとの後方互換性を維持するために分離されたプリプロセストークンとして扱う。
 
 @smallexample
@@ -2605,7 +2628,7 @@ int i = @{ 2.2 @}; // error: narrowing from double to int
 @item -Wnoexcept @r{(C++とObjective-C++専用)}
 @opindex Wnoexcept
 @opindex Wno-noexcept
-例外を投げない例外指定（すなわち、@code{throw()}か@code{noexcept}）を持たない関数を呼び出しているのでnoexcept式が偽と評価されるがｍ
+例外を投げない例外指定（すなわち、@code{throw()}か@code{noexcept}）を持たない関数を呼び出しているのでnoexcept式が偽と評価されるが、
 コンパイラが決して例外を出さないと知っている時に警告する。
 
 @item -Wnoexcept-type @r{(C++とObjective-C++専用)}
@@ -2666,6 +2689,63 @@ struct A @{
 @noindent
 コンパイラは@code{i}と@code{j}のメンバ初期化を並べ替えてメンバの宣言順に一致させ、その効果に対する警告を生成する。
 この警告は@option{-Wall}で有効である。
+
+@item -Wno-pessimizing-move @r{(C++ and Objective-C++ only)}
+@opindex Wpessimizing-move
+@opindex Wno-pessimizing-move
+この警告は、@ code {std::move}の呼び出しがコピーの省略を防ぐときに警告します。 コピーの省略が発生する可能性がある典型的なシナリオは、クラスの戻り値の型で関数を返し、返される式が不揮発性の自動オブジェクトの名前であり、関数パラメーターではなく、 関数の戻り値の型であるときです。
+
+@smallexample
+struct T @{
+@dots{}
+@};
+T fn()
+@{
+  T t;
+  @dots{}
+  return std::move (t);
+@}
+@end smallexample
+
+しかし、この例では、@code{std::move}呼び出しはコピーの省略を防ぎます。
+
+この警告は@option {-Wall}によって有効になります。
+
+@item -Wno-redundant-move @r{(C++ and Objective-C++ only)}
+@opindex Wredundant-move
+@opindex Wno-redundant-move
+この警告は、@ code{std::move}の冗長な呼び出しについて警告します。 つまり、@code{std::move}呼び出しがなくても移動操作が実行されていた場合です。 これは、コンパイラーが、コピー省略が適用できないローカル変数を返すなどの特定の状況で、オブジェクトを右辺値であるかのように処理することを強制されるために発生します。 以下を考えます：
+
+@smallexample
+struct T @{
+@dots{}
+@};
+T fn(T t)
+@{
+  @dots{}
+  return std::move (t);
+@}
+@end smallexample
+
+ここでは、@code{std::move}呼び出しは冗長です。 G++はCore Issue 1579を実装しているためです。別の例は次のとおりです。
+
+@smallexample
+struct T @{ // convertible to U
+@dots{}
+@};
+struct U @{
+@dots{}
+@};
+U fn()
+@{
+  T t;
+  @dots{}
+  return std::move (t);
+@}
+@end smallexample
+この例では、返される式のタイプと関数の戻りタイプが異なるため、コピー省略は適用できませんが、G++は戻り値を右辺値で指定されたものとして扱います。
+
+この警告は@option {-Wextra}によって有効にされます。
 
 @item -fext-numeric-literals @r{(C++とObjective-C++専用)}
 @opindex fext-numeric-literals
@@ -2756,7 +2836,7 @@ b->f();
 @end smallexample
 
 @noindent
-コンパイルできない。
+はコンパイルできない。
 
 @item -Wno-pmf-conversions @r{(C++とObjective-C++専用)}
 @opindex Wno-pmf-conversions
@@ -2798,6 +2878,11 @@ STLはまだ使用可能である。間接的に仮想継承を使っている�
 @opindex Wterminate
 @opindex Wno-terminate
 @code{terminate}を直ちに呼ぶことになるthrows式について警告する。
+
+@item -Wno-class-conversion @r{(C++とObjective-C++専用)}
+@opindex Wno-class-conversion
+@opindex Wclass-conversion
+変換関数がオブジェクトを同じ型、その型の基本クラス、またはvoidに変換する場合の警告を無効にします。 このような変換関数は呼び出されません。
 @end table
 
 @node Objective-C and Objective-C++ Dialect Options
@@ -2991,6 +3076,8 @@ Objective-C代入がガベージコレクタで妨害される時には警告す
 エラーメッセージを行あたり@var{n}文字ぐらいで収めようとする。もし、@var{n}が0ならば、
 行送り返しは行われない。それぞれのエラーメッセージは1行で現れる。これは全フロントエンドのデフォルトである。
 
+注-このオプションは、@samp{#error}および@samp{#warning}プリプロセッサディレクティブ、および@samp{deprecated} 関数/型/変数属性の表示にも影響します。 ただし、@samp{pragma GCC warning}および@samp{pragma GCC error}プラグマには影響しません。
+
 @item -fdiagnostics-show-location=once
 @opindex fdiagnostics-show-location
 行送り返しモードでのみ意味を持つ。診断メッセージ報告器にソース場所情報を@emph{一度}だけを発するように命じる。
@@ -3114,6 +3201,29 @@ C++フロントエンドでのテンプレート引数内でハイライトし�
 このオプションはこの情報を抑制する。@option{-fmessage-length=n}が与えられた時は、ソース行は@var{n}文字へと切り詰められる。
 出力がターミナルへと行われるときは、幅は@env{COLUMNS}環境変数か、もしセットされていない時はターミナルの幅へと制限される。
 
+@item -fno-diagnostics-show-labels
+@opindex fno-diagnostics-show-labels
+@opindex fdiagnostics-show-labels
+デフォルトでは、ソースコードを（@option {-fdiagnostics-show-caret}を介して）印刷するとき、診断は式のタイプなどの関連情報でソースコードの範囲にラベルを付けることができます。
+
+@smallexample
+    printf ("foo %s bar", long_i + long_j);
+                 ~^       ~~~~~~~~~~~~~~~
+                  |              |
+                  char *         long int
+@end smallexample
+
+このオプションは、これらのラベルの印刷を抑制します（上記の例では、垂直バーと「char *」および「long int」テキスト）。
+
+@item -fno-diagnostics-show-line-numbers
+@opindex fno-diagnostics-show-line-numbers
+@opindex fdiagnostics-show-line-numbers
+デフォルトでは、ソースコードを印刷するとき（@option{-fdiagnostics-show-caret}を使用）、左マージンが印刷され、行番号が表示されます。 このオプションは、この左マージンを抑制します。
+
+@item -fdiagnostics-minimum-margin-width=@var{width}
+@opindex fdiagnostics-minimum-margin-width
+このオプションは、@option{-fdiagnostics-show-line-numbers}によって出力される左マージンの最小幅を制御します。 デフォルトは6です。
+
 @item -fdiagnostics-parseable-fixits
 @opindex fdiagnostics-parseable-fixits
 IDEによる推測に適した、機械で解析可能な形式で修正ヒントを生成する。それぞれの修正で、
@@ -3162,17 +3272,14 @@ diffは色が付くかも付かないかもしれず、診断と同じ規則が�
 @item -fdiagnostics-show-template-tree
 @opindex fdiagnostics-show-template-tree
 
-In the C++ frontend, when printing diagnostics showing mismatching
-template types, such as:
+C ++フロントエンドで、次のようなテンプレートタイプの不一致を示す診断を印刷する場合：
 
 @smallexample
   could not convert 'std::map<int, std::vector<double> >()'
     from 'map<[...],vector<double>>' to 'map<[...],vector<float>>
 @end smallexample
 
-the @option{-fdiagnostics-show-template-tree} flag enables printing a
-tree-like structure showing the common and differing parts of the types,
-such as:
+@option{-fdiagnostics-show-template-tree}フラグを使用すると、次のようなタイプの共通部分と異なる部分を示すツリーのような構造を印刷できます。
 
 @smallexample
   map<
@@ -3181,30 +3288,197 @@ such as:
       [double != float]>>
 @end smallexample
 
-The parts that differ are highlighted with color (``double'' and
-``float'' in this case).
+異なる部分は色で強調表示されます（この場合は「double」と「float」）。
 
 @item -fno-elide-type
 @opindex fno-elide-type
 @opindex felide-type
-By default when the C++ frontend prints diagnostics showing mismatching
-template types, common parts of the types are printed as ``[...]'' to
-simplify the error message.  For example:
+デフォルトでは、C ++フロントエンドが不一致のテンプレートタイプを示す診断を出力するとき、エラーメッセージを簡素化するために、タイプの一般的な部分は ``[...]''として出力されます。 例えば：
 
 @smallexample
   could not convert 'std::map<int, std::vector<double> >()'
     from 'map<[...],vector<double>>' to 'map<[...],vector<float>>
 @end smallexample
 
-Specifying the @option{-fno-elide-type} flag suppresses that behavior.
-This flag also affects the output of the
-@option{-fdiagnostics-show-template-tree} flag.
+@option{-fno-elide-type}フラグを指定すると、その動作が抑制されます。
+このフラグは、@option{-fdiagnostics-show-template-tree}フラグの出力にも影響します。
 
 @item -fno-show-column
 @opindex fno-show-column
 診断で桁番号を出力しない。これはもし診断が桁番号を理解しない、例えば@command{dejagnu}のような
 プログラムでスキャンされるときには必要かもしれない。
 
+@item -fdiagnostics-format=@var{FORMAT}
+@opindex fdiagnostics-format
+診断を印刷するために別の形式を選択します。
+@var{FORMAT}は@samp{text}または@samp{json}です。
+デフォルトは@samp{text}です。
+
+@samp{json}形式は、診断を表すJSONオブジェクトを含むトップレベルのJSON配列で構成されます。
+
+JSONはフォーマットなしで1行として出力されます。 以下の例は明確にするためにフォーマットされています。
+
+診断には、子診断を含めることがあります。 たとえば、このエラーと注意は：
+
+@smallexample
+misleading-indentation.c:15:3: warning: this 'if' clause does not
+  guard... [-Wmisleading-indentation]
+   15 |   if (flag)
+      |   ^~
+misleading-indentation.c:17:5: note: ...this statement, but the latter
+  is misleadingly indented as if it were guarded by the 'if'
+   17 |     y = 2;
+      |     ^
+@end smallexample
+
+@noindent
+次のように（フォーマット後）JSON形式で印刷される場合があります。
+
+@smallexample
+[
+    @{
+        "kind": "warning",
+        "locations": [
+            @{
+                "caret": @{
+                    "column": 3,
+                    "file": "misleading-indentation.c",
+                    "line": 15
+                @},
+                "finish": @{
+                    "column": 4,
+                    "file": "misleading-indentation.c",
+                    "line": 15
+                @}
+            @}
+        ],
+        "message": "this \u2018if\u2019 clause does not guard...",
+        "option": "-Wmisleading-indentation",
+        "children": [
+            @{
+                "kind": "note",
+                "locations": [
+                    @{
+                        "caret": @{
+                            "column": 5,
+                            "file": "misleading-indentation.c",
+                            "line": 17
+                        @}
+                    @}
+                ],
+                "message": "...this statement, but the latter is @dots{}"
+            @}
+        ]
+    @},
+    @dots{}
+]
+@end smallexample
+
+@noindent
+@code{note}は@code{warning}の子です。
+
+診断には@code{kind}があります。 これが@code{warning}の場合、警告を制御するコマンドラインオプションを説明する@code{option}キーがあります。
+
+診断には、ゼロ個以上の場所を含めることがあります。 各場所には、@code{caret}位置とオプションの@code{start}および@code{finish}位置の3つまでの位置があります。 場所には、オプションの@code{label}文字列を含めることもできます。 たとえば、次のエラーは：
+
+@smallexample
+bad-binary-ops.c:64:23: error: invalid operands to binary + (have 'S' @{aka
+   'struct s'@} and 'T' @{aka 'struct t'@})
+   64 |   return callee_4a () + callee_4b ();
+      |          ~~~~~~~~~~~~ ^ ~~~~~~~~~~~~
+      |          |              |
+      |          |              T @{aka struct t@}
+      |          S @{aka struct s@}
+@end smallexample
+
+@noindent
+3つの場所があります。 そのプライマリロケーションは、列23の「+」トークンにあります。2つのセカンダリロケーションがあり、式の左辺と右辺にラベルが付いています。 JSON形式で次のように印刷される場合があります。
+
+@smallexample
+    @{
+        "children": [],
+        "kind": "error",
+        "locations": [
+            @{
+                "caret": @{
+                    "column": 23, "file": "bad-binary-ops.c", "line": 64
+                @}
+            @},
+            @{
+                "caret": @{
+                    "column": 10, "file": "bad-binary-ops.c", "line": 64
+                @},
+                "finish": @{
+                    "column": 21, "file": "bad-binary-ops.c", "line": 64
+                @},
+                "label": "S @{aka struct s@}"
+            @},
+            @{
+                "caret": @{
+                    "column": 25, "file": "bad-binary-ops.c", "line": 64
+                @},
+                "finish": @{
+                    "column": 36, "file": "bad-binary-ops.c", "line": 64
+                @},
+                "label": "T @{aka struct t@}"
+            @}
+        ],
+        "message": "invalid operands to binary + @dots{}"
+    @}
+@end smallexample
+
+診断に修正ヒントが含まれている場合、@option{-fdiagnostics-parseable-fixits}の出力に似た、半開間隔で構成される@code{fixits}配列があります。 たとえば、この診断と置換の修正のヒント：
+
+@smallexample
+demo.c:8:15: error: 'struct s' has no member named 'colour'; did you
+  mean 'color'?
+    8 |   return ptr->colour;
+      |               ^~~~~~
+      |               color
+@end smallexample
+
+@noindent
+JSON形式で次のように印刷される場合があります。
+
+@smallexample
+    @{
+        "children": [],
+        "fixits": [
+            @{
+                "next": @{
+                    "column": 21,
+                    "file": "demo.c",
+                    "line": 8
+                @},
+                "start": @{
+                    "column": 15,
+                    "file": "demo.c",
+                    "line": 8
+                @},
+                "string": "color"
+            @}
+        ],
+        "kind": "error",
+        "locations": [
+            @{
+                "caret": @{
+                    "column": 15,
+                    "file": "demo.c",
+                    "line": 8
+                @},
+                "finish": @{
+                    "column": 20,
+                    "file": "demo.c",
+                    "line": 8
+                @}
+            @}
+        ],
+        "message": "\u2018struct s\u2019 has no member named @dots{}"
+    @}
+@end smallexample
+
+@noindent
+ここで修正ヒントは、@code{start}から@code{next}までのテキストを@code{string}の値に置き換えることを示唆しています。 削除は、@code{string}の空の値、@code{start}が@code{next}に等しい挿入によって表されます。
 @end table
 
 @node Warning Options
@@ -3323,10 +3597,10 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 -Wbool-compare  
 -Wbool-operation  
 -Wc++11-compat  -Wc++14-compat  
--Wcatch-value @r{(C++とObjective-C++のみ)}  
+-Wcatch-value @r{(C++とObjective-C++専用)}  
 -Wchar-subscripts  
 -Wcomment  
--Wduplicate-decl-specifier @r{(CとObjective-Cのみ)} 
+-Wduplicate-decl-specifier @r{(CとObjective-C専用)} 
 -Wenum-compare @r{(C/ObjCで。これはC++ではデフォルトである)} 
 -Wformat   
 -Wint-in-bool-context  
@@ -3348,6 +3622,7 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 -Wnonnull-compare  
 -Wopenmp-simd 
 -Wparentheses  
+-Wpessimizing-move @r{(C++専用)} 
 -Wpointer-sign  
 -Wreorder   
 -Wrestrict
@@ -3358,7 +3633,6 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 -Wsizeof-pointer-memaccess 
 -Wstrict-aliasing  
 -Wstrict-overflow=1
--Wstringop-truncation
 -Wswitch  
 -Wtautological-compare  
 -Wtrigraphs  
@@ -3385,6 +3659,7 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 
 @gccoptlist{-Wclobbered  
 -Wcast-function-type 
+-Wdeprecated-copy @r{(C++専用)}
 -Wempty-body  
 -Wignored-qualifiers 
 -Wimplicit-fallthrough=3 
@@ -3393,6 +3668,7 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 -Wold-style-declaration @r{(C専用)}  
 -Woverride-init  
 -Wsign-compare @r{(C専用)} 
+-Wredundant-move @r{(C++専用)} 
 -Wtype-limits  
 -Wuninitialized  
 -Wshift-negative-value @r{(C++03とC99以降専用)}  
@@ -3430,11 +3706,6 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 配列の添字が@code{char}ならば警告する。これはプログラマーがこの型がある機種では符号付きであることをしばしば忘れるので
 一般的なエラーの原因である。
 この警告は@option{-Wall}で有効になる。
-
-@item -Wchkp
-@opindex Wchkp
-ポインタ境界検査器によって見つかった不正なメモリアクセスについて警告する。
-(@option{-fcheck-pointer-bounds}).
 
 @item -Wno-coverage-mismatch
 @opindex Wno-coverage-mismatch
@@ -3906,22 +4177,22 @@ ISO Cは関数定義で修飾された@code{void}戻り型を禁じているた�
 @item -Wmissing-attributes
 @opindex Wmissing-attributes
 @opindex Wno-missing-attributes
-Warn when a declaration of a function is missing one or more attributes
-that a related function is declared with and whose absence may adversely
-affect the correctness or efficiency of generated code.  For example, in
-C++, the warning is issued when an explicit specialization of a primary
-template declared with attribute @code{alloc_align}, @code{alloc_size},
-@code{assume_aligned}, @code{format}, @code{format_arg}, @code{malloc},
-or @code{nonnull} is declared without it.  Attributes @code{deprecated},
-@code{error}, and @code{warning} suppress the warning.
+関数の宣言に、関連する関数が宣言されている1つ以上の属性が欠落しており、その欠落が生成されたコードの正確性または効率に悪影響を与える可能性がある場合に警告します。 たとえば、属性を使用してターゲットの要件よりも制限の少ない要件を指定するエイリアスの宣言に対して警告が発行されます。
+これは通常、潜在的な最適化の機会を表しています。
+対照的に、@option{-Wattribute-alias=2}オプションは、エイリアスがターゲットよりも制限的である場合に発行される警告を制御します。これは、誤ったコード生成につながる可能性があります。
+考慮される属性には、@code{alloc_align}、@code{alloc_size}、
+@code{cold}、@code{const}、@code{hot}、@code{leaf}、@code{malloc}、
+@code{nonnull}、@code{noreturn}、@code{nothrow}、@code{pure}、
+@code{returns_nonnull}、および@code{returns_twice}があります。
+
+C++では、属性@code{alloc_align}、@code{alloc_size}、@code{assume_aligned}、@code{format}、@code{format_arg}、@code{malloc}、@code{nonnull}で宣言されたプライマリテンプレートの明示的な特殊化が宣言されていない場合に警告が発行されます。 属性@code{deprecated}、@code{error}、および@code{warning}は警告を抑制します。
 (@pxref{Function Attributes}).
 
-@option{-Wmissing-attributes} is enabled by @option{-Wall}.
+@code{copy}属性を使用して、属性を明示的に列挙せずに、別の宣言と同じ属性セットを宣言に適用できます。 この属性は、関数（@pxref{Common Function Attributes}）、変数（@pxref{Common Variable Attributes}）、または型（@pxref{Common Type Attributes}）の宣言に適用できます。
 
-For example, since the declaration of the primary function template
-below makes use of both attribute @code{malloc} and @code{alloc_size}
-the declaration of the explicit specialization of the template is
-diagnosed because it is missing one of the attributes.
+@option{-Wmissing-attributes}は@option{-Wall}によって有効化されます。
+
+たとえば、以下のプライマリ関数テンプレートの宣言は属性@code{malloc}と@code{alloc_size}の両方を使用しているため、テンプレートの明示的な特殊化の宣言は、属性の1つがないため診断されます。
 
 @smallexample
 template <class T>
@@ -3951,15 +4222,20 @@ int b[2][2] = @{ @{ 0, 1 @}, @{ 2, 3 @} @};
 @opindex Wno-missing-include-dirs
 ユーザの提供したincludeディレクトリが存在しない時警告する。
 
+@item -Wmissing-profile
+@opindex Wmissing-profile
+@opindex Wno-missing-profile
+@option {-fprofile-use}オプションの使用時にフィードバックプロファイルが欠落している場合に警告します。
+このオプションは、プロファイルを再生成せずに、@option{-fprofile-generate}と@option{-fprofile-use}を使用してコンパイルする間に、新しい関数または新しいファイルがユーザーコードに追加される場合を診断します。 これらの場合、プロファイルフィードバックデータファイルには、それぞれ新しく追加された関数またはファイルのプロファイルフィードバック情報が含まれていません。 また、プロファイルカウントデータ（.gcda）ファイルが削除された場合、GCCはプロファイルフィードバック情報を使用できません。 これらのすべての場合、プロファイル生成ステップの期限が切れたことをユーザーに通知する警告が発行されます。 @option{-Wno-missing-profile}を使用して、
+警告を無効にします。 警告を無視すると、コードの最適化が不十分になる可能性があります。
+警告を完全に無効にすることはお勧めできません。存在しないプロファイルデータが正当化される場合にのみ実行する必要があります。
+
 @item -Wmultistatement-macros
 @opindex Wmultistatement-macros
 @opindex Wno-multistatement-macros
-Warn about unsafe multiple statement macros that appear to be guarded
-by a clause such as @code{if}, @code{else}, @code{for}, @code{switch}, or
-@code{while}, in which only the first statement is actually guarded after
-the macro is expanded.
+@code{if}、@code{else}、@code{for}、@code{switch}、または@code{while}などの節によって保護されているように見える安全でない複数ステートメントマクロについて警告します。 マクロが展開された後、最初のステートメントだけが実際に保護されます。
 
-For example:
+例えば、
 
 @smallexample
 #define DOIT x++; y++
@@ -3967,15 +4243,15 @@ if (c)
   DOIT;
 @end smallexample
 
-will increment @code{y} unconditionally, not just when @code{c} holds.
-The can usually be fixed by wrapping the macro in a do-while loop:
+@code{c}が保持されているときだけでなく、無条件に@code{y}をインクリメントします。
+通常、do-whileループでマクロをラップすることで修正できます。
 @smallexample
 #define DOIT do @{ x++; y++; @} while (0)
 if (c)
   DOIT;
 @end smallexample
 
-This warning is enabled by @option{-Wall} in C and C++.
+この警告は、CおよびC++の@option{-Wall}によって有効になります。
 
 @item -Wparentheses
 @opindex Wparentheses
@@ -3988,7 +4264,7 @@ This warning is enabled by @option{-Wall} in C and C++.
 @code{?:}の第2項を省略するGNU拡張の危険な使い方も警告する。@code{?:}演算子の条件が真偽値の場合は、
 省略された値は常に１である。しばしばプログラマは代わりに条件節内部で計算された値であることを期待する。
 
-C ++の場合、宣言で不要なかっこのいくつかの場合に警告される。これは宣言ではなく、関数呼び出しの試みを示しうる。
+C++の場合、宣言で不要なかっこのいくつかの場合に警告される。これは宣言ではなく、関数呼び出しの試みを示しうる。
 
 @smallexample
 @{
@@ -4345,6 +4621,11 @@ GCCが理解できない@code{#pragma}ディレクティブに出会ったら警
 正しくないパラメータ、不正の構文、プラグマ間の矛盾のようなプラグマの不正利用について警告しない。
 @option{-Wunknown-pragmas}.
 
+@item -Wno-prio-ctor-dtor
+@opindex Wno-prio-ctor-dtor
+@opindex Wprio-ctor-dtor
+コンストラクターまたはデストラクターに0から100までの優先順位が使用されている場合、警告しません。コンストラクター属性とデストラクター属性を使用すると、コンストラクター/デストラクターに優先順位を割り当てて、@code{main}が呼び出される前または戻った後の実行順序を制御できます。 コンパイラーは実装のために0から100の間の優先順位値を予約しているため、優先順位値は100より大きくなければなりません。
+
 @item -Wstrict-aliasing
 @opindex Wstrict-aliasing
 @opindex Wno-strict-aliasing
@@ -4425,7 +4706,6 @@ GCCが理解できない@code{#pragma}ディレクティブに出会ったら警
 出力バッファを溢れさせると判断された@code{memcpy}や@code{strcpy}のような文字列操作関数の呼び出し
 について警告する。余分な引数は出力先のサイズを決定するために実行するObject Size Checkingの種類よりも
 １大きい。 @xref{Object Size Checking}.
-
 引数は、文字配列での操作を行うが関数でのみ意味を持つが、@code{memcpy}のような生メモリ関数は、オブジェクトサイズ
 タイプ0をいつも使うので意味を持たない。オプションは、最大の可能なオブジェクトか多くても@code{SIZE_MAX / 2}バイト
 を超えてサイズを指定した呼び出しにも警告する。オプションは最適化が利用可能なときに最高の結果を生むが、
@@ -4477,14 +4757,9 @@ Linuxシステムでは、この設定で最適化を有効にすると、@code{
 @item -Wstringop-truncation
 @opindex Wstringop-truncation
 @opindex Wno-stringop-truncation
-Warn for calls to bounded string manipulation functions such as @code{strncat},
-@code{strncpy}, and @code{stpncpy} that may either truncate the copied string
-or leave the destination unchanged.
+@code{strncat}、@code{strncpy}、@code{stpncpy}など、コピーされた文字列を切り捨てるか、宛先を変更しないままにする可能性のある、境界付き文字列操作関数の呼び出しについて警告します。
 
-In the following example, the call to @code{strncat} specifies a bound that
-is less than the length of the source string.  As a result, the copy of
-the source will be truncated and so the call is diagnosed.  To avoid the
-warning use @code{bufsize - strlen (buf) - 1)} as the bound.
+次の例では、@code{strncat}の呼び出しで、ソース文字列の長さより短い境界が指定されています。 その結果、ソースのコピーが切り捨てられるため、呼び出しが診断されます。 警告を回避するには、@code{bufsize-strlen (buf) -1}を境界として使用します。
 
 @smallexample
 void append (char *buf, size_t bufsize)
@@ -4493,12 +4768,7 @@ void append (char *buf, size_t bufsize)
 @}
 @end smallexample
 
-As another example, the following call to @code{strncpy} results in copying
-to @code{d} just the characters preceding the terminating NUL, without
-appending the NUL to the end.  Assuming the result of @code{strncpy} is
-necessarily a NUL-terminated string is a common mistake, and so the call
-is diagnosed.  To avoid the warning when the result is not expected to be
-NUL-terminated, call @code{memcpy} instead.
+別の例として、次の@code{strncpy}の呼び出しは、末尾にNULを追加することなく、終了NULの前の文字だけを@code{d}にコピーします。 @code{strncpy}の結果が必然的にNULで終了する文字列であると仮定することはよくある間違いであるため、呼び出しは診断されます。 結果がNULで終了すると予想されない場合の警告を回避するには、代わりに@code{memcpy}を呼び出します。
 
 @smallexample
 void copy (char *d, const char *s)
@@ -4507,12 +4777,7 @@ void copy (char *d, const char *s)
 @}
 @end smallexample
 
-In the following example, the call to @code{strncpy} specifies the size
-of the destination buffer as the bound.  If the length of the source
-string is equal to or greater than this size the result of the copy will
-not be NUL-terminated.  Therefore, the call is also diagnosed.  To avoid
-the warning, specify @code{sizeof buf - 1} as the bound and set the last
-element of the buffer to @code{NUL}.
+次の例では、@code{strncpy}の呼び出しで、宛先バッファのサイズを境界として指定しています。 ソース文字列の長さがこのサイズ以上の場合、コピーの結果はNULで終了しません。 したがって、コールも診断されます。 警告を避けるには、@code{sizeof buf-1}を境界として指定し、バッファーの最後の要素を@code{NUL}に設定します。
 
 @smallexample
 void copy (const char *s)
@@ -4523,15 +4788,7 @@ void copy (const char *s)
 @}
 @end smallexample
 
-In situations where a character array is intended to store a sequence
-of bytes with no terminating @code{NUL} such an array may be annotated
-with attribute @code{nonstring} to avoid this warning.  Such arrays,
-however, are not suitable arguments to functions that expect
-@code{NUL}-terminated strings.  To help detect accidental misuses of
-such arrays GCC issues warnings unless it can prove that the use is
-safe.  @xref{Common Variable Attributes}.
-
-Option @option{-Wstringop-truncation} is enabled by @option{-Wall}.
+文字配列が終了@code{NUL}なしでバイトシーケンスを格納することを意図している状況では、この警告を回避するために、配列に属性@code{nonstring}で注釈を付けることができます。 ただし、そのような配列は、@code{NUL}で終了する文字列を期待する関数の適切な引数ではありません。 そのような配列の偶発的な誤用の検出を支援するために、GCCは、使用が安全であると証明できる場合を除き、警告を発行します。@xref{Common Variable Attributes}.
 
 @item -Wsuggest-attribute=@r{[}pure@r{|}const@r{|}noreturn@r{|}format@r{|}cold@r{|}malloc@r{]}
 @opindex Wsuggest-attribute=
@@ -4542,6 +4799,7 @@ Option @option{-Wstringop-truncation} is enabled by @option{-Wall}.
 @item -Wsuggest-attribute=pure
 @itemx -Wsuggest-attribute=const
 @itemx -Wsuggest-attribute=noreturn
+@itemx -Wmissing-noreturn
 @itemx -Wsuggest-attribute=malloc
 @opindex Wsuggest-attribute=pure
 @opindex Wno-suggest-attribute=pure
@@ -4549,6 +4807,8 @@ Option @option{-Wstringop-truncation} is enabled by @option{-Wall}.
 @opindex Wno-suggest-attribute=const
 @opindex Wsuggest-attribute=noreturn
 @opindex Wno-suggest-attribute=noreturn
+@opindex Wmissing-noreturn
+@opindex Wno-missing-noreturn
 @opindex Wsuggest-attribute=malloc
 @opindex Wno-suggest-attribute=malloc
 
@@ -4610,22 +4870,30 @@ ocerrideキーワードでマークされていないオーバーライド仮想
 @item -Walloc-zero
 @opindex Wno-alloc-zero
 @opindex Walloc-zero
-組み込み形式の関数@code{aligned_alloc}、@code{alloca}、@code{calloc}、@code{malloc}と@code{realloc}含め、属性@code{alloc_size}で装飾された割り当て関数へのゼロバイトを指定した呼び出しについて警告する。これらの関数のサイズがゼロで呼び出されたときの動作は実装によって異なる（@code{realloc}の場合は廃止された）ので、それに頼ると微妙な移植性のバグが生じる可能性があるので避けるべきである。りますので避けてください。
+組み込み形式の関数@code{aligned_alloc}、@code{alloca}、@code{calloc}、@code{malloc}と@code{realloc}含め、属性@code{alloc_size}で装飾された割り当て関数へのゼロバイトを指定した呼び出しについて警告する。これらの関数のサイズがゼロで呼び出されたときの動作は実装によって異なる（@code{realloc}の場合は廃止された）ので、それに頼ると微妙な移植性のバグが生じる可能性があるので避けるべきである。
 
-@item -Walloc-size-larger-than=@var{n}
-属性@code{alloc_size}で修飾された館数が指定されたバイト数よりも大きいサイズを割り当てようとしたとき及び、サイズ計算の結果が無限精度の整数で@code{SIZE_MAX / 2}を超えるところで警告する。
-オプション引数@var{n}は、キロバイトとキビバイトに@code{kB}と@code{KiB}、メガバイトとメビバイトに@code{MB}と@code{MiB}などのようなバイトの倍数を指定する標準サフィックスのいずれかで終わってもよい。@option{-Walloc-size-greater-than=}@var{PTRDIFF_MAX}はデフォルトで有効になっている。@var{SIZE_MAX}以上の@var{n}を指定することで、オプションで制御される警告を無効にすることができる。
-
+@item -Walloc-size-larger-than=@var{byte-size}
+@opindex Walloc-size-larger-than=
+@opindex Wno-alloc-size-larger-than
+指定されたバイト数よりも大きいオブジェクトを割り当てようとする属性@code{alloc_size}で装飾された関数の呼び出し、または無限精度の整数型でのサイズ計算の結果がターゲットでの@samp{PTRDIFF_MAX}の値を超える場合に警告します。
+@option{-Walloc-size-larger-than=}@samp{PTRDIFF_MAX}はデフォルトで有効になっています。
+オプションによって制御される警告は、@samp{SIZE_MAX}以上の@var{byte-size}を指定するか、@ option{-Wno-alloc-size-larger-than}によって無効にできます。
 @xref{Function Attributes}.
+
+@item -Wno-alloc-size-larger-than
+@opindex Wno-alloc-size-larger-than
+@option{-Walloc-size-larger-than =}警告を無効にします。 このオプションは、@option{-Walloc-size-larger-than=}@samp{SIZE_MAX}以上と同等です。
 
 @item -Walloca
 @opindex Wno-alloca
 @opindex Walloca
 このオプションはソースでの@code{alloca}の全使用を警告する。
 
-@item -Walloca-larger-than=@var{n}
-このオプションは、整数型の引数を多くても@var{n}バイトに制限する制御述語によって制限されない@code{alloca}への呼び出し、またはバインドが未知の@code{alloca}への呼び出しを警告しり。
-非整数型の引数は、期待される範囲に制約されているように見えても、無限と見なされます。
+@item -Walloca-larger-than=@var{byte-size}
+@opindex Walloca-larger-than=
+@opindex Wno-alloca-larger-than
+このオプションは、整数型の引数を多くても@var{byte-size}バイトに制限する制御述語によって制限されない@code{alloca}への呼び出し、またはバインドが未知の@code{alloca}への呼び出しを警告しり。
+非整数型の引数は、期待される範囲に制約されているように見えても、無制限と見なされます。
 
 例えば、@code{alloca}の制限された場合は以下のようである。
 
@@ -4675,7 +4943,7 @@ void func (signed int n)
 
 このオプションは@option{-Wall}では有効にならず、@option{-ftree-vrp}が活性（@option{-O2}以上でのデフォルト）のときのみ活性になる。
 
-@option{-Wvla-larger-than=@var{n}}も見よ。
+@option{-Wvla-larger-than=}@samp{byte-size}も見よ。
 
 @item -Warray-bounds
 @itemx -Warray-bounds=@var{n}
@@ -4694,10 +4962,27 @@ void func (signed int n)
 これは多数の偽陽性を与えるかもしれず、デフォルトで無効にされる。
 @end table
 
-@item -Wattribute-alias
-Warn about declarations using the @code{alias} and similar attributes whose
-target is incompatible with the type of the alias.  @xref{Function Attributes,
-,Declaring Attributes of Functions}.
+@item -Wattribute-alias=@var{n}
+@itemx -Wno-attribute-alias
+@opindex -Wattribute-alias
+@opindex -Wno-attribute-alias
+@code{alias}と、ターゲットがエイリアスのタイプと互換性がない同様の属性を使用した宣言について警告します。
+@xref{Function Attributes,,関数の属性の宣言}.
+
+@table @gcctabopt
+@item -Wattribute-alias=1
+@option{-Wattribute-alias}オプションのデフォルトの警告レベルは、エイリアス宣言のタイプとそのターゲットのタイプ間の非互換性を診断します。 このような非互換性は通常、バグを示しています。
+
+@item -Wattribute-alias=2
+
+このレベルでは、@option{-Wattribute-alias}は、エイリアス宣言の属性がターゲットに適用される属性よりも制限されている場合も診断します。 これらの不一致により、誤ったコードが生成される可能性があります。 他の場合には、それらは無害であり、ターゲットに欠落している属性を追加するだけで解決できます。 比較のために、@option{-Wmissing-attributes}オプションを参照してください。これは、エイリアス宣言がターゲットよりも制限が厳しくなく、制限が少ない場合に診断を制御します。
+
+考慮される属性には、@code{alloc_align}、@code{alloc_size}、
+@code{cold}、@code{const}、@code{hot}、@code{leaf}、@code{malloc}、@code{nonnull}、@code{noreturn}、@code{nothrow}、@code{pure}、@code{returns_nonnull}、および@code{returns_twice}があります。
+@end table
+
+@option{-Wattribute-alias}は@option{-Wattribute-alias=1}と同等です。
+これがデフォルトです。 @option{-Wno-attribute-alias}または@option{-Wattribute-alias=0}でこれらの警告を無効にできます。
 
 @item -Wbool-compare
 @opindex Wno-bool-compare
@@ -4828,8 +5113,8 @@ if ((a & 16) == 10) @{ @dots{} @}
 この背後の考えは、時々、浮動小数点値を無限に正確な実数の近似と思うことが（プログラマにとって）便利であるということである。
 こうしているならば、あなたは計算が持ち出す最大であるかありそうな最大のエラーを計算し（コードを分析することによって、あるいはなんとかして）
 、比較（そして、出力を生じるとき、しかし、それは異なる問題である）を実行するときそれを考慮に入れる必要がある。
-特に、平等のためのテストの代わりに、あなたは、2つの値が重なる範囲を持つかどうか見るためにチェックするべきである。
-そして、これは関係演算子でされるので、平等比較は多分誤っているだろう。
+特に、等価のためのテストの代わりに、あなたは、2つの値が重なる範囲を持つかどうか見るためにチェックするべきである。
+そして、これは関係演算子でされるので、等価比較は多分誤っているだろう。
 
 @item -Wtraditional @r{(CとObjective-Cのみ)}
 @opindex Wtraditional
@@ -4947,26 +5232,39 @@ for (SomeIterator i = SomeObj.begin(); i != SomeObj.end(); ++i)
 
 この警告は@option{-Wshadow=local}によって有効になる。
 
-@item -Wlarger-than=@var{len}
-@opindex Wlarger-than=@var{len}
-@opindex Wlarger-than-@var{len}
-@var{len}バイトよりも大きいオブジェクトが定義された時に警告する。
+@item -Wlarger-than=@var{byte-size}
+@opindex Wlarger-than=
+@opindex Wlarger-than-@var{byte-size}
+サイズが@var {byte-size}を超えるオブジェクトが定義されるたびに警告します。
+@option{-Wlarger-than=}@samp{PTRDIFF_MAX}はデフォルトで有効になっています。
+オプションによって制御される警告は、@samp{SIZE_MAX}以上の@var{byte-size}を指定するか、@ option{-Wno-larger-than}によって無効にできます。
 
-@item -Wframe-larger-than=@var{len}
-@opindex Wframe-larger-than
-関数フレームが@var{len}バイトよりも大きいサイズの時に警告する。
-スタック・フレームサイズを測定するためにされる計算は、概算で、保守的でない。たとえあなたが警告を着かないとしても、
-実際の必要条件は@var{len}よりいくぶん大きいかもしれない。そのうえ、警告を発するべきかどうか決定するとき、@code{alloca}、可変長の配列または関連した
+@item -Wno-larger-than
+@opindex Wno-larger-than
+@option{-Wlarger-than=}警告を無効にします。 このオプションは、@option{-Wlarger-than=}@samp{SIZE_MAX}以上と同等です。
+
+@item -Wframe-larger-than=@var{byte-size}
+@opindex Wframe-larger-than=
+@opindex Wno-frame-larger-than
+関数フレームが@var{byte-size}バイトよりも大きいサイズの時に警告する。
+スタック・フレームサイズを測定するためにされる計算は、概算で、保守的でない。たとえあなたが警告を得なとしても、実際の必要条件は@var{byte-size}よりいくぶん大きいかもしれない。そのうえ、警告を発するべきかどうか決定するとき、@code{alloca}、可変長の配列または関連した
 構成概念を通して割り当てられる少しのスペースもコンパイラによって含まれない。
+@option{-Wframe-larger-than=}@samp{PTRDIFF_MAX}はデフォルトで有効になっています。
+@samp{SIZE_MAX}以上の@var{byte-size}を指定するか、@option{-Wno-frame-larger-than}でオプションによって制御される警告を無効にできます。
+
+@item -Wno-frame-larger-than
+@opindex Wno-frame-larger-than
+@option{-Wframe-larger-than=}警告を無効にします。 このオプションは、@option{-Wframe-larger-than=}@samp {SIZE_MAX}以上と同等です。
 
 @item -Wno-free-nonheap-object
 @opindex Wno-free-nonheap-object
 @opindex Wfree-nonheap-object
 ヒープに割り当てられなかったオブジェクトを開放しようとすることを警告しない。
 
-@item -Wstack-usage=@var{len}
+@item -Wstack-usage=@var{byte-size}
 @opindex Wstack-usage
-関数のスタック使用が@var{len}バイトを超えるかもしれない時に警告する。
+@opindex Wno-stack-usage
+関数のスタック使用が@var{byte-size}バイトを超えるかもしれない時に警告する。
 スタック使用を決定するための計算は保守的である。@code{alloca}によって割り当てられる空間,
 可変長配列、関連する構造は警告を発するかどうかを決定する際にコンパイラによって含まれる。
 
@@ -4992,6 +5290,18 @@ for (SomeIterator i = SomeObj.begin(); i != SomeObj.end(); ++i)
   warning: stack usage might be unbounded
 @end smallexample
 @end itemize
+
+@option{-Wstack-usage=}@samp{PTRDIFF_MAX}はデフォルトで有効になっています。
+@samp{SIZE_MAX}以上の@var{byte-size}を指定するか、@option{-Wno-stack-usage}でオプションによって制御される警告を無効にできます。
+
+@item -Wno-stack-usage
+@opindex Wno-stack-usage
+@option{-Wstack-usage=}警告を無効にします。 このオプションは、@option{-Wstack-usage=}@samp{SIZE_MAX}以上と同等です。
+
+@item -Wunsafe-loop-optimizations
+@opindex Wunsafe-loop-optimizations
+@opindex Wno-unsafe-loop-optimizations
+コンパイラがループインデックスの境界で何も想定できないため、ループを最適化できない場合に警告します。 @option{-funsafe-loop-optimizations}を使用すると、コンパイラーがそのような仮定を行う場合に警告が表示されます。
 
 @item -Wno-pedantic-ms-format @r{(MinGWターゲットのみ)}
 @opindex Wno-pedantic-ms-format
@@ -5075,6 +5385,12 @@ if (p == '\0')
 例えば、もし符号なし値が0と@code{<}か@code{>=}で比較されていたら警告する。この警告は
 @option{-Wextra}で有効になる。
 
+@item -Wabsolute-value @r{(CとObjective-C専用)}
+@opindex Wabsolute-value
+@opindex Wno-absolute-value
+より適切な標準関数が利用可能な場合、引数の絶対値を計算する標準関数の呼び出しを警告します。
+たとえば、@code{abs(3.14)}を呼び出すと、double引数の絶対値を計算するために呼び出す適切な関数が@code{fabs}であるため、警告がトリガーされます。 このオプションは、そのような関数の呼び出しの引数に符号なしの型がある場合にも警告をトリガーします。 この警告は、明示的な型キャストによって抑制でき、@option{-Wextra}によっても有効になります。
+
 @include cppwarnopts.texi
 
 @item -Wbad-function-cast @r{(CとObjective-C専用)}
@@ -5145,24 +5461,14 @@ ISO C++ 2014とISO C++ 2017の間で意味が異なるC++構造について警�
 
 @item -Wcast-align=strict
 @opindex Wcast-align=strict
-Warn whenever a pointer is cast such that the required alignment of the
-target is increased.  For example, warn if a @code{char *} is cast to
-an @code{int *} regardless of the target machine.
+ターゲットの必要なアライメントが増加するようにポインターがキャストされるたびに警告します。 たとえば、ターゲットマシンに関係なく、@ code{char *}が@code{int *}にキャストされた場合に警告します。
 
 @item -Wcast-function-type
 @opindex Wcast-function-type
 @opindex Wno-cast-function-type
-Warn when a function pointer is cast to an incompatible function pointer.
-In a cast involving function types with a variable argument list only
-the types of initial arguments that are provided are considered.
-Any parameter of pointer-type matches any other pointer-type.  Any benign
-differences in integral types are ignored, like @code{int} vs. @code{long}
-on ILP32 targets.  Likewise type qualifiers are ignored.  The function
-type @code{void (*) (void)} is special and matches everything, which can
-be used to suppress this warning.
-In a cast involving pointer to member types this warning warns whenever
-the type cast is changing the pointer to member type.
-This warning is enabled by @option{-Wextra}.
+関数ポインターが互換性のない関数ポインターにキャストされたときに警告します。
+可変引数リストを持つ関数型を含むキャストでは、提供される初期引数の型のみが考慮されます。
+ポインタータイプのパラメーターは、他のポインタータイプと一致します。 ILP32ターゲットの@code{int}と@code{long}のように、整数型の良性の違いは無視されます。 同様に、型修飾子は無視されます。 関数型@code{void(*) (void)}は特別であり、すべてに一致します。これを使用して、この警告を抑制できます。メンバー型へのポインターを含むキャストでは、型キャストがメンバー型へのポインターを変更するたびにこの警告が警告されます。この警告は@option {-Wextra}によって有効にされます。
 
 @item -Wwrite-strings
 @opindex Wwrite-strings
@@ -5173,15 +5479,12 @@ Cをコンパイルするとき、文字列定数に型@code{const char[@var{len
 C++をコンパイルするとき、文字列定数から@code{char *}への廃止予定の変換ついて警告する。この警告は、C++プログラムではデフォルトで使用可能である。
 
 @item -Wcatch-value
-@itemx -Wcatch-value=@var{n} @r{(C++ and Objective-C++ only)}
+@itemx -Wcatch-value=@var{n} @r{(C++とObjective-C++専用)}
 @opindex Wcatch-value
 @opindex Wno-catch-value
-Warn about catch handlers that do not catch via reference.
-With @option{-Wcatch-value=1} (or @option{-Wcatch-value} for short)
-warn about polymorphic class types that are caught by value.
-With @option{-Wcatch-value=2} warn about all class types that are caught
-by value. With @option{-Wcatch-value=3} warn about all types that are
-not caught by reference. @option{-Wcatch-value} is enabled by @option{-Wall}.
+参照を介してキャッチしないキャッチハンドラについて警告します。
+@option{-Wcatch-value=1}（または略して@option{-Wcatch-value}）を使用すると、値によってキャッチされるポリモーフィッククラスタイプについて警告します。
+@option{-Wcatch-value=2}を使用すると、値によってキャッチされるすべてのクラスタイプについて警告します。 @option{-Wcatch-value=3}を使用すると、参照によってキャッチされないすべてのタイプについて警告します。 @option{-Wcatch-value}は@option{-Wall}によって有効になります。
 
 @item -Wclobbered
 @opindex Wclobbered
@@ -5332,7 +5635,7 @@ C++では、この警告は@option{-Wall}でも有効である。Cでは、@opti
 void operator delete (void *) noexcept;
 void operator delete[] (void *) noexcept;
 @end smallexample
-対応するサイズ付き解放関数の定義
+に対応するサイズ付き解放関数の定義
 @smallexample
 void operator delete (void *, std::size_t) noexcept;
 void operator delete[] (void *, std::size_t) noexcept;
@@ -5377,7 +5680,7 @@ void make_file (const char *name)
 @code{memset}組み込み関数の疑わしい呼び出しを、もし第2引数が0でなく第3引数が0ならば警告する。
 これは例えば、@code{memset (buf, sizeof buf, 0)}について警告し、おそらく代わりに
 @code{memset (buf, 0, sizeof buf)}を意図していたであろう。診断は第３引数が定数0の時だけ生成される。
-もしそれが0へと変換される式であるか、ある型への0のキャストであるなどならば、ユーザが非キスを間違えたことは
+もしそれが0へと変換される式であるか、ある型への0のキャストであるなどならば、ユーザが引数を間違えたことは
 ずっとありそうもないので、警告は生成されない。この警告は@option{-Wall}で有効になる。
 
 @item -Waddress
@@ -5388,6 +5691,12 @@ void make_file (const char *name)
 関数のアドレスは常に真へと評価されるので、条件式でのそれらの仕様は大抵プログラマが関数呼び出しの括弧を忘れたことを示している。
 文字列通しの比較は未指定の振る舞いを起こし、Cでは移植性がないので、プログラマが代わりに@code{strcmp}を使うべきなことを示している。
 この警告は@option{-Wall}で有効になる。
+
+@item -Waddress-of-packed-member
+@opindex Waddress-of-packed-member
+@opindex Wno-address-of-packed-member
+structまたはunionのパックされたメンバーのアドレスが取得されたときに警告します。
+これは通常、位置合わせされていないポインター値になります。 これはデフォルトで有効になっています。
 
 @item -Wlogical-op
 @opindex Wlogical-op
@@ -5436,7 +5745,16 @@ if ((!a) > 1) @{ @dots{} @}
 @item -Wno-builtin-declaration-mismatch
 @opindex Wno-builtin-declaration-mismatch
 @opindex Wbuiltin-declaration-mismatch
-組み込み関数が間違ったシグネチャか非関数で宣言されたら警告する。この警告はデフォルトで有効である。
+組み込み関数が互換性のないシグネチャで宣言されている場合、または非関数として宣言されている場合、またはプロトタイプを含まない型で宣言された組み込み関数が、その昇格された型が関数で期待されるものと一致しない引数で呼び出された場合に警告します。@option{-Wno-builtin-declaration-mismatch}警告はデフォルトで有効になっています。 警告を回避するには、組み込み関数のプロトタイプをスコープに入れるための適切なヘッダーを含めます。
+
+たとえば、以下の@code{memset}の呼び出しは、関数が引数として@code{size_t}型の値を予期しているが、@code{32}の型は@code{int}であるため、警告によって診断されます。 @option{-Wextra}を使用すると、関数の宣言も診断されます。
+@smallexample
+extern void* memset ();
+void f (void *d)
+@{
+  memset (d, '\0', 32);
+@}
+@end smallexample
 
 @item -Wno-builtin-macro-redefined
 @opindex Wno-builtin-macro-redefined
@@ -5484,7 +5802,7 @@ C++で失われた宣言を探知するには@option{-Wmissing-declarations}を�
 @item -Wmissing-declarations
 @opindex Wmissing-declarations
 @opindex Wno-missing-declarations
-グローバル関数が前の宣言なしで定義されていると携行する。定義自身がプロトタイプを提供していてもそうする。
+グローバル関数が前の宣言なしで定義されていると警告する。定義自身がプロトタイプを提供していてもそうする。
 このオプションを使うとヘッダファイルで宣言されていないグローバル関数を検知することができる。
 Cでは、前に非プロトタイプの宣言のある関数は警告が発せられない。失われたプロトタイプを探知するには
 @option{-Wmissing-prototypes}を使う。C++では、関数テンプレート、インライン関数、匿名名前空間での関数には警告が発せられない。
@@ -5547,7 +5865,7 @@ ISO CとISO C++では、それらが文字の異なるシーケンスである�
 GCCがサポートする4レベルの警告がある。デフォルトは@option{-Wnormalized=nfc}である。そして、ISO 「C」正規化型@dfn{NFC}になり識別子には何でも警告する。
 NFCは、大部分の用途のための推薦された形である。それは、@option{-Wnormalized}に等しい。
 
-不幸にも、ISO CとISO C++によって、識別子と認められているが、NFCに変換すると認められない文字がある。すなわち、これらのシンボル移植性のあるCとC++で使い、
+不幸にも、ISO CとISO C++によって、識別子と認められているが、NFCに変換すると認められない文字がある。すなわち、これらのシンボルを移植性のあるCとC++で使い、
 すべての識別子をNFCにする方法はない。@option{-Wnormalized=id}は、これらの文字の警告を抑える。関係する標準の将来のバージョンがこれを修正することが望まれる。
 そして、それはこのオプションがデフォルトでない理由である。
 
@@ -5559,8 +5877,13 @@ ISO 10646はあるフォントや表示方法では、特にフォーマッテ�
 例えば、@code{\u207F}、「上付きラテン小文字N」は上付き文字の場所に置かれた単なる@code{n}のように表示される。
 ISO 10646はそれらすべても同様に標準系に変換する@dfn{NFKC}正規化スキームを定義していて、GCCは
 @option{-Wnormalized=nfkc}を使っているならNFKCでないコードに警告する。この警告は数字0と混乱するかもしれないという理由で文字Oを含む
-すべての識別子を警告するようなものなので、デフォルトではないが、プログラム環境がそれらのもじを区別して表示できないならばローカルコード規約として
+すべての識別子を警告するようなものなので、デフォルトではないが、プログラム環境がそれらの文字を区別して表示できないならばローカルコード規約として
 役立つかもしれない。
+
+@item -Wno-attribute-warning
+@opindex Wno-attribute-warning
+@opindex Wattribute-warning
+@code{warning}属性で宣言された関数（@pxref{Function Attributes}）の使用について警告しない。 デフォルトでは、この警告は有効になっています。 @option{-Wno-attribute-warning}を使用して警告を無効にしたり、@option{-Wno-error=attribute-warning}を使用して@option{-Werror}フラグでコンパイルしたときにエラーを無効にしたりできます。
 
 @item -Wno-deprecated
 @opindex Wno-deprecated
@@ -5605,7 +5928,7 @@ ISO 10646はそれらすべても同様に標準系に変換する@dfn{NFKC}正�
 @opindex Woverride-init-side-effects
 @opindex Wno-override-init-side-effects
 指示付きの初期化子(@pxref{Designated Inits, , 指示付きの初期化子})を使った時に副作用付きの初期化フィールドを
-上書きしたら警告する。これはデフォルおで有効である。
+上書きしたら警告する。これはデフォルトで有効である。
 
 @item -Wpacked
 @opindex Wpacked
@@ -5648,10 +5971,8 @@ struct foo
 @item -Wpacked-not-aligned @r{(C, C++, Objective-C and Objective-C++ only)}
 @opindex Wpacked-not-aligned
 @opindex Wno-packed-not-aligned
-Warn if a structure field with explicitly specified alignment in a
-packed struct or union is misaligned.  For example, a warning will
-be issued on @code{struct S}, like, @code{warning: alignment 1 of
-'struct S' is less than 8}, in this code:
+パックされたstructまたはunionで明示的に指定されたアラインメントを持つ構造体フィールドがミスアラインされている場合に警告します。 たとえば、このコードでは、@code{warning：alignment 1 of
+'struct S' is less than 8}のように、@code{struct S}で警告が発行されます。
 
 @smallexample
 @group
@@ -5662,7 +5983,7 @@ struct __attribute__ ((packed)) S @{
 @end group
 @end smallexample
 
-This warning is enabled by @option{-Wall}.
+この警告は@option{-Wall}によって有効になります。
 
 @item -Wpadded
 @opindex Wpadded
@@ -5678,7 +5999,7 @@ This warning is enabled by @option{-Wall}.
 @item -Wno-restrict
 @opindex Wrestrict
 @opindex Wno-restrict
-@code{restrict}修飾パラメータ（またはC++では@code{__ restrict}修飾パラメータ）によって参照されるオブジェクトが別の引数でエイリアスされた場合、またはそのようなオブジェクト間のコピーが重複した場合に警告する。たとえば、以下の@code{strcpy}関数を呼び出しは、最初の文字を最後の4文字に置き換えて文字列を切り詰めようとする。 しかし、呼び出しが終端NULを@code{a[4]}に書き込むため、コピーは重なり、呼び出しは診断される。
+@code{restrict}修飾パラメータ（またはC++では@code{__restrict}修飾パラメータ）によって参照されるオブジェクトが別の引数でエイリアスされた場合、またはそのようなオブジェクト間のコピーが重複した場合に警告する。たとえば、以下の@code{strcpy}関数を呼び出しは、最初の文字を最後の4文字に置き換えて文字列を切り詰めようとする。 しかし、呼び出しが終端NULを@code{a[4]}に書き込むため、コピーは重なり、呼び出しは診断される。
 
 @smallexample
 void foo (void)
@@ -5745,7 +6066,7 @@ void foo (void)
 @item -Wlong-long
 @opindex Wlong-long
 @opindex Wno-long-long
-@code{long long}型が湯買われた時に警告する。これはISO C90とC++98モードで@option{-Wpedantic}か@option{-Wtraditional}によって有効になる。
+@code{long long}型が使われた時に警告する。これはISO C90とC++98モードで@option{-Wpedantic}か@option{-Wtraditional}によって有効になる。
 警告メッセージを抑制するには、@option{-Wno-long-long}を使う。
 
 @item -Wvariadic-macros
@@ -5773,21 +6094,26 @@ void foo (void)
 @opindex Wno-virtual-move-assign
 非自明のC++11ムーブ代入演算子で仮想基底から継承されたことの警告を抑制する。これはもし仮想基底が1つ以上の経路で到達可能なら、
 複数回ムーブされ。両方のオブジェクトが最終的にムーブされた状態になりうるために危険である。
-もしムーブ代入演算子ががムーブされたオブジェクトからのムーブを避けるように書かれているならば、この警告は無効化可能である。
+もしムーブ代入演算子がムーブされたオブジェクトからのムーブを避けるように書かれているならば、この警告は無効化可能である。
 
 @item -Wvla
 @opindex Wvla
 @opindex Wno-vla
 コードで可変長配列が使われたら警告する。@option{-Wno-vla}は@option{-Wpedantic}から可変長配列の警告を止める。
 
-@item -Wvla-larger-than=@var{n}
-このオプションが使われると、コンパイラはサイズが制限されていないか、@var{n}バイト以上になりうる引数によって制限されている使用について警告する。これは@option{-Walloca-larger-than=@var{n}}の動きと同様だが、可変長配列に対して働く。
+@item -Wvla-larger-than=@var{byte-size}
+@opindex Wvla-larger-than=
+@opindex Wno-vla-larger-thanこのオプションが使われると、コンパイラはサイズが制限されていないか、@var{byte-size}バイト以上になりうる引数によって制限されている使用について警告する。これは@option{-Walloca-larger-than=@var{byte-size}}の動きと同様だが、可変長配列に対して働く。
 
 GCCは既知の値の小さい可変長配列をただの配列に最適化するかもしれず、したがって、そのような配列では警告が発せられないかもしれないことに注意する。
 
 この警告は@option{-Wall}によっては有効にされず、@option{-ftree-vrp}が活性（@option{-O2}以上のデフォルト）のときだけ活性になる。
 
-@option{-Walloca-larger-than=@var{n}}も見よ。
+@option{-Walloca-larger-than=@var{byte-size}}も見よ。
+
+@item -Wno-vla-larger-than
+@opindex Wno-vla-larger-than
+@option{-Wvla-larger-than=}警告を無効にします。 このオプションは、@option{-Wvla-larger-than=}@samp{SIZE_MAX}以上と同等です。
 
 @item -Wvolatile-register-var
 @opindex Wvolatile-register-var
@@ -5867,7 +6193,7 @@ GDBでのデバッグをより良くするが、他のデバッガをクラッ�
 @item -ggdb
 @opindex ggdb
 GDBによって使うためのデバッグ情報を生成する。これは利用可能な最も表現力のあるフォーマット
-（DWARD, stabs,もしどちらもサポートされていないならネイティブフォーマット）を使い、もし可能ならばGDBで拡張を含むことを意味する。
+（DWARF, stabs,もしどちらもサポートされていないならネイティブフォーマット）を使い、もし可能ならばGDBで拡張を含むことを意味する。
 
 @item -gdwarf
 @itemx -gdwarf-@var{version}
@@ -5969,6 +6295,10 @@ GCCがクラスのためにデバッグ情報を通常発する方法を取り�
 ビルドシステムがデバッグ情報をリンクするのを避けることを可能にする。このオプションが役立つためには、
 @file{.dwo}ファイルをデバッガが読める必要がある。
 
+@item -gdescribe-dies
+@opindex gdescribe-dies
+人工変数、外部参照、呼び出しサイトパラメーターDIEなど、名前属性のない一部のDWARF DIEに説明属性を追加します。
+
 @item -gpubnames
 @opindex gpubnames
 DWARF@code{.debug_pubnames}セクションと@code{.debug_pubtypes}セクションを生成する。
@@ -6029,6 +6359,7 @@ DWARF2 +行番号テーブルを生成する場合、GCCにDWARF2+行番号テ�
 @opindex gcolumn-info
 @opindex gno-column-info
 ファイルと行だけでなく、DWARFデバッグ情報に位置情報の列情報を出力する。このオプションはデフォルトで有効になっている。
+
 @item -gstatement-frontiers
 @itemx -gno-statement-frontiers
 @opindex gstatement-frontiers
@@ -6150,10 +6481,10 @@ DWARFで巻き戻し情報を生成する。
 ブレークポイントで止まるなら、どんな変数にも新しい値を代入でき、関数内の他の文へプログラムカウンタを変更でき
 ソースコードから期待される正確な結果を得るだろう。
 
-最適化フラグをオンにするとコンパイラはパフォーマンスと・およびコード再うをコンパイル時間とおそらくプログラムをデバッグする可能性と
+最適化フラグをオンにするとコンパイラはパフォーマンスと・およびコードサイズをコンパイル時間とおそらくプログラムをデバッグする可能性と
 引き換えに向上させようとする
 
-コンパイラはそのプログラムのち知識に基いて最適化を行う。複数のファイルを一つの出力ファイルに一度にコンパイルすれば
+コンパイラはそのプログラムの知識に基いて最適化を行う。複数のファイルを一つの出力ファイルに一度にコンパイルすれば
 コンパイラはそれぞれをコンパイルするときに全ファイルから得られた情報を使うことができる。
 
 すべての最適化がフラグで直接制御できるわけではない。フラグを持つ最適化だけがこの節でリストされている。
@@ -6174,9 +6505,14 @@ GCCを@option{-Q --help=optimizers}で起動することでそれぞれのレベ
 
 @option{-O}で、コンパイル時間を大きく使う最適化を行わずに、コンパイラはコードサイズと実行時間を減らそうとする。
 
+@c Note that in addition to the default_options_table list in opts.c,
+@c several optimization flags default to true but control optimization
+@c passes that are explicitly disabled at -O0.
+
+
 @option{-O}は以下の最適化フラグをオンにする
-@gccoptlist{
--fauto-inc-dec 
+@c Please keep the following list alphabetized.
+@gccoptlist{-fauto-inc-dec 
 -fbranch-count-reg 
 -fcombine-stack-adjustments 
 -fcompare-elim 
@@ -6187,12 +6523,13 @@ GCCを@option{-Q --help=optimizers}で起動することでそれぞれのレベ
 -fdse 
 -fforward-propagate 
 -fguess-branch-probability 
--fif-conversion2 
 -fif-conversion 
+-fif-conversion2 
 -finline-functions-called-once 
--fipa-pure-const 
 -fipa-profile 
+-fipa-pure-const 
 -fipa-reference 
+-fipa-reference-addressable 
 -fmerge-constants 
 -fmove-loop-invariants 
 -fomit-frame-pointer 
@@ -6213,10 +6550,11 @@ GCCを@option{-Q --help=optimizers}で起動することでそれぞれのレベ
 -ftree-forwprop 
 -ftree-fre 
 -ftree-phiprop 
+-ftree-pta 
+-ftree-scev-cprop 
 -ftree-sink 
 -ftree-slsr 
 -ftree-sra 
--ftree-pta 
 -ftree-ter 
 -funit-at-a-time}
 
@@ -6226,24 +6564,22 @@ GCCを@option{-Q --help=optimizers}で起動することでそれぞれのレベ
 @option{-O}と比較して、これはコンパイル時間と生成されたコードのパフォーマンスの両方を増やす。
 
 @option{-O2}は@option{-O}で指定された最適化フラグすべてをオンにする。それはさらに以下の最適化フラグもオンにする。
-@gccoptlist{-fthread-jumps 
--falign-functions  -falign-jumps 
--falign-loops  -falign-labels 
+@c Please keep the following list alphabetized!
+@gccoptlist{-falign-functions  -falign-jumps 
+-falign-labels  -falign-loops 
 -fcaller-saves 
+-fcode-hoisting 
 -fcrossjumping 
 -fcse-follow-jumps  -fcse-skip-blocks 
 -fdelete-null-pointer-checks 
--fdevirtualize -fdevirtualize-speculatively 
+-fdevirtualize  -fdevirtualize-speculatively 
 -fexpensive-optimizations 
 -fgcse  -fgcse-lm  
 -fhoist-adjacent-loads 
 -finline-small-functions 
 -findirect-inlining 
--fipa-cp 
--fipa-bit-cp 
--fipa-vrp 
--fipa-sra 
--fipa-icf 
+-fipa-bit-cp  -fipa-cp  -fipa-icf 
+-fipa-ra  -fipa-sra  -fipa-vrp 
 -fisolate-erroneous-paths-dereference 
 -flra-remat 
 -foptimize-sibling-calls 
@@ -6251,39 +6587,40 @@ GCCを@option{-Q --help=optimizers}で起動することでそれぞれのレベ
 -fpartial-inlining 
 -fpeephole2 
 -freorder-blocks-algorithm=stc 
--freorder-blocks-and-partition -freorder-functions 
+-freorder-blocks-and-partition  -freorder-functions 
 -frerun-cse-after-loop  
--fsched-interblock  -fsched-spec 
 -fschedule-insns  -fschedule-insns2 
+-fsched-interblock  -fsched-spec 
 -fstore-merging 
 -fstrict-aliasing 
+-fthread-jumps 
 -ftree-builtin-call-dce 
--ftree-switch-conversion -ftree-tail-merge 
--fcode-hoisting 
 -ftree-pre 
--ftree-vrp 
--fipa-ra}
+-ftree-switch-conversion  -ftree-tail-merge 
+-ftree-vrp}
 
 計算gotoを使うプログラムでは@option{-O2}を呼ぶことについての@option{-fgcse}の警告に注意せよ。
 
 @item -O3
 @opindex O3
 もっと最適化する。@option{-O3}は@option{-O2}によって指定されたすべての最適化をオンにして、以下の最適化フラグもオンにする。
-@gccoptlist{-finline-functions 
--funswitch-loops 
--fpredictive-commoning 
--fgcse-after-reload 
--ftree-loop-vectorize 
--ftree-loop-distribution 
--ftree-loop-distribute-patterns 
+@c Please keep the following list alphabetized!
+@gccoptlist{-fgcse-after-reload 
+-finline-functions 
+-fipa-cp-clone
 -floop-interchange 
 -floop-unroll-and-jam 
--fsplit-paths 
--ftree-slp-vectorize 
--fvect-cost-model 
--ftree-partial-pre 
 -fpeel-loops 
--fipa-cp-clone}
+-fpredictive-commoning 
+-fsplit-paths 
+-ftree-loop-distribute-patterns 
+-ftree-loop-distribution 
+-ftree-loop-vectorize 
+-ftree-partial-pre 
+-ftree-slp-vectorize 
+-funswitch-loops 
+-fvect-cost-model 
+-fversion-loops-for-strides}
 
 @item -O0
 @opindex O0
@@ -6295,9 +6632,11 @@ GCCを@option{-Q --help=optimizers}で起動することでそれぞれのレベ
 さらなる最適化も行う。
 
 @option{-Os}は以下の最適化フラグを無効にする。
-@gccoptlist{-falign-functions  -falign-jumps  -falign-loops 
--falign-labels  -freorder-blocks  -freorder-blocks-algorithm=stc 
--freorder-blocks-and-partition  -fprefetch-loop-arrays}
+@gccoptlist{-falign-functions  -falign-jumps 
+-falign-labels  -falign-loops 
+-fprefetch-loop-arrays  -freorder-blocks-algorithm=stc}
+
+また、@option{-finline-functions}を有効にし、コンパイラーに実行速度ではなくコードサイズを調整させ、コードサイズを削減するように設計されたさらなる最適化を実行します。
 
 @item -Ofast
 @opindex Ofast
@@ -6309,7 +6648,16 @@ Fortran固有の@option{-fstack-arrays}、@option{-fmax-stack-var-size}が指定
 @opindex Og
 デバッグ経験を最適化する。@option{-Og}はデバッグを干渉しない最適化を有効にする。それは標準的な
 編集・コンパイル・デバッグサイクルにとっての選択肢のレベルとなる最適化であるべきで、
-速いコンパイルとよいデバッグ経験を維持する合理的なレベルを提供する。
+速いコンパイルとよいデバッグ経験を維持する合理的なレベルを提供する。 デバッグ情報を収集する一部のコンパイラパスは@option{-O0}で無効になるため、デバッグ可能なコードの生成には@option{-O0}よりも適切な選択です。
+
+@option{-O0}と同様に、@option{-Og}は多くの最適化パスを完全に無効にするため、それらを制御する個々のオプションは効果がありません。 それ以外の場合、@option {-Og}は、デバッグを妨げる可能性のあるフラグを除く、すべての@option{-O1}最適化フラグを有効にします。
+
+@gccoptlist{-fbranch-count-reg  -fdelayed-branch 
+-fif-conversion  -fif-conversion2  
+-finline-functions-called-once 
+-fmove-loop-invariants  -fssa-phiopt 
+-ftree-bit-ccp  -ftree-pta  -ftree-sra}
+
 @end table
 
 もし、レベル数のありなしにかかわらず、複数の@option{-O}オプションを使うなら、最後のそのようなオプションが有効なものである。
@@ -6324,10 +6672,8 @@ Fortran固有の@option{-fstack-arrays}、@option{-fmax-stack-var-size}が指定
 @table @gcctabopt
 @item -fno-defer-pop
 @opindex fno-defer-pop
-それぞれの関数が返るとすぐに関数呼び出しの引数をポップする。関数呼び出しの後に引数をポップしなければならない機種では、
-コンパイラは通常いくつかの関数呼び出しのスタックで引数を計算して一度にポップする。
-
-レベル@option{-O}, @option{-O2}, @option{-O3}, @option{-Os}で無効にされる。
+@opindex fdefer-pop
+関数呼び出し後に引数をポップする必要があるマシンの場合、各関数が戻るとすぐに引数を常にポップします。@option{-O1}以上のレベルでは、@option{-fdefer-pop}がデフォルトです。 これにより、コンパイラーは、いくつかの関数呼び出しの引数をスタックに蓄積し、それらを一度にポップすることができます。
 
 @item -fforward-propagate
 @opindex fforward-propagate
@@ -6362,7 +6708,7 @@ RTLでの前方伝搬パスを実行する。このパスは2つの命令を結�
 
 @item -foptimize-strlen
 @opindex foptimize-strlen
-種々ののC文字列関数（例えば、@code{strlen}, @code{strchr}, @code{Strcpy})とその@code{_FORTIFY_SOURCE}対応物を
+種々のC文字列関数（例えば、@code{strlen}, @code{strchr}, @code{Strcpy})とその@code{_FORTIFY_SOURCE}対応物を
 より速い代替物でと最適化する。
 
 レベル@option{-O2}, @option{-O3}で有効になる。
@@ -6394,12 +6740,12 @@ RTLでの前方伝搬パスを実行する。このパスは2つの命令を結�
 
 もし与えられた関数のすべての呼び出しが統合され、関数が@code{static}と宣言されていたら、関数はそれ自身は通常は出力されない。
 
-レベル@option{-O2}, @option{-O3}, @option{-Os}で有効になる。
+レベル@option{-O2}, @option{-O3}, @option{-Os}で有効になる。@option{-fprofile-use}および@option{-fauto-profile}によっても有効になります。
 
 @item -finline-functions-called-once
 @opindex finline-functions-called-once
 すべての一度だけ呼ばれた@code{static}関数を@code{inline}をマークされていなくても呼び出し元へのインライン化と考える。
-もし与えられた関数が統合されたなら、関数自身はアセンブラコードとｓていは出力されない。
+もし与えられた関数が統合されたなら、関数自身はアセンブラコードとしては出力されない。
 
 レベル@option{-O1}, @option{-O2}, @option{-O3}と@option{-Os}で有効になる。
 
@@ -6560,7 +6906,7 @@ CSEがelse句のない単純な@code{if}文に出会ったならば、@option{-f
 @opindex fgcse
 大域共通部分式除去パスを行う。このパスは大域定数とコピーの伝搬も行う。
 
-@emph{_注意_：} GCC拡張の計算gotoを使ったプログラムをコンパイルするときは、
+@emph{注意：} GCC拡張の計算gotoを使ったプログラムをコンパイルするときは、
 大域共通部分式除去パスをコマンドラインで@option{-fno-gcse}を加える事で無効にしたほうがよい実行時パフォーマンスを得るかもしれにあ。
 
 レベル@option{-O2}, @option{-O3}, @option{-Os}で有効になる。
@@ -6590,6 +6936,8 @@ CSEがelse句のない単純な@code{if}文に出会ったならば、@option{-f
 @opindex fgcse-after-reload
 @option{-fgcse-after-reload}が有効になる時、冗長ロード除去パスがリロードの後に行われる。このパスの目的は
 冗長なこぼれを片付けることである。
+
+@option {-fprofile-use}および@option {-fauto-profile}によって有効になります。
 
 @item -faggressive-loop-optimizations
 @opindex faggressive-loop-optimizations
@@ -6678,7 +7026,6 @@ AVRILとCR16、MSP430では、このオプションは完全に無効にされ�
 
 @item -fdevirtualize-at-ltrans
 @opindex fdevirtualize-at-ltrans
-
 ローカル変換モードでリンク時最適化器を走らせるとき、積極的な非仮想化のために必要とされる余分の情報を流れ出させる。
 このオプションはより多くの非仮想化を使用可能にするが、かなり流れられたデータのサイズを増やす。この理由で、
 それはデフォルトで無効にされている。
@@ -6948,7 +7295,7 @@ ELFのようなあるオブジェクトフォーマットで、動的リンカ�
 その場合では、呼び出し前後で保存と復帰をする必要が無い。これは呼ばれた関数が
 現在の関数と同じコンパイル単位の一部でそれより前にコンパイルされている時だけ可能である。
 
-レベル@option{-O2}, @option{-O3}, @option{-Os}で有効である。
+レベル@option{-O2}、@option{-O3}、@option{-Os}で有効になりますが、プロファイリング用に生成されたコードがインスツルメントされる場合、オプションは無効になります（@option{-p}または@option {-pg}）または呼び出し先のレジスタの使用状況を正確に知ることができない場合（これは、RTLでプロローグとエピローグを公開しないターゲットで発生します）。
 
 @item -fconserve-stack
 @opindex fconserve-stack
@@ -7003,6 +7350,16 @@ pure、constな関数を発見する。@option{-O}以上でデフォルトで有
 @opindex fipa-reference
 コンパイル単位を脱出しない静的変数を発見する。@option{-O}以上でデフォルトで有効である。
 
+@item -fipa-reference-addressable
+@opindex fipa-reference-addressable
+読み取り専用、書き込み専用、およびアドレス指定不可能な静的変数を発見します。
+@option{-O}以降でデフォルトで有効になります。
+
+@item -fipa-stack-alignment
+@opindex fipa-stack-alignment
+可能な場合、呼び出しサイトでのスタック調整を減らします。
+デフォルトで有効になっています。
+
 @item -fipa-pta
 @opindex fipa-pta
 手続間ポインタ解析と手続間修正・参照解析を行う。このオプションは大きなコンパイル単位で
@@ -7028,11 +7385,14 @@ pure、constな関数を発見する。@option{-O}以上でデフォルトで有
 (@option{--param ipcp-unit-growth=@var{value}}を見よ。)
 このフラグは@option{-O3}でデフォルトで有効である。
 
-@item -fipa-cp-alignment
-@opindex -fipa-cp-alignment
-有効の時、この最適化はよりよいベクトル化と文字列操作をサポートするために関数パラメータの境界を伝搬する。
+@item -fipa-bit-cp
+@opindex fipa-bit-cp
+有効にすると、プロシージャ間のビット定数定数伝播を実行します。 このフラグは、@option{-O2}でデフォルトで有効になり、@option{-fprofile-use}および@option{-fauto-profile}で有効になります。
+@option{-fipa-cp}が有効になっている必要があります。
 
-このフラグは@option{-O2}と@option{-Os}でデフォルトで有効である。@option{-fipa-cp}が有効である必要がある。
+@item -fipa-vrp
+@opindex fipa-vrp
+有効にした場合、値の範囲のプロシージャー間の伝搬を実行します。 このフラグは、@option{-O2}でデフォルトで有効になっています。 @option{-fipa-cp}が有効になっている必要があります。
 
 @item -fipa-icf
 @opindex fipa-icf
@@ -7044,6 +7404,46 @@ pure、constな関数を発見する。@option{-O}以上でデフォルトで有
 GCCによってのみ見つかる同一性もGoldによってのみ見つかる同一性もある。
 
 このフラグは@option{-O2}と@option{-Os}でデフォルトで有効である。
+
+@item -flive-patching=@var{level}
+@opindex flive-patching
+GCCの最適化を制御して、ライブパッチに適した出力を生成します。
+
+コンパイラーの最適化が関数の本体またはその本体から抽出された情報を使用して別の関数を最適化/変更する場合、後者は前者の影響を受ける関数と呼ばれます。 関数にパッチを適用する場合、影響を受ける関数にもパッチを適用する必要があります。
+
+影響を受ける関数は、コンパイラのプロシージャー間の最適化によって決まります。 たとえば、関数を呼び出し元にインライン化する場合、関数を複製して呼び出し元を変更してこの新しいクローンを呼び出す場合、関数の純粋性/安定性情報を抽出して直接または間接呼び出し元を最適化する場合など、呼び出し元に影響があります。
+
+通常、IPA最適化を有効にすると、各関数の影響を受ける関数の数が多くなります。 影響を受ける関数の数を制御し、影響を受ける関数のリストをより簡単に計算するために、2つの異なるレベルでIPA最適化を部分的に有効にできます。
+
+@var {level}引数は次のいずれかでなければなりません：
+
+@table @samp
+
+@item inline-clone
+
+インライン化、クローン作成、集合体のプロシージャー間のスカラー置換、部分的なインライン化など、インライン化とクローン作成の最適化のみを有効にします。その結果、関数にパッチを適用すると、そのすべての呼び出し元とそのクローンの呼び出し元が影響を受けるため、同様にパッチを適用する必要があります。
+
+@option{-flive-patching=inline-clone}は以下の最適化オプションを無効化します。
+@gccoptlist{-fwhole-program  -fipa-pta  -fipa-reference  -fipa-ra 
+-fipa-icf  -fipa-icf-functions  -fipa-icf-variables 
+-fipa-bit-cp  -fipa-vrp  -fipa-pure-const  -fipa-reference-addressable 
+-fipa-stack-alignment}
+
+@item inline-only-static
+
+静的関数のインライン化のみを有効にします。
+その結果、静的関数にパッチを適用すると、すべての呼び出し元が影響を受けるため、同様にパッチを適用する必要があります。
+
+@option{-flive-patching=inline-clone}が無効にするすべてのフラグに加えて、@option {-flive-patching=inline-only-static}は次の追加の最適化フラグを無効にします。
+@gccoptlist{-fipa-cp-clone  -fipa-sra  -fpartial-inlining  -fipa-cp}
+
+@end table
+
+@option{-flive-patching}が値なしで指定された場合、デフォルト値は@var{inline-clone}です。
+
+このフラグはデフォルトで無効になっています。
+
+@option {-flive-patching}はリンク時最適化（@option{-flto}）ではサポートされていないことに注意してください。
 
 @item -fisolate-erroneous-paths-dereference
 @opindex fisolate-erroneous-paths-dereference
@@ -7159,24 +7559,8 @@ SSA表現の外へプログラムを変換する間、単なるコンパイラ�
 @item -ftree-loop-if-convert
 @opindex ftree-loop-if-convert
 最も内側のループでの条件付きジャンプを分岐なしの等価物に変換しようとする。
-意図はベクトル化パsうはループを扱う能力を向上させるために最も内側のループから制御フロー
+意図はベクトル化パスはループを扱う能力を向上させるために最も内側のループから制御フロー
 を取り除くことである。これはベクトル化が有効ならばデフォルトで有効である。
-
-@item -ftree-loop-if-convert-stores
-@opindex ftree-loop-if-convert-stores
-メモリ書き込みを含む条件付きジャンプも変換しようとする。この変換は条件付きメモリ書き込みを無条件メモリ書き込みに
-変換するのでマルチスレッドプログラミングでは安全ではなくなりうる。例えば、
-@smallexample
-for (i = 0; i < N; i++)
-  if (cond)
-    A[i] = expr;
-@end smallexample
-は
-@smallexample
-for (i = 0; i < N; i++)
-  A[i] = cond ? expr : A[i];
-@end smallexample
-へと変換され、潜在的なデータ競合を引き起こす。
 
 @item -ftree-loop-distribution
 @opindex ftree-loop-distribution
@@ -7197,7 +7581,8 @@ DO I = 1, N
    D(I) = E(I) * F
 ENDDO
 @end smallexample
-へと変換される。
+へと変換される。このフラグは、@option{-O3}でデフォルトで有効になっています。
+@option{-fprofile-use}および@option{-fauto-profile}によっても有効になります。
 
 @item -ftree-loop-distribute-patterns
 @opindex ftree-loop-distribute-patterns
@@ -7220,31 +7605,29 @@ DO I = 1, N
    B(I) = A(I) + I
 ENDDO
 @end smallexample
-へと変換され、初期化ループはmemset 0への呼び出しへと変換される。
+へと変換され、初期化ループはmemset 0への呼び出しへと変換される。このフラグは@option{-O3}でデフォルトで有効になる。@option{-fprofile-use}および@option{-fauto-profile}によっても有効になります。
 
 @item -floop-interchange
 @opindex floop-interchange
-Perform loop interchange outside of graphite.  This flag can improve cache
-performance on loop nest and allow further loop optimizations, like
-vectorization, to take place.  For example, the loop
+グラファイトの外側でループ交換を実行します。 このフラグを使用すると、ループネストのキャッシュパフォーマンスが向上し、ベクトル化などのループの最適化をさらに行うことができます。 たとえば、ループ
 @smallexample
 for (int i = 0; i < N; i++)
   for (int j = 0; j < N; j++)
     for (int k = 0; k < N; k++)
       c[i][j] = c[i][j] + a[i][k]*b[k][j];
 @end smallexample
-is transformed to
+は以下へと変換されます。
 @smallexample
 for (int i = 0; i < N; i++)
   for (int k = 0; k < N; k++)
     for (int j = 0; j < N; j++)
       c[i][j] = c[i][j] + a[i][k]*b[k][j];
 @end smallexample
-このフラグは@option{-O3}でデフォルトで有効になる。
+このフラグは@option{-O3}でデフォルトで有効になる。@option{-fprofile-use}および@option {-fauto-profile}によっても有効になります。
 
 @item -floop-unroll-and-jam
 @opindex floop-unroll-and-jam
-実現可能なループでアンロールとジャム変換を適用する。 ループネストでは、外部ループを何らかの要因で展開し、結果として得られる複数の内部ループを融合する。 このフラグはデフォルトで@option {-O3}で有効になっている。
+実現可能なループでアンロールとジャム変換を適用する。 ループネストでは、外部ループを何らかの要因で展開し、結果として得られる複数の内部ループを融合する。 このフラグはデフォルトで@option{-O3}で有効になっている。
 
 @item -ftree-loop-im
 @opindex ftree-loop-im
@@ -7256,6 +7639,10 @@ for (int i = 0; i < N; i++)
 @opindex ftree-loop-ivcanon
 繰り返しの数を決定するために複雑な解析を必要とするループで、繰り返しの数ために規範的なカウンタを作成する。
 後の最適化は、それから簡単に数を測定するかもしれない。特にループ展開に関連して役に立つ。
+
+@item -ftree-scev-cprop
+@opindex ftree-scev-cprop
+最終的な値の置換を実行します。 ループを終了するときの値が初期値とループ反復回数のみを使用して決定できるようにループ内で変数が変更された場合、そのような計算によって最終値の使用を十分に安価に置き換えます 。これにより、データの依存関係が減り、さらに簡素化できる場合があります。@option{-O}以降でデフォルトで有効になります。
 
 @item -fivopts
 @opindex fivopts
@@ -7275,8 +7662,7 @@ for (int i = 0; i < N; i++)
 
 @item -ftree-sra
 @opindex ftree-sra
-集積のスカラー置換を行う。このパスは構造体参照をスカラーで置換し、構造体がメモリーへ
-あまりに早くコミットすることを防ぐ。このフラグは@option{-O}以上でデフォルトで有効である。
+集計のスカラー置換を実行します。 このパスは、構造参照をスカラーに置き換えて、構造をメモリにコミットするのが早すぎることを防ぎます。 このフラグは、@option{-Og}を除き、@option{-O1}以上でデフォルトで有効になっています。
 
 @item -fstore-merging
 @opindex fstore-merging
@@ -7292,7 +7678,6 @@ SSA→通常フェーズの間に一時式置換を行う。単一使用・単�
 @opindex ftree-slsr
 木での直線長さ削減を行う。これは乗算を含んでいる関連した表現を認識して、可能な場合それらをより高価でない計算と置き換える。
 これは@option{-O}以上でデフォルトで有効である。
-
 
 @item -ftree-vectorize
 @opindex ftree-vectorize
@@ -7360,7 +7745,7 @@ OpenMP simdディレクティブマークされたループのベクトル化で
 @opindex fpredictive-commoning
 予測的共通化最適化、すなわち（時にメモリのロード・ストアする）前のループの繰り返しで行われた計算の再利用を行う。
 
-このオプションはレベル@option{-O3}で有効である。
+このオプションはレベル@option{-O3}で有効である。@option{-fprofile-use}および@option{-fauto-profile}によっても有効になります。
 
 @item -fprefetch-loop-arrays
 @opindex fprefetch-loop-arrays
@@ -7374,6 +7759,7 @@ OpenMP simdディレクティブマークされたループのベクトル化で
 
 @item -fno-printf-return-value
 @opindex fno-printf-return-value
+@opindex fprintf-return-value
 @code{sprintf}、@code{vprintf}、@code{vsprintf}、@code{vsnprintf}のようなフォーマットされた出力関数の既知の戻り値に定数を代入しない。 （しかし@code{sprintf}と@code{fprintf}はしない）。
 この変換により、GCCは、定数であるか、または正確な戻り値を可能にする範囲内の値であることが知られている引数で呼び出される、これらの関数の既知の戻り値に基づいて分岐を最適化または排除することさえできる。 たとえば、@option{-fprintf-return-value}が有効な場合、@code{if}文の分岐と本体（@code{snprintf}の呼び出しではない） は、@code{i}が32ビット以下の整数のときは、戻り値が多くても8であると保証されているので最適化で消すことができる。
 
@@ -7383,13 +7769,15 @@ if (snprintf (buf, "%08x", i) >= sizeof buf)
   @dots{}
 @end smallexample
 
-@option{-f printf-return-value}オプションは、他の最適化に依存し、@option{-O2}以上で最良の結果をもたらす。 @option{-Wformat-overflow}オプションと@option{-Wformat-truncation}オプションと連携して動作する。
-@option {-fprintf-return-value}オプションは、デフォルトで有効になっている。
+@option{-fprintf-return-value}オプションは、他の最適化に依存し、@option{-O2}以上で最良の結果をもたらす。 @option{-Wformat-overflow}オプションと@option{-Wformat-truncation}オプションと連携して動作する。
+@option{-fprintf-return-value}オプションは、デフォルトで有効になっている。
 
 @item -fno-peephole
 @itemx -fno-peephole2
 @opindex fno-peephole
+@opindex fpeephole
 @opindex fno-peephole2
+@opindex fpeephole2
 機種依存の覗き穴最適化を無効にする。@option{-fno-peephole}と@option{-fno-peephole2}の違いは
 コンパイラ内でどのように実装されているかである。あるターゲットは片方を使い、別のはもう片方を使い、一部は両方使う。
 
@@ -7496,16 +7884,24 @@ int f() @{
 
 @item -falign-functions
 @itemx -falign-functions=@var{n}
+@itemx -falign-functions=@var{n}:@var{m}
+@itemx -falign-functions=@var{n}:@var{m}:@var{n2}
+@itemx -falign-functions=@var{n}:@var{m}:@var{n2}:@var{m2}
 @opindex falign-functions
-関数の開始を@var{n}より大きい次の２のベキに揃え、最大@var{n}バイト飛ばす。例えば、
-@option{-falign-functions=32}は次の32バイト境界に関数を揃えるが、
-@option{-falign-functions=24}はこれが23バイト以下を飛ばして可能なときのみ32バイト境界に揃える。
+関数の先頭を、@var{m}-1バイトまでスキップして、@var{n}より大きい次の2のべき乗に揃えます。 これにより、@var{n}バイトのアライメント境界を超えることなく、少なくとも関数の最初の@var{m}バイトをCPUでフェッチできます。
 
-@option{-fno-align-functions}と@option{-falign-functions=1}は関数が等価でアラインメントしないという意味である。
+@var{m}が指定されていない場合、デフォルトは@var{n}になります。
 
-あるアセンブラは@var{n}が2のベキの時だけこのフラグをサポートする。その場合は、切り上げられる。
+例：@option{-falign-functions=32}は、関数を次の32バイト境界に位置合わせします。@option{-falign-functions=24}は、23バイト以下をスキップしてこれを行うことができる場合にのみ、次の32バイト境界に位置合わせします。@option{-falign-functions=32:7}は、6バイト以下をスキップしてこれを実行できる場合にのみ、次の32バイト境界に整列します。
 
-もし@var{n}が指定されていないか0ならば、機種依存のデフォルトが使われる。@var{n}の可能な最大値は65536である。
+@var{n2}:@var{m2}値の2番目のペアでは、2次アライメントを指定できます。@option{-falign-functions=64:7:32:3}は、6バイト以下をスキップすることで実行できる場合には次の64バイト境界にアライメントします。 さもなければ、2バイト以下をスキップすることで実行できる場合は、次の32バイト境界に揃えます。
+@var{m2}が指定されていない場合、デフォルトは@var{n2}になります。
+
+一部のアセンブラは、@var{n}が2の累乗の場合にのみこのフラグをサポートします。その場合、切り上げられます。
+
+@option{-fno-align-functions}と@option{-falign-functions=1}は同等であり、関数が整列されないことを意味します。
+
+@var{n}が指定されていないかゼロの場合、マシン依存のデフォルトを使用します。許可される@var{n}オプションの最大値は65536です。
 
 レベル@option{-O2}, @option{-O3}で有効である。
 
@@ -7514,12 +7910,13 @@ int f() @{
 
 @item -falign-labels
 @itemx -falign-labels=@var{n}
+@itemx -falign-labels=@var{n}:@var{m}
+@itemx -falign-labels=@var{n}:@var{m}:@var{n2}
+@itemx -falign-labels=@var{n}:@var{m}:@var{n2}:@var{m2}
 @opindex falign-labels
 @option{-falign-functions}のように@var{n}バイトまでを飛ばしてすべての分岐ターゲットを2のベキの境界に揃える。
-このオプションは簡単にコードを遅くできる。なぜなら分岐ターゲットがコードの通常の流れで到達するときにはダミー操作を挿入しなければならない
-からである。
 
-@option{-fno-align-labels}と@option{-falign-labels=1}は等価でありラベルがアラインメントされないことを意味する。
+このオプションのパラメーターは、@option{-falign-functions}オプションに類似しています。@option{-fno-align-labels}と@option{-falign-labels=1}は同等であり、ラベルが整列されていないことを意味します。
 
 @option{-falign-loops}か@option{-falign-jumps}が適用可能でこの値よりも大きいならば、代わりにそれらの値が使われる。
 
@@ -7529,11 +7926,14 @@ int f() @{
 
 @item -falign-loops
 @itemx -falign-loops=@var{n}
+@itemx -falign-loops=@var{n}:@var{m}
+@itemx -falign-loops=@var{n}:@var{m}:@var{n2}
+@itemx -falign-loops=@var{n}:@var{m}:@var{n2}:@var{m2}
 @opindex falign-loops
 @option{-falign-functions}のように@var{n}バイトまで飛ばしてループを２のベキの境界に揃える。
 もしループが何回も実行されるなら、これはダミー操作の実行を作る。
 
-@option{-fno-align-loops}と@option{-falign-loops=1}は等価であり、ループがアラインメントされないことを意味する。@var{n}の可能な最大値は65536である。
+このオプションのパラメーターは、@option{-falign-functions}オプションに類似しています。 @option{-fno-align-loops}と@option{-falign-loops=1}は同等であり、ループが整列しないことを意味します。許可される@var {n}オプションの最大値は65536です。
 
 もし@var{n}が指定されていないか0ならば、機種依存のデフォルトが使われる。
 
@@ -7541,10 +7941,14 @@ int f() @{
 
 @item -falign-jumps
 @itemx -falign-jumps=@var{n}
+@itemx -falign-jumps=@var{n}:@var{m}
+@itemx -falign-jumps=@var{n}:@var{m}:@var{n2}
+@itemx -falign-jumps=@var{n}:@var{m}:@var{n2}:@var{m2}
 @opindex falign-jumps
 ジャンプによってのみ到達可能な分岐ターゲットを、@option{-falign-functions}のように@var{n}バイトまで飛ばして2のベキの境界に揃える。
 この場合には、ダミー操作を実行する必要はない。
 
+このオプションのパラメーターは、@option{-falign-functions}オプションに類似しています。 
 @option{-fno-align-jumps}と@option{-falign-jumps=1}は等価であり、ループがアラインメントされないことを意味する。
 
 もし@var{n}が指定されていないか0ならば、機種依存のデフォルトが使われる。@var{n}の可能な最大値は65536である。
@@ -7564,8 +7968,8 @@ int f() @{
 このオプションが使われると、未参照の静的変数は削除されない。このオプションは特定の順序に依存した既存のコードをサポートすることを
 意図している。新しいコードでは、可能なら属性を使ったほうがいい。
 
-レベル@option{-O0}で有効である。明示的に無効にする時、@option{-fno-section-anchors}を含み、
-さもなければあるターゲットでは@option{-O0}で有効である。
+@option{-ftoplevel-reorder}は、@option {-O1}以上ではデフォルトであり、@option{-fsection-anchors}が明示的に要求されている場合は@option{-O0}でもデフォルトです。
+さらに、@option{-fno-toplevel-reorder}は@option{-fno-section-anchors}を意味します。
 
 @item -fweb
 @opindex fweb
@@ -7632,26 +8036,13 @@ GCCはドライバを使う必要があることである。GCCは関与した�
 もし@option{-fno-lto}がリンカに渡されたなら、手続間最適化は適用されない。
 @option{-fno-fat-lto-objects}が有効なときはコンパイル段階は速くなるが、それらを通常の非LTOリンクは行えないことに注意する。
 
-さらに、個々のファイルをコンパイルするのに使ったさいt経過は必ずしもリンク時に使うものと関連している必要はない。例えば、
-
-@smallexample
-gcc -c -O0 -ffat-lto-objects -flto foo.c
-gcc -c -O0 -ffat-lto-objects -flto bar.c
-gcc -o myprog -O3 foo.o bar.o
-@end smallexample
-
-これは個々のオブジェクトファイルは最適化されていないアセンブラコードを生成するが、結果のバイナリ@file{myprog}が@option{-O3}で最適化される。
-もし、代わりに最終バイナリが@option{-fno-lto}で生成されるなら、@file{myprog}は最適化されない。
-
 最終バイナリを生成するとき、GCCはリンク時最適化をバイトコードを含むファイルに対してのみ適用する。
 したがって、オブジェクトファイルとライブラリをGIMPLEバイトコードと最終オブジェクトコードで混ぜて一致させることができる。
 GCCは自動的にどのファイルがLTOモードで最適化されてどのファイルがさらなる処理をせずにリンクするかを選択する。
 
-バイトコードを生成するときにGCCによって維持されるコード生成オプションがある、なぜならそれらは最終リンクステージで使う必要があるからである。
-一般的にはリンク時に指定したオプションはコンパイル時に指定したオプションを上書きする。
+一般に、リンク時に指定されたオプションはコンパイル時に指定されたオプションをオーバーライドしますが、GCCは入力ファイルのコンパイルに使用される設定からリンク時オプションを推測しようとする場合があります。
 
-もしリンク時に最適化レベルオプション@option{-O}が指定されていないならば、GCCはオブジェクトファイルをコンパイルするときに使った最高の
-最適化レベルを使う。
+リンク時に最適化レベルオプション@option{-O}を指定しない場合、GCCはオブジェクトファイルのコンパイル時に使用される最高の最適化レベルを使用します。 2つの理由から、コンパイル時ではなくリンク時のみに最適化レベルオプションを指定することは一般に無効であることに注意してください。 まず、最適化なしでコンパイルすると、リンク時に効果的な最適化に必要な情報を収集するコンパイラパスが抑制されます。 第二に、いくつかの初期の最適化パスはリンク時にではなくコンパイル時にのみ実行できます。
 
 現在、以下のオプションと設定が明示的に指定した最初のオブジェクトファイルから取られている。
 @option{-fPIC}, @option{-fpic}, @option{-fpie}, @option{-fcommon},
@@ -7715,7 +8106,7 @@ LTOの現在の実装は異なるタイプのホストで移植性があるバ�
 リンク時最適化はELFとDWARFの組み合わせ以外でのシステムでのデバッグ情報の生成とはうまく働かない。
 
 任意の@var{n}を指定したならば、リンク時の最適化とコード生成はインストールされた@command{make}プログラムを調整して
-@var{n}の並列ジョブを使って並列に実行される。環境変数@env{MAKE}はツアクァれるプログラムを上書きするのに使うことができる。
+@var{n}の並列ジョブを使って並列に実行される。環境変数@env{MAKE}は使われるプログラムを上書きするのに使うことができる。
 @var{n}のデフォルト値は1である。
 
 @option{-flto=jobserver}をGNU makeのジョブサーバーモードを並列ジョブの数を決定するために使うために指定することができる。
@@ -7762,7 +8153,7 @@ goldかGNU ld 2.21以降で利用可能である。
 これはそれらをLTOリンクと通常のリンクの両方で利用可能にする。このオプションは@option{-flto}でコンパイルした時だけ
 効果があり、リンク時は無視される。
 
-@option{-fno-fat-lto-objects}は素のLTOに比較してコンパイル時間を向上させるが、LTOを完治する完全なツールチェーンが必要である。
+@option{-fno-fat-lto-objects}は素のLTOに比較してコンパイル時間を向上させるが、LTOを感知する完全なツールチェーンが必要である。
 それは基本機能にリンカプラグインサポートのあるリンカを必要とする。さらに、@command{nm}、@command{ar}、@command{ranlib}が
 （静的ライブラリなどをビルドする能力がある）完全に機能するビルド環境を許すためにはリンカプラグインをサポートする必要がある。
 GCCは正しいオプションをそれらのツールに渡すために@command{gcc-ar}, @command{gcc-nm}, @command{gcc-ranlib}ラッパを提供している。
@@ -7797,9 +8188,13 @@ GCCは正しいオプションをそれらのツールに渡すために@command
 @itemx -fprofile-use=@var{path}
 @opindex fprofile-use
 プロファイルのフィードバックに指示された最適化を有効にし、プロファイルフィードバックが利用可能なときだけ一般的に有益な
-最適化に従う。@option{-fbranch-probabilities}, @option{-fvpt},
-@option{-funroll-loops}, @option{-fpeel-loops}, @option{-ftracer}, 
-@option{-ftree-vectorize}, @option{ftree-loop-distribute-patterns}.
+最適化に従う。@gccoptlist{-fbranch-probabilities  -fprofile-values 
+-funroll-loops  -fpeel-loops  -ftracer  -fvpt 
+-finline-functions  -fipa-cp  -fipa-cp-clone  -fipa-bit-cp 
+-fpredictive-commoning  -fsplit-loops  -funswitch-loops 
+-fgcse-after-reload  -ftree-loop-vectorize  -ftree-slp-vectorize 
+-fvect-cost-model=dynamic  -ftree-loop-distribute-patterns 
+-fprofile-reorder-functions}。
 
 このオプションを使うことができる前には、最初にプロファイル情報を生成しなければならない。
 @option{-fprofile-generate}オプションについての情報は@xref{Optimize Options}
@@ -7814,12 +8209,14 @@ GCCは正しいオプションをそれらのツールに渡すために@command
 @opindex fauto-profile
 サンプリングベースのフィードバックに指示された最適化を有効にし、プロファイルフィードバックが利用可能なときだけ一般的に有益な
 最適化に従う。
-@option{-fbranch-probabilities}, @option{-fvpt},
-@option{-funroll-loops}, @option{-fpeel-loops}, @option{-ftracer}, 
-@option{-ftree-vectorize},
-@option{-finline-functions}, @option{-fipa-cp}, @option{-fipa-cp-clone},
-@option{-fpredictive-commoning}, @option{-funswitch-loops},
-@option{-fgcse-after-reload},  @option{-ftree-loop-distribute-patterns}.
+
+@gccoptlist{-fbranch-probabilities  -fprofile-values 
+-funroll-loops  -fpeel-loops  -ftracer  -fvpt 
+-finline-functions  -fipa-cp  -fipa-cp-clone  -fipa-bit-cp 
+-fpredictive-commoning  -fsplit-loops  -funswitch-loops 
+-fgcse-after-reload  -ftree-loop-vectorize  -ftree-slp-vectorize 
+-fvect-cost-model=dynamic  -ftree-loop-distribute-patterns 
+-fprofile-correction}
 
 @var{path}はAutoFDOプロファイル情報を含むファイルの名前である。省略された時は、
 現在のディレクトの@file{fbdata.afdo}がデフォルトである。
@@ -7867,7 +8264,7 @@ IEEE浮動小数点数の正確な定義に依存している。そのような�
 Cをコンパイルするとき、@option{-fexcess-precision=standard}が指定されるならば、
 過剰な精度はISO C99で指定されている規則に追従する;
 特に、キャストと代入は、値をそれらの意味論的な型（@option{-ffloat-store}が代入に影響を及ぼすだけであるのに対して）に丸められる。
-@option{-std=c99}のような厳しい適合オプションが使われるならば、このオプションはCでデフォルトで使用可能である。
+@option{-std=c99}のような厳しい適合オプションが使われるならば、このオプションはCでデフォルトで使用可能である。@option{-ffast-math}は、厳密な適合オプションが使用されているかどうかに関係なく、デフォルトで@option{-fexcess-precision=fast}を有効にします。
 
 @opindex mfpmath
 @option{-fexcess-precision=standard}はC以外の言語では実装されておらず、@option{-funsafe-math-optimizations}か@option{-ffast-math}が
@@ -7878,12 +8275,13 @@ Cをコンパイルするとき、@option{-fexcess-precision=standard}が指定�
 @opindex ffast-math
 オプション@option{-fno-math-errno}, @option{-funsafe-math-optimizations},
 @option{-ffinite-math-only}, @option{-fno-rounding-math},
-@option{-fno-signaling-nans}@option{-fcx-limited-range}をセットする。
+@option{-fno-signaling-nans}, @option{-fcx-limited-range},
+@option{-fexcess-precision=fast}をセットする。
 
 このオプションはプリプロセッサマクロ@code{__FAST_MATH__}を定義させる。
 
 このオプションはIEEEの正確な実装やISOの数学関数の規則・仕様に依存しているプログラムに誤った出力を出しうるので、
-@option{-Ofast}を除いてどんな@option{-O}でのオンにならない。
+@option{-Ofast}を除いてどんな@option{-O}でもオンにならない。
 しかし、それはそれらの仕様の保証を必要としないプログラムの実行を高速化するかもしれない。
 
 @item -fno-math-errno
@@ -8037,13 +8435,15 @@ IEEEシグナルNaNがユーザ可視のトラップを浮動小数点操作の�
 これらは最適化を向上させるために使うことができる。現在、それらは1箇所のみで使われる。@file{reorg.c}で、分岐がどのくらい取られるかを
 推測する代わりに、@samp{REG_BR_PROB}がパスがどのくらいの頻度でとられるかを正確に決定するのに使われる。
 
+@option{-fprofile-use}と@option{-fauto-profile}で有効になる。
+
 @item -fprofile-values
 @opindex fprofile-values
 @option{-fprofile-arcs}と組み合わせれば、それはプログラム内で式の値についてのデータが収集されるようにコードを追加する。
 
 @option{-fbranch-probabilities}で、それは最適化での使用のための表現の値のプライファイリングから収集されたデータを読み戻す。
 
-@option{-fprofile-generate}と @option{-fprofile-use}で有効である。
+@option{-fprofile-generate}と @option{-fprofile-use}、@option{-fauto-profile}で有効になる。
 
 @item -fprofile-reorder-functions
 @opindex fprofile-reorder-functions
@@ -8057,6 +8457,8 @@ IEEEシグナルNaNがユーザ可視のトラップを浮動小数点操作の�
 
 @option{-fbranch-probabilities}で、収集したデータを読み戻して実際にそれらに基づいた最適化を行う。現在最適化は除数の値についてを知識
 を使った除算命令の特殊化を含む。
+
+@option{-fprofile-use}と@option{-fauto-profile}で有効になる。
 
 @item -frename-registers
 @opindex frename-registers
@@ -8078,7 +8480,7 @@ IEEEシグナルNaNがユーザ可視のトラップを浮動小数点操作の�
 スーパーブロックサイズを大きくするために末端複写を行う。この変換は関数の制御フローを単純化して
 他の最適化がもっといい仕事ができるようにする。
 
-@option{-fprofile-use}で有効になる。
+@option{-fprofile-use}と@option{-fauto-profile}で有効になる。
 
 @item -funroll-loops
 @opindex funroll-loops
@@ -8087,7 +8489,7 @@ IEEEシグナルNaNがユーザ可視のトラップを浮動小数点操作の�
 これは完全ループ引き剥がし（すなわち、小さい定数回の繰り返しのループを完全に除去する）もオンにする。
 これはコードを大きくし、実行を速くするかもしれないししないかもしれない。
 
-@option{-fprofile-use}で有効になる。
+@option{-fprofile-use}と@option{-fauto-profile}で有効になる。
 
 @item -funroll-all-loops
 @opindex funroll-all-loops
@@ -8099,19 +8501,46 @@ IEEEシグナルNaNがユーザ可視のトラップを浮動小数点操作の�
 （プロファイル・フィードバックから）情報が十分にあるあまり巻かれないループを引き剥がす。
 これは完全ループ引き剥がし（すなわち、小さい定数回の繰り返しのループを完全に除去する）もオンにする。
 
-@option{-fprofile-use}で有効になる。
+@option{-O3}, @option{-fprofile-use}, @option{-fauto-profile}で有効になる。
 
 @item -fmove-loop-invariants
 @opindex fmove-loop-invariants
-RTLループ最適化器でループ不変移動パスを有効にする。レベル@option{-O1}で有効になる。
+RTLループ最適化器でループ不変移動パスを有効にする。@option{-Og}以外のレベル@option{-O1}以上で有効になる。
 
 @item -fsplit-loops
 @opindex fsplit-loops
 反復空間の一方の側で常に真であり、他方で偽である条件を含む場合、ループを2つに分割する。
 
+@option{-fprofile-use}, @option{-fauto-profile}で有効になる。
+
 @item -funswitch-loops
 @opindex funswitch-loops
 ループ不変条件の分岐を、両方の分岐でループの重複させて、ループの外へ移動する。（条件の結果に応じて修正する）
+
+@option{-fprofile-use}, @option{-fauto-profile}で有効になる。
+
+@item -fversion-loops-for-strides
+@opindex fversion-loops-for-strides
+ループが可変ストライドを使用して配列を反復処理する場合、ストライドが常に1であると想定する別のバージョンのループを作成します。 例えば：
+
+@smallexample
+for (int i = 0; i < n; ++i)
+  x[i * stride] = @dots{};
+@end smallexample
+
+becomes:
+
+@smallexample
+if (stride == 1)
+  for (int i = 0; i < n; ++i)
+    x[i] = @dots{};
+else
+  for (int i = 0; i < n; ++i)
+    x[i * stride] = @dots{};
+@end smallexample
+
+これは、Fortranで想定される形状の配列の場合に特に便利です。Fortranでは、連続アクセスを想定したベクトル化が改善されます。このフラグは、@ option{-O3}でデフォルトで有効になっています。
+@option{-fprofile-use}, @option{-fauto-profile}でも有効になる。
 
 @item -ffunction-sections
 @itemx -fdata-sections
@@ -8185,12 +8614,11 @@ GCCは命令がある数より大きい関数はインライン化しない。�
 
 @table @gcctabopt
 @item predictable-branch-outcome
-分岐がこの（％での）閾値よりも小さい確率で予測されるならば、よく予測可能だとみなされる。デフォルトは10である。
+分岐がこの（％での）閾値よりも小さい確率で予測されるならば、よく予測可能だとみなされる。
 
 @item max-rtl-if-conversion-insns
 RTLのif変換がブロック周りの条件付き分岐を削除して条件付き実行命令で置換しようとする。
-このパラメータはif変換で考慮されるべきブロックの最大命令数を与える。デフォルトは10であるが、
-コンパイラはif変換が利益がありそうかどうかを決定するために他のヒューリスティックも使う。
+このパラメータはif変換で考慮されるべきブロックの最大命令数を与える。コンパイラは、他のヒューリスティックを使用して、if変換が有益かどうかを判断します。
 
 @item max-rtl-if-conversion-predictable-cost
 @itemx max-rtl-if-conversion-unpredictable-cost
@@ -8204,18 +8632,16 @@ RTL if-conversionは、ブロックの周りの条件分岐を削除し、それ
 @item min-crossjump-insns
 クロスジャンプが行われる前に２つのブロックの終わりに一致しなければならない命令の最小数。
 この値はそこからクロスジャンプされるブロックの全命令が一致した場合には無視される。
-デフォルト値は5である。
 
 @item max-grow-copy-bb-insns
 ジャンプの代わりに基本ブロックがコピーされるときに最大コードサイズ拡張係数。
-拡張はジャンプ命令との比率である。デフォルト値は8である。
+拡張はジャンプ命令との比率である。
 
 @item max-goto-duplication-insns
 計算gotoへジャンプするブロックへの重複する命令の最大値。
 いくつかのパスにおいて@math{O(N^2)}ふるまいを避けるために、
 GCCはできるだけ遅く、早く計算されたgotosをコンパイル・プロセスを分解し、それらをできるだけ遅くに結合する。
 max-goto-duplication-命令を超えない基本ブロックの末端での計算ジャンプのみが結合される。
-デフォルト値は8である。
 
 @item max-delay-slot-insn-search
 遅延スロットを満たす命令を探すときに考慮される命令の最大数。もしこの任意の命令数よりも多くが見つかったならば、
@@ -8233,7 +8659,7 @@ max-goto-duplication-命令を超えない基本ブロックの末端での計�
 
 @item max-gcse-insertion-ratio
 もし削除に対する式挿入比が任意の式でこの値よりも大きいならば、RTL PREは式の挿入や削除を行い、
-命令ストリームでの部分冗長計算を残す。デフォルト値は20である。
+命令ストリームでの部分冗長計算を残す。
 
 @item max-pending-list-length
 現在の状態をフラッシュして完全に始める前に許可する保留依存スケジューリングの最大値。
@@ -8247,28 +8673,41 @@ max-goto-duplication-命令を超えない基本ブロックの末端での計�
 GCCで使われるツリーインライン化器を制御する幾つかのパラメータ。
 この数はツリーインライン化器がインライン化を考慮する単一関数での（GCCの内部表現で数えられた）
 命令の最大数をセットする。これはinlineと宣言された関数とクラス宣言(C++)で実装されたメソッドのみに影響する。
-デフォルト値は400である。
 
 @item max-inline-insns-auto
 @option{-finline-funcions}(@option{-O3}に含まれる)を使った時、
 さもなければコンパイラによってインラインの考慮をされない多数の関数が調査される。
 それらの関数にとって、インラインと宣言された関数と比較して異なる（より制限的な）制限が適用される。
-デフォルト値は30である。
+
+@item max-inline-insns-small
+これは、@option{-finline-small-functions}に関連すると見なされる呼び出しに適用されます。
+
+@item max-inline-insns-size
+これは、サイズが最適化された呼び出しに適用される範囲です。 インライン化によって露出される最適化の機会を予測するために、わずかな成長が望ましい場合があります。
+
+@item uninlined-function-insns
+関数のプロローグやエピローグなどの関数のオーバーヘッドについて、インライン化によって処理される命令の数。
+
+@item uninlined-function-time
+関数のプロローグやエピローグの実行に必要な時間など、関数のオーバーヘッドのためにインライナーが考慮する余分な時間
+
+@item uninlined-thunk-insns
+@item uninlined-thunk-time
+@option{-param uninlined-function-insns}および@option{-param uninlined-function-time}と同じですが、関数サンクに適用されます
 
 @item inline-min-speedup
 呼び出し元・呼び出し先の推測されたパフォーマンスの向上がこの（パーセントでの）閾値を超えると、
 @option{--param max-inline-insns-single}と@option{--param max-inline-insns-auto}の制限にもかかわらず
-インライン化されうる。デフォルト値は15である。
+インライン化されうる。
 
 @item large-function-insns
 ほんとうに大きい関数を指定する制限。インライン化の後でこの制限よりも大きい関数では、インライン化は
 @option{--param large-function-growth}によって抑制される。このパラメータはバックエンドによって使われる
 非線形アルゴリズムによる極端なコンパイル時間を避けるために主に役立つ。
-デフォルト値は2700である。
 
 @item large-function-growth
-パーセントで、インライン化で引き起こされる大きな関数の最大成長率を指定する。
-デフォルト値は100で元のサイズの2倍の大きさに制限される。
+インライン化による大きな関数の最大成長率をパーセントで指定します。
+たとえば、パラメータ値100は、大きな関数の成長を元のサイズの2.0倍に制限します。
 
 @item large-unit-insns
 大きな翻訳単位を指定する制限。この制限より大きい単位のインライン化によって引き起こされる成長は
@@ -8277,7 +8716,6 @@ GCCで使われるツリーインライン化器を制御する幾つかのパ�
 成長率は300\%だがそれでもそのようなインライン化はとてもまともである。しかし、小さいインライン化可能な関数を含むとても大きな単位では、
 全体の成長率制限はコードサイズの指数的拡大を避けるために必要である。したがって、もっと小さい単位では、
 サイズは@option{--param inline-unit-growth}が適用される前に@option{--param large-unit-insns}へと増やされる。
-デフォルトは10000である。
 
 @item inline-unit-growth
 インライン化によって起こされるコンパイル単位の全体の最大成長率を指定する。
@@ -8285,16 +8723,14 @@ GCCで使われるツリーインライン化器を制御する幾つかのパ�
 プロファイル・フィードバックによって）は単位サイズに入らない。
 
 @item ipcp-unit-growth
-手続間定数伝搬によって起こされるコンパイル単位の全体の最大成長率を指定する。
-デフォルト値は10で元のサイズ1.1倍に制限される。
+プロシージャー間の定数伝搬によって引き起こされるコンパイル単位の全体的な最大成長を指定します。 たとえば、パラメータ値10は、ユニットの成長を元のサイズの1.1倍に制限します。
 
 @item large-stack-frame
 大きなスタックフレームを指定する制限。インライン化の間にアルゴリズムはこの制限をあまり超えて成長しないようにしようとする。
-デフォルト値は265バイトである。
 
 @item large-stack-frame-growth
 インライン化で起こされる大きなスタックフレームの最大成長率をパーセントで指定する。
-デフォルト値は1000で元のサイズの11倍にスタックフレームの成長を制限する。
+たとえば、パラメータ値1000は、大きなスタックフレームの成長を元のサイズの11倍に制限します。
 
 @item max-inline-insns-recursive
 @itemx max-inline-insns-recursive-auto
@@ -8302,7 +8738,7 @@ GCCで使われるツリーインライン化器を制御する幾つかのパ�
 
 @option{--param max-inline-insns-recursive}はインラインと宣言された関数に適用される。インラインと宣言されていない関数では、
 再帰インライン化は@option{-finline-functions} (@option{-O3}に含まれる)が有効の時だけ起こる。
-代わりに@option{--param max-inline-insns-recursive-auto}が適用される。デフォルト値は450である。
+代わりに@option{--param max-inline-insns-recursive-auto}が適用される。
 
 @item max-inline-recursive-depth
 @itemx max-inline-recursive-depth-auto
@@ -8310,7 +8746,7 @@ GCCで使われるツリーインライン化器を制御する幾つかのパ�
 
 @option{--param max-inline-recursive-depth}はインラインと宣言された関数に適用される。インラインと宣言されていない関数では、
 再帰インライン化は@option{-finline-functions} (@option{-O3}に含まれる)が有効の時だけ起こる。
-代わりに@option{--param max-inline-recursive-depth-auto}が適用される。デフォルト値は8である。
+代わりに@option{--param max-inline-recursive-depth-auto}が適用される。
 
 @item min-inline-recursive-probability
 再帰インライン化は平均で深い再帰を持つ関数にだけ有益であまり再帰が深くない関数には
@@ -8319,11 +8755,9 @@ GCCで使われるツリーインライン化器を制御する幾つかのパ�
 プロファイル・フィードバックが利用可能(@option{-fprofile-generate}参照)な時、
 実際の再帰深さは与えられた関数式経由で関数が再帰する確率から推測できる。
 パラメータはその確率が与えられた（パーセントでの）しきい値を超えた呼び出し式のみをインライン化するように制限する。
-デフォルト値は10である。
 
 @item early-inlining-insns
 初期インライン化が作る成長率を指定する。実際には大きな抽象化ペナルティを持つコードのインライン化の量を増加させる。
-デフォルト値は14である。
 
 @item max-early-inliner-iterations
 初期インライン化の繰り返し数を制限する。これは基本的には初期インライン化は解決できる入れ子の間接呼び出しの数を制限する。
@@ -8331,46 +8765,41 @@ GCCで使われるツリーインライン化器を制御する幾つかのパ�
 
 @item comdat-sharing-probability
 combat可視性のあるC++のインライン関数が複数のコンパイル単位をまたいで共有される（パーセントでの）確率。
-デフォルト値は20である。
 
 @item profile-func-internal-id
 プロファイルデータベース検索での関数内部IDを使うかどうかを制御するパラメータ。もし値が0ならば、コンパイラは
 関数でアセンブラ名とファイル名に基づいたIDを使い、古いプロファイルデータを関数並べ替えなどのソースの変更にもっと
-耐えられるようにする。デフォルト値は0である。
+耐えられるようにする。
 
 @item min-vect-loop-bound
 @option{-ftree-vectorize}が使われた時にループがベクトル化されない最小の繰り返し数。
 ベクトル化を可能にするためにはベクトル化後の繰り返し数がこのオプションによって指定された値よりも大きい必要がある。
-デフォルト値は0である。
 
 @item gcse-cost-distance-ratio
 GCSE最適化によって移動させる表現の最大距離の計算での拡大率。これは現在コード持ち上げ過程でのみサポートされていrう。
 比率を大きくするほど、もっと積極的なコード持ち上げが単純な式によって、すなわち、コストが
 @option{gcse-unrestricted-cost}未満である式によって行われる。0を指定すると単純な式の持ち上げを無効にする。
-デフォルト値は10である。
 
 @item gcse-unrestricted-cost
 大雑把に単一の典型的な機械語のコストによって測られる、GCSE最適化が式が移動できる距離を拘束しないコストである。
 これは現在コード持ち上げ過程でのみサポートされている。コストを小さくすると、より積極的なコード持ち上げをなる。
-0を指定するとすべての式が未制限の距離を移動できるようになる。デフォルト値は3である。
+0を指定するとすべての式が未制限の距離を移動できるようになる。
 
 @item max-hoist-depth
 ドミネーター・ツリーで式を持ち上げる時の検索の深さ。これは持ち上げアルゴリズムで二次の振る舞いを避けるのに使われる。
-0の値は、検索に対する制限をせず、巨大な関数のコンパイルを遅くするかもしれない。デフォルト値は、30である。
+0の値は、検索に対する制限をせず、巨大な関数のコンパイルを遅くするかもしれない。
 
 @item max-tail-merge-comparisons
 bbと比較する類似のbbの最大量。これは木末端マージの二次の振る舞いを避けるために使われる。
-デフォルト値は10である。
 
 @item max-tail-merge-iterations
 関数を超えた経路の繰り返しの最大値。これは木末端マージでのコンパイル時間を制限するために使われる。
-デフォルト値は2である。
 
 @item store-merging-allow-unaligned
-ストアのマージパスで、アライメントの合わないストアを導入することが合法的である場合は、許可する。 デフォルト値は1である。
+ストアのマージパスで、アライメントの合わないストアを導入することが合法的である場合は、許可する。 
 
 @item max-stores-to-merge
-ストアのマージパスでより広いストアにマージしようとするストアの最大数。 最小値は2、デフォルトは64である。
+ストアのマージパスでより広いストアにマージしようとするストアの最大数。 
 
 @item max-unrolled-insns
 ループは展開されなければならないかもしれない命令の最大値。もしループが展開されたなら、このパラメータは
@@ -8408,9 +8837,6 @@ bbと比較する類似のbbの最大量。これは木末端マージの二次�
 @item max-unswitch-level
 単一ループでの非分岐された分岐の最大値。
 
-@item max-loop-headers-insns
-コピーループヘッダによって複製されるループヘッダでの命令の最大数。
-
 @item lim-expensive
 ループ不変移動での高価な式の最小コスト。
 
@@ -8426,11 +8852,15 @@ bbと比較する類似のbbの最大量。これは木末端マージの二次�
 取り除こうとする。
 
 @item avg-loop-niter
-Average number of iterations of a loop.
+ループの平均反復回数。
 
 @item dse-max-object-size
 デッド・ストア除去によって追従されるオブジェクトの最大サイズ（バイト単位）。
 値を大きくするとコンパイル時間が長くなる可能性がある。
+
+@item dse-max-alias-queries-per-store
+ストアごとのエイリアスoracleへのクエリの最大数。
+値を大きくするとコンパイル時間が長くなり、デッドストアがより多く削除される場合があります。
 
 @item scev-max-expr-size
 スカラー変化解析で使われる式のサイズの境界。大きな式は解析器を遅くする。
@@ -8469,6 +8899,9 @@ Average number of iterations of a loop.
 指定された値を持つ式の確率を制御する。このパラメータは入力でパーセント（0から100）を取る。
 90のデフォルト確率は経験的に得られている。
 
+@item builtin-string-cmp-inline-length
+インライン化に適格な組み込みストリングcmp呼び出しの定数ストリングの最大長。
+
 @item align-threshold
 基本ブロックをアラインメントするために関数内の基本ブロックの実行の最大頻度の割合を選択する。
 
@@ -8502,25 +8935,16 @@ Average number of iterations of a loop.
 プロファイルフィードバックありでのコンパイルｄの値はトレーサーを効果的にするためにはより保守的（高く）する必要がある。
 
 @item stack-clash-protection-guard-size
-Specify the size of the operating system provided stack guard as
-2 raised to @var{num} bytes.  The default value is 12 (4096 bytes).
-Acceptable values are between 12 and 30.  Higher values may reduce the
-number of explicit probes, but a value larger than the operating system
-provided guard will leave code vulnerable to stack clash style attacks.
+オペレーティングシステムが提供するスタックガードのサイズを、2の@var{num}乗バイトで指定します。 値を大きくすると、明示的なプローブの数を減らすことができますが、ガードが提供するオペレーティングシステムよりも大きい値を設定すると、コードがスタッククラッシュスタイル攻撃に対して脆弱になります。
 
 @item stack-clash-protection-probe-interval
-Stack clash protection involves probing stack space as it is allocated.  This
-param controls the maximum distance between probes into the stack as 2 raised
-to @var{num} bytes.  Acceptable values are between 10 and 16 and defaults to
-12.  Higher values may reduce the number of explicit probes, but a value
-larger than the operating system provided guard will leave code vulnerable to
-stack clash style attacks.
+スタッククラッシュ保護には、割り当てられたスタックスペースの調査が含まれます。 このパラメーターは、2の@var{num}乗バイトで、スタックへのプローブ間の最大距離を制御します。 値を大きくすると、明示的なプローブの数を減らすことができますが、ガードが提供するオペレーティングシステムよりも大きい値を設定すると、コードがスタッククラッシュスタイル攻撃に対して脆弱になります。
 
 @item max-cse-path-length
-CSEが考える経路での基本ブロックの最大値。デフォルトは10である。
+CSEが考える経路での基本ブロックの最大値。
 
 @item max-cse-insns
-フラッシュの前のCSEが持つ最大命令数。デフォルトは1000である。
+フラッシュの前のCSEが持つ最大命令数。
 
 @item ggc-min-expand
 
@@ -8547,88 +8971,80 @@ RAMを計算出来ない時は、下界が使われる。このパラメータ�
 
 @item max-reload-search-insns
 等価レジスタを後方検索する命令リロードの最大数。値を増やすともっと積極的な最適化を意味し、
-コンパイル時間を増加させておそらく少しパフォーマンスを向上させる。デフォルト値は100である。
+コンパイル時間を増加させておそらく少しパフォーマンスを向上させる。
 
 @item max-cselib-memory-locations
 cselibが考慮するメモリ場所の最大値。値を増やすともっと積極的な最適化を意味し、
-コンパイル時間を増加させておそらく少しパフォーマンスを向上させる。デフォルト値は500である、
+コンパイル時間を増加させておそらく少しパフォーマンスを向上させる。
 
 @item max-sched-ready-insns
 第1スケジュールパスの間に与えられた時間でスケジューラで考慮される発せる準備ができた命令の最大値。
 値を増やすもっと徹底的な検索をすることを意味し、コンパイル時間を増加させておそらく小さな利点がある。
-デフォルト値は100である。
 
 @item max-sched-region-blocks
-ブロック間スケジューリングで考慮される領域のブロックの最大数。デフォルト値は10である。
+ブロック間スケジューリングで考慮される領域のブロックの最大数。
 
 @item max-pipeline-region-blocks
-選択的スケジューラでパイプライン化で考慮される領域のブロックの最大数。デフォルト値は15である。
+選択的スケジューラでパイプライン化で考慮される領域のブロックの最大数。
 
 @item max-sched-region-insns
-ブロック間スケジューリングで考慮される領域の命令の最大数。デフォルト値は100である。
+ブロック間スケジューリングで考慮される領域の命令の最大数。
 
 @item max-pipeline-region-insns
-選択的スケジューラでのパイプライン化で考慮される領域の命令の最大数。デフォルト値は200である。
+選択的スケジューラでのパイプライン化で考慮される領域の命令の最大数。
 
 @item min-spec-prob
-ブロック間推測スケジューリング用のソースブロック到達の（パーセントでの）最小確率。デフォルト値は40である。
+ブロック間推測スケジューリング用のソースブロック到達の（パーセントでの）最小確率。
 
 @item max-sched-extend-regions-iters
 CFGを通しての拡張領域への繰り返しの最大数。値0（デフォルト）は領域拡張を無効にする。
 
 @item max-sched-insn-conflict-delay
-推測移動で考慮される命令の最大衝突遅延。デフォルト値は3である。
+推測移動で考慮される命令の最大衝突遅延。
 
 @item sched-spec-prob-cutoff
 推測成功で、推測命令がスケジューリングされる（パーセントでの）最小確率。
-デフォルト値は40である。
 
 @item sched-state-edge-prob-cutoff
 スケジューラがエッジ全体でその段階を保存するためになければならない最小限の確率。
-デフォルト血は10である。
 
 @item sched-mem-true-dep-cost
-同じ場所を目的とするストアとロードの間の（CPUサイクルでの）最小距離。デフォルト値は1である。
+同じ場所を目的とするストアとロードの間の（CPUサイクルでの）最小距離。
 
 @item selsched-max-lookahead
 選択的スケジューリングの前方窓の最大サイズ。それは利用可能な命令の検索の深さである。
-デフォルト値は50である。
 
 @item selsched-max-sched-times
 選択的スケジューリングの間に命令がスケジュールされる時間の最大値。
 これは命令がそれを通してパイプライン化されるかもしれない繰り返し数の制限である。
-デフォルト値は2である。
 
 @item selsched-insns-to-rename
 選択的スケジューリングでの名前変えで考慮される準備済みリストでの最良の命令の最大数。
-デフォルト値は2である。
 
 @item sms-min-sc
-振動モジュロスケジューラーが生成するステージカウントの最小値。デフォルト値は2である。
+振動モジュロスケジューラーが生成するステージカウントの最小値。
 
 @item max-last-value-rtl
 そのレジスタの最後の既知の値として疑似レジスタのコンバイナの表現において記録されることができる多くのRTLとして計られる最大サイズ。
-デフォルト値は10000である。
 
 @item max-combine-insns
-RTLコンバイナが結合しようとする命令の最大数。デフォルト値は@option{-Og}では2で、さもなければ4である。
+RTLコンバイナが結合しようとする命令の最大数。
 
 @item integer-share-limit
 小さい整数定数は共有データ構造を使うことができ、コンパイラのメモリ使用を減らして速度を速める。
-これは共有整数定数の最大値をセットする。デフォルト値は256である。
+これは共有整数定数の最大値をセットする。
 
 @item ssp-buffer-size
 @option{-fstack-protection}を使っている時のスタック破壊防御を受け取るバッファ（すなわち、配列）の最小値。
 
 @item min-size-for-stack-sharing
-最適化しない時のスタックスロット共有の一部をなす変数の最小サイズ。デフォルト値は32である。
+最適化しない時のスタックスロット共有の一部をなす変数の最小サイズ。
 
 @item max-jump-thread-duplication-stmts
 スレッドジャンプの時に複製する必要があるブロックで許される行の最大値。
 
 @item max-fields-for-field-sensitive
 ポインタ解析の間でのフィールドに敏感なやり方で扱われる構造のフィールドの最大数。
-デフォルトは@option{-O0}と@option{-O1}ではゼロで、@option{-Os}, @option{-O2}, @option{-O3}では100である。
 
 @item prefetch-latency
 プリフェッチが終わる前に実行される命令の平均値の推測。前もってプリフェッチされる距離は
@@ -8647,11 +9063,25 @@ RTLコンバイナが結合しようとする命令の最大数。デフォル�
 @item l2-cache-size
 キロバイトでの、L2キャッシュのサイズ。
 
+@item prefetch-dynamic-strides
+ループ配列プリフェッチパスが、一定でないストライドに対してソフトウェアプリフェッチヒントを発行するかどうか。 ストライドが非一定であるという事実により、これらのヒントを発行する明確なメリットがあるかどうかを予測することが困難になる場合がありますが、これは有益な場合があります。
+
+一定でないストライドに対してプリフェッチヒントを発行する必要がある場合は、1に設定します。 一定で、@option{prefetch-minimum-stride}以下であることがわかっているストライドに対してのみプリフェッチヒントを発行する必要がある場合は、0に設定します。
+
+@item prefetch-minimum-stride
+プリフェッチヒントの使用を開始する最小定数ストライド（バイト単位）。 ストライドがこのしきい値よりも小さい場合、プリフェッチヒントは発行されません。
+
+この設定は、ハードウェアプリフェッチャーを備えたプロセッサに役立ちます。この場合、ハードウェアプリフェッチャーとソフトウェアプリフェッチャーの間に競合が発生する可能性があります。 ハードウェアプリフェッチャーが処理可能な最大ストライドを持っている場合、ソフトウェアプリフェッチャーの使用を改善するためにここで使用する必要があります。
+
+値-1は、しきい値がないことを意味するため、一定のストライドに対してプリフェッチヒントを発行できます。
+
+この設定は、既知で一定のストライドにのみ役立ちます。
+
 @item loop-interchange-max-num-stmts
-The maximum number of stmts in a loop to be interchanged.
+交換されるループ内のstmtの最大数。
 
 @item loop-interchange-stride-ratio
-The minimum ratio between stride of two loops for interchange to be profitable.
+交換が有益になるための2つのループのストライド間の最小比率。
 
 @item min-insn-to-prefetch-ratio
 命令数とループでのプリフェッチを可能にするためのプリフェッチの数の最小比。
@@ -8660,7 +9090,7 @@ The minimum ratio between stride of two loops for interchange to be profitable.
 命令数とループのプリフェッチを可能にするためのメモリ参照の数の最小比。
 
 @item use-canonical-types
-コンパイラが「正規の」型システムを使うべき。デフォルトでは、これは常に1であるべきで、
+コンパイラが「正規の」型システムを使うべきか。デフォルトでは、これは常に1であるべきで、
 C++とObjective-C++で型を比較するのにもっと効率のいい内部メカニズムを使う。しかし、
 もし正規型システムでのバグが比較の失敗を起こすならば、正規型を無効にするためにこの値を0にセットする。
 
@@ -8673,46 +9103,41 @@ switch初期化変換がswitch内で@option{switch-conversion-max-branch-ratio}�
 このパラメータは計算されるセットの長さの上に制限を置き、手に負えないふるまいを妨げる。
 0の値をこのパラメータに設定することは、無制限のセットされた長さを許す。
 
-@item sccvn-max-scc-size
-SCCVN過程の間の強接続コンポネント(SCC)の最大サイズ。もしこの制限が当たれば、関数全体のSCCVN過程は行われず、
-それに依存した最適化は行われない。デフォルト最大SCCサイズは10000である。
+@item rpo-vn-max-loop-depth
+楽観的に値が付けられた最大ループ深度。
+制限が最も内側の@var{rpo-vn-max-loop-depth}ループに達すると、ループネストの最も外側のループは楽観的に値が付けられ、残りはしません。
 
 @item sccvn-max-alias-queries-per-access
 ロードとストアの冗長を探すときに行うエイリアス・オラクルクエリの最大数。
 もしこの制限が当たったならば検索は中止されロード・ストアは冗長とはみなされない。
 クエリの数は関数エントリへのロード空のすべての経路でのストアの数へとアルゴリズム的に制限される。
-クエリのデフォルト最大値は1000である。
 
 @item ira-max-loops-num
 IRAはデフォルトで領域レジスタ割り当てを使う。もし関数がこのパラメータで与えられう数よりも多くのループを含むなら、
-多くとも領域レジスタ割り当ての領域からの最もよく実行されるループの与えられる数のみである。パラメータのデフォルト値は100である。
+多くとも領域レジスタ割り当ての領域からの最もよく実行されるループの与えられる数のみである。
 
 @item ira-max-conflict-table-size 
 IRAは衝突テーブルを圧縮するために洗練されたアルゴリズムを用いているけれども、テーブルはそれでも巨大な関数には
-かなりの量のメモリを要求しうる。もし関数の衝突テーブルがこのパラメータによってMBで与えられるサイズをよりも大きくなりうるなら、、
+かなりの量のメモリを要求しうる。もし関数の衝突テーブルがこのパラメータによってMBで与えられるサイズをよりも大きくなりうるなら、
 レジスタアロケータは代わりに疑似レジスタ衝突テーブルを作る必要がない速くて、単純で、低品質なアルゴリズムを使う。
-パラメータのデフォルト値は2000である。
 
 @item ira-loop-reserved-regs
 IRAはループ不変式を移動するための決定のために(@option{-O3}参照)ループ内のもっと正確なレジスタ圧力を評価するために使うことができる。
-ある他の目的のために予約された利用可能なレジスタの数はこのパラメータで与えられる。パラメータのデフォルト値は2で、
-それは典型的な命令によって必要となるレジスタの最小数である。この値は数々の実験で最良であることがわかっている。
+ある他の目的のために予約された利用可能なレジスタの数はこのパラメータで与えられる。パラメータのデフォルト値は数々の実験で最良であることがわかっている値です。
 
 @item lra-inheritance-ebb-probability-cutoff
 LRAは、以降の命令でのレジスタで再ロードされる値を再利用しようと試みる。
 この最適化は継承と呼ばれる。EBBはこの最適化をするための領域として使われる。
 パラメータはLRAでEBBを継承するためにBBを加えるために使われる最小のフォールスルーの最小確率を
-パーセントで定義する。パラメータのデフォルト値は40である。値はx86-64でのSPEC2000の数々の実行から選択された。
+パーセントで定義する。パラメータのデフォルト値はx86-64でのSPEC2000の数々の実行から選択された。
 
 @item loop-invariant-max-bbs-in-loop
 ループ不変式移動は、とても大きいループでは、コンパイル時間とコンパイル時に必要なメモリの量の両方で、とても高価になりうる。
 このパラメータよりも多い基本ブロックを持つループにはループ不変移動最適化が行われない。
-パラメータのデフォルト値は@option{-O1}では1000で、@option{-O2}以上では10000である。
 
 @item loop-max-datarefs-for-datadeps
 とても大きいループではデータ遺贈の構築は高価である。このパラメータはデータ依存解析で考慮されるループでのデータ参照の数を
 制限する。これらの大きいループはループデータ依存を使った最適化では扱われない。
-デフォルト値は1000である。
 
 @item max-vartrack-size
 任意の関数の変数追跡データフロー解析の間に使うハッシュテーブルスロットの最大値をセットする。
@@ -8725,14 +9150,10 @@ LRAは、以降の命令でのレジスタで再ロードされる値を再利�
 これはもっと完全なデバッグ情報のコンパイル時間と交換する。もしこれがあまりにも低くセットされていたら、
 利用可能でデバッグ情報で表現されうる値式は最終的に使われないかもしれない。これを高くすると
 コンパイラがもっと複雑なデバッグ式をみつけることができるかもしれないが、コンパイル時間とメモリが増えるかもしれない。
-デフォルトは12である。
 
 @item max-debug-marker-count
-Sets a threshold on the number of debug markers (e.g. begin stmt
-markers) to avoid complexity explosion at inlining or expanding to RTL.
-If a function has more such gimple stmts than the set limit, such stmts
-will be dropped from the inlined copy of a function, and from its RTL
-expansion.  The default is 100000.
+デバッグマーカー（たとえば、stmtマーカーの開始）の数にしきい値を設定して、RTLへのインライン化または拡張時の複雑さの爆発を回避します。
+関数に設定された制限よりも多くのそのようなgimple stmtがある場合、そのようなstmtは関数のインラインコピーおよびそのRTL拡張から削除されます。
 
 @item min-nondebug-insn-uid
 非デバッグ命令用にこのパラメータで始まるuidを使う。このパラメータ未満の範囲は
@@ -8755,19 +9176,12 @@ IPA-SRAは一つ以上の新しいパラメータで集計へのポインタを�
 このオプションは@option{-fgnu-tm}を使っているときだけ適用される。
 
 @item graphite-max-nb-scop-params
-Graphiteループ変換での指数的な効果を避けるために、静的制御部分(SCoP)でのパラメータの数は制限される。デフォルト値は10個のパラメータで、0の値を使用して境界を持ち上げることができる。 コンパイル時に値が不明で、SCoPの外部で定義されている変数は、SCoPのパラメータである。
+Graphiteループ変換での指数的な効果を避けるために、静的制御部分(SCoP)でのパラメータの数は制限される。0の値を使用して境界を持ち上げることができる。 コンパイル時に値が不明で、SCoPの外部で定義されている変数は、SCoPのパラメータである。
 
 @item loop-block-tile-size
 @option{-floop-block}か@option{-floop-strip-mine}で有効になる、ループブロッキングかループ露天掘り変換で、
 与えられた繰り返し数によって入れ子のループ内のそれぞれのループで露天掘りを行う。
-露天掘りの長さは@option{loop-block-tile-size}を使って変更できる。デフォルト値は51回である。
-
-@item loop-unroll-jam-size
-@option{-floop-unroll-and-jam}オプション用の展開係数を指定する。デフォルト値は4である。
-
-@item loop-unroll-jam-depth
-@option{-floop-unroll-and-jam}で展開される次元を（最も内側から数えて）指定する。
-デフォルト値は2である。
+露天掘りの長さは@option{loop-block-tile-size}を使って変更できる。
 
 @item ipa-cp-value-list-size
 IPA-CPは関数のパラメータを伝搬させて非仮想化を実行するするためにすべての可能な値と渡された型を追おうとする。
@@ -8815,7 +9229,6 @@ WHOPR（推定された命令で）のための最小の分割のサイズ。
 
 @item cxx-max-namespaces-for-diagnostic-help
 C++名検索が識別子のために失敗するとき、提案について相談する名前空間の最大数。
-デフォルトは、1000である。
 
 @item sink-frequency-threshold
 文が文の降下を許す本来のブロックと比較してターゲット・ブロックの最大相対的な（パーセントでの）実行頻度。
@@ -8886,32 +9299,31 @@ C++名検索が識別子のために失敗するとき、提案について相�
 もし測定される関数のメモリアクセスの数がこの数以上なら、インラインチェックの代わりにコールバックを使う。
 例えば、インラインコードを無効にするには、@option{--param asan-instrumentation-with-call-threshold=0}を使う。
 
-@item chkp-max-ctor-size
-ポインタ範囲チェッカで生成される静的コンストラクタは、最適化レベル@option{-O1}以上では
-とても大きく、コンパイル時間を増やすかもしれない。このパラメータは単一の生成されたコンストラクタでの
-文の最大数である。デフォルト値は5000である。
+注：デフォルトでは、実行時にチェックは無効になっています。 有効にするには、環境変数@env{ASAN_OPTIONS}に@code{detect_stack_use_after_return=1}を追加します。
+
+@item asan-instrumentation-with-call-threshold
+インストルメントされる関数のメモリアクセス数がこの数以上の場合、インラインチェックの代わりにコールバックを使用します。例えば。 インラインコードを無効にするには、@option{-param asan-instrumentation-with-call-threshold=0}を使用します。
+
+@item use-after-scope-direct-emission-threshold
+バイト単位のローカル変数のサイズがこの数値以下である場合、ランタイムコールバックを使用する代わりに、シャドウメモリを直接ポイズニング（または無害化）します。
 
 @item max-fsm-thread-path-insns
-有限状態オートマトンジャンプスレッド経路でのブロック複製でコピーされる命令の最大数。デフォルトは100である。
+有限状態オートマトンジャンプスレッド経路でのブロック複製でコピーされる命令の最大数。
 
 @item max-fsm-thread-length
-有限状態オートマトンジャンプスレッド経路での基本ブロックの最大数。デフォルトは10である。
+有限状態オートマトンジャンプスレッド経路での基本ブロックの最大数。
 
 @item max-fsm-thread-paths
-有限状態オートマトン用に作るための新しいジャンプスレッドの最大数。デフォルトは50である。
+有限状態オートマトン用に作るための新しいジャンプスレッドの最大数。
 
 @item parloops-chunk-size
-parloopsによって並列化されたループ用のompスケジュールのチャンクサイズ。デフォルトは0である。
+parloopsによって並列化されたループ用のompスケジュールのチャンクサイズ。
 
 @item parloops-schedule
 parloopsによって並列化されたループ用のompスケジュールのスケジュールタイプ。（static, dynamic, guided, auto, runtime)
-デフォルトはstatic。
 
 @item parloops-min-per-thread
-The minimum number of iterations per thread of an innermost parallelized
-loop for which the parallelized variant is prefered over the single threaded
-one.  The default is 100.  Note that for a parallelized loop nest the
-minimum number of iterations of the outermost loop per thread is two.
+並列化バリアントがシングルスレッドループよりも優先される、最も内側の並列化ループのスレッドごとの最小反復回数。 並列化されたループネストの場合、スレッドごとの最も外側のループの最小反復回数は2回です。
 
 @item max-ssa-name-query-depth
 畳み込みルーチンのようなものでのSSA名の属性を要求するときの再帰の最大深さ。
@@ -8933,6 +9345,125 @@ unroll-and-jam変換が利益をもたらすと考えられるように最適化
 
 @item unroll-jam-max-unroll
 unroll-and-jam変換によって外側ループを展開する必要のある最大回数。
+
+@item max-rtl-if-conversion-unpredictable-cost
+予測不能と見なされるブランチのRTL if-conversionパスによって生成されるシーケンスの最大許容コスト。
+
+@item max-variable-expansions-in-unroller
+@option {-fvariable-expansion-in-unroller}を使用する場合、ループの展開中に個々の変数が展開される最大回数。
+
+@item tracer-min-branch-probability-feedback
+最適なエッジの確率がこのしきい値（パーセント）より小さい場合、前方成長を停止します。 プロファイルのフィードバックが利用可能な場合に使用されます。
+
+@item partial-inlining-entry-probability
+分割領域のエントリBBの最大確率（関数のエントリBBに対するパーセント）で、部分的なインライン化が発生します。
+
+@item max-tracked-strlens
+strlen最適化パスが文字列の長さを追跡する文字列の最大数。
+
+@item gcse-after-reload-partial-fraction
+リロード後に部分的な冗長性の除去を実行するためのしきい値比率。
+
+@item gcse-after-reload-critical-fraction
+リロード後に冗長性の除去を実行できるクリティカルエッジ実行カウントのしきい値比。
+
+@item max-loop-header-insns
+ループヘッダーのコピーコピーによって複製されるループヘッダーのinsnの最大数。
+
+@item vect-epilogues-nomask
+小さいベクトルサイズを使用してループエピローグベクトル化を有効にします。
+
+@item slp-max-insns-in-bb
+SLPベクトル化の対象となる基本ブロック内の命令の最大数。
+
+@item avoid-fma-max-bits
+FMAの作成を回避する最大ビット数。
+
+@item sms-loop-average-count-threshold
+Swing Moduloスケジューラーによって考慮される平均ループカウントのしきい値。
+
+@item sms-dfa-history
+swing moduloスケジューラーがDFAを使用して競合をチェックするときに考慮するサイクルの数。
+
+@item hot-bb-count-fraction
+基本ブロックをホットと見なす必要がある（非LTOモードで使用）必要がある場合、プログラム内の基本ブロックの繰り返しの最大カウントの一部を選択する
+
+@item max-inline-insns-recursive-auto
+再帰的インライン化を介して増加できる、非インライン関数の命令の最大数。
+
+@item graphite-allow-codegen-errors
+@option{-fchecking}のときにcodegenエラーがICEであるかどうか。
+
+@item sms-max-ii-factor
+Swing Moduloスケジューラーがループのスケジューリングに使用する上限を調整するための要因。
+
+@item lra-max-considered-reload-pseudos
+非リロード擬似のスピル中に考慮されるリロード擬似の最大数。
+
+@item max-pow-sqrt-depth
+実数定数によるべき乗を合成するときに使用するsqrtチェーンの最大の深さ。
+
+@item max-dse-active-local-stores
+RTLデッドストアの削除におけるアクティブなローカルストアの最大数。
+
+@item asan-instrument-allocas
+asan allocas / VLAs保護を有効にします。
+
+@item max-iterations-computation-cost
+反復回数を計算するための式のコストにバインドされています。
+
+@item max-isl-operations
+isl操作の最大数。0は無制限を意味します。
+
+@item graphite-max-arrays-per-scop
+scopごとの配列の最大数。
+
+@item max-vartrack-reverse-op-size
+逆操作を追加するlocリストの最大サイズ。
+
+@item unlikely-bb-count-fraction
+プロファイルの最小部分は、ありそうであると見なされるべきではない、与えられた基本ブロック実行カウントを実行します。
+
+@item tracer-dynamic-coverage-feedback
+トレース形成でカバーする必要がある実行頻度で重み付けされた関数の割合。
+プロファイルのフィードバックが利用可能な場合に使用されます。
+
+@item max-inline-recursive-depth-auto
+非インライン関数の再帰的インライン化の最大の深さ。
+
+@item fsm-scale-path-stmts
+（スケーリングされた）ブロックの数と比較するときに、スレッドパス内のステートメントの数に適用するスケール係数。
+
+@item fsm-maximum-phi-arguments
+FSMスレッダーがブロックのスレッド化を試行しない前に、PHIが持つことができる引数の最大数
+
+@item uninit-control-dep-attempts
+初期化されていない変数分析中に制御依存関係を検索するためのネストされた呼び出しの最大数。
+
+@item indir-call-topn-profile
+間接呼び出しプロファイルの上位N個のターゲットアドレスを追跡します。
+
+@item max-once-peeled-insns
+1回だけロールバックされる、ピールされたループのinsnsの最大数。
+
+@item sra-max-scalarization-size-Osize
+サイズをコンパイルする際にスカラー化を考慮する必要がある集合体の最大サイズ（ストレージ単位）。
+
+@item fsm-scale-path-blocks
+（スケーリングされた）ステートメントの数と比較するときに、スレッドパス内のブロックの数に適用されるスケール係数。
+
+@item sched-autopref-queue-depth
+ハードウェア自動プリフェッチャースケジューラモデル制御フラグ。
+モデルが調べる先読みサイクルの数。 ''で、命令ソートヒューリスティックのみを有効にします。
+
+@item loop-versioning-max-inner-insns
+ループバージョン管理パスがコピーするには大きすぎると見なす前に、内部ループが保持できる命令の最大数。
+
+@item loop-versioning-max-outer-insns
+ループバージョン管理パスがコピーするには大きすぎると見なす前に外部ループが保持できる命令の最大数で、バージョン管理から直接恩恵を受ける内部ループ内の命令を割引きます。
+
+@item ssa-name-def-chain-limit
+値など、変数のプロパティを決定する際に従うSSA_NAME割り当ての最大数。 これにより、特定のステートメントを最適化するとき、または診断を発行する前にそれらの有効性を判断するときに、GCCが実行する反復または再帰呼び出しの数が制限されます。
 
 @end table
 @end table
