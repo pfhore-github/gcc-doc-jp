@@ -89,23 +89,21 @@ GCCで使うことができるコマンドラインオプションのほとん�
 @cindex specifying compiler version and target machine
 @cindex compiler version, specifying
 @cindex target machine, specifying
-GCCを走らせる通常の方法は@command{gcc}と呼ばれる実行ファイルを走らせるか、
-クロスコンパイルの時は@command{@var{machine}-gcc}、特定のGCCのバージョンの時は
-@command{@var{machine}-gcc-@var{version}}である。C++プログラムをコンパイルするときは、
+GCCを走らせる通常の方法は@command{gcc}、クロスコンパイルの時は@command{@var{machine}-gcc}、特定のGCCのバージョンの時は
+@command{@var{machine}-gcc-@var{version}}と呼ばれる実行ファイルを走らせることである。C++プログラムをコンパイルするときは、
 GCCを@command{g++}として起動するべきである。C++プログラムをコンパイルするときの
 @command{gcc}と@code{G++}の振る舞いの差につての情報は@xref{Invoking G++,,C++プログラムをコンパイルする}。
 
 @cindex grouping options
 @cindex options, grouping
-@command{gcc}プログラムはオプションとファイル名をオペランドとして受理する。多くのオプションは複数文字の
-名前である。したがって複数の単一文字オプションはグループ化@emph{できない}。@option{-dv}は@w{@samp{-d -v}}とは
+@command{gcc}プログラムはオプションとファイル名をオペランドとして受理する。多くのオプションは複数文字の名前である。したがって複数の単一文字オプションはグループ化@emph{できない}。@option{-dv}は@w{@samp{-d -v}}とは
 全く異なる。
 
 @cindex order of options
 @cindex options, order
 オプションと他の引数は混ぜることができる。多くの場合で、使う順番は問題にならない。同じ種類のオプションを
 複数使う場合は順番が問題になる。例えば、@option{-L}を複数回指定すれば、ディレクトリは指定した順番で
-検索される。同様に、@option{-}の位置は意味を持つ。
+検索される。同様に、@option{-l}の位置は意味を持つ。
 
 多くのオプションは@samp{-f}ないし@samp{-W}で始まる長い名前を持つ。例えば@option{-fmove-loop-invariants}, 
 @option{-Wformat}など。それらの大抵は肯定形と否定形を持つ。@option{-ffoo}の否定形は@option{-fno-foo}である。
@@ -153,23 +151,25 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 @table @emph
 @item 全体のオプション
 @xref{Overall Options,,出力の種類を制御するオプション}.
-@gccoptlist{-c  -S  -E  -o @var{file}  -x @var{language}
--v  -###  --help@r{[}=@var{class}@r{[},@dots{}@r{]]} --target-help --version
--pass-exit-codes -pipe  -specs=@var{file}  -wrapper
-@@@var{file}  -ffile-prefix-map=@var{old}=@var{new}
--fplugin=@var{file}  -fplugin-arg-@var{name}=@var{arg}
+@gccoptlist{-c  -S  -E  -o @var{file}  -x @var{language}  @gol
+-v  -###  --help@r{[}=@var{class}@r{[},@dots{}@r{]]}  --target-help  --version @gol
+-pass-exit-codes  -pipe  -specs=@var{file}  -wrapper  @gol
+@@@var{file}  -ffile-prefix-map=@var{old}=@var{new}  @gol
+-fplugin=@var{file}  -fplugin-arg-@var{name}=@var{arg}  @gol
 -fdump-ada-spec@r{[}-slim@r{]}  -fada-spec-parent=@var{unit}  -fdump-go-spec=@var{file}}
 
 @item C言語オプション
 @xref{C Dialect Options,,C変種を制御するオプション}.
-@gccoptlist{-ansi  -std=@var{standard}  -fgnu89-inline 
--fpermitted-flt-eval-methods=@var{standard} 
--aux-info @var{filename}  -fallow-parameterless-variadic-functions 
--fno-asm  -fno-builtin  -fno-builtin-@var{function}  -fgimple
--fhosted  -ffreestanding  -fopenacc  -fopenacc-dim=@var{geom} -fopenmp  -fopenmp-simd 
--fms-extensions  -fplan9-extensions  -fsso-struct=@var{endianness} 
--fallow-single-precision  -fcond-mismatch  -flax-vector-conversions 
--fsigned-bitfields  -fsigned-char 
+@gccoptlist{-ansi  -std=@var{standard}  -fgnu89-inline @gol
+-fpermitted-flt-eval-methods=@var{standard} @gol
+-aux-info @var{filename}  -fallow-parameterless-variadic-functions @gol
+-fno-asm  -fno-builtin  -fno-builtin-@var{function}  -fgimple@gol
+-fhosted  -ffreestanding @gol
+-fopenacc  -fopenacc-dim=@var{geom} @gol
+-fopenmp  -fopenmp-simd @gol
+-fms-extensions  -fplan9-extensions  -fsso-struct=@var{endianness} @gol
+-fallow-single-precision  -fcond-mismatch  -flax-vector-conversions @gol
+-fsigned-bitfields  -fsigned-char @gol
 -funsigned-bitfields  -funsigned-char}
 
 @item C++言語オプション
@@ -9487,23 +9487,22 @@ FSMスレッダーがブロックのスレッド化を試行しない前に、PH
 
 @table @gcctabopt
 @cindex @command{prof}
-@item -p
-@opindex p
-解析プログラム@command{prof}に適したプロファイル情報を書くための追加のコードを生成する。
-このオプションをデータがほしいソースファイルをコンパイルするときに使わなければならず、
-リンクするときにも使わなければならない。
-
 @cindex @command{gprof}
-@item -pg
+@item -p
+@itemx -pg
+@opindex p
 @opindex pg
-解析プログラム@command{gprof}に適したプロファイル情報を書くための追加のコードを生成する。
-このオプションをデータがほしいソースファイルをコンパイルするときに使わなければならず、
-リンクするときにも使わなければならない。
+分析プログラム@command{prof}（@option{-p}の場合）または@command{gprof}（@option {-pg}の場合）に適したプロファイル情報を書き込むための追加コードを生成します。  このオプションは、データが必要なソースファイルをコンパイルするときに使用する必要があり、リンクするときにも使用する必要があります。
+
+関数属性@code {no_instrument_function}を使用して、これらのオプションでコンパイルするときに個々の関数のプロファイリングを抑制することができます。
+@xref {Common Function Attributes}。
 
 @item -fprofile-arcs
 @opindex fprofile-arcs
 プログラムフロー@dfn{arcs}が測定されるようにコードを追加する。実行の間に
 プログラムはそれぞれの分岐と呼び出しが何回実行されるかと何回取られる・返るかを記録する。
+優先度をサポートするコンストラクターをサポートするターゲットでは、プロファイリングは、グローバル変数のタイプとして使用されるクラスのコンストラクター、デストラクタ、およびC ++コンストラクタ（およびデストラクタ）を適切に処理します。
+
 コンパイルされたプログラムが終了するときにそれぞれのファイルごとに
 @file{@var{auxname}.gcda}と呼ばれるファイルにこのデータを保存する。
 データはプロファイルに指示された最適化(@option{-fbranch-probabilities})、
@@ -9518,6 +9517,7 @@ FSMスレッダーがブロックのスレッド化を試行しない前に、PH
 @cindex @command{gcov}
 @item --coverage
 @opindex coverage
+
 このオプションはカバレッジ解析のために測定されたコードをコンパイル・リンクするために使う。
 このオプションは@option{-fprofile-arcs} @option{-ftest-coverage}(コンパイル時)と
 @option{-lgcov}（リンク時）と同義語である。詳細はこれらのオプションを見よ。
@@ -9566,10 +9566,7 @@ arcが唯一の出口であるかブロックへの唯一の入り口である�
 
 @item -fprofile-abs-path
 @opindex fprofile-abs-path
-Automatically convert relative source file names to absolute path names
-in the @file{.gcno} files.  This allows @command{gcov} to find the correct
-sources in projects where compilations occur with different working
-directories.
+@file{.gcno}ファイル内の相対ソースファイル名を絶対パス名に自動的に変換します。 これにより、@command{gcov}は、異なる作業ディレクトリでコンパイルが行われるプロジェクトで正しいソースを見つけることができます。
 
 @item -fprofile-dir=@var{path}
 @opindex fprofile-dir
@@ -9580,6 +9577,18 @@ directories.
 絶対と相対パスが、使われることができる。
 デフォルトで、GCCは@var{path}としてカレント・ディレクトリを使い、したがって
 プロフィール・データ・ファイルはオブジェクト・ファイルと同じディレクトリに現れる。
+
+実行可能ファイルを大規模な並列環境で実行する場合は、プロファイルを異なるフォルダーに保存することをお勧めします。 これは、実行時にエクスポートされる@var{path}の変数を使用して実行できます。
+
+@table @gcctabopt
+
+@item %p
+プロセスID。
+
+@item %q@{VAR@}
+環境変数@var{VAR}の値
+
+@end table
 
 @item -fprofile-generate
 @itemx -fprofile-generate=@var{path}
@@ -9606,10 +9615,25 @@ directories.
 
 @samp{prefer-atomic}を使うと、ターゲットでサポートされている場合は@samp{atomic}に、それ以外の場合は@samp {single}に変換される。 コマンドラインに@option{-pthread}がある場合、GCCドライバは自動的に@samp{prefer-atomic}を選択する。
 
+@item -fprofile-filter-files=@var{regex}
+@opindex fprofile-filter-files
+
+名前が正規表現（セミコロンで区切られた）に一致するファイルの関数のみを計装する。
+
+たとえば、@option{-fprofile-filter-files=main.c;module.*.c}は@file {main.c}と「module」で始まるすべてのCファイルのみをインスツルメントします。
+
+@item -fprofile-exclude-files=@var{regex}
+@opindex fprofile-exclude-files
+
+名前がすべての正規表現（セミコロンで区切られた）に一致しないファイルの関数のみを計装する。
+
+たとえば、@option{-fprofile-exclude-files=/usr/*}は、@file{/usr/}フォルダーにあるすべてのファイルのインストルメンテーションを防ぎます。
+
 @item -fsanitize=address
 @opindex fsanitize=address
 高速なメモリエラー検知器のAddressSanitizerを有効にする。
 メモリアクセス命令は境界外と解放後使用のバグを検知するために測定される。
+このオプションは、@option{-fsanitize-address-use-after-scope}を有効にします。
 さらなる詳細は@uref{https://github.com/google/sanitizers/wiki/AddressSanitizer}を見よ。
 実行時の振る舞いは@env{ASAN_OPTIONS}環境変数を使って影響させることができる。
 @code{help=1}をセットすると、測定されるプログラムの開始時に利用可能なオプションが表示される。
@@ -9622,27 +9646,18 @@ Linuxカーネル用のAddressSanitizerを有効にする。詳しい詳細は@u
 
 @item -fsanitize=pointer-compare
 @opindex fsanitize=pointer-compare
-Instrument comparison operation (<, <=, >, >=) with pointer operands.
-The option must be combined with either @option{-fsanitize=kernel-address} or
-@option{-fsanitize=address}
-The option cannot be combined with @option{-fsanitize=thread}
-and/or @option{-fcheck-pointer-bounds}.
-Note: By default the check is disabled at run time.  To enable it,
-add @code{detect_invalid_pointer_pairs=2} to the environment variable
-@env{ASAN_OPTIONS}. Using @code{detect_invalid_pointer_pairs=1} detects
-invalid operation only when both pointers are non-null.
+ポインターオペランドを使用した機器比較操作（<、<=、>、> =）を計装する。
+オプションは、@option{-fsanitize=kernel-address}または@option{-fsanitize=address}のいずれかと組み合わせる必要があります
+このオプションは@option{-fsanitize=thread}と組み合わせることはできません。
+注：デフォルトでは、実行時にチェックは無効になっています。 有効にするには、環境変数@env {ASAN_OPTIONS}に@code{detect_invalid_pointer_pairs=2}を追加します。 @code {detect_invalid_pointer_pairs=1}を使用すると、両方のポインターがnullでない場合にのみ無効な操作が検出されます。
 
 @item -fsanitize=pointer-subtract
 @opindex fsanitize=pointer-subtract
-Instrument subtraction with pointer operands.
-The option must be combined with either @option{-fsanitize=kernel-address} or
-@option{-fsanitize=address}
-The option cannot be combined with @option{-fsanitize=thread}
-and/or @option{-fcheck-pointer-bounds}.
-Note: By default the check is disabled at run time.  To enable it,
-add @code{detect_invalid_pointer_pairs=2} to the environment variable
-@env{ASAN_OPTIONS}. Using @code{detect_invalid_pointer_pairs=1} detects
-invalid operation only when both pointers are non-null.
+ポインターオペランドを使用した減算を計装する。
+オプションは、@option{-fsanitize=kernel-address}または@option{-fsanitize=address}のいずれかと組み合わせる必要があります。
+オプションを@option{-fsanitize=thread}と組み合わせることはできません。
+注：デフォルトでは、実行時にチェックは無効になっています。 有効にするには、
+@code{detect_invalid_pointer_pairs=2}を環境変数@env{ASAN_OPTIONS}に追加します。 @code {detect_invalid_pointer_pairs=1}を使用すると、両方のポインターがnullでない場合にのみ無効な操作が検出されます。
 
 @item -fsanitize=thread
 @opindex fsanitize=thread
@@ -9651,8 +9666,10 @@ invalid operation only when both pointers are non-null.
 さらなる詳細は@uref{https://github.com/google/sanitizers/wiki#threadsanitizer}を見よ。
 実行時の振る舞いは@env{TSAN_OPTIONS}環境変数を使って影響させることができる。
 サポートされているオプションのリストは@url{https://github.com/google/sanitizers/wiki/ThreadSanitizerFlags}を見よ。
-このオプションは@option{-fsanitize=address}, @option{-fsanitize=leak},
-かつ/及び@option{-fcheck-pointer-bounds}と組み合わせることはできない。
+このオプションは@option{-fsanitize=address}, @option{-fsanitize=leak}と組み合わせることはできない。
+
+サニタイズされたアトミックビルトインは、呼び出し以外の例外で無効なメモリアドレスを操作する場合、例外をスローできないことに注意してください。
+（@option {-fnon-call-exceptions}）。
 
 @item -fsanitize=leak
 @opindex fsanitize=leak
