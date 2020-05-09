@@ -151,33 +151,34 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 @table @emph
 @item 全体のオプション
 @xref{Overall Options,,出力の種類を制御するオプション}.
-@gccoptlist{-c  -S  -E  -o @var{file}  -x @var{language}  @gol
--v  -###  --help@r{[}=@var{class}@r{[},@dots{}@r{]]}  --target-help  --version @gol
--pass-exit-codes  -pipe  -specs=@var{file}  -wrapper  @gol
-@@@var{file}  -ffile-prefix-map=@var{old}=@var{new}  @gol
--fplugin=@var{file}  -fplugin-arg-@var{name}=@var{arg}  @gol
+@gccoptlist{-c  -S  -E  -o @var{file}  -x @var{language}  
+-v  -###  --help@r{[}=@var{class}@r{[},@dots{}@r{]]}  --target-help  --version 
+-pass-exit-codes  -pipe  -specs=@var{file}  -wrapper  
+@@@var{file}  -ffile-prefix-map=@var{old}=@var{new}  
+-fplugin=@var{file}  -fplugin-arg-@var{name}=@var{arg}  
 -fdump-ada-spec@r{[}-slim@r{]}  -fada-spec-parent=@var{unit}  -fdump-go-spec=@var{file}}
 
 @item C言語オプション
 @xref{C Dialect Options,,C変種を制御するオプション}.
-@gccoptlist{-ansi  -std=@var{standard}  -fgnu89-inline @gol
--fpermitted-flt-eval-methods=@var{standard} @gol
--aux-info @var{filename}  -fallow-parameterless-variadic-functions @gol
--fno-asm  -fno-builtin  -fno-builtin-@var{function}  -fgimple@gol
--fhosted  -ffreestanding @gol
--fopenacc  -fopenacc-dim=@var{geom} @gol
--fopenmp  -fopenmp-simd @gol
--fms-extensions  -fplan9-extensions  -fsso-struct=@var{endianness} @gol
--fallow-single-precision  -fcond-mismatch  -flax-vector-conversions @gol
--fsigned-bitfields  -fsigned-char @gol
+@gccoptlist{-ansi  -std=@var{standard}  -fgnu89-inline 
+-fpermitted-flt-eval-methods=@var{standard} 
+-aux-info @var{filename}  -fallow-parameterless-variadic-functions 
+-fno-asm  -fno-builtin  -fno-builtin-@var{function}  -fgimple
+-fhosted  -ffreestanding 
+-fopenacc  -fopenacc-dim=@var{geom} 
+-fopenmp  -fopenmp-simd 
+-fms-extensions  -fplan9-extensions  -fsso-struct=@var{endianness} 
+-fallow-single-precision  -fcond-mismatch  -flax-vector-conversions 
+-fsigned-bitfields  -fsigned-char 
 -funsigned-bitfields  -funsigned-char}
 
 @item C++言語オプション
 @xref{C++ Dialect Options,,C++変種を制御するオプション}.
 @gccoptlist{-fabi-version=@var{n}  -fno-access-control 
 -faligned-new=@var{n}  -fargs-in-order=@var{n}  -fchar8_t  -fcheck-new 
--fconstexpr-depth=@var{n}  -fconstexpr-loop-limit=@var{n} 
--fconstexpr-ops-limit=@var{n} -fno-elide-constructors 
+-fconstexpr-depth=@var{n}  -fconstexpr-cache-depth=@var{n} 
+-fconstexpr-loop-limit=@var{n}  -fconstexpr-ops-limit=@var{n} 
+-fno-elide-constructors 
 -fno-enforce-eh-specs 
 -fno-gnu-keywords 
 -fno-implicit-templates 
@@ -188,7 +189,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -fno-nonansi-builtins  -fnothrow-opt  -fno-operator-names 
 -fno-optional-diags  -fpermissive 
 -fno-pretty-templates 
--frepo  -fno-rtti  -fsized-deallocation 
+-fno-rtti  -fsized-deallocation 
 -ftemplate-backtrace-limit=@var{n} 
 -ftemplate-depth=@var{n} 
 -fno-threadsafe-statics  -fuse-cxa-atexit 
@@ -196,19 +197,26 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -fvisibility-inlines-hidden 
 -fvisibility-ms-compat 
 -fext-numeric-literals 
--Wabi=@var{n}  -Wabi-tag  -Wconversion-null  -Wctor-dtor-privacy 
+-Wabi-tag  -Wcatch-value  -Wcatch-value=@var{n} 
+-Wno-class-conversion  -Wclass-memaccess 
+-Wcomma-subscript  -Wconditionally-supported 
+-Wno-conversion-null  -Wctor-dtor-privacy  -Wno-delete-incomplete 
 -Wdelete-non-virtual-dtor  -Wdeprecated-copy  -Wdeprecated-copy-dtor 
--Wliteral-suffix 
--Wmultiple-inheritance  -Wno-init-list-lifetime 
--Wnamespaces  -Wnarrowing 
--Wpessimizing-move  -Wredundant-move 
--Wnoexcept  -Wnoexcept-type  -Wclass-memaccess 
--Wnon-virtual-dtor  -Wreorder  -Wregister 
--Weffc++  -Wstrict-null-sentinel  -Wtemplates 
+-Weffc++  -Wextra-semi  -Wno-inaccessible-base 
+-Wno-inherited-variadic-ctor  -Wno-init-list-lifetime 
+-Wno-invalid-offsetof  -Wno-literal-suffix  -Wmismatched-tags 
+-Wmultiple-inheritance  -Wnamespaces  -Wnarrowing 
+-Wnoexcept  -Wnoexcept-type  -Wnon-virtual-dtor 
+-Wpessimizing-move  -Wno-placement-new  -Wplacement-new=@var{n} 
+-Wredundant-move -Wredundant-tags 
+-Wreorder  -Wregister 
+-Wstrict-null-sentinel  -Wno-subobject-linkage  -Wtemplates 
 -Wno-non-template-friend  -Wold-style-cast 
--Woverloaded-virtual  -Wno-pmf-conversions 
--Wno-class-conversion  -Wno-terminate 
--Wsign-promo  -Wvirtual-inheritance}
+-Woverloaded-virtual  -Wno-pmf-conversions -Wsign-promo 
+-Wsized-deallocation  -Wsuggest-final-methods 
+-Wsuggest-final-types  -Wsuggest-override  
+-Wno-terminate  -Wuseless-cast  -Wvirtual-inheritance  
+-Wno-virtual-move-assign  -Wvolatile  -Wzero-as-null-pointer-constant}
 
 @item Objective-CとObjective-C++言語オプション
 @xref{Objective-C and Objective-C++ Dialect Options,,Objective-CとObjective-C++変種を制御するオプション}.
@@ -227,7 +235,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -freplace-objc-classes 
 -fzero-link 
 -gen-decls 
--Wassign-intercept 
+-Wassign-intercept -Wno-property-assign-default 
 -Wno-protocol  -Wselector 
 -Wstrict-selector-match 
 -Wundeclared-selector}
@@ -237,97 +245,146 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 @gccoptlist{-fmessage-length=@var{n}  
 -fdiagnostics-show-location=@r{[}once@r{|}every-line@r{]}  
 -fdiagnostics-color=@r{[}auto@r{|}never@r{|}always@r{]}  
+-fdiagnostics-urls=@r{[}auto@r{|}never@r{|}always@r{]}  
 -fdiagnostics-format=@r{[}text@r{|}json@r{]}  
 -fno-diagnostics-show-option  -fno-diagnostics-show-caret 
 -fno-diagnostics-show-labels  -fno-diagnostics-show-line-numbers 
+-fno-diagnostics-show-cwe  
 -fdiagnostics-minimum-margin-width=@var{width} 
 -fdiagnostics-parseable-fixits  -fdiagnostics-generate-patch 
 -fdiagnostics-show-template-tree  -fno-elide-type 
+-fdiagnostics-path-format=@r{[}none@r{|}separate-events@r{|}inline-events@r{]} 
+-fdiagnostics-show-path-depths 
 -fno-show-column}
 
 @item 警告オプション
 @xref{Warning Options,,警告の要求・抑制をするオプション}.
 @gccoptlist{-fsyntax-only  -fmax-errors=@var{n}  -Wpedantic 
 -pedantic-errors 
--w  -Wextra  -Wall  -Waddress  -Waddress-of-packed-member 
--Waggregate-return  -Waligned-new 
--Walloc-zero  -Walloc-size-larger-than=@var{byte-size} 
+-w  -Wextra  -Wall  -Wabi=@var{n} 
+-Waddress  -Wno-address-of-packed-member  -Waggregate-return 
+-Walloc-size-larger-than=@var{byte-size}  -Walloc-zero 
 -Walloca  -Walloca-larger-than=@var{byte-size} 
--Wno-aggressive-loop-optimizations  -Warray-bounds  -Warray-bounds=@var{n} 
--Wno-attributes  -Wattribute-alias=@var{n}  
--Wbool-compare  -Wbool-operation 
+-Wno-aggressive-loop-optimizations 
+-Warith-conversion 
+-Warray-bounds  -Warray-bounds=@var{n} 
+-Wno-attributes  -Wattribute-alias=@var{n} -Wno-attribute-alias 
+-Wno-attribute-warning  -Wbool-compare  -Wbool-operation 
 -Wno-builtin-declaration-mismatch 
 -Wno-builtin-macro-redefined  -Wc90-c99-compat  -Wc99-c11-compat 
+-Wc11-c2x-compat 
 -Wc++-compat  -Wc++11-compat  -Wc++14-compat  -Wc++17-compat  
+-Wc++20-compat  
 -Wcast-align  -Wcast-align=strict  -Wcast-function-type  -Wcast-qual  
--Wchar-subscripts  -Wcatch-value  -Wcatch-value=@var{n} 
--Wclobbered  -Wcomment  -Wconditionally-supported 
--Wconversion  -Wcoverage-mismatch  -Wno-cpp  -Wdangling-else  -Wdate-time 
--Wdelete-incomplete 
--Wno-attribute-warning 
+-Wchar-subscripts 
+-Wclobbered  -Wcomment 
+-Wconversion  -Wno-coverage-mismatch  -Wno-cpp 
+-Wdangling-else  -Wdate-time 
 -Wno-deprecated  -Wno-deprecated-declarations  -Wno-designated-init 
 -Wdisabled-optimization 
--Wno-discarded-qualifiers  -Wno-discarded-array-qualifiers 
+-Wno-discarded-array-qualifiers  -Wno-discarded-qualifiers 
 -Wno-div-by-zero  -Wdouble-promotion 
 -Wduplicated-branches  -Wduplicated-cond 
--Wempty-body  -Wenum-compare  -Wno-endif-labels  -Wexpansion-to-defined 
--Werror  -Werror=*  -Wextra-semi  -Wfatal-errors 
--Wfloat-equal  -Wformat  -Wformat=2 
+-Wempty-body  -Wno-endif-labels  -Wenum-compare  -Wenum-conversion 
+-Werror  -Werror=*  -Wexpansion-to-defined  -Wfatal-errors 
+-Wfloat-conversion  -Wfloat-equal  -Wformat  -Wformat=2 
 -Wno-format-contains-nul  -Wno-format-extra-args  
 -Wformat-nonliteral  -Wformat-overflow=@var{n} 
 -Wformat-security  -Wformat-signedness  -Wformat-truncation=@var{n} 
 -Wformat-y2k  -Wframe-address 
 -Wframe-larger-than=@var{byte-size}  -Wno-free-nonheap-object 
--Wjump-misses-init 
--Whsa  -Wif-not-aligned 
--Wignored-qualifiers  -Wignored-attributes  -Wincompatible-pointer-types 
+-Wno-hsa  -Wno-if-not-aligned  -Wno-ignored-attributes 
+-Wignored-qualifiers  -Wno-incompatible-pointer-types 
 -Wimplicit  -Wimplicit-fallthrough  -Wimplicit-fallthrough=@var{n} 
--Wimplicit-function-declaration  -Wimplicit-int 
+-Wno-implicit-function-declaration  -Wno-implicit-int 
 -Winit-self  -Winline  -Wno-int-conversion  -Wint-in-bool-context 
--Wno-int-to-pointer-cast  -Winvalid-memory-model  -Wno-invalid-offsetof 
--Winvalid-pch  -Wlarger-than=@var{byte-size} 
--Wlogical-op  -Wlogical-not-parentheses  -Wlong-long 
--Wmain  -Wmaybe-uninitialized  -Wmemset-elt-size  -Wmemset-transposed-args 
+-Wno-int-to-pointer-cast  -Wno-invalid-memory-model 
+-Winvalid-pch  -Wjump-misses-init  -Wlarger-than=@var{byte-size} 
+-Wlogical-not-parentheses  -Wlogical-op  -Wlong-long 
+-Wno-lto-type-mismatch -Wmain  -Wmaybe-uninitialized 
+-Wmemset-elt-size  -Wmemset-transposed-args 
 -Wmisleading-indentation  -Wmissing-attributes  -Wmissing-braces 
 -Wmissing-field-initializers  -Wmissing-format-attribute 
--Wmissing-include-dirs  -Wmissing-noreturn  -Wmissing-profile 
+-Wmissing-include-dirs  -Wmissing-noreturn  -Wno-missing-profile 
 -Wno-multichar  -Wmultistatement-macros  -Wnonnull  -Wnonnull-compare 
 -Wnormalized=@r{[}none@r{|}id@r{|}nfc@r{|}nfkc@r{]} 
--Wnull-dereference  -Wodr  -Wno-overflow  -Wopenmp-simd  
--Woverride-init-side-effects  -Woverlength-strings 
--Wpacked  -Wpacked-bitfield-compat -Wpacked-not-aligned  -Wpadded 
+-Wnull-dereference  -Wno-odr  -Wopenmp-simd  
+-Wno-overflow  -Woverlength-strings  -Wno-override-init-side-effects 
+-Wpacked  -Wno-packed-bitfield-compat  -Wpacked-not-aligned  -Wpadded 
 -Wparentheses  -Wno-pedantic-ms-format 
--Wplacement-new  -Wplacement-new=@var{n} 
--Wpointer-arith  -Wpointer-compare  -Wno-pointer-to-int-cast 
+-Wpointer-arith  -Wno-pointer-compare  -Wno-pointer-to-int-cast 
 -Wno-pragmas  -Wno-prio-ctor-dtor  -Wredundant-decls 
--Wrestrict  -Wno-return-local-addr 
--Wreturn-type  -Wsequence-point  -Wshadow  -Wno-shadow-ivar 
--Wshadow=global,  -Wshadow=local,  -Wshadow=compatible-local 
--Wshift-overflow  -Wshift-overflow=@var{n} 
--Wshift-count-negative  -Wshift-count-overflow  -Wshift-negative-value 
--Wsign-compare  -Wsign-conversion  -Wfloat-conversion 
--Wno-scalar-storage-order  -Wsizeof-pointer-div 
--Wsizeof-pointer-memaccess  -Wsizeof-array-argument 
+-Wrestrict  -Wno-return-local-addr  -Wreturn-type 
+-Wno-scalar-storage-order  -Wsequence-point 
+-Wshadow  -Wshadow=global  -Wshadow=local  -Wshadow=compatible-local 
+-Wno-shadow-ivar 
+-Wno-shift-count-negative  -Wno-shift-count-overflow  -Wshift-negative-value 
+-Wno-shift-overflow  -Wshift-overflow=@var{n} 
+-Wsign-compare  -Wsign-conversion 
+-Wno-sizeof-array-argument 
+-Wsizeof-pointer-div  -Wsizeof-pointer-memaccess 
 -Wstack-protector  -Wstack-usage=@var{byte-size}  -Wstrict-aliasing 
 -Wstrict-aliasing=n  -Wstrict-overflow  -Wstrict-overflow=@var{n} 
--Wstringop-overflow=@var{n}  -Wstringop-truncation  -Wsubobject-linkage 
+-Wstring-compare 
+-Wstringop-overflow=@var{n}  -Wno-stringop-truncation 
 -Wsuggest-attribute=@r{[}pure@r{|}const@r{|}noreturn@r{|}format@r{|}malloc@r{]} 
--Wsuggest-final-types   -Wsuggest-final-methods  -Wsuggest-override 
--Wswitch  -Wswitch-bool  -Wswitch-default  -Wswitch-enum 
--Wswitch-unreachable  -Wsync-nand 
+-Wswitch  -Wno-switch-bool  -Wswitch-default  -Wswitch-enum 
+-Wno-switch-outside-range  -Wno-switch-unreachable  -Wsync-nand 
 -Wsystem-headers  -Wtautological-compare  -Wtrampolines  -Wtrigraphs 
 -Wtype-limits  -Wundef 
 -Wuninitialized  -Wunknown-pragmas 
--Wunsuffixed-float-constants  -Wunused  -Wunused-function 
--Wunused-label  -Wunused-local-typedefs  -Wunused-macros 
+-Wunsuffixed-float-constants  -Wunused 
+-Wunused-but-set-parameter  -Wunused-but-set-variable 
+-Wunused-const-variable  -Wunused-const-variable=@var{n} 
+-Wunused-function  -Wunused-label  -Wunused-local-typedefs 
+-Wunused-macros 
 -Wunused-parameter  -Wno-unused-result 
 -Wunused-value  -Wunused-variable 
--Wunused-const-variable  -Wunused-const-variable=@var{n} 
--Wunused-but-set-parameter  -Wunused-but-set-variable 
--Wuseless-cast  -Wvariadic-macros  -Wvector-operation-performance 
--Wvla  -Wvla-larger-than=@var{byte-size}  -Wvolatile-register-var 
--Wwrite-strings 
--Wzero-as-null-pointer-constant}
+-Wno-varargs  -Wvariadic-macros 
+-Wvector-operation-performance 
+-Wvla  -Wvla-larger-than=@var{byte-size}  -Wno-vla-larger-than 
+-Wvolatile-register-var  -Wwrite-strings 
+-Wzero-length-bounds}
+
+@item 静的解析オプション
+@gccoptlist{
+-fanalyzer 
+-fanalyzer-call-summaries 
+-fanalyzer-checker=@var{name} 
+-fanalyzer-fine-grained 
+-fanalyzer-state-merge 
+-fanalyzer-state-purge 
+-fanalyzer-transitivity 
+-fanalyzer-verbose-edges 
+-fanalyzer-verbose-state-changes 
+-fanalyzer-verbosity=@var{level} 
+-fdump-analyzer 
+-fdump-analyzer-stderr 
+-fdump-analyzer-callgraph 
+-fdump-analyzer-exploded-graph 
+-fdump-analyzer-exploded-nodes 
+-fdump-analyzer-exploded-nodes-2 
+-fdump-analyzer-exploded-nodes-3 
+-fdump-analyzer-state-purge 
+-fdump-analyzer-supergraph 
+-Wno-analyzer-double-fclose 
+-Wno-analyzer-double-free 
+-Wno-analyzer-exposure-through-output-file 
+-Wno-analyzer-file-leak 
+-Wno-analyzer-free-of-non-heap 
+-Wno-analyzer-malloc-leak 
+-Wno-analyzer-null-argument 
+-Wno-analyzer-null-dereference 
+-Wno-analyzer-possible-null-argument 
+-Wno-analyzer-possible-null-dereference 
+-Wno-analyzer-stale-setjmp-buffer 
+-Wno-analyzer-tainted-array-index 
+-Wanalyzer-too-complex 
+-Wno-analyzer-unsafe-call-within-signal-handler 
+-Wno-analyzer-use-after-free 
+-Wno-analyzer-use-of-pointer-in-stale-stack-frame 
+-Wno-analyzer-use-of-uninitialized-value 
+}
 
 @item CとObjective-C専用の警告オプション
 @gccoptlist{-Wbad-function-cast  -Wmissing-declarations 
@@ -354,7 +411,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -fno-eliminate-unused-debug-types 
 -femit-struct-debug-baseonly  -femit-struct-debug-reduced 
 -femit-struct-debug-detailed@r{[}=@var{spec-list}@r{]} 
--feliminate-unused-debug-symbols  -femit-class-debug-always 
+-fno-eliminate-unused-debug-symbols  -femit-class-debug-always 
 -fno-merge-debug-strings  -fno-dwarf2-cfi-asm 
 -fvar-tracking  -fvar-tracking-assignments}
 
@@ -365,10 +422,10 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -falign-jumps[=@var{n}[:@var{m}:[@var{n2}[:@var{m2}]]]] 
 -falign-labels[=@var{n}[:@var{m}:[@var{n2}[:@var{m2}]]]] 
 -falign-loops[=@var{n}[:@var{m}:[@var{n2}[:@var{m2}]]]] 
+-fno-allocation-dce -fallow-store-data-races 
 -fassociative-math  -fauto-profile  -fauto-profile[=@var{path}] 
 -fauto-inc-dec  -fbranch-probabilities 
--fbranch-target-load-optimize  -fbranch-target-load-optimize2 
--fbtr-bb-exclusive  -fcaller-saves 
+-fcaller-saves 
 -fcombine-stack-adjustments  -fconserve-stack 
 -fcompare-elim  -fcprop-registers  -fcrossjumping 
 -fcse-follow-jumps  -fcse-skip-blocks  -fcx-fortran-rules 
@@ -378,6 +435,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -fdevirtualize-at-ltrans  -fdse 
 -fearly-inlining  -fipa-sra  -fexpensive-optimizations  -ffat-lto-objects 
 -ffast-math  -ffinite-math-only  -ffloat-store  -fexcess-precision=@var{style} 
+-ffinite-loops 
 -fforward-propagate  -ffp-contract=@var{style}  -ffunction-sections 
 -fgcse  -fgcse-after-reload  -fgcse-las  -fgcse-lm  -fgraphite-identity 
 -fgcse-sm  -fhoist-adjacent-loads  -fif-conversion 
@@ -409,8 +467,8 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -fpartial-inlining  -fpeel-loops  -fpredictive-commoning 
 -fprefetch-loop-arrays 
 -fprofile-correction 
--fprofile-use  -fprofile-use=@var{path}  -fprofile-values 
--fprofile-reorder-functions 
+-fprofile-use  -fprofile-use=@var{path} -fprofile-partial-training 
+-fprofile-values -fprofile-reorder-functions 
 -freciprocal-math  -free  -frename-registers  -freorder-blocks 
 -freorder-blocks-algorithm=@var{algorithm} 
 -freorder-blocks-and-partition  -freorder-functions 
@@ -430,7 +488,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -fsignaling-nans 
 -fsingle-precision-constant  -fsplit-ivs-in-unroller  -fsplit-loops
 -fsplit-paths 
--fsplit-wide-types  -fssa-backprop  -fssa-phiopt 
+-fsplit-wide-types  -fsplit-wide-types-early  -fssa-backprop  -fssa-phiopt 
 -fstdarg-opt  -fstore-merging  -fstrict-aliasing 
 -fthread-jumps  -ftracer  -ftree-bit-ccp 
 -ftree-builtin-call-dce  -ftree-ccp  -ftree-ch 
@@ -456,8 +514,9 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 @gccoptlist{-p  -pg  -fprofile-arcs  --coverage  -ftest-coverage 
 -fprofile-abs-path 
 -fprofile-dir=@var{path}  -fprofile-generate  -fprofile-generate=@var{path} 
--fprofile-update=@var{method}  -fprofile-filter-files=@var{regex} 
--fprofile-exclude-files=@var{regex} 
+-fprofile-note=@var{path} -fprofile-prefix-path=@var{path} 
+-fprofile-update=@var{method} -fprofile-filter-files=@var{regex} 
+-fprofile-exclude-files=@var{regex} -fprofile-reproducibility 
 -fsanitize=@var{style}  -fsanitize-recover  -fsanitize-recover=@var{style} 
 -fasan-shadow-offset=@var{number}  -fsanitize-sections=@var{s1},@var{s2},... 
 -fsanitize-undefined-trap-on-error  -fbounds-check 
@@ -472,8 +531,8 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -finstrument-functions-exclude-function-list=@var{sym},@var{sym},@dots{} 
 -finstrument-functions-exclude-file-list=@var{file},@var{file},@dots{}}
 
-@item プリプロセスオプション
-@xref{Preprocessor Options,,プリプロセスを制御するオプション}.
+@item プリプロセッサオプション
+@xref{Preprocessor Options,,プリプロセッサを制御するオプション}.
 @gccoptlist{-A@var{question}=@var{answer} 
 -A-@var{question}@r{[}=@var{answer}@r{]} 
 -C  -CC  -D@var{macro}@r{[}=@var{defn}@r{]} 
@@ -481,6 +540,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -fdebug-cpp  -fdirectives-only  -fdollars-in-identifiers  
 -fexec-charset=@var{charset}  -fextended-identifiers  
 -finput-charset=@var{charset}  -fmacro-prefix-map=@var{old}=@var{new}  
+-fmax-include-depth=@var{depth} 
 -fno-canonical-system-headers  -fpch-deps  -fpch-preprocess  
 -fpreprocessed  -ftabstop=@var{width}  -ftrack-macro-expansion  
 -fwide-exec-charset=@var{charset}  -fworking-directory 
@@ -518,7 +578,6 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -L@var{dir}  -no-canonical-prefixes  --no-sysroot-suffix 
 -nostdinc  -nostdinc++  --sysroot=@var{dir}}
 
-
 @item コード生成オプション
 @xref{Code Gen Options,,コード生成規約オプション}.
 @gccoptlist{-fcall-saved-@var{reg}  -fcall-used-@var{reg} 
@@ -526,7 +585,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -fnon-call-exceptions  -fdelete-dead-exceptions  -funwind-tables 
 -fasynchronous-unwind-tables 
 -fno-gnu-unique 
--finhibit-size-directive  -fno-common  -fno-ident 
+-finhibit-size-directive  -fcommon  -fno-ident 
 -fpcc-struct-return  -fpic  -fPIC  -fpie  -fPIE  -fno-plt 
 -fno-jump-tables 
 -frecord-gcc-switches 
@@ -541,8 +600,9 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 @item デベロッパオプション
 @xref{Developer Options,,GCCデベロッパオプション}.
 @gccoptlist{-d@var{letters}  -dumpspecs  -dumpmachine  -dumpversion 
--dumpfullversion  -fchecking  -fchecking=@var{n}  -fdbg-cnt-list 
--fdbg-cnt=@var{counter-value-list} 
+-dumpfullversion  -fcallgraph-info@r{[}=su,da@r{]}
+-fchecking  -fchecking=@var{n}
+-fdbg-cnt-list   -fdbg-cnt=@var{counter-value-list} 
 -fdisable-ipa-@var{pass_name} 
 -fdisable-rtl-@var{pass_name} 
 -fdisable-rtl-@var{pass-name}=@var{range-list} 
@@ -599,11 +659,13 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -mlow-precision-recip-sqrt  -mlow-precision-sqrt  -mlow-precision-div 
 -mpc-relative-literal-loads 
 -msign-return-address=@var{scope} 
--mbranch-protection=@var{none}|@var{standard}|@var{pac-ret}[+@var{leaf}]|@var{bti} 
+-mbranch-protection=@var{none}|@var{standard}|@var{pac-ret}[+@var{leaf}
++@var{b-key}]|@var{bti} 
 -march=@var{name}  -mcpu=@var{name}  -mtune=@var{name}  
 -moverride=@var{string}  -mverbose-cost-dump 
 -mstack-protector-guard=@var{guard} -mstack-protector-guard-reg=@var{sysreg} 
--mstack-protector-guard-offset=@var{offset} -mtrack-speculation }
+-mstack-protector-guard-offset=@var{offset} -mtrack-speculation 
+-moutline-atomics }
 
 @emph{Adapteva Epiphany Options}
 @gccoptlist{-mhalf-reg-file  -mprefer-short-insn-regs 
@@ -670,16 +732,18 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -mrestrict-it 
 -mverbose-cost-dump 
 -mpure-code 
--mcmse}
+-mcmse 
+-mfdpic}
 
 @emph{AVR Options}
 @gccoptlist{-mmcu=@var{mcu}  -mabsdata  -maccumulate-args 
 -mbranch-cost=@var{cost} 
 -mcall-prologues  -mgas-isr-prologues  -mint8 
+-mdouble=@var{bits} -mlong-double=@var{bits} 
 -mn_flash=@var{size}  -mno-interrupts 
 -mmain-is-OS_task  -mrelax  -mrmw  -mstrict-X  -mtiny-stack 
 -mfract-convert-truncate 
--mshort-calls  -nodevicelib 
+-mshort-calls  -nodevicelib  -nodevicespecs 
 -Waddr-space-convert  -Wmisspelled-isr}
 
 @emph{Blackfin Options}
@@ -760,6 +824,10 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -mexplicit-relocs  -msmall-data  -mlarge-data 
 -msmall-text  -mlarge-text 
 -mmemory-latency=@var{time}}
+
+@emph{eBPF Options}
+@gccoptlist{-mbig-endian -mlittle-endian -mkernel=@var{version}
+-mframe-limit=@var{bytes}}
 
 @emph{FR30 Options}
 @gccoptlist{-msmall-model  -mno-lsim}
@@ -960,7 +1028,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -mwarn-mcu 
 -mcode-region=  -mdata-region= 
 -msilicon-errata=  -msilicon-errata-warn= 
--mhwmult=  -minrt}
+-mhwmult=  -minrt  -mtiny-printf}
 
 @emph{NDS32 Options}
 @gccoptlist{-mbig-endian  -mlittle-endian 
@@ -996,7 +1064,8 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 @emph{OpenRISC Options}
 @gccoptlist{-mboard=@var{name}  -mnewlib  -mhard-mul  -mhard-div 
 -msoft-mul  -msoft-div 
--mcmov  -mror  -msext  -msfimm  -mshftimm}
+-msoft-float  -mhard-float  -mdouble-float -munordered-float 
+-mcmov  -mror  -mrori  -msext  -msfimm  -mshftimm}
 
 @emph{PDP-11 Options}
 @gccoptlist{-mfpu  -msoft-float  -mac0  -mno-ac0  -m40  -m45  -m10 
@@ -1009,6 +1078,10 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 
 @emph{PowerPC Options}
 See RS/6000 and PowerPC Options.
+
+@emph{PRU Options}
+@gccoptlist{-mmcu=@var{mcu}  -minrt  -mno-relax  -mloop 
+-mabi=@var{variant} }
 
 @emph{RISC-V Options}
 @gccoptlist{-mbranch-cost=@var{N-instruction} 
@@ -1025,7 +1098,8 @@ See RS/6000 and PowerPC Options.
 -mcmodel=medlow  -mcmodel=medany 
 -mexplicit-relocs  -mno-explicit-relocs 
 -mrelax  -mno-relax 
--mriscv-attribute  -mmo-riscv-attribute}
+-mriscv-attribute  -mmo-riscv-attribute 
+-malign-data=@var{type}}
 
 @emph{RL78 Options}
 @gccoptlist{-msim  -mmul=none  -mmul=g13  -mmul=g14  -mallregs 
@@ -1042,7 +1116,7 @@ See RS/6000 and PowerPC Options.
 -mpowerpc-gfxopt  -mno-powerpc-gfxopt 
 -mmfcrf  -mno-mfcrf  -mpopcntb  -mno-popcntb  -mpopcntd  -mno-popcntd 
 -mfprnd  -mno-fprnd 
--mcmpb  -mno-cmpb  -mmfpgpr  -mno-mfpgpr  -mhard-dfp  -mno-hard-dfp 
+-mcmpb  -mno-cmpb  -mhard-dfp  -mno-hard-dfp 
 -mfull-toc   -mminimal-toc  -mno-fp-in-toc  -mno-sum-in-toc 
 -m64  -m32  -mxl-compat  -mno-xl-compat  -mpe 
 -malign-power  -malign-natural 
@@ -1088,7 +1162,8 @@ See RS/6000 and PowerPC Options.
 -mfloat128  -mno-float128  -mfloat128-hardware  -mno-float128-hardware 
 -mgnu-attribute  -mno-gnu-attribute 
 -mstack-protector-guard=@var{guard} -mstack-protector-guard-reg=@var{reg} 
--mstack-protector-guard-offset=@var{offset}}
+-mstack-protector-guard-offset=@var{offset} -mprefixed -mno-prefixed 
+-mpcrel -mno-pcrel}
 
 @emph{RX Options}
 @gccoptlist{-m64bit-doubles  -m32bit-doubles  -fpu  -nofpu
@@ -1114,7 +1189,8 @@ See RS/6000 and PowerPC Options.
 -msmall-exec  -mno-small-exec  -mmvcle  -mno-mvcle 
 -m64  -m31  -mdebug  -mno-debug  -mesa  -mzarch 
 -mhtm  -mvx  -mzvector 
--mtpf-trace  -mno-tpf-trace  -mfused-madd  -mno-fused-madd 
+-mtpf-trace  -mno-tpf-trace  -mtpf-trace-skip  -mno-tpf-trace-skip 
+-mfused-madd  -mno-fused-madd 
 -mwarn-framesize  -mwarn-dynamicstack  -mstack-size  -mstack-guard 
 -mhotpatch=@var{halfwords},@var{halfwords}}
 
@@ -1167,17 +1243,6 @@ See RS/6000 and PowerPC Options.
 -mpopc  -mno-popc  -msubxc  -mno-subxc 
 -mfix-at697f  -mfix-ut699  -mfix-ut700  -mfix-gr712rc 
 -mlra  -mno-lra}
-
-@emph{SPU Options}
-@gccoptlist{-mwarn-reloc  -merror-reloc 
--msafe-dma  -munsafe-dma 
--mbranch-hints 
--msmall-mem  -mlarge-mem  -mstdmain 
--mfixed-range=@var{register-range} 
--mea32  -mea64 
--maddress-space-conversion  -mno-address-space-conversion 
--mcache-size=@var{cache-size} 
--matomic-updates  -mno-atomic-updates}
 
 @emph{System V Options}
 @gccoptlist{-Qy  -Qn  -YP,@var{paths}  -Ym,@var{dir}}
@@ -1241,10 +1306,10 @@ See RS/6000 and PowerPC Options.
 -msse4a  -m3dnow  -m3dnowa  -mpopcnt  -mabm  -mbmi  -mtbm  -mfma4  -mxop 
 -madx  -mlzcnt  -mbmi2  -mfxsr  -mxsave  -mxsaveopt  -mrtm  -mhle  -mlwp 
 -mmwaitx  -mclzero  -mpku  -mthreads  -mgfni  -mvaes  -mwaitpkg 
--mshstk -mmanual-endbr -mforce-indirect-call  -mavx512vbmi2 
+-mshstk -mmanual-endbr -mforce-indirect-call  -mavx512vbmi2 -mavx512bf16 -menqcmd 
 -mvpclmulqdq  -mavx512bitalg  -mmovdiri  -mmovdir64b  -mavx512vpopcntdq 
 -mavx5124fmaps  -mavx512vnni  -mavx5124vnniw  -mprfchw  -mrdpid 
--mrdseed  -msgx 
+-mrdseed  -msgx -mavx512vp2intersect
 -mcldemote  -mms-bitfields  -mno-align-stringops  -minline-all-stringops 
 -minline-stringops-dynamically  -mstringop-strategy=@var{alg} 
 -mmemcpy-strategy=@var{strategy}  -mmemset-strategy=@var{strategy} 
@@ -1405,7 +1470,7 @@ Dのドキュメントコード（Ddoc）。
 ライブラリユニット本体（サブプログラムおよびパッケージ本体）を含むAdaソースコードファイル、そのようなファイルは
 @dfn{ボディ}と呼ばれる。
 
-@c GCCはまだ含まれていない元の拡張子を知っている。
+@c GCCはまだ含まれていない言語の拡張子を知っている。
 @c Ratfor:
 @c @var{file}.r
 
@@ -1456,7 +1521,7 @@ brig
 ソースのコンパイル・アセンブルはするがリンクしない。リンクの段階は単に行われない。
 最終的な出力はそれぞれのファイルのオブジェクトファイルの形式である。
 
-デフォルトでは、ソースファイルのオブジェクトファイル名は拡張子@samp{.c}, @samp{.i}, @samp{.s}などを
+デフォルトでは、ソースファイルのオブジェ���トファイル名は拡張子@samp{.c}, @samp{.i}, @samp{.s}などを
 @samp{.o}で置換したものである。
 
 認識できないファイル、コンパイル・アセンブルが不要なファイルは無視される。
@@ -1479,9 +1544,8 @@ brig
 @cindex output file option
 @item -o @var{file}
 @opindex o
-ファイル@var{file}に出力させる。これは
-Place output in file @var{file}.  これは実行ファイル、オブジェクトファイル、アセンブラファイル、プリプロセス済みのCのコード
-であるかにかかわらず、すべての種類の出力で適用される。.
+ファイル@var{file}に出力させる。これは実行ファイル、オブジェクトファイル、アセンブラファイル、プリプロセス済みのCのコード
+であるかにかかわらず、すべての種類の出力で適用される。
 
 もし@option{-o}が指定されていないならば、デフォルトは実行ファイルが@file{a.out}であり、@file{@var{source}.@var{suffix}}の
 オブジェクトファイルが@file{@var{source}.o}であり、そのアセンブラが@file{@var{source}.s}であり、プリプロセスされた
@@ -1522,7 +1586,7 @@ Place output in file @var{file}.  これは実行ファイル、オブジェク�
 @option{-param}によって認識される値を表示する。
 
 @item @var{language}
-@var{language}がサポートするオプションを表示する。@var{language}はこのバージョンのGCCがサポートする言語名の１つである。
+@var{language}がサポートするオプションを表示する。@var{language}はこのバージョンのGCCがサポートする言語名の１つである。オプションがすべての言語でサポートされている場合は、@samp{common}クラスを選択する必要があります。
 
 @item @samp{common}
 全言語で共通のオプションを表示する
@@ -1630,13 +1694,7 @@ gcc -c t.c -wrapper gdb,--args
 
 @item -ffile-prefix-map=@var{old}=@var{new}
 @opindex ffile-prefix-map
-When compiling files residing in directory @file{@var{old}}, record
-any references to them in the result of the compilation as if the
-files resided in directory @file{@var{new}} instead.  Specifying this
-option is equivalent to specifying all the individual
-@option{-f*-prefix-map} options.  This can be used to make reproducible
-builds that are location independent.  See also
-@option{-fmacro-prefix-map} and @option{-fdebug-prefix-map}.
+ディレクトリ@file{@var{old}}にあるファイルをコンパイルするときは、ファイルがディレクトリ@file{@var{new}}にあるかのように、コンパイルの結果にそれらへの参照を記録します。 このオプションを指定することは、個々の@option{-f*-prefix-map}オプションをすべて指定することと同じです。 これは、場所に依存しない再現可能なビルドを作成するために使用できます。 @option{-fmacro-prefix-map}および@option{-fdebug-prefix-map}も参照してください。
 
 @item -fplugin=@var{name}.so
 @opindex fplugin
@@ -1653,7 +1711,6 @@ builds that are location independent.  See also
 @item -fdump-ada-spec@r{[}-slim@r{]}
 @opindex fdump-ada-spec
 CとC++のソースとインクルードファイルで、対応するAda specsを生成する。
-For C and C++ source and include files, generate corresponding Ada specs.
 @xref{Generating Ada Bindings for C and C++ headers,,, gnat_ugn,
 GNAT ユーザガイド}で、この機能の詳細の文書が提供される。
 
@@ -1832,7 +1889,7 @@ ISO C17のGNU変種。これはCコードのデフォルトである。
 @option{-std=c++17}のGNU変種。名前@samp{gnu++1z}は非推奨である。
 
 @item c++2a
-ISO C++標準の次の改定であり、とりあえず、2020年の間で計画される。サポートは非常に実験的で、ほぼ間違いなく将来のリリースにおいて非互換の方向で変わる。
+ISO C++標準の次の改定であり、2020年の間で計画される。サポートは非常に実験的で、ほぼ間違いなく将来のリリースにおいて非互換の方向で変わる。
 
 @item gnu++2a
 @option{-std=c++2a}のGNU変種。サポートは非常に実験的で、ほぼ間違いなく将来のリリースにおいて非互換の方向で変わる。
@@ -1855,17 +1912,17 @@ Macros,,,cpp,The C Preprocessor}.
 @opindex fpermitted-flt-eval-methods=ts-18661-3
 ISO/IEC TS 18661-3は、交換または拡張フォーマットであるセマンティックタイプを持つ操作と定数を、
 その型の精度と範囲で評価すべきかを示す@code{FLT_EVAL_METHOD}の新しい許容値を定義する。
-これらの新しい値は、C99 / C11で許可されているもののスーパーセットであり、
+これらの新しい値は、C99/C11で許可されているもののスーパーセットであり、
 @code{FLT_EVAL_METHOD}の他の正の値の意味を指定しない。したがって、C11に準拠するコードは、
 新しい値の可能性を期待して書かれていない可能性がある。
 
-@option{-fpermitted-flt-eval-methods}は、コンパイラがC99 / C11で指定された@code{FLT_EVAL_METHOD}の値のみを許可するか、
+@option{-fpermitted-flt-eval-methods}は、コンパイラがC99/C11で指定された@code{FLT_EVAL_METHOD}の値のみを許可するか、
 SO / IEC TS 18661-3で指定された拡張された値のセットを許可するかを指定する。
 
 @var{style}は必要に応じて@code{c11}か@code{ts-18661-3}である。
 
-規格に準拠したモード（@option{-std = c11}など）のデフォルトは、@option{-fpermitted-flt-eval-methods = c11}である。
-GNU変種（@option{-std = gnu11}など）のデフォルトは@option{-fpermitted-flt-eval-methods = ts-18661-3}である。
+規格に準拠したモード（@option{-std=c11}など）のデフォルトは、@option{-fpermitted-flt-eval-methods=c11}である。
+GNU変種（@option{-std=gnu11}など）のデフォルトは@option{-fpermitted-flt-eval-methods=ts-18661-3}である。
 
 @item -aux-info @var{filename}
 @opindex aux-info
@@ -1951,7 +2008,7 @@ GIMPLEパスの単体試験を可能にする。
 @opindex fopenacc
 @cindex OpenACC accelerator programming
 C/C++での@code{#pragma acc}とFortranでの@code{!$acc}OpenACCディレクティブを有効にする。
-@option{-fopenacc}が指定された時は、コンパイラはOpenACCアプリケーション・プログラミングインターフェースv2.0
+@option{-fopenacc}が指定された時は、コンパイラはOpenACCアプリケーション・プログラミングインターフェースv2.6
 @w{@uref{https://www.openacc.org/}}に基づいた加速されたコードを生成する。このオプションは
 @option{-pthread}を含み、したがって@option{-pthread}をサポートするターゲットでのみサポートされている。
 
@@ -2133,6 +2190,8 @@ G++ 8で初めて登場したバージョン12は、x86_64ターゲット上の�
 
 バージョン13は、G++ 8.2ではじめて登場し、バージョン12の偶発的な変更を修正した。
  
+G++10で最初に登場したバージョン14では、nullptr式のマングリングが修正されています。
+
 @option{-Wabi}も見よ。
 
 @item -fabi-compat-version=@var{n}
@@ -2160,6 +2219,52 @@ G++ 8で初めて登場したバージョン12は、x86_64ターゲット上の�
 
 このフラグは@option {-std=c++17}でデフォルトで有効になっています。
 
+@item -fchar8_t
+@itemx -fno-char8_t
+@opindex fchar8_t
+@opindex fno-char8_t
+C++2aで採用された@code{char8_t}のサポートを有効にします。 これには、新しい@code{char8_t}基本タイプの追加、UTF-8文字列と文字リテラルのタイプの変更、ユーザー定義リテラルの新しい署名、関連する標準ライブラリの更新、新しい@code {__cpp_char8_t}と@code{__ cpp_lib_char8_t}機能テストマクロが含まれます 。
+
+このオプションを使用すると、通常の文字列およびUTF-8文字列に対して関数をオーバーロードできます。
+
+@smallexample
+int f(const char *);    // #1
+int f(const char8_t *); // #2
+int v1 = f("text");     // Calls #1
+int v2 = f(u8"text");   // Calls #2
+@end smallexample
+
+@noindent
+そしてユーザ定義リテラル用の新しい署名が導入されます。
+
+@smallexample
+int operator""_udl1(char8_t);
+int v3 = u8'x'_udl1;
+int operator""_udl2(const char8_t*, std::size_t);
+int v4 = u8"text"_udl2;
+template<typename T, T...> int operator""_udl3();
+int v5 = u8"text"_udl3;
+@end smallexample
+
+@noindent
+UTF-8文字列と文字リテラルのタイプの変更により、ISO C++11以降の標準との非互換性が生じます。 たとえば、次のコードはISO C++ 11で整形式ですが、@option {-fchar8_t}が指定されている場合は形式が正しくありません。
+
+@smallexample
+char ca[] = u8"xx";     // エラー: char配列がワイド文字列から
+                        //        初期化される
+const char *cp = u8"xx";// エラー: `const char8_t*'から
+                        //         `const char*'への不正な変換
+int f(const char*);
+auto v = f(u8"xx");     // エラー: `const char8_t*'から
+                        //         `const char*'への不正な変換
+std::string s@{u8"xx"@};  // エラー: `std::basic_string<char>::basic_string()'
+                        //        への呼び出し関数が見つからない
+using namespace std::literals;
+s = u8"xx"s;            // エラー: `basic_string<char8_t>'から
+                        //         非スカラー型`basic_string<char>'への
+                        //        変換が要求された
+@end smallexample
+
 @item -fcheck-new
 @opindex fcheck-new
 @code{operator new}で返されるポインタがnullでないことを割り当てられた領域を修正しようとする前にチェックする。
@@ -2169,18 +2274,21 @@ C++標準が@code{operator new}が@code{throw()}と宣言された場合にの�
 示される。@samp{new (nothrow)}も見よ。
 
 @item -fconcepts
+@itemx -fconcepts-ts
 @opindex fconcepts
-C++コンセプト技術仕様書ISO 19217 (2015)のサポートを有効にし、以下の様なコードを許可する。
+@opindex fconcepts-ts
+@option{-std=c++2a}未満では、@option{-fconcepts}は、コンセプト技術仕様、ISO 19217（2015）のC++拡張のサポートを有効にします。
 
-@smallexample
-template <class T> concept bool Addable = requires (T t) @{ t + t; @};
-template <Addable T> T add (T a, T b) @{ return a + b; @}
-@end smallexample
+@option{-std=c++2a}以上では、概念は言語標準の一部であるため、@option {-fconcepts}はデフォルトでオンになります。 ただし、Conceptの標準仕様はTSとは大幅に異なるため、TSで許可されていても標準に組み込まれなかった一部の構成は、@option {-fconcepts-ts}によって有効にすることができます。
 
 @item -fconstexpr-depth=@var{n}
 @opindex fconstexpr-depth
 C++11定数式関数の最大入れ子評価深さを@var{n}にセットする。制限は定数表現評価の無限再帰を検出するために
 必要である。標準で指定された最小値は512である。
+
+@item -fconstexpr-cache-depth=@var{n}
+@opindex fconstexpr-cache-depth
+@var{n}にキャッシュされるC++11 constexpr関数のネストされた評価深度の最大レベルを設定します。 これはヒューリスティックであり、コンパイル速度（キャッシュが繰り返し計算を回避する場合）とメモリー消費量（キャッシュが非常に再帰的な評価によって非常に大きくなる場合）をトレードオフします。 デフォルトは8です。ほとんどのユーザーはそれを調整する可能性がありませんが、コードでconstexprの計算を頻繁に行う場合は、自分に最適な値を見つけるために実験することをお勧めします。
 
 @item -fconstexpr-loop-limit=@var{n}
 @opindex fconstexpr-loop-limit
@@ -2193,29 +2301,14 @@ C++14constexpr関数でのループの繰り返し数の最大値を@var{n}に�
 単一のループの反復回数が上記の制限で制限されている場合でも、複数のネストされたループがあり、それぞれに多くの反復があり、上記の制限よりも小さい場合、またはループの本体内またはさらにループの評価が必要な式が多すぎると、結果のconstexpr評価に時間がかかりすぎる可能性があります。
 デフォルトは33554432（1 << 25）です。
 
-@item -fdeduce-init-list
-@opindex fdeduce-init-list
-すなわち、ブレースで囲まれた初期化リストからの@code{std::initializer_list}として、テンプレート・タイプ・パラメータの推論を使用可能にする。すなわち、
-
-@smallexample
-template <class T> auto forward(T t) -> decltype (realfn (t))
-@{
-  return realfn (t);
-@}
-
-void f()
-@{
-  forward(@{1,2@}); // call forward<std::initializer_list<int>>
-@}
-@end smallexample
-
-この推論はC++11標準で元々提案された意味へのありうる拡張として実装されたが、最終標準の一部ではなかったので、
-デフォルトで無効にされた。このオプションは非推奨であり、G++の将来のバージョンでは削除されるかもしれない。
+@item -fcoroutines
+@opindex fcoroutines
+C++コルーチン拡張のサポートを有効にします（実験的）。
 
 @item -fno-elide-constructors
 @opindex fno-elide-constructors
 C++標準は同じ型の他のオブジェクトを初期化するために使われるだけの一時値の生成を省略する実装を許している。
-このオプションを指定するとその最適化を無効化、G++がどんな場合でもコピーコンストラクタを呼ぶようにする。
+このオプションを指定するとその最適化を無効化し、G++がどんな場合でもコピーコンストラクタを呼ぶようにする。
 このオプションはG++がさもなければインライン展開されるようなささいなメンバ関数を呼ぶようにもさせる。
 
 C++17では、コンパイラはこれらの一時値を抜かすことを要求しているが、このオプションは些細なメンバ関数にはまだ影響する。
@@ -2268,7 +2361,7 @@ MFCで使われている、暗黙のintやメンバへのポインタを非標�
 @item -fnew-inheriting-ctors
 @opindex fnew-inheriting-ctors
 C++11コンストラクタ継承の意味に対してP0136の調整を有効にする。これはC++17の一部だが
-C++11とC++14に対するデファクト・レポートであるとも考えられる。このフラグは@option{-fabi-version=10}以下
+C++11とC++14に対する欠陥レポートであるとも考えられる。このフラグは@option{-fabi-version=10}以下
 が指定されない限りデフォルトである。
 
 @item -fnew-ttp-matching
@@ -2309,11 +2402,6 @@ ANSI/ISO Cで義務付けられていない関数の組み込み宣言を無効�
 @code{void f(T) [with T = int]}。エラーメッセージがクラステンプレートの特殊化を参照するとき、コンパイラはテンプレートのデフォルトテンプレート引数を
 省略する。もしこれらの振る舞いがエラーメッセージを理解するのを易しくするのではなく、難しくしているときは、@option{-fno-pretty-templates}を使って
 無効にすることができる。
-
-@item -frepo
-@opindex frepo
-リンク時の自動テンプレート実体化を有効にする。このオプションは@option{-fno-implicit-templates}を含む。さらなる情報は@xref{Template
-Instantiation}。
 
 @item -fno-rtti
 @opindex fno-rtti
@@ -2422,6 +2510,11 @@ DSOのエクスポートテーブルに現れないようにして。DSO内で�
 これはテストのためだけに存在し。エンドユーザは使うべきではない。それは劣ったコードを引き起こし、利点はない。
 このオプションは将来のG++のバージョンでは削除されるかもしれない。
 
+@item -fext-numeric-literals @r{(C++とObjective-C++専用)}
+@opindex fext-numeric-literals
+@opindex fno-ext-numeric-literals
+虚数、固定小数点、またはマシン定義のリテラル数サフィックスをGNU拡張機能として受け入れます。 このオプションをオフにすると、これらのサフィックスはC++11ユーザー定義のリテラル数値サフィックスとして扱われます。これは、C++11より前のすべての方言とすべてのGNU方言でデフォルトでオンになっています。すなわち、@option {-std=c++98}、@option{-std=gnu++98}、@option{-std=gnu++11}、@option{-std=gnu++14}。このオプションは、ISO C++11以降ではデフォルトでオフになっています（@option{-std=c++11}、...）。
+
 @item -nostdinc++
 @opindex nostdinc++
 C++特有の標準ディレクトリでヘッダファイルを検索しないが、他の標準ディレクトリは検索する。（このオプションは
@@ -2431,107 +2524,29 @@ C++ライブラリをビルドするときに使う）
 加えて、これらの最適化、警告、コード生成オプションはC++プログラムでのみ意味を持つ。
 
 @table @gcctabopt
-@item -Wabi @r{(C, Objective-C, C++とObjective-C++専用)}
-@opindex Wabi
-@opindex Wno-abi
-ベンダー本来のC++ ABIと互換性を持たないかもしれないコードを生成するときに警告する。
-G++は現在、メジャーリリースごとにデフォルトでABIを更新するので、@option{-Wabi}は通常、
-初期のリリース以降に発見されたABIの問題のためにリリースの後半で加えられたチェックがある場合だけ警告する。@option{-Wabi}は
-(@option{-fabi-version=@var{n}}で)古いABIバージョンが選択されたときにはもっと多くの警告をする。
-
-特定の@option{-fabi-version}レベル（例えば@option{-fabi-version=2}と比較した変化について警告する@option{-Wabi=2}）との
-互換性について警告するために、@option{-Wabi}が明確なバージョン番号で使われることもできる。
-
-明確なバージョン番号が提供され、@option{-fabi-compat-version}が指定されないならば、このオプションからのバージョン番号が互換性別名のために使われる。
-明確なバージョン番号がこのオプションで提供されないが@option{-fabi-compat-version}が指定されるならば、そのバージョン番号がABI警告のために使われる。
-
-すべての場合について警告するように努力するが、たとえG++が非互換のコードを生成しているとしても、警告されないあるケースが多分あるだろう。たとえ生成されるコードが互換性を持つとしても、警告が発されるケースも、あるかもしれない。
-
-G++によって生成されるコードが他のコンパイラによってコードを生成してバイナリ互換でないかもしれないという事実を心配するならば、あなたはこれらの警告を避けるためにあなたのコードを書き直すべきである。
-
-@option{-fabi-version=2}（GCC 3.4～4.9からのデフォルトであった）の既知の非互換性は、以下を含む：
-
-@itemize @bullet
-
-@item
-参照型の非型のテンプレートパラメータのテンプレートは誤ってマングルされた
-
-@smallexample
-extern int N;
-template <int &> struct S @{@};
-void n (S<N>) @{2@}
-@end smallexample
-
-これは@option{-fabi-version=3}で修正された。
-
-@item
-@code{__attribute ((vector_size))}を使って宣言されたSIMDベクタ型は異なるサイズのベクタを取るオーバーロードができない
-非標準のやり方でマングルされた
-
-マングルは@option{-fabi-version=4}で変わった。
-
-@item
-@code{__attribute ((const))}と@code{noreturn}は型修飾子としてマングルされ、素の宣言の@code{decltype}は折りたたまれた。
-
-これらのマングルの問題は@option{-fabi-version=5}で修正された。
-
-@item
-可変長引数関数に渡されるスコープの列挙は非スコープの列挙のように格上げされ、@code{va_arg}が文句を言う。多くのターゲットでは、@code{int}より小さな
-引数を渡す方法がないので、これは効果を持たない。
-
-さらに、ABIはテンプレート引数の詰め、@code{const_cast}, @code{static_cast}, 前置インクリメント・デクリメント、テンプレート引数として使われるクラススコープの関数
-のマングルを変えた。
-
-これらの問題は@option{-fabi-version=6}で修正された。
-
-@item
-デフォルト引数スコープでのラムダは間違ってマングルされ、ABIは@code{nullptr_t}のマングルを変えた。
-
-これらの問題は@option{-fabi-version=7}で修正された。
-
-@item
-関数cv修正子つきの関数型をマングルするとき、修正子なしの関数型は誤って置換対象として扱われた。
-
-これは @option{-fabi-version=8}で修正され、GCC5.1のデフォルトである。
-
-@item
-@code{decltype(nullptr)}は誤ってアライメント1を持ち。非境界アクセスを起こした。これはパラメータが最小のアラインメントを持つので、
-@code{nullptr_t}パラメータを持つ関数のABIには影響しないことに注意。
-
-これは @option{-fabi-version=9}で修正され、GCC5.2のデフォルトである。
-
-@item
-関数型のia32呼び出し規約(stdcall, regparmなど)のような、型の識別性に影響するターゲット固有の属性はマングル名に影響せず、テンプレート引数として関数ポインタ
-が使われた時は名前の衝突を引き起こした。
-
-これは @option{-fabi-version=10}で修正され、GCC6.1のデフォルトである。
-
-@end itemize
-
-psABI関連の変更についても警告する。現時点での既知のpsABIの変更は以下を含む。
-
-@itemize @bullet
-
-@item
-SysV/x86-64では、@code{long double}を持つ共用体メンバはpsABIで指定されたようにメモリで渡される。例えば、
-
-@smallexample
-union U @{
-  long double ld;
-  int i;
-@};
-@end smallexample
-
-@noindent
-@code{union U}は常にメモリで渡される。
-
-@end itemize
 
 @item -Wabi-tag @r{(C++とObjective-C++専用)}
 @opindex Wabi-tag
 @opindex -Wabi-tag
 ABIタグを持たないコンテキストでABIタグが使われた型について警告する。
 ABIタグについての情報は@ref{C++ Attributes}参照。
+
+@item -Wcomma-subscript @r{(C++とObjective-C++専用)}
+@opindex Wcomma-subscript
+@opindex Wno-comma-subscript
+添え字式内でのコンマ式の使用について警告します。
+この使用法はC++2aで廃止されました。 ただし、@code{())}でラップされたコンマ式は非推奨ではありません。 例：
+
+@smallexample
+@group
+void f(int *a, int b, int c) @{
+    a[b,c];     // deprecated
+    a[(b,c)];   // OK
+@}
+@end group
+@end smallexample
+
+@option{-std=c++2a}ではデフォルトで有効である。
 
 @item -Wctor-dtor-privacy @r{(C++とObjective-C++専用)}
 @opindex Wctor-dtor-privacy
@@ -2579,11 +2594,11 @@ int i = li.begin()[0] // 未定義の振る舞い
 
 @end itemize
 
-@item -Wliteral-suffix @r{(C++とObjective-C++専用)}
+@item -Wno-literal-suffix @r{(C++とObjective-C++専用)}
 @opindex Wliteral-suffix
 @opindex Wno-literal-suffix
-文字列または文字定数にアンダースコアで始まらないユーザ定義接尾辞が続くときに警告する。合致する警告として、GCCはそのような接尾辞を、
-@code{<inttypes.h>}からの書式マクロを使うコードとの後方互換性を維持するために分離されたプリプロセストークンとして扱う。
+文字列または文字リテラルの後にアンダースコアで始まらないud-suffixが続く場合は警告しません。 準拠する拡張機能として、@code{<inttypes.h>}のフォーマットマクロを使用するコードとの下位互換性を維持するため、GCCはそのようなサフィックスを個別の前処理トークンとして扱います
+。例えば：
 
 @smallexample
 #define __STDC_FORMAT_MACROS
@@ -2598,16 +2613,9 @@ int main() @{
 
 この場合、@code{PRId64}は別のプリプロセストークンとして扱われる。
 
-さらに、ユーザ定義のリテラル演算子が、アンダースコアで始まらないリテラル接尾辞識別子で宣言されたときに警告する。アンダースコアで始まらないリテラル接尾辞識別子は、将来の標準化のために予約されている。
+さらに、ユーザ定義のリテラル演算子が、アンダースコアで始まらないリテラル接尾辞識別子で宣言されたときの警告も制御する。アンダースコアで始まらないリテラル接尾辞識別子は、将来の標準化のために予約されている。
 
 この警告はデフォルトで有効である。
-
-@item -Wlto-type-mismatch
-@opindex Wlto-type-mismatch
-@opindex Wno-lto-type-mismatch
-
-リンク時最適化の間に異なるコンパイル単位からのグローバル宣言ち不一致の型について警告する。
-有効にするには@option{-flto}が要求される。デフォルトで有効である。
 
 @item -Wno-narrowing @r{(C++とObjective-C++専用)}
 @opindex Wnarrowing
@@ -2648,14 +2656,14 @@ void h() @{ f(g); @}
 @noindent
 C++14では、@code{f}は@code{f}@code{f<void(*)()>}を呼ぶが、C++17では、@code{f<void(*)()noexcept>}を呼ぶ。
 
-@item -Wclass-memaccess @r{(C++とObjective-C++のみ)}
+@item -Wclass-memaccess @r{(C++とObjective-C++専用)}
 @opindex Wclass-memaccess
 @code{memset}や@code{memcpy}のような生のメモリ関数の呼び出し先がクラス型のオブジェクトで、そのようなオブジェクトへの書き込みがクラスの非自明な、または削除されたコンストラクタおよびコピー代入をバイパスするか、 constの正当性やカプセル化に違反するか、仮想テーブルポインタが壊れる可能性があるに警告する。 そのようなオブジェクトの表現を変更すると、そのクラスのメンバ関数によって維持される不変量に違反する可能性がある。 例えば、以下の@code{memset}への呼び出しは、自明ではないクラスオブジェクトを変更するため未定義で、診断される。 このような型のオブジェクトの記憶域を初期化またはクリアする安全な方法は、適切なコンストラクタまたは代入演算子が利用可能であればそれを使用することである。
 @smallexample
 std::string str = "abc";
 memset (&str, 0, sizeof str);
 @end smallexample
-@option{-Wclass-memaccess}オプションは@option {-Wall}によって有効になる。明示的にクラスオブジェクトへのポインタを@code{void *}にキャストするか、生のメモリ関数によって安全にアクセスできる型にキャストすると警告が抑制される。
+@option{-Wclass-memaccess}オプションは@option{-Wall}によって有効になる。明示的にクラスオブジェクトへのポインタを@code{void *}にキャストするか、生のメモリ関数によって安全にアクセスできる型にキャストすると警告が抑制される。
 
 @item -Wnon-virtual-dtor @r{(C++とObjective-C++専用)}
 @opindex Wnon-virtual-dtor
@@ -2690,10 +2698,10 @@ struct A @{
 コンパイラは@code{i}と@code{j}のメンバ初期化を並べ替えてメンバの宣言順に一致させ、その効果に対する警告を生成する。
 この警告は@option{-Wall}で有効である。
 
-@item -Wno-pessimizing-move @r{(C++ and Objective-C++ only)}
+@item -Wno-pessimizing-move @r{(C++とObjective-C++専用)}
 @opindex Wpessimizing-move
 @opindex Wno-pessimizing-move
-この警告は、@ code {std::move}の呼び出しがコピーの省略を防ぐときに警告します。 コピーの省略が発生する可能性がある典型的なシナリオは、クラスの戻り値の型で関数を返し、返される式が不揮発性の自動オブジェクトの名前であり、関数パラメーターではなく、 関数の戻り値の型であるときです。
+この警告は、@code{std::move}の呼び出しがコピーの省略を防ぐときに警告します。 コピーの省略が発生する可能性がある典型的なシナリオは、クラスの戻り値の型で関数を返し、返される式が不揮発性の自動オブジェクトの名前であり、関数パラメーターではなく、 関数の戻り値の型であるときです。
 
 @smallexample
 struct T @{
@@ -2711,7 +2719,7 @@ T fn()
 
 この警告は@option {-Wall}によって有効になります。
 
-@item -Wno-redundant-move @r{(C++ and Objective-C++ only)}
+@item -Wno-redundant-move @r{(C++とObjective-C++専用)}
 @opindex Wredundant-move
 @opindex Wno-redundant-move
 この警告は、@ code{std::move}の冗長な呼び出しについて警告します。 つまり、@code{std::move}呼び出しがなくても移動操作が実行されていた場合です。 これは、コンパイラーが、コピー省略が適用できないローカル変数を返すなどの特定の状況で、オブジェクトを右辺値であるかのように処理することを強制されるために発生します。 以下を考えます：
@@ -2745,20 +2753,36 @@ U fn()
 @end smallexample
 この例では、返される式のタイプと関数の戻りタイプが異なるため、コピー省略は適用できませんが、G++は戻り値を右辺値で指定されたものとして扱います。
 
-この警告は@option {-Wextra}によって有効にされます。
+この警告は@option{-Wextra}によって有効にされます。
 
-@item -fext-numeric-literals @r{(C++とObjective-C++専用)}
-@opindex fext-numeric-literals
-@opindex fno-ext-numeric-literals
-GNU拡張として、虚数、固定小数点、機種定義のリテラル数値接尾辞を受理する。このオプションが切られているときは、
-C++11ユーザ定義リテラル数値接尾辞として扱う。これはすべてのC++11以前の変種と全GNU変種ではデフォルトである。
-@option{-std=c++98}, @option{-std=gnu++98}, @option{-std=gnu++11}, @option{-std=gnu++14}。このオプションはISO C++11以降では
-(@option{-std=c++11}, ... ではデフォルトでオフである。
-@end table
+@item -Wredundant-tags @r{(C++とObjective-C++専用)}
+@opindex Wredundant-tags
+@opindex Wno-redundant-tags
+あいまいさを引き起こさずにキーを削除できるコンテキストで、クラス型と列挙型への参照で冗長なクラスキーと列挙キーについて警告します。 例えば：
 
-以下の@option{-W@dots{}}オプションは@option{-Wall}に影響されない。
+@smallexample
+struct foo;
+struct foo *p;   // warn that keyword struct can be eliminated
+@end smallexample
 
-@table @gcctabopt
+@noindent
+一方、この例では警告はありません。
+
+@smallexample
+struct foo;
+void foo ();   // "hides" struct foo
+void bar (struct foo&);  // no warning, keyword struct is necessary
+@end smallexample
+
+@item -Wno-subobject-linkage @r{(C++とObjective-C++のみ)}
+@opindex Wsubobject-linkage
+@opindex Wno-subobject-linkage
+クラスタイプが基底かフィールドがその型が匿名名前空間を使っているかリンケージのない型に依存している時に警告する。
+もし型Aがリンケージなしか内部リンケージの型Bに依存している時、それを複数の翻訳空間で定義することはBの意味がそれぞれの翻訳単位で
+異なるためにODR違反と違反になる。もしAが単一翻訳単位にしか現れないのであれば、警告を黙らせる最善の方法はそれも匿名名前空間において
+内部リンケージを与えることである。コンパイラはメイン.Cファイルで定義された型には、複数の定義はありそうもないので、警告を与えない。
+@option{-Wsubobject-linkage}はデフォルトで有効である。
+
 @item -Weffc++ @r{(C++とObjective-C++専用)}
 @opindex Weffc++
 @opindex Wno-effc++
@@ -2785,16 +2809,16 @@ Scott Meyersの@cite{Effective C++}シリーズ本のスタイルガイドライ
 
 @end itemize
 
-このオプションはeffective C++の推奨のひとつでもある、@option{-Wnon-virtual-dtor}も有効にする。
-しかし、検査はアクセス可能な非多相基底クラスの仮想デストラクタの欠如にも警告する。
+このオプションはeffective C++の推奨のひとつでもある、@option{-Wnon-virtual-dtor}も有効にする。しかし、検査はアクセス可能な非多相基底クラスの仮想デストラクタの欠如にも警告する。
 
 このオプションを選択した時は、標準ライブラリヘッダがすべてのガイドラインに従っているわけではないことに気をつけること。
 @samp{grep -v}をそれらの警告を除外するのに使う。
+@end table
 
 @item -Wstrict-null-sentinel @r{(C++とObjective-C++専用)}
 @opindex Wstrict-null-sentinel
 @opindex Wno-strict-null-sentinel
-キャストなしの@code{NULL}を標識として使うことを警告する。@code{NULL}はが@code{__null}と定義されているので、
+キャストなしの@code{NULL}を標識として使うことを警告する。@code{NULL}は@code{__null}と定義されているので、
 GCCでコンパイルするときだけ有効化標識である。これはヌルポインタではなくヌルポインタ定数であるが、それはポインタと同じサイズ
 であることが保証されている。しかしこれは他のコンパイラに対しては移植性がない。
 
@@ -2855,6 +2879,22 @@ b->f();
 これはその規則を強制させるために使うことができる。STLのようなシステムヘッダ内ではこの警告は効力がないため、
 まだSTLは使用可能である。テンプレートの実体化や特殊化をしてもよい。
 
+@item -Wmismatched-tags @r{(C++とObjective-C++専用)}
+@opindex Wmismatched-tags
+@opindex Wno-mismatched-tags
+構造体、クラス、およびクラステンプレートの宣言とそれらの特殊化について、定義が提供されていない場合は定義または最初の宣言のいずれにも一致しないクラスキーを使用して警告します。
+
+たとえば、@code{draw}の引数リストで@code{struct Object}を宣言すると、警告がトリガーされます。 これを回避するには、冗長なクラスキー@code{struct}を削除するか、@code{class}に置き換えて、その定義と一致させます。
+@smallexample
+class Object @{
+public:
+  virtual ~Object () = 0;
+@};
+void draw (struct Object*);
+@end smallexample
+
+上記の例が示すように、クラスキー@code{struct}でクラスを宣言することは間違いありません。 @option{-Wmismatched-tags}オプションは、一貫したスタイルのクラス宣言を実現するのに役立つことを目的としています。 Windowsベースのコンパイラへの移植を意図したコードでは、警告は、異なるクラスキーで宣言されたシンボルのマングリングの違いによる未解決の参照を防ぐのに役立ちます。 オプションは、単独で、または@option{-Wredundant-tags}と組み合わせて使用できます。
+
 @item -Wmultiple-inheritance @r{(C++とObjective-C++専用)}
 @opindex Wmultiple-inheritance
 クラスが複数の直接基底クラスで定義されたときに警告する。あるコードルールは多重継承を禁止していて、これはそのルールを
@@ -2867,6 +2907,11 @@ STLはまだ使用可能である。間接的に多重継承しているクラ�
 強制するのに使うことができる。この警告はSTLのようなシステムヘッダファイルでは効力がないため、
 STLはまだ使用可能である。間接的に仮想継承を使っているクラスも定義できる。
 
+@item -Wno-virtual-move-assign
+@opindex Wvirtual-move-assign
+@opindex Wno-virtual-move-assign
+非自明なC++11移動代入演算子を使用して仮想ベースから継承することに関する警告を抑制します。 仮想ベースが複数のパスに沿って到達可能である場合、仮想ベースが複数回移動されるため、両方のオブジェクトが移動元の状態になる可能性があるため、これは危険です。 移動元オブジェクトからの移動を回避するように割り当て割り当て演算子が記述されている場合、この警告を無効にすることができます。
+
 @item -Wnamespaces
 @opindex Wnamespaces
 名前空間定義が開かれていると警告する。あるコードルールは名前空間を禁止していて、これはそのルールを
@@ -2877,23 +2922,162 @@ STLはまだ使用可能である。間接的に仮想継承を使っている�
 @item -Wno-terminate @r{(C++とObjective-C++専用)}
 @opindex Wterminate
 @opindex Wno-terminate
-@code{terminate}を直ちに呼ぶことになるthrows式について警告する。
+@code{terminate}を直ちに呼ぶことになるthrows式について警告を無効化する。
 
 @item -Wno-class-conversion @r{(C++とObjective-C++専用)}
 @opindex Wno-class-conversion
 @opindex Wclass-conversion
 変換関数がオブジェクトを同じ型、その型の基本クラス、またはvoidに変換する場合の警告を無効にします。 このような変換関数は呼び出されません。
+
+@item -Wvolatile @r{(C++とObjective-C++専用)}
+@opindex Wvolatile
+@opindex Wno-volatile
+@code{volatile}修飾子の廃止予定の使用について警告します。 これには、@code{volatile}修飾された型の前置・後置の@code{++}、@code{--}表現、左オペランドが@code{volatile}修飾された非クラス型の値である単純な代入、左オペランドが@code{volatile}修飾された非クラス型である複合代入、@code{volatile}修飾された関数戻り値型、@code{volatile}修飾されたパラメーター型、および@の構造化バインディングである複合代入@code{volatile}修飾型。 この使用法はC++20で廃止されました。
+
+@option{-std=c++2a}でデフォルトで有効になります。
+
+@item -Wzero-as-null-pointer-constant @r{(C++とObjective-C++専用)}
+@opindex Wzero-as-null-pointer-constant
+@opindex Wno-zero-as-null-pointer-constant
+リテラル@samp{0}がnullポインタ定数として使用されている場合に警告します。 これは、C++11で@code{nullptr}への変換を容易にするのに役立ちます。
+
+@item -Waligned-new
+@opindex Waligned-new
+@opindex Wno-aligned-new
+@code{alignof(std::max_align_t)}よりも大きいアライメントが必要であるが、明示的なアライメントパラメータなしの割り当て関数を使用するタイプの新しい式について警告します。 このオプションは、@option{-Wall}によって有効になります。
+
+通常、これはグローバル割り当て関数についてのみ警告しますが、
+@option{-Waligned-new=all}は、クラスメンバーの割り当て関数についても警告します。
+
+@item -Wno-placement-new
+@itemx -Wplacement-new=@var{n}
+@opindex Wplacement-new
+@opindex Wno-placement-new
+オブジェクトのタイプよりも小さいバッファ内にオブジェクトを作成するなど、未定義の動作を伴う配置new式について警告します。 たとえば、以下の配置new式は、64バイトの大きさのバッファーで64の整数の配列を構築しようとするため、診断されます。
+@smallexample
+char buf [64];
+new (buf) int[64];
+@end smallexample
+この警告はデフォルトで有効になっています。
+
+@table @gcctabopt
+@item -Wplacement-new=1
+これは、@option{-Wplacement-new}のデフォルトの警告レベルです。 このレベルでは、GCCがレガシーコードとの互換性のための拡張機能として許可している一部の厳密に定義されていない構成に対して警告は発行されません。 たとえば、次の@code{new}式は、1要素配列の終わりを超えて書き込むため、C++標準に従って未定義の動作があっても、このレベルでは診断されません。
+@smallexample
+struct S @{ int n, a[1]; @};
+S *s = (S *)malloc (sizeof *s + 31 * sizeof s->a[0]);
+new (s->a)int [32]();
+@end smallexample
+
+@item -Wplacement-new=2
+このレベルでは、レベル1と同じすべての構成を診断することに加えて、構造が最後のメンバーにオブジェクトを構成する構築されるオブジェクトのサイズよりも大きいnew式を配置するための診断が発行されます。 前の例は診断されますが、次の構成ではレベル2での警告を回避するために柔軟なメンバー配列拡張を利用します。
+@smallexample
+struct S @{ int n, a[]; @};
+S *s = (S *)malloc (sizeof *s + 32 * sizeof s->a[0]);
+new (s->a)int [32]();
+@end smallexample
+
+@end table
+
+@item -Wcatch-value
+@itemx -Wcatch-value=@var{n} @r{(C++とObjective-C++専用)}
+@opindex Wcatch-value
+@opindex Wno-catch-value
+参照を介してキャッチしないキャッチハンドラについて警告します。 @option{-Wcatch-value = 1}（または略して@option{-Wcatch-value}）を使用すると、値によってキャッチされるポリモーフィッククラスタイプについて警告します。 @option{-Wcatch-value=2}を使用すると、値によってキャッチされるすべてのクラスタイプについて警告します。 @option{-Wcatch-value=3}を使用すると、参照によってキャッチされないすべてのタイプについて警告します。 @option{-Wcatch-value}は@option {-Wall}によって有効になります。
+
+@item -Wconditionally-supported @r{(C++とObjective-C++専用)}
+@opindex Wconditionally-supported
+@opindex Wno-conditionally-supported
+条件付きでサポートされている（C ++ 11 [intro.defs]）構成について警告します。
+
+@item -Wno-delete-incomplete @r{(C++とObjective-C++専用)}
+@opindex Wdelete-incomplete
+@opindex Wno-delete-incomplete
+不完全な型へのポインタを削除するときに警告しない。実行時に未定義の動作を引き起こす可能性があります。 この警告はデフォルトで有効になっています。
+
+@item -Wextra-semi @r{(C++, Objective-C++ only)}
+@opindex Wextra-semi
+@opindex Wno-extra-semi
+クラス内の関数定義の後に、セミコロンの重複について警告します。
+
+@item -Wno-inaccessible-base @r{(C++, Objective-C++ only)}
+@opindex Winaccessible-base
+@opindex Wno-inaccessible-base
+このオプションは、あいまいさのために基本クラスから派生したクラスで基本クラスにアクセスできない場合の警告を制御します。 警告はデフォルトで有効になっています。 あいまいな仮想ベースの警告は、@option{-Wextra}オプションによって有効になることに注意してください。
+@smallexample
+@group
+struct A @{ int a; @};
+
+struct B : A @{ @};
+
+struct C : B, A @{ @};
+@end group
+@end smallexample
+
+@item -Wno-inherited-variadic-ctor
+@opindex Winherited-variadic-ctor
+@opindex Wno-inherited-variadic-ctor
+継承元の基本クラスにC可変引数コンストラクタがある場合のC++11継承コンストラクタの使用に関する警告を抑制します。 省略記号は継承されないため、警告はデフォルトでオンになっています。
+
+@item -Wno-invalid-offsetof @r{(C++とObjective-C++専用)}
+@opindex Wno-invalid-offsetof
+@opindex Winvalid-offsetof
+@code{offsetof}マクロを非PODタイプに適用することによる警告を抑制します。 2014 ISO C++標準によれば、非標準レイアウトタイプに@code{offsetof}を適用することは定義されていません。 ただし、既存のC++実装では、@ code {offsetof}は通常、意味のある結果をもたらします。 このフラグは、移植性のないコードを作成していることを認識しており、意図的にそれに関する警告を無視することを選択したユーザー向けです。
+
+@code{offsetof}の制限は、C++標準の将来のバージョンで緩和される可能性があります。
+
+@item -Wsized-deallocation @r{(C++とObjective-C++専用)}
+@opindex Wsized-deallocation
+@opindex Wno-sized-deallocation
+以下のような対応するサイズの割り当て解除関数の定義のない、
+@smallexample
+void operator delete (void *, std::size_t) noexcept;
+void operator delete[] (void *, std::size_t) noexcept;
+@end smallexample
+サイズなしの割り当て解除関数の定義
+@smallexample
+void operator delete (void *) noexcept;
+void operator delete[] (void *) noexcept;
+@end smallexample
+もしくはその逆について警告する。@option{-Wextra}と@option{-fsized-deallocation}によって有効化されます。
+
+@item -Wsuggest-final-types
+@opindex Wno-suggest-final-types
+@opindex Wsuggest-final-types
+型がC++ 11@code{final}指定子で宣言された場合、または可能であれば匿名名前空間で宣言された場合にコード品質が向上する仮想メソッドを持つ型について警告します。 これにより、GCCはポリモーフィックな呼び出しをより積極的に仮想化解除できます。 この警告は、クラス階層グラフに関する情報がより完全なリンク時最適化でより効果的です。
+
+@item -Wsuggest-final-methods
+@opindex Wno-suggest-final-methods
+@opindex Wsuggest-final-methods
+メソッドがC++ 11@code{final}指定子で宣言された場合、または、可能であれば、その型は匿名の名前空間または@code{final}指定子で宣言されていた場合にコード品質が向上する仮想メソッドについて警告します。この警告は、クラス階層グラフに関する情報がより完全なリンク時最適化でより効果的です。 最初に@option{-Wsuggest-final-types}の提案を検討してから、新しい注釈で再構築することをお勧めします。
+
+@item -Wsuggest-override
+@opindex Wsuggest-override
+@opindex Wno-suggest-override
+@code{override}キーワードでマークされていない仮想関数のオーバーライドについて警告します。
+
+@item -Wuseless-cast @r{(C++とObjective-C++専用)}
+@opindex Wuseless-cast
+@opindex Wno-useless-cast
+式が自分自身の型にキャストされたときに警告します。
+
+@item -Wno-conversion-null @r{(C++とObjective-C++専用)}
+@opindex Wconversion-null
+@opindex Wno-conversion-null
+@code{NULL}と非ポインタ型の間の変換について警告しません。 @option{-Wconversion-null}はデフォルトで有効になっています。
+
 @end table
 
 @node Objective-C and Objective-C++ Dialect Options
 @section Objective-CとObjective-C++変種を制御するオプション
+
 @cindex compiler options, Objective-C and Objective-C++
 @cindex Objective-C and Objective-C++ options, command-line
 @cindex options, Objective-C and Objective-C++
 (注意：このマニュアルはObjective-CとObjective-C++言語自身は説明していない。参照は
 @xref{Standards,,GCCによってサポートされている言語標準})
 
-この節はObjective-CとObjective-C++プログラムでのみ意味を持つコマンドラインオプションを紡車する。
+この節はObjective-CとObjective-C++プログラムでのみ意味を持つコマンドラインオプションを説明する。
 言語非依存のGNUコンパイラオプションのほとんども使用可能である。
 例えば、@file{some_Class.m}を次のようにコンパイルするかもしれない。
 
@@ -3023,6 +3207,11 @@ NeXTランタイムでコンパイルしているとき、コンパイラは@cod
 @opindex Wno-assign-intercept
 Objective-C代入がガベージコレクタで妨害される時には警告する。
 
+@item -Wno-property-assign-default @r{(Objective-CとObjective-C++専用)}
+@opindex Wproperty-assign-default
+@opindex Wno-property-assign-default
+Objective-Cオブジェクトのプロパティに割り当てセマンティクスが指定されていない場合は警告しません。
+
 @item -Wno-protocol @r{(Objective-CとObjective-C++専用)}
 @opindex Wno-protocol
 @opindex Wprotocol
@@ -3036,7 +3225,7 @@ Objective-C代入がガベージコレクタで妨害される時には警告す
 同じセレクタの異なるタイプの複数のメソッドがコンパイルで見つかるならば警告する。
 チェックは、コンパイルの最後の段階にメソッドのリストで実行される。
 その上、@code{@@selector(@dots{})}表現において現れている各々のセレクタと、コンパイルの間に見つかったそのセレクタの対応するメソッドでチェックは実行される。
-これらのチェックがコンパイル終了後だけメソッド・テーブルを探査するので、コンパイルの最後の段階に達しない（たとえばエラーがコンパイル中に見つかるか、、@option{-fsyntax-only}オプションが使われている）ならば、これらの警告は出されない。
+これらのチェックがコンパイル終了後だけメソッド・テーブルを探査するので、コンパイルの最後の段階に達しない（たとえばエラーがコンパイル中に見つかるか、@option{-fsyntax-only}オプションが使われている）ならば、これらの警告は出されない。
 
 @item -Wstrict-selector-match @r{(Objective-CとObjective-C++専用)}
 @opindex Wstrict-selector-match
@@ -3065,7 +3254,7 @@ Objective-C代入がガベージコレクタで妨害される時には警告す
 @cindex diagnostic messages
 @cindex message formatting
 
-伝統的に、診断メッセージは、出力装置の状況向き（例えばその幅@dots{}）にかかわりなく書式を設定された。
+伝統的に、診断メッセージは、出力装置の状況（例えばその幅@dots{}）にかかわりなく書式を設定された。
 あなたは、例えば、診断メッセージのためにフォーマット化しているアルゴリズムを制御するために以下に記すオプションを使用することができる：
 行当たりの文字数、ソース情報をどのぐらい頻繁に報告すべきか。
 ある言語フロントエンドがこれらのオプションを守らないかもしれないことに注意すべきである。
@@ -3082,7 +3271,7 @@ Objective-C代入がガベージコレクタで妨害される時には警告す
 @opindex fdiagnostics-show-location
 行送り返しモードでのみ意味を持つ。診断メッセージ報告器にソース場所情報を@emph{一度}だけを発するように命じる。
 つまり、メッセージが単一の物理行にを収まらないほど長く、行送りをしなければならない場合には、
-以降の継続行では、（接頭辞として）ソース場所は二度とは発されない。これは、デフォルトふるまいである。
+以降の継続行では、（接頭辞として）ソース場所は二度とは発されない。これは、デフォルトの振る舞いである。
 
 @item -fdiagnostics-show-location=every-line
 行送り返しモードでのみ意味を持つ。診断メッセージ報告器に単一行には収まらないほど長いメッセージを分割する過程の結果の物理行ごとに
@@ -3140,6 +3329,10 @@ type-diff=01;32
 @vindex note GCC_COLORS @r{capability}
 注釈のマーカーのSGR部分文字列
 
+@item path=
+@vindex path GCC_COLORS @r{capability}
+@option{-fdiagnostics-path-format=}を介して出力される制御フローイベントのパスを色付けするためのSGRサブストリング。個々のイベントの識別子や、手続き間の呼び出しと戻りを示す行など。
+
 @item range1=
 @vindex range1 GCC_COLORS @r{capability}
 最初の追加範囲のSGR部分文字列
@@ -3187,6 +3380,24 @@ C++フロントエンドでのテンプレート引数内でハイライトし�
 
 @end table
 
+@item -fdiagnostics-urls[=@var{WHEN}]
+@opindex fdiagnostics-urls
+@cindex urls
+@vindex GCC_URLS @r{environment variable}
+@vindex TERM_URLS @r{environment variable}
+診断にURLを埋め込むためにエスケープシーケンスを使用します。 たとえば、@option{-fdiagnostics-show-option}が診断を制御するコマンドラインオプションを示すテキストを出力する場合、そのオプションのドキュメントのURLを埋め込みます。
+
+@var{WHEN}は@samp{never}、@samp{always}、または@samp{auto}です。 @samp{auto}は、標準エラーが端末であり、この機能と互換性がないことがわかっているemacsシェルまたはグラフィカル端末で実行されていない場合にのみ、GCCにURLエスケープシーケンスを使用させます。以下を参照してください。
+
+デフォルトは、コンパイラーの構成方法によって異なります。 上記の@var{WHEN}オプションのいずれかです。
+
+GCCを（@option{-with-diagnostics-urls=auto-if-env} configure-timeオプションを使用して構成して、デフォルトが環境変数の影響を受けるようにすることもできます。そのような構成では、GCCはデフォルトで@env{GCC_URLS}または@env{TERM_URLS}のいずれかの環境変数が存在し、コンパイラーの環境で空でない場合は@samp{auto}を使用し、どちらでもない場合は@samp{never}を使用します。
+
+ただし、@option{-fdiagnostics-urls=always}を使用しても、動作はそれらの環境変数に依存します。@env{GCC_URLS}が空または@samp{no}に設定されている場合、診断にURLを埋め込まない。 @samp{st}に設定すると、URLはSTエスケープシーケンスを使用します。 デフォルトの@samp{bel}に設定すると、URLはBELエスケープシーケンスを使用します。 他の空でない値は、機能を有効にします。 @env{GCC_URLS}が設定されていない場合は、フォールバックとして@env{TERM_URLS}を使用します。 注：STはANSIエスケープシーケンス、文字列ターミネーター@samp{ESC \}、BELはASCII文字、通常はビープ音のように聞こえるCTRL-Gです。
+
+現時点では、GCCは、URL機能を実装していないか、バグが有るか、少なくともまだ使われているバージョンのいくつかにバグがあってURLエスケープが誤動作する可能性が高いことがわかっているいくつかの端末も検出しようとします。
+そのリストは現在xfce4-terminal、バグのあるgnome-terminalバージョン、Linuxコンソール、およびmingwであることがわかっています。 このチェックは、@option{-fdiagnostics-urls=always}でスキップできます。
+
 @item -fno-diagnostics-show-option
 @opindex fno-diagnostics-show-option
 @opindex fdiagnostics-show-option
@@ -3214,6 +3425,11 @@ C++フロントエンドでのテンプレート引数内でハイライトし�
 @end smallexample
 
 このオプションは、これらのラベルの印刷を抑制します（上記の例では、垂直バーと「char *」および「long int」テキスト）。
+
+@item -fno-diagnostics-show-cwe
+@opindex fno-diagnostics-show-cwe
+@opindex fdiagnostics-show-cwe
+診断メッセージには、オプションで@url{https://cwe.mitre.org/index.html, CWE}識別子を関連付けることができます。GCC自体は、@option{-fanalyzer}診断の一部にのみそのようなメタデータを提供します。 GCCプラグインは、そのようなメタデータで診断を提供する場合もあります。 デフォルトでは、この情報が存在する場合、診断とともに印刷されます。 このオプションは、このメタデータの印刷を抑制します。
 
 @item -fno-diagnostics-show-line-numbers
 @opindex fno-diagnostics-show-line-numbers
@@ -3272,7 +3488,7 @@ diffは色が付くかも付かないかもしれず、診断と同じ規則が�
 @item -fdiagnostics-show-template-tree
 @opindex fdiagnostics-show-template-tree
 
-C ++フロントエンドで、次のようなテンプレートタイプの不一致を示す診断を印刷する場合：
+C++フロントエンドで、次のようなテンプレートタイプの不一致を示す診断を印刷する場合：
 
 @smallexample
   could not convert 'std::map<int, std::vector<double> >()'
@@ -3293,7 +3509,7 @@ C ++フロントエンドで、次のようなテンプレートタイプの不�
 @item -fno-elide-type
 @opindex fno-elide-type
 @opindex felide-type
-デフォルトでは、C ++フロントエンドが不一致のテンプレートタイプを示す診断を出力するとき、エラーメッセージを簡素化するために、タイプの一般的な部分は ``[...]''として出力されます。 例えば：
+デフォルトでは、C++フロントエンドが不一致のテンプレートタイプを示す診断を出力するとき、エラーメッセージを簡素化するために、タイプの一般的な部分は ``[...]''として出力されます。 例えば：
 
 @smallexample
   could not convert 'std::map<int, std::vector<double> >()'
@@ -3302,6 +3518,105 @@ C ++フロントエンドで、次のようなテンプレートタイプの不�
 
 @option{-fno-elide-type}フラグを指定すると、その動作が抑制されます。
 このフラグは、@option{-fdiagnostics-show-template-tree}フラグの出力にも影響します。
+
+@item -fdiagnostics-path-format=@var{KIND}
+@opindex fdiagnostics-path-format
+そのようなパスが関連付けられている診断の制御フローイベントのパスを出力する方法を指定します。
+
+@var{KIND}は@samp{none}, @samp{separate-events}, またはデフォルトの@samp{inline-events}です。
+
+@samp{none}は診断パスを出力しないことを意味します。
+
+@samp{separate-events}は、診断内のイベントごとに個別の「メモ」診断を出力することを意味します。 例えば：
+
+@smallexample
+test.c:29:5: error: passing NULL as argument 1 to 'PyList_Append' which requires a non-NULL parameter
+test.c:25:10: note: (1) when 'PyList_New' fails, returning NULL
+test.c:27:3: note: (2) when 'i < count'
+test.c:29:5: note: (3) when calling 'PyList_Append', passing NULL from (1) as argument 1
+@end smallexample
+
+@samp{inline-events}は、イベントをソースコード内に「インライン」で出力することを意味します。 このビューは、イベントを十分に近いイベントの実行に統合して、ソース内のラベル付き範囲として出力しようとします。
+
+たとえば、上記と同じイベントは次のように出力されるかもしれません。
+
+@smallexample
+  'test': events 1-3
+    |
+    |   25 |   list = PyList_New(0);
+    |      |          ^~~~~~~~~~~~~
+    |      |          |
+    |      |          (1) when 'PyList_New' fails, returning NULL
+    |   26 |
+    |   27 |   for (i = 0; i < count; i++) @{
+    |      |   ~~~
+    |      |   |
+    |      |   (2) when 'i < count'
+    |   28 |     item = PyLong_FromLong(random());
+    |   29 |     PyList_Append(list, item);
+    |      |     ~~~~~~~~~~~~~~~~~~~~~~~~~
+    |      |     |
+    |      |     (3) when calling 'PyList_Append', passing NULL from (1) as argument 1
+    |
+@end smallexample
+
+プロシージャ間の制御フローは、イベントをスタックフレームごとにグループ化し、インデントを使用してスタックフレームのネスト、プッシュ、ポップの方法を示しています。
+
+例えば、
+
+@smallexample
+  'test': events 1-2
+    |
+    |  133 | @{
+    |      | ^
+    |      | |
+    |      | (1) entering 'test'
+    |  134 |   boxed_int *obj = make_boxed_int (i);
+    |      |                    ~~~~~~~~~~~~~~~~~~
+    |      |                    |
+    |      |                    (2) calling 'make_boxed_int'
+    |
+    +--> 'make_boxed_int': events 3-4
+           |
+           |  120 | @{
+           |      | ^
+           |      | |
+           |      | (3) entering 'make_boxed_int'
+           |  121 |   boxed_int *result = (boxed_int *)wrapped_malloc (sizeof (boxed_int));
+           |      |                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+           |      |                                    |
+           |      |                                    (4) calling 'wrapped_malloc'
+           |
+           +--> 'wrapped_malloc': events 5-6
+                  |
+                  |    7 | @{
+                  |      | ^
+                  |      | |
+                  |      | (5) entering 'wrapped_malloc'
+                  |    8 |   return malloc (size);
+                  |      |          ~~~~~~~~~~~~~
+                  |      |          |
+                  |      |          (6) calling 'malloc'
+                  |
+    <-------------+
+    |
+ 'test': event 7
+    |
+    |  138 |   free_boxed_int (obj);
+    |      |   ^~~~~~~~~~~~~~~~~~~~
+    |      |   |
+    |      |   (7) calling 'free_boxed_int'
+    |
+(etc)
+@end smallexample
+
+@item -fdiagnostics-show-path-depths
+@opindex fdiagnostics-show-path-depths
+このオプションは、診断に関連する制御フローパスを印刷するときに追加情報を提供します。
+
+このオプションを指定すると、@option{-fdiagnostics-path-format=separate-events}内のイベントの実行ごとにスタック深度が出力されます。
+
+これは、プロシージャ間の制御フローを報告する診断をデバッグするときに、GCC開発者およびプラグイン開発者が使用することを目的としています。
 
 @item -fno-show-column
 @opindex fno-show-column
@@ -3479,6 +3794,45 @@ JSON形式で次のように印刷される場合があります。
 
 @noindent
 ここで修正ヒントは、@code{start}から@code{next}までのテキストを@code{string}の値に置き換えることを示唆しています。 削除は、@code{string}の空の値、@code{start}が@code{next}に等しい挿入によって表されます。
+
+診断に関連する制御フローイベントのパスがある場合、診断には、イベントを表すオブジェクトの@code{path}配列があります。 各イベントオブジェクトには、@code{description}文字列、@code{location}オブジェクト、@code{function}文字列、および手続き間パスを表す@code{depth}番号があります。 @code{function}はそのイベントでの現在の関数を表し、@code{depth}はベースラインに対するスタックの深さを表します。高いほど、スタック内のフレーム数が多くなります。
+
+たとえば、@option{-fdiagnostics-path-format=}の手順内の例では、パスに次のJSONが含まれる場合があります。
+
+@smallexample
+    "path": [
+        @{
+            "depth": 0,
+            "description": "when 'PyList_New' fails, returning NULL",
+            "function": "test",
+            "location": @{
+                "column": 10,
+                "file": "test.c",
+                "line": 25
+            @}
+        @},
+        @{
+            "depth": 0,
+            "description": "when 'i < count'",
+            "function": "test",
+            "location": @{
+                "column": 3,
+                "file": "test.c",
+                "line": 27
+            @}
+        @},
+        @{
+            "depth": 0,
+            "description": "when calling 'PyList_Append', passing NULL from (1) as argument 1",
+            "function": "test",
+            "location": @{
+                "column": 5,
+                "file": "test.c",
+                "line": 29
+            @}
+        @}
+    ]
+@end smallexample
 @end table
 
 @node Warning Options
@@ -3550,7 +3904,7 @@ JSON形式で次のように印刷される場合があります。
 まるでそれらがコマンド・ラインの終わりに現れるように、pragmas（@pxref{Diagnostic Pragmas}）を通して使用可能にされるか、使用不能なオプションは実施される。
 
 認められていない警告オプションが要請される（例えば、@option{-Wunknown-warning}）とき、GCCはオプションが認識されないと述べている診断を発する。
-しかし、@option{-Wno-}の形が使われるならば、ふるまいはわずかに異なる：他の診断法が生み出されない限り、
+しかし、@option{-Wno-}の形が使われるならば、ふるまいはわずかに異なる：他の診断が生み出されない限り、
 診断は@option{-Wno-unknown-warning}のために生み出されない。これは古いコンパイラで新しい@option{-Wno-}オプションを使用可能にする、
 しかし、何かがうまくいかないならば、コンパイラは認められていないオプションが存在すると警告する。
 
@@ -3593,7 +3947,7 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 @option{-Wall}は以下の警告フラグをONにする。
 
 @gccoptlist{-Waddress   
--Warray-bounds=1 @r{(}@option{-O2}@r{のみ)}  
+-Warray-bounds=1 @r{@option{-O2}@r{) (でのみ} }  
 -Wbool-compare  
 -Wbool-operation  
 -Wc++11-compat  -Wc++14-compat  
@@ -3601,38 +3955,41 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 -Wchar-subscripts  
 -Wcomment  
 -Wduplicate-decl-specifier @r{(CとObjective-C専用)} 
--Wenum-compare @r{(C/ObjCで。これはC++ではデフォルトである)} 
+-Wenum-compare @r{(C/ObjCにおいて。これはC++ではデフォルトでオンです)} 
+-Wenum-conversion @r{C/ObjCにおいて} 
 -Wformat   
+-Wformat-overflow  
+-Wformat-truncation  
 -Wint-in-bool-context  
 -Wimplicit @r{(CとObjective-C専用)} 
 -Wimplicit-int @r{(CとObjective-C専用)} 
 -Wimplicit-function-declaration @r{(CとObjective-C専用)} 
--Winit-self @r{(C++専用)} 
+-Winit-self @r{(C++専用} 
 -Wlogical-not-parentheses 
--Wmain @r{(C/ObjCでかつ} @option{-ffreestanding}@r{でないときのみ)}  
+-Wmain @r{(C/ObjC専用かつ} @option{-ffreestanding}@r{) でないときのみ}  
 -Wmaybe-uninitialized 
 -Wmemset-elt-size 
 -Wmemset-transposed-args 
 -Wmisleading-indentation @r{(C/C++専用)} 
 -Wmissing-attributes 
--Wmissing-braces @r{(C/ObjC専用)} 
+-Wmissing-braces @r{(C/ObjC専用} 
 -Wmultistatement-macros  
 -Wnarrowing @r{(C++専用)}  
 -Wnonnull  
 -Wnonnull-compare  
 -Wopenmp-simd 
 -Wparentheses  
--Wpessimizing-move @r{(C++専用)} 
+-Wpessimizing-move @r{(C++専用}  
 -Wpointer-sign  
 -Wreorder   
--Wrestrict
+-Wrestrict   
 -Wreturn-type  
 -Wsequence-point  
--Wsign-compare @r{(C++専用)}  
--Wsizeof-pointer-div
+-Wsign-compare @r{(C++専用}  
+-Wsizeof-pointer-div 
 -Wsizeof-pointer-memaccess 
 -Wstrict-aliasing  
--Wstrict-overflow=1
+-Wstrict-overflow=1  
 -Wswitch  
 -Wtautological-compare  
 -Wtrigraphs  
@@ -3642,8 +3999,8 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 -Wunused-label     
 -Wunused-value     
 -Wunused-variable  
--Wvolatile-register-var 
-}
+-Wvolatile-register-var  
+-Wzero-length-bounds}
 
 ある警告フラグが@option{-Wall}によって含まれないことに注意すべきである。ユーザーが不確かであると一般に思わないが
 あなたは時折それについて調べたいかもしれない構造のいくつかも警告する。他のものは
@@ -3658,8 +4015,8 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 古い名前はまだ利用可能だが、新しい名前はより描写的である。）
 
 @gccoptlist{-Wclobbered  
--Wcast-function-type 
--Wdeprecated-copy @r{(C++専用)}
+-Wcast-function-type  
+-Wdeprecated-copy @r{(C++専用)} 
 -Wempty-body  
 -Wignored-qualifiers 
 -Wimplicit-fallthrough=3 
@@ -3668,14 +4025,13 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 -Wold-style-declaration @r{(C専用)}  
 -Woverride-init  
 -Wsign-compare @r{(C専用)} 
--Wredundant-move @r{(C++専用)} 
+-Wstring-compare 
+-Wredundant-move @r{(C++専用)}  
 -Wtype-limits  
 -Wuninitialized  
--Wshift-negative-value @r{(C++03とC99以降専用)}  
--Wunused-parameter @r{(} @option{-Wunused} @r{および} @option{-Wall}@r{でのみ)} 
--Wunused-but-set-parameter @r{(} @option{-Wunused} @r{および} @option{-Wall}@r{でのみ)}  
-}
-
+-Wshift-negative-value @r{(C++03とC99以降)}  
+-Wunused-parameter @r{(} @option{-Wunused} @r{または} @option{-Wall}@r{があるとき)} 
+-Wunused-but-set-parameter @r{(} @option{-Wunused} @r{または} @option{-Wall}@r{があるとき)}}
 オプション@option{-Wextra}は以下の場合の警告メッセージも出力する。
 
 @itemize @bullet
@@ -3697,6 +4053,103 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 
 @item
 (C++のみ) 導出クラスのコピーコンストラクタで初期化されていない基底クラス
+
+@end itemize
+
+@item -Wabi @r{(C, Objective-C, C++とObjective-C++専用)}
+@opindex Wabi
+@opindex Wno-abi
+
+ABIの変更の影響を受けるコードについて警告します。 これには、特定のターゲットのpsABIだけでなく、ベンダー中立のC ++ ABIと互換性がない可能性があるコードが含まれます。
+
+G++は現在、メジャーリリースごとにデフォルトでABIを更新するので、@option{-Wabi}は通常、
+初期のリリース以降に発見されたABIの問題のためにリリースの後半で加えられたチェックがある場合だけ警告する。@option{-Wabi}は
+(@option{-fabi-version=@var{n}}で)古いABIバージョンが選択されたときにはもっと多くの警告をする。
+
+特定の@option{-fabi-version}レベル（例えば@option{-fabi-version=2}と比較した変化について警告する@option{-Wabi=2}）との
+互換性について警告するために、@option{-Wabi}が明確なバージョン番号で使われることもできる。
+
+明確なバージョン番号が提供され、@option{-fabi-compat-version}が指定されないならば、このオプションからのバージョン番号が互換性別名のために使われる。
+明確なバージョン番号がこのオプションで提供されないが@option{-fabi-compat-version}が指定されるならば、そのバージョン番号がABI警告のために使われる。
+
+すべての場合について警告するように努力するが、たとえG++が非互換のコードを生成しているとしても、警告されないあるケースが多分あるだろう。たとえ生成されるコードが互換性を持つとしても、警告が発されるケースも、あるかもしれない。
+
+G++によって生成されるコードが他のコンパイラによってコードを生成してバイナリ互換でないかもしれないという事実を心配するならば、あなたはこれらの警告を避けるためにあなたのコードを書き直すべきである。
+
+@option{-fabi-version=2}（GCC 3.4～4.9からのデフォルトであった）の既知の非互換性は、以下を含む：
+
+@itemize @bullet
+
+@item
+参照型の非型のテンプレートパラメータのテンプレートは誤ってマングルされた
+@smallexample
+extern int N;
+template <int &> struct S @{@};
+void n (S<N>) @{2@}
+@end smallexample
+
+これは@option{-fabi-version=3}で修正された。
+
+@item
+@code{__attribute ((vector_size))}を使って宣言されたSIMDベクタ型は異なるサイズのベクタを取るオーバーロードができない
+非標準のやり方でマングルされた
+
+マングルは@option{-fabi-version=4}で変わった。
+
+@item
+@code{__attribute ((const))}と@code{noreturn}は型修飾子としてマングルされ、素の宣言の@code{decltype}は折りたたまれた。
+
+これらのマングルの問題は@option{-fabi-version=5}で修正された。
+
+@item
+可変長引数関数に渡されるスコープの列挙は非スコープの列挙のように格上げされ、@code{va_arg}が文句を言う。多くのターゲットでは、@code{int}より小さな
+引数を渡す方法がないので、これは効果を持たない。
+
+さらに、ABIはテンプレート引数の詰め、@code{const_cast}, @code{static_cast}, 前置インクリメント・デクリメント、テンプレート引数として使われるクラススコープの関数
+のマングルを変えた。
+
+これらの問題は@option{-fabi-version=6}で修正された。
+
+@item
+デフォルト引数スコープでのラムダは間違ってマングルされ、ABIは@code{nullptr_t}のマングルを変えた。
+
+これらの問題は@option{-fabi-version=7}で修正された。
+
+@item
+関数cv修正子つきの関数型をマングルするとき、修正子なしの関数型は誤って置換対象として扱われた。
+
+これは @option{-fabi-version=8}で修正され、GCC5.1のデフォルトである。
+
+@item
+@code{decltype(nullptr)}は誤ってアライメント1を持ち。非境界アクセスを起こした。これはパラメータが最小のアラインメントを持つので、
+@code{nullptr_t}パラメータを持つ関数のABIには影響しないことに注意。
+
+これは @option{-fabi-version=9}で修正され、GCC5.2のデフォルトである。
+
+@item
+関数型のia32呼び出し規約(stdcall, regparmなど)のような、型の識別性に影響するターゲット固有の属性はマングル名に影響せず、テンプレート引数として関数ポインタ
+が使われた時は名前の衝突を引き起こした。
+
+これは @option{-fabi-version=10}で修正され、GCC6.1のデフォルトである。
+
+@end itemize
+
+psABI関連の変更についても警告する。現時点での既知のpsABIの変更は以下を含む。
+
+@itemize @bullet
+
+@item
+SysV/x86-64では、@code{long double}を持つ共用体メンバはpsABIで指定されたようにメモリで渡される。例えば、
+
+@smallexample
+union U @{
+  long double ld;
+  int i;
+@};
+@end smallexample
+
+@noindent
+@code{union U}は常にメモリで渡される。
 
 @end itemize
 
@@ -3722,7 +4175,8 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 
 @item -Wno-cpp
 @r{(C, Objective-C, C++, Objective-C++とFortran専用)}
-
+@opindex Wno-cpp
+@opindex Wcpp
 @code{#warning}ディレクティブによって生成された警告メッセージを抑制する。
 
 @item -Wdouble-promotion @r{(C, C++, Objective-C とObjective-C++専用)}
@@ -3735,7 +4189,6 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 
 浮動小数点定数が暗黙に型@code{double}であるために、誤って@code{double}で計算するのは容易い。
 例えば、
-
 @smallexample
 @group
 float area(float radius)
@@ -3785,6 +4238,10 @@ GNU libc版2.2によってサポートされるフォーマット機能に対し
 フォーマット・チェックのこのレベルのある側面は、以下のオプションで無効にできる。 @option{-Wno-format-contains-nul},
 @option{-Wno-format-extra-args}, @option{-Wno-format-zero-length}。
 @option{-Wformat}は@option{-Wall}で有効にされる。
+
+@opindex Wformat=2
+@option{-Wformat}と追加のフォーマットチェックを有効にします。 現在、@option{-Wformat -Wformat-nonliteral -Wformat-security -Wformat-y2k}と同等です。
+@end table
 
 @item -Wno-format-contains-nul
 @opindex Wno-format-contains-nul
@@ -4119,7 +4576,7 @@ The @option{-Wimplicit-fallthrough=3}警告は@option{-Wextra}によって有効
 @item -Wif-not-aligned @r{(C, C++, Objective-C, Objective-C++のみ)}
 @opindex Wif-not-aligned
 @opindex Wno-if-not-aligned
-@code{warn_if_not_aligned}属性によってトリガされる警告を発行するかどうかを制御する。 これはデフォルトで有効になっている。 無効にするには、@option{-Word-aligned not-aligned}を使用する。
+@code{warn_if_not_aligned}属性によってトリガされる警告を発行するかどうかを制御する。 これはデフォルトで有効になっている。
 
 @item -Wignored-qualifiers @r{(CとC++専用)}
 @opindex Wignored-qualifiers
@@ -4320,7 +4777,7 @@ C++17標準は大抵の場合でのオペランドの評価の順序を定義す
 の戻り値なしの@code{return}文（関数の本体の最後で抜けるのは戻り値なしで返るとみなされる）も警告する。
 
 Cのみでは、戻り型が@code{void}である関数内の式つきの@code{return}文を、式の型も@code{void}出ない限りは
-蛍光する。GNU拡張として、後者の場合は@option{-Wpedantic}が使われない限り警告なしで受理される。
+警告する。GNU拡張として、後者の場合は@option{-Wpedantic}が使われない限り警告なしで受理される。
 
 C++では、@option{-Wno-return-type}が指定された時でも、戻り値型のない関数は常に診断を生成する。
 唯一の例外は@code{main}とシステムヘッダで定義された関数である。
@@ -4393,6 +4850,11 @@ switch ((int) (a == 4))
 @end smallexample
 この警告はCとC++をプログラムでデフォルトで有効である。
 
+@item -Wno-switch-outside-range
+@opindex Wswitch-outside-range
+@opindex Wno-switch-outside-range
+このオプションは、@code{switch}ケースにそれぞれのタイプの範囲外の値がある場合の警告を制御します。 この警告は、CおよびC++プログラムではデフォルトで有効になっています。
+
 @item -Wswitch-unreachable
 @opindex Wswitch-unreachable
 @opindex Wno-switch-unreachable
@@ -4422,7 +4884,7 @@ switch (cond)
   @}
 @end group
 @end smallexample
-この警告はCとC++プログラムではデフォルで有効である。
+この警告はCとC++プログラムではデフォルトで有効である。
 
 @item -Wsync-nand @r{(CとC++専用)}
 @opindex Wsync-nand
@@ -4495,7 +4957,7 @@ C++では含まない。この警告は@option{-Wall}で有効になる。
 @opindex Wno-unused-const-variable
 定数静的変数が宣言の他に使われていない時にいつも警告する。@option{-Wunused-const-variable=1}は
 Cでは@option{-Wunused-variable}の時に有効であるが、C++では異なる。Cではこれは変数領域を宣言するが、
-C++では定数変数が@code{#define}を置き換えたのｄエラーではない。
+C++では定数変数が@code{#define}を置き換えたのでエラーではない。
 
 この警告を抑制するには@code{unused}属性(@pxref{Variable Attributes})を使う。
 
@@ -4699,6 +5161,24 @@ GCCが理解できない@code{#pragma}ディレクティブに出会ったら警
 を与えるために、最高の警告レベルでのみ警告される。
 @end table
 
+@item -Wstring-compare
+@opindex Wstring-compare
+@opindex Wno-string-compare
+ひとつの引数の長さが他方の引数が格納されている配列のサイズ（もしくは@scode{strncmp}の場合には境界）よりも大きいために、そのような等価に対する検査でゼロであるか非ゼロであるかが決定できるような@code{strcmp}と@code {strncmp}への呼び出しに対して警告します。 たとえば、以下の@code{strcmp}の呼び出しは、配列@code{a}の内容に関係なく、その結果が必ずゼロ以外になるため、診断されます。
+
+@smallexample
+extern char a[4];
+void f (char *d)
+@{
+  strcpy (d, "string");
+  @dots{}
+  if (0 == strcmp (a, d))   // cannot be true
+    puts ("a and d are the same");
+@}
+@end smallexample
+
+@option{-Wstring-compare}は@option{-Wextra}で有効になります。
+
 @item -Wstringop-overflow
 @itemx -Wstringop-overflow=@var{type}
 @opindex Wstringop-overflow
@@ -4754,10 +5234,10 @@ Linuxシステムでは、この設定で最適化を有効にすると、@code{
 @item -Wstringop-overflow=4
 @option{-Wstringop-overflow=4}オプションは、タイプ3のオブジェクトサイズチェックを使用して宛先オブジェクトのサイズを決定する。この設定では、データメンバーのオーバーフローに関する警告が表示され、宛先が複数のオブジェクトのいずれかである場合は、最大のサイズを使用して警告を出すかどうかを決定する。@option {-Wstringop-overflow=3}と同様に、このオプションの設定により、良質なコードの警告が発生する可能性があります。
 
-@item -Wstringop-truncation
+@item -Wno-stringop-truncation
 @opindex Wstringop-truncation
 @opindex Wno-stringop-truncation
-@code{strncat}、@code{strncpy}、@code{stpncpy}など、コピーされた文字列を切り捨てるか、宛先を変更しないままにする可能性のある、境界付き文字列操作関数の呼び出しについて警告します。
+@code{strncat}、@code{strncpy}、@code{stpncpy}など、コピーされた文字列を切り捨てるか、宛先を変更しないままにする可能性のある、境界付き文字列操作関数の呼び出しについて警告しません。
 
 次の例では、@code{strncat}の呼び出しで、ソース文字列の長さより短い境界が指定されています。 その結果、ソースのコピーが切り捨てられるため、呼び出しが診断されます。 警告を回避するには、@code{bufsize-strlen (buf) -1}を境界として使用します。
 
@@ -4945,6 +5425,25 @@ void func (signed int n)
 
 @option{-Wvla-larger-than=}@samp{byte-size}も見よ。
 
+@item -Wno-alloca-larger-than
+@opindex Wno-alloca-larger-than
+@option{-Walloca-larger-than=}の警告を無効にします。 このオプションは、@option{-Walloca-larger-than=}@samp{SIZE_MAX}以上と同等です。
+
+@item -Warith-conversion
+@opindex Warith-conversion
+@opindex Wno-arith-conversion
+オペランドを同じ型に変換しても値を変更できない場合でも、算術演算からの暗黙的な変換について警告します。 これは、@option{-Wconversion}、@option{-Wfloat-conversion}、および@option{-Wsign-conversion}からの警告に影響します。
+
+@smallexample
+@group
+void f (char c, int i)
+@{
+  c = c + i; // warns with @option{-Wconversion}
+  c = c + 1; // only warns with @option{-Warith-conversion}
+@}
+@end group
+@end smallexample
+
 @item -Warray-bounds
 @itemx -Warray-bounds=@var{n}
 @opindex Wno-array-bounds
@@ -5057,9 +5556,31 @@ else if (p->q != NULL) @{ @dots{} @}
 @item -Wno-int-conversion @r{(CとObjective-Cのみ)}
 @opindex Wno-int-conversion
 @opindex Wint-conversion
-非互換の整数とポインタの変換について警告しない。この警告は暗黙の変換についけ警告する。
+非互換の整数とポインタの変換について警告しない。この警告は暗黙の変換について警告する。
 明示的な変換は警告@option{-Wno-int-to-pointer-cast}と@option{-Wno-pointer-to-int-cast}
 が使われるかもしれない。
+
+
+@item -Wzero-length-bounds
+@opindex Wzero-length-bounds
+@opindex Wzero-length-bounds
+同じオブジェクトの他のメンバーと重複する可能性がある長さゼロの配列メンバーの要素へのアクセスについて警告します。 長さゼロの内部配列の宣言は推奨されていません。それらへのアクセスは定義されていないためです。 @xref{Zero Length}を参照してください。
+
+たとえば、配列要素が後続のメンバー@code{b}および@code{c}と重複するため、関数@code{bad}の最初の2つのストアが診断されます。 3番目のストアは、囲んでいるオブジェクトの境界を超えているため、@option{-Warray-bounds}によって診断されます。
+
+@smallexample
+struct X @{ int a[0]; int b, c; @};
+struct X x;
+
+void bad (void)
+@{
+  x.a[0] = 0;   // -Wzero-length-bounds
+  x.a[1] = 1;   // -Wzero-length-bounds
+  x.a[2] = 2;   // -Warray-bounds
+@}
+@end smallexample
+
+オプション@option{-Wzero-length-bounds}は@option{-Warray-bounds}によって有効になります。
 
 @item -Wno-div-by-zero
 @opindex Wno-div-by-zero
@@ -5204,11 +5725,11 @@ Objective-Cメソッドでローカル変数がインスタンス変数を隠す
 
 @item -Wshadow=global
 @opindex Wshadow=global
-@option{-Wshadow}のデフォルトである。どんな（グローバル）隠しにも警告する。
+どんな隠しにも警告する。@option{-Wshadow}と同じである。
 
 @item -Wshadow=local
 @opindex Wshadow=local
-ローカル変数が他のローカル変数・パラメータを隠すときに警告する。この警告は@option{-Wshadow=global}で有効になる。
+ローカル変数が他のローカル変数・パラメータを隠すときに警告する。
 
 @item -Wshadow=compatible-local
 @opindex Wshadow=compatible-local
@@ -5311,51 +5832,6 @@ for (SomeIterator i = SomeObj.begin(); i != SomeObj.end(); ++i)
 MSランタイムに依存して、ウィンドウズターゲットで使われる@code{I32}, @code{I64}, @code{I}
 指定子で使った時の警告を無効にする。
 
-@item -Waligned-new
-@opindex Waligned-new
-@opindex Wno-aligned-new
-@code{alignof(std::max_align_t)}よりも大きなアラインメントを要求するが明示的なアラインメントパラメータのない割当関数を使っているnew式について警告する。
-
-通常、この警告はグローバル割当関数についてのみ警告するが、@option{-Waligned-new=all}はクラスメンバ割当関数についても警告する。
-
-@item -Wplacement-new
-@itemx -Wplacement-new=@var{n}
-@opindex Wplacement-new
-@opindex Wno-placement-new
-オブジェクトの型より小さいバッファにオブジェクトを構築するような、配置new式の未定義な振る舞い
-について警告する。例えば、以下の配置new式は64バイト長しかないバッファに64の整数の配列を
-構築しようとするため、診断される。
-@smallexample
-char buf [64];
-new (buf) int[64];
-@end smallexample
-この警告はデフォルトで有効である。
-
-@table @gcctabopt
-@item -Wplacement-new=1
-@option{-Wplacement-new}のデフォルトの警告レベルである。このレベルでは、
-古いコードとの互換性のためにGCCが拡張として許しているある厳密には未定義の構造については警告を
-出さない。例えば、以下の@code{new}式はC++標準によれば1要素の配列の終わりの後ろに書くために、
-未定義の振る舞いだが、このレベルでは診断されない。
-@smallexample
-struct S @{ int n, a[1]; @};
-S *s = (S *)malloc (sizeof *s + 31 * sizeof s->a[0]);
-new (s->a)int [32]();
-@end smallexample
-
-@item -Wplacement-new=2
-このレベルでは、レベル１でと同じ構造を診断することに加え、その方が単一要素の配列であり、
-そのサイスが構築されるオブジェクトのサイズより小さい構造体の最後のメンバでオブジェクトを構築する
-配置new式にも診断する。前の例が診断を出す一方、以下の可変長メンバ配列拡張を使うとレベル２の警告を
-避けることができる。
-@smallexample
-struct S @{ int n, a[]; @};
-S *s = (S *)malloc (sizeof *s + 32 * sizeof s->a[0]);
-new (s->a)int [32]();
-@end smallexample
-
-@end table
-
 @item -Wpointer-arith
 @opindex Wpointer-arith
 @opindex Wno-pointer-arith
@@ -5414,6 +5890,11 @@ ISO C99にはないが、ISO C11にはある機能について警告する。例
 @code{_Alignas}指定子、@code{Alignof}演算子、@code{_Generic}キーワードなど。
 このオプションは標準モードと独立である。傾向は@code{__extension__}に続く式では無効にされる。
 
+@item -Wc11-c2x-compat @r{(CとObjective-C専用)}
+@opindex Wc11-c2x-compat
+@opindex Wno-c11-c2x-compat
+ISO C11にはないがISO C2Xにはある機能について警告します。たとえば、@code{_Static_assert}の文字列の省略、属性に対する@samp{[[]]}構文の使用、10進浮動小数点型の使用などについて警告します。 このオプションは、標準モードから独立しています。 @code{__ extension__}に続く式では警告が無効になっています。
+
 @item -Wc++-compat @r{(CとObjective-C専用)}
 @opindex Wc++-compat
 ISO CとISO C++の共通部分集合の外側のISO C構造について警告する。例えば、@code{void *}から
@@ -5433,6 +5914,11 @@ ISO C++2011とISO C++2014で意味が異なるC++構造について警告する�
 @item -Wc++17-compat @r{(C++とObjective-C++専用)}
 @opindex Wc++17-compat
 ISO C++ 2014とISO C++ 2017の間で意味が異なるC++構造について警告する。これは@option{-Wall}で有効になる。
+
+@item -Wc++20-compat @r{(C++とObjective-C++専用)}
+@opindex Wc++20-compat
+@opindex Wno-c++20-compat
+ISO C++ 2017とISO C++ 2020の間で意味が異なるC++構造について警告する。これは@option{-Wall}で有効になる。
 
 @item -Wcast-qual
 @opindex Wcast-qual
@@ -5461,7 +5947,7 @@ ISO C++ 2014とISO C++ 2017の間で意味が異なるC++構造について警�
 
 @item -Wcast-align=strict
 @opindex Wcast-align=strict
-ターゲットの必要なアライメントが増加するようにポインターがキャストされるたびに警告します。 たとえば、ターゲットマシンに関係なく、@ code{char *}が@code{int *}にキャストされた場合に警告します。
+ターゲットの必要なアライメントが増加するようにポインターがキャストされるたびに警告します。 たとえば、ターゲットマシンに関係なく、@code{char *}が@code{int *}にキャストされた場合に警告します。
 
 @item -Wcast-function-type
 @opindex Wcast-function-type
@@ -5478,23 +5964,10 @@ Cをコンパイルするとき、文字列定数に型@code{const char[@var{len
 
 C++をコンパイルするとき、文字列定数から@code{char *}への廃止予定の変換ついて警告する。この警告は、C++プログラムではデフォルトで使用可能である。
 
-@item -Wcatch-value
-@itemx -Wcatch-value=@var{n} @r{(C++とObjective-C++専用)}
-@opindex Wcatch-value
-@opindex Wno-catch-value
-参照を介してキャッチしないキャッチハンドラについて警告します。
-@option{-Wcatch-value=1}（または略して@option{-Wcatch-value}）を使用すると、値によってキャッチされるポリモーフィッククラスタイプについて警告します。
-@option{-Wcatch-value=2}を使用すると、値によってキャッチされるすべてのクラスタイプについて警告します。 @option{-Wcatch-value=3}を使用すると、参照によってキャッチされないすべてのタイプについて警告します。 @option{-Wcatch-value}は@option{-Wall}によって有効になります。
-
 @item -Wclobbered
 @opindex Wclobbered
 @opindex Wno-clobbered
 変数が@code{longjmp}や@code{vfork}で変わるかもしれないときに警告する。これは@option{-Wextra}で有効である。
-
-@item -Wconditionally-supported @r{(C++とObjective-C++専用)}
-@opindex Wconditionally-supported
-@opindex Wno-conditionally-supported
-条件付きでサポートされる(C++11 [intro.defs])構造について警告する。
 
 @item -Wconversion
 @opindex Wconversion
@@ -5506,25 +5979,6 @@ C++をコンパイルするとき、文字列定数から@code{char *}への廃�
 
 C++では、ユーザ定義の混乱したオーバーロード解決、@code{void}、同じ型、基底クラスかそれへの参照型への変換のような、型変換演算子を使わない変換にも
 警告する。符号付きと符号なし整数間の変換は@option{-Wsign-conversion}で明示的に有効にしないかぎりデフォルトで無効にされる。
-
-@item -Wno-conversion-null @r{(C++とObjective-C++のみ)}
-@opindex Wconversion-null
-@opindex Wno-conversion-null
-@code{NULL}と非ポインタ型の変換を警告しない。@option{-Wconversion-null}はデフォルトで有効にされる。
-
-@item -Wzero-as-null-pointer-constant @r{(C++とObjective-C++のみ)}
-@opindex Wzero-as-null-pointer-constant
-@opindex Wno-zero-as-null-pointer-constant
-定数@samp{0}をヌルポインタ定数として使った時に警告する。これはC++11で@code{nullptr}への変換を促進するのに役立つ。
-
-@item -Wsubobject-linkage @r{(C++とObjective-C++のみ)}
-@opindex Wsubobject-linkage
-@opindex Wno-subobject-linkage
-クラスタイプが基底かフィールドがその型が匿名名前空間を使っているかリンケージのない型に依存している時に警告する。
-もし型Aがリンケージなしか内部リンケージの型Bに依存している時、それを複数の翻訳空間で定義することはBの意味がそれぞれの翻訳単位で
-異なるためにODR違反と違反になる。もしAが単一翻訳単位にしか現れないのであれば、警告を黙らせる最善の方法はそれも匿名名前空間において
-内部リンケージを与えることである。コンパイラはメイン.Cファイルで定義された型には、複数の定義はありそうもないので、警告を与えない。
-@option{-Wsubobject-linkage}はデフォルトで有効である。
 
 @item -Wdangling-else
 @opindex Wdangling-else
@@ -5561,25 +6015,25 @@ C・C++では、それぞれの@code{else}分岐は可能な最も内側の@code
 
 この警告は@option{-Wparentheses}で有効になる。
 
+@item -Wzero-as-null-pointer-constant @r{(C++とObjective-C++のみ)}
+@opindex Wzero-as-null-pointer-constant
+@opindex Wno-zero-as-null-pointer-constant
+定数@samp{0}をヌルポインタ定数として使った時に警告する。これはC++11で@code{nullptr}への変換を促進するのに役立つ。
+
 @item -Wdate-time
 @opindex Wdate-time
 @opindex Wno-date-time
 ビット単位で同一のコンパイル再現性を妨げるかもしれないため、@code{__TIME__}、 @code{__DATE__}、@code{__TIMESTAMP__}に出会ったら警告する。
 
-@item -Wdelete-incomplete @r{(C++とObjective-C++のみ)}
-@opindex Wdelete-incomplete
-@opindex Wno-delete-incomplete
-実行時に未定義の振る舞いを引き起こすかもしれないため、非完全形へのポインタを削除しようとすると警告する。この警告はデフォルトで有効である。
-
-@item -Wuseless-cast @r{(C++とObjective-C++専用)}
-@opindex Wuseless-cast
-@opindex Wno-useless-cast
-式が自分の型へとキャストされている時に警告する。
-
 @item -Wempty-body
 @opindex Wempty-body
 @opindex Wno-empty-body
 @code{if}, @code{else}, @code{do while}文に空の本体が現れると警告する。これは@option{-Wextra}でも有効になる。
+
+@item -Wno-endif-labels
+@opindex Wendif-labels
+@opindex Wno-endif-labels
+@code{#else}と@code{#endif}の後に、トークンが残っていることについて警告しません。
 
 @item -Wenum-compare
 @opindex Wenum-compare
@@ -5587,11 +6041,11 @@ C・C++では、それぞれの@code{else}分岐は可能な最も内側の@code
 異なる列挙型の値間の比較について警告する。C++では条件式での列挙の不一致も診断して警告はデフォルトで有効になる。
 Cではこの警告は@option{-Wall}で有効になる。
 
-@item -Wextra-semi @r{(C++, Objective-C++のみ)}
-@opindex Wextra-semi
-@opindex Wno-extra-semi
-クラス内関数定義の後の冗長なセミコロンについて警告する。
- 
+@item -Wenum-conversion @r{(C, Objective-C専用)}
+@opindex Wenum-conversion
+@opindex Wno-enum-conversion
+列挙型の値が暗黙的に別の列挙型に変換されたときに警告します。 この警告は、@ option {-Wextra}によって有効になります。
+
 @item -Wjump-misses-init @r{(C, Objective-C専用)}
 @opindex Wjump-misses-init
 @opindex Wno-jump-misses-init
@@ -5614,7 +6068,7 @@ C++では、この警告は@option{-Wall}でも有効である。Cでは、@opti
 @opindex Wsign-conversion
 @opindex Wno-sign-conversion
 符号付き製数式を符号なし整数値に代入するような、整数値の符号が変わるかもしれない暗黙の変換について警告する。
-明示的なキャストはこの警告を黙らせる。Cでは、では、このオプションは@option{-Wconversion}でも有効になる。
+明示的なキャストはこの警告を黙らせる。Cでは、このオプションは@option{-Wconversion}でも有効になる。
 
 @item -Wfloat-conversion
 @opindex Wfloat-conversion
@@ -5626,21 +6080,6 @@ C++では、この警告は@option{-Wall}でも有効である。Cでは、@opti
 @opindex -Wno-scalar-storage-order
 @opindex -Wscalar-storage-order
 逆スカラー格納順に関する疑わしい構造について警告しない。
-
-@item -Wsized-deallocation @r{(C++とObjective-C++のみ)}
-@opindex Wsized-deallocation
-@opindex Wno-sized-deallocation
-サイズ無しの解放関数の定義で
-@smallexample
-void operator delete (void *) noexcept;
-void operator delete[] (void *) noexcept;
-@end smallexample
-に対応するサイズ付き解放関数の定義
-@smallexample
-void operator delete (void *, std::size_t) noexcept;
-void operator delete[] (void *, std::size_t) noexcept;
-@end smallexample
-がないかその逆ならば警告する。@option{-Wextra}と@option{-fsized-deallocation}の時に警告する。
 
 @item -Wsizeof-pointer-div
 @opindex Wsizeof-pointer-div
@@ -5692,7 +6131,7 @@ void make_file (const char *name)
 文字列通しの比較は未指定の振る舞いを起こし、Cでは移植性がないので、プログラマが代わりに@code{strcmp}を使うべきなことを示している。
 この警告は@option{-Wall}で有効になる。
 
-@item -Waddress-of-packed-member
+@item -Wno-address-of-packed-member
 @opindex Waddress-of-packed-member
 @opindex Wno-address-of-packed-member
 structまたはunionのパックされたメンバーのアドレスが取得されたときに警告します。
@@ -6016,12 +6455,6 @@ void foo (void)
 @opindex Wno-nested-externs
 @code{extern}宣言が関数内に現れたら警告する。
 
-@item -Wno-inherited-variadic-ctor
-@opindex Winherited-variadic-ctor
-@opindex Wno-inherited-variadic-ctor
-基底クラスがC可変長引数コンストラクタをから継承されている時にC++11継承コンストラクタを使うと警告する。
-三点文字が継承されないため、この警告はデフォルトでオンである。
-
 @item -Winline
 @opindex Winline
 @opindex Wno-inline
@@ -6031,15 +6464,6 @@ void foo (void)
 コンパイラは関数をインライン化するかどうかを決定するために様々なヒューリスティックを使う。例えば、
 コンパイラははインライン化される関数のサイズと現在の関数ですでにされたインラインの量を考慮する。
 したがって、ソースプログラムでのの一見ささいな変化が@option{-Winline}で生成される警告を現れたり、消したりする、
-
-@item -Wno-invalid-offsetof @r{(C++とObjective-C++専用)}
-@opindex Wno-invalid-offsetof
-@opindex Winvalid-offsetof
-非POD型の@code{offsetof}マクロの適用の警告を抑制する。2014 C++標準によれば、非標準レイアウト型への@code{offset}の適用は未定義である。
-しかし、既存のC++実装では、@code{offsetof}は典型的には意味のある結果を与える。
-このフラグは、それらが移植性のないコードを書いていることに気づいていて、それについて警告を無視するほうを故意に選んだユーザーのためである。
-
-@code{offsetof}の制限はC++標準の将来のバージョンでは緩和されうかもしれない。
 
 @item -Wint-in-bool-context
 @opindex Wint-in-bool-context
@@ -6051,7 +6475,6 @@ void foo (void)
 @opindex Wint-to-pointer-cast
 異なるサイズの整数へのポインタへのキャストについての警告を抑制する。C++ではより小さいサイズのポインタ型へのキャストはエラーである。
 @option{Wint-to-pointer-cast}はデフォルトで有効である。
-
 
 @item -Wno-pointer-to-int-cast @r{(CとObjective-C専用)}
 @opindex Wno-pointer-to-int-cast
@@ -6075,7 +6498,7 @@ void foo (void)
 可変長マクロがISO C90モードで使われたか、GNU代替構文がISO C99モードで使われたら警告する。これは@option{-Wpedantic}か@option{-Wtraditional}
 で有効になる。警告メッセージを抑制するなら、@option{-Wno-variadic-macros}を使う。
 
-@item -Wvarargs
+@item -Wno-varargs
 @opindex Wvarargs
 @opindex Wno-varargs
 @code{va_start}のような可変長引数を扱うためのマクロの疑問な使用法を警告する。これはデフォルトである。警告メッセージを抑制するためには、
@@ -6088,13 +6511,6 @@ void foo (void)
 ベクトル操作は@code{piecewise}で実装可能であり、それは全ベクトル単位でスカラー演算が実行されることを意味する。
 @code{in parallel}は、ベクトル操作がより広い型のスカラーを使って実装されることを意味し、通常ははもっとパフォーマンスがよくなる。
 @code{as single scalar}は、ベクトルがスカラー型に合うことを意味する。
-
-@item -Wno-virtual-move-assign
-@opindex Wvirtual-move-assign
-@opindex Wno-virtual-move-assign
-非自明のC++11ムーブ代入演算子で仮想基底から継承されたことの警告を抑制する。これはもし仮想基底が1つ以上の経路で到達可能なら、
-複数回ムーブされ。両方のオブジェクトが最終的にムーブされた状態になりうるために危険である。
-もしムーブ代入演算子がムーブされたオブジェクトからのムーブを避けるように書かれているならば、この警告は無効化可能である。
 
 @item -Wvla
 @opindex Wvla
@@ -6152,16 +6568,420 @@ C99では4095に引き上げられた。C++98では規範的な最小最大値�
 
 @item -Wunsuffixed-float-constants @r{(CとObjective-C専用)}
 @opindex Wunsuffixed-float-constants
-
 接尾辞がないどんな浮動小数点定数にも警告を発する。@option{-Wsystem-headers}と一緒に使った時は
 システムヘッダ内のそのような定数に警告する。これはC99への10進浮動小数点拡張からのプラグマ
 @code{FLOAT_CONST_DECIMAL64}と一緒に使うコードを準備するときに役立つ。
 
+@item -Wno-lto-type-mismatch
+@opindex Wlto-type-mismatch
+@opindex Wno-lto-type-mismatch
+
+リンク時最適化の間に異なるコンパイル単位からのグローバル宣言ち不一致の型について警告する。
+有効にするには@option{-flto}が要求される。デフォルトで有効である。
+
 @item -Wno-designated-init @r{(CとObjective-C専用)}
+@opindex Wdesignated-init
+@opindex Wno-designated-init
 位置の初期化子が@code{designated_init}属性をマークされた構造体を初期化するために使われたら警告する。
 
-@item -Whsa
+@item -Wno-hsa
+@opindex Whsa
+@opindex Wno-hsa
 コンパイラされた関数かOpenMP構造のためにHSAILが生成されなかった時に警告を発する。
+
+@end table
+
+@node Static Analyzer Options
+@section Options That Control Static Analysis
+
+@table @gcctabopt
+@item -fanalyzer
+@opindex analyzer
+@opindex fanalyzer
+@opindex fno-analyzer
+This option enables an static analysis of program flow which looks
+for ``interesting'' interprocedural paths through the
+code, and issues warnings for problems found on them.
+
+This analysis is much more expensive than other GCC warnings.
+
+Enabling this option effectively enables the following warnings:
+
+@gccoptlist{ @gol
+-Wanalyzer-double-fclose @gol
+-Wanalyzer-double-free @gol
+-Wanalyzer-exposure-through-output-file @gol
+-Wanalyzer-file-leak @gol
+-Wanalyzer-free-of-non-heap @gol
+-Wanalyzer-malloc-leak @gol
+-Wanalyzer-possible-null-argument @gol
+-Wanalyzer-possible-null-dereference @gol
+-Wanalyzer-null-argument @gol
+-Wanalyzer-null-dereference @gol
+-Wanalyzer-stale-setjmp-buffer @gol
+-Wanalyzer-tainted-array-index @gol
+-Wanalyzer-unsafe-call-within-signal-handler @gol
+-Wanalyzer-use-after-free @gol
+-Wanalyzer-use-of-uninitialized-value @gol
+-Wanalyzer-use-of-pointer-in-stale-stack-frame @gol
+}
+
+This option is only available if GCC was configured with analyzer
+support enabled.
+
+@item -Wanalyzer-too-complex
+@opindex Wanalyzer-too-complex
+@opindex Wno-analyzer-too-complex
+If @option{-fanalyzer} is enabled, the analyzer uses various heuristics
+to attempt to explore the control flow and data flow in the program,
+but these can be defeated by sufficiently complicated code.
+
+By default, the analysis silently stops if the code is too
+complicated for the analyzer to fully explore and it reaches an internal
+limit.  The @option{-Wanalyzer-too-complex} option warns if this occurs.
+
+@item -Wno-analyzer-double-fclose
+@opindex Wanalyzer-double-fclose
+@opindex Wno-analyzer-double-fclose
+This warning requires @option{-fanalyzer}, which enables it; use
+@option{-Wno-analyzer-double-fclose} to disable it.
+
+This diagnostic warns for paths through the code in which a @code{FILE *}
+can have @code{fclose} called on it more than once.
+
+@item -Wno-analyzer-double-free
+@opindex Wanalyzer-double-free
+@opindex Wno-analyzer-double-free
+This warning requires @option{-fanalyzer}, which enables it; use
+@option{-Wno-analyzer-double-free} to disable it.
+
+This diagnostic warns for paths through the code in which a pointer
+can have @code{free} called on it more than once.
+
+@item -Wno-analyzer-exposure-through-output-file
+@opindex Wanalyzer-exposure-through-output-file
+@opindex Wno-analyzer-exposure-through-output-file
+This warning requires @option{-fanalyzer}, which enables it; use
+@option{-Wno-analyzer-exposure-through-output-file}
+to disable it.
+
+This diagnostic warns for paths through the code in which a
+security-sensitive value is written to an output file
+(such as writing a password to a log file).
+
+@item -Wno-analyzer-file-leak
+@opindex Wanalyzer-file-leak
+@opindex Wno-analyzer-file-leak
+This warning requires @option{-fanalyzer}, which enables it; use
+@option{-Wno-analyzer-file-leak}
+to disable it.
+
+This diagnostic warns for paths through the code in which a
+@code{<stdio.h>} @code{FILE *} stream object is leaked.
+
+@item -Wno-analyzer-free-of-non-heap
+@opindex Wanalyzer-free-of-non-heap
+@opindex Wno-analyzer-free-of-non-heap
+This warning requires @option{-fanalyzer}, which enables it; use
+@option{-Wno-analyzer-free-of-non-heap}
+to disable it.
+
+This diagnostic warns for paths through the code in which @code{free}
+is called on a non-heap pointer (e.g. an on-stack buffer, or a global).
+
+@item -Wno-analyzer-malloc-leak
+@opindex Wanalyzer-malloc-leak
+@opindex Wno-analyzer-malloc-leak
+This warning requires @option{-fanalyzer}, which enables it; use
+@option{-Wno-analyzer-malloc-leak}
+to disable it.
+
+This diagnostic warns for paths through the code in which a
+pointer allocated via @code{malloc} is leaked.
+
+@item -Wno-analyzer-possible-null-argument
+@opindex Wanalyzer-possible-null-argument
+@opindex Wno-analyzer-possible-null-argument
+This warning requires @option{-fanalyzer}, which enables it; use
+@option{-Wno-analyzer-possible-null-argument} to disable it.
+
+This diagnostic warns for paths through the code in which a
+possibly-NULL value is passed to a function argument marked
+with @code{__attribute__((nonnull))} as requiring a non-NULL
+value.
+
+@item -Wno-analyzer-possible-null-dereference
+@opindex Wanalyzer-possible-null-dereference
+@opindex Wno-analyzer-possible-null-dereference
+This warning requires @option{-fanalyzer}, which enables it; use
+@option{-Wno-analyzer-possible-null-dereference} to disable it.
+
+This diagnostic warns for paths through the code in which a
+possibly-NULL value is dereferenced.
+
+@item -Wno-analyzer-null-argument
+@opindex Wanalyzer-null-argument
+@opindex Wno-analyzer-null-argument
+This warning requires @option{-fanalyzer}, which enables it; use
+@option{-Wno-analyzer-null-argument} to disable it.
+
+This diagnostic warns for paths through the code in which a
+value known to be NULL is passed to a function argument marked
+with @code{__attribute__((nonnull))} as requiring a non-NULL
+value.
+
+@item -Wno-analyzer-null-dereference
+@opindex Wanalyzer-null-dereference
+@opindex Wno-analyzer-null-dereference
+This warning requires @option{-fanalyzer}, which enables it; use
+@option{-Wno-analyzer-null-dereference} to disable it.
+
+This diagnostic warns for paths through the code in which a
+value known to be NULL is dereferenced.
+
+@item -Wno-analyzer-stale-setjmp-buffer
+@opindex Wanalyzer-stale-setjmp-buffer
+@opindex Wno-analyzer-stale-setjmp-buffer
+This warning requires @option{-fanalyzer}, which enables it; use
+@option{-Wno-analyzer-stale-setjmp-buffer} to disable it.
+
+This diagnostic warns for paths through the code in which
+@code{longjmp} is called to rewind to a @code{jmp_buf} relating
+to a @code{setjmp} call in a function that has returned.
+
+When @code{setjmp} is called on a @code{jmp_buf} to record a rewind
+location, it records the stack frame.  The stack frame becomes invalid
+when the function containing the @code{setjmp} call returns.  Attempting
+to rewind to it via @code{longjmp} would reference a stack frame that
+no longer exists, and likely lead to a crash (or worse).
+
+@item -Wno-analyzer-tainted-array-index
+@opindex Wanalyzer-tainted-array-index
+@opindex Wno-analyzer-tainted-array-index
+This warning requires both @option{-fanalyzer} and
+@option{-fanalyzer-checker=taint} to enable it;
+use @option{-Wno-analyzer-tainted-array-index} to disable it.
+
+This diagnostic warns for paths through the code in which a value
+that could be under an attacker's control is used as the index
+of an array access without being sanitized.
+
+@item -Wno-analyzer-unsafe-call-within-signal-handler
+@opindex Wanalyzer-unsafe-call-within-signal-handler
+@opindex Wno-analyzer-unsafe-call-within-signal-handler
+This warning requires @option{-fanalyzer}, which enables it; use
+@option{-Wno-analyzer-unsafe-call-within-signal-handler} to disable it.
+
+This diagnostic warns for paths through the code in which a
+function known to be async-signal-unsafe (such as @code{fprintf}) is
+called from a signal handler.
+
+@item -Wno-analyzer-use-after-free
+@opindex Wanalyzer-use-after-free
+@opindex Wno-analyzer-use-after-free
+This warning requires @option{-fanalyzer}, which enables it; use
+@option{-Wno-analyzer-use-after-free} to disable it.
+
+This diagnostic warns for paths through the code in which a
+pointer is used after @code{free} is called on it.
+
+@item -Wno-analyzer-use-of-pointer-in-stale-stack-frame
+@opindex Wanalyzer-use-of-pointer-in-stale-stack-frame
+@opindex Wno-analyzer-use-of-pointer-in-stale-stack-frame
+This warning requires @option{-fanalyzer}, which enables it; use
+@option{-Wno-analyzer-use-of-pointer-in-stale-stack-frame}
+to disable it.
+
+This diagnostic warns for paths through the code in which a pointer
+is dereferenced that points to a variable in a stale stack frame.
+
+@item -Wno-analyzer-use-of-uninitialized-value
+@opindex Wanalyzer-use-of-uninitialized-value
+@opindex Wno-analyzer-use-of-uninitialized-value
+This warning requires @option{-fanalyzer}, which enables it; use
+@option{-Wno-analyzer-use-of-uninitialized-value} to disable it.
+
+This diagnostic warns for paths through the code in which an uninitialized
+value is used.
+
+@end table
+
+Pertinent parameters for controlling the exploration are:
+@option{--param analyzer-bb-explosion-factor=@var{value}},
+@option{--param analyzer-max-enodes-per-program-point=@var{value}},
+@option{--param analyzer-max-recursion-depth=@var{value}}, and
+@option{--param analyzer-min-snodes-for-call-summary=@var{value}}.
+
+The following options control the analyzer.
+
+@table @gcctabopt
+
+@item -fanalyzer-call-summaries
+@opindex fanalyzer-call-summaries
+@opindex fno-analyzer-call-summaries
+Simplify interprocedural analysis by computing the effect of certain calls,
+rather than exploring all paths through the function from callsite to each
+possible return.
+
+If enabled, call summaries are only used for functions with more than one
+call site, and that are sufficiently complicated (as per
+@option{--param analyzer-min-snodes-for-call-summary=@var{value}}).
+
+@item -fanalyzer-checker=@var{name}
+@opindex fanalyzer-checker
+Restrict the analyzer to run just the named checker, and enable it.
+
+Some checkers are disabled by default (even with @option{-fanalyzer}),
+such as the @code{taint} checker that implements
+@option{-Wanalyzer-tainted-array-index}, and this option is required
+to enable them.
+
+@item -fanalyzer-fine-grained
+@opindex fanalyzer-fine-grained
+@opindex fno-analyzer-fine-grained
+This option is intended for analyzer developers.
+
+Internally the analyzer builds an ``exploded graph'' that combines
+control flow graphs with data flow information.
+
+By default, an edge in this graph can contain the effects of a run
+of multiple statements within a basic block.  With
+@option{-fanalyzer-fine-grained}, each statement gets its own edge.
+
+@item -fanalyzer-show-duplicate-count
+@opindex fanalyzer-show-duplicate-count
+@opindex fno-analyzer-show-duplicate-count
+This option is intended for analyzer developers: if multiple diagnostics
+have been detected as being duplicates of each other, it emits a note when
+reporting the best diagnostic, giving the number of additional diagnostics
+that were suppressed by the deduplication logic.
+
+@item -fno-analyzer-state-merge
+@opindex fanalyzer-state-merge
+@opindex fno-analyzer-state-merge
+This option is intended for analyzer developers.
+
+By default the analyzer attempts to simplify analysis by merging
+sufficiently similar states at each program point as it builds its
+``exploded graph''.  With @option{-fno-analyzer-state-merge} this
+merging can be suppressed, for debugging state-handling issues.
+
+@item -fno-analyzer-state-purge
+@opindex fanalyzer-state-purge
+@opindex fno-analyzer-state-purge
+This option is intended for analyzer developers.
+
+By default the analyzer attempts to simplify analysis by purging
+aspects of state at a program point that appear to no longer be relevant
+e.g. the values of locals that aren't accessed later in the function
+and which aren't relevant to leak analysis.
+
+With @option{-fno-analyzer-state-purge} this purging of state can
+be suppressed, for debugging state-handling issues.
+
+@item -fanalyzer-transitivity
+@opindex fanalyzer-transitivity
+@opindex fno-analyzer-transitivity
+This option enables transitivity of constraints within the analyzer.
+
+@item -fanalyzer-verbose-edges
+This option is intended for analyzer developers.  It enables more
+verbose, lower-level detail in the descriptions of control flow
+within diagnostic paths.
+
+@item -fanalyzer-verbose-state-changes
+This option is intended for analyzer developers.  It enables more
+verbose, lower-level detail in the descriptions of events relating
+to state machines within diagnostic paths.
+
+@item -fanalyzer-verbosity=@var{level}
+This option controls the complexity of the control flow paths that are
+emitted for analyzer diagnostics.
+
+The @var{level} can be one of:
+
+@table @samp
+@item 0
+At this level, interprocedural call and return events are displayed,
+along with the most pertinent state-change events relating to
+a diagnostic.  For example, for a double-@code{free} diagnostic,
+both calls to @code{free} will be shown.
+
+@item 1
+As per the previous level, but also show events for the entry
+to each function.
+
+@item 2
+As per the previous level, but also show events relating to
+control flow that are significant to triggering the issue
+(e.g. ``true path taken'' at a conditional).
+
+This level is the default.
+
+@item 3
+As per the previous level, but show all control flow events, not
+just significant ones.
+
+@item 4
+This level is intended for analyzer developers; it adds various
+other events intended for debugging the analyzer.
+
+@end table
+
+@item -fdump-analyzer
+@opindex fdump-analyzer
+Dump internal details about what the analyzer is doing to
+@file{@var{file}.analyzer.txt}.
+This option is overridden by @option{-fdump-analyzer-stderr}.
+
+@item -fdump-analyzer-stderr
+@opindex fdump-analyzer-stderr
+Dump internal details about what the analyzer is doing to stderr.
+This option overrides @option{-fdump-analyzer}.
+
+@item -fdump-analyzer-callgraph
+@opindex fdump-analyzer-callgraph
+Dump a representation of the call graph suitable for viewing with
+GraphViz to @file{@var{file}.callgraph.dot}.
+
+@item -fdump-analyzer-exploded-graph
+@opindex fdump-analyzer-exploded-graph
+Dump a representation of the ``exploded graph'' suitable for viewing with
+GraphViz to @file{@var{file}.eg.dot}.
+Nodes are color-coded based on state-machine states to emphasize
+state changes.
+
+@item -fdump-analyzer-exploded-nodes
+@opindex dump-analyzer-exploded-nodes
+Emit diagnostics showing where nodes in the ``exploded graph'' are
+in relation to the program source.
+
+@item -fdump-analyzer-exploded-nodes-2
+@opindex dump-analyzer-exploded-nodes-2
+Dump a textual representation of the ``exploded graph'' to
+@file{@var{file}.eg.txt}.
+
+@item -fdump-analyzer-exploded-nodes-3
+@opindex dump-analyzer-exploded-nodes-3
+Dump a textual representation of the ``exploded graph'' to
+one dump file per node, to @file{@var{file}.eg-@var{id}.txt}.
+This is typically a large number of dump files.
+
+@item -fdump-analyzer-state-purge
+@opindex fdump-analyzer-state-purge
+As per @option{-fdump-analyzer-supergraph}, dump a representation of the
+``supergraph'' suitable for viewing with GraphViz, but annotate the
+graph with information on what state will be purged at each node.
+The graph is written to @file{@var{file}.state-purge.dot}.
+
+@item -fdump-analyzer-supergraph
+@opindex fdump-analyzer-supergraph
+Dump representations of the ``supergraph'' suitable for viewing with
+GraphViz to @file{@var{file}.supergraph.dot} and to
+@file{@var{file}.supergraph-eg.dot}.  These show all of the
+control flow graphs in the program, with interprocedural edges for
+calls and returns.  The second dump contains annotations showing nodes
+in the ``exploded graph'' and diagnostics associated with them.
 
 @end table
 
@@ -7589,7 +8409,7 @@ ENDDO
 ライブラリに呼び出しで生成されるコードになりうるパターンのループ分散を実行する。
 このフラグは、@option{-O3}でデフォルトで有効である
 。
-このパスは初期化ループを分散させて、memset 0への呼び出しを生成する。例えば、ループ
+このパスは初期化ループを分散さ���て、memset 0への呼び出しを生成する。例えば、ループ
 @smallexample
 DO I = 1, N
   A(I) = 0
@@ -8498,7 +9318,7 @@ IEEEシグナルNaNがユーザ可視のトラップを浮動小数点操作の�
 
 @item -fpeel-loops
 @opindex fpeel-loops
-（プロファイル・フィードバックから）情報が十分にあるあまり巻かれないループを引き剥がす。
+（プ��ファイル・フィードバックから）情報が十分にあるあまり巻かれないループを引き剥がす。
 これは完全ループ引き剥がし（すなわち、小さい定数回の繰り返しのループを完全に除去する）もオンにする。
 
 @option{-O3}, @option{-fprofile-use}, @option{-fauto-profile}で有効になる。
@@ -15181,7 +16001,7 @@ divとmod命令を使わない。
 @item -mgprel-ro
 @opindex mgprel-ro
 
-読取り専用セクションにあることが知られているデータについては、FDPIC ABIの@code{GPREL}再配置の使用を有効にする。 @option{-fpic}または@option{-fpie}を除いて、デフォルトで有効になっている。グローバルオフセットテーブルを小さくするのに役立つかもしれないが、１命令を4つに変える。@option{-fPIC}または@option{-fPIE}では、3命令を4に変え、そのうちの1つを複数のシンボルで共有することができ、参照シンボルのGOTエントリが不要になるため、勝つ可能性が高くなる。 そうでない場合は、@option{-mno-gprel-ro}を使用して無効にすることができる。
+読取り専用セクションにあることが知られているデータについては、FDPIC ABIの@code{GPREL}再配置の使用を有効にする。 @option{-fpic}または@option{-fpie}を除いて、デフォルトで有効になっている。グローバルオフセットテーブルを小さくするのに役立つかもしれないが、１命���を4つに変える。@option{-fPIC}または@option{-fPIE}では、3命令を4に変え、そのうちの1つを複数のシンボルで共有することができ、参照シンボルのGOTエントリが不要になるため、勝つ可能性が高くなる。 そうでない場合は、@option{-mno-gprel-ro}を使用して無効にすることができる。
 
 @item -multilib-library-pic
 @opindex multilib-library-pic
@@ -16284,7 +17104,7 @@ GCCが位置に依存しないコードを生成していない限り、これ�
 
 @item -mcop
 @opindex mcop
-コプロセッサ命令を有効にする。 デフォルトでは、これは32ビットコプロセッサです。 コプロセッサは、通常、@option{-mconfig=}オプションで有効になることに注意。
+コプロセッサ命令を有効にする。 デフォルトでは、これは32ビットコプロセッサです。 コプロセッサは、通常、@option{-mconfig=}���プションで有効になることに注意。
 
 @item -mcop32
 @opindex mcop32
@@ -19723,7 +20543,7 @@ RX命令のオペランドとして使用できる定数の最大サイズをバ
 @opindex mno-pid
 位置に依存しないデータの生成を有効にする。 有効にされると、定数データへのアクセスは、レジスタに保持されたベースアドレスからのオフセットを介して行わる。 これにより、実行可能ファイルの再配置を必要とせずに、実行時に定数データの位置を決定することができる。これは、厳しいメモリ制約を伴う組み込みアプリケーションのメリットである。 このオプションによって、変更可能なデータは影響を受けない。
 
-この機能を使用すると、定数データベースのアドレスには、通常@code{r13}のレジスタが予約される。 これにより、特に複雑な機能では、コードの速度が遅くなることがある。
+この機能を使用すると、定��データベースのアドレスには、通常@code{r13}のレジスタが予約される。 これにより、特に複雑な機能では、コードの速度が遅くなることがある。
 
 定数データベースアドレスを保持するために選択された実際のレジスタは、@option{-msmall-data-limit}および/または@option{-mint-register}コマンドラインオプションが有効かどうかによって異なる。レジスタ@code{r13}から始め下方に進み、レジスタは最初に@option{-mint-register}、次に@option {-mpid}、最後に@option{-msmall-data-limit}の要件を満たすように割り当てられる。したがって、@option{-mint-register=4}と@option{-mpid}の両方がコマンドラインで指定されている場合、小さなデータエリアレジスタは@code{r8}になる可能性がある。
 
@@ -21689,7 +22509,7 @@ GCCは@option{-fast-math}ではすでに@code{RSQRTSS}（または@code{RSQRTPS}
 
 @item -mrecip=@var{opt}
 @opindex mrecip=opt
-このオプションは、どの逆数見積り命令を使用するかを制御する。 @var{opt}はコンマで区切られたオプションのリストである。オプションの前に@samp {!}を付けてオプションを反転することができる。
+このオプションは、どの逆数見積り命令を使用するかを制御する。 @var{opt}はコンマで区切られたオプ��ョンのリストである。オプションの前に@samp {!}を付けてオプションを反転することができる。
 
 @table @samp
 @item all
