@@ -6592,20 +6592,18 @@ C99では4095に引き上げられた。C++98では規範的な最小最大値�
 @end table
 
 @node Static Analyzer Options
-@section Options That Control Static Analysis
+@section 静的解析を制御するオプション
 
 @table @gcctabopt
 @item -fanalyzer
 @opindex analyzer
 @opindex fanalyzer
 @opindex fno-analyzer
-This option enables an static analysis of program flow which looks
-for ``interesting'' interprocedural paths through the
-code, and issues warnings for problems found on them.
+このオプションは、プログラムフローの静的分析を有効にし、コードを介して「興味深い」プロシージャ間パスを探し、見つかった問題について警告を発行します。
 
-This analysis is much more expensive than other GCC warnings.
+この分析は、他のGCC警告よりもはるかにコストがかかります。
 
-Enabling this option effectively enables the following warnings:
+このオプションを有効にすると、次の警告が効果的に有効になります。
 
 @gccoptlist{ @gol
 -Wanalyzer-double-fclose @gol
@@ -6626,362 +6624,271 @@ Enabling this option effectively enables the following warnings:
 -Wanalyzer-use-of-pointer-in-stale-stack-frame @gol
 }
 
-This option is only available if GCC was configured with analyzer
-support enabled.
+このオプションは、GCCがアナライザーサポートを有効にして構成されている場合にのみ使用できます。
 
 @item -Wanalyzer-too-complex
 @opindex Wanalyzer-too-complex
 @opindex Wno-analyzer-too-complex
-If @option{-fanalyzer} is enabled, the analyzer uses various heuristics
-to attempt to explore the control flow and data flow in the program,
-but these can be defeated by sufficiently complicated code.
+@option{-fanalyzer}が有効な場合、アナライザーはさまざまなヒューリスティックを使用してプログラム内の制御フローとデータフローを探索しようとしますが、これらは十分に複雑なコードによって無効にすることがあります。
 
-By default, the analysis silently stops if the code is too
-complicated for the analyzer to fully explore and it reaches an internal
-limit.  The @option{-Wanalyzer-too-complex} option warns if this occurs.
+デフォルトでは、コードが複雑すぎてアナライザーが完全に探索できず、内部制限に達すると、分析はサイレントに停止します。 @option{-Wanalyzer-too-complex}オプションは、これが発生した場合に警告します。
 
 @item -Wno-analyzer-double-fclose
 @opindex Wanalyzer-double-fclose
 @opindex Wno-analyzer-double-fclose
-This warning requires @option{-fanalyzer}, which enables it; use
-@option{-Wno-analyzer-double-fclose} to disable it.
+この警告には@option{-fanalyzer}が必要で、それがあると有効になります。 @option{-Wno-analyzer-double-fclose}を使用して無効にします。
 
-This diagnostic warns for paths through the code in which a @code{FILE *}
-can have @code{fclose} called on it more than once.
+この診断は、@code{FILE *}が@code{fclose}を複数回呼び出すことができるコードを通るパスについて警告します。
 
 @item -Wno-analyzer-double-free
 @opindex Wanalyzer-double-free
 @opindex Wno-analyzer-double-free
-This warning requires @option{-fanalyzer}, which enables it; use
-@option{-Wno-analyzer-double-free} to disable it.
+この警告には@option{-fanalyzer}が必要で、それがあると有効になります。 @option{-Wno-analyzer-double-free}を使用して無効にします。
 
-This diagnostic warns for paths through the code in which a pointer
-can have @code{free} called on it more than once.
+この診断は、ポインターが@code{free}を複数回呼び出すことができるコードのパスを警告します。
 
 @item -Wno-analyzer-exposure-through-output-file
 @opindex Wanalyzer-exposure-through-output-file
 @opindex Wno-analyzer-exposure-through-output-file
-This warning requires @option{-fanalyzer}, which enables it; use
-@option{-Wno-analyzer-exposure-through-output-file}
-to disable it.
+この警告には@option{-fanalyzer}が必要で、それがあると有効になります。 @option{-Wno-analyzer-exposure-through-output-file}を使用して無効にします。
 
-This diagnostic warns for paths through the code in which a
-security-sensitive value is written to an output file
-(such as writing a password to a log file).
+この診断は、セキュリティ上重要な値が出力ファイルに書き込まれる（ログファイルにパスワードを書き込むなど）コードを通るパスについて警告します。
 
 @item -Wno-analyzer-file-leak
 @opindex Wanalyzer-file-leak
 @opindex Wno-analyzer-file-leak
-This warning requires @option{-fanalyzer}, which enables it; use
-@option{-Wno-analyzer-file-leak}
-to disable it.
+この警告には@option{-fanalyzer}が必要で、それがあると有効になります。 @option{-Wno-analyzer-file-leak}を使用して無効にします。
 
-This diagnostic warns for paths through the code in which a
-@code{<stdio.h>} @code{FILE *} stream object is leaked.
+この診断は、@code{<stdio.h>} @code{FILE *}ストリームオブジェクトがリークしているコードのパスを警告します。
 
 @item -Wno-analyzer-free-of-non-heap
 @opindex Wanalyzer-free-of-non-heap
 @opindex Wno-analyzer-free-of-non-heap
-This warning requires @option{-fanalyzer}, which enables it; use
-@option{-Wno-analyzer-free-of-non-heap}
-to disable it.
+この警告には@option{-fanalyzer}が必要で、それがあると有効になります。
+@option{-Wno-analyzer-free-of-non-heap}を使用して無効にします。
 
-This diagnostic warns for paths through the code in which @code{free}
-is called on a non-heap pointer (e.g. an on-stack buffer, or a global).
+この診断は、@code{free}が非ヒープポインター（たとえば、スタック上のバッファー、またはグローバル）で呼び出されるコードのパスを警告します。
 
 @item -Wno-analyzer-malloc-leak
 @opindex Wanalyzer-malloc-leak
 @opindex Wno-analyzer-malloc-leak
-This warning requires @option{-fanalyzer}, which enables it; use
-@option{-Wno-analyzer-malloc-leak}
-to disable it.
+この警告には@option{-fanalyzer}が必要で、それがあると有効になります。
+@option{-Wno-analyzer-malloc-leak}を使用して無効にします。
 
-This diagnostic warns for paths through the code in which a
-pointer allocated via @code{malloc} is leaked.
+この診断は、@code{malloc}を介して割り当てられたポインターがリークされるコードのパスについて警告します。
 
 @item -Wno-analyzer-possible-null-argument
 @opindex Wanalyzer-possible-null-argument
 @opindex Wno-analyzer-possible-null-argument
-This warning requires @option{-fanalyzer}, which enables it; use
-@option{-Wno-analyzer-possible-null-argument} to disable it.
+この警告には@option{-fanalyzer}が必要で、それがあると有効になります。
+@option{-Wno-analyzer-possible-null-argument}を使用して無効にします。
 
-This diagnostic warns for paths through the code in which a
-possibly-NULL value is passed to a function argument marked
-with @code{__attribute__((nonnull))} as requiring a non-NULL
-value.
+この診断は、NULLの可能性がある値が、非NULL値を必要とする@code {__attribute__((nonnull))}でマークされた関数引数に渡されるコードのパスを警告します。
 
 @item -Wno-analyzer-possible-null-dereference
 @opindex Wanalyzer-possible-null-dereference
 @opindex Wno-analyzer-possible-null-dereference
-This warning requires @option{-fanalyzer}, which enables it; use
-@option{-Wno-analyzer-possible-null-dereference} to disable it.
+この警告には@option{-fanalyzer}が必要で、それがあると有効になります。
+@option{-Wno-analyzer-possible-null-dereference}を使用して無効にします。
 
-This diagnostic warns for paths through the code in which a
-possibly-NULL value is dereferenced.
+この診断は、NULLの可能性がある値が逆参照されるコードを通るパスについて警告します。
 
 @item -Wno-analyzer-null-argument
 @opindex Wanalyzer-null-argument
 @opindex Wno-analyzer-null-argument
-This warning requires @option{-fanalyzer}, which enables it; use
-@option{-Wno-analyzer-null-argument} to disable it.
+この警告には@option{-fanalyzer}が必要で、それがあると有効になります。
+@option{-Wno-analyzer-null-argument}を使用して無効にします。
 
-This diagnostic warns for paths through the code in which a
-value known to be NULL is passed to a function argument marked
-with @code{__attribute__((nonnull))} as requiring a non-NULL
-value.
+この診断は、NULLであることがわかっている値が非NULL値を必要とする@code{__attribute__((nonnull))}でマークされた関数引数に渡されるコードを通るパスを警告します。
 
 @item -Wno-analyzer-null-dereference
 @opindex Wanalyzer-null-dereference
 @opindex Wno-analyzer-null-dereference
-This warning requires @option{-fanalyzer}, which enables it; use
-@option{-Wno-analyzer-null-dereference} to disable it.
+この警告には@option{-fanalyzer}が必要で、それがあると有効になります。
+@option{-Wno-analyzer-null-dereference}を使用して無効にします。
 
-This diagnostic warns for paths through the code in which a
-value known to be NULL is dereferenced.
+この診断は、NULLであることがわかっている値が逆参照されるコードを通るパスについて警告します。
 
 @item -Wno-analyzer-stale-setjmp-buffer
 @opindex Wanalyzer-stale-setjmp-buffer
 @opindex Wno-analyzer-stale-setjmp-buffer
-This warning requires @option{-fanalyzer}, which enables it; use
-@option{-Wno-analyzer-stale-setjmp-buffer} to disable it.
+この警告には@option{-fanalyzer}が必要で、それがあると有効になります。
+@option{-Wno-analyzer-stale-setjmp-buffer}を使用して無効にします。
 
-This diagnostic warns for paths through the code in which
-@code{longjmp} is called to rewind to a @code{jmp_buf} relating
-to a @code{setjmp} call in a function that has returned.
+この診断では、@code{longjmp}が呼び出されて返された関数の@code{setjmp}呼び出しに関連する@code{jmp_buf}に巻き戻されるコードを通るパスについて警告します。
 
-When @code{setjmp} is called on a @code{jmp_buf} to record a rewind
-location, it records the stack frame.  The stack frame becomes invalid
-when the function containing the @code{setjmp} call returns.  Attempting
-to rewind to it via @code{longjmp} would reference a stack frame that
-no longer exists, and likely lead to a crash (or worse).
+巻き戻しの場所を記録するために@code{jmp_buf}で@code{setjmp}が呼び出されると、スタックフレームが記録されます。 @code{setjmp}呼び出しを含む関数が戻ると、スタックフレームは無効になります。 @code{longjmp}を介して巻き戻そうとすると、存在しないスタックフレームを参照し、おそらくクラッシュ（またはさらに悪いこと）につながります。
 
 @item -Wno-analyzer-tainted-array-index
 @opindex Wanalyzer-tainted-array-index
 @opindex Wno-analyzer-tainted-array-index
-This warning requires both @option{-fanalyzer} and
-@option{-fanalyzer-checker=taint} to enable it;
-use @option{-Wno-analyzer-tainted-array-index} to disable it.
+この警告には@option{-fanalyzer}と@option{-fanalyzer-checker=taint}が必要で、それらがあると有効になります。
+use @option{-Wno-analyzer-tainted-array-index}を使用して無効にします。
 
-This diagnostic warns for paths through the code in which a value
-that could be under an attacker's control is used as the index
-of an array access without being sanitized.
+この診断は、攻撃者の制御下にある可能性のある値がサニタイズされずに配列アクセスのインデックスとして使用されるコードを通るパスについて警告します。
 
 @item -Wno-analyzer-unsafe-call-within-signal-handler
 @opindex Wanalyzer-unsafe-call-within-signal-handler
 @opindex Wno-analyzer-unsafe-call-within-signal-handler
-This warning requires @option{-fanalyzer}, which enables it; use
-@option{-Wno-analyzer-unsafe-call-within-signal-handler} to disable it.
+この警告には@option{-fanalyzer}が必要で、それがあると有効になります。
+@option{-Wno-analyzer-unsafe-call-within-signal-handler}を使用して無効にします。
 
-This diagnostic warns for paths through the code in which a
-function known to be async-signal-unsafe (such as @code{fprintf}) is
-called from a signal handler.
+この診断では、非同期シグナルに対して安全でないことがわかっている関数（@code{fprintf}など）がシグナルハンドラーから呼び出されるコードのパスについて警告します。
 
 @item -Wno-analyzer-use-after-free
 @opindex Wanalyzer-use-after-free
 @opindex Wno-analyzer-use-after-free
-This warning requires @option{-fanalyzer}, which enables it; use
-@option{-Wno-analyzer-use-after-free} to disable it.
+この警告には@option{-fanalyzer}が必要で、それがあると有効になります。
+@option{-Wno-analyzer-use-after-free}を使用して無効にします。
 
-This diagnostic warns for paths through the code in which a
-pointer is used after @code{free} is called on it.
+この診断は、@code{free}が呼び出された後にポインターが使用されるコードのパスを警告します。
 
 @item -Wno-analyzer-use-of-pointer-in-stale-stack-frame
 @opindex Wanalyzer-use-of-pointer-in-stale-stack-frame
 @opindex Wno-analyzer-use-of-pointer-in-stale-stack-frame
-This warning requires @option{-fanalyzer}, which enables it; use
-@option{-Wno-analyzer-use-of-pointer-in-stale-stack-frame}
-to disable it.
+この警告には@option{-fanalyzer}が必要で、それがあると有効になります。
+@option{-Wno-analyzer-use-of-pointer-in-stale-stack-frame}を使用して無効にします。
 
-This diagnostic warns for paths through the code in which a pointer
-is dereferenced that points to a variable in a stale stack frame.
+この診断は、古いスタックフレーム内の変数を指すポインターが逆参照されるコードを通るパスについて警告します。
 
 @item -Wno-analyzer-use-of-uninitialized-value
 @opindex Wanalyzer-use-of-uninitialized-value
 @opindex Wno-analyzer-use-of-uninitialized-value
-This warning requires @option{-fanalyzer}, which enables it; use
-@option{-Wno-analyzer-use-of-uninitialized-value} to disable it.
+この警告には@option{-fanalyzer}が必要で、それがあると有効になります。
+@option{-Wno-analyzer-use-of-uninitialized-value}を使用して無効にします。
 
-This diagnostic warns for paths through the code in which an uninitialized
-value is used.
+この診断は、初期化されていない値が使用されているコードのパスについて警告します。
 
 @end table
 
-Pertinent parameters for controlling the exploration are:
+探索を制御するための関連パラメータは次のとおりです。
 @option{--param analyzer-bb-explosion-factor=@var{value}},
 @option{--param analyzer-max-enodes-per-program-point=@var{value}},
-@option{--param analyzer-max-recursion-depth=@var{value}}, and
+@option{--param analyzer-max-recursion-depth=@var{value}}, と
 @option{--param analyzer-min-snodes-for-call-summary=@var{value}}.
 
-The following options control the analyzer.
+以下のオプションはアナライザーを制御します。
 
 @table @gcctabopt
 
 @item -fanalyzer-call-summaries
 @opindex fanalyzer-call-summaries
 @opindex fno-analyzer-call-summaries
-Simplify interprocedural analysis by computing the effect of certain calls,
-rather than exploring all paths through the function from callsite to each
-possible return.
+コールサイトから可能な各リターンまでの関数のすべてのパスを探索するのではなく、特定の呼び出しの効果を計算することにより、手続き間の分析を簡素化します。
 
-If enabled, call summaries are only used for functions with more than one
-call site, and that are sufficiently complicated (as per
-@option{--param analyzer-min-snodes-for-call-summary=@var{value}}).
+有効にした場合、呼び出しの要約は複数の呼び出しサイトを持つ、（@option{-param analyzer-min-snodes-for-call-summary=@var{value}}による）十分に複雑な関数にのみ使用されます。
 
 @item -fanalyzer-checker=@var{name}
 @opindex fanalyzer-checker
-Restrict the analyzer to run just the named checker, and enable it.
+名前付きチェッカーのみを実行するようにアナライザーを制限し、それを有効にします。
 
-Some checkers are disabled by default (even with @option{-fanalyzer}),
-such as the @code{taint} checker that implements
-@option{-Wanalyzer-tainted-array-index}, and this option is required
-to enable them.
+@option{-Wanalyzer-tainted-array-index}を実装する@code{taint}チェッカーなど、一部のチェッカーはデフォルトで（@option{-fanalyzer}を使用しても）無効になっており、このオプションは有効にするために必要です。
 
 @item -fanalyzer-fine-grained
 @opindex fanalyzer-fine-grained
 @opindex fno-analyzer-fine-grained
-This option is intended for analyzer developers.
+このオプションは、アナライザー開発者を対象としています。
 
-Internally the analyzer builds an ``exploded graph'' that combines
-control flow graphs with data flow information.
+内部的にアナライザーは、制御フローグラフとデータフロー情報を組み合わせた「分解グラフ」を作成します。
 
-By default, an edge in this graph can contain the effects of a run
-of multiple statements within a basic block.  With
-@option{-fanalyzer-fine-grained}, each statement gets its own edge.
+デフォルトでは、このグラフのエッジには、基本ブロック内の複数のステートメントの実行の影響を含めることができます。 @option{-fanalyzer-fine-grained}を使用すると、各ステートメントが独自の優位性を獲得します。
 
 @item -fanalyzer-show-duplicate-count
 @opindex fanalyzer-show-duplicate-count
 @opindex fno-analyzer-show-duplicate-count
-This option is intended for analyzer developers: if multiple diagnostics
-have been detected as being duplicates of each other, it emits a note when
-reporting the best diagnostic, giving the number of additional diagnostics
-that were suppressed by the deduplication logic.
+このオプションはアナライザーの開発者を対象としています。複数の診断が互いに重複していることが検出された場合、最適な診断を報告するときにノートが発行され、重複排除ロジックによって抑制された追加の診断の数が示されます。
 
 @item -fno-analyzer-state-merge
 @opindex fanalyzer-state-merge
 @opindex fno-analyzer-state-merge
-This option is intended for analyzer developers.
+このオプションは、アナライザー開発者を対象としています。
 
-By default the analyzer attempts to simplify analysis by merging
-sufficiently similar states at each program point as it builds its
-``exploded graph''.  With @option{-fno-analyzer-state-merge} this
-merging can be suppressed, for debugging state-handling issues.
+デフォルトでは、アナライザーは、「分解されたグラフ」を作成するときに、各プログラムポイントで十分に類似した状態をマージすることにより、分析を簡略化しようとします。 @option{-fno-analyzer-state-merge}を使用すると、このマージを抑制して、状態処理の問題をデバッグできます。
 
 @item -fno-analyzer-state-purge
 @opindex fanalyzer-state-purge
 @opindex fno-analyzer-state-purge
-This option is intended for analyzer developers.
+このオプションは、アナライザー開発者を対象としています。
 
-By default the analyzer attempts to simplify analysis by purging
-aspects of state at a program point that appear to no longer be relevant
-e.g. the values of locals that aren't accessed later in the function
-and which aren't relevant to leak analysis.
+デフォルトでは、アナライザーは、プログラムポイントでの状態の側面のうち、関連性がなくなったように見える部分、例えば 関数内で後でアクセスされず、リーク分析に関連しないローカルの値をパージすることにより、分析を簡略化しようとします。
 
-With @option{-fno-analyzer-state-purge} this purging of state can
-be suppressed, for debugging state-handling issues.
+@option{-fno-analyzer-state-purge}を使用すると、状態処理の問題をデバッグするために、この状態のパージを抑制できます。
 
 @item -fanalyzer-transitivity
 @opindex fanalyzer-transitivity
 @opindex fno-analyzer-transitivity
-This option enables transitivity of constraints within the analyzer.
+このオプションは、アナライザー内の制約の推移性を有効にします。
 
 @item -fanalyzer-verbose-edges
-This option is intended for analyzer developers.  It enables more
-verbose, lower-level detail in the descriptions of control flow
-within diagnostic paths.
+このオプションは、アナライザー開発者を対象としています。 これにより、診断パス内の制御フローの説明で、より詳細で低レベルの詳細が可能になります。
 
 @item -fanalyzer-verbose-state-changes
-This option is intended for analyzer developers.  It enables more
-verbose, lower-level detail in the descriptions of events relating
-to state machines within diagnostic paths.
+このオプションは、アナライザー開発者を対象としています。 診断パス内のステートマシンに関連するイベントの説明で、より詳細で低レベルの詳細が可能になります。
 
 @item -fanalyzer-verbosity=@var{level}
-This option controls the complexity of the control flow paths that are
-emitted for analyzer diagnostics.
+このオプションは、アナライザー診断のために出力される制御フローパスの複雑さを制御します。
 
-The @var{level} can be one of:
+@var{level}は以下の値をとります。
 
 @table @samp
 @item 0
-At this level, interprocedural call and return events are displayed,
-along with the most pertinent state-change events relating to
-a diagnostic.  For example, for a double-@code{free} diagnostic,
-both calls to @code{free} will be shown.
+このレベルでは、プロシージャ間の呼び出しと戻りのイベントが、診断に関連する最も適切な状態変化イベントと共に表示されます。 たとえば、二重@code{free}診断の場合、@code{free}への両方の呼び出しが表示されます。
 
 @item 1
-As per the previous level, but also show events for the entry
-to each function.
+前のレベルと同様に、各関数へのエントリのイベントも表示します。
 
 @item 2
-As per the previous level, but also show events relating to
-control flow that are significant to triggering the issue
-(e.g. ``true path taken'' at a conditional).
+前のレベルと同様に、問題のトリガーに重要な制御フローに関連するイベントも表示します（例：条件付きの「実際のパス」）。
 
-This level is the default.
+このレベルがデフォルトです。
 
 @item 3
-As per the previous level, but show all control flow events, not
-just significant ones.
+前のレベルと同様ですが、重要なイベントだけでなく、すべての制御フローイベントを表示します。
 
 @item 4
-This level is intended for analyzer developers; it adds various
-other events intended for debugging the analyzer.
+このレベルはアナライザー開発者を対象としています。 アナライザーのデバッグを目的とした他のさまざまなイベントを追加します。
 
 @end table
 
 @item -fdump-analyzer
 @opindex fdump-analyzer
-Dump internal details about what the analyzer is doing to
-@file{@var{file}.analyzer.txt}.
-This option is overridden by @option{-fdump-analyzer-stderr}.
+アナライザーの動作に関する内部の詳細を@file{@var{file}.analyzer.txt}にダンプします。
+このオプションは、@option{-fdump-analyzer-stderr}によってオーバーライドされます。
 
 @item -fdump-analyzer-stderr
 @opindex fdump-analyzer-stderr
-Dump internal details about what the analyzer is doing to stderr.
-This option overrides @option{-fdump-analyzer}.
+アナライザーが標準エラーに対して行っていることに関する内部の詳細をダンプします。
+このオプションは@option{-fdump-analyzer}をオーバーライドします。
 
 @item -fdump-analyzer-callgraph
 @opindex fdump-analyzer-callgraph
-Dump a representation of the call graph suitable for viewing with
-GraphViz to @file{@var{file}.callgraph.dot}.
+GraphVizでの表示に適したコールグラフの表現を@file{@var{file}.callgraph.dot}にダンプします。
 
 @item -fdump-analyzer-exploded-graph
 @opindex fdump-analyzer-exploded-graph
-Dump a representation of the ``exploded graph'' suitable for viewing with
-GraphViz to @file{@var{file}.eg.dot}.
-Nodes are color-coded based on state-machine states to emphasize
-state changes.
+GraphVizでの表示に適した「分解グラフ」の表現を@file{@var{file}.eg.dot}にダンプします。
+ノードは、状態の変化を強調するために、状態マシンの状態に基づいて色分けされます。
 
 @item -fdump-analyzer-exploded-nodes
 @opindex dump-analyzer-exploded-nodes
-Emit diagnostics showing where nodes in the ``exploded graph'' are
-in relation to the program source.
+「分解されたグラフ」のノードがプログラムソースに関連している場所を示す診断を送信します。
 
 @item -fdump-analyzer-exploded-nodes-2
 @opindex dump-analyzer-exploded-nodes-2
-Dump a textual representation of the ``exploded graph'' to
-@file{@var{file}.eg.txt}.
+「分解グラフ」のテキスト表現を@file{@var{file}.eg.txt}にダンプします。
 
 @item -fdump-analyzer-exploded-nodes-3
 @opindex dump-analyzer-exploded-nodes-3
-Dump a textual representation of the ``exploded graph'' to
-one dump file per node, to @file{@var{file}.eg-@var{id}.txt}.
-This is typically a large number of dump files.
+「分解グラフ」のテキスト表現をノードごとに1つのダンプファイルに、@file{@var{file}.eg-@var{id}.txt}にダンプします。これは通常、多数のダンプファイルです。
 
 @item -fdump-analyzer-state-purge
 @opindex fdump-analyzer-state-purge
-As per @option{-fdump-analyzer-supergraph}, dump a representation of the
-``supergraph'' suitable for viewing with GraphViz, but annotate the
-graph with information on what state will be purged at each node.
-The graph is written to @file{@var{file}.state-purge.dot}.
+@option{-fdump-analyzer-supergraph}のように、GraphVizでの表示に適した「スーパーグラフ」の表現をダンプしますが、各ノードでパージされる状態に関する情報をグラフに注釈として付けます。
+グラフは@file{@var{file}.state-purge.dot}に書き込まれます。
 
 @item -fdump-analyzer-supergraph
 @opindex fdump-analyzer-supergraph
-Dump representations of the ``supergraph'' suitable for viewing with
-GraphViz to @file{@var{file}.supergraph.dot} and to
-@file{@var{file}.supergraph-eg.dot}.  These show all of the
-control flow graphs in the program, with interprocedural edges for
-calls and returns.  The second dump contains annotations showing nodes
-in the ``exploded graph'' and diagnostics associated with them.
+GraphVizでの表示に適した「スーパーグラフ」の表現を@file{@var{file}.supergraph.dot}および@file{@var {file}.supergraph-eg.dot}にダンプします。 これらは、プログラム内のすべての制御フローグラフと、呼び出しと戻りの手続き間エッジを示しています。 2番目のダンプには、「分解されたグラフ」内のノードとそれらに関連付けられた診断を示す注釈が含まれています。
 
 @end table
 
