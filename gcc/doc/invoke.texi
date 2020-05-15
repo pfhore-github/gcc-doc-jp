@@ -7335,20 +7335,20 @@ GCCを@option{-Q --help=optimizers}で起動することでそれぞれのレベ
 もっと最適化する。@option{-O3}は@option{-O2}によって指定されたすべての最適化をオンにして、以下の最適化フラグもオンにする。
 @c Please keep the following list alphabetized!
 @gccoptlist{-fgcse-after-reload 
--finline-functions 
 -fipa-cp-clone
 -floop-interchange 
 -floop-unroll-and-jam 
 -fpeel-loops 
 -fpredictive-commoning 
+-fsplit-loops 
 -fsplit-paths 
--ftree-loop-distribute-patterns 
 -ftree-loop-distribution 
 -ftree-loop-vectorize 
 -ftree-partial-pre 
 -ftree-slp-vectorize 
 -funswitch-loops 
 -fvect-cost-model 
+-fvect-cost-model=dynamic 
 -fversion-loops-for-strides}
 
 @item -O0
@@ -7379,19 +7379,19 @@ Fortran固有の@option{-fstack-arrays}、@option{-fmax-stack-var-size}が指定
 編集・コンパイル・デバッグサイクルにとっての選択肢のレベルとなる最適化であるべきで、
 速いコンパイルとよいデバッグ経験を維持する合理的なレベルを提供する。 デバッグ情報を収集する一部のコンパイラパスは@option{-O0}で無効になるため、デバッグ可能なコードの生成には@option{-O0}よりも適切な選択です。
 
-@option{-O0}と同様に、@option{-Og}は多くの最適化パスを完全に無効にするため、それらを制御する個々のオプションは効果がありません。 それ以外の場合、@option {-Og}は、デバッグを妨げる可能性のあるフラグを除く、すべての@option{-O1}最適化フラグを有効にします。
+@option{-O0}と同様に、@option{-Og}は多くの最適化パスを完全に無効にするため、それらを制御する個々のオプションは効果がありません。 それ以外の場合、@option{-Og}は、デバッグを妨げる可能性のあるフラグを除く、すべての@option{-O1}最適化フラグを有効にします。
 
 @gccoptlist{-fbranch-count-reg  -fdelayed-branch 
--fif-conversion  -fif-conversion2  
+-fdse  -fif-conversion  -fif-conversion2  
 -finline-functions-called-once 
 -fmove-loop-invariants  -fssa-phiopt 
--ftree-bit-ccp  -ftree-pta  -ftree-sra}
+-ftree-bit-ccp  -ftree-dse -ftree-pta  -ftree-sra}
 
 @end table
 
 もし、レベル数のありなしにかかわらず、複数の@option{-O}オプションを使うなら、最後のそのようなオプションが有効なものである。
 
-形式@option{-f@var{flag}}のオプションは機種依存のフラグを指定する。大抵のフラグは肯定形と否定形の両方がある。@option{-ffoo}の否定形は
+形式@option{-f@var{flag}}のオプションは機種非依存のフラグを指定する。大抵のフラグは肯定形と否定形の両方がある。@option{-ffoo}の否定形は
 @option{-fno-foo}である。以下のテーブルで、形式の片方だけをリストする。典型的にあなたが使う方である。@samp{no-}を消すか加える事で
 他の形式を得ることができる。
 
@@ -7476,7 +7476,7 @@ RTLでの前方伝搬パスを実行する。このパスは2つの命令を結�
 すべての一度だけ呼ばれた@code{static}関数を@code{inline}をマークされていなくても呼び出し元へのインライン化と考える。
 もし与えられた関数が統合されたなら、関数自身はアセンブラコードとしては出力されない。
 
-レベル@option{-O1}, @option{-O2}, @option{-O3}と@option{-Os}で有効になる。
+レベル@option{-O1}, @option{-O2}, @option{-O3}と@option{-Os}で有効になるが、@option{-Og}ではならない。
 
 @item -fearly-inlining
 @opindex fearly-inlining
@@ -7567,18 +7567,18 @@ CやC++のような言語はそれぞれの変数が、再帰呼び出しでの�
 
 @item -fno-branch-count-reg
 @opindex fno-branch-count-reg
+@opindex fbranch-count-reg
 レジスタをデクリメントして、ゼロと比較し、その結果に基いて分岐する列を生成する代わりに
-カウントレジスタでの「デクリメントと分岐」命令の使用の機会をスキャンするパスの実行を避ける。
+カウントレジスタでの「デクリメントと分岐」命令の使用の機会をスキャンする最適化パスを無効化する。
 このオプションはそのような命令をサポートしたアーキテクチャでのみ意味を持ち、x86、PowerPC、IA-64、S/390を含む。
 @option{-fno-branch-count-reg}オプションは他の最適化パスによって導入された生成された命令列からの
 デクリメント・分岐命令は削除しないことに注意。
 
-@option{-O1}より高い場合デフォルトで有効である。
-
-デフォルトは@option{-fbranch-count-reg}である。
+@option{-Og}以外での@option{-O1}より高い場合デフォルトで有効である。
 
 @item -fno-function-cse
 @opindex fno-function-cse
+@opindex ffunction-cse
 レジスタに関数アドレスを置かない。定数関数を呼ぶそれぞれの命令に関数のアドレスを明示的に含ませる。
 
 このオプションは非効率なコードを生み出すが、アセンブラ出力を変更する奇妙なハックはこのオプションが使われない
@@ -7611,6 +7611,12 @@ CやC++のような言語はそれぞれの変数が、再帰呼び出しでの�
 
 レベル@option{-O}, @option{-O2}, @option{-O3}, @option{-Os}で有効になる。
 
+@item -fsplit-wide-types-early
+@opindex fsplit-wide-types-early
+ワイドタイプを非常に遅くではなく、早く完全に分割します。 @option{-fsplit-wide-types}がオンになっていない限り、このオプションは効果がありません。
+
+これは、一部のターゲットのデフォルトです。
+
 @item -fcse-follow-jumps
 @opindex fcse-follow-jumps
 共通部分式除去（CSE）で、ジャンプの行き先が他のパスで到達しない時に、ジャンプ命令を通してスキャンする。
@@ -7636,7 +7642,7 @@ CSEがelse句のない単純な@code{if}文に出会ったならば、@option{-f
 大域共通部分式除去パスを行う。このパスは大域定数とコピーの伝搬も行う。
 
 @emph{注意：} GCC拡張の計算gotoを使ったプログラムをコンパイルするときは、
-大域共通部分式除去パスをコマンドラインで@option{-fno-gcse}を加える事で無効にしたほうがよい実行時パフォーマンスを得るかもしれにあ。
+大域共通部分式除去パスをコマンドラインで@option{-fno-gcse}を加える事で無効にしたほうがよい実行時パフォーマンスを得るかもしれない。
 
 レベル@option{-O2}, @option{-O3}, @option{-Os}で有効になる。
 
@@ -7666,7 +7672,7 @@ CSEがelse句のない単純な@code{if}文に出会ったならば、@option{-f
 @option{-fgcse-after-reload}が有効になる時、冗長ロード除去パスがリロードの後に行われる。このパスの目的は
 冗長なこぼれを片付けることである。
 
-@option {-fprofile-use}および@option {-fauto-profile}によって有効になります。
+@option{-fprofile-use}および@option{-fauto-profile}によって有効になります。
 
 @item -faggressive-loop-optimizations
 @opindex faggressive-loop-optimizations
@@ -7724,7 +7730,7 @@ C++ ABIはコンストラクタとデストラクタの複数の入り口を必�
 
 @item -fdelete-null-pointer-checks
 @opindex fdelete-null-pointer-checks
-プラグラムが安全にヌルポインタの参照外しができず、アドレス０にはコードもデータ要素もないと仮定する。
+プラグラムが安全にヌルポインタの参照外しができず、アドレス0にはコードもデータ要素もないと仮定する。
 このオプションは全最適化レベルでの単純な定数畳み込み最適化を有効にする。それに加え、
 GCCでの他の最適化パスはヌルポインタの無用なチェックを除去する大域データフロー解析を制御するために
 このフラグを使う。これらはアドレス0へのメモリアクセスは常にトラップを発生させ、したがってもしすでに参照外しされた後で
@@ -7813,7 +7819,7 @@ Chaitin-Briggs色付けはすべてのアーキテクチャで実装されてい
 
 @item -fira-hoist-pressure
 @opindex fira-hoist-pressure
-表現を巻き上げる決定のために、コードを巻き上げるパスにおいてレジスタ圧を評価するために、IRA（統合レジスタアロケータ）を使う。
+表現を巻き上げる決定のためのコードを巻き上げるパスにおいてレジスタ圧を評価するために、IRA（統合レジスタアロケータ）を使う。
 このオプションはより小さいコードを起こすが、それはコンパイラを遅くすることがある。
 
 このオプションはすべてのターゲットでレベル@option{-Os}で有効になる。
@@ -7821,7 +7827,7 @@ Chaitin-Briggs色付けはすべてのアーキテクチャで実装されてい
 @item -fira-loop-pressure
 @opindex fira-loop-pressure
 ループ不変を動かす決定のためにループでレジスタ圧を評価するためにIRA（統合レジスタアロケータ）を使う。
-このオプションは通常大きなレジスタファイル（＞＝３２レジスタ）をもつ機種ではより速く、より小さいコードコードを生成するが、、
+このオプションは通常大きなレジスタファイル（＞＝３２レジスタ）をもつ機種ではより速く、より小さいコードコードを生成するが、
 コンパイラを遅くすることがある。
 
 このオプションはあるターゲットでレベル@option{-O3}で有効になる。
@@ -7867,11 +7873,13 @@ LRAは利益があるならば再実体化（再計算）を試みる。
 
 @item -fno-sched-interblock
 @opindex fno-sched-interblock
+@opindex fsched-interblock
 基本ブロックをまたいで命令をスケジュールしない。通常はレジスタ割当前のスケジュールではデフォルトで有効である。
 すなわち、@option{-fschedule-insns}でか、@option{-O2}以上。
 
 @item -fno-sched-spec
 @opindex fno-sched-spec
+@opindex fsched-spec
 非ロード命令の投機的な移動を許可しない。通常はレジスタ割当前のスケジュールではデフォルトで有効である。
 すなわち、@option{-fschedule-insns}でか、@option{-O2}以上。
 
@@ -7985,7 +7993,7 @@ CPUをモデル化するというわけではないので、このオプショ�
 @item -fsemantic-interposition
 @opindex fsemantic-interposition
 ELFのようなあるオブジェクトフォーマットで、動的リンカによるシンボルの挿入を許可する。
-これはDSOからエクスポートされたシンボルで、問題の関数や変数が変わるかもしれないという予想でにより、
+これはDSOからエクスポートされたシンボルで、問題の関数や変数が変わるかもしれないという予想により、
 コンパイラは手続間の伝搬、インライン化、他の最適化ができなくなることを意味する。
 この機能は例えば、メモリ割り当て関数をデバッグ実装で書き換えることなどで有用かもしれないが、
 コード品質の観点では高くつく。
@@ -8024,7 +8032,7 @@ ELFのようなあるオブジェクトフォーマットで、動的リンカ�
 その場合では、呼び出し前後で保存と復帰をする必要が無い。これは呼ばれた関数が
 現在の関数と同じコンパイル単位の一部でそれより前にコンパイルされている時だけ可能である。
 
-レベル@option{-O2}、@option{-O3}、@option{-Os}で有効になりますが、プロファイリング用に生成されたコードがインスツルメントされる場合、オプションは無効になります（@option{-p}または@option {-pg}）または呼び出し先のレジスタの使用状況を正確に知ることができない場合（これは、RTLでプロローグとエピローグを公開しないターゲットで発生します）。
+レベル@option{-O2}、@option{-O3}、@option{-Os}で有効になりますが、プロファイリング用に生成されたコードがインスツルメントされる場合、オプションは無効になります（@option{-p}または@option{-pg}）または呼び出し先のレジスタの使用状況を正確に知ることができない場合（これは、RTLでプロローグとエピローグを公開しないターゲットで発生します）。
 
 @item -fconserve-stack
 @opindex fconserve-stack
@@ -8104,7 +8112,7 @@ pure、constな関数を発見する。@option{-O}以上でデフォルトで有
 @item -fipa-cp
 @opindex fipa-cp
 手続間定数伝搬を行う。この最適化は関数へ渡される値がいつ定数であるかを決定するためにプログラムを解析して、
-それのそって最適化する。この最適化はもしアプリケーションが関数に定数を渡していたらかなりパフォーマンスを向上させうる。
+それにそって最適化する。この最適化はもしアプリケーションが関数に定数を渡していたらかなりパフォーマンスを向上させうる。
 このフラグは@option{-O2}, @option{-Os} and @option{-O3}でデフォルトで有効である。
 
 @item -fipa-cp-clone
@@ -8126,7 +8134,7 @@ pure、constな関数を発見する。@option{-O}以上でデフォルトで有
 @item -fipa-icf
 @opindex fipa-icf
 関数と読み込み専用変数の同一コード畳み込みを行う。この最適化はコードサイズを削減して、
-関数を異なる名前の同様物で置換することでスタック巻き戻しを乱すかもしれない。最適化あはリンク時最適化が有効の時に
+関数を異なる名前の同様物で置換することでスタック巻き戻しを乱すかもしれない。この最適化はリンク時最適化が有効の時に
 もっと効果的に働く。
 
 振る舞いはGoldリンカICF最適化と似ているにもかかわらず、GCC ICFは異なるレベルで働きそれ故に最適化は同じではない。
@@ -8144,7 +8152,7 @@ GCCの最適化を制御して、ライブパッチに適した出力を生成�
 
 通常、IPA最適化を有効にすると、各関数の影響を受ける関数の数が多くなります。 影響を受ける関数の数を制御し、影響を受ける関数のリストをより簡単に計算するために、2つの異なるレベルでIPA最適化を部分的に有効にできます。
 
-@var {level}引数は次のいずれかでなければなりません：
+@var{level}引数は次のいずれかでなければなりません：
 
 @table @samp
 
@@ -8172,7 +8180,7 @@ GCCの最適化を制御して、ライブパッチに適した出力を生成�
 
 このフラグはデフォルトで無効になっています。
 
-@option {-flive-patching}はリンク時最適化（@option{-flto}）ではサポートされていないことに注意してください。
+@option{-flive-patching}はリンク時最適化（@option{-flto}）ではサポートされていないことに注意してください。
 
 @item -fisolate-erroneous-paths-dereference
 @opindex fisolate-erroneous-paths-dereference
@@ -8232,6 +8240,13 @@ switchでの単純な初期化からスカラー配列からの初期化への�
 条件付き未実行コード除去(DCE)を行う。このフラグは@option{-O}以上で@option{-Os}が指定されていないならば
 デフォルトで有効である。
 
+@item -ffinite-loops
+@opindex ffinite-loops
+@opindex fno-finite-loops
+出口のあるループが最終的に出口を取り、無期限にループしないと仮定します。 これにより、コンパイラは、他に副作用のないループを削除でき、最終的な無限ループを考慮しません。
+
+このオプションは、-std=c++11以降のC++の@option{-O2}でデフォルトで有効になっています。
+
 @item -ftree-dominator-opts
 @opindex ftree-dominator-opts
 ドミネーター・ツリー横断に基づいた様々な単純なスカラー整理（構築・コピー伝搬、冗長除去、範囲伝搬と式の単純化）
@@ -8240,7 +8255,7 @@ switchでの単純な初期化からスカラー配列からの初期化への�
 
 @item -ftree-dse
 @opindex ftree-dse
-木での死んだストアの除去（DSE)を行う。死んだストアは間のロードがなく、後で他のストアによって上書きされるメモリの場所への
+木での非到達ストア除去（DSE)を行う。非到達ストアは間のロードがなく、後で他のストアによって上書きされるメモリの場所への
 ストアである。このフラグは@option{-O}以上でデフォルトで有効である。
 
 @item -ftree-ch
@@ -8318,7 +8333,7 @@ ENDDO
 ライブラリに呼び出しで生成されるコードになりうるパターンのループ分散を実行する。
 このフラグは、@option{-O3}でデフォルトで有効である
 。
-このパスは初期化ループを分散さ���て、memset 0への呼び出しを生成する。例えば、ループ
+このパスは初期化ループを分散させて、memset 0への呼び出しを生成する。例えば、ループ
 @smallexample
 DO I = 1, N
   A(I) = 0
@@ -8381,7 +8396,7 @@ for (int i = 0; i < N; i++)
 @opindex ftree-parallelize-loops
 ループを並列化する。すなわち、その繰り返し空間をｎスレッドで走るように分割する。
 これはその繰り返しが独立で任意に並べ替えができるループでのみ可能である。
-最適化は、例えばメモリ帯域幅によって制約されるよりはむしろ、CPU集約型であるループ用のため、
+この最適化は、例えばメモリ帯域幅によって制約されるよりはむしろ、CPU集約型であるループ用のため、
 マルチプロセッサマシンでのみ利益をもたらす。このオプションは@option{-pthread}を含み、
 したがって@option{-pthread}をサポートしているターゲットでのみサポートされる。
 
@@ -8447,7 +8462,7 @@ OpenMP simdディレクティブマークされたループのベクトル化で
 @item -fsplit-paths
 @opindex fsplit-paths
 ループバックエッジを導くパスを分割する。これは非到達コード除去と共通部分式除去を向上させる。これは
-@option{-O2}以上でデフォルトで有効である。
+@option{-O3}以上でデフォルトで有効である。
 
 @item -fsplit-ivs-in-unroller
 @opindex fsplit-ivs-in-unroller
@@ -8462,6 +8477,8 @@ OpenMP simdディレクティブマークされたループのベクトル化で
 @item -fvariable-expansion-in-unroller
 @opindex fvariable-expansion-in-unroller
 このオプションでコンパイラはループ展開時にある局所変数の複数のコピーを作り、それはより良いコードを起こしうる。
+
+この最適化は、PowerPCターゲットではデフォルトで有効になっていますが、それ以外の場合はデフォルトで無効になっています。
 
 @item -fpartial-inlining
 @opindex fpartial-inlining
@@ -8489,7 +8506,7 @@ OpenMP simdディレクティブマークされたループのベクトル化で
 @item -fno-printf-return-value
 @opindex fno-printf-return-value
 @opindex fprintf-return-value
-@code{sprintf}、@code{vprintf}、@code{vsprintf}、@code{vsnprintf}のようなフォーマットされた出力関数の既知の戻り値に定数を代入しない。 （しかし@code{sprintf}と@code{fprintf}はしない）。
+@code{sprintf}、@code{vprintf}、@code{vsprintf}、@code{vsnprintf}のようなフォーマットされた出力関数の既知の戻り値に定数を代入しない。 （しかし@code{sprintf}と@code{fprintf}は除く）。
 この変換により、GCCは、定数であるか、または正確な戻り値を可能にする範囲内の値であることが知られている引数で呼び出される、これらの関数の既知の戻り値に基づいて分岐を最適化または排除することさえできる。 たとえば、@option{-fprintf-return-value}が有効な場合、@code{if}文の分岐と本体（@code{snprintf}の呼び出しではない） は、@code{i}が32ビット以下の整数のときは、戻り値が多くても8であると保証されているので最適化で消すことができる。
 
 @smallexample
@@ -8522,7 +8539,7 @@ GCCをはもしプロファイリングフィードバック(@option{-fprofile-a
 これらのヒューリスティックは制御フローグラフにもとづいている。もし分岐確率が@code{__builtin_expect}で指定されているならば、
 ヒューリスティックは制御フローグラフの残りの分岐確率を推測するのに使われ、@code{__builtin_expect}情報が考慮に入れられる。
 ヒューリスティックと@code{__builtin_expect}の相互作用は複雑になりえ、ある場合には、ヒューリスティックを無効にして
-@code{__builtin_expect}の高架が理解しやすくすることが役立つかもしれない。
+@code{__builtin_expect}の効果が理解しやすくすることが役立つかもしれない。
 
 デフォルトはレベル@option{-O}, @option{-O2}, @option{-O3}, @option{-Os}では@option{-fguess-branch-probability}である。
 
@@ -8548,7 +8565,7 @@ GCCをはもしプロファイリングフィードバック(@option{-fprofile-a
 熱いのと冷たい基本ブロックをアセンブリと@file{.o}ファイルの別々のセクションへと分割し、
 ページングとキャッシュ局所性パフォーマンスを向上させる。
 
-この最適化は、例外処理または巻き戻しテーブル（setjump / longjumpまたはターゲット固有のスキームを使用するターゲット）、リンク・ワンスセクション、ユーザー定義セクション属性を持つ関数、および名前付きセクションサポートしていないアーキテクチャで自動的にオフになる。 @option{-fsplit-stack}を使用すると、このオプションはデフォルトでは（リンカエラーを避けるために）有効にはならないが、明示的に有効にすることができる（機能するリンカーを使用している場合）。
+この最適化は、例外処理または巻き戻しテーブル（setjump/longjumpまたはターゲット固有のスキームを使用するターゲット）、リンク・ワンスセクション、ユーザー定義セクション属性を持つ関数、および名前付きセクションサポートしていないアーキテクチャで自動的にオフになる。 @option{-fsplit-stack}を使用すると、このオプションはデフォルトでは（リンカエラーを避けるために）有効にはならないが、明示的に有効にすることができる（機能するリンカーを使用している場合）。
   
 @option {-O2}、@option {-O3}、@option {-Os}のレベルでx86用に有効になる。
 
@@ -8684,6 +8701,16 @@ int f() @{
 
 レベル@option{-O2}, @option{-O3}で有効である。
 
+@item -fno-allocation-dce
+@opindex fno-allocation-dce
+デッドコードの除去で未使用のC++割り当てを削除しない。
+
+@item -fallow-store-data-races
+@opindex fallow-store-data-races
+コンパイラーがストアで新しいデータ競合を導入できるようにします。
+
+レベル@option{-Ofast}で有効になります。
+
 @item -funit-at-a-time
 @opindex funit-at-a-time
 このオプションは互換性のために残されている。@option{-funit-at-a-time}には効果がないが、
@@ -8697,7 +8724,7 @@ int f() @{
 このオプションが使われると、未参照の静的変数は削除されない。このオプションは特定の順序に依存した既存のコードをサポートすることを
 意図している。新しいコードでは、可能なら属性を使ったほうがいい。
 
-@option{-ftoplevel-reorder}は、@option {-O1}以上ではデフォルトであり、@option{-fsection-anchors}が明示的に要求されている場合は@option{-O0}でもデフォルトです。
+@option{-ftoplevel-reorder}は、@option{-O1}以上ではデフォルトであり、@option{-fsection-anchors}が明示的に要求されている場合は@option{-O0}でもデフォルトです。
 さらに、@option{-fno-toplevel-reorder}は@option{-fno-section-anchors}を意味します。
 
 @item -fweb
@@ -8783,9 +8810,13 @@ GCCは自動的にどのファイルがLTOモードで最適化されてどの�
 
 他の@option{-ffp-contract}, @option{-fno-strict-overflow},
 @option{-fwrapv}, @option{-fno-trapv}, @option{-fno-strict-aliasing}のようなオプションは
-リンク段階を通して渡され、矛盾する翻訳単位で控えめにマージされる。特に
+リンク段階を通して渡され、矛盾する翻訳単位で保守的にマージされる。特に
 @option{-fno-strict-overflow}, @option{-fwrapv}, @option{-fno-trapv}は優先順位を取る。
 そして例えば、@option{-ffp-contract=off}は@option{-ffp-contract=fast}より優先される。それらはリンク時に上書きされる。
+
+@option{-Wa}または@option{-Xassembler}を介してアセンブラにオプションを渡す必要がある場合は、そのような翻訳単位を@option{-fno-lto}でコンパイルするか、すべての翻訳単位で一貫して同じアセンブラオプションを使用してください。 または、LTOリンク時にアセンブラオプションを指定することもできます。
+
+デバッグ情報の生成を有効にするには、コンパイル時に@option {-g}を指定する必要があります。 リンク時の入力ファイルのいずれかがデバッグ情報生成を有効にして構築されている場合、リンクはデバッグ情報生成も有効にします。 ドワーフレベル@option {-gdwarf-5}などの複雑なデバッグ情報設定は、リンカーコマンドラインで明示的に繰り返す必要があり、異なる設定を異なる翻訳単位で混在させることはお勧めしません。
 
 もしLTOが一緒にリンクされる別の翻訳単位の型と非互換で宣言されているCリンケージのオブジェクトに出会ったら、
 (ISO C99 6.2.7によれば未定義の振る舞い), 致命的でない診断が出るかもしれない。振る舞いは実行時は依然として未定義である。
@@ -8842,6 +8873,8 @@ LTOの現在の実装は異なるタイプのホストで移植性があるバ�
 これはすでにGCCを呼ぶMakefileがすでに並列で実行されている時に役立つ。これを働かせるためには現在のMakefileで
 コマンドレシピの前に@samp{+}を加えなくてはならない。このオプションは@env{MAKE}がGNU makeの時だけ働くだろう。
 
+@make{-flto=auto}を使用して、GNU makeのジョブサーバーを使用します（使用可能な場合）。または、システムに存在するCPUスレッドの数の自動検出にフォールバックします。
+
 @item -flto-partition=@var{alg}
 @opindex flto-partition
 リンク時最適化器で使われる分割アルゴリズムを指定する。値は元のソースファイルを反映する
@@ -8851,11 +8884,6 @@ LTOの現在の実装は異なるタイプのホストで移植性があるバ�
 デフォルト値は@samp{balanced}である。様々なコード順序問題の回避方法として@samp{1to1}を使うことができる一方、
 @samp{max}分割は内部テスト専用を意図している。値@samp{one}が正確に一つの分割が使われるべきであることを指定するのに対し、
 値@samp{none}は分割を迂回してリンク時最適化ステップをWPAフェーズから直接実行する。
-
-@item -flto-odr-type-merging
-@opindex flto-odr-type-merging
-リンク時にC++型のマングル化された形名のストリーミングとその統合を有効にする。これはLTOオブジェクトファイルのサイズを増やすが、
-単一定義規則違反の診断を有効にする。
 
 @item -flto-compression-level=@var{n}
 @opindex flto-compression-level
@@ -8913,17 +8941,23 @@ GCCは正しいオプションをそれらのツールに渡すために@command
 このオプションが指定された時は、GCCはヒューリスティックを使ってこの矛盾を修正・補正する。デフォルトではGCCは矛盾したプロファイルを検知したら
 エラーメッセージを生成する。
 
+@item -fprofile-partial-training
+@opindex fprofile-use
+@code{-fprofile-use}を使用すると、訓練の走行中に実行されないプログラムのすべての部分が、速度ではなくサイズに対して積極的に最適化されます。 プログラム内のすべての可能なホットパスをトレーニングするのが現実的でない場合があります。 （たとえば、プログラムには特定のハードウェアに固有の関数が含まれている場合があり、トリアーニングは、プログラムが実行されるすべてのハードウェア構成をカバーしていない場合があります。）@code{-fprofile-partial-training}を使用すると、プロファイルフィードバックは、 それらがプロファイルフィードバックなしでコンパイルされたかのように最適化されるようにトレーニングを実行します。 これにより、トレインランが代表的ではない場合のパフォーマンスが向上しますが、コードが大幅に大きくなります。
+
 @item -fprofile-use
 @itemx -fprofile-use=@var{path}
 @opindex fprofile-use
 プロファイルのフィードバックに指示された最適化を有効にし、プロファイルフィードバックが利用可能なときだけ一般的に有益な
-最適化に従う。@gccoptlist{-fbranch-probabilities  -fprofile-values 
+最適化に従う。
+
+@gccoptlist{-fbranch-probabilities  -fprofile-values 
 -funroll-loops  -fpeel-loops  -ftracer  -fvpt 
 -finline-functions  -fipa-cp  -fipa-cp-clone  -fipa-bit-cp 
 -fpredictive-commoning  -fsplit-loops  -funswitch-loops 
 -fgcse-after-reload  -ftree-loop-vectorize  -ftree-slp-vectorize 
 -fvect-cost-model=dynamic  -ftree-loop-distribute-patterns 
--fprofile-reorder-functions}。
+-fprofile-reorder-functions}
 
 このオプションを使うことができる前には、最初にプロファイル情報を生成しなければならない。
 @option{-fprofile-generate}オプションについての情報は@xref{Optimize Options}
@@ -9015,6 +9049,7 @@ Cをコンパイルするとき、@option{-fexcess-precision=standard}が指定�
 
 @item -fno-math-errno
 @opindex fno-math-errno
+@opindex fmath-errno
 @code{sqrt}のような単一命令で実行される数学関数を呼んだ後に@code{errno}をセットしない。
 数学のエラーハンドリングのIEEE例外に依存したプログラムはIEEE算術互換性を維持する一方で速度のために
 このフラグを使いたいかもしれない。
@@ -9073,14 +9108,16 @@ ISO CやC++の言語標準に違反する。注意：並べ替えはゼロの符
 
 @item -fno-signed-zeros
 @opindex fno-signed-zeros
+@opindex fsigned-zeros
 ゼロの符号を無視する浮動小数点算術の最適化を許可する。IEEE算術は+0.0と@minus{}0.0値を区別する振る舞いを指定していて、
 x+0.0や0.0*xのような表現の単純化を(@option{-ffinite-math-only}であっても)禁じている。
-このオプションは結果のゼルの符号が意味を持たないことを暗示する。
+このオプションは結果のゼロの符号が意味を持たないことを暗示する。
 
 デフォルトは@option{-fsigned-zeros}である。
 
 @item -fno-trapping-math
 @opindex fno-trapping-math
+@opindex ftrapping-math
 コードを浮動小数点演算がユーザに可視のトラップを生成しないと仮定してコンパイルする。これらのトラップは、
 ゼロによる除算、オーバーフロー、アンダーフロー、不正確の結果と不正な操作が含まれる。このオプションは
 @option{-fno-signaling-nans}が有効なことが要求される。もし例えば、「非停止」IEEE算術に依存しているなら
@@ -9119,11 +9156,12 @@ IEEEシグナルNaNがユーザ可視のトラップを浮動小数点操作の�
 
 @item -fno-fp-int-builtin-inexact
 @opindex fno-fp-int-builtin-inexact
+@opindex ffp-int-builtin-inexact
 組み込み関数@code{ceil}、@code{floor}、@code{round}と@code{trunc}、およびそれらの@code{float}および@code{long double}変種に非整数引数で「不正確」浮動小数点例外を発生させることを許可しない。ISO C99とC11は、これらの関数が「不正確」例外を発生させることを許しているが、IEEE 754-2008へのCバインディングであるISO / IEC TS 18661-1：2014では、そうすることは許可していない。
 
 デフォルトは@option{-ffp-int-builtin-inexact}で、例外を発生させる。 このオプションは、@option{-ftrapping-math}が有効でない限りは何も行わない。
 
-@option {-fno-fp-int-builtin-inexact}が使用されていても、関数がライブラリ関数の呼び出しを生成した場合、ライブラリ実装がTS 18661に従わない場合、「不正確」例外が発生する可能性がある。
+@option{-fno-fp-int-builtin-inexact}が使用されていても、関数がライブラリ関数の呼び出しを生成した場合、ライブラリ実装がTS 18661に従わない場合、「不正確」例外が発生する可能性がある。
 
 @item -fsingle-precision-constant
 @opindex fsingle-precision-constant
@@ -9222,12 +9260,12 @@ IEEEシグナルNaNがユーザ可視のトラップを浮動小数点操作の�
 
 @item -funroll-all-loops
 @opindex funroll-all-loops
-すべてのループを、たとえループ開始時に繰り返し数が不確定でも行う。これは通常プログラムの実行を遅くする。
+すべてのループを、たとえループ開始時に繰り返し数が不確定でも展開する。これは通常プログラムの実行を遅くする。
 @option{-funroll-all-loops}は@option{-funroll-loops}と同じオプションを含む。
 
 @item -fpeel-loops
 @opindex fpeel-loops
-（プ��ファイル・フィードバックから）情報が十分にあるあまり巻かれないループを引き剥がす。
+（プロファイル・フィードバックから）情報が十分にあるあまり巻かれないループを引き剥がす。
 これは完全ループ引き剥がし（すなわち、小さい定数回の繰り返しのループを完全に除去する）もオンにする。
 
 @option{-O3}, @option{-fprofile-use}, @option{-fauto-profile}で有効になる。
@@ -9268,7 +9306,7 @@ else
     x[i * stride] = @dots{};
 @end smallexample
 
-これは、Fortranで想定される形状の配列の場合に特に便利です。Fortranでは、連続アクセスを想定したベクトル化が改善されます。このフラグは、@ option{-O3}でデフォルトで有効になっています。
+これは、Fortranで想定される形状の配列の場合に特に便利です。Fortranでは、連続アクセスを想定したベクトル化が改善されます。このフラグは、@option{-O3}でデフォルトで有効になっています。
 @option{-fprofile-use}, @option{-fauto-profile}でも有効になる。
 
 @item -ffunction-sections
@@ -9280,25 +9318,11 @@ else
 
 リンカが最適化を実行して命令空間内の参照の局所性を改善できるシステムでは、これらのオプションを使用する。 ELFオブジェクト形式を使用するほとんどのシステムは、そのような最適化を備えたリンカを持っている。 AIXでは、リンカーはコールグラフに基づいてセクション（CSECT）を再配置する。 パフォーマンスへの影響はさまざまである。
  
- リンカのガベージコレクション（リンカの@option{-gc-sections}オプション）と一緒に使うと、これらのオプションは静的にリンクされた実行可能ファイル（ストリッピング後）を小さくするかもしれない。
+リンカのガベージコレクション（リンカの@option{-gc-sections}オプション）と一緒に使うと、これらのオプションは静的にリンクされた実行可能ファイル（ストリッピング後）を小さくするかもしれない。
  
- ELF / DWARFシステムでは、これらのオプションはデバッグ情報の品質を劣化させない。 他のオブジェクトファイル/デバッグ情報フォーマットでは問題がある可能性がある。
+ELF / DWARFシステムでは、これらのオプションはデバッグ情報の品質を劣化させない。 他のオブジェクトファイル/デバッグ情報フォーマットでは問題がある可能性がある。
 
 これらのオプションは、大きな利点がある場合にのみ使用すること。 これらのオプションを指定すると、アセンブラとリンカはより大きなオブジェクトファイルと実行可能ファイルを作成し、処理速度も低下する。 これらのオプションはコード生成に影響する。 それらはリンク時間まで未知であるため、翻訳ユニット内の相対位置を使用するコンパイラおよびアセンブラによる最適化を妨げる。このような最適化の一例は、ショートコール命令へのコールを緩和することである。
-
-@item -fbranch-target-load-optimize
-@opindex fbranch-target-load-optimize
-プロローグ・エピローグスレッディングの前に分岐目標レジスタロード最適化を行う。
-目標レジスタの使用は典型的にはリロードの間のみ露出するので、ループ外へのロードの持ち上げとブロック内スケジューリングは
-別の最適化パスが必要である。
-
-@item -fbranch-target-load-optimize2
-@opindex fbranch-target-load-optimize2
-プロローグ・エピローグスレッディングの後に分岐目標レジスタロード最適化を行う。
-
-@item -fbtr-bb-exclusive
-@opindex fbtr-bb-exclusive
-分岐目標レジスタロード最適化を行っている時に、どの基本ブロック内でも分岐目標レジスタを再利用しない。
 
 @item -fstdarg-opt
 @opindex fstdarg-opt
@@ -10195,6 +10219,7 @@ FSMスレッダーがブロックのスレッド化を試行しない前に、PH
 値など、変数のプロパティを決定する際に従うSSA_NAME割り当ての最大数。 これにより、特定のステートメントを最適化するとき、または診断を発行する前にそれらの有効性を判断するときに、GCCが実行する反復または再帰呼び出しの数が制限されます。
 
 @end table
+
 @end table
 
 @node Instrumentation Options
