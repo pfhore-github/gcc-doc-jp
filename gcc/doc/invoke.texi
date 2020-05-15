@@ -6605,23 +6605,23 @@ C99では4095に引き上げられた。C++98では規範的な最小最大値�
 
 このオプションを有効にすると、次の警告が効果的に有効になります。
 
-@gccoptlist{ @gol
--Wanalyzer-double-fclose @gol
--Wanalyzer-double-free @gol
--Wanalyzer-exposure-through-output-file @gol
--Wanalyzer-file-leak @gol
--Wanalyzer-free-of-non-heap @gol
--Wanalyzer-malloc-leak @gol
--Wanalyzer-possible-null-argument @gol
--Wanalyzer-possible-null-dereference @gol
--Wanalyzer-null-argument @gol
--Wanalyzer-null-dereference @gol
--Wanalyzer-stale-setjmp-buffer @gol
--Wanalyzer-tainted-array-index @gol
--Wanalyzer-unsafe-call-within-signal-handler @gol
--Wanalyzer-use-after-free @gol
--Wanalyzer-use-of-uninitialized-value @gol
--Wanalyzer-use-of-pointer-in-stale-stack-frame @gol
+@gccoptlist{ 
+-Wanalyzer-double-fclose 
+-Wanalyzer-double-free 
+-Wanalyzer-exposure-through-output-file 
+-Wanalyzer-file-leak 
+-Wanalyzer-free-of-non-heap 
+-Wanalyzer-malloc-leak 
+-Wanalyzer-possible-null-argument 
+-Wanalyzer-possible-null-dereference 
+-Wanalyzer-null-argument 
+-Wanalyzer-null-dereference 
+-Wanalyzer-stale-setjmp-buffer 
+-Wanalyzer-tainted-array-index 
+-Wanalyzer-unsafe-call-within-signal-handler 
+-Wanalyzer-use-after-free 
+-Wanalyzer-use-of-uninitialized-value 
+-Wanalyzer-use-of-pointer-in-stale-stack-frame 
 }
 
 このオプションは、GCCがアナライザーサポートを有効にして構成されている場合にのみ使用できます。
@@ -6979,9 +6979,10 @@ GNUアセンブラを要求する。
 @option{-gdwarf}は@option{-gdwarf-@var{level}}との混乱を避けるために、デバッグレベルの連結を受理しない。代わりにDWARFデバッグレベルを変えるためには
 追加の@option{-g@var{level}}を使う。
 
-@item -feliminate-unused-debug-symbols
+@item -fno-eliminate-unused-debug-symbols
 @opindex feliminate-unused-debug-symbols
-実際に使われているシンボルのみに対して、（もしサポートされていたら）stabsフォーマットでデバッグ情報を生成する。
+@opindex fno-eliminate-unused-debug-symbols
+デフォルトでは、実際に使用されていないシンボルのデバッグ情報は生成されません。 すべてのシンボルのデバッグ情報が必要な場合は、このオプションを使用します。
 
 @item -femit-class-debug-always
 @opindex femit-class-debug-always
@@ -7011,10 +7012,9 @@ GCCがクラスのためにデバッグ情報を通常発する方法を取り�
 @opindex fvar-tracking-assignments
 @opindex fno-var-tracking-assignments
 最適化でのデバッグ情報を向上させようとして、コンパイルの初期でユーザ変数への代入に注釈をつけ、
-注釈をコンパイルの最後まで引き継ごうとする。これとともに@option{-gdwarf-4}を使うことが推奨される。
+注釈をコンパイルの最後まで引き継ごうとする。@option{-gdwarf-4}とともに使うことが推奨される。
 
-たとえ変数追跡が使用不能であるとしても使用可能にされることができ、その場合には、注釈は作成されて維持されるが、終わりに捨てられる。
-デフォルトで、選択的なスケジューリングが使用可能にされるとき以外は、このフラグは@option{-fvar-tracking}と共に使用可能にされる。
+たとえ変数追跡が使用不能であるとしても使用可能にでき、その場合には、注釈は作成されて維持されるが、終わりに捨てられる。デフォルトで、選択的なスケジューリングが使用可能にされるとき以外は、このフラグは@option{-fvar-tracking}と共に使用可能にされる。
 
 @item -gsplit-dwarf
 @opindex gsplit-dwarf
@@ -7236,8 +7236,8 @@ GCCを@option{-Q --help=optimizers}で起動することでそれぞれのレベ
 @c several optimization flags default to true but control optimization
 @c passes that are explicitly disabled at -O0.
 
-
 @option{-O}は以下の最適化フラグをオンにする
+
 @c Please keep the following list alphabetized.
 @gccoptlist{-fauto-inc-dec 
 -fbranch-count-reg 
@@ -7301,8 +7301,10 @@ GCCを@option{-Q --help=optimizers}で起動することでそれぞれのレベ
 -fdelete-null-pointer-checks 
 -fdevirtualize  -fdevirtualize-speculatively 
 -fexpensive-optimizations 
+-ffinite-loops 
 -fgcse  -fgcse-lm  
 -fhoist-adjacent-loads 
+-finline-functions 
 -finline-small-functions 
 -findirect-inlining 
 -fipa-bit-cp  -fipa-cp  -fipa-icf 
