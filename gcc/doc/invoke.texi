@@ -10248,14 +10248,14 @@ FSMスレッダーがブロックのスレッド化を試行しない前に、PH
 @opindex pg
 分析プログラム@command{prof}（@option{-p}の場合）または@command{gprof}（@option {-pg}の場合）に適したプロファイル情報を書き込むための追加コードを生成します。  このオプションは、データが必要なソースファイルをコンパイルするときに使用する必要があり、リンクするときにも使用する必要があります。
 
-関数属性@code {no_instrument_function}を使用して、これらのオプションでコンパイルするときに個々の関数のプロファイリングを抑制することができます。
-@xref {Common Function Attributes}。
+関数属性@code{no_instrument_function}を使用して、これらのオプションでコンパイルするときに個々の関数のプロファイリングを抑制することができます。
+@xref{Common Function Attributes}。
 
 @item -fprofile-arcs
 @opindex fprofile-arcs
 プログラムフロー@dfn{arcs}が測定されるようにコードを追加する。実行の間に
 プログラムはそれぞれの分岐と呼び出しが何回実行されるかと何回取られる・返るかを記録する。
-優先度をサポートするコンストラクターをサポートするターゲットでは、プロファイリングは、グローバル変数のタイプとして使用されるクラスのコンストラクター、デストラクタ、およびC ++コンストラクタ（およびデストラクタ）を適切に処理します。
+優先度をサポートするコンストラクターをサポートするターゲットでは、プロファイリングは、グローバル変数のタイプとして使用されるクラスのコンストラクター、デストラクタ、およびC++コンストラクタ（およびデストラクタ）を適切に処理します。
 
 コンパイルされたプログラムが終了するときにそれぞれのファイルごとに
 @file{@var{auxname}.gcda}と呼ばれるファイルにこのデータを保存する。
@@ -10359,6 +10359,15 @@ arcが唯一の出口であるかブロックへの唯一の入り口である�
 収集されたプロファイル情報に基づいてプログラムを最適化するためには、@option{-fprofile-use}を使う。
 さらなる情報は@xref{Optimize Options}。
 
+@item -fprofile-note=@var{path}
+@opindex fprofile-note
+
+@var{path}が指定されている場合、GCCは@file{.gcno}ファイルを@var{path}の場所に保存します。 オプションを複数のソースファイルと組み合わせると、@file{.gcno}ファイルが上書きされます。
+
+@item -fprofile-prefix-path=@var{path}
+
+このオプションを@option{profile-generate=}@var{profile_dir}および@option{profile-use=}@var{profile_dir}と組み合わせて使用すると、ビルドされたソースツリーのベースディレクトリがどこにあるかをGCCに通知できます。 デフォルトでは、@var{profile_dir}には、ビルドされたプロジェクト内のすべてのオブジェクトファイルの絶対パスがマングルされたファイルが含まれます。インストルメント済みバイナリのビルドに使用されるディレクトリが、プロファイルフィードバックで最適化されたバイナリのビルドに使用されるディレクトリと異なる場合、最適化されたビルド中にプロファイルデータが見つからないため、これは望ましくありません。そのようなセットアップでは、ビルドのベースディレクトリを指す@var{path}つきの@option{-fprofile-prefix-path=}@var{path}を使用して、パスの無関係な部分を削除し、メインビルドディレクトリにすべてのファイル名を相対に保つことができます。
+
 @item -fprofile-update=@var{method}
 @opindex fprofile-update
 
@@ -10382,6 +10391,16 @@ arcが唯一の出口であるかブロックへの唯一の入り口である�
 名前がすべての正規表現（セミコロンで区切られた）に一致しないファイルの関数のみを計装する。
 
 たとえば、@option{-fprofile-exclude-files=/usr/*}は、@file{/usr/}フォルダーにあるすべてのファイルのインストルメンテーションを防ぎます。
+
+@item -fprofile-reproducible
+@opindex fprofile-reproducible
+@code{-fprofile-generate}によって収集されたプロファイルの再現性の制御レベル。 これにより、たとえば配布パッケージに役立つ同じ結果でプログラムを再構築することができます。
+
+@option{-fprofile-reproducibility=serial}を使用すると、@option{-fprofile-generate}によって収集されたプロファイルは、トレーニングされたプログラムが訓練実行の各呼び出しで同じように動作し、マルチスレッドではなく、プロファイルデータストリーミング常に同じ順序で行われる限り、再現可能です。プロファイルのストリーミングは、プログラムの実行終了時だけでなく、@code{fork}関数が呼び出される前にも発生することに注意してください。
+
+プログラムの一部の実行回数は、たとえば、一時ファイル名の長さやメモリ空間のランダム化（ハッシュテーブルの衝突率に影響を与える可能性がある）に依存することがよくあることに注意してください。このようなプログラムの再現できない部分は、@code{no_instrument_function}関数属性によって注釈を付けることができます。 @option{-l}を指定した@code{gcov-dump}を使用して、収集したデータをダンプし、それらが実際に再現可能であることを確認できます。
+
+@option{-fprofile-reproducibility=parallel-runs}を使用すると、データがgcdaファイルにストリーミングされる順序に関係なく、収集されたプロファイルは再現性を維持します。 この設定により、インストルメント済みプログラムの複数のインスタンスを並列に実行できます（@code{make -j}などを使用）。 これにより、収集されたデータ、特に間接呼び出しプロファイリングの品質が低下します。
 
 @item -fsanitize=address
 @opindex fsanitize=address
@@ -10422,8 +10441,7 @@ Linuxカーネル用のAddressSanitizerを有効にする。詳しい詳細は@u
 サポートされているオプションのリストは@url{https://github.com/google/sanitizers/wiki/ThreadSanitizerFlags}を見よ。
 このオプションは@option{-fsanitize=address}, @option{-fsanitize=leak}と組み合わせることはできない。
 
-サニタイズされたアトミックビルトインは、呼び出し以外の例外で無効なメモリアドレスを操作する場合、例外をスローできないことに注意してください。
-（@option {-fnon-call-exceptions}）。
+サニタイズされたアトミックビルトインは、非呼び出し例外（@option{-fnon-call-exceptions}）で無効なメモリアドレスを操作する場合、例外をスローできないことに注意してください。
 
 @item -fsanitize=leak
 @opindex fsanitize=leak
@@ -10446,8 +10464,7 @@ Linuxカーネル用のAddressSanitizerを有効にする。詳しい詳細は@u
 @opindex fsanitize=shift
 このオプションはシフト演算の結果が未定義でないかをチェックすることを有効にする。
 どれが正確に未定義であるかは、CとC++で、またISO C90とC99の間で微妙に異なっていることに注意。
-This option has two suboptions, @option{-fsanitize=shift-base} and
-@option{-fsanitize=shift-exponent}.
+このオプションには2つのサブオプション、@option{-fsanitize=shift-base}と@option{-fsanitize=shift-exponent}がある。
 
 @item -fsanitize=shift-exponent
 @opindex fsanitize=shift-exponent
@@ -10496,13 +10513,11 @@ a++;
 @opindex fsanitize=bounds
 このオプションは配列境界の計装を有効にする。様々な境界外アクセスが検知される。可変長配列メンバ、
 可変長配列メンバ様配列、静的領域の変数の初期化は計装されない。
-このオプションは@option{-fcheck-pointer-bounds}と組み合わせることはできない。
 
 @item -fsanitize=bounds-strict
 @opindex fsanitize=bounds-strict
 このオプションは厳密な配列境界の計装を有効にする。ほとんどの境界外アクセスは、可変長配列メンバと可変長配列メンバ様配列も含めて
 計装される。静的領域の変数の初期化は計装されない。
-このオプションは@option{-fcheck-pointer-bounds}と組み合わせることはできない。
 
 @item -fsanitize=alignment
 @opindex fsanitize=alignment
@@ -10515,16 +10530,13 @@ a++;
 
 @item -fsanitize=float-divide-by-zero
 @opindex fsanitize=float-divide-by-zero
-
 浮動小数点ゼロ除算を検知する。他の同様のオプションとは異なり、@option{-fsanitize=float-divide-by-zero}は
 @option{-fsanitize=undefined}によっては有効にならない。なぜなら浮動小数点ゼロ除算は
 無限大や非数を得る正当な方法だからである。
 
 @item -fsanitize=float-cast-overflow
 @opindex fsanitize=float-cast-overflow
-
-このオプションは符号小数点数から整数型への変換のチェックを有効にする。我々は変換の結果が桁あふれしないかを検査する。
-他の同様のオプションとは異なり、@option{-fsanitize=float-cast-overflow}は@option{-fsanitize=undefined}では有効にならない。
+このオプションは符号小数点数から整数型への変換のチェックを有効にする。我々は変換の結果が桁あふれしないかを検査する。他の同様のオプションとは異なり、@option{-fsanitize=float-cast-overflow}は@option{-fsanitize=undefined}では有効にならない。
 このオプションは@code{FE_INVALID}例外が有効のときはよく働かない。
 
 @item -fsanitize=nonnull-attribute
@@ -10560,17 +10572,12 @@ null値の返却を検知する。
 @item -fsanitize=pointer-overflow
 @opindex fsanitize=pointer-overflow
 
-This option enables instrumentation of pointer arithmetics.  If the pointer
-arithmetics overflows, a run-time error is issued.
+このオプションは、ポインタ演算の計測を有効にします。 ポインター演算がオーバーフローすると、実行時エラーが発行されます。
 
 @item -fsanitize=builtin
 @opindex fsanitize=builtin
 
-This option enables instrumentation of arguments to selected builtin
-functions.  If an invalid value is passed to such arguments, a run-time
-error is issued.  E.g.@ passing 0 as the argument to @code{__builtin_ctz}
-or @code{__builtin_clz} invokes undefined behavior and is diagnosed
-by this option.
+このオプションは、選択された組み込み関数への引数の計測を有効にします。 そのような引数に無効な値が渡されると、実行時エラーが発行されます。 たとえば、引数として@code{__ builtin_ctz}または@code{__ builtin_clz}に0を渡すと、未定義の動作が呼び出され、このオプションによって診断されます。
 
 @end table
 
@@ -10636,181 +10643,20 @@ undefined,float-cast-overflow,float-divide-by-zero,bounds-strict
 
 @item -fsanitize-coverage=trace-cmp
 @opindex fsanitize-coverage=trace-cmp
-Enable dataflow guided fuzzing code instrumentation.
-Inserts a call to @code{__sanitizer_cov_trace_cmp1},
-@code{__sanitizer_cov_trace_cmp2}, @code{__sanitizer_cov_trace_cmp4} or
-@code{__sanitizer_cov_trace_cmp8} for integral comparison with both operands
-variable or @code{__sanitizer_cov_trace_const_cmp1},
-@code{__sanitizer_cov_trace_const_cmp2},
-@code{__sanitizer_cov_trace_const_cmp4} or
-@code{__sanitizer_cov_trace_const_cmp8} for integral comparison with one
-operand constant, @code{__sanitizer_cov_trace_cmpf} or
-@code{__sanitizer_cov_trace_cmpd} for float or double comparisons and
-@code{__sanitizer_cov_trace_switch} for switch statements.
-
-@item -fbounds-check
-@opindex fbounds-check
-サポートするフロントエンドでは、配列にアクセスするための添字が宣言された範囲内であるかをチェックする追加のコードを挿入する。
-これは現在JavaとFOrtranフロントエンドによってのみサポートされていて、このオプションはそれぞれデフォルトでtrueとfalseである。
-
-@item -fcheck-pointer-bounds
-@opindex fcheck-pointer-bounds
-@opindex fno-check-pointer-bounds
-@cindex Pointer Bounds Checker options
-ポインタ範囲チェック計装を有効にする。そのポインタと関連した境界に対してメモリ・アクセスのために使われるポインタのチェックで、
-各々のメモリ参照は計装される。
-
-現在Intel MPXが利用可能な唯一の実装であり、したがって、この機能を有効にするためにはx86 GNU/Linuxターゲットと@option{-mmpx}が必要である。
-MPXに基づいた計装はハードウェアでのMPXを有効にして範囲違反シグナルを扱うためにランタイムライブラリを必要とする。
-デフォルトでは@option{-fcheck-pointer-bounds}と@option{-mmpx}オプションがプログラムをリンクするために使われたとき、
-GCCドライバは@file{libmpx}と@file{libmpxwrappers}ライブラリに対してリンクされる。
-動的ライブラリへの呼び出しでの境界チェックは@option{-z bndplt}サポートのあるリンカが必要である。
-もしGCCがこのオプションのサポートなしのリンカ（Goldリンカと古いバージョンのldを含む）で設定されたときには、
-もし@option{-mmpx}ありで@option{-static}も指定せずにリンクするときには警告が与えられる。なぜなら、なぜなら境界チェック防御の全体の効果が
-減らされるためである。@option{-static-libmpxwrappers}も見よ。
-
-MPXに基づいた計装はデバッグにも使うことができ、製品コードでプログラムセキュリティを上げるために含めることもできる。
-使用法に応じて、ランタイムライブラリに異なった要求があるかもしれない。MPXランタイムライブラリの現在のバージョンは
-デバッグツールとしての使用に重きをおいている。MPXランタイムライブラリの使用は@option{-lpthread}を含む。
-@option{-static-libmpx}も見よ。ランタイムライブラリの振る舞いは様々な@env{CHKP_RT_*}環境変数を使って影響させることができる。
-さらなる詳細は@uref{https://gcc.gnu.org/wiki/Intel%20MPX%20support%20in%20the%20GCC%20compiler}を見よ。
-
-生成された計装は様々な@option{-fchkp-*}オプションと@code{bnd_variable_size}構造体フィールド属性(@pxref{Type Attributes})と
-@code{bnd_legacy}、@code{bnd_instrument}関数属性(@pxref{Function Attributes})によって制御されることができる。
-GCCはポインタ境界チェッカを制御するいくつかの組み込み関数も提供する。さらなる情報は @xref{Pointer
-Bounds Checker builtins}を見よ。
-
-@item -fchkp-check-incomplete-type
-@opindex fchkp-check-incomplete-type
-@opindex fno-chkp-check-incomplete-type
-不完全型の変数のポインタ境界チェックを生成する。デフォルトで有効である。
-
-@item -fchkp-narrow-bounds
-@opindex fchkp-narrow-bounds
-@opindex fno-chkp-narrow-bounds
-オブジェクトフィールドのポインタ用のポインタ境界チェックによって使われる境界を制御する。もし挟化が有効ならば
-フィールド境界が使われる。さもなければオブジェクト境界が使われる。@option{-fchkp-narrow-to-innermost-array}、
-@option{-fchkp-first-field-has-own-bounds}も見よ。デフォルトで有効である。
-
-@item -fchkp-first-field-has-own-bounds
-@opindex fchkp-first-field-has-own-bounds
-@opindex fno-chkp-first-field-has-own-bounds
-ポインタ境界チェッカに構造体内の最初のフィールドのアドレス用の挟化範囲を使わせる。
-デフォルトでは最初のフィールドへのポインタは構造体全体へのポインタと同じ境界を持つ。
-
-@item -fchkp-flexible-struct-trailing-arrays
-@opindex fchkp-flexible-struct-trailing-arrays
-@opindex fno-chkp-flexible-struct-trailing-arrays
-ポインタ境界チェッカーに、構造内のすべての末尾の配列を可変長として扱うように強制する。 デフォルトでは、長さがゼロの配列フィールドまたは属性bnd_variable_sizeでマークされた配列フィールドのみが可変長として扱われる。
-
-@item -fchkp-narrow-to-innermost-array
-@opindex fchkp-narrow-to-innermost-array
-@opindex fno-chkp-narrow-to-innermost-array
-ポインタ境界チェッカに入れ子の静的配列のアクセスの場合に最も内側の配列の境界を使わせる。
-デフォルトではこのオプションは向こうで最も外側の配列の境界が使われる。
-
-@item -fchkp-optimize
-@opindex fchkp-optimize
-@opindex fno-chkp-optimize
-ポインタ境界チェッカ最適化を有効にする。最適化レベル@option{-O}, @option{-O2}, @option{-O3}で
-デフォルトで有効である。
-
-@item -fchkp-use-fast-string-functions
-@opindex fchkp-use-fast-string-functions
-@opindex fno-chkp-use-fast-string-functions
-ポインタ境界チェッカによる（非コピー境界の）文字列関数の@code{*_nobnd}バージョンの使用を有効にする。
-デフォルトで無効である。
-
-@item -fchkp-use-nochk-string-functions
-@opindex fchkp-use-nochk-string-functions
-@opindex fno-chkp-use-nochk-string-functions
-ポインタ境界チェッカによる（非チェック境界の）文字列関数の@code{*_nochk}バージョンの使用を有効にする。
-デフォルトで無効である。
-
-@item -fchkp-use-static-bounds
-@opindex fchkp-use-static-bounds
-@opindex fno-chkp-use-static-bounds
-ポインタ境界チェッカが静的変数の境界を保持する静的境界を生成することを許可する。
-デフォルトで有効である。
-
-@item -fchkp-use-static-const-bounds
-@opindex fchkp-use-static-const-bounds
-@opindex fno-chkp-use-static-const-bounds
-必要なときに毎回生成する代わりに固定範囲用の静的に初期化された境界を使う。
-@option{-fchkp-use-static-bounds}が有効なときにデフォルトで有効である。
-
-@item -fchkp-treat-zero-dynamic-size-as-infinite
-@opindex fchkp-treat-zero-dynamic-size-as-infinite
-@opindex fno-chkp-treat-zero-dynamic-size-as-infinite
-このオプションで、ポインタ境界チェッカによる代わりにその動的に取得されたサイズが0である不完全型の
-オブジェクトを無限サイズを持つとして扱う。このオプションはもしプログラムがあるシンボルののサイズ情報が
-失われているライブラリとリンクするときに役立つかもしれない。デフォルトで無効にされている。
-
-@item -fchkp-check-read
-@opindex fchkp-check-read
-@opindex fno-chkp-check-read
-ポインタ境界チェッカにすべてのメモリへの読み出しアクセスへのチェックを生成するように指示する。
-デフォルトで有効である。
-
-@item -fchkp-check-write
-@opindex fchkp-check-write
-@opindex fno-chkp-check-write
-ポインタ境界チェッカにメモリへのすべての書き出しへのチェックを生成するように指示する。
-デフォルトで有効である。
-
-@item -fchkp-store-bounds
-@opindex fchkp-store-bounds
-@opindex fno-chkp-store-bounds
-ポインタ境界チェッカにポインタ書き出し用の境界ストアを生成するように指示する。デフォルトで有効である。
-
-@item -fchkp-instrument-calls
-@opindex fchkp-instrument-calls
-@opindex fno-chkp-instrument-calls
-ポインタ境界チェッカに呼び出しへのポインタ境界を渡すように指示する。デフォルトで有効である。
-
-@item -fchkp-instrument-marked-only
-@opindex fchkp-instrument-marked-only
-@opindex fno-chkp-instrument-marked-only
-ポインタ境界チェッカに@code{bnd_instrument}属性(@pxref{Function Attributes})でマークされた関数のみ計装するように指示する。
-デフォルトで無効である。
-
-@item -fchkp-use-wrappers
-@opindex fchkp-use-wrappers
-@opindex fno-chkp-use-wrappers
-ポインタ境界チェッカに組み込み関数への呼び出しをラッパ関数への呼び出しへ置換することを許可する。
-@option{-fchkp-use-wrappers}がプログラムをリンクするときに使われたときは、GCCがドライバは自動的に
-@file{libmpxwrappers}をリンクする。@option{-static-libmpxwrappers}も見よ。
-デフォルトで有効である。
+データフローに基づくファジングコードの計装を有効にします。オペランド変数または@code{__sanitizer_cov_trace_const_cmp1}両方と一体の比較のために@code{__sanitizer_cov_trace_cmp1}、@code{__sanitizer_cov_trace_cmp2}、@code{__sanitizer_cov_trace_cmp4}または@code{__sanitizer_cov_trace_cmp8}への呼び出しを挿入、
+@code{__sanitizer_cov_trace_const_cmp2}、@ code{__sanitizer_cov_trace_const_cmp4}、または@code{__sanitizer_cov_trace_const_cmp8}は、1つのオペランド定数との整数比較用、@code{__sanitizer_cov_trace_cmpf}または@code {__sanitizer_cov_trace_cmpd}は、floatまたはdouble比較の場合、@code{__sanitizer_cov_trace_switch}は、switchステートメントの場合です。
 
 @item -fcf-protection=@r{[}full@r{|}branch@r{|}return@r{|}none@r{]}
 @opindex fcf-protection
-Enable code instrumentation of control-flow transfers to increase
-program security by checking that target addresses of control-flow
-transfer instructions (such as indirect function call, function return,
-indirect jump) are valid.  This prevents diverting the flow of control
-to an unexpected target.  This is intended to protect against such
-threats as Return-oriented Programming (ROP), and similarly
-call/jmp-oriented programming (COP/JOP).
+制御フロー転送のコード計装を有効にして、制御フロー転送命令（間接関数呼び出し、関数戻り、間接ジャンプなど）のターゲットアドレスが有効であることを確認して、プログラムのセキュリティを向上させます。 これにより、制御の流れが予期しないターゲットに迂回するのを防ぎます。 これは、リターン指向プログラミング（ROP）、同様に呼び出し/jmp指向プログラミング（COP / JOP）などの脅威から保護することを目的としています。
 
-The value @code{branch} tells the compiler to implement checking of
-validity of control-flow transfer at the point of indirect branch
-instructions, i.e. call/jmp instructions.  The value @code{return}
-implements checking of validity at the point of returning from a
-function.  The value @code{full} is an alias for specifying both
-@code{branch} and @code{return}. The value @code{none} turns off
-instrumentation.
+値@code{branch}は、間接分岐命令、つまりcall / jmp命令のポイントで制御フロー転送の有効性のチェックを実装するようコンパイラーに指示します。 値@code{return}は、関数から戻った時点での有効性のチェックを実装します。 値@code{full}は、@code{branch}と@code{return}の両方を指定するためのエイリアスです。 値@code{none}は、計装をオフにします。
 
-The macro @code{__CET__} is defined when @option{-fcf-protection} is
-used.  The first bit of @code{__CET__} is set to 1 for the value
-@code{branch} and the second bit of @code{__CET__} is set to 1 for
-the @code{return}.
+マクロ@code{__CET__}は、@ option{-fcf-protection}が使用されるときに定義されます。 @code{__CET__}の最初のビットは値@code{branch}に対して1に設定され、@code{__CET__}の2番目のビットは@code{return}に対して1に設定されます。
 
-You can also use the @code{nocf_check} attribute to identify
-which functions and calls should be skipped from instrumentation
-(@pxref{Function Attributes}).
+@code{nocf_check}属性を使用して、計装からスキップする必要がある関数と呼び出しを特定することもできます（@pxref{関数属性}）。
 
-Currently the x86 GNU/Linux target provides an implementation based
-on Intel Control-flow Enforcement Technology (CET).
+現在、x86 GNU/LinuxターゲットはIntel Control-flow Enforcement Technology（CET）に基づく実装を提供しています。
 
 @item -fstack-protector
 @opindex fstack-protector
@@ -10826,8 +10672,7 @@ on Intel Control-flow Enforcement Technology (CET).
 
 @item -fstack-protector-strong
 @opindex fstack-protector-strong
-@option{-fstack-protector}と同様だが追加の関数が保護される。局所配列定義を持つ関数、
-およびローカルフレームアドレスへの参照を持つ関数。
+@option {-fstack-protector}に似ていますが、保護される追加の関数が含まれます---ローカル配列定義を持つ、またはローカルフレームアドレスへの参照を持つ関数。 スタックに実際に割り当てられている変数のみが考慮され、最適化された変数またはレジスターに割り当てられた変数はカウントされません。
 
 @item -fstack-protector-explicit
 @opindex fstack-protector-explicit
@@ -10861,24 +10706,13 @@ on Intel Control-flow Enforcement Technology (CET).
 
 旧式スタックチェックはもしコンパイラでターゲットサポートが加えられないならば、@samp{specific}の代替方法でもあることに注意。
 
-@samp{-fstack-check=} is designed for Ada's needs to detect infinite recursion
-and stack overflows.  @samp{specific} is an excellent choice when compiling
-Ada code.  It is not generally sufficient to protect against stack-clash
-attacks.  To protect against those you want @samp{-fstack-clash-protection}.
+@samp{-fstack-check=}は、Adaが無限再帰とスタックオーバーフローを検出する必要があるために設計されています。 @samp{specific}は、Adaコードをコンパイルする際の優れた選択肢です。 スタッククラッシュ攻撃から保護するには、一般的には十分ではありません。 @samp{-fstack-clash-protection}を使用してこれらを保護します。
 
 @item -fstack-clash-protection
 @opindex fstack-clash-protection
-Generate code to prevent stack clash style attacks.  When this option is
-enabled, the compiler will only allocate one page of stack space at a time
-and each page is accessed immediately after allocation.  Thus, it prevents
-allocations from jumping over any stack guard page provided by the
-operating system.
+スタッククラッシュスタイルの攻撃を防ぐためのコードを生成します。 このオプションを有効にすると、コンパイラーは一度に1ページのスタックスペースのみを割り当て、各ページは割り当て直後にアクセスされます。 したがって、オペレーティングシステムによって提供されるスタックガードページを飛び越えて割り当てられるのを防ぎます。
 
-Most targets do not fully support stack clash protection.  However, on
-those targets @option{-fstack-clash-protection} will protect dynamic stack
-allocations.  @option{-fstack-clash-protection} may also provide limited
-protection for static stack allocations if the target supports
-@option{-fstack-check=specific}.
+ほとんどのターゲットはスタック衝突保護を完全にはサポートしていません。 ただし、これらのターゲットでは、@option{-fstack-clash-protection}は動的スタック割り当てを保護します。 ターゲットが@option{-fstack-check=specific}をサポートしている場合、@option{-fstack-clash-protection}は、静的スタック割り当ての保護を制限することもできます。
 
 @item -fstack-limit-register=@var{reg}
 @itemx -fstack-limit-symbol=@var{sym}
@@ -11002,6 +10836,16 @@ void __cyg_profile_func_exit  (void *this_fn,
 内部のマングルされた名前（例えば、@code{_Z4blahRSt6vectorIiSaIiEE}）でない。
 マッチは、部分文字列の上でされる：@var{sym}パラメータが関数名の部分文字列であるならば、それはマッチであると考えられる。
 C99とC++拡張された識別子では、関数名はUTF-8で与えられていなければならない。そして、一般的な文字名を使用しない。
+
+@item -fpatchable-function-entry=@var{N}[,@var{M}]
+@opindex fpatchable-function-entry
+各関数の先頭に@var{N} NOPを生成し、@var{M}番目のNOPの前に関数のエントリポイントを置きます。 @var{M}を省略すると、デフォルトで@code{0}になるため、関数のエントリは最初のNOPにあるアドレスを指します。 NOP命令は、コードセグメントが書き込み可能であれば、実行時に任意のインストルメンテーションにパッチを適用するために使用できる余分なスペースを予約します。 スペースの量は、NOPの数を介して間接的に制御できます。 使用されるNOP命令は、内部GCCバックエンドインターフェイス@code{gen_nop}によって発行される命令に対応しています。 この動作はターゲット固有であり、アーキテクチャバリアントや他のコンパイルオプション、あるいはその両方によって異なる場合があります。
+
+実行時の識別のために、それぞれの関数エントリから@var{M}を引いたものに対応するこれらの領域の開始アドレスが、結果のバイナリの@code{__patchable_function_entries}セクションに追加で収集されます。
+
+@code{__attribute__((patchable_function_entry(N,M)))}の値は、コマンドラインオプション@option{-fpatchable-function-entry=N,M}よりも優先されることに注意してください。 これを使用して、領域サイズを大きくしたり、単一の関数で領域を完全に削除したりできます。 @code{N = 0}の場合、パッド位置は記録されません。
+
+NOP命令は、プロローグよりも前であっても、関数のエントリアドレス(@var{M}に応じて、その前かもしれない）に挿入されます。
 
 @end table
 
