@@ -11,7 +11,7 @@
 
 @item -D @var{name}
 @opindex D
-@var{name}を定義[code{1}で事前に定義する。
+@var{name}を定義@code{1}で事前に定義する。
 
 @item -D @var{name}=@var{definition}
 @var{definition}の内容はトークン化され、変換フェーズ3で@samp{#define}ディレクティブに現れたかのように処理される。 特に、定義は埋め込み改行文字によって切り詰められる。
@@ -57,9 +57,9 @@ POSIXスレッド・ライブラリーを使用するために必要な追加の
 
 （@option{-MT}または@option{-MQ}で）明示的に指定されていない限り、オブジェクトファイル名は、接尾辞がobject file接尾辞で置き換えられ、先頭のディレクトリ部分が削除されたソースファイルの名前で構成される。 インクルードされたファイルがたくさんある場合、ルールは@samp{\}-改行を使用して複数の行に分割される。 ルールにはコマンドがない。
 
-このオプションは、@option {-dM}のようにプリプロセッサのデバッグ出力を抑制しない。 このようなデバッグ出力を依存関係ルールと混同しないようにするには、依存関係出力ファイルを@option {-MF}で明示的に指定するか、@env{DEPENDENCIES_OUTPUT}（@pxref {環境変数}）などの環境変数を使用する必要がある。 デバッグ出力は通常どおり通常の出力ストリームに送られる。
+このオプションは、@option{-dM}のようにプリプロセッサのデバッグ出力を抑制しない。 このようなデバッグ出力を依存関係ルールと混同しないようにするには、依存関係出力ファイルを@option{-MF}で明示的に指定するか、@env{DEPENDENCIES_OUTPUT}（@pxref{環境変数}）などの環境変数を使用する必要がある。 デバッグ出力は通常どおり通常の出力ストリームに送られる。
 
-@option {-M}をドライバに渡すと、@option{-E}が暗黙の@option{-w}で警告を抑止する。
+@option{-M}をドライバに渡すと、@option{-E}が暗黙の@option{-w}で警告を抑止する。
 
 @item -MM
 @opindex MM
@@ -78,7 +78,7 @@ POSIXスレッド・ライブラリーを使用するために必要な追加の
 
 @item -MG
 @opindex MG
-@option{-MG}は、依存性生成を要求する@option {-M}などのオプションとともに、ヘッダファイルが生成されていないと仮定し、エラーを発生させずに依存関係リストに追加する。 依存ファイル名は、パスの前に@code{#include}ディレクティブから直接取り込まれる。 @option{-MG}は前処理された出力を抑制する。欠落したヘッダファイルはこれを役に立たなくする。
+@option{-MG}は、依存性生成を要求する@option{-M}などのオプションとともに、ヘッダファイルが生成されていないと仮定し、エラーを発生させずに依存関係リストに追加する。 依存ファイル名は、パスの前に@code{#include}ディレクティブから直接取り込まれる。 @option{-MG}は前処理された出力を抑制する。欠落したヘッダファイルはこれを役に立たなくする。
 
 この機能は、Makeファイルの自動更新に使用される。
 
@@ -163,6 +163,10 @@ $$(objpfx)foo.o: foo.c
 @opindex fno-canonical-system-headers
 前処理の際に、正規化でシステムヘッダパスを短縮しない。
 
+@item -fmax-include-depth=@var{depth}
+@opindex fmax-include-depth
+ネストされた#includeの最大深度を設定します。 デフォルトは200です。
+
 @item -ftabstop=@var{width}
 @opindex ftabstop
 タブストップ間の距離を設定する。 これは、行にタブがあったとしても、プリプロセッサーが警告またはエラーの正しい列番号を報告するのに役立つ。 値が1より小さいか100より大きい場合、このオプションは無視される。 デフォルトは8である。
@@ -195,11 +199,11 @@ $$(objpfx)foo.o: foo.c
 @ifclear cppmanual
 @item -fpch-deps
 @opindex fpch-deps
-プリコンパイルされたヘッダー（@pxref {Precompiled Headers}）を使用する場合、このフラグは依存関係出力フラグにプリコンパイル済みヘッダーの依存関係のファイルもリストさせる。 指定されていない場合、プリコンパイルされたヘッダーが使用されたときにこれらのファイルは参照されないため、プリコンパイルされたヘッダーのみがリストされ、作成に使用されたファイルはリストされない。
+プリコンパイルされたヘッダー（@pxref{Precompiled Headers}）を使用する場合、このフラグは依存関係出力フラグにプリコンパイル済みヘッダーの依存関係のファイルもリストさせる。 指定されていない場合、プリコンパイルされたヘッダーが使用されたときにこれらのファイルは参照されないため、プリコンパイルされたヘッダーのみがリストされ、作成に使用されたファイルはリストされない。
 
 @item -fpch-preprocess
 @opindex fpch-preprocess
-このオプションは、プリコンパイルされたヘッダ（@pxref {Precompiled Headers}）を@option{-E}とともに使用できるようにする。 プリコンパイルされたヘッダが見つかった場所とその@var{filename}をマークするために、特殊な@code{#pragma}、@code{#pragma GCC pch_preprocess "@var{filename}"}を出力に挿入する。 @option{-fpreprocessed}が使用されているとき、GCCはこの@code{#pragma}を認識し、PCHをロードします。
+このオプションは、プリコンパイルされたヘッダ（@pxref{Precompiled Headers}）を@option{-E}とともに使用できるようにする。 プリコンパイルされたヘッダが見つかった場所とその@var{filename}をマークするために、特殊な@code{#pragma}、@code{#pragma GCC pch_preprocess "@var{filename}"}を出力に挿入する。 @option{-fpreprocessed}が使用されているとき、GCCはこの@code{#pragma}を認識し、PCHをロードします。
 
 結果として得られる前処理された出力は、GCCへの入力として本当に適しているだけなので、このオプションはデフォルトではオフになっている。 これは@option{-save-temps}によってスイッチオンされる。
 
@@ -262,7 +266,7 @@ GCCは標準化前のCコンパイラをエミュレートしようとはしな�
 
 @item -trigraphs
 @opindex trigraphs
-ISO Cトライグラフをサポートする。これらは3文字のシーケンスで、すべてが@samp {??}で始まり、
+ISO Cトライグラフをサポートする。これらは3文字のシーケンスで、すべてが@samp{??}で始まり、
 ISO Cで定義されています。 たとえば、@samp{??/}は@samp{\}を表す。したがって、@samp{'??/n'}は改行の文字定数である。
 @ifset cppmanual
 @xref{Initial processing}.
@@ -277,7 +281,7 @@ Replacement:      [    ]    @{    @}    #    \    ^    |    ~
 @end smallexample
 @end ifclear
 
-デフォルトでは、GCCはトリグラフを無視するが、標準準拠モードではそれを変換する。 @option{-std}オプションと@option{-ansi}オプションを参照せよ。
+デフォルトでは、GCCはトライグラフを無視するが、標準準拠モードではそれを変換する。 @option{-std}オプションと@option{-ansi}オプションを参照せよ。
 
 @item -remap
 @opindex remap
@@ -285,7 +289,7 @@ Replacement:      [    ]    @{    @}    #    \    ^    |    ~
 
 @item -H
 @opindex H
-他の通常のアクティビティに加えて、使用された各ヘッダファイルの名前を表示する。 それぞれの名前はインデントされて@samp{#include}スタックの深さを示す。 たとえ無効であっても、コンパイル済みのヘッダーファイルも出力される。 無効なプリコンパイル済みヘッダーファイルは@samp{... x}で印刷され、有効なものは@samp{...！}で印刷される。
+他の通常のアクティビティに加えて、使用された各ヘッダファイルの名前を表示する。 それぞれの名前はインデントされて@samp{#include}スタックの深さを示す。 たとえ無効であっても、コンパイル済みのヘッダーファイルも出力される。 無効なプリコンパイル済みヘッダーファイルは@samp{...x}で印刷され、有効なものは@samp{...!}で印刷される。
 
 @item -d@var{letters}
 @opindex d
@@ -297,7 +301,7 @@ Replacement:      [    ]    @{    @}    #    \    ^    |    ~
 @table @gcctabopt
 @item -dM
 @opindex dM
-通常の出力の代わりに、プリプロセッサの実行中に定義されたすべてのマクロの定義済みマクロを含む@samp{#define}ディレクティブのリストを生成する。 これにより、使用しているプリプロセッサのバージョンで定義されている内容を知ることができる。 あなたがファイル@file {foo.h}を持っていないと仮定すると、コマンド
+通常の出力の代わりに、プリプロセッサの実行中に定義されたすべてのマクロの定義済みマクロを含む@samp{#define}ディレクティブのリストを生成する。 これにより、使用しているプリプロセッサのバージョンで定義されている内容を知ることができる。 あなたがファイル@file{foo.h}を持っていないと仮定すると、コマンド
 
 @smallexample
 touch foo.h; cpp -dM foo.h
@@ -307,7 +311,7 @@ touch foo.h; cpp -dM foo.h
 すべての定義済みマクロを表示する。
 
 @ifclear cppmanual
-@option{-d}を@option{-E}オプションなしで使用すると、@option{-dM}は@option {-fdump-rtl-mach}の同義語として解釈される。
+@option{-d}を@option{-E}オプションなしで使用すると、@option{-dM}は@option{-fdump-rtl-mach}の同義語として解釈される。
 @xref{Developer Options, , ,gcc}.
 @end ifclear
 
