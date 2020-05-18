@@ -10888,34 +10888,6 @@ NOP命令は、プロローグよりも前であっても、関数のエント�
 このオプションは@option{-B}か@option{-wrapper}オプションと組み合わせて、代替のプリプロセッサを指定するか、
 通常のプリプロセスとコンパイルの間に追加の処理を行うときに役立つ。
 
-@item -fpatchable-function-entry=@var{N}[,@var{M}]
-@opindex fpatchable-function-entry
-Generate @var{N} NOPs right at the beginning
-of each function, with the function entry point before the @var{M}th NOP.
-If @var{M} is omitted, it defaults to @code{0} so the
-function entry points to the address just at the first NOP.
-The NOP instructions reserve extra space which can be used to patch in
-any desired instrumentation at run time, provided that the code segment
-is writable.  The amount of space is controllable indirectly via
-the number of NOPs; the NOP instruction used corresponds to the instruction
-emitted by the internal GCC back-end interface @code{gen_nop}.  This behavior
-is target-specific and may also depend on the architecture variant and/or
-other compilation options.
-
-For run-time identification, the starting addresses of these areas,
-which correspond to their respective function entries minus @var{M},
-are additionally collected in the @code{__patchable_function_entries}
-section of the resulting binary.
-
-Note that the value of @code{__attribute__ ((patchable_function_entry
-(N,M)))} takes precedence over command-line option
-@option{-fpatchable-function-entry=N,M}.  This can be used to increase
-the area size or to remove it completely on a single function.
-If @code{N=0}, no pad location is recorded.
-
-The NOP instructions are inserted at---and maybe before, depending on
-@var{M}---the function entry address, even before the prologue.
-
 @end table
 
 @node Assembler Options
@@ -10958,8 +10930,24 @@ The NOP instructions are inserted at---and maybe before, depending on
 @opindex c
 @opindex S
 @opindex E
-もしこれらのオプションが使われるなら、りんかははしらないので、オブジェクトファイル名は引数として使われるべきではない。
+もしこれらのオプションが使われるなら、リンカは走らないので、オブジェクトファイル名は引数として使われるべきではない。
 @xref{Overall Options}.
+
+@item -flinker-output=@var{type}
+@opindex flinker-output
+このオプションは、リンク時オプティマイザのコード生成を制御します。 デフォルトでは、リンカー出力はリンカープラグインによって自動的に決定されます。 コンパイラをデバッグする場合、および非LTOオブジェクトファイルとのインクリメンタルリンクが必要な場合は、タイプを手動で制御すると便利な場合があります。
+
+@var{type}が@samp{exec}の場合、コード生成は静的バイナリを生成します。 この場合、@option{-fpic}と@option{-fpie}はどちらも無効になります。
+
+@var{type}が@samp{dyn}の場合、コード生成により共有ライブラリが作成されます。 この場合、@option{-fpic}または@option{-fPIC}は保持されますが、自動的に有効にはなりません。 これにより、位置に依存しないコードを使わずに、これが可能なアーキテクチャ、つまりx86上で共有ライブラリを構築できます。
+
+@var{type}が@samp{pie}の場合、コード生成は@option{-fpie}実行可能ファイルを生成します。 これにより、@samp{exec}と同様の最適化が行われますが、コンパイル時に指定された場合、@option{-fpie}は無効にされません。
+
+@var{type}が@samp{rel}の場合、コンパイラはインクリメンタルリンクが行われたと見なします。 リンク時の最適化のための中間コードを含むセクションは、マージされ、事前に最適化され、結果のオブジェクトファイルに出力されます。 さらに、@option{-ffat-lto-objects}が指定されている場合、将来の非LTOリンク用にバイナリコードが生成されます。 インクリメンタルリンクによって生成されるオブジェクトファイルは、同じオブジェクトファイルから生成される静的ライブラリよりも小さくなります。 リンク時に、ライブラリ内のオブジェクトの大部分が使用されていると仮定すると、インクリメンタルリンクの結果は静的ライブラリよりも速く読み込まれます。
+
+最後に、@samp{nolto-rel}は、コード生成が強制され、最終的なバイナリが生成され、後でリンク時の最適化のための中間コードが取り除かれるインクリメンタルリンク用にコンパイラーを構成します。 複数のオブジェクトファイルをリンクすると、リンク時の最適化を無効にした場合よりもコードが最適化されます（たとえば、モジュール間のインライン化が発生します）が、プログラム全体の最適化の利点のほとんどは失われます。
+
+（@option {-r}による）インクリメンタルリンク中、リンカープラグインはデフォルトで@option{rel}になります。 ただし、GNU Binutilsへの現在のインターフェースでは、LTOオブジェクトと非LTOオブジェクトを1つの混合オブジェクトファイルに段階的にリンクすることはできません。 インクリメンタルリンクのオブジェクトファイルのいずれかがリンク時の最適化に使用できない場合、リンカープラグインは警告を発行し、@samp{nolto-rel}を使用します。 プログラム全体の最適化を維持するには、そのようなオブジェクトを静的ライブラリにリンクすることをお勧めします。 または、H.J.Luのbinutilsと混合オブジェクトのサポートを使用することもできます。
 
 @item -fuse-ld=bfd
 @opindex fuse-ld=bfd
@@ -10968,6 +10956,10 @@ The NOP instructions are inserted at---and maybe before, depending on
 @item -fuse-ld=gold
 @opindex fuse-ld=gold
 デフォルトリンカの代わりに@command{gold}を使う。
+
+@item -fuse-ld=lld
+@opindex fuse-ld=lld
+デフォルトリンカの代わりにLLVM @command{lld}を使う。
 
 @cindex Libraries
 @item -l@var{library}
@@ -11010,6 +11002,10 @@ Objective-CやObjective-C++プログラムをリンクするためには@option{
 これらのエントリは通常libcのエントリによって解決される。これらのエントリポイントはこのオプションを指定したときは
 他のメカニズムを通して提供されるべきである。
 
+@item -nolibc
+@opindex nolibc
+リンク時には、Cライブラリまたはシステムライブラリと密結合したシステムライブラリを使用しない。 スタートアップファイル、@file{libgcc}、または@file{libgnat}、@file{libgfortran}、@file{libstdc ++}などのツールチェーンが提供する言語サポートライブラリとはまだリンクします。 これにより、通常、リンクコマンドラインから@option{-lc}が削除され、また、通常はそれに付随し、Cライブラリがないと想定されると意味がなくものも削除されます。たとえば、@ option{-lpthread}または 一部の構成では@option{-lm}。 これは、実際に使用可能なCライブラリがない場合のベアボードターゲットを対象としています。
+
 @item -nostdlib
 @opindex nostdlib
 リンク時に標準システムスタートファイルもライブラリも使わない。
@@ -11026,7 +11022,7 @@ Objective-CやObjective-C++プログラムをリンクするためには@option{
 @cindex @option{-lgcc}, use with @option{-nodefaultlibs}
 @cindex @option{-nodefaultlibs} and unresolved references
 @cindex unresolved references and @option{-nodefaultlibs}
-@option{-nostdlib}と[option{-nodefaultlibs}によって迂回される標準ライブラリの一つは@file{libgcc.a}であり、
+@option{-nostdlib}とoption{-nodefaultlibs}によって迂回される標準ライブラリの一つは@file{libgcc.a}であり、
 GCCが特定の機種の欠点を克服するため、および、ある言語での特別に必要になるために使う内部サブルーチンのライブラリである。
 (@file{libgcc.a}の詳しい議論は@xref{Interface,,Interfacing to GCC Output,gccint,GNU Compiler Collection (GCC) Internals})
 大抵の場合は、他の標準ライブラリを避けたい場合でも@file{libgcc.a}は必要である。言い換えると、
@@ -11034,6 +11030,13 @@ GCCが特定の機種の欠点を克服するため、および、ある言語�
 これは内部GCCライブラリサブルーチンへの未解決のシンボルがないことを保証する。
 (そのような内部サブルーチンの例は@code{__main}で、C++のコンストラクタが呼ばれることを保証するために使われる。
  @pxref{Collect2,,@code{collect2}, gccint, GNU Compiler Collection (GCC) Internals}.)
+
+@item -e @var{entry}
+@itemx --entry=@var{entry}
+@opindex e
+@opindex entry
+
+プログラムのエントリポイントが@var{entry}であることを指定します。 引数はリンカによって解釈されます。 GNUリンカーは、シンボル名またはアドレスのいずれかを受け入れます。
 
 @item -pie
 @opindex pie
@@ -11050,6 +11053,10 @@ GCCが特定の機種の欠点を克服するため、および、ある言語�
 @item -pthread
 @opindex pthread
 POSIXスレッドライブラリとのリンク。 このオプションは、GNU/Linuxターゲット、その他のほとんどのUnix派生物、x86 CygwinおよびMinGWターゲットでもサポートされている。 いくつかのターゲットでは、このオプションはプリプロセッサのフラグも設定するので、コンパイルとリンクの両方に一貫して使用する必要がある。
+
+@item -r
+@opindex r
+再配置可能なオブジェクトを出力として生成します。 これは部分リンクとも呼ばれます。
 
 @item -rdynamic
 @opindex rdynamic
