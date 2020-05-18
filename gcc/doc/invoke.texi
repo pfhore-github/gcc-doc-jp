@@ -11379,15 +11379,11 @@ GNUリンカ（2.16以降）はこのオプションの必須のサポートを�
 
 @item -fwrapv-pointer
 @opindex fwrapv-pointer
-This option instructs the compiler to assume that pointer arithmetic
-overflow on addition and subtraction wraps around using twos-complement
-representation.  This flag disables some optimizations which assume
-pointer overflow is invalid.
+このオプションは、加算および減算でのポインター算術オーバーフローが2の補数表現を使用してラップアラウンドすると想定するようにコンパイラーに指示します。 このフラグは、ポインターのオーバーフローが無効であると想定する一部の最適化を無効にします。
 
 @item -fstrict-overflow
 @opindex fstrict-overflow
-This option implies @option{-fno-wrapv} @option{-fno-wrapv-pointer} and when
-negated implies @option{-fwrapv} @option{-fwrapv-pointer}.
+このオプションは@option{-fno-wrapv} @option{-fno-wrapv-pointer}を意味し、否定された場合は@option{-fwrapv} @option{-fwrapv-pointer}を意味します。
 
 @item -fexceptions
 @opindex fexceptions
@@ -11400,12 +11396,12 @@ C++ののような通常は必要としない言語では無効にする。し�
 @item -fnon-call-exceptions
 @opindex fnon-call-exceptions
 トラップ命令が例外を投げることを可能にするコードを生成する。これはプラットフォーム固有の必ずしもすべての場所では存在しない
-ランタイムサポートが必要なことに注意する。さらに、これは@emph{トラップ}命令が例外を投げることしか許可しない。
+ランタイムサポートが必要なことに注意する。さらに、これは@emph{_トラップ_}命令が例外を投げることしか許可しない。
 すなわち、メモリ参照か浮動小数点命令である。@code{SIGALRM}のような任意のシグナルハンドラから投げられる例外は許可しない。
 
 @item -fdelete-dead-exceptions
 @opindex fdelete-dead-exceptions
-例外を投げるかもしれないが、プログラムの実行にそれ以外は貢献しない最適化で消えるかもしれないとみなす。
+例外を投げるかもしれないが、プログラムの実行にそれ以外は貢献しない命令は最適化で消えるかもしれないとみなす。
 Ada言語仕様によって許されるように、このオプションはAdaフロントエンドではデフォルトで有効である。
 死んだ例外を取り除かれるようにする最適化パスは、異なる最適化レベルで独立して使用可能にされる。
 
@@ -11469,19 +11465,16 @@ GCCでコンパイルされたファイルと他のコンパイラ、特にPorta
 @strong{警告:} @option{-fshort-wchar}スイッチはGCCにスイッチなしで生成したコードとバイナリ互換性のないコードを生成するようにする。
 それを使うと非デフォルトのアプリケーション・バイナリのインターフェースに従う。
 
-@item -fno-common
+@item -fcommon
+@opindex fcommon
 @opindex fno-common
-Cコードで、未初期化のグローバル変数の配置を制御する。
-Unix C コンパイラは伝統的に、共通ブロックにその変数を置くことで異なるコンパイル単位でそのような変数の複数の定義を許可していた。
-これは@option{-fcommon}によって指定される振る舞いで、大抵のターゲットでのGCCにのデフォルトである。
-一方、この振る舞いはISO Cで要求されておらず、あるターゲットでは変数参照で速度やコードサイズのペナルティを運ぶかもしれない。
-@option{-fno-common}オプションは、一般のブロックとしてそれらを生成するのではなく、オブジェクト・ファイルのデータセクションへ
-コンパイラが初期化されていないグローバルな変数を置くべきことを指定する。
-あなたがそれらをリンクするとき、同じ変数が2つの異なるコンパイルにおいて宣言される（@code{extern}なしで）ならば、
-あなたが複数定義エラーを得るという趣旨を、これは持つ。
-この場合、あなたは@option{-fcommon}でコンパイルしなければならない。
-それがより良いパフォーマンスを提供するターゲットの上で、あるいは、あなたがこのように初期化されていない可変的な宣言を常に扱う
-他のシステムでプログラムが機能することを確かめたいならば、@option{-fno-common}でコンパイルすることは役に立つ。
+@cindex tentative definitions
+Cコードでは、このオプションは、初期化子なしで定義されたグローバル変数の配置を制御します。これは、C標準では@dfn{仮定義}と呼ばれています。 仮定義は、ストレージを割り当てない@code{extern}キーワードを使用した変数の宣言とは異なります。
+
+デフォルトは@option{-fno-common}で、コンパイラーが初期化されていないグローバル変数をオブジェクトファイルのBSSセクションに配置することを指定します。 これにより、リンカーによる一時的な定義のマージが禁止されるため、同じ変数が誤って複数のコンパイルユニットで定義されている場合は、多重定義エラーが発生します。
+
+@option {-fcommon}は、初期化されていないグローバル変数を共通ブロックに配置します。
+これにより、リンカーは、異なるコンパイルユニットにある同じ変数のすべての仮定義を、同じオブジェクトまたは非仮定義に解決できます。 この動作はC++と一貫性がなく、多くのターゲットでは、グローバル変数参照の速度とコードサイズのペナルティを意味します。 レガシーコードをエラーなしでリンクできるようにすることが主に役立ちます。
 
 @item -fno-ident
 @opindex fno-ident
@@ -11600,7 +11593,7 @@ test:
 m68kとRS/6000では32k。x86はそのような限度はない。）
 
 位置独立コードは特別なサポートを必要とし、特定の機種でのみ働く。x86では、GCCはSystem VではPICをサポートするが、Sun 386iではしない。
-IBM RS/6000のために生成された子どは常に位置独立である。
+IBM RS/6000のために生成されたコードは常に位置独立である。
 
 このフラグがセットされると、マクロ@code{__pic__}と@code{__PIC__}は1に定義される。
 
@@ -11801,7 +11794,18 @@ GCCに多分もっと効率的な32ビットアクセスの代わりに16ビッ�
 そして、GCCの構成（それがライブラリを捜すところのような）に関するその印刷情報。
 あなたは、めったに、普通のコンパイルとタスクをリンクすることためにこれらのオプションの何も使用する必要はあるべきでない。
 
+GCCに出力をファイルにダンプさせる多くの開発者オプションには、オプションの@samp{=@var{filename}}サフィックスが付きます。 @samp{stdout}または@samp{-}を指定して標準出力にダンプし、@samp{stderr}を指定して標準エラーを出力できます。
+
+@samp{=@var{filename}}を省略した場合、デフォルトのダンプファイル名は、ベースダンプファイル名、パス番号、フェーズレター、パス名を連結して作成されます。 ベースダンプファイル名は、明示的に指定され、実行可能ファイルではない場合に、コンパイラによって生成される出力ファイルの名前です。 それ以外の場合は、ソースファイル名です。 パス番号は、パスがコンパイラのパスマネージャに登録された順序によって決定されます。 これは一般に実行の順序と同じですが、プラグインによって登録されたパス、ターゲット固有のパス、または他の方法で遅れて登録されたパスは、以前に実行された場合でも、@samp{final}という名前のパスよりも大きい番号が付けられます。 フェーズレターは、@samp{i}（手続き間分析）、@samp{l}（言語固有）、@samp{r}（RTL）、または@samp{t}（ツリー）のいずれかです。 ファイルは、出力ファイルのディレクトリに作成されます。
+
 @table @gcctabopt
+
+@item -fcallgraph-info
+@itemx -fcallgraph-info=@var{MARKERS}
+@opindex fcallgraph-info
+オブジェクトファイルごとに、コンパイラーにプログラムのコールグラフ情報を出力させます。 情報は一般的なVCG形式で生成されます。 カンマ区切りのマーカーのリストが追加で指定されている場合は、ノードごと、エッジごと、またはその両方の追加情報で装飾できます。 @code{su}マーカーが指定されている場合、コールグラフはスタック使用情報で装飾されます。 @option{-fstack-usage}と同等です。 @code{da}マーカーが指定されると、コールグラフは動的に割り当てられたオブジェクトに関する情報で装飾されます。
+
+@option {-flto}でコンパイルすると、オブジェクトファイルとともにコールグラフ情報は出力されません。 LTOリンク時に、@option{-fcallgraph-info}は、中間のLTO出力ファイルの隣に複数のコールグラフ情報ファイルを生成する場合があります。
 
 @item -d@var{letters}
 @itemx -fdump-rtl-@var{pass}
@@ -11810,16 +11814,8 @@ GCCに多分もっと効率的な32ビットアクセスの代わりに16ビッ�
 @opindex fdump-rtl-@var{pass}
 時々コンパイルの間のデバッギング・ダンプを@var{letters}によって指定されるようにするように言う。
 コンパイラのRTLベースのパスをデバッグするために、これが使われる。
-@var{dumpname}にパス番号と語を追加することによって、大部分のダンプのファイル名は作られ、
-そしてファイルは出力ファイルのディレクトリで作成される。
-@option{=@var{filename}}オプションの場合、ダンプはパス数えられたダンプ・ファイルの代わりに、与えられたファイルで出力される。
-パスがパス・マネージャに登録されるので、パス番号が割り当てられる点に注意する。
-大部分のパスはそれらが実行する順序で登録され、そしてこれらのパスのために、数はパス実行順序に対応する。
-しかし、プラグインによって登録されたパス、コンパイル・ターゲットに特有のパス、さもなくば他のパスすべての後で登録されたパスは、
-たとえそれらが早く実行されたとしても、"final"という名前のパスよりも高くて数えられる。
-明示的に指定される出力ファイルもしもと実行可能であるもの名前から@var{dumpname}は生成され、
-さもなければ、それはソース・ファイルのbasenameである。
-@option{-E}がプリプロセスのために使われるとき、これらのスイッチは異なる影響を持つかもしれない。
+
+@option{-E}が前処理に使用される場合、一部の@option{-d@var{letters}}スイッチは異なる意味を持ちます。 プリプロセッサ固有のダンプオプションについては、@xref{Preprocessor Options}。
 
 デバッグ・ダンプは、@option{-fdump-rtl}スイッチまたはある@option{-d}オプション@var{letters}で使用可能にされることができる。
 @var{pass}と@var{letters}とそれらの意味に用いられる可能性がある文字は、ここにある：
@@ -12058,7 +12054,7 @@ GCCの「水平レジスタファイル」レジスタからx87のスタック�
 @opindex fdump-rtl-subregs_of_mode_finish
 @opindex fdump-rtl-dfinit
 @opindex fdump-rtl-dfinish
-これらのダンプは定義されているが常にからファイルを生成する。
+これらのダンプは定義されているが常に空ファイルを生成する。
 
 @item -da
 @itemx -fdump-rtl-all
@@ -12091,6 +12087,14 @@ normal output.
 @opindex dx
 コンパイルする代わりに関数のRTLをだけを生成する。通常は@option{-fdump-rtl-expand}と使われる。
 @end table
+
+@item -fdump-debug
+@opindex fdump-debug
+デバッグ中に生成されたデバッグ情報をダンプする。
+
+@item -fdump-earlydebug
+@opindex fdump-earlydebug
+初期のデバッグ生成フェーズで生成されたデバッグ情報をダンプします。
 
 @item -fdump-noaddr
 @opindex fdump-noaddr
@@ -12127,28 +12131,31 @@ text / bss / data / heap / stack / dso開始場所のあるコンパイラ呼び
 
 @end table
 
+さらに、オプション@option{-optimized}、@option{-missed}、@option{-note}、および@option{-all}を提供でき、@option{-fopt-info}と同じ意味です 、デフォルトは@option{-optimized}です。
+
+たとえば、@option{-fdump-ipa-inline-optimized-missed}は、インライン化されなかった呼び出しサイトとともに、インライン化された呼び出しサイトに関する情報を出力します。
+
+
+デフォルトでは、ダンプには、成功した最適化に関するメッセージ（@option{-optimized}と同等）と分析に関する低レベルの詳細が含まれます。
+
 @item -fdump-lang-all
 @itemx -fdump-lang-@var{switch}
 @itemx -fdump-lang-@var{switch}-@var{options}
 @itemx -fdump-lang-@var{switch}-@var{options}=@var{filename}
 @opindex fdump-lang-all
 @opindex fdump-lang
-Control the dumping of language-specific information.  The @var{options}
-and @var{filename} portions behave as described in the
-@option{-fdump-tree} option.  The following @var{switch} values are
-accepted:
+言語固有の情報のダンプを制御します。 @var{options}と@var{filename}の部分は、@option{-fdump-tree}オプションで説明されているように動作します。 次の@var{switch}値が受け入れられます。
 
 @table @samp
 @item all
 
-Enable all language-specific dumps.
+すべての言語固有のダンプを有効にします。
 
 @item class
-Dump class hierarchy information.  Virtual table information is emitted
-unless '@option{slim}' is specified.  This option is applicable to C++ only.
+クラス階層情報をダンプします。 '@option {slim}'が指定されていない限り、仮想テーブル情報が出力されます。 このオプションはC++にのみ適用されます。
 
 @item raw
-Dump the raw internal tree data.  This option is applicable to C++ only.
+生の内部ツリーデータをダンプします。 このオプションはC++にのみ適用されます。
 
 @end table
 
@@ -12223,26 +12230,11 @@ RTLをダンプするとき、デフォルトのLISP風表現の代わりに薄�
 失われた最適化情報の表示を有効にする。（あるパスでのみ利用可能である）
 @item note
 他の詳細の最適化情報を有効にする。（あるパスでのみ利用可能である）
-@item =@var{filename}
-自動の名前のダンプファイルの代わりに、与えられたファイル名へ出力する。
-ファイル名@file{stdout}と@file{stderr}は特別に扱われて常に標準ストリームを開くとみなされる。
-例えば、
-
-@smallexample
-gcc -O2 -ftree-vectorize -fdump-tree-vect-blocks=foo.dump
-     -fdump-tree-pre=/dev/stderr file.c
-@end smallexample
-
-は@file{foo.dump}にベクトル化器ダンプを出力し、PREダンプは@file{stderr}に出力する。
-もし2つの矛盾するファイル名が同じパスに与えられたなら、後者のオプションが前者を上書きする。
-
 @item all
 @option{raw}, @option{slim}, @option{verbose}, @file{lineno}を除く全オプションを有効にする。
-
 @item optall
 すべての最適化オプション、すなわち、@option{optimized}, @option{missed}, @option{note}をオンにする。
 @end table
-
 
 使用可能なツリーダンプを特定する、またはパスのダンプを検索するためには、以下の手順に従う。
 
@@ -12264,9 +12256,16 @@ gcc -O2 -ftree-vectorize -fdump-tree-vect-blocks=foo.dump
 様々な最適化パスからの最適化ダンプを制御する。もし@samp{-@var{options}}形が使われるならば、
 @var{option}はダンプ詳細と最適化を選択するための@samp{-}で分割されたオプションキーワードのリストである。
 
-@var{options}は2つのグループに分割できる。ダンプの詳細性を描写するオプションと、含まれるべき最適化を描写するオプションである。
-両方のグループからのオプションは重ならない限り自由に混ぜることができる。しかし、衝突する場合には、
-コマンドラインでの後者のオプションが前者のオプションを上書きする。
+@var{options}は3つのグループに分割できる。
+@enumerate
+@item
+どの種類のメッセージを出力するかを説明するオプション
+@item
+ダンプの詳細度を説明するオプション、および
+@item
+どの最適化を含めるかを説明するオプション。
+@end enumerate
+各グループのオプションは重複しないため、自由に組み合わせることができます。 ただし、競合が発生した場合は、コマンドラインの前のオプションが後のオプションで上書きされます。
 
 以下のオプションがダンプの詳細性を制御する。
 
@@ -12280,6 +12279,13 @@ gcc -O2 -ftree-vectorize -fdump-tree-vect-blocks=foo.dump
 最適化についての、ある変換および決定についてのもっと詳細なメッセージなどの詳細な情報を出力する。
 @item all
 詳細の最適化情報を出力する。これは@samp{optimized}, @samp{missed}, @samp{note}を含む。
+@end table
+
+次のオプションは、ダンプの詳細度を制御します。
+
+@table @samp
+@item internals
+デフォルトでは、「高レベル」メッセージのみが発行されます。 このオプションにより、GCC開発者のみが関心を持つ可能性が高い、追加のより詳細なメッセージが有効になります。
 @end table
 
 以下のオプションキーワードの一つ以上は最適化のグループを描写するために使われる。
@@ -12307,7 +12313,7 @@ gcc -O2 -ftree-vectorize -fdump-tree-vect-blocks=foo.dump
 出力@var{filename}は複数の翻訳単位の場合には上書きされることに注意する。
 もし複数の翻訳単位からの結合された出力が望まれるならば、@file{stderr}が代わりに使われるべきである。
 
-以下の例では、最適化情報が@file{stder}へと出力される。
+以下の例では、最適化情報が@file{stderr}へと出力される。
 
 @smallexample
 gcc -O3 -fopt-info
@@ -12348,6 +12354,38 @@ gcc -fopt-info-vec-missed=vec.miss -fopt-info-loop-optimized=loop.opt
 ここで一つの出力ファイルのみが許されるので２つの出力ファイル名@file{vec.miss}と@file{loop.opt}は衝突する。
 この例では、最初のオプションのみが効果を持ち、後ろのオプションは無視される。したがって、@file{vec.miss}が生成され、
 それには失敗した奇怪に関するベクトル化器からのダンプが含まれる。
+
+@item -fsave-optimization-record
+@opindex fsave-optimization-record
+@option {-fopt-info}をサポートする最適化について、実行された最適化の詳細を示すSRCFILE.opt-record.json.gzファイルを記述します。
+
+このオプションは実験的なものであり、圧縮されたJSONファイル内のデータの形式は変更される可能性があります。
+
+これは、@option{-fopt-info-all}の機械可読バージョンとほぼ同じであり、ソースファイル、行番号、列番号を含むメッセージのコレクションであり、各メッセージについて次の追加データがあります。
+
+@itemize @bullet
+
+@item
+最適化されているコードの実行カウント、およびこれが実際のプロファイルデータからのものか、単なる推定値であるかに関するメタデータ。これにより、コンシューマーはコードのホットネスによってメッセージに優先順位を付けることができます。
+
+@item
+最適化されるコードの関数名（該当する場合）
+
+@item
+最適化されるコードの「インラインチェーン」。これにより、関数がいくつかの異なる場所（インライン化される場合がある）にインライン化されると、リーダーはコピーを区別できます。
+
+@item
+式、ステートメント、またはシンボルテーブルノードを参照するメッセージのこれらの部分を識別するオブジェクト、これらのカテゴリのどれであるか、および使用可能な場合はソースコードの場所、
+
+@item
+メッセージを発行したGCCパス、および
+
+@item
+メッセージが発行されたGCC独自のコード内の場所
+
+@end itemize
+
+さらに、一部のメッセージは他のメッセージ内に論理的にネストされており、最適化パスの実装の詳細を反映しています。
 
 @item -fsched-verbose=@var{n}
 @opindex fsched-verbose
@@ -12425,13 +12463,12 @@ RTLパス@var{pass}を有効にする。オプション引数の説明と例は@
 @opindex fchecking
 @opindex fno-checking
 内部一貫性チェックを有効にする。デフォルトはコンパイラ設定に依存する。
-@option{-fchecking=2} enables further
-internal consistency checking that might affect code generation.
+@option{-fchecking=2}は、コード生成に影響を与える可能性のある内部整合性チェックをさらに有効にします。
 
 @item -frandom-seed=@var{string}
 @opindex frandom-seed
 このオプションはコンパイルファイルごとに異ならなければならないシンボル名を生成する場所でGCCが使うシードを提供する。
-それはカバレッジデータファイルとそれが生成するオブジェクトフィアルでの唯一のスタンプを置くためにも使われる。
+それはカバレッジデータファイルとそれが生成するオブジェクトファイルでの唯一のスタンプを置くためにも使われる。
 @option{-frandom-seed}オプションを再現可能な同一のオブジェクトファイルを生成するために使うことができる。
 
 @var{string}が数(10進、8進、16進)か任意の文字列（その場合CRC32を計算することで数に変換される）のどちらかであることができる。
@@ -12465,7 +12502,7 @@ gcc -save-temps -o outdir2/foo.o indir2/foo.c&
 
 @item -save-temps=obj
 @opindex save-temps=obj
-通常の「一時」中間ファイルを影響に保管する。もし@option{-o}オプションが使われたなら、
+通常の「一時」中間ファイルを永久に保管する。もし@option{-o}オプションが使われたなら、
 一時ファイルはオブジェクトファイルに基づく。もし@option{-o}が使われなければ、
 @option{-save-temps=obj}スイッチは@option{-save-temps}のように振る舞う。
 
@@ -12520,7 +12557,7 @@ gcc -save-temps=obj foobar.c -o dir2/yfoobar
 @var{opts}と@option{-fcompare-debug-second}を引数に加えて渡す。最後のコンパイルで最後の内部表現
 をダンプし、異なっていたらエラーを出力うすｒ。
 
-もし統合が省略されたらな、デフォルトの@option{-gtoggle}は使う。
+もし等号が省略されたらな、デフォルトの@option{-gtoggle}は使う。
 
 環境変数@env{GCC_COMPARE_DEBUG}が、もし定義されて、空でなくゼロでなければ、
 @option{-fcompare-debug}を暗黙の有効する。もし@env{GCC_COMPARE_DEBUG}がダッシュで始まって定義されていたら、
