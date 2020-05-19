@@ -12784,6 +12784,7 @@ GCCのによってサポートされているそれぞれのターゲット機�
 @menu
 * AArch64 Options::
 * Adapteva Epiphany Options::
+* AMD GCN Options::
 * ARC Options::
 * ARM Options::
 * AVR Options::
@@ -12791,8 +12792,10 @@ GCCのによってサポートされているそれぞれのターゲット機�
 * C6X Options::
 * CRIS Options::
 * CR16 Options::
+* C-SKY Options::
 * Darwin Options::
 * DEC Alpha Options::
+* eBPF Options::
 * FR30 Options::
 * FT32 Options::
 * FRV Options::
@@ -12818,7 +12821,7 @@ GCCのによってサポートされているそれぞれのターゲット機�
 * PDP-11 Options::
 * picoChip Options::
 * PowerPC Options::
-* PowerPC SPE Options::
+* PRU Options::
 * RISC-V Options::
 * RL78 Options::
 * RS/6000 and PowerPC Options::
@@ -12887,11 +12890,13 @@ intが32ビットで、long intとポインタが64ビットであるSysV風デ�
 
 @item -mcmodel=large
 @opindex mcmodel=large
-大きなコードモデル用のコードを生成する。これはアドレスとセクションおサイズなんの仮定もしない。
-ポインタは64ビットである。プログラムは静的にのみリンクできる。
+大きなコードモデル用のコードを生成する。これはアドレスとセクションにサイズ何の仮定もしない。
+ポインタは64ビットである。プログラムは静的にのみリンクできる。@option {-mcmodel = large}オプションは、@ option {-mabi = ilp32}、@ option {-fpic}および@option {-fPIC}と互換性がありません。
 
 @item -mstrict-align
+@itemx -mno-strict-align
 @opindex mstrict-align
+@opindex mno-strict-align
 境界の合っていないメモリ参照がシステムで扱われると仮定しない。
 
 @item -momit-leaf-frame-pointer
@@ -12899,6 +12904,16 @@ intが32ビットで、long intとポインタが64ビットであるSysV風デ�
 @opindex momit-leaf-frame-pointer
 @opindex mno-omit-leaf-frame-pointer
 末端関数でフレームポインタを省略・保持する。前者の振る舞いがデフォルトである。
+
+@item -mstack-protector-guard=@var{guard}
+@itemx -mstack-protector-guard-reg=@var{reg}
+@itemx -mstack-protector-guard-offset=@var{offset}
+@opindex mstack-protector-guard
+@opindex mstack-protector-guard-reg
+@opindex mstack-protector-guard-offset
+@var{guard}でカナリアを使用してスタック保護コードを生成します。 サポートされている場所は、グローバルカナリアの@samp{global}または適切なシステムレジスタ内のカナリアの@samp{sysreg}です。
+
+さらに後者を選択すると、オプション@option{-mstack-protector-guard-reg=@var{reg}}と@option{-mstack-protector-guard-offset=@var{offset}}が、カナリアを読み取るためのベースレジスタとして、そして、そのベースレジスタからのオフセットから使用するシステムレジスタを指定します。これは完全にLinuxカーネル内で使用するためのものであるため、デフォルトのレジスターやオフセットはありません。
 
 @item -mtls-dialect=desc
 @opindex mtls-dialect=desc
@@ -12943,18 +12958,33 @@ ARM Cortex-A53エラッタ843419用の回避手段を有効・無効にする。
 @opindex -mno-low-precision-div
 除算近似を有効または無効にする。このオプションは、@option{-ffast-math}または@option{-funsafe-math-optimizations}を使用する場合にのみ有効である。 これを有効にすると、除算結果の精度が単精度の場合は約16ビット、倍精度の場合は32ビットになる。
 
+@item -mtrack-speculation
+@itemx -mno-track-speculation
+条件付きブランチを介した投機的実行を追跡するための追加コードの生成を有効または無効にします。 @code{__builtin_speculation_safe_copy}への呼び出しを展開するときにコンパイラーが追跡状態を使用して、より効率的なコードシーケンスを生成できます。
+
+@item -moutline-atomics
+@itemx -mno-outline-atomics
+アトミック操作を実装するための行外ヘルパーの呼び出しを有効または無効にします。 これらのヘルパーは、実行時に、ARMv8.1-AのLSE命令を使用できるかどうかを判断します。 そうでない場合は、ベースARMv8.0 ISAにあるロード/ストア専用の命令を使用します。
+
+このオプションは、基本ARMv8.0命令セット用にコンパイルする場合にのみ適用できます。 より新しいリビジョンを使用している場合、@option{-march=armv8.1-a}または@option{-march=armv8-a+lse}では、ARMv8.1-Atomics命令が直接使用されます。 選択したCPUが@samp{lse}機能をサポートしているときに@option{-mcpu=}を使用する場合も同様です。
+
 @item -march=@var{name}
 @opindex march
 ターゲットアーキテクチャと、オプションで1つ以上の機能修飾子を指定する。オプションは形式
 @option{-march=@var{arch}@r{@{}+@r{[}no@r{]}@var{feature}@r{@}*}}である。
 
-@var{arch}の可能な値は@samp{armv8-a}, @samp{armv8.1-a}, @samp{armv8.2-a}, @samp{armv8.3-a}, @samp{armv8.4-a}, @var{native}である。
+以下の表は、@var{arch}の許容値と、それらがデフォルトで有効にする機能をまとめたものです。
 
-値@samp {armv8.4-a}は@samp {armv8.3-a}を含み、ARMv8.4-Aアーキテクチャ拡張のコンパイラサポートを有効にする。
-値@samp{armv8.3-a}は@samp{armv8.2-a}を含み、ARMv8.3-Aアーキテクチャ拡張のコンパイラサポートを有効にする。
-値@samp{armv8.2-a}は@samp{armv8.1-a}を含み、ARMv8.2-Aアーキテクチャ拡張のコンパイラサポートを有効にする。
-値@samp{armv8.1-a}は@samp{armv8-a}を含み、ARMv8.1アーキテクチャ拡張のコンパイラサポートを有効にする。
-特に、@samp{+crc}、@samp{+lse}、@samp{+rdma}機能を有効にする。
+@multitable @columnfractions 0.20 0.20 0.60
+@headitem @var{arch} value @tab Architecture @tab Includes by default
+@item @samp{armv8-a} @tab Armv8-A @tab @samp{+fp}, @samp{+simd}
+@item @samp{armv8.1-a} @tab Armv8.1-A @tab @samp{armv8-a}, @samp{+crc}, @samp{+lse}, @samp{+rdma}
+@item @samp{armv8.2-a} @tab Armv8.2-A @tab @samp{armv8.1-a}
+@item @samp{armv8.3-a} @tab Armv8.3-A @tab @samp{armv8.2-a}
+@item @samp{armv8.4-a} @tab Armv8.4-A @tab @samp{armv8.3-a}, @samp{+fp16fml}, @samp{+dotprod}
+@item @samp{armv8.5-a} @tab Armv8.5-A @tab @samp{armv8.4-a}, @samp{+sb}, @samp{+ssbs}, @samp{+predres}
+@item @samp{armv8.6-a} @tab Armv8.6-A @tab @samp{armv8.5-a}, @samp{+bf16}, @samp{+i8mm}
+@end multitable
 
 値@samp{native}はネイティブのAArch64 GNU/Linuxで利用可能であり、コンパイラにホストシステムの
 アーキテクチャを選ばせる。このオプションはもしコンパイラがホストシステムのアーキテクチャを
@@ -12972,13 +13002,22 @@ GCCは@var{name}をアセンブリコードを生成するときにどの種類�
 GCCがコードのパフォーマンスを調整すべきターゲットプロセッサの名前を指定する。このオプションの可能な値以下。
 @samp{generic}, @samp{cortex-a35}, @samp{cortex-a53}, @samp{cortex-a55},
 @samp{cortex-a57}, @samp{cortex-a72}, @samp{cortex-a73}, @samp{cortex-a75},
-@samp{exynos-m1}, @samp{falkor}, @samp{qdf24xx}, @samp{saphira},
-@samp{xgene1}, @samp{vulcan}, @samp{thunderx},
-@samp{thunderxt88}, @samp{thunderxt88p1}, @samp{thunderxt81},
-@samp{thunderxt83}, @samp{thunderx2t99}, @samp{cortex-a57.cortex-a53},
-@samp{cortex-a72.cortex-a53}, @samp{cortex-a73.cortex-a35},
-@samp{cortex-a73.cortex-a53}, @samp{cortex-a75.cortex-a55},
-@samp{native}。
+@samp{cortex-a76}, @samp{cortex-a76ae}, @samp{cortex-a77},
+@samp{cortex-a65}, @samp{cortex-a65ae}, @samp{cortex-a34},
+@samp{ares}, @samp{exynos-m1}, @samp{emag}, @samp{falkor},
+@samp{neoverse-e1},@samp{neoverse-n1},@samp{qdf24xx}, @samp{saphira},
+@samp{phecda}, @samp{xgene1}, @samp{vulcan}, @samp{octeontx},
+@samp{octeontx81},  @samp{octeontx83},
+@samp{octeontx2}, @samp{octeontx2t98}, @samp{octeontx2t96}
+@samp{octeontx2t93}, @samp{octeontx2f95}, @samp{octeontx2f95n},
+@samp{octeontx2f95mm}
+@samp{thunderx}, @samp{thunderxt88},
+@samp{thunderxt88p1}, @samp{thunderxt81}, @samp{tsv110},
+@samp{thunderxt83}, @samp{thunderx2t99},
+@samp{cortex-a57.cortex-a53}, @samp{cortex-a72.cortex-a53},
+@samp{cortex-a73.cortex-a35}, @samp{cortex-a73.cortex-a53},
+@samp{cortex-a75.cortex-a55}, @samp{cortex-a76.cortex-a55}
+@samp{native}.
 
 値@samp{cortex-a57.cortex-a53}, @samp{cortex-a72.cortex-a53},
 @samp{cortex-a73.cortex-a35}, @samp{cortex-a73.cortex-a53},
@@ -13023,8 +13062,19 @@ PC相対のリテラルロードを有効・無効にする。このオプショ
 
 @item -msign-return-address=@var{scope}
 @opindex msign-return-address
-戻りアドレスの署名が適用される関数スコープを選択する。許容値はリターンアドレスの署名を無効にする@samp{none}、リーフ関数でない関数のポインタ署名を有効にする@samp{non-leaf}、すべての関数のポインタ署名を有効にする@samp{all}。 デフォルト値は@samp{none}である。
+リターンアドレス署名が適用される関数スコープを選択します。 許可される値は、戻りアドレスの署名を無効にする@samp{none}、リーフ関数ではない関数のポインター署名を有効にする@samp{non-leaf}、およびすべての関数のポインター署名を有効にする@samp{all}です。 デフォルト値は@samp{none}です。 このオプションは、-mbranch-protectionによって廃止されました。
 
+@item -mbranch-protection=@var{none}|@var{standard}|@var{pac-ret}[+@var{leaf}+@var{b-key}]|@var{bti}
+@opindex mbranch-protection
+使用するブランチ保護機能を選択します。 @samp{none}がデフォルトであり、すべてのタイプのブランチ保護をオフにします。 @samp{standard}は、すべてのタイプのブランチ保護機能をオンにします。 機能に追加のチューニングオプションがある場合、@samp{standard}はその機能を標準レベルに設定します。 @samp{pac-ret[+@var{leaf}]}は、戻りアドレスの署名を標準レベルでオンにします。aキーを使用して、戻りアドレスをメモリに保存する署名関数（非リーフ関数は実際には常にこれを行います）。 オプションの引数@samp{leaf}を使用して、リーフ関数を含めるように署名を拡張できます。 オプションの引数@samp{b-key}を使用して、AキーではなくBキーで関数に署名できます。 @samp{bti}はブランチターゲット識別メカニズムをオンにします。
+
+@item -msve-vector-bits=@var{bits}
+@opindex msve-vector-bits
+SVEベクタレジスタのビット数を指定します。 このオプションは、SVEが有効な場合にのみ効果があります。
+
+GCCは2つの形式のSVEコード生成をサポートします：任意のサイズのベクトルレジスターで機能する「ベクトル長に依存しない」出力と、GCCが最適化のため有用な場合にベクトル長について推測できるようにする「ベクトル長固有」出力。@samp{bits}の可能な値は、@samp{scalable}、@samp{128}、@samp{256}、@samp{512}、@samp{1024}および@samp{2048}です。 @samp{scalable}を指定すると、ベクトル長に依存しない出力が選択されます。 現在、@samp{-msve-vector-bits = 128}はビッグエンディアンターゲットのベクトル長に依存しない出力も生成します。 他のすべての値は、ベクトル長固有のコードを生成します。 これらの値の動作は将来のリリースで変更される可能性があり、@samp {scalable}以外の値は、異なるハードウェアSVEベクトル長にわたって移植可能なコードを生成するために依存すべきではありません。
+
+デフォルトは@samp {-msve-vector-bits = scalable}で、ベクトル長に依存しないコードを生成します。
 @end table
 
 @subsubsection @option{-march} and @option{-mcpu} Feature Modifiers
@@ -13064,7 +13114,39 @@ Armv8-sha2暗号拡張を有効にする。 これにより、アドバンスト
 sha512およびsha3暗号拡張を有効にする。 これにより、アドバンストSIMD命令も有効になる。 Armv8.2-Aより前のアーキテクチャでこのオプションを使用することはサポートされていない。
 @item sm4
 sm3およびsm4暗号拡張を有効にする。 これにより、アドバンストSIMD命令も有効になる。Armv8.2-Aより前のアーキテクチャでこのオプションを使用することはサポートされていない。
-  
+@item profile
+統計プロファイリング拡張を有効にします。 このオプションは、アセンブラレベルで拡張機能を有効にするためだけのものであり、コード生成には影響しません。
+@item rng
+Armv8.5-a乱数命令を有効にします。 このオプションは、アセンブラレベルで拡張機能を有効にするためだけのものであり、コード生成には影響しません。
+@item memtag
+Armv8.5-aメモリタグ拡張機能を有効にします。 Armv8.5-Aより前のアーキテクチャでのこのオプションの使用はサポートされていません。
+@item sb
+Armv8-a投機バリア命令を有効にします。 このオプションは、アセンブラレベルで拡張機能を有効にするためだけのものであり、コード生成には影響しません。 このオプションは、@option{-march=armv8.5-a}ではデフォルトで有効になっています。
+@item ssbs
+Armv8-a投機的ストアバイパスセーフ命令を有効にします。 このオプションは、アセンブラレベルで拡張機能を有効にするためだけのものであり、コード生成には影響しません。 このオプションは、@option{-march=armv8.5-a}ではデフォルトで有効になっています。
+@item predres
+Armv8-a実行およびデータ予測制限命令を有効にします。 このオプションは、アセンブラレベルで拡張機能を有効にするためだけのものであり、コード生成には影響しません。 このオプションは、@option{-march=armv8.5-a}ではデフォルトで有効になっています。
+@item sve2
+Armv8-a Scalable Vector Extension 2を有効にします。これにより、SVE命令も有効になります。
+@item sve2-bitperm
+SVE2 bitperm命令を有効にします。 これにより、SVE2命令も有効になります。
+@item sve2-sm4
+SVE2 sm4命令を有効にします。 これにより、SVE2命令も有効になります。
+@item sve2-aes
+SVE2 aes命令を有効にします。 これにより、SVE2命令も有効になります。
+@item sve2-sha3
+SVE2 sha3命令を有効にします。 これにより、SVE2命令も有効になります。
+@item tme
+Transactional Memory Extensionを有効にします。
+@item i8mm
+8ビット整数行列乗算命令を有効にします。 これにより、Advanced SIMDおよび浮動小数点命令も有効になります。 このオプションは、@option{-march = armv8.6-a}ではデフォルトで有効になっています。 Armv8.2-Aより前のアーキテクチャでのこのオプションの使用はサポートされていません。
+@item f32mm
+32ビット浮動小数点行列乗算命令を有効にします。 これにより、SVE命令も有効になります。 Armv8.2-Aより前のアーキテクチャでのこのオプションの使用はサポートされていません。
+@item f64mm
+64ビット浮動小数点行列乗算命令を有効にします。 これにより、SVE命令も有効になります。 Armv8.2-Aより前のアーキテクチャでのこのオプションの使用はサポートされていません。
+@item bf16
+brain半精度浮動小数点命令を有効にします。 これにより、Advanced SIMDおよび浮動小数点命令も有効になります。 このオプションは、@option{-march = armv8.6-a}ではデフォルトで有効になっています。 Armv8.2-Aより前のアーキテクチャでのこのオプションの使用はサポートされていません。
+
 @end table
 
 @option{crypto}は@option{aes}、@option{sha2}、@option{simd}を含み、それは@option{fp}を含む。逆に、
@@ -13098,9 +13180,8 @@ sm3およびsm4暗号拡張を有効にする。 これにより、アドバン�
 
 @item -mno-soft-cmpsf
 @opindex mno-soft-cmpsf
-単精度浮動小数点数比較で、@code{fsub}命令とフラグのテス後を生成する。これはソフトウェア比較よりも速いが、
-NaNが存在するか、２つの異なる小さい数が比較されて差が0として計算されるようなときには不正確な結果お生み得る。
-デフォルトは@option{-msoft-cmpsf}であり、遅いが、IEEE準拠のソフトウェア比較を使う。
+@opindex msoft-cmpsf
+単精度浮動小数点比較の場合、@code{fsub}命令を発行してフラグをテストします。 これはソフトウェアの比較より高速ですが、NaNが存在する場合、または2つの異なる小さな数値が比較され、それらの差がゼロとして計算される場合に、誤った結果が得られる可能性があります。 デフォルトは@option{-msoft-cmpsf}で、低速ですがIEEE準拠のソフトウェア比較を使用します。
 
 @item -mstack-offset=@var{num}
 @opindex mstack-offset
@@ -13115,6 +13196,7 @@ NaNが存在するか、２つの異なる小さい数が比較されて差が0�
 
 @item -mno-round-nearest
 @opindex mno-round-nearest
+@opindex mround-nearest
 スケジューラが丸めモードが切り詰めにセットされていると仮定する。デフォルトは@option{-mround-nearest}
 である。
 
@@ -13164,12 +13246,15 @@ NaNが存在するか、２つの異なる小さい数が比較されて差が0�
 
 デフォルトは@option{-mfp-mode=caller}である。
 
-@item -mnosplit-lohi
+@item -mno-split-lohi
 @itemx -mno-postinc
 @itemx -mno-postmodify
-@opindex mnosplit-lohi
+@opindex mno-split-lohi
+@opindex msplit-lohi
 @opindex mno-postinc
+@opindex mpostinc
 @opindex mno-postmodify
+@opindex mpostmodify
 それぞれ、32ビットロードの分割、後置インクリメントアドレスの生成、後置修正アドレスの生成を
 無効にするコード生成調整。デフォルトは@option{msplit-lohi},
 @option{-mpost-inc}, @option{-mpost-modify}。
@@ -13199,6 +13284,39 @@ ABI変更であることに注意する。
 
 @end table
 
+@node AMD GCN Options
+@subsection AMD GCNオプション
+@cindex AMD GCN Options
+
+これらのオプションは、AMD GCNポート専用に定義されています。
+
+@table @gcctabopt
+
+@item -march=@var{gpu}
+@opindex march
+@itemx -mtune=@var{gpu}
+@opindex mtune
+@var {gpu}のアーキテクチャタイプまたはチューニングを設定します。 @var {gpu}でサポートされる値は
+
+@table @samp
+@opindex fiji
+@item fiji
+GCN3 Fijiデバイス（gfx803）用にコンパイルします。
+
+@item gfx900
+GCN5 Vega 10デバイス（gfx900）用にコンパイルします。
+
+@item gfx906
+GCN5 Vega 20デバイス（gfx906）用にコンパイルします。
+
+@end table
+
+@item -mstack-size=@var{bytes}
+@opindex mstack-size
+各GPUスレッド（ウェーブフロント）に対して要求されるスタック領域の@var{bytes}の数を指定します。 多くのスレッドがあり、使用可能なメモリが限られている場合があることに注意してください。 スタック割り当てのサイズも、実行時のパフォーマンスに影響を与える可能性があります。 OpenACCまたはOpenMPを使用する場合のデフォルトは32KB、それ以外の場合は1MBです。
+
+@end table
+
 @node ARC Options
 @subsection ARCオプション
 @cindex ARC options
@@ -13215,8 +13333,7 @@ ABI変更であることに注意する。
 
 @item -mjli-always
 @opindex mjli-alawys
-Force to call a function using jli_s instruction.  This option is
-valid only for ARCv2 architecture.
+jli_s命令を使用して関数を強制的に呼び出します。 このオプションは、ARCv2アーキテクチャーでのみ有効です。
 
 @item -mcpu=@var{cpu}
 @opindex mcpu
@@ -13294,8 +13411,7 @@ ARC HS38 CPU用にコンパイルする。
 NPS400チップ上のARC 700用にコンパイルする。
 
 @item em_mini
-Compile for ARC EM minimalist configuration featuring reduced register
-set.
+レジスタセットを削減したARC EMミニマリスト構成向けにコンパイルします。
 
 @end table
 
@@ -13494,39 +13610,23 @@ ARC EMでは利用できない。
 
 @item -mirq-ctrl-saved=@var{register-range}, @var{blink}, @var{lp_count}
 @opindex mirq-ctrl-saved
-Specifies general-purposes registers that the processor automatically
-saves/restores on interrupt entry and exit.  @var{register-range} is
-specified as two registers separated by a dash.  The register range
-always starts with @code{r0}, the upper limit is @code{fp} register.
-@var{blink} and @var{lp_count} are optional.  This option is only
-valid for ARC EM and ARC HS cores.
+割り込みの開始と終了時にプロセッサが自動的に保存/復元する汎用レジスタを指定します。 @var{register-range}は、ダッシュで区切られた2つのレジスタとして指定されます。 レジスタ範囲は常に@code{r0}で始まり、上限は@code{fp}レジスタです。@var{blink}と@var{lp_count}はオプションです。 このオプションは、ARC EMおよびARC HSコアでのみ有効です。
 
 @item -mrgf-banked-regs=@var{number}
 @opindex mrgf-banked-regs
-Specifies the number of registers replicated in second register bank
-on entry to fast interrupt.  Fast interrupts are interrupts with the
-highest priority level P0.  These interrupts save only PC and STATUS32
-registers to avoid memory transactions during interrupt entry and exit
-sequences.  Use this option when you are using fast interrupts in an
-ARC V2 family processor.  Permitted values are 4, 8, 16, and 32.
+高速割り込みへのエントリ時に2番目のレジスタバンクに複製されるレジスタの数を指定します。 高速割り込みは、最高の優先度レベルP0の割り込みです。 これらの割り込みは、PCとSTATUS32レジスタのみを保存し、割り込みのエントリシーケンスと終了シーケンス中のメモリトランザクションを回避します。 ARC V2ファミリプロセッサで高速割り込みを使用している場合は、このオプションを使用します。 許可される値は、4、8、16、および32です。
 
 @item -mlpc-width=@var{width}
 @opindex mlpc-width
-Specify the width of the @code{lp_count} register.  Valid values for
-@var{width} are 8, 16, 20, 24, 28 and 32 bits.  The default width is
-fixed to 32 bits.  If the width is less than 32, the compiler does not
-attempt to transform loops in your program to use the zero-delay loop
-mechanism unless it is known that the @code{lp_count} register can
-hold the required loop-counter value.  Depending on the width
-specified, the compiler and run-time library might continue to use the
-loop mechanism for various needs.  This option defines macro
-@code{__ARC_LPC_WIDTH__} with the value of @var{width}.
+@code{lp_count}レジスタの幅を指定します。 @var{width}の有効な値は、8、16、20、24、28、32ビットです。 デフォルトの幅は32ビットに固定されています。 幅が32未満の場合、@code{lp_count}レジスタが必要なループカウンター値を保持できることがわかっていない限り、コンパイラーはプログラム内のループを変換してゼロ遅延ループメカニズムを使用しようとしません。 指定された幅に応じて、コンパイラとランタイムライブラリはループメカニズムをさまざまなニーズに使用し続ける場合があります。 このオプションは、@var{width}の値を使用してマクロ@code{__ARC_LPC_WIDTH__}を定義します。
 
 @item -mrf16
 @opindex mrf16
-This option instructs the compiler to generate code for a 16-entry
-register file.  This option defines the @code{__ARC_RF16__}
-preprocessor macro.
+このオプションは、16エントリのレジスタファイルのコードを生成するようコンパイラーに指示します。 このオプションは、@code{__ARC_RF16__}プリプロセッサマクロを定義します。
+
+@item -mbranch-index
+@opindex mbranch-index
+ジャンプテーブルを実装するには、@code{bi}または@code{bih}命令の使用を有効にします。
 
 @end table
 
@@ -13537,11 +13637,11 @@ preprocessor macro.
 @table @gcctabopt
 @item -mdsp-packa
 @opindex mdsp-packa
-DSPパックA拡張を有効にするためにアセンブラに渡される。プリプロセッサシンボル@code{__Xdsp_packa}もセットする。
+DSPパックA拡張を有効にするためにアセンブラに渡される。プリプロセッサシンボル@code{__Xdsp_packa}もセットする。このオプションは廃止予定です。
 
 @item -mdvbf
 @opindex mdvbf
-二重ビタビ・バタフライ拡張を有効にするためにアセンブラに渡される。プリプロセッサシンボル@code{__Xdvbf}もセットする。
+二重ビタビ・バタフライ拡張を有効にするためにアセンブラに渡される。プリプロセッサシンボル@code{__Xdvbf}もセットする。このオプションは廃止予定です。
 
 @c ARC700 4.10 extension instruction
 @item -mlock
@@ -13550,17 +13650,17 @@ DSPパックA拡張を有効にするためにアセンブラに渡される。�
 
 @item -mmac-d16
 @opindex mmac-d16
-アセンブラへ渡される。プリプロセッサシンボル@code{__Xxmac_d16}もセットする。
+アセンブラへ渡される。プリプロセッサシンボル@code{__Xxmac_d16}もセットする。このオプションは廃止予定です。
 
 @item -mmac-24
 @opindex mmac-24
-アセンブラへ渡される。プリプロセッサシンボル@code{__Xxmac_d24}もセットする。
+アセンブラへ渡される。プリプロセッサシンボル@code{__Xxmac_d24}もセットする。このオプションは廃止予定です。
 
 @c ARC700 4.10 extension instruction
 @item -mrtsc
 @opindex mrtsc
 64ビットタイムスタンプカウンタ拡張命令を有効にするためにアセンブラへ渡される。
-プリプロセッサシンボル@code{__Xrtsc}も有効になる。
+プリプロセッサシンボル@code{__Xrtsc}も有効になる。このオプションは廃止予定です。
 
 @c ARC700 4.10 extension instruction
 @item -mswape
@@ -13571,7 +13671,7 @@ DSPパックA拡張を有効にするためにアセンブラに渡される。�
 @item -mtelephony
 @opindex mtelephony
 電話のための二重・一重イペランド命令を有効にするためにアセンブラへ渡される。
-プリプロセッサシンボル@code{__Xtelephony}も有効になる。
+プリプロセッサシンボル@code{__Xtelephony}も有効になる。このオプションは廃止予定です。
 
 @item -mxy
 @opindex mxy
@@ -13629,10 +13729,7 @@ XYメモリ拡張を有効にするためにアセンブラへ渡される。
 
 @item -G @var{num}
 @opindex G
-Put definitions of externally-visible data in a small data section if
-that data is no bigger than @var{num} bytes.  The default value of
-@var{num} is 4 for any ARC configuration, or 8 when we have double
-load/store operations.
+データが@var{num}バイト以下の場合、外部から見えるデータの定義を小さなデータセクションに配置します。 @var{num}のデフォルト値は、ARC構成の場合は4であり、ロード/ストア操作が2回の場合は8です。
 
 @item -mno-sdata
 @opindex mno-sdata
@@ -13704,7 +13801,7 @@ RTL生成時に@code{adddi3}と@code{subdi3}を@code{add.f}、@code{adc}など�
 @item -mlra
 @opindex mlra
 ローカルレジスタ割当を有効にする。これはARCではまだ実験的であり、したがって
-デフォルトではコンパイラは標準のりろー度（すなわち、@option{-mno-lra}）を使う。
+デフォルトではコンパイラは標準のリロード（すなわち、@option{-mno-lra}）を使う。
 
 @item -mlra-priority-none
 @opindex mlra-priority-none
@@ -13718,13 +13815,17 @@ r0..r3 / r12 .. r15のターゲットレジスタ優先順位を示す。
 @opindex mlra-priority-noncompact
 r0..r3 / r12 .. r15のターゲットレジスタ優先順位を減じる。
 
-@item -mno-millicode
-@opindex mno-millicode
+@item -mmillicode
+@opindex mmillicode
 (@option{-Os}を使って)サイズの最適化のとき、多数のレジスタの保存と復帰をしなければならない
 プロローグとエピローグはしばしばlibgccの特別な関数の呼び出しを使うことで短縮できる。
 これは@emph{millicode}呼び出しとして参照される。それらの呼び出しがパフォーマンス問題を持ち出すことがあり、
 また・及び非標準でリンクされるときにリンクの問題を引き起こすので、このオプションはmillicode呼び出し生成
-を止めるために提供される。
+を入り切りするために提供される。
+
+@item -mcode-density-frame
+@opindex mcode-density-frame
+このオプションにより、コンパイラーは@code {enter}および@code {leave}命令を発行できます。 これらの命令は、コード密度機能を備えたCPUにのみ有効です。
 
 @item -mmixed-code
 @opindex mmixed-code
@@ -13911,16 +14012,15 @@ ARC750D用に調整する。
 @c not currently implemented
 @item -mapcs-reentrant
 @opindex mapcs-reentrant
-Generate reentrant, position-independent code.  The default is
-@option{-mno-apcs-reentrant}.
+再入可能で位置に依存しないコードを生成します。 デフォルトは@option{-mno-apcs-reentrant}です。
 @end ignore
 
 @item -mthumb-interwork
 @opindex mthumb-interwork
 ARMとThumn命令セット間の呼び出しをサポートするコードを生成する。
 このオプションなしでは、v5以前のアーキテクチャでは、2つの命令セットは
-一つのプログラム内で確実に使うことができない。
-@option{-mthumb-interwork}が指定されるとわずかに大きなコードが生成されるため、
+一つのプログラム内で信頼してに使うことができない。
+デフォルトでは、@option{-mthumb-interwork}が指定されるとわずかに大きなコードが生成されるため、
 @option{-mno-thumb-interwork}である。AAPCS設定ではこのオプションは意味を持たない。
 
 @item -mno-sched-prolog
@@ -13943,6 +14043,10 @@ FPU固有の呼び出し規約を使う。
 はリンク互換でないことに注意する。全プログラムを同じABIで、コンパイルし、
 五感のあるライブラリの集合とリンクしなければならない。
 
+@item -mgeneral-regs-only
+@opindex mgeneral-regs-only
+汎用レジスタのみを使用するコードを生成します。 これにより、コンパイラーは浮動小数点レジスターおよびAdvanced SIMDレジスターを使用できなくなりますが、アセンブラーに制限はありません。
+
 @item -mlittle-endian
 @opindex mlittle-endian
 リトルエンディアンモードで実行するプロセッサ用のコードを生成する。これは
@@ -13958,7 +14062,7 @@ FPU固有の呼び出し規約を使う。
 @opindex mbe8
 ビッグエンディアンイメージをリンクするときは、BE8とBE32のフォーマットを選択する。このオプションはリトルエンディアンイメージには効果がなく、無視される。 デフォルトは、選択したターゲットアーキテクチャに依存する。 ARMv6以降のアーキテクチャの場合、デフォルトはBE8である。古いアーキテクチャの場合、デフォルトはBE32である。 BE32形式はARMによって推奨されていない。
 
-@item -march=@var{name}
+@item -march=@var{name}@r{[}+extension@dots{}@r{]}
 @opindex march
 これはターゲットARMアーキテクチャの名前を指定する。GCCはこの名前をアセンブリコードを生成するときに
 生成できる命令の種類を決定するために使う。このオプションは@option{-mcpu=}オプションと一緒に及び代わりに
@@ -13972,16 +14076,18 @@ FPU固有の呼び出し規約を使う。
 @samp{armv7}, @samp{armv7-a}, @samp{armv7ve}, 
 @samp{armv8-a}, @samp{armv8.1-a}, @samp{armv8.2-a}, @samp{armv8.3-a},
 @samp{armv8.4-a},
+@samp{armv8.5-a},
+@samp{armv8.6-a},
 @samp{armv7-r},
 @samp{armv8-r},
 @samp{armv6-m}, @samp{armv6s-m},
 @samp{armv7-m}, @samp{armv7e-m},
 @samp{armv8-m.base}, @samp{armv8-m.main},
-@samp{iwmmxt} and @samp{iwmmxt2}.
+@samp{armv8.1-m.main},
+@samp{iwmmxt}と@samp{iwmmxt2}.
 
 さらに、Thumbの実行状態をサポートしない次のアーキテクチャは認識されますが、サポートは廃止予定である。
-@samp{armv2}, @samp{armv2a}, @samp{armv3}, @samp{armv3m},
-@samp{armv4}, @samp{armv5}, @samp{armv5e}.
+@samp{armv4}
 
 多くのアーキテクチャが拡張をサポートしている。 これらは@samp{+@var{extension}}をアーキテクチャ名に追加することで追加できる。 拡張オプションは順番に処理され、機能が蓄積される。拡張は、それに依存する必要なベース拡張も有効にする。 例えば、@samp{+crypto}拡張は常に@samp{+simd}拡張を有効にする。 @samp{+no@dots {}}という接頭辞が付いた拡張機能は例外である。これらの拡張機能は指定されたオプションと、その拡張機能の存在に依存するその他の拡張機能を無効にする。
 
@@ -13992,8 +14098,7 @@ FPU固有の呼び出し規約を使う。
 以下の表は、各アーキテクチャでサポートされている拡張機能の一覧です。言及されていないアーキテクチャは、拡張をサポートしていない。
 
 @table @samp
-@item  armv5e
-@itemx armv5te
+@item armv5te
 @itemx armv6
 @itemx armv6j
 @itemx armv6k
@@ -14107,6 +14212,10 @@ ARMv8-A Advanced SIMDと浮動小数点命令。
 暗号命令を無効化する。
 @item +nofp
 浮動小数点数、Advanced SIMD、暗号命令を無効化する。
+@item +sb
+投機バリア命令。
+@item +predres
+実行およびデータ予測制限命令。
 @end table
 
 @item armv8.1-a
@@ -14122,6 +14231,12 @@ ARMv8.1-A Advanced SIMDと浮動小数点命令。
 
 @item +nofp
 浮動小数点数、Advanced SIMD、暗号命令を無効化する。
+
+@item +sb
+投機バリア命令。
+
+@item +predres
+実行およびデータ予測制限命令。
 @end table
 
 @item armv8.2-a
@@ -14147,6 +14262,20 @@ ARMv8.1-A Advanced SIMDと浮動小数点命令。
 
 @item +nofp
 浮動小数点数、Advanced SIMD、暗号命令を無効化する。
+
+@item +sb
+投機バリア命令。
+
+@item +predres
+実行およびデータ予測制限命令。
+
+@item +i8mm
+8ビット整数行列乗算命令。
+これにより、Advanced SIMDおよび浮動小数点命令も有効になります。
+
+@item +bf16
+ブレイン半精度浮動小数点命令。
+これにより、Advanced SIMDおよび浮動小数点命令も有効になります。
 @end table
 
 @item armv8.4-a
@@ -14165,6 +14294,84 @@ ARMv8.1-A Advanced SIMDと浮動小数点命令に加えて内積拡張。
 
 @item +nofp
 浮動小数点数、Advanced SIMD、暗号命令を無効化する。
+
+@item +sb
+投機バリア命令。
+
+@item +predres
+実行およびデータ予測制限命令。
+
+@item +i8mm
+8ビット整数行列乗算命令。
+これにより、Advanced SIMDおよび浮動小数点命令も有効になります。
+
+@item +bf16
+ブレイン半精度浮動小数点命令。
+これにより、Advanced SIMDおよび浮動小数点命令も有効になります。
+@end table
+
+@item armv8.5-a
+@table @samp
+@item +fp16
+半精度浮動小数点データ処理命令。これはAdvanced SIMD、浮動小数点命令だけでなく、内積拡張と半精度浮動小数点fmla拡張も有効にする。
+
+@item +simd
+ARMv8.1-A Advanced SIMDと浮動小数点命令に加えて内積拡張。
+
+@item +crypto
+暗号命令。これはAdvanced SIMD、浮動小数点命令に加えて内積拡張も有効にする。
+
+@item +nocrypto
+暗号拡張を無効にする。
+
+@item +nofp
+浮動小数点数、Advanced SIMD、暗号命令を無効化する。
+
+@item +sb
+投機バリア命令。
+
+@item +predres
+実行およびデータ予測制限命令。
+
+@item +i8mm
+8ビット整数行列乗算命令。
+これにより、Advanced SIMDおよび浮動小数点命令も有効になります。
+
+@item +bf16
+ブレイン半精度浮動小数点命令。
+これにより、Advanced SIMDおよび浮動小数点命令も有効になります。
+@end table
+
+@item armv8.6-a
+@table @samp
+@item +fp16
+半精度浮動小数点データ処理命令。これはAdvanced SIMD、浮動小数点命令だけでなく、内積拡張と半精度浮動小数点fmla拡張も有効にする。
+
+@item +simd
+ARMv8.1-A Advanced SIMDと浮動小数点命令に加えて内積拡張。
+
+@item +crypto
+暗号命令。これはAdvanced SIMD、浮動小数点命令に加えて内積拡張も有効にする。
+
+@item +nocrypto
+暗号拡張を無効にする。
+
+@item +nofp
+浮動小数点数、Advanced SIMD、暗号命令を無効化する。
+
+@item +sb
+投機バリア命令。
+
+@item +predres
+実行およびデータ予測制限命令。
+
+@item +i8mm
+8ビット整数行列乗算命令。
+これにより、Advanced SIMDおよび浮動小数点命令も有効になります。
+
+@item +bf16
+ブレイン半精度浮動小数点命令。
+これにより、Advanced SIMDおよび浮動小数点命令も有効になります。
 @end table
 
 @item armv7-r
@@ -14174,6 +14381,12 @@ ARMv8.1-A Advanced SIMDと浮動小数点命令に加えて内積拡張。
 
 @item +fp
 16の倍精度レジスタを持つVFPv3浮動小数点命令。拡張@samp{+vfpv3-d16}をこの拡張の別名として使用可能である。
+
+@item +vfpv3xd-d16-fp16
+16の倍精度レジスタと半精度の浮動小数点変換演算を備えた単精度VFPv3浮動小数点命令。
+
+@item +vfpv3-d16-fp16
+16の倍精度レジスタと半精度の浮動小数点変換演算を備えたVFPv3浮動小数点命令。
 
 @item +nofp
 浮動小数点拡張を無効にする。
@@ -14200,6 +14413,31 @@ ARM状態整数除算拡張を無効化する。
 浮動小数点拡張を無効化する。
 @end table
 
+@item  armv8.1-m.main
+@table @samp
+
+@item +dsp
+DSP命令。
+
+@item +mve
+Mプロファイルベクトル拡張（MVE）整数命令。
+
+@item +mve.fp
+Mプロファイルベクトル拡張（MVE）整数および単精度浮動小数点命令。
+
+@item +fp
+単精度浮動小数点命令。
+
+@item +fp.dp
+単精度・倍精度浮動小数点命令。
+
+@item +nofp
+浮動小数点拡張を無効化する。
+
+@item +cdecp0, +cdecp1, ... , +cdecp7
+オプションで指定された数値（0〜7）に従って、選択したコプロセッサーでカスタムデータパス拡張（CDE）を有効にします。
+@end table
+
 @item  armv8-m.main
 @table @samp
 @item +dsp
@@ -14216,6 +14454,9 @@ DSP拡張を無効化する。
 
 @item +nofp
 浮動小数点拡張を無効化する。
+
+@item +cdecp0, +cdecp1, ... , +cdecp7
+オプションで指定された数値（0〜7）に従って、選択したコプロセッサーでカスタムデータパス拡張（CDE）を有効にします。
 @end table
 
 @item armv8-r
@@ -14244,53 +14485,37 @@ ARMv8-A Advanced SIMDと浮動小数点命令。
 @opindex mtune
 このオプションはGCCはコードのパフォーマンスを調整すべきターゲットARMプロセッサの名前を指定する。
 ありARM実装ではこのオプションを使うことでよりよいパフォーマンスを得ることができる。
-可能な名前は以下である： @samp{arm2}, @samp{arm250},
-@samp{arm3}, @samp{arm6}, @samp{arm60}, @samp{arm600}, @samp{arm610},
-@samp{arm620}, @samp{arm7}, @samp{arm7m}, @samp{arm7d}, @samp{arm7dm},
-@samp{arm7di}, @samp{arm7dmi}, @samp{arm70}, @samp{arm700},
-@samp{arm700i}, @samp{arm710}, @samp{arm710c}, @samp{arm7100},
-@samp{arm720},
-@samp{arm7500}, @samp{arm7500fe}, @samp{arm7tdmi}, @samp{arm7tdmi-s},
-@samp{arm710t}, @samp{arm720t}, @samp{arm740t},
-@samp{strongarm}, @samp{strongarm110}, @samp{strongarm1100},
-@samp{strongarm1110},
-@samp{arm8}, @samp{arm810}, @samp{arm9}, @samp{arm9e}, @samp{arm920},
-@samp{arm920t}, @samp{arm922t}, @samp{arm946e-s}, @samp{arm966e-s},
-@samp{arm968e-s}, @samp{arm926ej-s}, @samp{arm940t}, @samp{arm9tdmi},
-@samp{arm10tdmi}, @samp{arm1020t}, @samp{arm1026ej-s},
-@samp{arm10e}, @samp{arm1020e}, @samp{arm1022e},
+可能な名前は以下である： @samp{arm7tdmi}, @samp{arm7tdmi-s}, @samp{arm710t},
+@samp{arm720t}, @samp{arm740t}, @samp{strongarm}, @samp{strongarm110},
+@samp{strongarm1100}, 0@samp{strongarm1110}, @samp{arm8}, @samp{arm810},
+@samp{arm9}, @samp{arm9e}, @samp{arm920}, @samp{arm920t}, @samp{arm922t},
+@samp{arm946e-s}, @samp{arm966e-s}, @samp{arm968e-s}, @samp{arm926ej-s},
+@samp{arm940t}, @samp{arm9tdmi}, @samp{arm10tdmi}, @samp{arm1020t},
+@samp{arm1026ej-s}, @samp{arm10e}, @samp{arm1020e}, @samp{arm1022e},
 @samp{arm1136j-s}, @samp{arm1136jf-s}, @samp{mpcore}, @samp{mpcorenovfp},
 @samp{arm1156t2-s}, @samp{arm1156t2f-s}, @samp{arm1176jz-s}, @samp{arm1176jzf-s},
 @samp{generic-armv7-a}, @samp{cortex-a5}, @samp{cortex-a7}, @samp{cortex-a8},
 @samp{cortex-a9}, @samp{cortex-a12}, @samp{cortex-a15}, @samp{cortex-a17},
 @samp{cortex-a32}, @samp{cortex-a35}, @samp{cortex-a53}, @samp{cortex-a55},
 @samp{cortex-a57}, @samp{cortex-a72}, @samp{cortex-a73}, @samp{cortex-a75},
-@samp{cortex-r4}, @samp{cortex-r4f}, @samp{cortex-r5}, @samp{cortex-r7},
-@samp{cortex-r8}, @samp{cortex-r52},
-@samp{cortex-m33},
-@samp{cortex-m23},
-@samp{cortex-m7},
-@samp{cortex-m4},
-@samp{cortex-m3},
-@samp{cortex-m1},
-@samp{cortex-m0},
-@samp{cortex-m0plus},
-@samp{cortex-m1.small-multiply},
-@samp{cortex-m0.small-multiply},
-@samp{cortex-m0plus.small-multiply},
-@samp{exynos-m1},
-@samp{marvell-pj4},
-@samp{xscale}, @samp{iwmmxt}, @samp{iwmmxt2}, @samp{ep9312},
-@samp{fa526}, @samp{fa626},
-@samp{fa606te}, @samp{fa626te}, @samp{fmp626}, @samp{fa726te},
-@samp{xgene1}.
+@samp{cortex-a76}, @samp{cortex-a76ae}, @samp{cortex-a77},
+@samp{ares}, @samp{cortex-r4}, @samp{cortex-r4f},
+@samp{cortex-r5}, @samp{cortex-r7}, @samp{cortex-r8}, @samp{cortex-r52},
+@samp{cortex-m0}, @samp{cortex-m0plus}, @samp{cortex-m1}, @samp{cortex-m3},
+@samp{cortex-m4}, @samp{cortex-m7}, @samp{cortex-m23}, @samp{cortex-m33},
+@samp{cortex-m35p}, @samp{cortex-m55},
+@samp{cortex-m1.small-multiply}, @samp{cortex-m0.small-multiply},
+@samp{cortex-m0plus.small-multiply}, @samp{exynos-m1}, @samp{marvell-pj4},
+@samp{neoverse-n1}, @samp{xscale}, @samp{iwmmxt}, @samp{iwmmxt2},
+@samp{ep9312}, @samp{fa526}, @samp{fa626}, @samp{fa606te}, @samp{fa626te},
+@samp{fmp626}, @samp{fa726te}, @samp{xgene1}.
 
 それに加えて、このオプションはGCCがbig.LITTLEシステム用のコードのパフォーマンスを調整すべきかを指定することができる。
 可能な名前は以下である：
 @samp{cortex-a15.cortex-a7}, @samp{cortex-a17.cortex-a7},
 @samp{cortex-a57.cortex-a53}, @samp{cortex-a72.cortex-a53},
 @samp{cortex-a72.cortex-a35}, @samp{cortex-a73.cortex-a53},
-@samp{cortex-a75.cortex-a55}.
+@samp{cortex-a75.cortex-a55}, @samp{cortex-a76.cortex-a55}
 
 @option{-mtune=generic-@var{arch}}はGCCがアーキテクチャ@var{arch}内のプロセッサの混合用に
 パフォーマンスを調整すべきことを指定する。
@@ -14321,21 +14546,23 @@ ARMv8-A Advanced SIMDと浮動小数点命令。
 
 @table @samp
 @item +nodsp
-@samp{cortex-m33}のDSP命令を無効にする。
+@samp{cortex-m33}, @samp{cortex-m35p}での@samp{cortex-m33}のDSP命令を無効にする。
 + 
 @item  +nofp
-@samp{arm9e}, @samp{arm946e-s}, @samp{arm966e-s}, @samp{arm968e-s}, @samp{arm10e},
+@samp{arm9e},
+@samp{arm946e-s}, @samp{arm966e-s}, @samp{arm968e-s}, @samp{arm10e},
 @samp{arm1020e}, @samp{arm1022e}, @samp{arm926ej-s},
 @samp{arm1026ej-s}, @samp{cortex-r5}, @samp{cortex-r7}, @samp{cortex-r8},
-@samp{cortex-m4}, @samp{cortex-m7}, @samp{cortex-m33}における浮動小数点命令を無効にする。
+@samp{cortex-m4}, @samp{cortex-m7}, @samp{cortex-m33}, @samp{cortex-m35p}における浮動小数点命令を無効にする。
 @samp{generic-armv7-a}, @samp{cortex-a5}, @samp{cortex-a7},
 @samp{cortex-a8}, @samp{cortex-a9}, @samp{cortex-a12},
 @samp{cortex-a15}, @samp{cortex-a17}, @samp{cortex-a15.cortex-a7},
 @samp{cortex-a17.cortex-a7}, @samp{cortex-a32}, @samp{cortex-a35},
-@samp{cortex-a53}, @samp{cortex-a55}における浮動小数点とSIMD命令を無効にする。
+@samp{cortex-a53},@samp{cortex-a55}, @samp{cortex-m55}における浮動小数点とSIMD命令を無効にする。
 
 @item +nofp.dp
-@samp{cortex-r5}, @samp{cortex-r52}, @samp{cortex-m7}における浮動小数点命令の倍精度構成要素を無効化する。
+@samp{cortex-r5}, @samp{cortex-r7}, @samp{cortex-r8}, @samp{cortex-r52},
+@samp{cortex-m7}における浮動小数点命令の倍精度構成要素を無効化する。
 
 @item +nosimd
 @samp{generic-armv7-a}, @samp{cortex-a5}, @samp{cortex-a7}, @samp{cortex-a9}でのSIMD命令を無効化する（が、不動小数点はしない）
@@ -14344,14 +14571,14 @@ ARMv8-A Advanced SIMDと浮動小数点命令。
 @samp{cortex-a32}, @samp{cortex-a35}, @samp{cortex-a53}, @samp{cortex-a55}, @samp{cortex-a57},
 @samp{cortex-a72}, @samp{cortex-a73}, @samp{cortex-a75}, @samp{exynos-m1},
 @samp{xgene1}, @samp{cortex-a57.cortex-a53}, @samp{cortex-a72.cortex-a53},
-@samp{cortex-a73.cortex-a35}, @samp{cortex-a73.cortex-a53}, @samp{cortex-a75.cortex-a55}で
-暗号命令を有効化する。
+@samp{cortex-a73.cortex-a35}, @samp{cortex-a73.cortex-a53},
+@samp{cortex-a75.cortex-a55}で暗号命令を有効化する。
 @end table
 
-さらに、@samp{generic-armv7-a}擬似ターゲットは、16倍精度レジスタを持つVFPv3にデフォルト設定されている。次の拡張オプションをサポートしている。@samp{vfpv3-d16}, @samp{vfpv3},
-@samp{vfpv3-d16-fp16}, @samp{vfpv3-fp16}, @samp{vfpv4-d16},
-@samp{vfpv4}, @samp{neon}, @samp{neon-vfpv3}, @samp{neon-fp16},
-@samp{neon-vfpv4}.  意味は@option{-march=armv7-a}への拡張と同じである。
+さらに、@samp{generic-armv7-a}擬似ターゲットは、16倍精度レジスタを持つVFPv3にデフォルト設定されている。次の拡張オプションをサポートしている。@samp{mp}, @samp{sec}, @samp{vfpv3-d16},
+@samp{vfpv3}, @samp{vfpv3-d16-fp16}, @samp{vfpv3-fp16},
+@samp{vfpv4-d16}, @samp{vfpv4}, @samp{neon}, @samp{neon-vfpv3},
+@samp{neon-fp16}, @samp{neon-vfpv4}.  意味は@option{-march=armv7-a}への拡張と同じである。
 
 @option{-mcpu=generic-@var{arch}}も許可され、@option{-march=@var{arch} -mtune=generic-@var{arch}}
 と等価である。さらなる情報は@option{-mtune}を見よ。
@@ -14397,7 +14624,7 @@ ARMv8-A Advanced SIMDと浮動小数点命令。
 異なる値は潜在的に非互換である。ある値でコンパイルされたコードは、もしそれらが構造体や共用体を使った情報
 をやり取りするならば、必ずしも他の値でコンパイルされたコードやライブラリと一緒に動くことは期待できない。
 
-This option is deprecated.
+このオプションは廃止予定です。
 
 @item -mabort-on-noreturn
 @opindex mabort-on-noreturn
@@ -14479,9 +14706,7 @@ ARMとThumbモードを上書きすることができる。
 
 @item -mflip-thumb 
 @opindex mflip-thumb
-Switch ARM/Thumb modes on alternating functions.
-This option is provided for regression testing of mixed Thumb/ARM code
-generation, and is not intended for ordinary use in compiling code.
+交互機能でARM/Thumbモードを切り替えます。 このオプションは、Thumb/ARMコードの混合生成の回帰テスト用に提供されており、コードのコンパイルでの通常の使用を目的としていません。
 
 @item -mtpcs-frame
 @opindex mtpcs-frame
@@ -14588,6 +14813,17 @@ ARMv8-Aの規則に適合するためにITブロックの生成を制限する�
 @opindex mcmse
 「ARMv8-Mセキュリティ拡張機能：開発ツールのエンジニアリング仕様に関する要件」に従って、セキュアなコードを生成する。この文書は
 @url{http://infocenter.arm.com/help/topic/com.arm.doc.ecm0359818/ECM0359818_armv8m_security_extensions_reqs_on_dev_tools_1_0.pdf}にある。
+
+@item -mfdpic
+@itemx -mno-fdpic
+@opindex mfdpic
+@opindex mno-fdpic
+64ビット関数記述子を使用して関数へのポインタを表すFDPIC ABIを選択します。 コンパイラーが@code{arm-*-uclinuxfdpiceabi}ターゲット用に構成されている場合、このオプションはデフォルトでオンになり、PIC / PIE関連のオプションが提供されない場合は@option{-fPIE}を暗黙指定します。 他のターゲットでは、FDPIC固有のコード生成機能のみを有効にし、ユーザーは必要に応じてPIC / PIE関連のオプションを明示的に提供する必要があります。
+
+静的リンクは、プログラムが自己再配置するときに動的リンカーがまだ含まれるため、サポートされていないことに注意してください。 そのような動作が許容できる場合は、-staticおよび-Wl、-dynamic-linkerオプションを使用してください。
+
+反対の@option{-mno-fdpic}オプションは、ユーザーランドプログラムのビルドに使用したものと同じ（@code {arm-*-uclinuxfdpiceabi}）ツールチェーンを使用してLinuxカーネルをビルドするのに役立ちます（必要です）。
+
 @end table
 
 @node AVR Options
