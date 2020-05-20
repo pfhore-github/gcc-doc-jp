@@ -14864,15 +14864,16 @@ GCCは以下のAVRデバイスとISAをサポートしている。
 @opindex mcall-prologues
 関数プロローグ/エピローグは、適切なサブルーチンへの呼び出しとして展開される。 コードサイズが小さくなる。
 
+@item -mdouble=@var{bits}
+@itemx -mlong-double=@var{bits}
+@opindex mdouble
+@opindex mlong-double
+@code{double}タイプまたは@code{long double}タイプのサイズ（ビット単位）をそれぞれ設定します。 @var{bits}の可能な値は32および64です。@var{bits}の特定の値が許可されるかどうかは@code{-with-double=}および@code{-with-long-double=} @w{@uref{https://gcc.gnu.org/install/configure.html#avr,configure options}}、およびオプションのデフォルト値にも同じことが適用されます。
+
 @item -mgas-isr-prologues
 @opindex mgas-isr-prologues
-Interrupt service routines (ISRs) may use the @code{__gcc_isr} pseudo
-instruction supported by GNU Binutils.
-If this option is on, the feature can still be disabled for individual
-ISRs by means of the @ref{AVR Function Attributes,,@code{no_gccisr}}
-function attribute.  This feature is activated per default
-if optimization is on (but not with @option{-Og}, @pxref{Optimize Options}),
-and if GNU Binutils support @w{@uref{https://sourceware.org/PR21683,PR21683}}.
+割り込みサービスルーチン（ISR）は、GNU Binutilsでサポートされている@code{__gcc_isr}疑似命令を使用できます。
+このオプションがオンの場合でも、@ref{AVR Function Attributes,,@code{no_gccisr}}関数属性を使用して、個々のISRの機能を無効にすることができます。 この機能は、最適化がオン（@option{-Og}、@pxref{最適化オプション}を除く）で、GNU Binutilsが@w{@uref {https://sourceware.org/PR21683,PR21683}}をサポートしている場合、デフォルトでアクティブになります。 
 
 @item -mint8
 @opindex mint8
@@ -14881,9 +14882,7 @@ size.
 
 @item -mmain-is-OS_task
 @opindex mmain-is-OS_task
-Do not save registers in @code{main}.  The effect is the same like
-attaching attribute @ref{AVR Function Attributes,,@code{OS_task}}
-to @code{main}. It is activated per default if optimization is on.
+@code{main}にレジスタを保存しない。 効果は、属性@ref{AVR Function Attributes,,@code{OS_task}}を@code{main}にアタッチするのと同じです。 最適化がオンの場合、デフォルトでアクティブになります。
 
 @item -mn-flash=@var{num}
 @opindex mn-flash
@@ -14910,11 +14909,9 @@ to @code{main}. It is activated per default if optimization is on.
 @item -mshort-calls
 @opindex mshort-calls
 
-Assume that @code{RJMP} and @code{RCALL} can target the whole
-program memory.
+@code{RJMP}と@code{RCALL}がプログラムメモリ全体をターゲットにできると仮定します。
 
-This option is used internally for multilib selection.  It is
-not an optimization option, and you don't need to set it by hand.
+このオプションは、マルチライブラリを選択するために内部的に使用されます。 これは最適化オプションではないため、手動で設定する必要はありません。
 
 @item -msp8
 @opindex msp8
@@ -14945,6 +14942,12 @@ sbiw r26, const   ; X -= const
 @item -nodevicelib
 @opindex nodevicelib
 AVR-LibCのデバイス固有ライブラリ@code{lib <mcu> .a}にはリンクしない。
+
+@item -nodevicespecs
+@opindex nodevicespecs
+コンパイラドライバのコマンドラインに@option{-specs=device-specs/specs-@var{mcu}}を追加しない。 ユーザーは、適切なコンパイラー、アセンブラー、リンカーなどのサブプロセスに適切なコマンドラインオプションを提供する責任があります。 つまり、ユーザーは@option{-specs=@var{path-to-specs-file}}を使用してプライベートデバイスのスペックファイルを提供する必要があります。 オプション@option{-mmcu=@var{mcu}}はもう必要ありません。
+
+このオプションは、@option{-B @var{some-path}}が@code {specs-@var{mcu}}という名前のスペックファイルを含む@code{device-specs}という名前のフォルダーを含むディレクトリを指す必要があるカスタムのデバイス仕様ファイルを指定する以前の方法の代わりとしても使用できます。@var{mcu}は@option{-mmcu=@var{mcu}}で指定されています。
 
 @item -Waddr-space-convert
 @opindex Waddr-space-convert
@@ -15004,7 +15007,7 @@ init3_set_eind (void)
 @end example
 
 @noindent
-@code{__trampolines_start}シンボルはリンカスクリプトで定義される。.
+@code{__trampolines_start}シンボルはリンカスクリプトで定義される。
 
 @item
 次の2つの条件が満たされている場合、リンカーによって自動的にスタブが生成される。
@@ -15025,12 +15028,12 @@ LDI r25, hi8(gs(@var{func}))
 @item 計算goto
 @item プロローグ保存の関数が使われたとき、@option{-mcall-prologues}コマンド行オプション参照
 @item switch/case分岐テーブル。このような分岐テーブルを必要としない場合は、@option {-fno-jump-tables}コマンドラインオプションを指定することができる。
-@item スタートアップ・シャットダウン中に呼ばれるCとC++では、のコンストラクタ・デストラクタ
+@item スタートアップ・シャットダウン中に呼ばれるCとC++のコンストラクタ・デストラクタ
 @item もしツールが上で説明した@code{gs()}修飾子に当たったとき
 @end itemize
 
 @item
-このような非シンボルアドレスへのジャンプはサポートされ@emph{ない}
+このような非シンボルアドレスへのジャンプはサポートされ@emph{_ない_}
 
 @example
 int main (void)
@@ -15176,24 +15179,39 @@ GCCは、ユーザーコードが機能の有無をテストできるように�
 @code{IN}、@code{OUT}、@code{SBI}などのようなI / O特殊機能レジスタに直接対処できる命令は、@code{LD}または@code{STS}のようなRAMにアクセスする命令によってアドレス指定された場合とは異なるアドレスを使用することがある。 このオフセットはデバイスのアーキテクチャに依存し、それぞれのI / Oアドレスを得るためにRAMアドレスから減算する必要がある。
 
 @item __AVR_SHORT_CALLS__
-The @option{-mshort-calls} command line option is set.
+@option {-mshort-calls}コマンドラインオプションが設定されています。
 
 @item __AVR_PM_BASE_ADDRESS__=@var{addr}
-Some devices support reading from flash memory by means of @code{LD*}
-instructions.  The flash memory is seen in the data address space
-at an offset of @code{__AVR_PM_BASE_ADDRESS__}.  If this macro
-is not defined, this feature is not available.  If defined,
-the address space is linear and there is no need to put
-@code{.rodata} into RAM.  This is handled by the default linker
-description file, and is currently available for
-@code{avrtiny} and @code{avrxmega3}.  Even more convenient,
-there is no need to use address spaces like @code{__flash} or
-features like attribute @code{progmem} and @code{pgm_read_*}.
+一部のデバイスは、@code{LD *}命令によるフラッシュメモリからの読み取りをサポートしています。 フラッシュメモリは、@code{__AVR_PM_BASE_ADDRESS__}のオフセットでデータアドレス空間に表示されます。 このマクロが定義されていない場合、この機能は使用できません。 定義されている場合、アドレス空間は線形であり、@code{.rodata}をRAMに配置する必要はありません。 これはデフォルトのリンカ記述ファイルによって処理され、現在@code{avrtiny}および@code{avrxmega3}で使用できます。 さらに便利なのは、@code{__flash}のようなアドレス空間や、属性@code{progmem}や@code{pgm_read_ *}のような機能を使用する必要がないことです。
 
 @item __WITH_AVRLIBC__
 コンパイラは、AVR-Libcと一緒に使用するように構成されています。
-@option { - with-avrlibc}設定オプションを参照せよ。
+@option{-with-avrlibc}設定オプションを参照せよ。
 
+@item __HAVE_DOUBLE_MULTILIB__
+@option{-mdouble =}がmultilibオプションとして機能する場合に定義されます。
+
+@item __HAVE_DOUBLE32__
+@itemx __HAVE_DOUBLE64__
+コンパイラがそれぞれ、32ビット、64ビットのdoubleをサポートするかどうかを定義します。
+実際のレイアウトはオプション@option {-mdouble=}で指定されます。
+
+@item __DEFAULT_DOUBLE__
+@option {-mdouble =}が設定されていない場合の@code {double}のビットサイズ。 プログラムで@code {double}のレイアウトをテストするには、組み込みマクロ@code{__SIZEOF_DOUBLE__}を使用します。
+
+@item __HAVE_LONG_DOUBLE32__
+@itemx __HAVE_LONG_DOUBLE64__
+@itemx __HAVE_LONG_DOUBLE_MULTILIB__
+@itemx __DEFAULT_LONG_DOUBLE__
+上記と同じですが、@code{double}の代わりに@code{long double}を使用します。
+
+@item __WITH_DOUBLE_COMPARISON__
+@code{--with-double-comparison=@{tristate|bool|libf7@}} @w{@uref{https://gcc.gnu.org/install/configure.html#avr,configure option}}を反映しています。@code{2}または@code {3}に定義されます。
+
+@item __WITH_LIBF7_LIBGCC__
+@itemx __WITH_LIBF7_MATH__
+@itemx __WITH_LIBF7_MATH_SYMBOLS__
+@code{--with-libf7=@{libgcc|math|math-symbols@}} @w{@uref{https://gcc.gnu.org/install/configure.html#avr,configure option}}を反映しています。
 @end table
 
 @node Blackfin Options
@@ -15476,7 +15494,7 @@ cris-axis-linux-gnuターゲットでのみ認識される旧式の何もしな�
 @itemx -mcr16c
 @opindex mcr16cplus
 @opindex mcr16c
-CR16CまたはCR16C +アーキテクチャ用のコードを生成する。 CR16C+アーキテクチャはデフォルトである。
+CR16CまたはCR16C+アーキテクチャ用のコードを生成する。 CR16C+アーキテクチャはデフォルトである。
 
 @item -msim
 @opindex msim
@@ -15495,6 +15513,169 @@ CR16CまたはCR16C +アーキテクチャ用のコードを生成する。 CR16
 データモデルを選択する。 @var{model}の選択肢は@samp{near}、@samp{far}または@samp{medium}である。 @samp{medium}はデフォルトである。ただし、@samp{far}は@option{-mcr16c}では有効ではない。これは、CR16Cアーキテクチャがfarデータモデルをサポートしていないためである。
 @end table
 
+@node C-SKY Options
+@subsection C-SKY Options
+@cindex C-SKY Options
+
+GCCは、C-SKY V2プロセッサー用にコンパイルするときにこれらのオプションをサポートします。
+
+@table @gcctabopt
+
+@item -march=@var{arch}
+@opindex march=
+C-SKYターゲットアーキテクチャを指定します。 @var{arch}の有効な値は次のとおりです。
+@samp{ck801}、@samp{ck802}、@samp{ck803}、@samp{ck807}、および@samp{ck810}。 デフォルトは@samp{ck810}です。
+
+@item -mcpu=@var{cpu}
+@opindex mcpu=
+C-SKYターゲットプロセッサを指定します。 @var {cpu}の有効な値は次のとおりです。
+@samp{ck801}, @samp{ck801t},
+@samp{ck802}, @samp{ck802t}, @samp{ck802j},
+@samp{ck803}, @samp{ck803h}, @samp{ck803t}, @samp{ck803ht},
+@samp{ck803f}, @samp{ck803fh}, @samp{ck803e}, @samp{ck803eh},
+@samp{ck803et}, @samp{ck803eht}, @samp{ck803ef}, @samp{ck803efh},
+@samp{ck803ft}, @samp{ck803eft}, @samp{ck803efht}, @samp{ck803r1},
+@samp{ck803hr1}, @samp{ck803tr1}, @samp{ck803htr1}, @samp{ck803fr1},
+@samp{ck803fhr1}, @samp{ck803er1}, @samp{ck803ehr1}, @samp{ck803etr1},
+@samp{ck803ehtr1}, @samp{ck803efr1}, @samp{ck803efhr1}, @samp{ck803ftr1},
+@samp{ck803eftr1}, @samp{ck803efhtr1},
+@samp{ck803s}, @samp{ck803st}, @samp{ck803se}, @samp{ck803sf},
+@samp{ck803sef}, @samp{ck803seft},
+@samp{ck807e}, @samp{ck807ef}, @samp{ck807}, @samp{ck807f},
+@samp{ck810e}, @samp{ck810et}, @samp{ck810ef}, @samp{ck810eft},
+@samp{ck810}, @samp{ck810v}, @samp{ck810f}, @samp{ck810t}, @samp{ck810fv},
+@samp{ck810tv}, @samp{ck810ft}, @samp{ck810ftv}.
+
+@item -mbig-endian
+@opindex mbig-endian
+@itemx -EB
+@opindex EB
+@itemx -mlittle-endian
+@opindex mlittle-endian
+@itemx -EL
+@opindex EL
+
+ビッグエンディアンコードまたはリトルエンディアンコードを選択します。 デフォルトはリトルエンディアンです。
+
+@item -mhard-float
+@opindex mhard-float
+@itemx -msoft-float
+@opindex msoft-float
+
+ハードウェアまたはソフトウェアの浮動小数点実装を選択します。デフォルトはソフトフロートです。
+
+@item -mdouble-float
+@itemx -mno-double-float
+@opindex mdouble-float
+@option {-mhard-float}が有効な場合、倍精度浮動小数点命令の生成を有効にします。 これは、CK803用にコンパイルする場合を除いて、デフォルトです。
+
+@item -mfdivdu
+@itemx -mno-fdivdu
+@opindex mfdivdu
+@option{-mhard-float}が有効な場合、@code{frecipd}、@code{fsqrtd}、および@code{fdivd}命令の生成を有効にします。 これは、CK803用にコンパイルする場合を除いて、デフォルトです。
+
+@item -mfpu=@var{fpu}
+@opindex mfpu=
+浮動小数点プロセッサを選択します。 このオプションは、@option{-mhard-float}と組み合わせてのみ使うことができます。 @var{fpu}の値は@samp{fpv2_sf}（@samp{-mno-double-float -mno-fdivdu}と同等）、@samp{fpv2}（@samp{-mdouble-float -mno-divdu} ）、@samp{fpv2_divd}（@samp{-mdouble-float -mdivdu}）。
+
+@item -melrw
+@itemx -mno-elrw
+@opindex melrw
+拡張@code {lrw}命令を有効にします。 このオプションのデフォルトは、CK801の場合はオン、それ以外の場合はオフです。
+
+@item -mistack
+@itemx -mno-istack
+@opindex mistack
+割り込みスタック命令を有効にします。 デフォルトはオフです。
+
+@code{interrupt}および@code{isr}関数属性（@pxref{C-SKY Function Attributes}）を処理するには、@option {-mistack}オプションが必要です。
+
+@item -mmp
+@opindex mmp
+マルチプロセッサ命令を有効にします。 デフォルトはオフです。
+
+@item -mcp
+@opindex mcp
+コプロセッサー命令を有効にします。 デフォルトはオフです。
+
+@item -mcache
+@opindex mcache
+コプロセッサー命令を有効にします。 デフォルトはオフです。
+
+@item -msecurity
+@opindex msecurity
+C-SKYセキュリティ指示を有効にします。 デフォルトはオフです。
+
+@item -mtrust
+@opindex mtrust
+C-SKYトラスト命令を有効にします。 デフォルトはオフです。
+
+@item -mdsp
+@opindex mdsp
+@itemx -medsp
+@opindex medsp
+@itemx -mvdsp
+@opindex mvdsp
+C-SKY DSP、拡張DSP、またはベクトルDSP命令をそれぞれ有効にします。 これらのオプションはすべてデフォルトでオフになっています。
+
+@item -mdiv
+@itemx -mno-div
+@opindex mdiv
+除算命令を生成します。 デフォルトはオフです。
+
+@item -msmart
+@itemx -mno-smart
+@opindex msmart
+16ビット命令を使用できるように0〜7の番号が付いたレジスタのみを使用して、スマートモードのコードを生成します。 このオプションは、必要な動作であるCK801では無視され、CK802ではデフォルトでオンになります。 他のターゲットの場合、デフォルトはオフです。
+
+@item -mhigh-registers
+@itemx -mno-high-registers
+@opindex mhigh-registers
+16〜31の番号が付けられた上位レジスタを使用してコードを生成します。 このオプションは、CK801、CK802、またはCK803ではサポートされておらず、他のプロセッサーではデフォルトで有効になっています。
+
+@item -manchor
+@itemx -mno-anchor
+@opindex manchor
+グローバルアンカーシンボルアドレスを使用してコードを生成します。
+
+@item -mpushpop
+@itemx -mno-pushpop
+@opindex mpushpop
+@code{push}および@code{pop}命令を使用してコードを生成します。 このオプションのデフォルトはオンです。
+
+@item -mmultiple-stld
+@itemx -mstm
+@itemx -mno-multiple-stld
+@itemx -mno-stm
+@opindex mmultiple-stld
+@code{stm}および@code{ldm}命令を使用してコードを生成します。 このオプションはCK801ではサポートされていませんが、他のプロセッサではデフォルトで有効になっています。
+
+@item -mconstpool
+@itemx -mno-constpool
+@opindex mconstpool
+アセンブラーに延期するのではなく、コンパイラーで定数プールを作成します。 このオプションはデフォルトであり、CK801およびCK802での正しいコード生成に必要であり、他のプロセッサーではオプションです。
+
+@item -mstack-size
+@item -mno-stack-size
+@opindex mstack-size
+アセンブリ出力の各関数に対して@code {.stack_size}ディレクティブを発行します。 このオプションのデフォルトはオフです。
+
+@item -mccrt
+@itemx -mno-ccrt
+@opindex mccrt
+libgccの代わりにC-SKYコンパイラランタイムのコードを生成します。 このオプションのデフォルトはオフです。
+
+@item -mbranch-cost=@var{n}
+@opindex mbranch-cost=
+ブランチのコストをおおよそ@code {n}命令に設定します。 デフォルトは1です。
+
+@item -msched-prolog
+@itemx -mno-sched-prolog
+@opindex msched-prolog
+関数のプロローグとエピローグのシーケンスのスケジューリングを許可します。 このオプションを使用すると、C-SKY V2 ABIプロローグ要件に準拠せず、デバッグまたはバックトレースできないコードになる可能性があります。 デフォルトでは無効になっています。
+
+@end table
+
 @node Darwin Options
 @subsection Darwinオプション
 @cindex Darwin options
@@ -15505,7 +15686,7 @@ DarwinのFSF GCCは、「fat」オブジェクトファイルを作成しない�
 
 （@samp{ppc7400}や@samp{ppc970}や@samp{i686}のような）作成されるファイルのサブタイプは、GCCがターゲットとするISAを指定するフラグ@option{-mcpu}や@option{-march}で決定される。これを無効にするには、 @option{-force_cpusubtype_ALL}オプションを使用できる。
 
-Darwinのツールは、ISAの不一致がある場合の動作が異なる。 アセンブラ@file{as}は、生成しているファイルのサブタイプに有効な命令のみを使用できるため、64ビット命令を@samp{ppc750}オブジェクトファイルに入れることはできない。 共有ライブラリのリンカー@file{/usr/bin/libtool}は、入力ファイルよりも制限の少ないサブタイプで共有ライブラリを作成するように要求された場合に失敗し、エラーを表示する。（例えば、@samp{ppc970}オブジェクトファイルを@samp{ppc7400}ライブラリに置こうとすると）。実行可能ファイルのリンカー@command {ld}は、実行可能ファイルに入力ファイルの中で最も制限的なサブタイプを静かに提供する。
+Darwinのツールは、ISAの不一致がある場合の動作が異なる。 アセンブラ@file{as}は、生成しているファイルのサブタイプに有効な命令のみを使用できるため、64ビット命令を@samp{ppc750}オブジェクトファイルに入れることはできない。 共有ライブラリのリンカー@file{/usr/bin/libtool}は、入力ファイルよりも制限の少ないサブタイプで共有ライブラリを作成するように要求された場合に失敗し、エラーを表示する。（例えば、@samp{ppc970}オブジェクトファイルを@samp{ppc7400}ライブラリに置こうとすると）。実行可能ファイルのリンカー@command{ld}は、実行可能ファイルに入力ファイルの中で最も制限的なサブタイプを静かに提供する。
 
 @table @gcctabopt
 @item -F@var{dir}
@@ -15527,7 +15708,7 @@ Darwinのツールは、ISAの不一致がある場合の動作が異なる。 �
 すべてのシンボルとタイプのデバッグ情報を出力する。
 
 @item -mmacosx-version-min=@var{version}
-この実行可能ファイルが実行されるMacOS Xの最も古いバージョンは@var{version}である。 @var {version}の典型的な値は@code{10.1}、@code{10.2}、@code{10.3.9}である。
+この実行可能ファイルが実行されるMacOS Xの最も古いバージョンは@var{version}である。 @var{version}の典型的な値は@code{10.1}、@code{10.2}、@code{10.3.9}である。
 
 コンパイラがデフォルトでシステムのヘッダーを使用するように構築されている場合、このオプションのデフォルトはコンパイラが実行されているシステムのバージョンである。それ以外の場合、デフォルトはできるだけ多くのシステムおよびコードベースと互換性がある。
 
@@ -15542,7 +15723,7 @@ Darwinのツールは、ISAの不一致がある場合の動作が異なる。 �
 
 @item -mone-byte-bool
 @opindex mone-byte-bool
-@code{sizeofbool）= 1}のように、@code {bool}のデフォルトを上書きする。デフォルトでは、Darwin/PowerPC用にコンパイルするときは@code{sizeofbool}は@code{4}、Darwin/x86用にコンパイルするときは@code{1}なので、このオプションはx86には影響しない。
+@code{sizeof(bool)=1}のように、@code{bool}のデフォルトを上書きする。デフォルトでは、Darwin/PowerPC用にコンパイルするときは@code{sizeof(bool)}は@code{4}、Darwin/x86用にコンパイルするときは@code{1}なので、このオプションはx86には影響しない。
 
 @strong{警告:} @option{--one-byte-bool}スイッチは、GCCに、そのスイッチなしで生成されたコードとバイナリ互換性のないコードを生成させる。 このスイッチを使用するには、システムライブラリを含むプログラム内の他のすべてのモジュールを再コンパイルする必要がある。 このスイッチを使用して、デフォルト以外のデータモデルに準拠させる。
 
@@ -15552,13 +15733,11 @@ Darwinのツールは、ISAの不一致がある場合の動作が異なる。 �
 @opindex mfix-and-continue
 @opindex ffix-and-continue
 @opindex findirect-data
-GDBが既に実行中のプログラムに@file{.o}ファイルを動的にロードできるように、高速ターンアラウンド開発に適したコードを生成する。 下位互換性のために@option{-findirect-data}と@option {-ffix-and-continue}が提供されている。
+GDBが既に実行中のプログラムに@file{.o}ファイルを動的にロードできるように、高速ターンアラウンド開発に適したコードを生成する。 下位互換性のために@option{-findirect-data}と@option{-ffix-and-continue}が提供されている。
 
 @item -all_load
 @opindex all_load
 静的アーカイブライブラリのすべてのメンバーを読み込む。詳細は、man ld（1）を参照せよ。
-Loads all members of static archive libraries.
-See man ld(1) for more information.
 
 @item -arch_errors_fatal
 @opindex arch_errors_fatal
@@ -15711,7 +15890,7 @@ Mach-oバンドル形式ファイルを作成する。詳細は、man ld（1）�
 @node DEC Alpha Options
 @subsection DEC Alpha オプション
 
-これらの@samp {-m}オプションは、DEC Alphaの実装で定義されている。
+これらの@samp{-m}オプションは、DEC Alphaの実装で定義されている。
 
 @table @gcctabopt
 @item -mno-soft-float
@@ -15911,6 +16090,33 @@ EV6としてスケジュールし、BWX、CIX、FIX、およびMAX拡張をサ�
 @end table
 @end table
 
+@node eBPF Options
+@subsection eBPFオプション
+@cindex eBPF Options
+
+@table @gcctabopt
+@item -mframe-limit=@var{bytes}
+フレームサイズのハード制限をバイト単位で指定します。 現在、指定できる値は@samp {32767}以下でなければなりません。 デフォルトでは、対象となるLinuxカーネルのバージョンによって課される制限が適用されます。
+
+@item -mkernel=@var{version}
+@opindex mkernel
+これは、コンパイルされたプログラムを実行するカーネルの最小バージョンを指定します。 GCCはこのバージョンを使用して、使用する命令、許可するカーネルヘルパーなどを決定します。  現在、
+@var{version}は@samp{4.0}, @samp{4.1}, @samp{4.2},
+@samp{4.3}, @samp{4.4}, @samp{4.5}, @samp{4.6}, @samp{4.7},
+@samp{4.8}, @samp{4.9}, @samp{4.10}, @samp{4.11}, @samp{4.12},
+@samp{4.13}, @samp{4.14}, @samp{4.15}, @samp{4.16}, @samp{4.17},
+@samp{4.18}, @samp{4.19}, @samp{4.20}, @samp{5.0}, @samp{5.1},
+@samp{5.2}, @samp{latest}, @samp{native}のひとつです。
+
+@item -mbig-endian
+@opindex mbig-endian
+ビッグエンディアンターゲットのコードを生成します。
+
+@item -mlittle-endian
+@opindex mlittle-endian
+リトルエンディアンターゲットのコードを生成します。 これがデフォルトです。
+@end table
+
 @node FR30 Options
 @subsection FR30オプション
 @cindex FR30 Options
@@ -15948,6 +16154,18 @@ EV6としてスケジュールし、BWX、CIX、FIX、およびMAX拡張をサ�
 @item -mnodiv
 @opindex mnodiv
 divとmod命令を使わない。
+
+@item -mft32b
+@opindex mft32b
+FT32Bプロセッサの拡張命令の使用を有効にします。
+
+@item -mcompress
+@opindex mcompress
+Ft32Bコード圧縮スキームを使用してすべてのコードを圧縮します。
+
+@item -mnopm
+@opindex  mnopm
+プログラムメモリを読み取るコードを生成しない。
 
 @end table
 
@@ -16256,18 +16474,6 @@ Andriodプラットフォームで互換性のあるコードをコンパイル�
 @opindex tno-android-ld
 @option{-mandroid}のリンク効果を無効にします。つまり、標準のLinuxリンクオプションをリンカーに渡す。
 
-@item -mft32b
-@opindex mft32b
-Enable use of the extended instructions of the FT32B processor.
-
-@item -mcompress
-@opindex mcompress
-Compress all code using the Ft32B code compression scheme.
-
-@item -mnopm
-@opindex  mnopm
-Do not generate code that reads program memory.
-
 @end table
 
 @node H8/300 Options
@@ -16420,7 +16626,7 @@ HP @command{ld}に固有のオプションを使用する。共有ライブラ�
 @option{-munix=93}は、GCC 3.3と3.4と同じ事前定義を提供する。 @option{-munix=95}は、@code{XOPEN_UNIX}と@code{_XOPEN_SOURCE_EXTENDED}、および@file{unix95.o}の開始ファイルに追加の事前定義を提供する。
 @option{-munix=98}は、@code{_XOPEN_UNIX}、@code{_XOPEN_SOURCE_EXTENDED}、@code{_INCLUDE__STDC_A1_SOURCE}、@code{_INCLUDE_XOPEN_SOURCE_500}、および開始ファイル@file{unix98.o}の追加定義を提供する。
 
-このオプションは、さまざまなライブラリルーチンのインターフェイスを変更することに注意することが@emph{重要}である。 また、Cライブラリの動作上の動作にも影響する。 したがって、このオプションの使用には@emph{細心}の注意が必要です。
+このオプションは、さまざまなライブラリルーチンのインターフェイスを変更することに注意することが@emph{_重要_}である。 また、Cライブラリの動作上の動作にも影響する。 したがって、このオプションの使用には@emph{_細心_}の注意が必要です。
 
 複数のUNIX標準で動作するライブラリコードは、必要に応じて変数@code{__ xpg4_extended_mask}をテスト、設定、復元する必要がある。 ほとんどのGNUソフトウェアはこの機能を提供していない。
 
