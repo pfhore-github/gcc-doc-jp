@@ -21373,6 +21373,15 @@ MMX、SSE、SSE2、SSE3命令セットサポートを持つIntel Pentuim 4 CPU�
 @item silvermont
 64ビット拡張、MOVBE、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、AES、PCLMUL、RDRND命令セットサポートを持つIntel Slivermont CPU。
 
+@item goldmont
+64ビット拡張、MOVBE、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、AES、PCLMUL、RDRNDXSAVE、 XSAVEOPT、FSGSBASE命令セットサポートを持つIntel Goldmont CPU。
+
+@item goldmont-plus
+64ビット拡張、MOVBE、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、AES、PCLMUL、RDRNDXSAVE、 XSAVEOPT、FSGSBASE、TWRITE、RDPID、SGX、UMIP命令セットサポートを持つIntel Goldmont Plus CPU。
+
+@item tremont
+64ビット拡張、MOVBE、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、AES、PCLMUL、RDRNDXSAVE、 XSAVEOPT、FSGSBASE、TWRITE、RDPID、SGX、UMIP、GFNI-SSE、CLWB、ENCLV命令セットサポートを持つIntel Tremont CPU。
+
 @item knl
 64ビット拡張、MOVBE、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、AVX、AVX2、AES、PCLMUL、FSGSBASE、RDRND、MFA、BMI、BMI2、F16C、RDSEED、ADCX、PREFETCHW、AVX512F、AVX512PF、AVX512ER、AVX512CD命令セットサポート持つIntel Knight's Landing CPU。
 
@@ -21404,6 +21413,28 @@ RDRND, FMA, BMI, BMI2, F16C, RDSEED, ADCX, PREFETCHW, CLFLUSHOPT, XSAVEC,
 XSAVES, AVX512F, AVX512VL, AVX512BW, AVX512DQ, AVX512CD, AVX512VBMI,
 AVX512IFMA, SHA, CLWB, UMIP, RDPID, GFNI, AVX512VBMI2, AVX512VPOPCNTDQ,
 AVX512BITALG, AVX512VNNI, VPCLMULQDQ, VAES, PCONFIG, WBNOINVD命令セットサポートを持つIntel Icelake サーバーCPU 。
+
+@item cascadelake
+64ビット拡張、MOVBE、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、PKU、AVX、AVX2、AES、PCLMUL、FSGSBASE、RDRND、FMA、BMI、BMI2 、F16C、RDSEED、ADCX、PREFETCHW、CLFLUSHOPT、XSAVEC、XSAVES、AVX512F、CLWB、AVX512VL、AVX512BW、AVX512DQ、AVX512CDおよびAVX512VNNI命令セットサポートを持つIntel Cascadelake CPU
+
+@item cooperlake
+64ビット拡張、MOVBE、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、PKU、AVX、AVX2、AES、PCLMUL、FSGSBASE、RDRND、FMA、BMI、BMI2 、F16C、RDSEED、ADCX、PREFETCHW、CLFLUSHOPT、XSAVEC、XSAVES、AVX512F、CLWB、AVX512VL、AVX512BW、AVX512DQ、AVX512CD、AVX512VNNIおよびAVX512BF16命令セットのサポートを持つIntel Cooperlake CPU。
+
+@item tigerlake
+64ビット拡張、MOVBE、MMX、SSE、SSE2、SSE3、SSSE3、
+SSE4.1、SSE4.2、POPCNT、PKU、AVX、AVX2、AES、PCLMUL、FSGSBASE、RDRND、FMA、BMI、
+BMI2、F16C、RDSEED、ADCX、PREFETCHW、CLFLUSHOPT、XSAVEC、XSAVES、AVX512F、
+AVX512VL、AVX512BW、AVX512DQ、AVX512CD、AVX512VBMI、AVX512IFMA、SHA、CLWB、UMIP、
+RDPID、GFNI、AVX512VBMI2、AVX512VPOPCNTDQ、AVX512BITALG、AVX512VNNI、VPCLMULQDQ、
+VAES、PCONFIG、WBNOINVD、MOVDIRI、MOVDIR64B命令セットのサポートを持つIntel Cooperlake CPU。
+
+Intel Tigerlake CPU with 64-bit extensions, MOVBE, MMX, SSE, SSE2, SSE3, SSSE3,
+SSE4.1, SSE4.2, POPCNT, PKU, AVX, AVX2, AES, PCLMUL, FSGSBASE, RDRND, FMA, BMI,
+BMI2, F16C, RDSEED, ADCX, PREFETCHW, CLFLUSHOPT, XSAVEC, XSAVES, AVX512F,
+AVX512VL, AVX512BW, AVX512DQ, AVX512CD, AVX512VBMI, AVX512IFMA, SHA, CLWB, UMIP,
+RDPID, GFNI, AVX512VBMI2, AVX512VPOPCNTDQ, AVX512BITALG, AVX512VNNI, VPCLMULQDQ,
+VAES, PCONFIG, WBNOINVD, MOVDIRI, MOVDIR64B and  AVX512VP2INTERSECT instruction
+set support.
 
 @item k6
 MMX命令セットサポートを持つAMD K6 CPU。
@@ -21450,6 +21481,9 @@ x86-64命令セットサポートを持つAMD15世代コアに基づくCPU。（
 
 @item znver1
 x86-64命令セットサポートを持つAMD17世代コアに基づくCPU。（これはBMI、BMI2、F16C、FMA、FSGSBASE、AVX、AVX2、ADCX、RDSEED、MWAITX、SHA、CLZERO、AES、、PCL_MUL、CX16、MOVBE、MMX、SSE、SSE2、SSE3、SSE4A、SSSE3、SSE4.1、SSE4.2、ABM、XSAVES、CLFULSHOPT、POPCNT、64ビット命令セット拡張を含む。）
+
+@item znver2
+x86-64命令セットサポートを持つAMD17世代コアに基づくCPU。（これはBMI、BMI2、F16C、CLWB、FMA、FSGSBASE、AVX、AVX2、ADCX、RDSEED、MWAITX、SHA、CLZERO、AES、PCL_MUL、CX16、MOVBE、MMX、SSE、SSE2、SSE3、SSE4A、SSSE3、SSE4.1、SSE4.2、ABM、XSAVES、CLFULSHOPT、POPCNT、RDPID、WBNOINVD、64ビット命令セット拡張を含む。）
 
 @item btver1
 x86-64命令セットサポートを持つAMD14世代コアに基づくCPU。（これはMMX、SSE、SSE2、SSE3、SSE4A、CX16、ABM、64ビット命令セット拡張を含む。）
@@ -21517,7 +21551,7 @@ ABIと使用可能な命令のセットを除いて、生成されたコード�
 
 @table @samp
 @item generic
-最も一般的なIA32・AMD64・EM64Tプロセッサ用に最適化されたコードを生成する。コードを実行するCPUが分かっている場合は、@option{-mtune = generic}ではなく、対応する@option{-mtune}または@option{-march}オプションを使用するべきである。しかし、アプリケーションのどのCPUユーザーが正確に何を持っているのかわからない場合は、このオプションを使用する必要がある。
+最も一般的なIA32・AMD64・EM64Tプロセッサ用に最適化されたコードを生成する。コードを実行するCPUが分かっている場合は、@option{-mtune=generic}ではなく、対応する@option{-mtune}または@option{-march}オプションを使用するべきである。しかし、アプリケーションのどのCPUユーザーが正確に何を持っているのかわからない場合は、このオプションを使用する必要がある。
 
 新しいプロセッサが市場に展開されると、このオプションの動作が変わる。 したがって、新しいバージョンのGCCにアップグレードすると、このオプションで制御されるコード生成は、GCCのリリース時に最も一般的なプロセッサーを反映して変更される。
 
@@ -21596,7 +21630,7 @@ x86-32コンパイラでは、SSE拡張を有効にしてこのオプション�
 
 @item -mno-fancy-math-387
 @opindex mno-fancy-math-387
-一部の387エミュレータは、387の@code {sin}、@code {cos}および@code {sqrt}命令をサポートしていない。これらの命令の生成を避けるには、このオプションを指定する。このオプションはOpenBSDとNetBSDのデフォルトである。  このオプションは、@option{-march}がターゲットCPUが常にFPUを持っていることを示し、命令がエミュレーションを必要としないときには無効になる。@option{-funsafe-math-optimizations}スイッチも使用しない限り、これらの命令は生成されない。
+一部の387エミュレータは、387の@code{sin}、@code{cos}および@code{sqrt}命令をサポートしていない。これらの命令の生成を避けるには、このオプションを指定する。このオプションはOpenBSDとNetBSDのデフォルトである。  このオプションは、@option{-march}がターゲットCPUが常にFPUを持っていることを示し、命令がエミュレーションを必要としないときには無効になる。@option{-funsafe-math-optimizations}スイッチも使用しない限り、これらの命令は生成されない。
 
 @item -malign-double
 @itemx -mno-align-double
@@ -21614,7 +21648,7 @@ x86-64では、デフォルトで@option{-malign-double}が有効になってい
 @opindex m128bit-long-double
 これらのスイッチは、@code{long double}型のサイズを制御する。x86-32アプリケーションのバイナリインタフェースでは、サイズを96ビットに指定しているため、32ビットモードではデフォルトで@option{-m96bit-long-double}が使用される。
 
-最近のアーキテクチャー（Pentium以上）は、@code{long double}が8バイト境界または16バイト境界に整列させることを好む。ABIに準拠した配列や構造では、これは不可能である。したがって、@option {-m128bit-long-double}を指定すると、@code{long double}に追加の32ビットのゼロを埋め込むことで、@code{long double}を16バイト境界に揃える。
+最近のアーキテクチャー（Pentium以上）は、@code{long double}が8バイト境界または16バイト境界に整列させることを好む。ABIに準拠した配列や構造では、これは不可能である。したがって、@option{-m128bit-long-double}を指定すると、@code{long double}に追加の32ビットのゼロを埋め込むことで、@code{long double}を16バイト境界に揃える。
 
 x86-64コンパイラでは、ABIが@code{long double}が16バイトの境界に揃うように指定するので、@option{-m128bit-long-double}がデフォルトの選択肢である。
 
@@ -21693,7 +21727,7 @@ MMXレジスタの代わりに8バイトのベクトルをメモリに返しま�
 @opindex mincoming-stack-boundary
 入ってくるスタックが2の@var {num}バイト乗の境界に揃えられていると仮定する。@option{-mincoming-stack-boundary}を指定しないと、@option{-mpreferred-stack-boundary}で指定されたものが使用される。
 
-PentiumとPentium Proでは、@code{double}と@code{long double}の値は8バイトの境界（@option{-malign-double}を参照）に合わせるか、さもなければ実行時に大きなパフォーマンス上のペナルティを被る。Pentium IIIでは、Streaming SIMD Extension（SSE）のデータ型@code{__ m128}が16バイト境界でないと正しく動作しないことがある。
+PentiumとPentium Proでは、@code{double}と@code{long double}の値は8バイトの境界（@option{-malign-double}を参照）に合わせるか、さもなければ実行時に大きなパフォーマンス上のペナルティを被る。Pentium IIIでは、Streaming SIMD Extension（SSE）のデータ型@code{__m128}が16バイト境界でないと正しく動作しないことがある。
 
 スタック上のこの値の適切なアライメントを確実にするためには、スタック境界は、スタックに格納された任意の値が必要とする値と同じ位置になければならない。さらに、スタックを整列させたままにするように、すべての関数を生成する必要がある。したがって、より望まれたスタック境界でコンパイルされた関数を、あまり望まれないスタック境界でコンパイルされた関数から呼び出すと、スタックの位置がずれてしまう可能性が最も高くなる。コールバックを使用するライブラリは、常にデフォルト設定を使用することが推奨される。
 
@@ -21772,8 +21806,14 @@ PentiumとPentium Proでは、@code{double}と@code{long double}の値は8バイ
 @itemx -mclflushopt
 @opindex mclflushopt
 @need 200
+@itemx -mclwb
+@opindex mclwb
+@need 200
 @itemx -mfsgsbase
 @opindex mfsgsbase
+@need 200
+@itemx -mptwrite
+@opindex mptwrite
 @need 200
 @itemx -mrdrnd
 @opindex mrdrnd
@@ -21793,8 +21833,20 @@ PentiumとPentium Proでは、@code{double}と@code{long double}の値は8バイ
 @itemx -mfma4
 @opindex mfma4
 @need 200
+@itemx -mprfchw
+@opindex mprfchw
+@need 200
+@itemx -mrdpid
+@opindex mrdpid
+@need 200
 @itemx -mprefetchwt1
 @opindex mprefetchwt1
+@need 200
+@itemx -mrdseed
+@opindex mrdseed
+@need 200
+@itemx -msgx
+@opindex msgx
 @need 200
 @itemx -mxop
 @opindex mxop
@@ -21814,10 +21866,14 @@ PentiumとPentium Proでは、@code{double}と@code{long double}の値は8バイ
 @itemx -mabm
 @opindex mabm
 @need 200
+@itemx -madx
+@opindex madx
+@need 200
 @itemx -mbmi
 @opindex mbmi
 @need 200
 @itemx -mbmi2
+@opindex mbmi2
 @need 200
 @itemx -mlzcnt
 @opindex mlzcnt
@@ -21840,11 +21896,11 @@ PentiumとPentium Proでは、@code{double}と@code{long double}の値は8バイ
 @itemx -mrtm
 @opindex mrtm
 @need 200
+@itemx -mhle
+@opindex mhle
+@need 200
 @itemx -mtbm
 @opindex mtbm
-@need 200
-@itemx -mmpx
-@opindex mmpx
 @need 200
 @itemx -mmwaitx
 @opindex mmwaitx
@@ -21858,11 +21914,17 @@ PentiumとPentium Proでは、@code{double}と@code{long double}の値は8バイ
 @itemx -mavx512vbmi2
 @opindex mavx512vbmi2
 @need 200
+@itemx -mavx512bf16
+@opindex mavx512bf16
+@need 200
 @itemx -mgfni
 @opindex mgfni
 @need 200
 @itemx -mvaes
 @opindex mvaes
+@need 200
+@itemx -mwaitpkg
+@opindex mwaitpkg
 @need 200
 @itemx -mvpclmulqdq
 @opindex mvpclmulqdq
@@ -21876,12 +21938,35 @@ PentiumとPentium Proでは、@code{double}と@code{long double}の値は8バイ
 @itemx -mmovdir64b
 @opindex mmovdir64b
 @need 200
+@itemx -menqcmd
+@opindex menqcmd
+@need 200
 @itemx -mavx512vpopcntdq
 @opindex mavx512vpopcntdq
-これらのスイッチを使用すると、MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1, AVX, AVX2, AVX512F, AVX512PF, AVX512ER, AVX512CD, SHA, AES, PCLMUL, FSGSBASE, RDRND, F16C, FMA, SSE4A, FMA4, XOP, LWP, ABM,  AVX512VL, AVX512BW, AVX512DQ, AVX512IFMA, AVX512VBMI, BMI, BMI2, VAES,
-FXSR, XSAVE, XSAVEOPT, LZCNT, RTM, MPX, MWAITX, PKU, IBT, SHSTK, AVX512VBMI2,
-GFNI, VPCLMULQDQ, AVX512BITALG, MOVDIRI, MOVDIR64B,
-AVX512VPOPCNTDQ3DNow! または強化された3DNow！ 拡張命令セットでの命令の使用を有効にする。それぞれに対応する@option {-mno-}オプションがあり、これらの命令の使用を無効にする。
+@need 200
+@itemx -mavx512vp2intersect
+@opindex mavx512vp2intersect
+@need 200
+@itemx -mavx5124fmaps
+@opindex mavx5124fmaps
+@need 200
+@itemx -mavx512vnni
+@opindex mavx512vnni
+@need 200
+@itemx -mavx5124vnniw
+@opindex mavx5124vnniw
+@need 200
+@itemx -mcldemote
+@opindex mcldemote
+これらのスイッチを使用すると、MMX, SSE,
+SSE2, SSE3, SSSE3, SSE4, SSE4A, SSE4.1, SSE4.2, AVX, AVX2, AVX512F, AVX512PF,
+AVX512ER, AVX512CD, AVX512VL, AVX512BW, AVX512DQ, AVX512IFMA, AVX512VBMI, SHA,
+AES, PCLMUL, CLFLUSHOPT, CLWB, FSGSBASE, PTWRITE, RDRND, F16C, FMA, PCONFIG,
+WBNOINVD, FMA4, PREFETCHW, RDPID, PREFETCHWT1, RDSEED, SGX, XOP, LWP,
+3DNow!@:, enhanced 3DNow!@:, POPCNT, ABM, ADX, BMI, BMI2, LZCNT, FXSR, XSAVE,
+XSAVEOPT, XSAVEC, XSAVES, RTM, HLE, TBM, MWAITX, CLZERO, PKU, AVX512VBMI2,
+GFNI, VAES, WAITPKG, VPCLMULQDQ, AVX512BITALG, MOVDIRI, MOVDIR64B, AVX512BF16,
+ENQCMD, AVX512VPOPCNTDQ, AVX5124FMAPS, AVX512VNNI, AVX5124VNNIW, CLDEMOTE拡張命令セットでの命令の使用を有効にする。それぞれに対応する@option{-mno-}オプションがあり、これらの命令の使用を無効にする。
 
 これらの拡張機能は、組み込み関数としても利用できる。これらのスイッチで有効または無効にする関数の詳細については、@ref{x86 Built-in Functions}を参照せよ。
 
@@ -21917,43 +22002,41 @@ AVX512VPOPCNTDQ3DNow! または強化された3DNow！ 拡張命令セットで�
 
 @item -mprefer-vector-width=@var{opt}
 @opindex mprefer-vector-width
-This option instructs GCC to use @var{opt}-bit vector width in instructions
-instead of default on the selected platform.
+このオプションは、GCCに対して、選択されたプラットフォームでのデフォルトではなく、@var{opt}ビットのベクトル幅を命令で使用するように指示します。
 
 @table @samp
 @item none
-No extra limitations applied to GCC other than defined by the selected platform.
+選択したプラットフォームで定義されている以外に、GCCに適用される追加の制限はありません。
 
 @item 128
-Prefer 128-bit vector width for instructions.
+命令については、128ビットのベクトル幅を優先してください。
 
 @item 256
-Prefer 256-bit vector width for instructions.
+命令については、256ビットのベクトル幅を優先してください。
 
 @item 512
-Prefer 512-bit vector width for instructions.
+命令については、512ビットのベクトル幅を優先してください。
 @end table
 
 @item -mcx16
 @opindex mcx16
-このオプションを使用すると、GCCは64ビットコードで@code{CMPXCHG16B}命令を生成して、16バイト整列128ビットオブジェクトに対して比較および交換操作を実装できる。これは、1つのマシンワードサイズを超えるデータ構造のアトミック更新に役立つ コンパイラはこの命令を使用して@ref{__ sync Builtins}を実装する。 しかし、128ビット整数で動作する@ref{__ Atomic Builtins}では、常にライブラリ呼び出しが使用される。
+このオプションを使用すると、GCCは64ビットコードで@code{CMPXCHG16B}命令を生成して、16バイト整列128ビットオブジェクトに対して比較および交換操作を実装できる。これは、1つのマシンワードサイズを超えるデータ構造のアトミック更新に役立つ コンパイラはこの命令を使用して@ref{__sync Builtins}を実装する。 しかし、128ビット整数で動作する@ref{__Atomic Builtins}では、常にライブラリ呼び出しが使用される。
 
 @item -msahf
 @opindex msahf
-このオプションを使用すると、64ビットコードで@code {SAHF}命令を生成できる。2005年12月のPentium 4 G1の導入に先立ち、インテル64をサポートしていた初期のインテルPentium 4 CPUは、AMD64でサポートされている@code{LAHF}と@code{SAHF}命令が欠けていた。これらは、それぞれ特定のステータスフラグのロードおよびストア命令である。64ビットモードでは、@code{fmod}、@code{drem}、および@code{remainder}組み込み関数を最適化するために@code{SAHF}命令が使用される。詳細は@ref {Other Builtins}を参照せよ。
+このオプションを使用すると、64ビットコードで@code{SAHF}命令を生成できる。2005年12月のPentium 4 G1の導入に先立ち、インテル64をサポートしていた初期のインテルPentium 4 CPUは、AMD64でサポートされている@code{LAHF}と@code{SAHF}命令が欠けていた。これらは、それぞれ特定のステータスフラグのロードおよびストア命令である。64ビットモードでは、@code{fmod}、@code{drem}、および@code{remainder}組み込み関数を最適化するために@code{SAHF}命令が使用される。詳細は@ref{Other Builtins}を参照せよ。
 
 @item -mmovbe
 @opindex mmovbe
-このオプションは@code{__ builtin_bswap32}と@code{__ builtin_bswap64}を実装するために@code{movbe}命令の使用を可能にする。
+このオプションは@code{__builtin_bswap32}と@code{__builtin_bswap64}を実装するために@code{movbe}命令の使用を可能にする。
 
 @item -mshstk
 @opindex mshstk
-The @option{-mshstk} option enables shadow stack built-in functions
-from x86 Control-flow Enforcement Technology (CET).
+@option {-mshstk}オプションは、x86 Control-flow Enforcement Technology（CET）のシャドウスタック組み込み関数を有効にします。
 
 @item -mcrc32
 @opindex mcrc32
-このオプションは組み込み関数@code{__ builtin_ia32_crc32qi}、@code{__ builtin_ia32_crc32hi}、@code{__ builtin_ia32_crc32si}、@code{__ builtin_ia32_crc32di}を使用して@code{crc32}機械命令をする。
+このオプションは組み込み関数@code{__builtin_ia32_crc32qi}、@code{__builtin_ia32_crc32hi}、@code{__builtin_ia32_crc32si}、@code{__builtin_ia32_crc32di}を使用して@code{crc32}機械命令をする。
 
 @item -mrecip
 @opindex mrecip
@@ -21965,7 +22048,7 @@ GCCは@option{-fast-math}ではすでに@code{RSQRTSS}（または@code{RSQRTPS}
 
 @item -mrecip=@var{opt}
 @opindex mrecip=opt
-このオプションは、どの逆数見積り命令を使用するかを制御する。 @var{opt}はコンマで区切られたオプ��ョンのリストである。オプションの前に@samp {!}を付けてオプションを反転することができる。
+このオプションは、どの逆数見積り命令を使用するかを制御する。 @var{opt}はコンマで区切られたオプションのリストである。オプションの前に@samp{!}を付けてオプションを反転することができる。
 
 @table @samp
 @item all
@@ -22004,20 +22087,12 @@ GCCは現在、@option {-mveclibabi = svml}が使用されているときは対�
 
 @item -mforce-indirect-call
 @opindex mforce-indirect-call
-Force all calls to functions to be indirect. This is useful
-when using Intel Processor Trace where it generates more precise timing
-information for function calls.
+関数のすべての呼び出しを強制的に間接的にします。 これは、関数呼び出しのより正確なタイミング情報を生成するインテルプロセッサートレースを使用する場合に役立ちます。
 
 @item -mcall-ms2sysv-xlogues
 @opindex mcall-ms2sysv-xlogues
 @opindex mno-call-ms2sysv-xlogues
-Due to differences in 64-bit ABIs, any Microsoft ABI function that calls a
-System V ABI function must consider RSI, RDI and XMM6-15 as clobbered.  By
-default, the code for saving and restoring these registers is emitted inline,
-resulting in fairly lengthy prologues and epilogues.  Using
-@option{-mcall-ms2sysv-xlogues} emits prologues and epilogues that
-use stubs in the static portion of libgcc to perform these saves and restores,
-thus reducing function size at the cost of a few extra instructions.
+64ビットABIの違いにより、System V ABI関数を呼び出すMicrosoft ABI関数は、RSI、RDI、およびXMM6-15を破壊されたものと見なす必要があります。 デフォルトでは、これらのレジスタを保存および復元するためのコードはインラインで出力されるため、かなり長いプロローグとエピローグが生成されます。 @option{-mcall-ms2sysv-xlogues}を使用すると、libgccの静的部分のスタブを使用してこれらの保存と復元を実行するプロローグとエピローグが生成されるため、いくつかの追加の命令を使用して関数サイズを削減できます。
 
 @item -mtls-dialect=@var{type}
 @opindex mtls-dialect
@@ -22157,7 +22232,7 @@ struct
 @item rep_byte
 @itemx rep_4byte
 @itemx rep_8byte
-指定したサイズのi386接頭辞@code {rep}を使用して展開する。
+指定したサイズのi386接頭辞@code{rep}を使用して展開する。
 
 @item byte_loop
 @itemx loop
@@ -22170,11 +22245,11 @@ struct
 
 @item -mmemcpy-strategy=@var{strategy}
 @opindex mmemcpy-strategy=@var{strategy}
-@code{__ builtin_memcpy}をインライン化するかどうかを、コピー操作の予想されるサイズがわかっているときに使用するインラインアルゴリズムを決定するための、内部決定のヒューリスティックをオーバーライドする。 @var{strategy}は@var{alg}:@var{max_size}:@var{dest_align}の三つ組のコンマで区切られたリストである。@var{alg}は@option{-mstringop-strategy}で指定され、@var{max_size}はインラインアルゴリズム@var{alg}が許可される最大バイトサイズを指定する。 最後のトリプレットの場合、@var{max_size}は@code{-1}でなければならない。 リスト内のトリプレットの@var{max_size}は、昇順で指定する必要がある。 @var{alg}の最小バイトサイズは、最初のトリプレットの場合は@code{0}、前の範囲の@code{@var{max_size}+1}である。
+@code{__builtin_memcpy}をインライン化するかどうかを、コピー操作の予想されるサイズがわかっているときに使用するインラインアルゴリズムを決定するための、内部決定のヒューリスティックをオーバーライドする。 @var{strategy}は@var{alg}:@var{max_size}:@var{dest_align}の三つ組のコンマで区切られたリストである。@var{alg}は@option{-mstringop-strategy}で指定され、@var{max_size}はインラインアルゴリズム@var{alg}が許可される最大バイトサイズを指定する。 最後のトリプレットの場合、@var{max_size}は@code{-1}でなければならない。 リスト内のトリプレットの@var{max_size}は、昇順で指定する必要がある。 @var{alg}の最小バイトサイズは、最初のトリプレットの場合は@code{0}、前の範囲の@code{@var{max_size}+1}である。
 
 @item -mmemset-strategy=@var{strategy}
 @opindex mmemset-strategy=@var{strategy}
-このオプションは@code{__ builtin_memset}拡張を制御する以外は@option{-mmemcpy-strategy=}と似ている。
+このオプションは@code{__builtin_memset}拡張を制御する以外は@option{-mmemcpy-strategy=}と似ている。
 
 @item -momit-leaf-frame-pointer
 @opindex momit-leaf-frame-pointer
@@ -22196,7 +22271,7 @@ GNU Cライブラリを使用するシステムの場合、デフォルトはオ
 @itemx -mno-fentry
 @opindex mfentry
 プロファイリングがアクティブな場合（@option{-pg}）、プロファイリングカウンタの呼び出しをプロローグの前に置く。
-注：x86アーキテクチャでは、@option{-mfentry}と@option{-pg}の属性@code {ms_hook_prologue}は現時点では不可能である。
+注：x86アーキテクチャでは、@option{-mfentry}と@option{-pg}の属性では@code{ms_hook_prologue}は現時点では不可能である。
 
 @item -mrecord-mcount
 @itemx -mno-record-mcount
@@ -22207,6 +22282,23 @@ GNU Cライブラリを使用するシステムの場合、デフォルトはオ
 @itemx -mno-nop-mcount
 @opindex mnop-mcount
 プロファイリングがアクティブな場合（@option{-pg}）、プロファイリング関数への呼び出しをNOPとして生成する。 これは、あとで動的にパッチを適用する必要がある場合に便利である。 これはおそらく@option{-mrecord-mcount}と一緒に使うと便利である。
+
+@item -minstrument-return=@var{type}
+@opindex minstrument-return
+指定された関数の呼び出しを伴う-pg -mfentryインストルメント済み関数の関数出口を計装します。 これは、retで終わる真の戻り値のみを計測しますが、jumpで終わる兄弟呼び出しは計測しません。 有効なタイプは、計測を行わない@var{none}、__return__への呼び出しを生成する@var{call}、または5バイトのnopを生成する@var{nop5}です。
+
+@item -mrecord-return
+@itemx -mno-record-return
+@opindex mrecord-return
+すべてのリターンインストルメンテーションコードを指す__return_locセクションを生成します。
+
+@item -mfentry-name=@var{name}
+@opindex mfentry-name
+-pg -mfentry関数の関数エントリで呼び出される__fentry__シンボルの名前を設定します。
+
+@item -mfentry-section=@var{name}
+@opindex mfentry-section
+-mrecord-mcount呼び出しを記録するセクションの名前を設定します（デフォルトは__mcount_loc）。
 
 @item -mskip-rax-setup
 @itemx -mno-skip-rax-setup
@@ -22236,13 +22328,27 @@ Intel Atomのような一部のプロセッサでは、8ビット符号なし整
 
 後者の選択肢では、オプション@option{-mstack-protector-guard-reg=@var{reg}}と@option{-mstack-protector-guard-offset=@var{offset}}カナリアを読み込むためのベース・レジスタとして、またそのベース・レジスタからのオフセットから使用するために、@code{%fs}または@code{％gs}を使用する。 これらのデフォルトは、関連するABIで指定されている。
 
-@item -mmitigate-rop
-@opindex mmitigate-rop
-意図しないリターンオペコードを含むコードシーケンスを生成しないようにして、特定の攻撃の形態を緩和する。 現時点では、このオプションはできることで制限されていて、重大な保護を提供するためには信頼されるべきではない。
-
 @item -mgeneral-regs-only
 @opindex mgeneral-regs-only
 汎用レジスタのみを使用するコードを生成する。 これにより、コンパイラは浮動小数点、ベクトル、マスク、およびバウンドレジスタを使用できなくなる。
+
+@item -mindirect-branch=@var{choice}
+@opindex mindirect-branch
+間接呼び出しを変換し、@var{choice}でジャンプします。 デフォルトは@samp{keep}で、間接呼び出しを維持し、変更せずにジャンプします。 @samp{thunk}は、間接呼び出しを変換し、呼び出しにジャンプしてサンクを返します。 @samp{thunk-inline}は、間接呼び出しを変換し、インライン呼び出しにジャンプしてサンクを返します。 @samp{thunk-extern}は、間接呼び出しを変換し、外部呼び出しにジャンプして、別のオブジェクトファイルで提供されるサンクを返します。 関数属性@code{indirect_branch}を使用して、特定の関数のこの動作を制御できます。@xref{Function Attributes}.
+
+@option{-mcmodel=large}は、@option{-mindirect-branch=thunk}および@option{-mindirect-branch=thunk-extern}と互換性がないことに注意してください。これは、大きなコードモデルではサンク関数に到達できない場合があるためです。
+
+外部サンクを変更して制御フローチェックを無効にすることはできないため、@option{-mindirect-branch=thunk-extern}は@option{-fcf-protection=branch}と互換性がないことに注意してください。
+
+@item -mfunction-return=@var{choice}
+@opindex mfunction-return
+@var{choice}で関数の戻り値を変換します。 デフォルトは@samp{keep}で、関数の戻り値は変更されません。 @samp{thunk}は、関数returnを呼び出しに変換し、thunkを返します。 @samp{thunk-inline}は、関数の戻りをインライン呼び出しに変換し、サンクを返します。 @samp{thunk-extern}は、関数の戻りを外部呼び出しに変換し、別のオブジェクトファイルで提供されるサンクを返します。 関数属性@code{function_return}を使用して、特定の関数のこの動作を制御できます。@xref{Function Attributes}.
+
+大きなコードモデルではサンク関数に到達できない可能性があるため、@option{-mcmodel = large}は@option{-mfunction-return=thunk}および@option{-mfunction-return=thunk-extern}と互換性がないことに注意してください。
+
+@item -mindirect-branch-register
+@opindex mindirect-branch-register
+間接呼び出しとレジスタを介してのジャンプを強制しします。
 
 @end table
 
@@ -22475,7 +22581,7 @@ z-compile -input %i
 @@c++
 @end smallexample
 
-ZZファイルは実際にはC ++ソースファイルだと言う。
+ZZファイルは実際にはC++ソースファイルだと言う。
 
 @item #@var{name}
 これにより、次のようなエラーメッセージが表示される。
@@ -22717,13 +22823,13 @@ Use "-Wa,OPTION" to pass "OPTION" to the assembler.
 ％@{@code{S}*@}と似ているが、@code{S}と@code {T}オプションの順序を保持する（仕様の@code{S}と@code{T}の順序は重要ではない）。アンパサンドで区切られた変数はいくつでもよい。 ワイルドカードはそれぞれオプションである。@samp{％@{D*＆U*＆A*@}}としてCPPに役立つ。
 
 @item %@{S:X@}
-@option{-S}スイッチがGCCに与えられている場合、@code {X}に置き換えられる。
+@option{-S}スイッチがGCCに与えられている場合、@code{X}に置き換えられる。
 
 @item %@{!S:X@}
-@option{-S}スイッチがGCCに対して与えられて@emph{いない}場合、@code {X}に置き換えられる。
+@option{-S}スイッチがGCCに対して与えられて@emph{いない}場合、@code{X}に置き換えられる。
 
 @item %@{S*:X@}
-名前が@code{-S}で始まるスイッチがGCCに指定されている場合は、@code {X}に置き換える。通常、@code{X}はスイッチの数にかかわらず一度だけ置換される。しかし、@code{％*}が@code{X}のどこかに現れた場合、@code {X}は、一致するスイッチごとに1回置き換えられ、@code {%*}は@code {*}に一致するスイッチの一部で置き換えられる。
+名前が@code{-S}で始まるスイッチがGCCに指定されている場合は、@code{X}に置き換える。通常、@code{X}はスイッチの数にかかわらず一度だけ置換される。しかし、@code{％*}が@code{X}のどこかに現れた場合、@code{X}は、一致するスイッチごとに1回置き換えられ、@code{%*}は@code {*}に一致するスイッチの一部で置き換えられる。
 
 @code{％*}が仕様列の最後の部分として現れた場合、最後の置換の終了後にスペースが追加される。ただし、列内にテキストがさらに存在する場合は、スペースは生成されない。 これにより、より大きな文字列の一部として@code{％*}置換を使用することができる。たとえば、次のような列文字列があると：
 
@@ -22751,7 +22857,7 @@ Use "-Wa,OPTION" to pass "OPTION" to the assembler.
 言語@code{S}のファイルを処理していない場合は、@code{X}に置き換える。
 
 @item %@{S|P:X@}
-@code{-S}か@code{-P}のどちらかがGCCに与えられた場合、@code{X}に置き換える。これは@samp{!}、@samp{.}、@samp{,}、@code {*}シーケンスと組み合わせても問題ないが、結合は@samp{|}よりも強くなる。 @code{X*}に@code{％*}が含まれている場合は、すべての選択肢に星印を付ける必要があり、最初の一致する選択肢のみが置換される。
+@code{-S}か@code{-P}のどちらかがGCCに与えられた場合、@code{X}に置き換える。これは@samp{!}、@samp{.}、@samp{,}、@code{*}シーケンスと組み合わせても問題ないが、結合は@samp{|}よりも強くなる。 @code{X*}に@code{％*}が含まれている場合は、すべての選択肢に星印を付ける必要があり、最初の一致する選択肢のみが置換される。
 
 たとえば、次のような仕様文字列があると、
 
@@ -22772,23 +22878,6 @@ jim.d         -bar -boggle
 @item %@{S:X; T:Y; :D@}
 GCCに@code{S}が与えられていれば、@code{X}に置き換えられる。 そうでなければ、GCCに@code{T}が与えられていれば、@code{Y}に置き換える。さもなければ@code{D}を代入する。必要だけ多くの節をできる。 これは、必要に応じて@code{.}、@code{,}、@code{!}、@code{|}、@code{*}と組み合わせることができる。
 
-@item -mindirect-branch=@var{choice}
-@opindex -mindirect-branch
-間接呼び出しとジャンプを@var{choice}を使って変換する。 デフォルトは@samp{keep}で、これは間接呼び出しとジャンプを保持する。@samp{thunk}は間接呼び出しとジャンプを、サンクの呼び出しと復帰に変換する。@samp{thunk-inline}は間接呼び出しとジャンプをインライン化されたサンクの呼び出しと復帰に変換する。@samp{thunk-extern}は間接呼び出しとジャンプを別のオブジェクトファイルで提供されたサンクへの外部呼び出しと復帰に変換する。関数属性@code{indirect_branch}を使用すると、特定の関数のこの動作を制御できる。 @xref{Function Attributes}
-
-大きなコードモデルでは、サンク関数に到達できない可能性があるため、@option{-mcmodel=large}は@option{-mindirect-branch=thunk}や@option {-mindirect-branch=thunk-extern}と互換性がないことに注意せよ。
-
-外部のサンクを制御フローチェックを無効にするように変更することはできないので、@option{-mindirect-branch=thunk-extern}は@option{-fcf-protection=branch}や@option {-fcheck-pointer-bounds}と互換性がないことに注意せよ。
-
-@item -mfunction-return=@var{choice}
-@opindex -mfunction-return
-@var{choice}で関数復帰を変換する。 デフォルトは@samp{keep}で、関数復帰は変更されない。 @samp{thunk}は関数復帰をサンクの呼び出しと復帰に変換する。 @samp{thunk-inline}は、関数復帰をインライン化されたサンクの呼び出しと復帰に変換する。 @samp {thunk-extern}は、関数復帰を、別のオブジェクトファイルで提供されるサンクの呼び出しと復帰に変換する。 特定の関数に対してこの動作を制御するには、関数属性@code{function_return}を使用する。@xref{Function Attributes}.
-
-大きなコードモデルでは、サンク関数に到達できない可能性があるため、@option{-mcmodel=large}は@option{-mfunction-return=thunk}や@option {-mfunction-return=thunk-extern}と互換性がないことに注意せよ。
-
-@item -mindirect-branch-register
-@opindex -mindirect-branch-register
-レジスタ経由の間接呼び出しとジャンプを強制する。
 
 @end table
 
