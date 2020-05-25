@@ -12,25 +12,25 @@ ISO Cの適合する実装は、「実装定義」と呼ばれる各分野にお
 @xref{Implementation-defined behavior, , 実装依存の振る舞い, cpp, The C Preprocessor}.  ライブラリとオペレーティングシステム（または自立環境用にコンパイルするときは他の環境）によって選択されるものもある。 詳細については、そのドキュメントを参照せよ。
 
 @menu
-* 翻訳実装::
-* 環境実装::
-* 識別子実装::
-* 文字実装::
-* 整数実装::
-* 浮動小数点実装::
-* 配列とポインタの実装::
-* ヒントの実装::
-* 構造体、共用体、列挙、ビットフィールド実装::
-* 限定子実装::
-* 宣言子実装::
-* 文実装::
-* プリプロセスディレクティブ実装::
-* ライブラリ関数の実装::
-* アーキテクチャ実装::
-* ロケール固有の振る舞いの実装::
+* Translation implementation::
+* Environment implementation::
+* Identifiers implementation::
+* Characters implementation::
+* Integers implementation::
+* Floating point implementation::
+* Arrays and pointers implementation::
+* Hints implementation::
+* Structures unions enumerations and bit-fields implementation::
+* Qualifiers implementation::
+* Declarators implementation::
+* Statements implementation::
+* Preprocessing directives implementation::
+* Library functions implementation::
+* Architecture implementation::
+* Locale-specific behavior implementation::
 @end menu
 
-@node 翻訳実装
+@node Translation implementation
 @section 翻訳
 
 @itemize @bullet
@@ -46,7 +46,7 @@ ISO Cの適合する実装は、「実装定義」と呼ばれる各分野にお
 
 @end itemize
 
-@node 環境実装
+@node Environment implementation
 @section 環境
 
 これらのポイントのほとんどの動作は、Cライブラリの実装に依存しており、GCC自体では定義されていない。
@@ -59,7 +59,7 @@ ISO Cの適合する実装は、「実装定義」と呼ばれる各分野にお
 
 @end itemize
 
-@node 識別子実装
+@node Identifiers implementation
 @section 識別子
 
 @itemize @bullet
@@ -81,7 +81,7 @@ ISO Cの適合する実装は、「実装定義」と呼ばれる各分野にお
 
 @end itemize
 
-@node 文字実装
+@node Characters implementation
 @section 文字
 
 @itemize @bullet
@@ -149,14 +149,14 @@ ABIによって決定される。
 @xref{Implementation-defined behavior, , 実装依存の振る舞い, cpp, The C Preprocessor}。
 
 @item
-@cite{対応する標準エンコーディングマクロ(@code{__STDC_ISO_10646__}, @code{__STDC_UTF_16__}, or
+@cite{対応する標準エンコーディングマクロ(@code{__STDC_ISO_10646__}, @code{__STDC_UTF_16__}, 
 @code{__STDC_UTF_32__})が定義されていないときの@code{wchar_t}、@code{char16_t}、および@code{char32_t}のいずれかのエンコーディング (C11 6.10.8.2)。}
 
 @xref{Implementation-defined behavior, , 実装依存の振る舞い, cpp, The C Preprocessor}。  @code {char16_t}と@code {char32_t}リテラルは、それぞれ常にUTF-16とUTF-32でエンコードされる。
 
 @end itemize
 
-@node 整数実装
+@node Integers implementation
 @section 整数
 
 @itemize @bullet
@@ -201,7 +201,7 @@ GCCは、除算の結果がゼロに向かって切り捨てられるというC9
 
 @end itemize
 
-@node 浮動小数点実装
+@node Floating point implementation
 @section 浮動小数点
 
 @itemize @bullet
@@ -236,12 +236,12 @@ C99付録Fに従う。
 C99付録Fに従う。
 
 @item
-@cite{@code {FP_CONTRACT}プラグマで許可されていない浮動式が収縮するかどうか (C99 と C11 6.5)。}
+@cite{@code{FP_CONTRACT}プラグマで許可されていない浮動式が収縮するかどうか (C99 と C11 6.5)。}
 
 式は、@option{-ffp-contract=fast}、@option{-funsafe-math-optimizations}または@option{-ffast-math}が使用されている場合にのみ、現在のところ収縮する。これは変更されることがある。
 
 @item
-@cite{@code {FENV_ACCESS}プラグマのデフォルトの状態 (C99 と C11 7.6.1)。}
+@cite{@code{FENV_ACCESS}プラグマのデフォルトの状態 (C99 と C11 7.6.1)。}
 
 このプラグマは実装されていないが、デフォルトは@option{-frounding-math}が使われていない限りは「オフ」であり、使われている場合は「オン」である。
 
@@ -267,7 +267,7 @@ C99付録Fに従う。
 
 @end itemize
 
-@node 配列とポインタの実装
+@node  Arrays and pointers implementation
 @section 配列とポインタ
 
 @itemize @bullet
@@ -293,7 +293,7 @@ C99付録Fに従う。
 
 @end itemize
 
-@node ヒントの実装
+@node Hints implementation
 @section ヒント
 
 @itemize @bullet
@@ -321,7 +321,7 @@ C99付録Fに従う。
 
 @end itemize
 
-@node 構造体、共用体、列挙、ビットフィールド実装
+@node Structures unions enumerations and bit-fields implementation
 @section 構造体、共用体、列挙、ビットフィールド
 
 @itemize @bullet
@@ -377,7 +377,7 @@ ABIによって決定される。
 
 @end itemize
 
-@node 限定子実装
+@node Qualifiers implementation
 @section 限定子
 
 @itemize @bullet
@@ -408,7 +408,7 @@ Cの標準によれば、このような式は、その型が元の型の非修�
 
 @end itemize
 
-@node 宣言子実装
+@node Declarators implementation
 @section 宣言子
 
 @itemize @bullet
@@ -419,18 +419,18 @@ GCCは利用可能なメモリによってのみ制限される。
 
 @end itemize
 
-@node 文実装
+@node Statements implementation
 @section 文
 
 @itemize @bullet
 @item
-@cite{@code {switch}ステートメント内の@code {case}値の最大数 (C90 6.6.4.2)。}
+@cite{@code{switch}ステートメント内の@code{case}値の最大数 (C90 6.6.4.2)。}
 
 GCCは利用可能なメモリによってのみ制限される。
 
 @end itemize
 
-@node プリプロセスディレクティブ実装
+@node Preprocessing directives implementation
 @section プリプロセスディレクティブ
 
 実装定義の動作のこれらの側面の詳細については、@xref{Implementation-defined behavior, , 実装依存の振る舞い, cpp, The C Preprocessor}。
@@ -469,11 +469,11 @@ GCCは利用可能なメモリによってのみ制限される。
 すべてのターゲットでGCCが受け入れたプラグマの詳細は@xref{Pragmas, , プラグマ, cpp, The C Preprocessor}。ターゲット指定のプラグマは@xref{Pragmas, , GCCによって受理されるプラグマ}。
 
 @item
-@cite{それぞれ翻訳の日付と時刻が利用できない場合の@code {__ DATE__}と@code {__ TIME__}の定義 (C90 6.8.8, C99 6.10.8, C11 6.10.8.1)。}
+@cite{それぞれ翻訳の日付と時刻が利用できない場合の@code {__DATE__}と@code {__TIME__}の定義 (C90 6.8.8, C99 6.10.8, C11 6.10.8.1)。}
 
 @end itemize
 
-@node ライブラリ関数の実装
+@node Library functions implementation
 @section ライブラリ関数
 
 これらの点のほとんどの動作は、Cライブラリの実装に依存しており、GCC自体では定義されていない。
@@ -486,7 +486,7 @@ GCCは利用可能なメモリによってのみ制限される。
 
 @end itemize
 
-@node アーキテクチャ実装
+@node Architecture implementation
 @section アーキテクチャ
 
 @itemize @bullet
@@ -508,7 +508,7 @@ ABIで決定される。
 @item
 @cite{拡張アライメントがサポートされているかどうかと、サポートされているコンテキスト (C11 6.2.8)。}
 
-@math{2 ^ {28}}（バイト）までの拡張配列は、自動保存期間のオブジェクトでサポートされている。 静的およびスレッド記憶期間のオブジェクトに対してサポートされているアライメントは、ABIによって決定される。
+@math{2^{28}}（バイト）までの拡張配列は、自動保存期間のオブジェクトでサポートされている。 静的およびスレッド記憶期間のオブジェクトに対してサポートされているアライメントは、ABIによって決定される。
 
 @item
 @cite{基本型の_Alignof式によって返されたもの以外の有効な整列値（存在する場合） (C11 6.2.8)。}
@@ -516,13 +516,13 @@ ABIで決定される。
 有効なアラインメントは、2のべき乗から@math{2^{28}}までである。
 
 @item
-@cite{@code {sizeof}演算子と@code {_Alignof}演算子の結果の値 (C90 6.3.3.4, C99 と C11 6.5.3.4)。}
+@cite{@code{sizeof}演算子と@code{_Alignof}演算子の結果の値 (C90 6.3.3.4, C99 と C11 6.5.3.4)。}
 
 ABIで決定される。
 
 @end itemize
 
-@node ロケール固有の振る舞いの実装
+@node Locale-specific behavior implementation
 @section ロケール固有の振る舞い
 
 これらの点の動作はCライブラリの実装に依存し、GCC自体では定義されない。

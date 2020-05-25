@@ -9,9 +9,9 @@ c Copyright (C) 1988-2018 Free Software Foundation, Inc.
 @cindex C language extensions
 
 @opindex pedantic
-GNU Cは、ISO標準Cにはないいくつかの言語機能を提供している。（これらの機能のいずれかが使用されている場合、@ option{-pedantic}オプションはGCCに警告メッセージを出力するように指示する）。条件付きコンパイルでこれらの機能が利用できるかどうかをテストするために、あらかじめ定義されたマクロ@code{__ GNUC__}が常にGCCの下で定義されている。
+GNU Cは、ISO標準Cにはないいくつかの言語機能を提供している。（これらの機能のいずれかが使用されている場合、@ option{-pedantic}オプションはGCCに警告メッセージを出力するように指示する）。条件付きコンパイルでこれらの機能が利用できるかどうかをテストするために、あらかじめ定義されたマクロ@code{__GNUC__}が常にGCCの下で定義されている。
 
-これらの拡張は、CとObjective-Cで利用できる。 それらのほとんどはC++でも利用可能である。C++に@emph{のみ}適用する拡張機能は、@xref{C++ Extensions,,C++言語の拡張機能}。
+これらの拡張は、CとObjective-Cで利用できる。 それらのほとんどはC++でも利用可能である。C++に@emph{_のみ_}適用する拡張機能は、@xref{C++ Extensions,,C++言語の拡張機能}。
 
 ISO C99にはあるがC90やC++にはない機能のいくつかは、拡張機能として、C90モードとC++でGCCで受理される。
 
@@ -20,7 +20,8 @@ ISO C99にはあるがC90やC++にはない機能のいくつかは、拡張機�
 * Local Labels::        ブロックにローカルなラベル。
 * Labels as Values::    ラベルへのポインタの取得と計算goto。
 * Nested Functions::    AlgolとPascalのような、関数のレキシカルスコープ。
-* Constructing Calls::  他の関数の呼び出しの派遣
+* Nonlocal Gotos::      非局所ジャンプ。
+* Constructing Calls::  別の関数の呼び出しをディスパッチする
 * Typeof::              @code{typeof}: 式の型の参照。
 * Conditionals::        @samp{?:}の第２引数の省略。
 * __int128::            128ビット整数---@code{__int128}。
@@ -39,6 +40,7 @@ ISO C99にはあるがC90やC++にはない機能のいくつかは、拡張機�
 * Escaped Newlines::    エスケープされた改行のためのやや緩い規則。
 * Subscripting::        配列は非左辺値でも添字を取ることができる。
 * Pointer Arith::       @code{void}ポインタと関数ポインタでの算術。
+* Variadic Pointer Args::  可変数引数関数への引数ポインタ。
 * Pointers to Arrays::  修飾子付きの配列へのポインタは期待通りに機能する。
 * Initializers::        非定数初期化子。
 * Compound Literals::   値として構造体・共用体・配列を与える複合定数。
@@ -122,9 +124,28 @@ ISO C99にはあるがC90やC++にはない機能のいくつかは、拡張機�
   (@{int _a = (a), _b = (b); _a > _b ? _a : _b; @})
 @end smallexample
 
+変数宣言を導入すると（@code{maxint}で行うように）変数のシャドウが発生する可能性があるため、@code{max}マクロを使用したこの例では正しい結果が生成されます。
+@smallexample
+int _a = 1, _b = 2, c;
+c = max (_a, _b);
+@end smallexample
+@noindent
+maxintを使用したこの例では、以下は行われません。
+@smallexample
+int _a = 1, _b = 2, c;
+c = maxint (_a, _b);
+@end smallexample
+
+たとえば、次のようにこのパターンを再帰的に使用すると、この問題が発生する可能性があります。
+
+@smallexample
+#define maxint3(a, b, c) \
+  (@{int _a = (a), _b = (b), _c = (c); maxint (maxint (_a, _b), _c); @})
+@end smallexample
+
 列挙定数の値、ビットフィールドの幅、または静的変数の初期値などの定数式では、埋め込み文は使用できない。
 
-オペランドの型がわからない場合でもこれを行うことができるが、@code{typeof}や@code{__ auto_type}（@pxref{Typeof}）を使用する必要がある。
+オペランドの型がわからない場合でもこれを行うことができるが、@code{typeof}や@code{__auto_type}（@pxref{Typeof}）を使用する必要がある。
 
 G++では、文式の結果値は配列と関数ポインタの格下げを受け、その値を囲む式に返される。 たとえば、@code{A}がクラスの場合、
 
@@ -153,9 +174,9 @@ void foo ()
 @noindent
 は一時的なものが破壊される場所は異なる。 @code{macro}の場合、一時的な@code{X}は@code {b}の初期化直後に破棄される。 @code{function}の場合、関数が返ってきたら一時値は破壊される。
 
-これらの考慮事項は、C++で動作するように設計されたヘッダーファイルでこの形式の式式を使用することは、おそらく悪い考えであることを意味する。 （一部のバージョンのGNU Cライブラリには、正確にこのバグにつながる文式を使ったヘッダファイルが含まれていた）。
+これらの考慮事項は、C++で動作するように設計されたヘッダーファイルでこの形式の文式を使用することは、おそらく悪い考えであることを意味する。 （一部のバージョンのGNU Cライブラリには、正確にこのバグにつながる文式を使ったヘッダファイルが含まれていた）。
 
-@code{goto}を使うか、式文の中の@code{case}または@code{default}ラベルのある@code{switch}文を使って式文の中にジャンプすることはできない。計算@code{goto}（@pxref{Labels as Values}）で文式にジャンプすると、未定義の動作が発生する。式文からの飛び越しは許可されるが、式文がより大きい式の一部である場合、文の式の前後で評価する特定の部分式が必要な場合を除き、その式の他の部分式が評価されない 。 いずれにしても、関数呼び出しと同様に、文の式の評価は、その包含する式の他の部分の評価とインタリーブされない。 例えば、
+@code{goto}を使うか、式文の中の@code{case}または@code{default}ラベルのある@code{switch}文を使って式文の中にジャンプすることはできない。計算@code{goto}（@pxref{Labels as Values}）で文式にジャンプすると、未定義の動作が発生する。式文からの飛び越しは許可されるが、式文がより大きい式の一部である場合、文の式の前後で評価する特定の部分式が必要な場合を除き、その式の他の部分式が評価されない。 いずれにしても、関数呼び出しと同様に、文の式の評価は、その包含する式の他の部分の評価とインタリーブされない。 例えば、
 
 @smallexample
   foo (), ((@{ bar1 (); goto a; 0; @}) + bar2 ()), baz();
@@ -186,7 +207,7 @@ __label__ @var{label1}, @var{label2}, /* @r{@dots{}} */;
 
 ローカルラベルの宣言は、ブロックの先頭、通常の宣言または文の前に来なければならない。
 
-ラベル宣言はラベル@emph{名}を定義するが、ラベル自体は定義しない。 @code{@var{label}:}は、文の式の中で通常の方法で行う必要がある。
+ラベル宣言はラベル@emph{_名_}を定義するが、ラベル自体は定義しない。 @code{@var{label}:}は、文の式の中で通常の方法で行う必要がある。
 
 ローカルラベル機能は、複雑なマクロに便利である。 マクロにネストされたループが含まれている場合、@code{goto}はそれらのループを中断するのに便利である。 ただし、関数全体をスコープとする通常のラベルは使用できない。マクロを1つの関数で複数回展開できる場合、ラベルはその関数で複数定義される。 ローカルラベルはこの問題を回避する。 例えば：
 
@@ -236,7 +257,7 @@ do @{                                              \
 @cindex goto with computed label
 @cindex address of a label
 
-単項演算子@samp {&&}を使用して、現在の関数（または含む関数）で定義されているラベルのアドレスを取得できる。 値は型@code{void*}を持つ。 この値は定数であり、その型の定数が有効な場合はいつでも使用できる。 例えば：
+単項演算子@samp{&&}を使用して、現在の関数（または含む関数）で定義されているラベルのアドレスを取得できる。 値は型@code{void*}を持つ。 この値は定数であり、その型の定数が有効な場合はいつでも使用できる。 例えば：
 
 @smallexample
 void *ptr;
@@ -251,7 +272,7 @@ goto *ptr;
 @end smallexample
 
 @noindent
-@code {void *}型の式はすべて使用できる。
+@code{void *}型の式はすべて使用できる。
 
 これらの定数を使用する1つの方法は、ジャンプテーブルとして機能する静的配列を初期化することである。
 
@@ -286,7 +307,7 @@ goto *(&&foo + array[i]);
 @noindent
 これは、必要な動的再配置の数を減らし、結果としてデータを読み取り専用にすることができるようになり、共有ライブラリでのコードにより適している。AVRターゲットでは、このラベルの差の代替方法はサポートされていない。AVRプログラムの最初の方法を使用すること。
 
-同じラベルの@code{&& foo}式は、インクルードされた関数がインライン化またはクローン化されている場合、異なる値を持つことがある。 プログラムがそれらが常に同じであることに依存する場合、インライン化とクローン化を防ぐために@code{__attribute__((__noinline__,__noclone__))}を使用する必要がある。 @code{&& foo}を静的変数初期化子で使用すると、インライン化とクローン化は禁止される。
+同じラベルの@code{&&foo}式は、インクルードされた関数がインライン化またはクローン化されている場合、異なる値を持つことがある。 プログラムがそれらが常に同じであることに依存する場合、インライン化とクローン化を防ぐために@code{__attribute__((__noinline__,__noclone__))}を使用する必要がある。 @code{&&foo}を静的変数初期化子で使用すると、インライン化とクローン化は禁止される。
 
 @node Nested Functions
 @section 入れ子関数
@@ -345,7 +366,7 @@ hack (int *array, int size)
 
 GCCは、@dfn{trampolines}（トランポリン）と呼ばれる手法を使って入れ子関数のアドレスを取得する。 このテクニックは@cite{Lexical Closures for C++}（Thomas M. Breuel、USENIX C++ Conference Proceedings、1988年10月17-21日）に記述されている。
 
-入れ子関数は、ラベルを含んでいる関数から継承したラベルにジャンプすることができる（ただし、ラベルは、その関数内で明示的に宣言されていなければならない@pxref {Local Labels}）。 このようなジャンプは、@code{goto}と中間関数を行ったネストされた関数を終了して、すぐに包含関数に戻る。 次に例を示す。
+入れ子関数は、ラベルを含んでいる関数から継承したラベルにジャンプすることができる（ただし、ラベルは、その関数内で明示的に宣言されていなければならない@pxref{Local Labels}）。 このようなジャンプは、@code{goto}と中間関数を行ったネストされた関数を終了して、すぐに包含関数に戻る。 次に例を示す。
 
 @smallexample
 @group
@@ -390,6 +411,34 @@ bar (int *array, int offset, int size)
   /* @r{@dots{}} */
 @}
 @end smallexample
+
+@node Nonlocal Gotos
+@section 非局所ジャンプ
+@cindex nonlocal gotos
+
+GCCは組み込み関数@code{__builtin_setjmp}と@code{__builtin_longjmp}を提供し、これらはCライブラリ関数@code{setjmp}と@code{longjmp}に似ていますが互換性はありません。組み込みバージョンは、一部のターゲットで例外処理を実装するためにGCCのライブラリによって内部的に使用されます。 ビルトインの代わりに、ユーザーコードの@code {<setjmp.h>}で宣言されている標準Cライブラリ関数を使用する必要があります。
+
+これらの関数の組み込みバージョンは、GCCの通常のメカニズムを使用して、関数の入り口と出口でスタックを使用してレジスタを保存および復元します。 ジャンプバッファ引数@var{buf}は、保存されたレジスタ値のセット全体ではなく、スタックフレームの復元に必要な情報のみを保持します。
+
+重要な注意点は、GCCは、コンパイル対象の特定のアーキテクチャバリアントで既知のレジスタのみを保存および復元するように調整していることです。 これにより、@code{__builtin_setjmp}および@code{__builtin_longjmp}が対応するライブラリよりも効率的になる場合がありますが、完全なレジスタセットを使用するコードと混在させると、不正確で不可解な動作が発生する可能性もあります。
+
+組み込み関数にジャンプバッファ引数@var {buf}を次のように宣言する必要があります。
+
+@smallexample
+#include <stdint.h>
+intptr_t @var{buf}[5];
+@end smallexample
+
+@deftypefn {Built-in Function} {int} __builtin_setjmp (intptr_t *@var{buf})
+この関数は、現在のスタックコンテキストを@var{buf}に保存します。 @code{__builtin_setjmp}は、同じ@var{buf}を使用して直接戻る場合は0を、@code{__builtin_longjmp}から戻る場合は1を返します。
+This function saves the current stack context in @var{buf}.  
+@end deftypefn
+
+@deftypefn {Built-in Function} {void} __builtin_longjmp (intptr_t *@var{buf}, int @var{val})
+この関数は、@code{__builtin_setjmp}への以前の呼び出しによって保存された、@var{buf}内のスタックコンテキストを復元します。 @code{__builtin_longjmp}が終了すると、プログラムは一致する@code{__builtin_setjmp}が値@var{val}を返すかのように実行を再開します。値は1でなければなりません。
+
+@code{__builtin_longjmp}はスタックコンテキストを復元するために関数のリターンメカニズムに依存しているため、@code{__builtin_setjmp}を呼び出す同じ関数から呼び出して@var{buf}を初期化することはできません。 @code{__builtin_setjmp}を呼び出す関数から（直接的または間接的に）呼び出される関数からのみ呼び出すことができます。
+@end deftypefn
 
 @node Constructing Calls
 @section 関数呼び出しの構築
@@ -498,11 +547,11 @@ typeof (int *)
 ISO Cプログラムに含まれているときに動作する必要があるヘッダファイルを作成する場合は、@code{typeof}の代わりに@code{__typeof__}を記述する。
 @xref{Alternate Keywords}.
 
-@code{typeof}構文は、typedef名を使うことができるところならどこでも使うことができる。 たとえば、宣言、キャスト、または@code{sizeof}や@code {typeof}の内部で使用できる。
+@code{typeof}構文は、typedef名を使うことができるところならどこでも使うことができる。 たとえば、宣言、キャスト、または@code{sizeof}や@code{typeof}の内部で使用できる。
 
 @code{typeof}のオペランドは、可変的に変更された型の式またはそのような型の名前である場合にのみ、その副作用を評価される。
 
-@code{typeof}は、式文（@pxref {Statement Exprs}）と併用すると便利である。ここで2つの方法を組み合わせて、どの算術型でも動作し、それぞれの引数を正確に1回評価する安全な 「最大」'マクロを定義する方法を示す：
+@code{typeof}は、式文（@pxref{Statement Exprs}）と併用すると便利である。ここで2つの方法を組み合わせて、どの算術型でも動作し、それぞれの引数を正確に1回評価する安全な 「最大」マクロを定義する方法を示す：
 
 @smallexample
 #define max(a,b) \
@@ -517,10 +566,10 @@ ISO Cプログラムに含まれているときに動作する必要があるヘ
 @cindex variables, local, in macros
 @cindex macros, local variables in
 
-ローカル変数に対してアンダースコアで始まる名前を使用する理由は、@code {a}と@code {b}の代わりに使用される式内で発生する変数名との競合を避けるためである。 最終的には、スコープが初期化子の後にのみ始まる変数を宣言できる新しい宣言構文を設計したいと考えている。 このような競合を防ぐより確実な方法になりだろう。
+ローカル変数に対してアンダースコアで始まる名前を使用する理由は、@code{a}と@code{b}の代わりに使用される式内で発生する変数名との競合を避けるためである。 最終的には、スコープが初期化子の後にのみ始まる変数を宣言できる新しい宣言構文を設計したいと考えている。 このような競合を防ぐより確実な方法になりだろう。
 
 @noindent
-@code {typeof}の使用に関するいくつかの例：
+@code{typeof}の使用に関するいくつかの例：
 
 @itemize @bullet
 @item
@@ -620,7 +669,7 @@ x ? x : y
 @section 128ビット整数
 @cindex @code{__int128} data types
 
-拡張として、整数スカラー型@code {__int128}は、128ビットを保持するのに十分な整数モードを持つターゲットに対してサポートされている。符号なし128ビット整数の場合は@code{__int128}、符号なし128ビット整数の場合は@code{unsigned __int128}と書くだけである。 GCCでは、@code{long long}整数が128ビット幅未満のターゲットに対して@code{__int128}型の整数定数を表現するためのサポートはない。
+拡張として、整数スカラー型@code{__int128}は、128ビットを保持するのに十分な整数モードを持つターゲットに対してサポートされている。符号なし128ビット整数の場合は@code{__int128}、符号なし128ビット整数の場合は@code{unsigned __int128}と書くだけである。 GCCでは、@code{long long}整数が128ビット幅未満のターゲットに対して@code{__int128}型の整数定数を表現するためのサポートはない。
 
 @node Long Long
 @section 倍長整数
