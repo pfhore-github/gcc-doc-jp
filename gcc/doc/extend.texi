@@ -679,7 +679,7 @@ x ? x : y
 @cindex @code{LL} integer suffix
 @cindex @code{ULL} integer suffix
 
-ISO C99は、少なくとも64ビット幅の整数のデータ型をサポートしている。拡張としてGCCはC90モードとC++でそれらをサポートしている。符号付き整数の場合は@code{long long int}、符号なし整数の場合は@code{unsigned long long int}と書くだけである。 @code{long long int}型の整数定数を作成するには、接尾辞@samp{LL}を整数に追加する。 @code{unsigned long long int}型の整数定数を作るには、接尾辞@samp{ULL}を整数に加える。
+ISO C99とISO C++11は、少なくとも64ビット幅の整数のデータ型をサポートしている。拡張としてGCCはC90モードとC++98でそれらをサポートしている。符号付き整数の場合は@code{long long int}、符号なし整数の場合は@code{unsigned long long int}と書くだけである。 @code{long long int}型の整数定数を作成するには、接尾辞@samp{LL}を整数に追加する。 @code{unsigned long long int}型の整数定数を作るには、接尾辞@samp{ULL}を整数に加える。
 
 これらの型は、他の整数型のように算術演算で使用できる。これらの型に対する加算、減算、およびビット単位の論理演算は、すべてのタイプのマシンでオープンコード化されている。 マシンがフルワードからダブルワードへの拡大乗算命令をサポートしている場合、乗算はオープンコーディングされている。 除算とシフトは特別なサポートを提供するマシンでのみ開かれている。 オープンコーディングされていない操作では、GCCに付属する特別なライブラリルーチンが使用される。
 
@@ -697,9 +697,7 @@ ISO C99は浮動小数点複素数データ型をサポートしていて、拡�
 
 複雑なデータ型を持つ定数を書くには、接尾辞@samp{i}または@samp{j}（どちらか、それらは同等である）を使用する。 たとえば、@code{2.5fi}は@code{_Complex float}型を持ち、@code{3i}は@code{_Complex int}型を持つ。 このような定数は、常に純粋な虚数値を持つが、実定数を加えることで、好きな複素数を作ることができる。 これはGNU拡張である。 ISO C99に準拠したCライブラリ（GNU Cライブラリなど）を持ち、浮動小数点型の複素定数を構築したい場合は、@code{<complex.h>}をインクルードし、代わりに@code{I}または@code {_Complex_I}マクロを使うべきである。
 
-The ISO C++14 library also defines the @samp{i} suffix, so C++14 code
-that includes the @samp{<complex>} header cannot use @samp{i} for the
-GNU extension.  The @samp{j} suffix still has the GNU meaning.
+ISO C++14ライブラリでは@samp{i}サフィックスも定義されているため、@samp{<complex>}ヘッダーを含むC++ 14コードでは、GNU拡張機能に@samp{i}を使用できません。 @samp{j}サフィックスはまだGNUの意味を持っています。
 
 @cindex @code{__real__} keyword
 @cindex @code{__imag__} keyword
@@ -725,17 +723,17 @@ GCCは複素自動変数を不連続な方法で割り当てることができ�
 
 ISO/IEC TS 18661-3：2015は、追加の浮動小数点型@code{_Float @var{n}}と@code{_Float @var{n}x}のCサポートを定義している。 サポートされる型のセットは、ターゲット・アーキテクチャーによって異なる。 これらの型は、C++のコンパイル時にはサポートされていない。これらの型の定数は、接尾辞@code{f@var{n}}または@code{F@var{n}}と@code{f@var{n}x}または@code{F@var{n}x}である。これらの型名は、@code {_Complex}とともに使用して、複素数型を宣言することができる。
 
-拡張として、GNU CとGNU C++は、すべてのターゲットでサポートされていない追加の浮動型をサポートしている。
+拡張として、GNU CとGNU C++は、すべてのターゲットでサポートされているわけではない追加の浮動型をサポートしている。
 
 @itemize @bullet
-@item @code{__float128}は、i386、x86_64、IA-64、hppa HP-UX、およびベクトルスカラー（VSX）命令セットを有効にするPowerPC GNU/Linuxターゲットで利用できる。 @code{__float128}は128ビット浮動型をサポートしている。 HP-UX以外のi386、x86_64、PowerPC、およびIA-64では、@code{__float128}は@code {_Float128}の別名である。hppaとIA-64 HP-UXでは、@code{__float128}は@code{long double}の別名である。
+@item @code{__float128}は、i386、x86_64、IA-64、hppa HP-UX、およびベクトルスカラー（VSX）命令セットを有効にするPowerPC GNU/Linuxターゲットで利用できる。 @code{__float128}は128ビット浮動型をサポートしている。 HP-UX以外のi386、x86_64、PowerPC、およびIA-64では、@code{__float128}は@code{_Float128}の別名である。hppaとIA-64 HP-UXでは、@code{__float128}は@code{long double}の別名である。
 
-@item @code{__float80}は、i386、x86_64、IA-64ターゲットで使用でき、80ビット（@code{XFmode}）浮動小数点型をサポートする。 これらのターゲット上のタイプ名@code {_Float64x}の別名である。
+@item @code{__float80}は、i386、x86_64、IA-64ターゲットで使用でき、80ビット（@code{XFmode}）浮動小数点型をサポートする。 これらのターゲット上のタイプ名@code{_Float64x}の別名である。
 
-@item @code{__ibm128}はPowerPCターゲットで使用でき、@code{long double}に使用される現在のフォーマットであるIBM拡張倍精度フォーマットへのアクセスを提供する。 将来、PowerPC上で@code{long double}が@code{__float128}に移行するとき、@code {__ibm128}は2つのタイプ間の変換に使用される。
+@item @code{__ibm128}はPowerPCターゲットで使用でき、@code{long double}に使用される現在のフォーマットであるIBM拡張倍精度フォーマットへのアクセスを提供する。 将来、PowerPC上で@code{long double}が@code{__float128}に移行するとき、@code{__ibm128}は2つのタイプ間の変換に使用される。
 @end itemize
 
-これらの追加タイプのサポートには、算術演算子が含まれる。加算、減算、乗算、除算; 単項算術演算子; 関係演算子; 等価演算子; 整数や他の浮動小数点型との変換などがある。 @code{__float80}型及び@code{__ibm128}型のリテラル定数に@samp{w}や@samp{W}の接尾辞を使用する。 @code{_float128}には、接尾辞@samp {q}または@samp {Q}を使用する。
+これらの追加タイプのサポートには、算術演算子が含まれる。加算、減算、乗算、除算; 単項算術演算子; 関係演算子; 等価演算子; 整数や他の浮動小数点型との変換などがある。 @code{__float80}型及び@code{__ibm128}型のリテラル定数に@samp{w}や@samp{W}の接尾辞を使用する。 @code{_float128}には、接尾辞@samp{q}または@samp{Q}を使用する。
 
 PowerPC Linuxシステムで@code{_Float128}、@code{__float128}、@code{__ibm128}を使用するには、@option{-mfloat128}オプションを使用する必要がある。 GCCの将来のバージョンでは、@code{_Float128}と@code{__float128}が自動的に有効になることが期待される。
 
@@ -748,7 +746,7 @@ typedef _Complex float __attribute__((mode(TC))) _Complex128;
 typedef _Complex float __attribute__((mode(XC))) _Complex80;
 @end smallexample
 
-PowerPC Linux VSXターゲットでは、対応する内部複素数型@code{__float128}型の@code{KCmode}と@code{__ibm128}型の@code {ICmode}を使用して複素数型を宣言できる。
+PowerPC Linux VSXターゲットでは、対応する内部複素数型@code{__float128}型の@code{KCmode}と@code{__ibm128}型の@code{ICmode}を使用して複素数型を宣言できる。
 
 @smallexample
 typedef _Complex float __attribute__((mode(KC))) _Complex_float128;
@@ -764,7 +762,7 @@ RMおよびAArch64ターゲットでは、GCCはARM C言語拡張で定義され
 
 ARMターゲットは、半精度の浮動小数点値に対して2つの互換性のない表現をサポートしている。 表現の1つを選択し、プログラムで一貫して使用する必要がある。
 
-@option{-mfp16-format=ieee}を指定すると、IEEE 754-2008形式が選択される。この形式は、@math{2^{-14}}〜65504の範囲の正規化された値を表すことができる。有効精度は11ビット、10進数で約３桁である。
+@option{-mfp16-format=ieee}を指定すると、IEEE 754-2008形式が選択される。この形式は、@math{2^{-14}}から65504の範囲の正規化された値を表すことができる。有効精度は11ビット、10進数で約３桁である。
 
 @option{-mfp16-format=alternative}を指定すると、ARM代替フォーマットが選択される。 この表現はIEEE形式に似ているが、無限またはNaNをサポートしていない。 代わりに指数の範囲が拡張され、この形式は@math{2^{-14}}から131008の範囲の正規化された値を表すことができる。
 
@@ -813,14 +811,14 @@ GCCは、@file{math.h}、@file{fenv.h}、@file{stdio.h}、@file{stdlib.h}、お�
 @section 16進浮動小数点数
 @cindex hex floats
 
-ISO C99は、@code{1.55e1}のような通常の10進表記だけでなく、16進形式で書かれた@code{0x1.fp3}のような数字で書いた浮動小数点数もサポートしている。 GNU拡張として、GCCはこれをC90モード（厳密に準拠している場合を除く）とC++でサポートしている。 そのフォーマットでは、@samp{0x}16進数導入子と@samp{p}または@samp{P}指数フィールドは必須である。 指数は、有意な部分が乗算される2の累乗を示す10進数である。従って@samp {0x1.f}は
+ISO C99とISO C++17は、@code{1.55e1}のような通常の10進表記だけでなく、16進形式で書かれた@code{0x1.fp3}のような数字で書いた浮動小数点数もサポートしている。 GNU拡張として、GCCはこれをC90モード（厳密に準拠している場合を除く）とC++98、C++11、C++14でサポートしている。 そのフォーマットでは、@samp{0x}16進数導入子と@samp{p}または@samp{P}指数フィールドは必須である。 指数は、有意な部分が乗算される2の累乗を示す10進数である。従って@samp {0x1.f}は
 @tex
 $1 {15\over16}$,
 @end tex
 @ifnottex
 1 15/16,
 @end ifnottex
-@samp {p3}は8を乗じ、@code{0x1.fp3}の値は@code {1.55e1}と同じである。
+@samp{p3}は8を乗じ、@code{0x1.fp3}の値は@code{1.55e1}と同じである。
 
 10進表記の浮動小数点数とは異なり、指数は常に16進表記で必要である。 さもなければ、コンパイラは、例えば@code{0x1.f}のあいまい性を解決することができない。@samp{f}は@code{float}型の浮動小数点定数の拡張でもあるので、これは@code{1.0f}または@code{1.9375}を意味する。
 
@@ -956,16 +954,16 @@ GNU Cは、ISO/IEC DTR 18037のN1169草案で定義されている固定小数�
 
 拡張として、GNU Cは、ISO/IEC DTR 18037のN1275ドラフトで定義されている名前付きアドレス空間をサポートしている。GCCの名前付きアドレス空間のサポートは、テクニカルレポート草案の変更に伴い進化する。 ターゲットの呼び出し規則も変更される可能性がある。 現在、AVR、SPU、M32C、RL78、およびx86ターゲットのみが汎用アドレス空間以外のアドレス空間をサポートしている。
 
-アドレス空間識別子は、他のC型修飾子（例えば、@code{const}や@code{volatile}など）と全く同じように使用できる。 詳細については、N1275のマニュアルを参照せよ。
+アドレス空間識別子は、他のC型修飾子（例えば、@code{const}や@code{volatile}など）と全く同じように使用できる。 詳細については、N1275の文書を参照せよ。
 
 @anchor{AVR Named Address Spaces}
 @subsection AVR名前付きアドレス空間
 
 AVRターゲットには、読み込み専用のデータをフラッシュメモリに格納し、そのフラッシュから読み込みに必要な特別な命令@code{LPM}または@code{ELPM}を使用してそのデータにアクセスするために使用できるいくつかのアドレス空間がある。
 
-@code{avrtiny}と@code{avrxmega3}に属するデバイスは、フラッシュメモリがRAMアドレス空間にマップされているため、@code{LD*}命令でフラッシュメモリにアクセスできる。 @code{__flash}や@ref{AVR Variable Attributes,,@code{progmem}}のような言語拡張は@emph{不要}である。これらのデバイスのデフォルトのリンカ記述ファイルはその機能を提供し、@ code {.rodata}はフラッシュに残る：コンパイラは@code{LD*}命令を生成し、リンカスクリプトはすべての@code{.rodata}シンボルにコア固有のオフセットを追加する：@code{avrtiny}の場合は@code{0x4000}、 @code {avrxmega3}の場合@code{0x8000}。それぞれのデバイスのリストについては、@ref{AVR Options}を参照せよ。
+@code{avrtiny}と@code{avrxmega3}に属するデバイスは、フラッシュメモリがRAMアドレス空間にマップされているため、@code{LD*}命令でフラッシュメモリにアクセスできる。 @code{__flash}や@ref{AVR Variable Attributes,,@code{progmem}}のような言語拡張は@emph{_不要_}である。これらのデバイスのデフォルトのリンカ記述ファイルはその機能を提供し、@code{.rodata}はフラッシュに残る：コンパイラは@code{LD*}命令を生成し、リンカスクリプトはすべての@code{.rodata}シンボルにコア固有のオフセットを追加する：@code{avrtiny}の場合は@code{0x4000}、 @code {avrxmega3}の場合@code{0x8000}。それぞれのデバイスのリストについては、@ref{AVR Options}を参照せよ。
 
-@code{avrtiny}や@code{avrxmega3}以外のデバイスでは、フラッシュメモリがRAMアドレス空間に見えないため、読み取り専用データを含むすべてのデータはRAM（汎用アドレス空間）に配置される。 （インライン）アセンブラコードを使用せずにこのデータにアクセスするための正しい命令を生成するために、フラッシュメモリ@emph{と}に読み出し専用データを配置するには、特別なアドレス空間が必要である。
+@code{avrtiny}や@code{avrxmega3}以外のデバイスでは、フラッシュメモリがRAMアドレス空間に見えないため、読み取り専用データを含むすべてのデータはRAM（汎用アドレス空間）に配置される。 （インライン）アセンブラコードを使用せずにこのデータにアクセスするための正しい命令を生成するために、フラッシュメモリ@emph{_と_}に読み出し専用データを配置するには、特別なアドレス空間が必要である。
 
 @table @code
 @item __flash
@@ -1077,18 +1075,6 @@ M32Cターゲットでは、R8CおよびM16C CPUのバリエーションでは�
 
 RL78ターゲットでは、@code{__far}で修飾された変数は、デフォルトの16ビットアドレスではなく32ビットポインタ（20ビットアドレス）でアクセスされる。 非遠隔変数は、アドレス空間の最上位64KiBに現れると仮定する。
 
-@subsection SPU名前付きアドレス空間
-@cindex @code{__ea} SPU Named Address Spaces
-
-SPUのターゲット変数は、タイプを@code{__ea}アドレス空間識別子で修飾することによって、別のアドレス空間に属するものとして宣言することができる。
-
-@smallexample
-extern int __ea i;
-@end smallexample
-
-@noindent 
-コンパイラは変数@code{i}にアクセスするための特別なコードを生成する。ランタイムライブラリのサポートを使用したり、そのアドレス空間にアクセスするための特別なマシン命令を生成することができる。
-
 @subsection x86名前付きアドレス空間
 @cindex x86 named address spaces
 
@@ -1126,25 +1112,29 @@ struct line *thisline = (struct line *)
 thisline->length = this_length;
 @end smallexample
 
-ISO C90では、@code{contents}の長さを1にする必要がある。つまり、スペースを浪費したり、@code{malloc}の引数を複雑にすることになる。
+長さがゼロの配列のサイズはゼロですが、この種類の配列メンバーは、テールパディングの結果として、囲んでいる型のサイズを増やす可能性があります。囲んでいる構造体の先頭からの長さゼロの配列メンバーのオフセットは、同じタイプの1つ以上の要素を持つ配列のオフセットと同じです。長さ0の配列のアラインメントは、その要素のアラインメントと同じです。
 
-ISO C99では、@dfn{flexible array member}（可変長配列メンバ）を使用する。これは構文とセマンティクスが少し異なる。
+構造オブジェクトの内部メンバーとして、または非メンバーオブジェクトとしてを含む、他のコンテキストで長さ0の配列を宣言することはお勧めしません。このようなコンテキストで宣言された長さ0の配列の要素へのアクセスは定義されておらず、診断される場合があります。
+
+長さがゼロの配列拡張がない場合、ISO C90では、上記の例の@code{contents}配列は通常、単一の要素を持つように宣言されます。アラインメントの目的で囲んでいる構造体のサイズにのみ寄与する長さゼロの配列とは異なり、1要素の配列は常に、少なくとも1つの型の単一のオブジェクトと同じ大きさのスペースを占有します。この方法で1要素の配列を使用することはお勧めできませんが、GCCは長さがゼロの配列と同様に、末尾の1要素の配列メンバーへのアクセスを処理します。
+
+上記の@code{struct line}のような可変長型を宣言するための推奨されるメカニズムは、ISO C99 @dfn{柔軟な配列メンバー}であり、構文とセマンティクスが少し異なります。
 
 @itemize @bullet
 @item
-可変長配列メンバは@code{contents []}と、@code {0}なしで書かれている。
+可変長配列メンバは@code{contents []}と、@code{0}なしで書かれている。
 
 @item
-可変長配列メンバは型が不完全なため、@code{sizeof}演算子は適用されてはならない。 ゼロ長配列の元々の実装では、@code {sizeof}はゼロに評価される。
+可変長配列メンバは型が不完全なため、@code{sizeof}演算子は適用されてはならない。 ゼロ長配列の元々の実装では、@code{sizeof}はゼロに評価される。
 
 @item
-可変長配列メンバは@code {struct}の最後のメンバとして表示され、それ以外の場合は非空でなければならない。
+可変長配列メンバは@code{struct}の最後のメンバとして表示され、それ以外の場合は非空でなければならない。
 
 @item
 可変長配列メンバを含む構造体またはそのような構造体を含む共用体（おそらく再帰的に）は、配列の構造体または要素のメンバであってはならない。 （ただし、これらの用途はGCCによって拡張機能として許可される）。
 @end itemize
 
-ゼロ長配列の空でない初期化は、配列よりも多くの初期化要素がある場合と同様に扱われる。「配列の余分な要素」に関する適切な警告が与えられ、余分な要素（この場合すべて ）は無視される。
+ゼロ長配列の空でない初期化は、配列よりも多くの初期化要素がある場合と同様に扱われる。「配列の余分な要素」に関する適切な警告が与えられ、余分な要素（この場合すべて）は無視される。
 
 GCCでは、可変長配列メンバの静的初期化が可能である。これは、元の構造体を含む新しい構造体を定義し、続いてデータを格納するのに十分な大きさの配列を定義することと同じである。たとえば以下のように、@code{f1}は@code{f2}のように宣言されているかのように構築される。
 
@@ -1227,7 +1217,7 @@ foo (int n)
 @cindex @code{alloca} vs variable-length arrays
 可変長配列によく似た効果を得るには、関数@code{alloca}を使うことができる。 関数@code{alloca}は他の多くのC実装で利用可能である（ただし、すべてではない）。 一方、可変長配列はよりエレガントである。
 
-これらの2つの方法には他にも違いがある。 @code{alloca}で割り当てられたスペースは、それを含む@emph{関数}が返るまで存在する。可変長配列の空間は、このスコープで@code{alloca}も使用しない限り、配列名のスコープが終了するとすぐに割り当てから解放される。
+これらの2つの方法には他にも違いがある。 @code{alloca}で割り当てられたスペースは、それを含む@emph{_関数_}が返るまで存在する。可変長配列の空間は、このスコープで@code{alloca}も使用しない限り、配列名のスコープが終了するとすぐに割り当てから解放される。
 
 関数の引数として可変長配列を使うこともできる：
 
@@ -1291,7 +1281,7 @@ debug ("A message")
 
 GNU CPPでは、このように可変引数を完全に省略することができる。 上記の例では、マクロの展開にフォーマット文字列の後に余分なカンマが残っているため、コンパイラは不平を言う。
 
-この問題を解決するために、CPPはトークンペースト演算子@samp {##}で使用される可変引数に対して特別に動作する。 代わりにこう書く場合
+この問題を解決するために、CPPはトークンペースト演算子@samp{##}で使用される可変引数に対して特別に動作する。 代わりにこう書く場合
 
 @smallexample
 #define debug(format, ...) fprintf (stderr, format, ## __VA_ARGS__)
@@ -1340,7 +1330,7 @@ GNU Cでは、@code{void}へのポインタと関数へのポインタについ�
 その結果、@code{sizeof}は@code{void}と関数型でも許され、1を返す。
 
 @opindex Wpointer-arith
-@option {-Wpointer-arith}オプションは、これらの拡張が使用されている場合に警告を要求する。
+@option{-Wpointer-arith}オプションは、これらの拡張が使用されている場合に警告を要求する。
 
 @node Pointers to Arrays
 @section 修飾子付き配列へのポインタは期待どおりに動作する
@@ -1556,14 +1546,14 @@ struct point ptarray[10] = @{ [2].y = yv2, [2].x = xv2, [0].x = xv0 @};
 @cindex case ranges
 @cindex ranges in case statements
 
-以下のように、単一の@code {case}ラベルに連続した値の範囲を指定することができる。
+以下のように、単一の@code{case}ラベルに連続した値の範囲を指定することができる。
 
 @smallexample
 case @var{low} ... @var{high}:
 @end smallexample
 
 @noindent
-これは@var {low}から@var {high}までの整数値ごとに1つずつ、個々の@code {case}ラベルの適切な数と同じ効果を持つ。
+これは@var{low}から@var{high}までの整数値ごとに1つずつ、個々の@code{case}ラベルの適切な数と同じ効果を持つ。
 
 この機能は、ASCII文字コードの範囲で特に便利である。
 
@@ -1571,7 +1561,7 @@ case @var{low} ... @var{high}:
 case 'A' ... 'Z':
 @end smallexample
 
-@strong{注意:} @code {...}の周囲にスペースを入れること。そうしないと、整数値を使うときに間違って解釈される可能性がある。 たとえば、次のように記述する。
+@strong{注意:} @code{...}の周囲にスペースを入れること。そうしないと、整数値を使うときに間違って解釈される可能性がある。 たとえば、次のように記述する。
 
 @smallexample
 case 1 ... 5:
@@ -1600,9 +1590,20 @@ double y;
 @end smallexample
 
 @noindent
-@code{x}と@code{y}の両方を@code{union foo}へキャストすることができる。
+@code{x}と@code{y}の両方を、@code{union foo}と次の代入にキャストできます
+@smallexample
+  z = (union foo) x;
+  z = (union foo) y;
+@end smallexample
+は以下の短縮形です
+@smallexample
+  z = (union foo) @{ .i = x @};
+  z = (union foo) @{ .d = y @};
+@end smallexample
 
-共用体型の変数への代入の右辺としてのキャストを使用することは、共用体型のメンバーに格納することと同じである。
+ただし、ユニオンには@code{float}型のメンバーがないため、@code{(union foo)FLT_MAX;}は有効なキャストではありません。
+
+共用体型の変数への代入の右側としてキャストを使用することは、同じ型の共用体のメンバーに格納することと同じです。
 
 @smallexample
 union foo u;
@@ -1658,6 +1659,7 @@ GCCは変数宣言（@pxref{Variable Attributes}）、ラベル（@pxref{Label A
 @menu
 * Common Function Attributes::
 * AArch64 Function Attributes::
+* AMD GCN Function Attributes::
 * ARC Function Attributes::
 * ARM Function Attributes::
 * AVR Function Attributes::
@@ -1684,7 +1686,6 @@ GCCは変数宣言（@pxref{Variable Attributes}）、ラベル（@pxref{Label A
 * RX Function Attributes::
 * S/390 Function Attributes::
 * SH Function Attributes::
-* SPU Function Attributes::
 * Symbian OS Function Attributes::
 * V850 Function Attributes::
 * Visium Function Attributes::
@@ -1700,9 +1701,41 @@ GCCは変数宣言（@pxref{Variable Attributes}）、ラベル（@pxref{Label A
 @table @code
 @c Keep this table alphabetized by attribute name.  Treat _ as space.
 
+@item access
+@itemx access (@var{access-mode}, @var{ref-index})
+@itemx access (@var{access-mode}, @var{ref-index}, @var{size-index})
+
+@code{access}属性を使用すると、適用される関数またはその呼び出し元による無効または安全でないアクセス、および読み取られないオブジェクトへの書き込み専用アクセスを検出できます。 このようなアクセスは、@option{-Wstringop-overflow}、@option{-Wuninitialized}、@option{-Wunused}などの警告によって診断できます。
+
+@code{access}属性は、属性の参照引数が適用される関数が@var{access-mode}に従って参照オブジェクトにアクセスすることを指定します。 @var{access-mode}引数は必須であり、@code{read_only}、@code{read_write}、または@code{write_only}の3つの名前のいずれかである必要があります。 残りの2つは位置引数です。
+
+必須の@var{ref-index}位置引数は、アクセスの対象となるポインター（またはC++では参照）型の関数引数を示します。同じポインタ引数は、最大で1つの異なる@code{access}属性で参照できます。
+
+オプションの@var{size-index}位置引数は、アクセスの最大サイズを指定する整数型の関数引数を示します。 サイズは、@var{ref-index}によって参照されるタイプの要素の数、またはポインタタイプが@code{void *}の場合のバイト数です。 @var{size-index}引数が指定されていない場合、ポインター引数はnullであるか、参照される型の少なくとも1つのオブジェクトに対して適切に配置され、大きいスペースを指す必要があります（これは、終端を超えたポインタは有効な引数ではないことを意味します）。 アクセスの実際のサイズは小さいかもしれませんが、それ以上であってはなりません。
+
+@code{read_only}アクセスモードは、それが適用されるポインターが、参照されたオブジェクトを読み取るために使用されるが、それに書き込まれないことを指定します。 @var{size-index}で示されるアクセスのサイズを指定する引数がゼロでない限り、参照されるオブジェクトを初期化する必要があります。 このモードは、@code{const}修飾子よりも強力な保証を意味します。これは、ポインターからキャストされたときに、指し示されたオブジェクトの変更を妨げません。 @code{read_only}アクセスモードの使用例は、@code{puts}関数の引数、または@code{memcpy}関数の2番目と3番目の引数です。
+
+@smallexample
+__attribute__ ((access (read_only, 1))) int puts (const char*);
+__attribute__ ((access (read_only, 1, 2))) void* memcpy (void*, const void*, size_t);
+@end smallexample
+
+@code{read_write}アクセスモードは、@code{const}修飾子のないポインタ型の引数に適用されます。 適用先のポインターが、参照オブジェクトの読み取りと書き込みの両方に使用されることを指定します。 @var{size-index}で示されるアクセスのサイズを指定する引数がゼロでない限り、ポインターによって参照されるオブジェクトを初期化する必要があります。 @code{read_write}アクセスモードの使用例は、@code{strcat}関数の最初の引数です。
+
+@smallexample
+__attribute__ ((access (read_write, 1), access (read_only, 2))) char* strcat (char*, const char*);
+@end smallexample
+
+@code{write_only}アクセスモードは、@code{const}修飾子のないポインタ型の引数に適用されます。 適用先のポインタは、参照されたオブジェクトへの書き込みに使用され、そこからの読み取りには使用されないことを指定します。 ポインタが参照するオブジェクトを初期化する必要はありません。 @code{write_only}アクセスモードの使用例は、@code{strcpy}関数の最初の引数、または@code{fgets}関数の最初の2つの引数です。
+
+@smallexample
+__attribute__ ((access (write_only, 1), access (read_only, 2))) char* strcpy (char*, const char*);
+__attribute__ ((access (write_only, 1, 2), access (read_write, 3))) int fgets (char*, int, FILE*);
+@end smallexample
+
 @item alias ("@var{target}")
 @cindex @code{alias} function attribute
-@code{alias}属性は宣言を他のシンボルのエイリアスとして出力し、指定する必要がある。 例えば、
+@code {alias}属性を使用すると、同じタイプ、および変数、同じサイズと配置で以前に宣言されている必要がある別のシンボルのエイリアスとして宣言が発行されます。 ターゲットとは異なるタイプのエイリアスの宣言は定義されておらず、診断される場合があります。 例として、以下の宣言：
 
 @smallexample
 void __f () @{ /* @r{Do something.} */; @}
@@ -1716,9 +1749,9 @@ void f () __attribute__ ((weak, alias ("__f")));
 
 @item aligned (@var{alignment})
 @cindex @code{aligned} function attribute
-この属性は、関数の最小アラインメントをバイト単位で指定する。
+@code {aligned}属性は、関数の最初の命令の最小整列をバイト単位で指定します。 指定する場合、@var{alignment}は2の整数定数乗でなければなりません。@var{alignment}引数を指定しないと、ターゲットの理想的な配置になります。 @code{__alignof__}演算子を使用して、それが何であるかを判断できます（@pxref{Alignment}）。 関数の定義が同じ変換単位で提供されていない場合、この属性は効果がありません。
 
-この属性を使用して関数のアラインメントを減らすことはできない。 しかし、関数の配置を明示的に指定すると、この関数の@option{-falign-functions}（@pxref{Optimize Options}）オプションの効果が上書きされる。
+この属性を使用して、以前に宣言された関数のアラインメントより大きな制限のアラインメントを減らすことはできません。 増やすだけです。 そうでない場合の試みは診断されます。 一部のターゲットは、1より大きい関数の最小デフォルトアライメントを指定します。このようなターゲットでは、制限の少ないアライメントを指定しても、通知なく無視されます。 属性を使用すると、この関数の@option{-falign-functions}（@pxref{Optimize Options}）オプションの効果が上書きされます。
 
 @code{aligned}属性の有効性は、リンカの固有の制限によって制限されることに注意せよ。 多くのシステムでは、リンカは関数が特定の最大アラインメントまで整列するようにのみ調整することができる。 （一部のリンカでは、サポートされている最大のアラインメントは非常に小さいかもしれない）。詳細については、リンカのマニュアルを参照せよ。
 
@@ -1726,7 +1759,7 @@ void f () __attribute__ ((weak, alias ("__f")));
 
 @item alloc_align
 @cindex @code{alloc_align} function attribute
-@code{alloc_align}属性は、関数の戻り値がメモリを指していることをコンパイラに知らせるために使用される。返されるポインタの最小アラインメントは、関数のパラメータの1つによって与えられる。 GCCは、この情報を使用してポインタのアラインメント解析を改善する。
+@code{alloc_align}属性は、ポインターを返し、少なくとも1つの整数型または列挙型の引数を取る関数に適用できます。 これは、返されたポインタが@var{position}の関数引数で指定された境界に配置されていることを示しています。 意味のある配置とは、1より大きい2の累乗です。 GCCはこの情報を使用して、ポインターのアライメント分析を改善します。
 
 割り当てられたアラインメントを示す関数パラメータは、整数の引数で指定される。その数は属性の引数である。引数の番号付けは1から始まる。
 
@@ -1737,13 +1770,14 @@ void* my_memalign(size_t, size_t) __attribute__((alloc_align(1)))
 @end smallexample
 
 @noindent
-@code {my_memalign}はパラメータ1によって与えられた最小整列でメモリを返すと宣言する。
+@code{my_memalign}はパラメータ1によって与えられた最小整列でメモリを返すと宣言する。
 
-@item alloc_size
+@item alloc_size (@var{position})
+@itemx alloc_size (@var{position-1}, @var{position-2})
 @cindex @code{alloc_size} function attribute
-@code{alloc_size}属性は、関数の戻り値がメモリを指していることをコンパイラに知らせるために使用される。サイズは関数のパラメータの1つまたは2つで与えられる。 GCCはこの情報を使って@code{__builtin_object_size}の正しさを向上させる。
+@code{alloc_size}属性は、ポインターを返し、整数または列挙型の少なくとも1つの引数を取る関数に適用できます。 これは、返されるポインタが、@var{position-1}の関数引数、または@var{position-1}と@var{position-2}の引数の積によって指定されるサイズのメモリを指すことを示します。 意味のあるサイズは、@code{PTRDIFF_MAX}より小さい正の値です。 GCCはこの情報を使用して、@code{__builtin_object_size}の結果を改善します。
 
-割り当てられたサイズを示す関数パラメータは、属性に供給される1つまたは2つの整数引数によって指定される。 割り当てられたサイズは、指定された単一の関数引数の値か、指定された2つの関数引数の積のいずれかである。 引数の番号付けは1から始まる。
+割り当てられたサイズを示す関数パラメーターは、属性に提供される1つまたは2つの整数引数によって指定されます。 割り当てられるサイズは、指定された単一の関数引数の値、または指定された2つの関数引数の積です。 引数の番号付けは、通常の関数では1から始まり、C++非静的メンバー関数では2から始まります。
 
 例えば、
 
@@ -1763,9 +1797,10 @@ void* my_realloc(void*, size_t) __attribute__((alloc_size(2)))
 @cindex @code{artificial} function attribute
 この属性は、可能であればデバッグ中にユニットとして表示されるべき小さなインラインラッパーに役立つ。 デバッグ情報のフォーマットに応じて、関数を人為的なものとしてマークするか、インラインボディ内のすべての命令に対して呼び出し元の位置を使用することを意味する。
 
-@item assume_aligned
+@item assume_aligned (@var{alignment})
+@itemx assume_aligned (@var{alignment}, @var{offset})
 @cindex @code{assume_aligned} function attribute
-@code{assume_aligned}属性は、関数の戻り値がメモリを指すことをコンパイラに伝えるために使用される。返されるポインタの最小アラインメントは最初の引数によって与えらる。 属性に2つの引数がある場合、2番目の引数は位置ずれオフセットである。
+@code{assume_aligned}属性は、ポインタを返す関数に適用できます。 これは、返されたポインタが@var{alignment}で指定された境界に配置されていることを示しています。 属性に2つの引数がある場合、2番目の引数はミスアライメント@var{offset}です。 @var{alignment}の意味のある値は、1より大きい2の累乗です。 @var{offset}の意味のある値は、ゼロより大きく、@var{alignment}より小さい値です。
 
 例えば、
 
@@ -1777,15 +1812,6 @@ void* my_alloc2(size_t) __attribute__((assume_aligned(32, 8)))
 @noindent
 は、@code{my_alloc1}が16バイトにアラインメントされたポインタを返し、@code{my_alloc2}は32を法とする値が8に等しいポインタを返すと宣言する。
 
-@item bnd_instrument
-@cindex @code{bnd_instrument} function attribute
-関数の@code{bnd_instrument}属性は、コンパイラに@option{-fchkp-instrument-marked-only}オプションを指定してコンパイルしたときに、関数を計装する必要があることをコンパイラに通知するために使用される。
-
-@item bnd_legacy
-@cindex @code{bnd_legacy} function attribute
-@cindex Pointer Bounds Checker attributes
-関数の@code{bnd_legacy}属性は、コンパイラに@option{-fcheck-pointer-bounds}オプションを指定してコンパイルしたときに、関数を計装してはならないことをコンパイラに通知するために使用される。
-
 @item cold
 @cindex @code{cold} function attribute
 関数の@code{cold}属性は、関数が実行される可能性が低いことをコンパイラに通知するために使用される。関数はスピードではなくサイズに最適化される。多くのターゲットでは、テキストセクションの特別なサブセクションに配置されるため、すべてのコールド関数が近くに出力され、プログラムの非コールドパートのコードローカリティが向上する。コード内のコールド関数の呼び出しにつながるパスは、分岐予測メカニズムによってはそうでないとマークされる。したがって、@code{perror}のような、考えられない状況を処理するために使用される関数をcoldとしてマークして、まれにマーク関数を呼び出すホット関数の最適化を改善すると便利である。
@@ -1795,10 +1821,23 @@ void* my_alloc2(size_t) __attribute__((assume_aligned(32, 8)))
 @item const
 @cindex @code{const} function attribute
 @cindex functions that have no side effects
-多くの関数は、引数を除くすべての値を調べず、値を返す以外の効果はない。 そのような関数への呼び出しは、共通部分式消去などの最適化に役立つ。@code{const}属性は、関数がグローバル変数を読み取ることを禁止するため、以下の同様の@code{pure}属性よりも関数の定義に大きな制限を課す。 その結果、関数宣言に属性が存在すると、GCCは関数呼び出しのためにより効率的なコードを出力することができる。 同じ関数を@code{const}属性と@code{pure}属性の両方で修飾すると診断される。
+戻り値がプログラムの監視可能な状態の変更の影響を受けず、値を返す以外にそのような状態に観測可能な影響を与えない関数の呼び出しは、一般的な部分式の除去などの最適化に役立ちます。 @code{const}属性を使用してそのような関数を宣言すると、GCCは、同じ引数値を使用して関数を繰り返し呼び出すときに、いくつかの呼び出しを発行することを回避できます。
+
+例えば、
+
+@smallexample
+int square (int) __attribute__ ((const));
+@end smallexample
+
+@noindent
+は、同じ引数値を持つ関数@code{square}への後続の呼び出しは、その間のステートメントに関係なく、最初の呼び出しの結果で置き換えることができることをGCCに伝えます。
+
+@code{const}属性は、関数が連続する呼び出し間の戻り値に影響するオブジェクトを読み取ることを禁止します。 ただし、この属性で宣言された関数は、不揮発性定数など、戻り値を変更しないオブジェクトを安全に読み取ることができます。
+
+@code{const}属性は、同様の@code{pure}属性よりも関数の定義に大きな制限を課します。 @code{const}属性と@code{pure}属性の両方で同じ関数を宣言すると、診断されます。 const関数には目に見える副作用はないので、@code{void}を返すことは意味がありません。 そのような関数の宣言が診断されます。
 
 @cindex pointer arguments
-ポインタ引数を持ち、指されるデータを調べる関数は、@code{const}と宣言されては@emph{ならない}ことに注意せよ。 同様に、非@code{const}関数を呼び出す関数は、通常は@code{const}であってはならない。 @code{const}関数は副作用を持つことができないので、そのような関数が@code{void}を返すのは意味がない。このような関数を宣言すると診断される。
+ポインター引数があり、ポイントされたデータを検査する関数は、ポイントされたデータが関数の連続した呼び出し間で変化する可能性がある場合、@ code{const}として宣言しては@emph{_ならない_}ことに注意してください。 一般に、関数は、変更される可能性のあるデータと変更できないデータを区別できないため、const関数はポインター、またはC++では参照引数を取ってはなりません。 同様に、非const関数を呼び出す関数は、通常、それ自体がconstであってはなりません。
 
 @item constructor
 @itemx destructor
@@ -1806,9 +1845,30 @@ void* my_alloc2(size_t) __attribute__((assume_aligned(32, 8)))
 @itemx destructor (@var{priority})
 @cindex @code{constructor} function attribute
 @cindex @code{destructor} function attribute
-@code{constructor}属性は、実行が自動的に@code{main()}に入る前に呼び出される。 同様に、@code{destructor}属性は、@code{main()}が完了した後、または@code {exit()}が呼び出された後に関数が自動的に呼び出されるようにする。 これらの属性を持つ関数は、プログラムの実行中に暗黙的に使用されるデータを初期化するのに便利である。
+@code{constructor}属性は、実行が自動的に@code{main()}に入る前に呼び出される。 同様に、@code{destructor}属性は、@code{main()}が完了した後、または@code{exit()}が呼び出された後に関数が自動的に呼び出されるようにする。 これらの属性を持つ関数は、プログラムの実行中に暗黙的に使用されるデータを初期化するのに便利である。
 
 オプションの整数優先順位を指定して、コンストラクタ関数とデストラクタ関数の実行順序を制御できる。より小さい優先順位番号を持つコンストラクタは、より大きな優先順位番号を持つコンストラクタの前で実行される。 反対の関係はデストラクタにも当てはまる。したがって、リソースを割り当てるコンストラクタと同じリソースを割り当て解除するデストラクタがある場合、通常は両方の関数の優先度が同じになる。コンストラクタとデストラクタ関数の優先順位は、名前空間スコープのC++オブジェクト（@pxref{C++ Attributes}）で指定されたものと同じである。しかし、現時点では、静的な記憶期間と属性@code{constructor}で装飾された関数を持つC++オブジェクトのコンストラクタが呼び出される順序は不定である。混合宣言では、属性@code{init_priority}を使用して特定の順序付けを行うことができる。
+
+機能がサポートされていないターゲットで@code{constructor}および@code{destructor}属性の引数形式を使用すると、エラーが発生して拒否されます。
+
+@item copy
+@itemx copy (@var{function})
+@cindex @code{copy} function attribute
+@code{copy}属性は、@var{function}が宣言されている属性のセットを、属性が適用される関数の宣言に適用します。 属性は、ターゲットと同じ属性のセットを指定することが期待されるエイリアスまたは関数リゾルバーを定義するライブラリー用に設計されています。 @code{copy}属性は、関数、変数、または型で使用できます。 ただし、属性が適用されるシンボルの種類（関数または変数）は、引数が参照するシンボルの種類と一致する必要があります。 @code{copy}属性は、構文属性と意味属性のみをコピーしますが、@code{alias}、@code{visibility}、@code{weak}などのシンボルのリンクまたは可視性に影響を与える属性はコピーしません。 @code{deprecated}および@code{target_clones}属性もコピーされません。
+@xref{Common Type Attributes}.
+@xref{Common Variable Attributes}.
+
+たとえば、以下の@var{StrongAlias}マクロは、@code{alias}および@code{copy}属性を使用して、@var{alloc_size}、@var{malloc}、@var{nothrow}属性で宣言された@var{allocate}関数の@var{alloc}というエイリアスを定義します 。 @code{__typeof__}演算子のおかげで、エイリアスはターゲット関数と同じ型になります。 @code{copy}属性の結果として、エイリアスもターゲットと同じ属性を共有します。
+
+@smallexample
+#define StrongAlias(TargetFunc, AliasDecl)  \
+  extern __typeof__ (TargetFunc) AliasDecl  \
+    __attribute__ ((alias (#TargetFunc), copy (TargetFunc)));
+
+extern __attribute__ ((alloc_size (1), malloc, nothrow))
+  void* allocate (size_t);
+StrongAlias (allocate, alloc);
+@end smallexample
 
 @item deprecated
 @itemx deprecated (@var{msg})
@@ -1830,9 +1890,9 @@ int (*fn_ptr)() = old_fn;
 @itemx warning ("@var{message}")
 @cindex @code{error} function attribute
 @cindex @code{warning} function attribute
-@code{error}属性や@code {warning}属性が関数宣言で使用され、そのような関数の呼び出しがデッドコードの削除やその他の最適化によって排除されない場合、@var{message}を含むエラー及び警告が診断される。これはコンパイル時のチェック、特に@code{__builtin_constant_p}およびインライン関数の引数のチェックがトリック@code{extern char [(condition) ? 1 : -1];}では不可能なインライン関数に便利である。
+@code{error}属性や@code{warning}属性が関数宣言で使用され、そのような関数の呼び出しがデッドコードの削除やその他の最適化によって排除されない場合、@var{message}を含むエラー及び警告が診断される。これはコンパイル時のチェック、特に@code{__builtin_constant_p}およびインライン関数の引数のチェックがトリック@code{extern char [(condition) ? 1 : -1];}では不可能なインライン関数に便利である。
 
-関数を未定義のままにしてリンクエラーを引き起こすことは可能だが（@code {.gnu.warning *}セクションのメッセージで関数を定義する）、これらの属性を使用すると、インライン関数が存在する場合でも、デバッグ情報を出力しない場合でも、問題が早期に診断され、呼び出しの正確な位置で診断される。
+関数を未定義のままにしてリンクエラーを引き起こすことは可能だが（@code{.gnu.warning *}セクションのメッセージで関数を定義する）、これらの属性を使用すると、インライン関数が存在する場合でも、デバッグ情報を出力しない場合でも、問題が早期に診断され、呼び出しの正確な位置で診断される。
 
 @item externally_visible
 @cindex @code{externally_visible} function attribute
@@ -1885,6 +1945,8 @@ my_dgettext (char *my_domain, const char *my_format)
 @noindent
 コンパイラは、@code{printf}、@code{scanf}、@code{strftime}または@code{strfmon}型関数の呼び出しで引数をチェックする。書式文字列の引数は、@code{ my_dgettext}関数を使用して、書式文字列引数@code{my_format}と一貫性を保つ。@code{format_arg}属性が指定されていない場合、 書式関数へのそのような呼び出しに対してコンパイラが伝えることができるすべてのことは、フォーマット文字列の引数が定数ではないことである。@option{-Wformat-nonliteral}が使用されているときに警告が生成されるが、属性なしでは呼び出しをチェックすることはできない。
 
+それぞれ異なる引数値を持つ複数の@code {format_arg}属性で宣言された関数の呼び出しでは、対応する実際の関数引数が、属性で指定されたすべてのフォーマット文字列に対してチェックされます。 この機能は、GNU @code {ngettext}ファミリーの関数をサポートするように設計されています。
+
 パラメータ@var{string-index}は、どの引数が書式文字列引数（1から始まる）かを指定する。 非静的なC++のメソッドは暗黙の@code{this}引数を持つので、そのようなメソッドの引数は2つから数える必要がある。
 
 @code{format_arg}属性を使うと、書式文字列を変更する独自の関数を識別することができる。これにより、GCCはオペランドが自分の関数の呼び出しである@code{printf}、 @code{scanf}、@code{strftime}、@code{strfmon}型の関数への呼び出しをチェックできる。コンパイラは、@option{-ansi}および適切な@option{-std}オプションによって厳密なISO Cサポートが要求される場合、または@option{-freestanding}および@option {-fno-builtin}が使用される場合を除いて、この方法で@code{gettext}、@code{dgettext}、@code{dcgettext}を扱う。@xref{C Dialect Options,,C変種を制御するオプション}。
@@ -1897,8 +1959,7 @@ Objective-C変種の場合、@code{format-arg}属性は上記の@code{format}属
 @cindex @code{gnu_inline} function attribute
 この属性は、@code{inline}キーワードも宣言されている関数で使用する必要がある。 GCCは、C99またはgnu99モードでコンパイルしていてもgnu90モードで定義されているかのように関数を扱うように指示する。
 
-関数が@code{extern}と宣言されている場合、この関数の定義はインライン化にのみ使用される。関数がスタンドアロン関数としてコンパイルされることはない。たとえそのアドレスを明示的に指定したとしても、関数はコンパイルされない。
-  このようなアドレスは、あたかも関数を宣言していて、定義していないかのように、外部参照になる。これはほとんどマクロの効果である。 これを使用する方法は、この属性を持つヘッダファイルに関数定義を置き、関数の別のコピーを@code{extern}なしでライブラリファイルに置くことである。ヘッダーファイルの定義によって、関数へのほとんどの呼び出しがインライン化される。 関数の使用が残っている場合は、ライブラリ内の単一のコピーを参照する。関数の2つの定義は正確に同じである必要はないが、同じ効果を持たなければプログラムが奇妙に動作する可能性がある。
+関数が@code{extern}と宣言されている場合、この関数の定義はインライン化にのみ使用される。関数がスタンドアロン関数としてコンパイルされることはない。たとえそのアドレスを明示的に指定したとしても、関数はコンパイルされない。このようなアドレスは、あたかも関数を宣言していて、定義していないかのように、外部参照になる。これはほとんどマクロの効果である。 これを使用する方法は、この属性を持つヘッダファイルに関数定義を置き、関数の別のコピーを@code{extern}なしでライブラリファイルに置くことである。ヘッダーファイルの定義によって、関数へのほとんどの呼び出しがインライン化される。 関数の使用が残っている場合は、ライブラリ内の単一のコピーを参照する。関数の2つの定義は正確に同じである必要はないが、同じ効果を持たなければプログラムが奇妙に動作する可能性がある。
 
 Cでは、関数が@code{extern}でも@code{static}でもない場合、関数はスタンドアロン関数としてコンパイルされ、可能な限りインライン化される。
 
@@ -1997,9 +2058,9 @@ int S::interface (int) __attribute__ ((ifunc ("_ZN1S8resolverEv")));
 @item malloc
 @cindex @code{malloc} function attribute
 @cindex functions that behave like malloc
-これは、関数が@code {malloc}のようなものであることをコンパイラに伝える。すなわち、関数によって返されたポインタ@var{P}は、関数が返ったときに有効な他のポインタをエイリアスできず、 正当なオブジェクトへのどんなポインタも@var{P}で扱われる任意の記憶域を占めることはない。
+これは、関数が@code{malloc}のようなものであることをコンパイラに伝える。すなわち、関数によって返されたポインタ@var{P}は、関数が返ったときに有効な他のポインタをエイリアスできず、 正当なオブジェクトへのどんなポインタも@var{P}で扱われる任意の記憶域を占めることはない。
 
-この属性を使用すると、最適化が向上する。 @code{malloc}や@code{calloc}のような関数は、初期化されていない、またはゼロアウトしたストレージへのポインタを返すので、このプロパティを持っている。 しかし、@ code{realloc}のような関数は、ポインタを含む記憶域へのポインタを返すことができるので、このプロパティを持たない。
+この属性を使用すると、最適化が向上する。 @code{malloc}や@code{calloc}のような関数は、初期化されていない、またはゼロアウトしたストレージへのポインタを返すので、このプロパティを持っている。 しかし、@code{realloc}のような関数は、ポインタを含む記憶域へのポインタを返すことができるので、このプロパティを持たない。
 
 @item no_icf
 @cindex @code{no_icf} function attribute
@@ -2020,10 +2081,7 @@ int S::interface (int) __attribute__ ((ifunc ("_ZN1S8resolverEv")));
 
 @item no_sanitize ("@var{sanitize_option}")
 @cindex @code{no_sanitize} function attribute
-The @code{no_sanitize} attribute on functions is used
-to inform the compiler that it should not do sanitization of all options
-mentioned in @var{sanitize_option}.  A list of values acceptable by
-@option{-fsanitize} option can be provided.
+関数の@code{no_sanitize}属性は、@var{sanitize_option}で言及されているすべてのオプションのサニタイズを行うべきではないことをコンパイラに通知するために使用されます。 @option{-fsanitize}オプションで許容される値のリストを提供できます。
 
 @smallexample
 void __attribute__ ((no_sanitize ("alignment", "object-size")))
@@ -2035,11 +2093,11 @@ g () @{ /* @r{Do something.} */; @}
 @item no_sanitize_address
 @itemx no_address_safety_analysis
 @cindex @code{no_sanitize_address} function attribute
-関数の@code {no_sanitize_address}属性は、@option{-fsanitize=address}オプションを指定してコンパイルするときに関数内でメモリアクセスを計測しないようにコンパイラに通知するために使用される。@code{no_address_safety_analysis}は非推奨の@code{no_sanitize_address}属性のエイリアスである。新しいコードでは@code{no_sanitize_address}を使用するべきである。
+関数の@code{no_sanitize_address}属性は、@option{-fsanitize=address}オプションを指定してコンパイルするときに関数内でメモリアクセスを計測しないようにコンパイラに通知するために使用される。@code{no_address_safety_analysis}は非推奨の@code{no_sanitize_address}属性のエイリアスである。新しいコードでは@code{no_sanitize_address}を使用するべきである。
 
 @item no_sanitize_thread
 @cindex @code{no_sanitize_thread} function attribute
-関数の@code{no_sanitize_thread}属性は、コンパイラに@option{-fsanitize = thread}オプションを指定してコンパイルするときに関数内でメモリアクセスを計測すべきでないことをコンパイラに通知するために使用される。
+関数の@code{no_sanitize_thread}属性は、コンパイラに@option{-fsanitize=thread}オプションを指定してコンパイルするときに関数内でメモリアクセスを計測すべきでないことをコンパイラに通知するために使用される。
 
 @item no_sanitize_undefined
 @cindex @code{no_sanitize_undefined} function attribute
@@ -2123,7 +2181,7 @@ main (/* @r{@dots{}} */)
 @item noreturn
 @cindex @code{noreturn} function attribute
 @cindex functions that never return
-@code{abort}や@code {exit}のようないくつかの標準ライブラリ関数は返らない。 GCCはこれを自動的に認識する。 一部のプログラムは、決して戻ってこない独自の関数を定義している。 コンパイラにこの事実を伝えるために@code{noreturn}を宣言することができる。 例えば、
+@code{abort}や@code{exit}のようないくつかの標準ライブラリ関数は返らない。 GCCはこれを自動的に認識する。 一部のプログラムは、決して戻ってこない独自の関数を定義している。 コンパイラにこの事実を伝えるために@code{noreturn}を宣言することができる。 例えば、
 
 @smallexample
 @group
@@ -2144,17 +2202,22 @@ fatal (/* @r{@dots{}} */)
 
 @code{noreturn}関数を呼び出す前に、呼び出し関数によって保存されたレジスタが復元されたと仮定しないこと。
 
-@code{noreturn}関数が@code {void}以外の戻り値の型を持つことは意味がない。
+@code{noreturn}関数が@code{void}以外の戻り値の型を持つことは意味がない。
 
 @item nothrow
 @cindex @code{nothrow} function attribute
 @code{nothrow}属性は、関数が例外をスローできないことをコンパイラに通知するために使用される。 例えば、標準Cライブラリのほとんどの関数は、関数ポインタの引数を取る@code{qsort}と@code{bsearch}を例外として、例外を投げないことを保証することができる。
 
-@item optimize
+@item optimize (@var{level}, @dots{})
+@item optimize (@var{string}, @dots{})
 @cindex @code{optimize} function attribute
-@code{optimize}属性は、関数がコマンドラインで指定されたものとは異なる最適化オプションでコンパイルされることを指定するために使用される。 引数は数値または文字列のいずれかである。 数値は最適化レベルとみなされる。@code{O}で始まる文字列は最適化オプションとみなされ、他のオプションは@code {-f}の接頭辞とともに使用されるものとみなされる。 @samp{#pragma GCC optimize}プラグマを使用して、複数の関数に影響を与える最適化オプションを設定することもできる。@samp{#pragma GCC optimize}プラグマの詳細は@xref{Function Specific Option Pragmas}。
+@code {optimize}属性は、関数がコマンドラインで指定されたものとは異なる最適化オプションでコンパイルされることを指定するために使用されます。 有効な引数は、負でない定数の整数と文字列です。 各数値引数は、最適化@var{level}を指定します。 各@var string}引数は、1つ以上のコンマ区切りの部分文字列で構成されます。 @code{O}という文字で始まる各部分文字列は、@option{-O0}や@option{-Os}などの最適化オプションを参照します。 他の部分文字列は、@code{-f}接頭辞の接尾辞として使用され、共同で最適化オプションの名前を形成します。@xref{Optimize Options}
 
-この属性は、デバッグ目的でのみ使用するべきである。 プロダクションコードには適していない。
+@samp{#pragma GCC optimize}プラグマを使用して、複数の関数に影響を与える最適化オプションを設定することもできる。@samp{#pragma GCC optimize}プラグマの詳細は@xref{Function Specific Option Pragmas}。
+
+複数のオプションを指定するためにコンマで区切られた引数として複数の文字列を提供することは、単一の文字列内でオプションの接尾辞をコンマ（@samp{,}）で区切ることと同じです。 文字列内にスペースを含めることはできません。
+
+属性で指定された@var{-f}プレフィックスで始まるすべての最適化オプションが、必ずしも関数に影響を与えるわけではありません。 @code{optimize}属性は、デバッグ目的でのみ使用してください。 プロダクションコードには適していません。
 
 @item patchable_function_entry
 @cindex @code{patchable_function_entry} function attribute
@@ -2168,24 +2231,23 @@ fatal (/* @r{@dots{}} */)
 @item pure
 @cindex @code{pure} function attribute
 @cindex functions that have no side effects
-多くの関数は戻り値以外の効果を持たず、戻り値はパラメータかつ/またはグローバル変数のみに依存する。このような関数への呼出は、算術演算子と同じように共通の部分式消去とループ最適化の対象となることができる。 これらの関数は@code{pure}属性で宣言する必要がある。 例えば、
+
+多くの関数は戻り値以外の効果を持たず、戻り値はパラメータかつ/またはグローバル変数のみに依存する。このような関数への呼出は、算術演算子と同じように共通の部分式消去とループ最適化の対象となることができる。 これらの関数は@code{pure}属性で宣言する必要がある。@code{pure}属性を使用してそのような関数を宣言すると、GCCは、同じ引数値を使用して関数を繰り返し呼び出すときに、いくつかの呼び出しを発行することを回避できます。
+
+@code{pure}属性は、関数が関数の戻り値を検査する以外の方法で監視できるプログラムの状態を変更することを禁止します。 ただし、@code{pure}属性を使用して宣言された関数は、不揮発性オブジェクトを安全に読み取り、戻り値やプログラムの監視可能な状態に影響を与えない方法でオブジェクトの値を変更できます。
+
+例えば、
 
 @smallexample
-int square (int) __attribute__ ((pure));
+int hash (char *) __attribute__ ((pure));
 @end smallexample
 
 @noindent
-仮説的な関数@code {square}は、プログラムが言うよりも少ない回数だけ呼び出すのが安全だと言う。
+は、同じ文字列を使用した関数@code {hash}への後続の呼び出しは、@ ode{hash}によって監視可能なプログラムの状態（配列自体の内容を含む）がその間で変化しなければ、最初の呼び出しの結果で置き換えることができることをGCCに伝えます。 @code{hash}は非constポインタ引数を取りますが、それが指す配列や、プログラムの残りの部分が依存する可能性のある他のオブジェクトを変更してはなりません。 ただし、呼び出し元は、関数の連続する呼び出しの間に配列の内容を安全に変更できます（そうすると、最適化が無効になります）。 この制限は、C++非静的メンバー関数の@code{this}ポインターによって参照されるメンバーオブジェクトにも適用されます。
 
-純粋な関数の一般的な例としては、@code {strlen}や@code {memcmp}がある。興味深い非純粋な関数は、無限ループを持つ関数、または揮発性メモリや他のシステムリソースに依存する関数で、2回の連続した呼び出し（マルチスレッド環境の@code{feof}など）の間で変更される可能性がある。
+純粋な関数のいくつかの一般的な例は、@code{strlen}または@code{memcmp}です。 興味深い非純粋関数とは、無限ループのある関数、または揮発性メモリやその他のシステムリソースに依存する関数であり、連続する呼び出し間で変化する可能性があります（マルチスレッド環境の標準C @code{feof}関数など）。
 
-The @code{pure} attribute imposes similar but looser restrictions on
-a function's defintion than the @code{const} attribute: it allows the
-function to read global variables.  Decorating the same function with
-both the @code{pure} and the @code{const} attribute is diagnosed.
-Because a @code{pure} function cannot have any side effects it does not
-make sense for such a function to return @code{void}.  Declaring such
-a function is diagnosed.
+@code{pure}属性は、@code{const}属性よりも関数の定義に同様の緩い制限を課します。これにより、関数はグローバル変数を読み取ることができます。 @code{pure}と@code{const}の両方の属性で同じ関数を装飾することが診断されます。 @code{pure}関数には副作用がないため、そのような関数が@code{void}を返すことは意味がありません。 そのような関数の宣言が診断されます。
 
 @item returns_nonnull
 @cindex @code{returns_nonnull} function attribute
@@ -2202,7 +2264,7 @@ mymalloc (size_t len) __attribute__((returns_nonnull));
 @item returns_twice
 @cindex @code{returns_twice} function attribute
 @cindex functions that return more than once
-@code{returns_twice}属性は、関数が複数回返す可能性があることをコンパイラに知らせる。 コンパイラは、そのような関数を呼び出す前にすべてのレジスタが停止していることを確認し、関数からの2回目の復帰後に矛盾する可能性のある変数についての警告を発する。 このような関数の例は@code{setjmp}と@code {vfork}である。そのような関数の@code{longjmp}のような対応物は、@code{noreturn}属性でマークする必要があるかもしれない。
+@code{returns_twice}属性は、関数が複数回返す可能性があることをコンパイラに知らせる。 コンパイラは、そのような関数を呼び出す前にすべてのレジスタが停止していることを確認し、関数からの2回目の復帰後に矛盾する可能性のある変数についての警告を発する。 このような関数の例は@code{setjmp}と@code{vfork}である。そのような関数の@code{longjmp}のような対応物は、@code{noreturn}属性でマークする必要があるかもしれない。
 
 @item section ("@var{section-name}")
 @cindex @code{section} function attribute
@@ -2230,9 +2292,9 @@ __attribute__ ((sentinel(0)))
 
 属性は組み込み関数@code{execl}と@code{execlp}の位置が0になるように自動的に設定される。 組み込み関数@code{execle}の属性の位置は1である。
 
-この文脈で有効な@code{NULL}は、ポインタ型を持つゼロとして定義されている。 あなたのシステムが@code {NULL}マクロを整数型で定義している場合、明示的なキャストを追加する必要がある。 GCCは@code{stddef.h}を、NULLを適切に再定義するコピーに置き換える。
+この文脈で有効な@code{NULL}は、ポインタ型を持つゼロとして定義されている。 あなたのシステムが@code{NULL}マクロを整数型で定義している場合、明示的なキャストを追加する必要がある。 GCCは@code{stddef.h}を、NULLを適切に再定義するコピーに置き換える。
 
-@option{-Wformat}を指定すると、不正義または間違っている警告の警告が有効になる。
+@option{-Wformat}を指定すると、存在しないまたは間違っている終端の警告が有効になる。
 
 @item simd
 @itemx simd("@var{mask}")
@@ -2262,14 +2324,42 @@ int sse3_func (void) __attribute__ ((__target__ ("sse3")));
 
 サポートされるオプションは、各ターゲットに固有です。詳細は@ref{x86 Function Attributes}、@ref{PowerPC Function Attributes}、 @ref{ARM Function Attributes}、 @ref{AArch64 Function Attributes}、 @ref{Nios II Function Attributes}、@ref{S/390 Function Attributes}を参照。
 
+@item symver ("@var{name2}@@@var{nodename}")
+ELFターゲットでは、この属性はシンボルバージョンを作成します。 パラメータの@var{name2}部分は、外部参照されるシンボルの実際の名前です。 @code{nodename}の部分は、共有ライブラリを構築するときにリンカーに提供されるバージョンスクリプトで指定されたノードの名前である必要があります。 バージョン付きシンボルを定義し、デフォルトの可視性でエクスポートする必要があります。
+
+@smallexample
+__attribute__ ((__symver__ ("foo@@VERS_1"))) int
+foo_v1 (void)
+@{
+@}
+@end smallexample
+
+@code{.symver foo_v1、foo @@ VERS_1}ディレクティブをアセンブラ出力に生成します。
+
+与えられたシンボルの複数のバージョンを定義することはエラーです。 このような場合、エイリアスを使用できます。
+
+@smallexample
+__attribute__ ((__symver__ ("foo@@VERS_2")))
+__attribute__ ((alias ("foo_v1")))
+int symver_foo_v1 (void);
+@end smallexample
+
+この例では、@code{foo_v1}のエイリアスをシンボル名@code{symver_foo_v1}で作成します。これは、@code{foo}のバージョン@code{VERS_2}になります。
+
+最後に、パラメータが@code {"@var{name2}@@@@@var{nodename}"}の場合、シンボルバージョンの作成に加えて（@code{"@var{name2}@@@var{nodename}"}が使用されたかのように）バージョンは、リンカーによって@var {name2}を解決するためにも使用されます。
+
 @item target_clones (@var{options})
 @cindex @code{target_clones} function attribute
 @code{target_clones}属性は、関数がコマンドラインで指定されたものとは異なるターゲットオプションでコンパイルされた複数のバージョンに複製されることを指定するために使用される。 サポートされるオプションと制限は、@code{target}属性と同じである。
 
-たとえば、x86では、@code{target_clones("sse4.1,avx")}で関数をコンパイルできる。 GCCは、@option{-msse4.1}と@option{-mavx}でコンパイルされた2つのファンクションクローンを作成する。PowerPCでは、@code{target_clones("cpu=power9,default")}で関数をコンパイルできる。
-GCCは、@option{-mcpu=power9}でコンパイルされたファンクションクローンとデフォルトオプションを持つファンクションクローンの2つを作成する。@code{target_clones}属性を使用するには、GLIBC 2.23以降を使用するようにGCCを設定する必要がある。
+たとえば、x86では、@code{target_clones("sse4.1,avx")}で関数をコンパイルできる。 GCCは、@option{-msse4.1}と@option{-mavx}でコンパイルされた2つのファンクションクローンを作成する。
+
+PowerPCでは、@code{target_clones("cpu=power9,default")}で関数をコンパイルできる。GCCは、@option{-mcpu=power9}でコンパイルされたファンクションクローンとデフォルトオプションを持つファンクションクローンの2つを作成する。@code{target_clones}属性を使用するには、GLIBC 2.23以降を使用するようにGCCを設定する必要がある。
 
 また、現在のアーキテクチャに適したクローンを動的に選択するリゾルバ関数（上記の@code{ifunc}属性を参照）を作成する。 @code{target_clones}属性を持つ関数の使用がある場合のみ、リゾルバが作成される。
+
+@code{target_clone}の呼び出し元から@code{target_clone}を使用せずに関数を呼び出しても、呼び出された関数のコピー（ターゲットクローン）は行われないことに注意してください。
+このような動作を強制したい場合は、@code{flatten}属性を使用して呼び出し関数を宣言することをお勧めしますか？
 
 @item unused
 @cindex @code{unused} function attribute
@@ -2362,15 +2452,21 @@ int foo ()
 @item weakref
 @itemx weakref ("@var{target}")
 @cindex @code{weakref} function attribute
-@code{weakref}属性は、宣言を弱い参照としてマークする。引数がなければ、それは@code{alias}属性にターゲットシンボルの名前を付ける必要がある。 オプションで、@code{weakref}自体の引数として@var{target}を与えることができる。 どちらの場合でも、@code{weakref}は宣言を暗黙的に@code{weak}とマークする。 @code{weakref}や@code{alias}の引数として与えられた@var{target}がなければ、@code{weakref}は@code {weak}と同等である。
+@code{weakref}属性は、宣言を弱参照としてマークします。 引数がない場合は、ターゲットシンボルに名前を付ける@code{alias}属性を伴う必要があります。 あるいは、@var{target}を@code{weakref}自体の引数として指定して、エイリアスのターゲット定義に名前を付けることもできます。 @var{target}は宣言と同じ型でなければなりません。 また、変数を指定する場合は、宣言と同じサイズと配置にする必要があります。 どちらの形式の宣言でも、@code{weakref}は宣言されたシンボルを@code{weak}として暗黙的にマークします。 @var{target}が@code{weakref}または@code{alias}の引数として指定されていない場合、@code{weakref}は@code{weak}と同等です（その場合、宣言は@code{extern}）。
 
 @smallexample
-static int x() __attribute__ ((weakref ("y")));
+/* Given the declaration: */
+extern int y (void);
+
+/* the following... */
+static int x (void) __attribute__ ((weakref ("y")));
+
 /* is equivalent to... */
-static int x() __attribute__ ((weak, weakref, alias ("y")));
-/* and to... */
-static int x() __attribute__ ((weakref));
-static int x() __attribute__ ((alias ("y")));
+static int x (void) __attribute__ ((weakref, alias ("y")));
+
+/* or, alternatively, to... */
+static int x (void) __attribute__ ((weakref));
+static int x (void) __attribute__ ((alias ("y")));
 @end smallexample
 
 弱参照は、それ自身ではターゲットシンボルに対して定義を与える必要がないエイリアスである。 ターゲットシンボルが弱参照によってのみ参照される場合、それは@code{weak}未定義シンボルになる。 ただし、直接参照されている場合は、そのような強力な参照が優先され、シンボルには定義が必要である。必ずしも同じ翻訳単位である必要はない。
@@ -2428,7 +2524,11 @@ AArch64ターゲットでは、次のターゲット固有の関数属性を使�
 
 @item sign-return-address
 @cindex @code{sign-return-address} function attribute, AArch64
-戻りアドレスの署名が適用される関数スコープを選択する。 動作と許容される引数は、コマンドラインオプションの@option{-msign-return-address=}と同じである。 デフォルト値は@code{none}である。
+戻りアドレスの符号が適用される関数スコープを選択する。 動作と許容される引数は、コマンドラインオプションの@option{-msign-return-address=}と同じである。 デフォルト値は@code{none}である。
+
+@item branch-protection
+@cindex @code{branch-protection} function attribute, AArch64
+ブランチ保護を適用する関数スコープを選択します。 動作と許容される引数は、コマンドラインオプション@option{-mbranch-protection=}の場合と同じです。 デフォルト値は@code{none}です。
 
 @end table
 
@@ -2473,11 +2573,85 @@ foo (int a)
 @subsubsection インライン規則
 異なるターゲットオプションを使用してコンパイルされた翻訳ユニット間で、個々の関数のターゲット属性を指定したり、リンク時の最適化を実行すると、関数のインライン化ルールに影響がでる。
 
-特に、呼び出し元関数は、呼び出し先が利用可能なアーキテクチャ上の機能が呼び出し元が使用できる機能のサブセットである場合にのみ、呼び出し先関数をインライン化できる。例：@option{-march=armv8-a+crc}でコンパイルされた、または同等の@code {arch = armv8-a + crc}属性でタグ付けされた関数@code{foo}は、関数をインラインで@code{@code{bar}}は@option{-march=armv8-a+nocrc}でコンパイルされている。なぜなら、@code {bar}が必要とするすべてのアーキテクチャ機能が@code{foo}を機能させるためである。 逆に関数@code {bar}は関数@code{foo}をインライン化できない。
+特に、呼び出し元関数は、呼び出し先が利用可能なアーキテクチャ上の機能が呼び出し元が使用できる機能のサブセットである場合にのみ、呼び出し先関数をインライン化できる。例：@option{-march=armv8-a+crc}でコンパイルされた、または同等の@code{arch=armv8-a+crc}属性でタグ付けされた関数@code{foo}は、関数をインラインで@code{@code{bar}}は@option{-march=armv8-a+nocrc}でコンパイルされている。なぜなら、@code{bar}が必要とするすべてのアーキテクチャ機能が@code{foo}を機能させるためである。 逆に関数@code{bar}は関数@code{foo}をインライン化できない。
 
 さらに@option{-mstrict-align}でコンパイルされた関数を@code{-mstrict-align}なしでコンパイルされた関数にインライン展開することはできない。ただし、@option{-mstrict-align}を指定せずにコンパイルされた関数を、@option{-mstrict-align}でコンパイルされた関数にインライン展開することはできる。
 
 @option{-mcpu=}、@option{-mtune=}のようなCPUチューニングオプションと属性は、@option{-mcpu=}オプションまたは@code{cpu=}属性は、上記で指定したアーキテクチャ機能ルールと競合する。
+
+@node AMD GCN Function Attributes
+@subsection AMD GCN関数属性
+
+これらの関数属性は、AMD GCNバックエンドでサポートされています。
+
+@table @code
+@item amdgpu_hsa_kernel
+@cindex @code{amdgpu_hsa_kernel} function attribute, AMD GCN
+この属性は、対応する関数をカーネル関数としてコンパイルする必要があることを示します。これは、HSAランタイムライブラリを介してホストから呼び出すことができるエントリポイントです。 デフォルトでは、関数は他のGCN関数からのみ呼び出すことができます。
+
+この属性は、デフォルトのパラメーターを使用して、@code{main}という名前の関数に暗黙的に適用されます。
+
+カーネル関数は整数値を返す場合があり、これはHSAの「カーネル」領域内の従来の場所に書き込まれます。
+
+属性パラメーターは、初期レジスター状態を介して、GPUドライバーによってカーネル関数に渡される値を構成します。 一部の値はコンパイラーによって使用されるため、強制されます。 他のオプションを有効にすると、コンパイラやランタイムライブラリの前提が崩れる可能性があります。
+
+@table @code
+@item private_segment_buffer
+@code{enable_sgpr_private_segment_buffer}フラグを設定します。 常にオン（スタックを見つけるために必要）。
+
+@item dispatch_ptr
+@code{enable_sgpr_dispatch_ptr}フラグを設定します。 常にオン（起動寸法を見つけるために必要）。
+
+@item queue_ptr
+@code{enable_sgpr_queue_ptr}フラグを設定します。 常にオン（アドレススペースの変換に必要）。
+
+@item kernarg_segment_ptr
+@code{enable_sgpr_kernarg_segment_ptr}フラグを設定します。 常にオン（カーネル引数「kernargs」を見つけるために必要）。
+
+@item dispatch_id
+@code{enable_sgpr_dispatch_id}フラグを設定します。
+
+@item flat_scratch_init
+@code{enable_sgpr_flat_scratch_init}フラグを設定します。
+
+@item private_segment_size
+@code{enable_sgpr_private_segment_size}フラグを設定します。
+
+@item grid_workgroup_count_X
+@code{enable_sgpr_grid_workgroup_count_x}フラグを設定します。 常にオン（OpenACC/OpenMPを使用するために必要）。
+
+@item grid_workgroup_count_Y
+@code{enable_sgpr_grid_workgroup_count_y}フラグを設定します。
+
+@item grid_workgroup_count_Z
+@code{enable_sgpr_grid_workgroup_count_z}フラグを設定します。
+
+@item workgroup_id_X
+@code{enable_sgpr_workgroup_id_x}フラグを設定します。
+
+@item workgroup_id_Y
+@code{enable_sgpr_workgroup_id_y}フラグを設定します。
+
+@item workgroup_id_Z
+@code{enable_sgpr_workgroup_id_z}フラグを設定します。
+
+@item workgroup_info
+@code{enable_sgpr_workgroup_info}フラグを設定します。
+
+@item private_segment_wave_offset
+@code{enable_sgpr_private_segment_wave_byte_offset}フラグを設定します。 常にオン（スタックを見つけるために必要）。
+
+@item work_item_id_X
+@code{enable_vgpr_workitem_id}パラメータを設定します。 常にオン（無効にすることはできません）。
+
+@item work_item_id_Y
+@code{enable_vgpr_workitem_id}パラメータを設定します。 常にオン（ベクトル化を有効にするために必要です。）
+
+@item work_item_id_Z
+@code{enable_vgpr_workitem_id}パラメータを設定します。 常にオン（OpenACC/OpenMPを使用するために必要）。
+
+@end table
+@end table
 
 @node ARC Function Attributes
 @subsection ARC関数属性
@@ -2520,6 +2694,10 @@ ARCでは、@code{long_call}属性でマークされた関数は常にレジス�
 @cindex @code{secure_call} function attribute, ARC
 この属性により、通常モードから呼び出し可能なセキュアコード関数をマークすることができる。 @code{sjli}テーブルへの安全な呼び出し関数の場所は、引数として渡す必要がある。
 
+@item naked
+@cindex @code{naked} function attribute, ARC
+この属性により、コンパイラーは必要な関数宣言を作成することができ、関数の本体はアセンブリコードにすることができます。 指定された関数には、コンパイラーによって生成されたプロローグ/エピローグシーケンスがありません。 naked関数に安全に含めることができるのは、基本的な@code{asm}ステートメントのみです（@pxref {Basic Asm}）。 拡張@code{asm}または基本的な@code{asm}とCコードの混合を使用すると動作するように見えるかもしれませんが、それらは信頼できる動作に依存することはできず、サポートされていません。
+
 @end table
 
 @node ARM Function Attributes
@@ -2528,6 +2706,11 @@ ARCでは、@code{long_call}属性でマークされた関数は常にレジス�
 これらの関数属性は、ARMターゲットでサポートされている。
 
 @table @code
+
+@item general-regs-only
+@cindex @code{general-regs-only} function attribute, ARM
+この関数のコードを生成するときに、浮動小数点またはAdvanced SIMDレジスタを使用しないことを示します。 関数が明示的に浮動小数点コードを使用する場合、コンパイラーはエラーを出します。 これは、コマンドラインオプション@option{-mgeneral-regs-only}の動作と同じです。
+
 @item interrupt
 @cindex @code{interrupt} function attribute, ARM
 この属性を使用して、指定された関数が割り込みハンドラであることを示す。 コンパイラは、この属性が存在するときに、割り込みハンドラで使用するのに適した関数入力および終了シーケンスを生成する。
@@ -2596,11 +2779,9 @@ ARM（A32）ISAのコード生成を強制する。
 
 @item arch=
 @cindex @code{arch=} function attribute, ARM
-Specifies the architecture version and architectural extensions to use
-for this function.  The behavior and permissible arguments are the same as
-for the @option{-march=} command-line option.
+この機能に使用するアーキテクチャバージョンとアーキテクチャ拡張を指定します。 動作と許容される引数は、@option{-march=}コマンドラインオプションの場合と同じです。
 
-The above target attributes can be specified as follows:
+上記のターゲット属性は、次のように指定できます。
 
 @smallexample
 __attribute__((target("arch=armv8-a+crc")))
@@ -2611,9 +2792,7 @@ f (int a)
 @}
 @end smallexample
 
-Additionally, the architectural extension string may be specified on its
-own.  This can be used to turn on and off particular architectural extensions
-without having to specify a particular architecture version or core.  Example:
+さらに、アーキテクチャの拡張文字列を独自に指定することもできます。 これは、特定のアーキテクチャバージョンまたはコアを指定する必要なく、特定のアーキテクチャ拡張をオンまたはオフにするために使用できます。 例：
 
 @smallexample
 __attribute__((target("+crc+nocrypto")))
@@ -2624,9 +2803,7 @@ foo (int a)
 @}
 @end smallexample
 
-In this example @code{target("+crc+nocrypto")} enables the @code{crc}
-extension and disables the @code{crypto} extension for the function @code{foo}
-without modifying an existing @option{-march=} or @option{-mcpu} option.
+この例では、@code{target("+crc+nocrypto")}は、既存の@option{-march}または@option {-mcpu}オプションを変更せずに、関数@code{foo}の@code{crc}拡張を有効にし、@code{crypto}拡張を無効にします。
 
 @end table
 
@@ -2648,10 +2825,7 @@ AVRでは、ハードウェアは割り込みが実行されると割り込み�
 
 @item no_gccisr
 @cindex @code{no_gccisr} function attribute, AVR
-Do not use @code{__gcc_isr} pseudo instructions in a function with
-the @code{interrupt} or @code{signal} attribute aka. interrupt
-service routine (ISR).
-Use this attribute if the preamble of the ISR prologue should always read
+@code{interrupt}または@code{signal}属性を持つ関数、別名割り込みサービスルーチン（ISR）関数では、@code{__ gcc_isr}疑似命令を使用しない。ISRプロローグのプリアンブルが常に
 @example
 push  __zero_reg__
 push  __tmp_reg__
@@ -2659,19 +2833,14 @@ in    __tmp_reg__, __SREG__
 push  __tmp_reg__
 clr   __zero_reg__
 @end example
-and accordingly for the postamble of the epilogue --- no matter whether
-the mentioned registers are actually used in the ISR or not.
-Situations where you might want to use this attribute include:
+を読み取る必要がある場合は、この属性を使用します。したがって、エピローグのポストアンブルにも対応します。前述のレジスタが実際にISRで使用されているかどうかは関係ありません。 この属性を使用する可能性のある状況は次のとおりです。
 @itemize @bullet
 @item
-Code that (effectively) clobbers bits of @code{SREG} other than the
-@code{I}-flag by writing to the memory location of @code{SREG}.
+@code{SREG}のメモリ位置に書き込むことにより、@code{I}フラグ以外の@code{SREG}のビットを（効果的に）破壊するコード。
 @item
-Code that uses inline assembler to jump to a different function which
-expects (parts of) the prologue code as outlined above to be present.
+インラインアセンブラを使用して、上記で概説したプロローグコード（の一部）が存在することを期待する別の関数にジャンプするコード。
 @end itemize
-To disable @code{__gcc_isr} generation for the whole compilation unit,
-there is option @option{-mno-gas-isr-prologues}, @pxref{AVR Options}.
+コンパイルユニット全体に対して@code{__gcc_isr}生成を無効にするために、オプション@option{-mno-gas-isr-prologues}があります。@pxref{AVR Options}
 
 @item OS_main
 @itemx OS_task
@@ -2761,6 +2930,25 @@ Blackfinでこの属性を使用すると、指定された関数が例外ハン
 @item interrupt
 @cindex @code{interrupt} function attribute, CR16
 この属性を使用して、指定された関数が割り込みハンドラであることを示す。コンパイラは、この属性が存在するときに、割り込みハンドラで使用するのに適した関数入力および終了シーケンスを生成する。
+@end table
+
+@node C-SKY Function Attributes
+@subsection C-SKY Function Attributes
+
+これらの関数属性は、C-SKYバックエンドでサポートされています。
+
+@table @code
+@item interrupt
+@itemx isr
+@cindex @code{interrupt} function attribute, C-SKY
+@cindex @code{isr} function attribute, C-SKY
+これらの属性を使用して、指定された関数が割り込みハンドラであることを示します。コンパイラーは、これらの属性のいずれかが存在する場合に、割り込みハンドラーでの使用に適した関数の入り口と出口のシーケンスを生成します。
+
+これらのオプションを使用するには、必要な割り込みスタック命令のサポートを有効にするために@option{-mistack}コマンドラインオプションが必要です。 それ以外の場合は警告とともに無視されます。 @xref{C-SKY Options}。
+
+@item naked
+@cindex @code{naked} function attribute, C-SKY
+この属性により、コンパイラは関数の本体をアセンブリコードにしながら、必要な関数宣言を構築することができる。 指定された関数は、コンパイラによって生成されたプロローグ/エピローグシーケンスを持たない。基本的な@code{asm}文（@pxref{Basic Asm}）だけが安全にnaked関数に含まれることができる。 拡張@code{asm}または基本的な@code{asm}とCコードの混在を使用すると動作するように見えるかもしれないが、信頼できる動作に依存することはできず、サポートされていない。
 @end table
 
 @node Epiphany Function Attributes
@@ -2899,7 +3087,7 @@ void bar (void)
 @node M32R/D Function Attributes
 @subsection M32R/D関数属性
 
-これらの関数属性は、M32R / Dバックエンドによってサポートされている。
+これらの関数属性は、M32R/Dバックエンドによってサポートされている。
 
 @table @code
 @item interrupt
@@ -3391,21 +3579,26 @@ PowerPCでは、呼び出し側が呼び出し側のターゲットオプショ�
 @end table
 
 @node RISC-V Function Attributes
-@subsection RISC-V Function Attributes
+@subsection RISC-V関数属性
 
-These function attributes are supported by the RISC-V back end:
+これらの関数属性は、RISC-Vバックエンドでサポートされています。
 
 @table @code
 @item naked
 @cindex @code{naked} function attribute, RISC-V
-This attribute allows the compiler to construct the
-requisite function declaration, while allowing the body of the
-function to be assembly code. The specified function will not have
-prologue/epilogue sequences generated by the compiler. Only basic
-@code{asm} statements can safely be included in naked functions
-(@pxref{Basic Asm}). While using extended @code{asm} or a mixture of
-basic @code{asm} and C code may appear to work, they cannot be
-depended upon to work reliably and are not supported.
+この属性により、コンパイラは関数の本体をアセンブリコードにしながら、必要な関数宣言を構築することができる。 指定された関数は、コンパイラによって生成されたプロローグ/エピローグシーケンスを持たない。基本的な@code{asm}文（@pxref{Basic Asm}）だけが安全にnaked関数に含まれることができる。 拡張@code{asm}または基本的な@code{asm}とCコードの混在を使用すると動作するように見えるかもしれないが、信頼できる動作に依存することはできず、サポートされていない。
+
+@item interrupt
+@cindex @code{interrupt} function attribute, RISC-V
+この属性を使用して、指定された関数が割り込みハンドラであることを示します。 コンパイラーは、この属性が存在する場合、割り込みハンドラーでの使用に適した関数の入り口と出口のシーケンスを生成します。
+
+次のように、割り込み属性にオプションのパラメーターを追加することで、処理する割り込みの種類を指定できます。
+
+@smallexample
+void f (void) __attribute__ ((interrupt ("user")));
+@end smallexample
+
+このパラメーターの許容値は、@code{user}、@code{supervisor}、および@code{machine}です。 パラメータがない場合、デフォルトで@code{machine}になります。
 @end table
 
 @node RL78 Function Attributes
@@ -3509,7 +3702,7 @@ S/390では、以下のオプションがサポートされています。
 @itemx no-warn-dynamicstack
 @end table
 
-これらのオプションは、S/390固有のコマンドラインオプション（@option {-m}のプレフィックスなし）とまったく同じように機能するが、機能マクロは変更されない。 例えば、
+これらのオプションは、S/390固有のコマンドラインオプション（@option{-m}のプレフィックスなし）とまったく同じように機能するが、機能マクロは変更されない。 例えば、
 
 @smallexample
 @code{target("no-vx")}
@@ -3566,17 +3759,6 @@ void f () __attribute__ ((interrupt_handler,
 @item trapa_handler
 @cindex @code{trapa_handler} function attribute, SH
 SHターゲットでは、この関数属性は@code{interrupt_handler}と似ているが、すべてのレジスタを保存して復元するわけではない。
-@end table
-
-@node SPU Function Attributes
-@subsection SPU関数属性
-
-これらの関数属性は、SPUバックエンドによってサポートされている。
-
-@table @code
-@item naked
-@cindex @code{naked} function attribute, SPU
-この属性により、コンパイラは関数の本体をアセンブリコードにしながら、必要な関数宣言を構築することができる。 指定された関数は、コンパイラによって生成されたプロローグ/エピローグシーケンスを持たない。基本@code{asm}文だけが安全にnaked関数（@pxref{Basic Asm}）に含まれることができる。 拡張@code{asm}または基本@code{asm}とCコードの混在を使用すると動作するように見えていても、信頼できる動作に依存することはできず、サポートされていない。
 @end table
 
 @node Symbian OS Function Attributes
@@ -3650,14 +3832,7 @@ x86-32ターゲットでは、この属性を使用して、集約がメモリ�
 
 @item naked
 @cindex @code{naked} function attribute, x86
-This attribute allows the compiler to construct the
-requisite function declaration, while allowing the body of the
-function to be assembly code. The specified function will not have
-prologue/epilogue sequences generated by the compiler. Only basic
-@code{asm} statements can safely be included in naked functions
-(@pxref{Basic Asm}). While using extended @code{asm} or a mixture of
-basic @code{asm} and C code may appear to work, they cannot be
-depended upon to work reliably and are not supported.
+この属性により、コンパイラは関数の本体をアセンブリコードにしながら、必要な関数宣言を構築することができる。 指定された関数は、コンパイラによって生成されたプロローグ/エピローグシーケンスを持たない。基本@code{asm}文だけが安全にnaked関数（@pxref{Basic Asm}）に含まれることができる。 拡張@code{asm}または基本@code{asm}とCコードの混在を使用すると動作するように見えていても、信頼できる動作に依存することはできず、サポートされていない。
 
 @item regparm (@var{number})
 @cindex @code{regparm} function attribute, x86
@@ -3727,38 +3902,308 @@ f (struct interrupt_frame *frame, uword_t error_code)
 
 @item target (@var{options})
 @cindex @code{target} function attribute
-@ref {Common Function Attributes}で説明したように、この属性ではターゲット固有のコンパイルオプションを指定できる。
+@ref{Common Function Attributes}で説明したように、この属性ではターゲット固有のコンパイルオプションを指定できる。
 
 x86では、次のオプションを使用できる。
 @table @samp
+@item 3dnow
+@itemx no-3dnow
+@cindex @code{target("3dnow")} function attribute, x86
+3DNow!命令の生成を有効/無効にする。
+
+@item 3dnowa
+@itemx no-3dnowa
+@cindex @code{target("3dnowa")} function attribute, x86
+拡張3DNow!命令の生成を有効/無効にする。
+
 @item abm
 @itemx no-abm
 @cindex @code{target("abm")} function attribute, x86
 拡張ビット命令の生成を有効/無効にする。
+
+@item adx
+@itemx no-adx
+@cindex @code{target("adx")} function attribute, x86
+ADX命令の生成を有効/無効にする。
 
 @item aes
 @itemx no-aes
 @cindex @code{target("aes")} function attribute, x86
 AES命令の生成を有効/無効にする。
 
+@item avx
+@itemx no-avx
+@cindex @code{target("avx")} function attribute, x86
+\1命令の生成を有効/無効にする。
+
+@item avx2
+@itemx no-avx2
+@cindex @code{target("avx2")} function attribute, x86
+AVX2命令の生成を有効/無効にする。
+
+@item avx5124fmaps
+@itemx no-avx5124fmaps
+@cindex @code{target("avx5124fmaps")} function attribute, x86
+AVX5124FMAPS命令の生成を有効/無効にする。
+
+@item avx5124vnniw
+@itemx no-avx5124vnniw
+@cindex @code{target("avx5124vnniw")} function attribute, x86
+AVX5124VNNIW命令の生成を有効/無効にする。
+
+@item avx512bitalg
+@itemx no-avx512bitalg
+@cindex @code{target("avx512bitalg")} function attribute, x86
+AVX512BITALG命令の生成を有効/無効にする。
+
+@item avx512bw
+@itemx no-avx512bw
+@cindex @code{target("avx512bw")} function attribute, x86
+AVX512BW命令の生成を有効/無効にする。
+
+@item avx512cd
+@itemx no-avx512cd
+@cindex @code{target("avx512cd")} function attribute, x86
+AVX512CD命令の生成を有効/無効にする。
+
+@item avx512dq
+@itemx no-avx512dq
+@cindex @code{target("avx512dq")} function attribute, x86
+AVX512DQ命令の生成を有効/無効にする。
+
+@item avx512er
+@itemx no-avx512er
+@cindex @code{target("avx512er")} function attribute, x86
+AVX512ER命令の生成を有効/無効にする。
+
+@item avx512f
+@itemx no-avx512f
+@cindex @code{target("avx512f")} function attribute, x86
+AVX512F命令の生成を有効/無効にする。
+
+@item avx512ifma
+@itemx no-avx512ifma
+@cindex @code{target("avx512ifma")} function attribute, x86
+AVX512IFMA命令の生成を有効/無効にする。
+
+@item avx512pf
+@itemx no-avx512pf
+@cindex @code{target("avx512pf")} function attribute, x86
+AVX512PF命令の生成を有効/無効にする。
+
+@item avx512vbmi
+@itemx no-avx512vbmi
+@cindex @code{target("avx512vbmi")} function attribute, x86
+AVX512VBMI命令の生成を有効/無効にする。
+
+@item avx512vbmi2
+@itemx no-avx512vbmi2
+@cindex @code{target("avx512vbmi2")} function attribute, x86
+AVX512VBMI2命令の生成を有効/無効にする。
+
+@item avx512vl
+@itemx no-avx512vl
+@cindex @code{target("avx512vl")} function attribute, x86
+AVX512VL命令の生成を有効/無効にする。
+
+@item avx512vnni
+@itemx no-avx512vnni
+@cindex @code{target("avx512vnni")} function attribute, x86
+AVX512VNNI命令の生成を有効/無効にする。
+
+@item avx512vpopcntdq
+@itemx no-avx512vpopcntdq
+@cindex @code{target("avx512vpopcntdq")} function attribute, x86
+AVX512VPOPCNTDQ命令の生成を有効/無効にする。
+
+@item bmi
+@itemx no-bmi
+@cindex @code{target("bmi")} function attribute, x86
+BMI命令の生成を有効/無効にする。
+
+@item bmi2
+@itemx no-bmi2
+@cindex @code{target("bmi2")} function attribute, x86
+BMI2命令の生成を有効/無効にする。
+
+@item cldemote
+@itemx no-cldemote
+@cindex @code{target("cldemote")} function attribute, x86
+CLDEMOTE命令の生成を有効/無効にする。
+
+@item clflushopt
+@itemx no-clflushopt
+@cindex @code{target("clflushopt")} function attribute, x86
+CLFLUSHOPT命令の生成を有効/無効にする。
+
+@item clwb
+@itemx no-clwb
+@cindex @code{target("clwb")} function attribute, x86
+CLWB命令の生成を有効/無効にする。
+
+@item clzero
+@itemx no-clzero
+@cindex @code{target("clzero")} function attribute, x86
+CLZERO命令の生成を有効/無効にする。
+
+@item crc32
+@itemx no-crc32
+@cindex @code{target("crc32")} function attribute, x86
+CRC32命令の生成を有効/無効にする。
+
+@item cx16
+@itemx no-cx16
+@cindex @code{target("cx16")} function attribute, x86
+CMPXCHG16B命令の生成を有効/無効にする。
+
 @item default
 @cindex @code{target("default")} function attribute, x86
 @xref{Function Multiversioning}デフォルトの関数バージョンを指定するために使用される。
+
+@item f16c
+@itemx no-f16c
+@cindex @code{target("f16c")} function attribute, x86
+F16C命令の生成を有効/無効にする。
+
+@item fma
+@itemx no-fma
+@cindex @code{target("fma")} function attribute, x86
+FMA命令の生成を有効/無効にする。
+
+@item fma4
+@itemx no-fma4
+@cindex @code{target("fma4")} function attribute, x86
+FMA4命令の生成を有効/無効にする。
+
+@item fsgsbase
+@itemx no-fsgsbase
+@cindex @code{target("fsgsbase")} function attribute, x86
+FSGSBASE命令の生成を有効/無効にする。
+
+@item fxsr
+@itemx no-fxsr
+@cindex @code{target("fxsr")} function attribute, x86
+FXSR命令の生成を有効/無効にする。
+
+@item gfni
+@itemx no-gfni
+@cindex @code{target("gfni")} function attribute, x86
+GFNI命令の生成を有効/無効にする。
+
+@item hle
+@itemx no-hle
+@cindex @code{target("hle")} function attribute, x86
+HLE命令プレフィックスの生成を有効/無効にする。
+
+@item lwp
+@itemx no-lwp
+@cindex @code{target("lwp")} function attribute, x86
+LWP命令の生成を有効/無効にする。
+
+@item lzcnt
+@itemx no-lzcnt
+@cindex @code{target("lzcnt")} function attribute, x86
+LZCNT命令の生成を有効/無効にする。
 
 @item mmx
 @itemx no-mmx
 @cindex @code{target("mmx")} function attribute, x86
 MMX命令の生成を有効/無効にする。
 
+@item movbe
+@itemx no-movbe
+@cindex @code{target("movbe")} function attribute, x86
+MOVBE命令の生成を有効/無効にする。
+
+@item movdir64b
+@itemx no-movdir64b
+@cindex @code{target("movdir64b")} function attribute, x86
+MOVDIR64B命令の生成を有効/無効にする。
+
+@item movdiri
+@itemx no-movdiri
+@cindex @code{target("movdiri")} function attribute, x86
+MOVDIRI命令の生成を有効/無効にする。
+
+@item mwaitx
+@itemx no-mwaitx
+@cindex @code{target("mwaitx")} function attribute, x86
+MWAITX命令の生成を有効/無効にする。
+
 @item pclmul
 @itemx no-pclmul
 @cindex @code{target("pclmul")} function attribute, x86
 PCLMUL命令の生成を有効/無効にする。
 
+@item pconfig
+@itemx no-pconfig
+@cindex @code{target("pconfig")} function attribute, x86
+PCONFIG命令の生成を有効/無効にする。
+
+@item pku
+@itemx no-pku
+@cindex @code{target("pku")} function attribute, x86
+PKU命令の生成を有効/無効にする。
+
 @item popcnt
 @itemx no-popcnt
 @cindex @code{target("popcnt")} function attribute, x86
 POPCNT命令の生成を有効/無効にする。
+
+@item prefetchwt1
+@itemx no-prefetchwt1
+@cindex @code{target("prefetchwt1")} function attribute, x86
+PREFETCHWT1命令の生成を有効/無効にする。
+
+@item prfchw
+@itemx no-prfchw
+@cindex @code{target("prfchw")} function attribute, x86
+PREFETCHW命令の生成を有効/無効にする。
+
+@item ptwrite
+@itemx no-ptwrite
+@cindex @code{target("ptwrite")} function attribute, x86
+PTWRITE命令の生成を有効/無効にする。
+
+@item rdpid
+@itemx no-rdpid
+@cindex @code{target("rdpid")} function attribute, x86
+RDPID命令の生成を有効/無効にする。
+
+@item rdrnd
+@itemx no-rdrnd
+@cindex @code{target("rdrnd")} function attribute, x86
+RDRND命令の生成を有効/無効にする。
+
+@item rdseed
+@itemx no-rdseed
+@cindex @code{target("rdseed")} function attribute, x86
+RDSEED命令の生成を有効/無効にする。
+
+@item rtm
+@itemx no-rtm
+@cindex @code{target("rtm")} function attribute, x86
+RTM命令の生成を有効/無効にする。
+
+@item sahf
+@itemx no-sahf
+@cindex @code{target("sahf")} function attribute, x86
+SAHF命令の生成を有効/無効にする。
+
+@item sgx
+@itemx no-sgx
+@cindex @code{target("sgx")} function attribute, x86
+SGX命令の生成を有効/無効にする。
+
+@item sha
+@itemx no-sha
+@cindex @code{target("sha")} function attribute, x86
+SHA命令の生成を有効/無効にする。
+
+@item shstk
+@itemx no-shstk
+@cindex @code{target("shstk")} function attribute, x86
+CETからのシャドウスタック組み込み関数を有効/無効にする。
 
 @item sse
 @itemx no-sse
@@ -3795,25 +4240,60 @@ SSE4.2命令の生成を有効/無効にする。
 @cindex @code{target("sse4a")} function attribute, x86
 SSE4A命令の生成を有効/無効にする。
 
-@item fma4
-@itemx no-fma4
-@cindex @code{target("fma4")} function attribute, x86
-FMA4命令の生成を有効/無効にする。
+@item ssse3
+@itemx no-ssse3
+@cindex @code{target("ssse3")} function attribute, x86
+SSSE3命令の生成を有効/無効にする。
+
+item tbm
+@itemx no-tbm
+@cindex @code{target("tbm")} function attribute, x86
+TBM命令の生成を有効/無効にする。
+
+@item vaes
+@itemx no-vaes
+@cindex @code{target("vaes")} function attribute, x86
+VAES命令の生成を有効/無効にする。
+
+@item vpclmulqdq
+@itemx no-vpclmulqdq
+@cindex @code{target("vpclmulqdq")} function attribute, x86
+VPCLMULQDQ命令の生成を有効/無効にする。
+
+@item waitpkg
+@itemx no-waitpkg
+@cindex @code{target("waitpkg")} function attribute, x86
+WAITPKG命令の生成を有効/無効にする。
+
+@item wbnoinvd
+@itemx no-wbnoinvd
+@cindex @code{target("wbnoinvd")} function attribute, x86
+WBNOINVD命令の生成を有効/無効にする。
 
 @item xop
 @itemx no-xop
 @cindex @code{target("xop")} function attribute, x86
 XOP命令の生成を有効/無効にする。
 
-@item lwp
-@itemx no-lwp
-@cindex @code{target("lwp")} function attribute, x86
-LWP命令の生成を有効/無効にする。
+@item xsave
+@itemx no-xsave
+@cindex @code{target("xsave")} function attribute, x86
+XSAVE命令の生成を有効/無効にする。
 
-@item ssse3
-@itemx no-ssse3
-@cindex @code{target("ssse3")} function attribute, x86
-SSSE3命令の生成を有効/無効にする。
+@item xsavec
+@itemx no-xsavec
+@cindex @code{target("xsavec")} function attribute, x86
+XSAVEC命令の生成を有効/無効にする。
+
+@item xsaveopt
+@itemx no-xsaveopt
+@cindex @code{target("xsaveopt")} function attribute, x86
+XSAVEOPT命令の生成を有効/無効にする。
+
+@item xsaves
+@itemx no-xsaves
+@cindex @code{target("xsaves")} function attribute, x86
+XSAVES命令の生成を有効/無効にする。
 
 @item cld
 @itemx no-cld
@@ -3911,6 +4391,24 @@ foo (void)
 @}
 @end smallexample
 
+item cf_check
+@cindex @code{cf_check} function attribute, x86
+
+関数の@code{cf_check}属性は、@option{-fcf-protection = branch}が有効になっているときにENDBR命令を関数エントリに配置する必要があることをコンパイラに通知するために使用されます。
+
+@item indirect_return
+@cindex @code{indirect_return} function attribute, x86
+
+@code{indirect_return}属性を関数に適用するだけでなく、変数または関数ポインタのタイプを適用して、関数が間接分岐を介して戻る可能性があることをコンパイラに通知できます。
+
+@item fentry_name("@var{name}")
+@cindex @code{fentry_name} function attribute, x86
+x86ターゲットでは、@code{fentry_name}属性により、@option{-pg -mfentry}で関数のインストルメンテーションが有効になっている場合に、関数エントリで呼び出す関数が設定されます。 @var{name}がnopの場合、5バイトのnopシーケンスが生成されます。
+
+@item fentry_section("@var{name}")
+@cindex @code{fentry_section} function attribute, x86
+x86ターゲットでは、@code{fentry_section}属性は、@option{-pg -mrecord-mcount}で有効にされたときに関数エントリインストルメンテーションコールを記録するセクションの名前を設定します。
+
 @end table
 
 x86では、呼び出し側が呼び出し元のターゲットオプションのサブセットを持たない限り、インライナは呼び出し元とは異なるターゲットオプションを持つ関数をインライン化しない。 たとえば、@code{-msse3}は@code{-msse2}を意味するため、@code{target("sse3")}で宣言された関数は@code{target("sse2")}で関数をインライン化できる。
@@ -3963,16 +4461,35 @@ x86では、呼び出し側が呼び出し元のターゲットオプション�
 次の属性は、ほとんどのターゲットでサポートされている。
 
 @table @code
+@item alias ("@var{target}")
+@cindex @code{alias} variable attribute
+@code{alias}変数属性により、宣言が@dfn{alias target}と呼ばれる別のシンボルのエイリアスとして発行されます。 トップレベル修飾子を除いて、エイリアスターゲットはエイリアスと同じタイプでなければなりません。 たとえば、次の
+
+@smallexample
+int var_target;
+extern int __attribute__ ((alias ("var_target"))) var_alias;
+@end smallexample
+
+@noindent
+は@code{var_alias}を@code {var_target}変数のエイリアスとして定義しています。
+
+エイリアスターゲットがエイリアスと同じ変換単位で定義されていない場合、エラーになります。
+
+属性がない場合、GCCは、外部リンケージを使用した個別の宣言が個別のオブジェクトを示すと想定していることに注意してください。 エイリアスとエイリアスターゲットの両方を使用して同じオブジェクトにアクセスすることは、属性でエイリアスを宣言しないと、翻訳単位では定義されません。
+
+この属性はアセンブラーとオブジェクトファイルのサポートを必要とし、すべてのターゲットで使用できるとは限りません。
+
 @cindex @code{aligned} variable attribute
-@item aligned (@var{alignment})
-この属性は、変数または構造体フィールドの最小整列をバイト単位で指定する。 たとえば、次のような宣言があると、
+@item aligned
+@itemx aligned (@var{alignment})
+@code{aligned}属性は、変数または構造体フィールドの最小配置をバイト単位で指定します。 @var{alignment}を指定する場合は、2の整数定数乗にする必要があります。@var{alignment}引数を指定しないと、ターゲットの最大の境界調整になります。これは、多くの場合、常に8バイトまたは16バイトです。 たとえば、次のような宣言があると、
 
 @smallexample
 int x __attribute__ ((aligned (16))) = 0;
 @end smallexample
 
 @noindent
-コンパイラはグローバル変数@code {x}を16バイトの境界に割り当てる。 68040では、これを@code{asm}式と共に使用して、16バイトのアライメントされたオペランドを必要とする@code{move16}命令にアクセスできる。
+コンパイラはグローバル変数@code{x}を16バイトの境界に割り当てる。 68040では、これを@code{asm}式と共に使用して、16バイトのアライメントされたオペランドを必要とする@code{move16}命令にアクセスできる。
 
 構造体フィールドの配置を指定することもできる。 たとえば、ダブルワードアライメントの@code{int}ペアを作成するには、次のように記述する。
 
@@ -4001,9 +4518,7 @@ short array[3] __attribute__ ((aligned (__BIGGEST_ALIGNMENT__)));
 
 @cindex @code{warn_if_not_aligned} variable attribute
 @item warn_if_not_aligned (@var{alignment})
-This attribute specifies a threshold for the structure field, measured
-in bytes.  If the structure field is aligned below the threshold, a
-warning will be issued.  For example, the declaration:
+この属性は、構造フィールドのしきい値をバイト単位で指定します。 構造フィールドがしきい値を下回ると、警告が出されます。 たとえば、宣言は次のとおりです。
 
 @smallexample
 struct foo
@@ -4015,11 +4530,7 @@ struct foo
 @end smallexample
 
 @noindent
-causes the compiler to issue an warning on @code{struct foo}, like
-@samp{warning: alignment 8 of 'struct foo' is less than 16}.
-The compiler also issues a warning, like @samp{warning: 'x' offset
-8 in 'struct foo' isn't aligned to 16}, when the structure field has
-the misaligned offset:
+次のように、コンパイラーに@code{struct foo}に関する警告を発行させます。@samp{warning: alignment 8 of 'struct foo' is less than 16}。 コンパイラーは、構造体フィールドのオフセットが正しくない場合、@samp{warning： 'x' offset 8 in 'struct foo' isn'taligned to 16}のような警告も発行します。
 
 @smallexample
 struct foo
@@ -4030,13 +4541,28 @@ struct foo
 @} __attribute__((aligned(16)));
 @end smallexample
 
-This warning can be disabled by @option{-Wno-if-not-aligned}.
-The @code{warn_if_not_aligned} attribute can also be used for types
-(@pxref{Common Type Attributes}.)
+この警告は、@option{-Wno-if-not-aligned}によって無効にできます。 @code{warn_if_not_aligned}属性は、型にも使用できます（@pxref{Common Type Attributes}）。
+
+@item alloc_size (@var{position})
+@itemx alloc_size (@var{position-1}, @var{position-2})
+@cindex @code{alloc_size} variable attribute
+@code{alloc_size}変数属性は、ポインターを返し、整数型の少なくとも1つの引数を取る関数へのポインターの宣言に適用できます。 これは、返されたポインタが、@var{position-1}の関数引数、または@var{position-1}と@var {position-2}の引数の積で指定されたサイズのオブジェクトを指していることを示します。 意味のあるサイズは、@code{PTRDIFF_MAX}より小さい正の値です。 他のサイズは、検出されると無視されます。 GCCはこの情報を使用して、@ code{__ builtin_object_size}の結果を改善します。
+
+たとえば、次の宣言は、
+
+@smallexample
+typedef __attribute__ ((alloc_size (1, 2))) void*
+  (*calloc_ptr) (size_t, size_t);
+typedef __attribute__ ((alloc_size (1))) void*
+  (*malloc_ptr) (size_t);
+@end smallexample
+
+@noindent
+@code{calloc_ptr}が、標準のC関数@code{calloc}と同様に、引数1と2の積によってサイズが指定されるオブジェクトを返す関数のポインターであることを指定します。同様に、@code{malloc_ptr}は、標準のC関数@code{malloc}と同様に、サイズが引数1によって関数に指定されたオブジェクトを返します。
 
 @item cleanup (@var{cleanup_function})
 @cindex @code{cleanup} variable attribute
-@code {cleanup}属性は、変数がスコープから外れると関数を実行する。 この属性は、自動関数スコープ変数にのみ適用できる。 静的記憶期間を有するパラメータまたは変数には適用できない。 関数は1つのパラメーター、変数と互換性のある型へのポインターを取る必要がある。 関数の戻り値（存在する場合）は無視される。
+@code{cleanup}属性は、変数がスコープから外れると関数を実行する。 この属性は、自動関数スコープ変数にのみ適用できる。 静的記憶期間を有するパラメータまたは変数には適用できない。 関数は1つのパラメーター、変数と互換性のある型へのポインターを取る必要がある。 関数の戻り値（存在する場合）は無視される。
 
 @option{-fexceptions}を有効にすると、例外の処理中に発生するスタックの巻き戻し中に@var{cleanup_function}が実行される。 @code{cleanup}属性は、例外を捕捉することを許可せず、アクションの実行のみを許可することに注意せよ。@var{cleanup_function}が正常に返されなかった場合の動作は未定義である。
 
@@ -4049,6 +4575,11 @@ The @code{warn_if_not_aligned} attribute can also be used for types
 @code{common}属性は、GCCに変数を「共通」ストレージに配置するよう要求する。 @code{nocommon}属性は、反対である。直接に空間を割り当てることを要求する。
 
 これらの属性は、それぞれ@option{-fno-common}フラグと@option{-fcommon}フラグによって選択されたデフォルトを上書きする。
+
+@item copy
+@itemx copy (@var{variable})
+@cindex @code{copy} variable attribute
+@code{copy}属性は、@var{variable}が宣言されている属性のセットを、属性が適用される変数の宣言に適用します。 この属性は、エイリアスシンボルと同じ属性セットを指定することが予想されるエイリアスを定義するライブラリ用に設計されています。 @code{copy}属性は、変数、関数、または型で使用できます。 ただし、属性が適用されるシンボルの種類（変数または関数）は、引数が参照するシンボルの種類と一致する必要があります。 @code{copy}属性は、構文属性と意味属性のみをコピーしますが、@code{alias}、@code{visibility}、@code{weak}などのシンボルのリンクまたは可視性に影響を与える属性はコピーしません。 @code{deprecated}属性もコピーされません。@xref{Common Function Attributes}. @xref{Common Type Attributes}.
 
 @item deprecated
 @itemx deprecated (@var{msg})
@@ -4066,26 +4597,17 @@ int new_fn () @{ return old_var; @}
 
 @code{deprecated}属性は、関数および型にも使用できる。 (@pxref{Common Function Attributes}, @pxref{Common Type Attributes}).
 
+属性に添付されたメッセージは、@option{-fmessage-length}オプションの設定の影響を受けます。
+
+@item mode (@var{mode})
+@cindex @code{mode} variable attribute
+この属性は、宣言のデータ型を指定します---どちらの型もモード@var{mode}に対応します。 これにより、実際には、幅に応じて整数型または浮動小数点型を要求できます。
+
+@var{mode}の可能なキーワードのリストについては、@xref{Machine Modes,,, gccint, GNU Compiler Collection (GCC) Internals}。 @code{byte}または@code{__byte__}のモードを指定して、1バイト整数に対応するモードを指定することもできます。@code{word}または@code{__word__}は、1ワード整数のモードに対応します。@code{pointer}または@code{__pointer__}は、ポインタを表すために使用されるモードです。
+
 @item nonstring
 @cindex @code{nonstring} variable attribute
-The @code{nonstring} variable attribute specifies that an object or member
-declaration with type array of @code{char}, @code{signed char}, or
-@code{unsigned char}, or pointer to such a type is intended to store
-character arrays that do not necessarily contain a terminating @code{NUL}.
-This is useful in detecting uses of such arrays or pointers with functions
-that expect @code{NUL}-terminated strings, and to avoid warnings when such
-an array or pointer is used as an argument to a bounded string manipulation
-function such as @code{strncpy}.  For example, without the attribute, GCC
-will issue a warning for the @code{strncpy} call below because it may
-truncate the copy without appending the terminating @code{NUL} character.
-Using the attribute makes it possible to suppress the warning.  However,
-when the array is declared with the attribute the call to @code{strlen} is
-diagnosed because when the array doesn't contain a @code{NUL}-terminated
-string the call is undefined.  To copy, compare, of search non-string
-character arrays use the @code{memcpy}, @code{memcmp}, @code{memchr},
-and other functions that operate on arrays of bytes.  In addition,
-calling @code{strnlen} and @code{strndup} with such arrays is safe
-provided a suitable bound is specified, and not diagnosed.
+@code{nonstring}変数属性は、@code{char}、@code{signed char}、または@code{unsigned char}の型配列を持つオブジェクトまたはメンバー宣言、またはそのような型へのポインターが必ずしも終了@code{NUL}を含まない文字配列を格納することを意図していることを指定します。これは、@code{NUL}で終了する文字列を期待する関数でそのような配列またはポインタの使用を検出し、そのような配列またはポインタが@code{strncpy}などの制限された文字列操作関数の引数として使用されたときに警告を回避するのに役立ちます。 たとえば、属性がない場合、GCCは以下の@code{strncpy}呼び出しに対して警告を発行します。これは、終端の@code{NUL}文字を追加せずにコピーを切り捨てることがあるためです。この属性を使用すると、警告を抑制することができます。ただし、配列が属性で宣言されている場合、@code{strlen}の呼び出しは診断されます。ただし、配列が属性で宣言されている場合、配列に@code{NUL}で終了する文字列が含まれていない場合、呼び出しは未定義であるため、@code{strlen}の呼び出しが診断されます。 文字列以外の文字配列をコピー、比較、検索するには、@code{memcpy}、@code{memcmp}、@code{memchr}、およびバイトの配列を操作するその他の関数を使用します。 さらに、そのような配列で@code{strnlen}と@code{strndup}を呼び出すことは、適切な境界が指定されており、診断されない限り安全です。
 
 @smallexample
 struct Data
@@ -4101,17 +4623,11 @@ int f (struct Data *pd, const char *s)
 @}
 @end smallexample
 
-@item mode (@var{mode})
-@cindex @code{mode} variable attribute
-この属性は、宣言のデータ型を指定する。どちらの型もモード@var{mode}に対応しする。 実際には、幅に応じて整数型または浮動小数点型を要求できる。
-
-@xref{Machine Modes,,, gccint, GNU Compiler Collection (GCC) Internals}は、@var {mode}の可能なキーワードのリストを参照する。また、1バイトの整数に対応するモードを示すために、@code{byte}または@code{__byte__}のモードを、1ワード整数のモードの場合は@code {word}または@code{__word__}、ポインタの表現に使用されるモードの場合は@code {pointer}または@code {__ pointer__}を指定することもできる。
-
 @item packed
 @cindex @code{packed} variable attribute
 @code{aligned}属性でより大きい値を指定しない限り、@code{packed}属性は、変数または構造体フィールドの配置が最小になるように指定する。変数には1バイト、フィールドには1ビットを指定する 。
 
-ここで構造体のフィールド@code{x}がパックされているので、すぐに@code {a}に続く：
+ここで構造体のフィールド@code{x}がパックされているので、すぐに@code{a}に続く：
 
 @smallexample
 struct foo
@@ -4172,7 +4688,7 @@ C++クラス・テンプレートの静的データ・メンバーに適用さ�
 
 @item vector_size (@var{bytes})
 @cindex @code{vector_size} variable attribute
-この属性は、変数のベクトルサイズをバイト単位で指定する。 たとえば、次のような宣言があると：
+この属性は、宣言された変数のタイプのベクトルサイズをバイト単位で指定します。 適用されるタイプは、@dfn{基本型}と呼ばれます。 @var{bytes}引数は、基本型サイズの正の2の累乗である必要があります。 たとえば、宣言は次のとおりです。
 
 @smallexample
 int foo __attribute__ ((vector_size (16)));
@@ -4183,7 +4699,7 @@ int foo __attribute__ ((vector_size (16)));
 
 この属性は、整数、浮動小数点スカラーにのみ適用されるが、配列、ポインタ、および関数の戻り値は、この構造とともに使用できる。
 
-この属性を持つ集合知は、対応するスカラーと同じサイズであっても無効である。 たとえば、次のような宣言は、
+この属性を持つ集合値は、対応するスカラーと同じサイズであっても無効である。 たとえば、次のような宣言は、
 
 @smallexample
 struct S @{ int a; @};
@@ -4196,23 +4712,25 @@ struct S  __attribute__ ((vector_size (16))) foo;
 @item visibility ("@var{visibility_type}")
 @cindex @code{visibility} variable attribute
 この属性は、それがアタッチされている宣言のリンケージに影響します。
-@code {visibility}属性については、@ref{Common Function Attributes}.
+@code{visibility}属性については、@ref{Common Function Attributes}.
 
 @item weak
 @cindex @code{weak} variable attribute
-@code {weak}属性については、@ref{Common Function Attributes}.
+@code{weak}属性については、@ref{Common Function Attributes}.
+
+@item noinit
+@cindex @code{noinit} variable attribute
+@code{noinit}属性を持つデータは、Cランタイムスタートアップコードまたはプログラムローダーによって初期化されません。 この方法でデータを初期化しないことで、プログラムの起動時間を短縮できます。 この属性はELFターゲットに固有であり、そのようなデータを正しい場所に配置するためにリンカーに依存しています
 
 @end table
 
 @node ARC Variable Attributes
-@subsection ARC Variable Attributes
+@subsection ARC変数属性
 
 @table @code
 @item aux
 @cindex @code{aux} variable attribute, ARC
-The @code{aux} attribute is used to directly access the ARC's
-auxiliary register space from C.  The auxilirary register number is
-given via attribute argument.
+@code{aux}属性は、CからARCの補助レジスタスペースに直接アクセスするために使用されます。補助レジスタ番号は、属性引数を介して指定されます。
 
 @end table
 
@@ -4345,7 +4863,7 @@ volatile int porta __attribute__((address (0x600)));
 @node H8/300 Variable Attributes
 @subsection H8/300変数属性
 
-これらの変数属性は、H8 / 300ターゲットで使用できる。
+これらの変数属性は、H8/300ターゲットで使用できる。
 
 @table @code
 @item eightbit_data
@@ -4488,13 +5006,20 @@ main()
 @cindex @code{persistent} variable attribute, MSP430 
 @code{persistent}属性を持つ変数は、Cランタイムスタートアップコードによって初期化されない。 代わりに、その値は、アプリケーションがロードされると一度設定され、プロセッサがリセットされたりプログラムが再起動しても、再び初期化されることはない。 永続的なデータはFLASH RAMに配置されることを意図しており、その値はリセット時に保持される。 アプリケーションを作成するために使用されるリンカースクリプトは、永続データが正しく配置されるようにする必要がある。
 
-@item lower
 @itemx upper
 @itemx either
-@cindex @code{lower} variable attribute, MSP430 
 @cindex @code{upper} variable attribute, MSP430 
 @cindex @code{either} variable attribute, MSP430 
 これらの属性は、同じ名前のMSP430関数属性と同じである（@pxref{MSP430 Function Attributes}）。これらの属性は、関数と変数の両方に適用できる。
+
+@item lower
+@cindex @code{lower} variable attribute, MSP430 
+これらの属性は、同じ名前のMSP430関数属性と同じである（@pxref{MSP430 Function Attributes}）が、追加の機能がある。
+
+@option{-mdata-region=}@{@code{upper,either,none}@}が渡された場合、または@code{section}属性が変数に適用された場合、コンパイラーはそれを処理する430X命令を生成します。 これは、コンパイラが変数が上位メモリ領域（アドレス0xFFFFより上）に配置される可能性があると想定する必要があるためです。 変数を@code{lower}属性でマークすると、変数が下位メモリに配置されるため、430命令を使用して安全に処理できることがコンパイラに通知されます。
+
+@code{section}属性の場合、指定されたセクション名が使用され、@code{.lower}プレフィックスは追加されません。
+
 @end table
 
 @node Nvidia PTX Variable Attributes
@@ -4518,19 +5043,13 @@ PowerPC設定では、@code{altivec}、@code{ms_struct}、@code{gcc_struct}と�
 構造体の属性の詳細は@ref{x86 Variable Attributes}のドキュメントを参照せよ。
 
 @cindex @code{altivec} variable attribute, PowerPC
-@code {altivec}属性のドキュメントについては、@ref{PowerPC Type Attributes}のドキュメントを参照せよ。
+@code{altivec}属性のドキュメントについては、@ref{PowerPC Type Attributes}のドキュメントを参照せよ。
 
 @node RL78 Variable Attributes
 @subsection RL78変数属性
 
 @cindex @code{saddr} variable attribute, RL78
 RL78バックエンドは@code{saddr}変数属性をサポートしている。 これは、対応する変数のSADDR領域への配置を指定する。これで、デフォルトのメモリ領域より効率的にアクセスできる。
-
-@node SPU Variable Attributes
-@subsection SPU変数属性
-
-@cindex @code{spu_vector} variable attribute, SPU
-SPUは変数の@code {spu_vector}属性をサポートしている。 この属性のドキュメントについては、@ref{SPU Type Attributes}.
 
 @node V850 Variable Attributes
 @subsection V850変数属性
@@ -4586,7 +5105,9 @@ SPUは変数の@code {spu_vector}属性をサポートしている。 この属�
 @cindex attribute of types
 @cindex type attributes
 
-キーワード@code {__attribute__}を使用すると、型の特殊属性を指定できる。 ある型の属性は@code{struct}型と@code{union}型にのみ適用されるが、その他の型は@code{typedef}宣言で定義された型に適用できる。 他の属性は関数（@pxref{Function Attributes}）、ラベル（@pxref{Label Attributes}）、列挙子（@pxref{Enumerator Attributes}）、文（@pxref{Statement Attributes}）、変数@pxref{Variable Attributes}）に定義されている。
+キーワード@code{__attribute__}を使用すると、型のさまざまな特別なプロパティを指定できます。 一部の型属性は構造体型と共用体型にのみ適用され、C++ではクラス型にも適用できますが、@code{typedef}宣言を介して定義された任意の型に適用できるものもあります。 特に明記しない限り、型が自明な構造か、ユーザー定義のコンストラクター、デストラクター、またはコピー割り当てを持つC++クラスかに関係なく、同じ制限と効果が属性に適用されます。
+
+ 他の属性は関数（@pxref{Function Attributes}）、ラベル（@pxref{Label Attributes}）、列挙子（@pxref{Enumerator Attributes}）、文（@pxref{Statement Attributes}）、変数@pxref{Variable Attributes}）に定義されている。
 
 @code{__attribute__}キーワードの後ろには二重括弧で囲まれた属性指定が続く。
 
@@ -4611,8 +5132,9 @@ SPUは変数の@code {spu_vector}属性をサポートしている。 この属�
 
 @table @code
 @cindex @code{aligned} type attribute
-@item aligned (@var{alignment})
-この属性は、指定された型の変数の最小整列（バイト単位）を指定する。 たとえば、次の宣言があると。
+@item aligned
+@itemx aligned (@var{alignment})
+@code{aligned}属性は、指定されたタイプの変数の最小整列（バイト単位）を指定します。 @var{alignment}を指定する場合は、2の累乗にする必要があります。@var{alignment}引数を指定しないと、ターゲットの最大の境界調整が行われます。これは、多くの場合、8バイトまたは16バイトです。 たとえば、宣言は次のとおりです。
 
 @smallexample
 struct S @{ short f[3]; @} __attribute__ ((aligned (8)));
@@ -4620,9 +5142,9 @@ typedef int more_aligned_int __attribute__ ((aligned (8)));
 @end smallexample
 
 @noindent
-@code{struct S}または@code {more_aligned_int}の各変数が@emph{少なくとも}8バイト境界に割り当てられていることをコンパイラーに（可能な限り）保証させる。SPARCでは、@code{struct S}型の変数をすべて8バイトの境界に揃えておくと、 @code {struct S}型の変数を別のものにコピーするときに、コンパイラは@code {ldd}と@code{std}（ダブルワードのロードとストア）命令を使用して、実行時の効率が向上する。
+@code{struct S}または@code{more_aligned_int}の各変数が@emph{少なくとも}8バイト境界に割り当てられていることをコンパイラーに（可能な限り）保証させる。SPARCでは、@code{struct S}型の変数をすべて8バイトの境界に揃えておくと、 @code{struct S}型の変数を別のものにコピーするときに、コンパイラは@code{ldd}と@code{std}（ダブルワードのロードとストア）命令を使用して、実行時の効率が向上する。
 
-@code {struct}型や@code {union}型のアライメントは、ISO C標準では、少なくとも問題の@code{struct}または@code{union}のすべてのメンバーのアライメントの最低公倍数の完全な倍数であることが要求されることに注意せよ。つまり、@code{aligned}属性をそのような型のメンバのいずれかに付加することによって、@code {struct}型または@code{union}型の整列を効果的に調整することができるが、 上の例では、コンパイラに@code{struct}型または@code{union}型全体のアライメントを調整するように要求する、より明白で直感的で読みやすい方法を示している。
+@code{struct}型や@code{union}型のアライメントは、ISO C標準では、少なくとも問題の@code{struct}または@code{union}のすべてのメンバーのアライメントの最低公倍数の完全な倍数であることが要求されることに注意せよ。つまり、@code{aligned}属性をそのような型のメンバのいずれかに付加することによって、@code{struct}型または@code{union}型の整列を効果的に調整することができるが、 上の例では、コンパイラに@code{struct}型または@code{union}型全体のアライメントを調整するように要求する、より明白で直感的で読みやすい方法を示している。
 
 前の例と同様に、コンパイラが指定された@code{struct}型または@code{union}型に対して使用する整列（バイト単位）を明示的に指定することができる。 あるいは、アラインメント係数を省略して、コンパイルするターゲットマシンの最大の有効なアライメントにタイプを合わせるようにコンパイラーに依頼することもできる。 たとえば、次のように書くことができる。
 
@@ -4636,15 +5158,13 @@ struct S @{ short f[3]; @} __attribute__ ((aligned));
 
 特定の型に対して時間効率の良いアライメントを選択し、その型の個々のスタンドアロンオブジェクトのみを宣言するようにコンパイラに依頼することはできるが、コンパイラの時間効率的な配置を選択する機能は、関連する（効率的に配置された）タイプの変数の配列を作成する予定がある場合にのみ、主に有効である。効率的に整列された型の変数の配列を宣言または使用すると、プログラムは関連する型へのポインタに対してポインタ算術（または同じものになる添え字付け）も行うが、コンパイラがこれらのポインタ算術演算用に生成するコードは、他の型より効率的に配置された型の方が効率がよいことがよくある。
 
-@code{aligned}属性の有効性は、リンカの固有の制限によって制限されることに注意せよ。 多くのシステムでは、リンカは、変数が特定の最大整列まで整列するようにのみ調整することができる。 （一部のリンカでは、サポートされている最大のアラインメントは非常に小さいかもしれない）。リンカが変数を最大8バイトのアラインメントまでしかアライメントできない場合、@code{aligned(16)}を@code {__attribute__}に指定しても8バイトのアラインメントしか得られない。 詳細については、リンカのマニュアルを参照せよ。
+@code{aligned}属性の有効性は、リンカの固有の制限によって制限されることに注意せよ。 多くのシステムでは、リンカは、変数が特定の最大整列まで整列するようにのみ調整することができる。 （一部のリンカでは、サポートされている最大のアラインメントは非常に小さいかもしれない）。リンカが変数を最大8バイトのアラインメントまでしかアライメントできない場合、@code{aligned(16)}を@code{__attribute__}に指定しても8バイトのアラインメントしか得られない。 詳細については、リンカのマニュアルを参照せよ。
 
-@code {aligned}属性はアラインメントを増加させるだけである。 @code {packed}属性を指定することで、アラインメントを減らすことができる。 下記参照。
+@code{aligned}属性はアラインメントを増加させるだけである。 @code{packed}属性を指定することで、アラインメントを減らすことができる。 下記参照。
 
 @cindex @code{warn_if_not_aligned} type attribute
 @item warn_if_not_aligned (@var{alignment})
-This attribute specifies a threshold for the structure field, measured
-in bytes.  If the structure field is aligned below the threshold, a
-warning will be issued.  For example, the declaration:
+この属性は、構造フィールドのしきい値をバイト単位で指定します。 構造フィールドがしきい値を下回ると、警告が出されます。 たとえば、宣言は次のとおりです。
 
 @smallexample
 typedef unsigned long long __u64
@@ -4659,12 +5179,7 @@ struct foo
 @end smallexample
 
 @noindent
-causes the compiler to issue an warning on @code{struct foo}, like
-@samp{warning: alignment 4 of 'struct foo' is less than 8}.
-It is used to define @code{struct foo} in such a way that
-@code{struct foo} has the same layout and the structure field @code{x}
-has the same alignment when @code{__u64} is aligned at either 4 or
-8 bytes.  Align @code{struct foo} to 8 bytes:
+は、@samp{warning：alignment 4 is 'struct foo' is less than 8}のように、コンパイラーは@code{struct foo}に対して警告を発行します。 @code{__u64}が4または8バイトのいずれかに配置されている場合、@code{struct foo}が同じレイアウトになり、構造フィールド@code{x}が同じ配置になるように、@code{struct foo}を定義するために使用されます 。 @code{struct foo}を8バイトに整列します。
 
 @smallexample
 struct foo
@@ -4676,9 +5191,7 @@ struct foo
 @end smallexample
 
 @noindent
-silences the warning.  The compiler also issues a warning, like
-@samp{warning: 'x' offset 12 in 'struct foo' isn't aligned to 8},
-when the structure field has the misaligned offset:
+は警告を止めます。 コンパイラーは、構造体フィールドのオフセットが正しくない場合、@samp{warning： 'x' offset 12 in 'struct foo' inn't alignment to 8}のような警告も発行します。
 
 @smallexample
 struct foo
@@ -4690,35 +5203,38 @@ struct foo
 @} __attribute__((aligned(8)));
 @end smallexample
 
-This warning can be disabled by @option{-Wno-if-not-aligned}.
+この警告は、@option{-Wno-if-not-aligned}によって無効にできます。
 
-@item bnd_variable_size
-@cindex @code{bnd_variable_size} type attribute
-@cindex Pointer Bounds Checker attributes
-構造体フィールドに適用されるとき、この属性はポインタの境界チェッカーに、このフィールドのサイズを静的型情報を使用して計算すべきではないことを伝える。 これは、構造体の終わりに配置された可変サイズの静的配列フィールドをマークするために使用される。
+@item alloc_size (@var{position})
+@itemx alloc_size (@var{position-1}, @var{position-2})
+@cindex @code{alloc_size} type attribute
+@code{alloc_size}型属性は、ポインターを返し、整数型の引数を少なくとも1つ取る関数の型の定義に適用できます。 これは、返されたポインタが、@var{position-1}の関数引数、または@var{position-1}と@var{position-2}の引数の積で指定されたサイズのオブジェクトを指していることを示します。意味のあるサイズは、@code{PTRDIFF_MAX}より小さい正の値です。 他のサイズは、検出されると無視されます。 GCCはこの情報を使用して、@code{__builtin_object_size}の結果を改善します。
+
+たとえば、次の宣言
 
 @smallexample
-struct S
-@{
-  int size;
-  char data[1];
-@}
-S *p = (S *)malloc (sizeof(S) + 100);
-p->data[10] = 0; //Bounds violation
+typedef __attribute__ ((alloc_size (1, 2))) void*
+  calloc_type (size_t, size_t);
+typedef __attribute__ ((alloc_size (1))) void*
+  malloc_type (size_t);
 @end smallexample
 
 @noindent
-フィールドの属性を使用することにより、望ましくない拘束違反チェックを避けることができる：
+は、@code{calloc_type}が標準のC関数@code{calloc}と同様に、サイズが引数1と2の積で与えられるオブジェクトを返す関数のタイプであり、@code{malloc_type}（標準のC関数@code {malloc}のような）は、サイズが引数1によって関数に与えられるオブジェクトを返すことを指定します。
+
+@item copy
+@itemx copy (@var{expression})
+@cindex @code{copy} type attribute
+@code{copy}属性は、@var{expression}の型が宣言されている属性のセットを、属性が適用される型の宣言に適用します。 この属性は、エイリアスシンボルと同じ属性セットを指定することが予想されるエイリアスを定義するライブラリ用に設計されています。 @code{copy}属性は、型、変数、または関数で使用できます。 ただし、属性が適用されるシンボルの種類（変数または関数）は、引数が参照するシンボルの種類と一致する必要があります。 @code{copy}属性は、構文属性と意味属性のみをコピーしますが、@code{alias}、@code{visibility}、@code{weak}などのシンボルのリンクまたは可視性に影響を与える属性はコピーしません。 @code{deprecated}属性もコピーされません。 @xref{Common Function Attributes}.　@xref{Common Variable Attributes}.
+
+たとえば、以下の@code{struct A}がサードパーティのライブラリヘッダーで定義されており、@code{N}の配置要件があり、@code packed}属性のために型の変数がそれほど配置されていない場合は常に警告が表示されます。無関係な@code{struct B}の定義に@code{copy}属性を指定すると、ポインタ式によって参照される型から@code{struct B}にすべての関連属性がコピーされます。
 
 @smallexample
-struct S
-@{
-  int size;
-  char data[1] __attribute__((bnd_variable_size));
-@}
-S *p = (S *)malloc (sizeof(S) + 100);
-p->data[10] = 0; //OK
+struct __attribute__ ((aligned (N), warn_if_not_aligned (N)))
+A @{ /* @r{@dots{}} */ @};
+struct __attribute__ ((copy ( (struct A *)0)) B @{ /* @r{@dots{}} */ @};
 @end smallexample
+
 
 @item deprecated
 @itemx deprecated (@var{msg})
@@ -4739,6 +5255,8 @@ T3 z __attribute__ ((deprecated));
 
 @code {deprecated}属性は、関数や変数にも使用できる。 (@pxref{Function Attributes}, @pxref{Variable Attributes})
 
+属性に添付されたメッセージは、@option{-fmessage-length}オプションの設定の影響を受けます。
+
 @item designated_init
 @cindex @code{designated_init} type attribute
 この属性は構造体型にのみ適用できる。 このタイプのオブジェクトの初期化では、位置初期化子ではなく、指示子付き初期化子を使用する必要があることを示している。 この属性の目的は、構造体のレイアウトが変更される可能性があることを、したがって位置の初期化に依存すると将来の破損が生じる可能性があることをプログラマが示すことができるようにすることである。
@@ -4747,7 +5265,7 @@ GCCはデフォルトでこの属性に基づいて警告を出す。 @option{-W
 
 @item may_alias
 @cindex @code{may_alias} type attribute
-この属性を持つ型へのポインタによるアクセスは、型に基づくエイリアス解析の対象ではないが、代わりに他の型のオブジェクトのエイリアスが可能であると想定される。 C99標準の第6.5節第7項の文脈では、そのようなポインタを逆参照する左辺式は、文字型のように扱われる。 エイリアスの問題の詳細については、@option{-fstrict-aliasing}を参照せよ。 この拡張は、あるベクトル型へのポインタが別のベクトル型へのポインタの別名付けを許可されているいくつかのベクトルAPIをサポートするために存在する。
+この属性を持つ型へのポインタによるアクセスは、型に基づくエイリアス解析の対象ではないが、代わりに他の型のオブジェクトのエイリアスが可能であると想定される。 C99標準の第6.5節第7項の文脈では、そのようなポインタを被参照する左辺式は、文字型のように扱われる。 エイリアスの問題の詳細については、@option{-fstrict-aliasing}を参照せよ。 この拡張は、あるベクトル型へのポインタが別のベクトル型へのポインタの別名付けを許可されているいくつかのベクトルAPIをサポートするために存在する。
 
 この属性を持つ型のオブジェクトは特別なセマンティクスを持たないことに注意せよ。
 
@@ -4774,14 +5292,21 @@ main (void)
 @noindent
 変数宣言で@code{short_a}を@code{short}に置き換えた場合、@option{-O2}以上でデフォルトでオンになる@option{-fstrict-aliasing}でコンパイルすると、上記のプログラムは強制終了するだろう。
 
+@item mode (@var{mode})
+@cindex @code{mode} type attribute
+この属性は、宣言のデータ型を指定します---どちらの型もモード@var{mode}に対応します。 これにより、実際には、幅に応じて整数型または浮動小数点型を要求できます。
+
+@var{mode}の可能なキーワードのリストについては、@xref{Machine Modes,,, gccint, GNU Compiler Collection (GCC) Internals},
+@code{byte}または@code{__byte__}のモードを指定して、1バイト整数に対応するモードを指定することもできます。@ code{word}または@code{__word__}は、1ワード整数のモードに対応し、@code{pointer}または@code{__pointer__}は、ポインタを表すために使用されるモードです。
+
 @item packed
 @cindex @code{packed} type attribute
-@code{struct}型または@code {union}型定義に添付されているこの属性は、構造体または共用体の各メンバ（ゼロ幅のビットフィールド以外）が必要なメモリを最小限に抑えるように配置されることを指定する。 @code{enum}定義に付けると、最小の整数型を使用する必要があることを示す。
+@code{struct}型または@code{union}型定義に添付されているこの属性は、構造体または共用体の各メンバ（ゼロ幅のビットフィールド以外）が必要なメモリを最小限に抑えるように配置されることを指定する。 @code{enum}定義に付けると、最小の整数型を使用する必要があることを示す。
 
 @opindex fshort-enums
 @code{struct}型と@code{union}型に@code{packed}属性を指定することは、構造体または共用体の各メンバで@code{packed}属性を指定するのと同じである。 コマンドラインで@option{-fshort-enums}フラグを指定することは、すべての@code{enum}定義で@code{packed}属性を指定するのと同じである。
 
-次の例では、@code {struct my_packed_struct}のメンバーは密接にまとめられているが、@code{s}メンバーの内部レイアウトはパックされていない。そうするためには、@code{struct my_unpacked_struct}もパックする必要がある。
+次の例では、@code{struct my_packed_struct}のメンバーは密接にまとめられているが、@code{s}メンバーの内部レイアウトはパックされていない。そうするためには、@code{struct my_unpacked_struct}もパックする必要がある。
 
 @smallexample
 struct my_unpacked_struct
@@ -4798,7 +5323,7 @@ struct __attribute__ ((__packed__)) my_packed_struct
   @};
 @end smallexample
 
-列挙型、構造体、共用体を定義していない@code {typedef}ではなく@code{enum}、@code {struct}または@code{union}の定義にのみ@code{packed}属性属性を指定することができる。
+列挙型、構造体、共用体を定義していない@code{typedef}ではなく@code{enum}、@code{struct}または@code{union}の定義にのみ@code{packed}属性属性を指定することができる。
 
 @item scalar_storage_order ("@var{endianness}")
 @cindex @code{scalar_storage_order} type attribute
@@ -4809,9 +5334,9 @@ struct __attribute__ ((__packed__)) my_packed_struct
 ターゲットのスカラー格納順序とは逆のスカラ格納順序を持つ型に対しては、追加の制限が適用される。
 
 @itemize
-@item 逆スカラー格納順序の@code{union}または@code {struct}のスカラーフィールドのアドレスを取ることは許されず、エラーが発生する。
-@item @option{-Wno-scalar-storage-name}が指定されていない限り、構成要素がスカラーである、配列フィールドのアドレスを逆スカラー格納順序の@code{union}または@code {struct}の配列フィールドのアドレスを取ることは許可されるが、警告が生成される。
-@item 逆スカラー格納順序の@code {union}または@code {struct}のアドレスを取ることは許可されている。
+@item 逆スカラー格納順序の@code{union}または@code{struct}のスカラーフィールドのアドレスを取ることは許されず、エラーが発生する。
+@item @option{-Wno-scalar-storage-name}が指定されていない限り、構成要素がスカラーである、配列フィールドのアドレスを逆スカラー格納順序の@code{union}または@code{struct}の配列フィールドのアドレスを取ることは許可されるが、警告が生成される。
+@item 逆スカラー格納順序の@code{union}または@code {struct}のアドレスを取ることは許可されている。
 @end itemize
 
 これらの制約は、スカラーのアドレスまたはスカラーコンポーネントを持つ配列のアドレスが取られたときに記憶順序属性が失われるために存在する。したがって、このアドレスを介して間接的に格納するのは一般的に機能しない。それにもかかわらず、第2の場合は、配列との間でブロックコピーを実行することができる。
@@ -4861,9 +5386,30 @@ pid_t wait (wait_status_ptr_t p)
 @cindex @code{unused} type attribute
 型（@code{union}や@code{struct}を含む）に接続すると、この型の変数は使用されない可能性があることを意味する。 変数が何もしないように見えても、GCCはその型の変数について警告を出さない。 これは通常、定義されて参照されないが、自明ではない簿記機能を持つコンストラクタとデストラクタを含むロッククラスまたはスレッドクラスのケースである。
 
+@item vector_size (@var{bytes})
+@cindex @code{vector_size} type attribute
+この属性は、バイト単位で測定されるタイプのベクトルサイズを指定します。 適用されるタイプは、@dfn{基本型}と呼ばれます。 @var{bytes}引数は、基本型サイズの正の2の累乗である必要があります。 たとえば、次の宣言：
+
+@smallexample
+typedef __attribute__ ((vector_size (32))) int int_vec32_t ;
+typedef __attribute__ ((vector_size (32))) int* int_vec32_ptr_t;
+typedef __attribute__ ((vector_size (32))) int int_vec32_arr3_t[3];
+@end smallexample
+
+@noindent
+は、@code{int_vec32_t}を、@code{int}サイズのユニットで構成される32バイトのベクトル型として定義します。 サイズが4バイトの@code{int}の場合、型は、それぞれ4バイトの8単位のベクトルを定義します。 @code{int_vec32_t}型の変数のモードは@code{V8SI}です。 @code{int_vec32_ptr_t}は、そのようなベクトル型へのポインタであるように定義され、@code{int_vec32_arr3_t}は、そのような3つのベクトルの配列になるように定義されます。 ベクトル型のオブジェクトの操作の詳細については、@xref{Vector Extensions}。
+
+この属性は、整数および浮動スカラー型にのみ適用できます。 関数宣言では、属性は関数の戻り値の型に適用されます。
+
+たとえば、次のとおりです。
+@smallexample
+__attribute__ ((vector_size (16))) float get_flt_vec16 (void);
+@end smallexample
+は、@code{get_flt_vec16}が基本型@code{float}の16バイトのベクトルを返す関数であることを宣言します。
+
 @item visibility
 @cindex @code{visibility} type attribute
-C++では、属性の可視性（@pxref {Function Attributes}）はクラス、構造体、共用体、列挙型にも適用できる。 他の型の属性とは異なり、属性は初期キーワードと型の名前の間になければならない。 タイプのボディの後には出現できない。
+C++では、属性の可視性（@pxref{Function Attributes}）はクラス、構造体、共用体、列挙型にも適用できる。 他の型の属性とは異なり、属性は初期キーワードと型の名前の間になければならない。 タイプのボディの後には出現できない。
 
 タイプの可視性は、クラス（vtable、typeinfoノードなど）に関連付けられた曖昧なリンケージエンティティに適用されることに注意せよ。 特に、あるクラスがある共有オブジェクト内で例外としてスローされ、別の共有オブジェクトで捕捉された場合、そのクラスはデフォルトの可視性を持たなければならない。 それ以外の場合は、2つの共有オブジェクトが同じtypeinfoノードを使用できず、例外処理が中断される。
 
@@ -4872,14 +5418,10 @@ C++では、属性の可視性（@pxref {Function Attributes}）はクラス、�
 複数の属性を指定するには、ダブルカッコ内でコンマで区切る。例えば、 @samp{__attribute__ ((aligned (16), packed))}.
 
 @node ARC Type Attributes
-@subsection ARC Type Attributes
+@subsection ARC型属性
 
 @cindex @code{uncached} type attribute, ARC
-Declaring objects with @code{uncached} allows you to exclude
-data-cache participation in load and store operations on those objects
-without involving the additional semantic implications of
-@code{volatile}.  The @code{.di} instruction suffix is used for all
-loads and stores of data declared @code{uncached}.
+@code{uncached}を使用してオブジェクトを宣言すると、@code{volatile}の追加の意味上の影響を伴うことなく、それらのオブジェクトのロードおよびストア操作におけるデータキャッシュの参加を除外できます。 @code{.di}命令サフィックスは、@code{uncached}として宣言されたデータのすべてのロードおよびストアに使用されます。
 
 @node ARM Type Attributes
 @subsection ARM型属性
@@ -4929,12 +5471,6 @@ __attribute__((altivec(bool__))) unsigned
 @end smallexample
 
 これらの属性は主に、@code{__vector}、@code{__pixel}、@code{__bool}のAltiVecキーワードをサポートすることを意図している。
-
-@node SPU Type Attributes
-@subsection SPU型属性
-
-@cindex @code{spu_vector} type attribute, SPU
-SPUは型の@code{spu_vector}属性をサポートしている。 この属性を使用すると、ソニー/東芝/IBM SPU言語拡張仕様でサポートされているベクトルデータ型を宣言できる。 @code{__vector}キーワードをサポートすることを意図している。
 
 @node x86 Type Attributes
 @subsection x86型属性
@@ -5082,7 +5618,7 @@ C++の属性のセマンティクスにはいくつかの問題がある。 た�
 
 @dfn{attribute specifier list}（属性指定子リスト）は、他のトークンで区切られていない、1つ以上の属性指定子の列である。
 
-属性名の前に@samp{__}を付けて属性名を指定することもできる。 これにより、同じ名前の可能性のあるマクロを気にせずにヘッダファイルでそれらを使用することができる。 たとえば、@code {noreturn}ではなく@code{__noreturn__}という属性名を使用できる。
+属性名の前に@samp{__}を付けて属性名を指定することもできる。 これにより、同じ名前の可能性のあるマクロを気にせずにヘッダファイルでそれらを使用することができる。 たとえば、@code{noreturn}ではなく@code{__noreturn__}という属性名を使用できる。
 
 @subsubheading ラベル属性
 
@@ -5096,6 +5632,7 @@ GNU Cでは、属性指定子リストが列挙子の一部として現れるて
 GNU Cでは、属性指定子リストが空文の一部として現れることができる。 属性はセミコロンの前に置かれる。
 
 @subsubheading 型属性
+
 属性指定子リストは@code{struct}、@code{union}または@code{enum}指定子の一部として現れることができる。 @code{struct}、@code{union}、@code{enum}キーワードの直後、または閉じ括弧の後に置くことができる。 前者の構文が好ましい。属性指定子が閉じ括弧の後に続く場合、それらは構造体、共用体、または列挙型に関連しているとみなされ、型指定子が含まれる囲み宣言には関係せず、定義された型は属性指定子の後まで完全ではない。
 @c Otherwise, there would be the following problems: a shift/reduce
 @c conflict between attributes binding the struct/union/enum and
@@ -5184,7 +5721,7 @@ isroot (x)   /* @r{??? lossage here ???} */
 @}
 @end smallexample
 
-@code {uid_t}型が@code {short}であるとする。 ISO Cでは、旧式の非プロトタイプ定義のサブワード引数が昇格されるため、この例は許可されない。 したがって、この例では、関数定義の引数は実際には@code{int}で、プロトタイプ引数の型@code{short}と一致しない。
+@code{uid_t}型が@code {short}であるとする。 ISO Cでは、旧式の非プロトタイプ定義のサブワード引数が昇格されるため、この例は許可されない。 したがって、この例では、関数定義の引数は実際には@code{int}で、プロトタイプ引数の型@code{short}と一致しない。
 
 このISO Cの制限により、プログラマーは@code{uid_t}型が@code{short}、@code{int}、または@code{long}であるかどうかわからないため、従来のCコンパイラに移植可能なコードを書くのが難しくなる。 したがって、これらのような場合、これらのGNU Cではプロトタイプが古いスタイルの定義を上書きすることができる。 より正確には、GNU Cでは、関数プロトタイプの引数型は、前の型が宣言前の後者の型と同じ場合は、後の旧式の型定義で指定された引数の型を上書きする。 したがって、GNU Cでは、上記の例は次のようになる。
 
@@ -5207,7 +5744,7 @@ GNU C++は古いスタイルの関数定義をサポートしていないので�
 @cindex C++ comments
 @cindex comments, C++ style
 
-GNU Cでは、C++スタイルのコメントを使うことができる。コメントは@samp {//}で始まり、行末まで続く。 他の多くのC実装では、このようなコメントが許可されており、1999 C標準に含まれている。 しかし、C99の前にISO Cのバージョンを指定する@option {-std}オプション、または@option{-ansi}（@option{-std = c90}と同等）を指定すると、C++スタイルのコメントは認識されない。
+GNU Cでは、C++スタイルのコメントを使うことができる。コメントは@samp {//}で始まり、行末まで続く。 他の多くのC実装では、このようなコメントが許可されており、1999 C標準に含まれている。 しかし、C99の前にISO Cのバージョンを指定する@option{-std}オプション、または@option{-ansi}（@option{-std=c90}と同等）を指定すると、C++スタイルのコメントは認識されない。
 
 @node Dollar Signs
 @section 識別子名でのドル記号
@@ -5230,7 +5767,7 @@ GNU Cでは、通常、識別子名にドル記号を使用することができ
 
 キーワード@code{__alignof__}を使うと、オブジェクトがどのように整列されているか、及び型によって通常必要とされる最小整列について問い合わせることができる。 その構文は@code{sizeof}と同じである。
 
-たとえば、ターゲットマシンが@code {double}値を8バイト境界に揃える必要がある場合、@code {__alignof__(double)}は8である。これは多くのRISCマシンで当てはまる。 より伝統的なマシン設計では、@code{__alignof__(double)}は4または2である。
+たとえば、ターゲットマシンが@code{double}値を8バイト境界に揃える必要がある場合、@code{__alignof__(double)}は8である。これは多くのRISCマシンで当てはまる。 より伝統的なマシン設計では、@code{__alignof__(double)}は4または2である。
 
 一部のマシンでは実際にはアラインメントが必要ない。それらは、奇数アドレスであっても任意のデータ型への参照を可能にする。これらのマシンでは、@code{__alignof__}は、GCCがデータ型を与える最小のアライメントを報告する。通常、ターゲットABIが指定する。
 
