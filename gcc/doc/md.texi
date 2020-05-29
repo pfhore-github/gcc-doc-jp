@@ -1081,9 +1081,9 @@ predicate.
 @cindex constraints, @code{asm}
 @cindex @code{asm} constraints
 
-以下は、@ code {asm}オペランドで使用できる制約文字の詳細である。
+以下は、@code{asm}オペランドで使用できる制約文字の詳細である。
 @end ifclear
-制約は、オペランドがレジスタ内にあるかどうか、およびどの種類のレジスタであるかを示すことができる。 オペランドがメモリ参照であるかどうか、およびどの種類のアドレスであるか、 オペランドが直接的な定数であるかどうか、および可能性のある値によって決まる。 制約には、2つのオペランドが一致する必要がある。 @samp {<}または@samp {>}制約が使用されている場合を除いて、アドレッシングレジスタを更新できる命令で副作用が一度だけ発生するという保証はないため、インライン@code{asm}のオペランドには副作用が許可されない。 
+制約は、オペランドがレジスタ内にあるかどうか、およびどの種類のレジスタであるかを示すことができる。 オペランドがメモリ参照であるかどうか、およびどの種類のアドレスであるか、 オペランドが直接的な定数であるかどうか、および可能性のある値によって決まる。 制約には、2つのオペランドが一致する必要がある。 @samp{<}または@samp{>}制約が使用されている場合を除いて、アドレッシングレジスタを更新できる命令で副作用が一度だけ発生するという保証はないため、インライン@code{asm}のオペランドには副作用が許可されない。 
 
 @ifset INTERNALS
 @menu
@@ -1138,7 +1138,7 @@ predicate.
 
 @cindex @samp{<} in constraint
 @item @samp{<}
-自動デクリメントアドレッシング（プリデクリメントまたはポストデクリメントのいずれか）を伴うメモリオペランドが許可される。 インライン@code{asm}では、この制約は、副作用を処理できる命令でオペランドが1回だけ使用されている場合にのみ許可される。 副作用が実行されないか、複数回実行されるため、インライン@code{asm}パターン内の制約文字列で@samp{<}を持つオペランドを使用しないか、複数の命令でそれを使用することは無効である。さらに、制約文字列中の@samp{<}を持つオペランドは、PowerPCの@code {％U0}命令サフィックスやIA-64の@code {％P0}のような特別な命令サフィックスを伴う。
+自動デクリメントアドレッシング（プリデクリメントまたはポストデクリメントのいずれか）を伴うメモリオペランドが許可される。 インライン@code{asm}では、この制約は、副作用を処理できる命令でオペランドが1回だけ使用されている場合にのみ許可される。 副作用が実行されないか、複数回実行されるため、インライン@code{asm}パターン内の制約文字列で@samp{<}を持つオペランドを使用しないか、複数の命令でそれを使用することは無効である。さらに、制約文字列中の@samp{<}を持つオペランドは、PowerPCの@code {%U0}命令サフィックスやIA-64の@code {%P0}のような特別な命令サフィックスを伴う。
 
 @cindex @samp{>} in constraint
 @item @samp{>}
@@ -1160,7 +1160,7 @@ predicate.
 
 @cindex @samp{I} in constraint
 @item @samp{I}, @samp{J}, @samp{K}, @dots{} @samp{P}
-@samp{I}から@samp {P}までの範囲の他の文字は、マシン依存の方法で、指定された範囲の明示的な整数値を持つ即値整数オペランドを許可するために定義されるかもしれない。 たとえば、68000では@samp{I}は1〜8の値の範囲を表すように定義されている。これはシフト命令のシフト数として許される範囲である。
+@samp{I}から@samp{P}までの範囲の他の文字は、マシン依存の方法で、指定された範囲の明示的な整数値を持つ即値整数オペランドを許可するために定義されるかもしれない。 たとえば、68000では@samp{I}は1〜8の値の範囲を表すように定義されている。これはシフト命令のシフト数として許される範囲である。
 
 @cindex @samp{E} in constraint
 @item @samp{E}
@@ -1173,7 +1173,7 @@ predicate.
 @cindex @samp{G} in constraint
 @cindex @samp{H} in constraint
 @item @samp{G}, @samp{H}
-@samp{G}と@samp {H}は、特定の範囲の値での即値浮動小数点オペランドを許可するような、マシン依存の方法で定義されているかもしれない。
+@samp{G}と@samp{H}は、特定の範囲の値での即値浮動小数点オペランドを許可するような、マシン依存の方法で定義されているかもしれない。
 
 @cindex @samp{s} in constraint
 @item @samp{s}
@@ -1204,7 +1204,7 @@ require a scratch register.
 @item @samp{0}, @samp{1}, @samp{2}, @dots{} @samp{9}
 指定されたオペランド番号と一致するオペランドが許可される。 同一の代替案内で文字と一緒に数字を使用する場合、その数字は最後に来るべきである。
 
-この数字は1桁以上にすることができる。 複数の数字が連続して出現する場合、それらは1つの10進整数として解釈される。 @samp{10}がオペランド1@emph{または}オペランド0と一致すると解釈されることは決して望まれないだろう。これが望ましいのであれば、代わりに複数の選択肢を使うことができる。
+この数字は1桁以上にすることができる。 複数の数字が連続して出現する場合、それらは1つの10進整数として解釈される。 @samp{10}がオペランド1@emph{_または_}オペランド0と一致すると解釈されることは決して望まれないだろう。これが望ましいのであれば、代わりに複数の選択肢を使うことができる。
 
 @cindex matching constraint
 @cindex constraint, matching
@@ -1501,17 +1501,17 @@ classes are defined.  Then none of this complexity is relevant.
 @item &
 このオペランドは、@dfn{earlyclobber}（早期破壊）オペランドであり、入力オペランドを使用して命令が終了する前に書き込まれることを意味する。 したがって、このオペランドは、命令によって、またはメモリアドレスの一部として読み取られるレジスタ内に存在しない可能性がある。
 
-@samp{&}は書かれている選択肢にのみ適用される。 複数の選択肢の制約では、@samp{&}が必要な場合もあれば、そうでない場合もある。 たとえば、68000の@samp {movdf} insnを参照せよ。
+@samp{&}は書かれている選択肢にのみ適用される。 複数の選択肢の制約では、@samp{&}が必要な場合もあれば、そうでない場合もある。 たとえば、68000の@samp{movdf} insnを参照せよ。
 
-初期の結果が書き込まれる前に入力としての唯一の使用が発生した場合、命令によって読み取られるオペランドは初期破壊オペランドに結びつけることができる。 この形式の代替案を追加すると、読み取りオペランドの一部だけが初期マクロによって影響を受ける場合、GCCはより良いコードを生成することができる。 たとえば、ARMの@samp {mulsi3} insnを参照せよ。
+初期の結果が書き込まれる前に入力としての唯一の使用が発生した場合、命令によって読み取られるオペランドは初期破壊オペランドに結びつけることができる。 この形式の代替案を追加すると、読み取りオペランドの一部だけが初期マクロによって影響を受ける場合、GCCはより良いコードを生成することができる。 たとえば、ARMの@samp{mulsi3} insnを参照せよ。
 
 さらに、@dfn{earlyclobber}オペランドが読取り/書込みオペランドでもある場合、そのオペランドは使用された後にのみ書き込まれる。
 
-@samp{&}は@samp {=}や@samp {+}を書く必要をなくさない。@dfn{earlyclobber}オペランドは常に書き込まれるため、読み取り専用の@dfn{earlyclobber}オペランドは不正な形式であり、コンパイラによって拒否される。
+@samp{&}は@samp{=}や@samp{+}を書く必要をなくさない。@dfn{earlyclobber}オペランドは常に書き込まれるため、読み取り専用の@dfn{earlyclobber}オペランドは不正な形式であり、コンパイラによって拒否される。
 
 @cindex @samp{%} in constraint
 @item %
-命令がこのオペランドと次のオペランドに対して可換であると宣言する。 つまり、すべてのオペランドを制約条件に適合させる最も安価な方法であれば、コンパイラは2つのオペランドを交換することができる。 @samp{％}はすべての選択肢に適用され、制約の最初の文字として指定する必要がある。 読み取り専用のオペランドだけが@samp{％}を使用できる。
+命令がこのオペランドと次のオペランドに対して可換であると宣言する。 つまり、すべてのオペランドを制約条件に適合させる最も安価な方法であれば、コンパイラは2つのオペランドを交換することができる。 @samp{%}はすべての選択肢に適用され、制約の最初の文字として指定する必要がある。 読み取り専用のオペランドだけが@samp{%}を使用できる。
 
 @ifset INTERNALS
 This is often used in patterns for addition instructions
@@ -1586,6 +1586,12 @@ register preferences.
 @item w
 浮動小数点レジスタ、Advanced SIMDベクタレジスタ及びSVEベクタレジスタ
 
+@item x
+@code{w}と同様だが、レジスタの0から15までに制限されます。
+
+@item y
+@code{w}と同様だが、レジスタの0から7までに制限されます。
+
 @item Upl
 下位SVE手続きレジスタ(@code{P0}から@code{P7})の一つ
 
@@ -1630,6 +1636,95 @@ SI / DI / SF / DFモードのロード/ストアペア命令に適したメモ�
 
 @end table
 
+@item AMD GCN ---@file{config/gcn/constraints.md}
+@table @code
+@item I
+@minus{}16から64までの範囲の即値整数
+
+@item J
+16ビット符号付き整数即値
+
+@item Kf
+即値定数@minus{}1
+
+@item L
+符号なし15ビット即値整数
+
+@item A
+命令エンコーディングでインライン化できる即時定数：整数@minus{} 16..64、または浮動小数点0.0、+/@minus{} 0.5、+/@minus{}1.0、+/@minus{}2.0、+/@minus{}4.0、1.0/(2.0*PI)
+
+@item B
+命令エンコーディングに添付できる即時32ビット符号付き整数
+
+@item C
+@minus{}16..4294967295の範囲の即時32ビット整数（つまり、32ビット符号なし整数または@samp{A}制約）
+
+@item DA
+2つの@samp{A}定数に分割できる即時64ビット定数
+
+@item DB
+2つの@samp{B}定数に分割できる即時64ビット定数
+
+@item U
+任意の@code{unspec}
+
+@item Y
+任意の@code{symbol_ref}及び@code{label_ref}
+
+@item v
+VGPRレジスタ
+
+@item Sg
+SGPRレジスタ
+
+@item SD
+VCC、M0、EXECなど、命令の宛先に有効なSGPRレジスタ
+SGPR registers valid for instruction destinations, including VCC, M0 and EXEC
+
+@item SS
+VCC、M0、EXEC、SCCなど、命令の入力に有効なSGPRレジスタ
+
+@item Sm
+スカラーメモリ命令のソースとして有効なSGPRレジスタ（M0およびEXECを除く）
+
+@item Sv
+SGPR registers valid as a source or destination for vector instructions
+(excludes EXEC)
+
+@item ca
+すべての条件レジスター：SCC、VCCZ、EXECZ
+
+@item cs
+スカラー条件レジスター：SCC
+
+@item cV
+ベクトル条件レジスター：VCC、VCC_LO、VCC_HI
+
+@item e
+EXECレジスター（EXEC_LOおよびEXEC_HI）
+
+@item RB
+@code{buffer_*}命令に適したアドレス空間を持つメモリオペランド
+
+@item RF
+@code{flat_*}命令に適したアドレス空間を持つメモリオペランド
+
+@item RS
+@code{s_*}命令に適したアドレス空間を持つメモリオペランド
+
+@item RL
+@code{ds_*} LDS命令に適したアドレス空間を持つメモリオペランド
+
+@item RG
+@code{ds_*} GDS命令に適したアドレス空間を持つメモリオペランド
+
+@item RD
+any @code{ds_*}命令に適したアドレス空間を持つメモリオペランド
+
+@item RM
+@code{global_*}命令に適したアドレス空間を持つメモリオペランド
+
+@end table
 
 @item ARC ---@file{config/arc/constraints.md}
 @table @code
@@ -1947,6 +2042,42 @@ add / sub命令で64ビット幅の定数をチェックする
 @item G
 即値ストアに適する浮動小数点定数
 @end table
+
+@item C-SKY---@file{config/csky/constraints.md}
+@table @code
+
+@item a
+ミニレジスタr0 - r7
+
+@item b
+低レジスタr0 - r15
+
+@item c
+Cレジスタ
+
+@item y
+HI、LOレジスタ
+
+@item l
+LOレジスタ
+
+@item h
+HIレジスタ
+
+@item v
+ベクタレジスタ
+
+@item z
+スタックポインタレジスタ(SP)
+@end table
+
+@ifset INTERNALS
+The C-SKY back end supports a large set of additional constraints
+that are only useful for instruction selection or splitting rather
+than inline asm, such as constraints representing constant integer
+ranges accepted by particular instruction encodings.
+Refer to the source code for details.
+@end ifset
 
 @item Epiphany---@file{config/epiphany/constraints.md}
 @table @code
@@ -2469,7 +2600,7 @@ $r1h
 データレジスタ
 
 @item f
-利用可能ならば、68881浮動小数点レjし歌
+利用可能ならば、68881浮動小数点レジスタ
 
 @item I
 1から8までの整数
@@ -2765,22 +2896,22 @@ opcode内に符号化されるメモリ参照。
 
 @item PowerPC and IBM RS6000---@file{config/rs6000/constraints.md}
 @table @code
+@item r
+汎用レジスタ (GPR), @code{r0}@dots{}@code{r31}.
+
 @item b
-アドレスベースレジスタ
+ベースレジスタ。@code{r}と似ているが、@code{r0}は許可されないので、@code{r1}@dots{}@code{r31}.
 
 @item d
-浮動小数点レジスタ（64ビット値を保持している）
-
-@item f
-浮動小数点レジスタ（32ビット値を保持している）
+浮動小数点レジスタ。 これは最近の@code{f}と同じです。歴史的に@code {f}は単精度用で、@ code {d}は倍精度浮動小数点用でした。
 
 @item v
 Altivecベクトルレジスタ
 
 @item wa
-@option{-mvsx}オプションが使われた場合は任意のVSXレジスタでさNO_REGS。
+VSXレジスタ（VSR）、@code{vs0}@dots{}@code{vs63}。 これはFPR（@code{vs0}@dots{}@code{vs31}が@code{f0}@dots{}@code{f31}）であるか、またはVR（@code{vs32}@dots{}@code{vs63}は@code{v0}@dots {}@code{v31}であるかのいずれかです。
 
-VSXレジスタを取るレジスタ制約(@code{wa}, @code{wd}, @code{wf}, @code{wg}, @code{wh}, @code{wi}, @code{wj}, @code{wk}, @code{wl}, @code{wm}, @code{wo}, @code{wp}, @code{wq}, @code{ws}, @code{wt}, @code{wu}, @code{wv}, @code{ww},@code{wy})のどれかが使われたときは、正しいレジスタが使われるように@code{%x<n>}を使わなくてはならない。さもなければもしAltivecレジスタがVSXレジスタを期待するVSX命令のオペランドであるならばアセンブリファイルのレジスタ番号は正しくないだろう。
+@code{wa}を使用するときは、@code{%x}出力修飾子を使用して、正しいレジスタ番号が出力されるようにする必要があります。 例えば：
 
 @smallexample
 asm ("xvadddp %x0,%x1,%x2"
@@ -2789,112 +2920,44 @@ asm ("xvadddp %x0,%x1,%x2"
 @end smallexample
 
 @noindent
-は正しいが、
 
-@smallexample
-asm ("xvadddp %0,%1,%2" 
-     : "=wa" (v1) 
-     : "wa" (v2), "wa" (v3));
-@end smallexample
+@code{v}オペランドに@code{%x}を使うべきではありません。
 
-@noindent
-は正しくない。
+@ifset INTERNALS
+@item h
+特殊レジスタ(@code{vrsave}, @code{ctr}, or @code{lr}).
+@end ifset
 
-もし命令がAltivecレジスタのみを取るならば、@code{%x<n>}を使いたくないだろう。
+@item c
+カウントレジスタ@code{ctr}
 
-@smallexample
-asm ("xsaddqp %0,%1,%2"
-     : "=v" (v1)
-     : "v" (v2), "v" (v3));
-@end smallexample
+@item l
+リンクレジスタ@code{lr}
 
-@noindent
-は@code{xsaddqp}命令がAltivecレジスタのみを取るので正しいが、
+@item x
+条件レジスタフィールド0 @code{cr0}
 
-@smallexample
-asm ("xsaddqp %x0,%x1,%x2" 
-     : "=v" (v1) 
-     : "v" (v2), "v" (v3));
-@end smallexample
+@item y
+任意の条件レジスタフィールド、@code{cr0}@dots{}@code{cr7}
 
-@noindent
-は正しくない。
-
-@item wb
-@option{-mcpu=power9}が使われるならばAltivecレジスタでさもなければNO_REGS。
-
-@item wd
-ベクトル倍精度データを保持するVSXベクトルレジスタかNO_REGS。
+@ifset INTERNALS
+@item z
+キャリービット、@code{XER[CA]}
 
 @item we
 @option{-mcpu=power9}と@option{-m64}オプションが使われたならVSXレジスタレジスタでさもなければNO_REGS。
 
-@item wf
-ベクトル単精度データを保持するVSXベクトルレジスタかNO_REGS。
-
-@item wg
-@option{-mmfpgpr}が使われたなら、浮動小数点レジスタでさNO_REGS。
-
-@item wh
-直接ムーブが利用可能ならば浮動小数点レジスタで、さもなければNO_REGS。
-Floating point register if direct moves are available, or NO_REGS.
-
-@item wi
-VSX命令用の64ビット整数を保持するFP及びVSX命令レジスタかNO_REGS。
-
-@item wj
-直接ムーブ用の64ビット整数を保持するFP及びVSX命令レジスタかNO_REGS。
-
-@item wk
-直接ムーブ用の64ビット倍精度数を保持するFP及びVSX命令レジスタかNO_REGS。
-
-@item wl
-LFIWAX命令が有効ならば浮動小数点レジスタでさもなければNO_REGS。
-
-@item wm
-直接ムーブ命令が利用可能ならばVSXレジスタでさNO_REGS。
-
 @item wn
 レジスタなし(NO_REGS)。
 
-@item wo
-ISA3.0 ベクトル命令用のVSXレジスタかNO_REGS。
-
-@item wp
-IEEE128ビット浮動小数点TFモード用のVSXレジスタかNO_REGS。
-
-@item wq
-IEEE128ビット浮動小数点用のVSXレジスタかNO_REGS。
-
 @item wr
-64ビット命令が利用可能ならば汎用目的レジスタでさもなければNO_REGS。
-
-@item ws
-スカラー倍精度値を保持するVSXレジスタかNO_REGS。
-
-@item wt
-128ビット整数を保持するVSXレジスタかNO_REGS。
-
-@item wu
-単精度・32ビット整数のロード・ストア用に使うAltivecレジスタかNO_REGS。
-
-@item wv
-倍精度ロード・ストア用に使うAltivecレジスタかNO_REGS。
-
-@item ww
-@option{-mvsx}下での単精度命令を実行するためのFP及びVSXレジスタかNO_REGS。
+@option{-mpowerpc64}が使われたら@code{r}と同様、さもなければNO_REGS。
 
 @item wx
-STFIWX命令が有効ならば浮動小数点レジスタ、さもなければNO_REGS。
-
-@item wy
-ISA 2.07浮動小数点命令を実行するためのFP及びVSXレジスタかNO_REGS。
-
-@item wz
-LFIWZX命令が有効ならば浮動小数点レジスタ、さもなければNO_REGS。
+@option{-mpowerpcgfxopt}が使われたら@code{d}と同様、さもなければNO_REGS。
 
 @item wA
-64ビット命令が有効ならばアドレスベースレジスタ、さもなければNO_REGS。
+@option{-mpowerpc64}が使われたら@code{b}と同様、さもなければNO_REGS。
 
 @item wB
 altivecレジスタへロードできる符号あり5ビット定数整数
@@ -2906,22 +2969,7 @@ altivecレジスタへロードできる符号あり5ビット定数整数
 XXSPLTIB命令とともにロードできるベクトル定数。
 
 @item wF
-power9融合ロード・ストアに適したメモリオペランド。
-
-@item wG
-TOC融合メモリ参照に適したメモリオペランド。
-
-@item wH
-@option{-mvsx-small-integer}ならばAltivecレジスタ。
-
-@item wI
-@option{-mvsx-small-integer}ならば浮動小数点レジスタ。
-
-@item wJ
-@option{-mvsx-small-integer}と@option{-mpower9-vector}ならばFPレジスタ。
-
-@item wK
-@option{-mvsx-small-integer}と@option{-mpower9-vector}ならばAltivecレジスタ。
+power8 GPR融合ロードに適したメモリオペランド。
 
 @item wL
 MFVSRLD命令が指す要素数である整数定数。
@@ -2933,28 +2981,17 @@ XXLORC命令が利用可能ならばすべてが１であるベクトル定数�
 ISA 3.0ベクトルd形式命令に適したメモリオペランド。
 
 @item wQ
-@code{lq}と@code{stq}命令と一緒に働くメモリアドレス。
+ロード・ストアクワッド命令に適したメモリオペランド。
 
 @item wS
 XXSPTLITBと符号拡張でロードできるベクトル定数。
 
-@item h
-@samp{MQ}, @samp{CTR}, 及び@samp{LINK} レジスタ。
+@item wY
+DS形式命令用のメモリオペランド。
 
-@item c
-@samp{CTR} レジスタ
-
-@item l
-@samp{LINK} レジスタ
-
-@item x
-@samp{CR} レジスタ（状態レジスタ）番号0
-
-@item y
-@samp{CR} レジスタ（状態レジスタ）
-
-@item z
-@samp{XER[CA]}キャリービット（XERレジスタの一部）
+@item wZ
+最後の4ビットを無視したインデックスまたは間接メモリオペランド
+@end ifset
 
 @item I
 符号付き16ビット定数
@@ -2968,6 +3005,7 @@ XXSPTLITBと符号拡張でロードできるベクトル定数。
 @item L
 16ビット左にシフトした符号付き16ビット定数。
 
+@ifset INTERNALS
 @item M
 31より大きい定数
 
@@ -2979,12 +3017,18 @@ XXSPTLITBと符号拡張でロードできるベクトル定数。
 
 @item P
 負にすると符号付き16ビット定数になる定数
+@end ifset
 
+@item eI
+接頭辞付きの命令がサポートされている場合は、符号付き34ビット整数定数。
+
+@ifset INTERNALS
 @item G
 語あたり1命令でレジスタにロードできる浮動小数点定数
 
 @item H
 3命令を使ってレジスタにロードできる整数・符号小数点定数
+@end ifset
 
 @item m
 メモリオペランド。通常、@code{m}はベースレジスタを更新するアドレスを許可しない。@samp{<}か@samp{>}制約も使われたならば、それらは許可され、したがってPowerPCターゲットではこの場合には@code{asm}文がオペランドに正確に1回だけアクセスするならばその場合のみ@code{asm}文で@samp{m<>}を使っても安全である。@code{asm}文は
@@ -3002,21 +3046,31 @@ asm ("st %1,%0" : "=m<>" (mem) : "r" (val));
 
 は正しくない。
 
+@ifset INTERNALS
 @item es
 「安定した」メモリオペランド。すなわち、ベースレジスタのいかなる自動更新も含まない。これは@samp{m}がベースレジスタの自動修正を許可していたときには役立っていたが、今はそれらが@samp{<}および@samp{>}が使われたときにのみ許可されるため、@samp{es}は基本的には@samp{<}と@samp{<}なしの@samp{m}と同じである。
+@end ifset
 
 @item Q
-レジスタからのオフセットであるメモリオペランド（通常は@code{asm}文では@samp{m}か@samp{es}を使うほうがいい）
+レジスタからのオフセットであるメモリオペランド。
+
+@ifset INTERNALS
+@item Y
+DQ形式命令用のメモリオペランド
+@end ifset
 
 @item Z
-インデックスからレジスタからの間接であるメモリオペランド（通常は@code{asm}文では@samp{m}か@samp{es}を使うほうがいい）
+インデックスからレジスタからの間接であるメモリオペランド
 
+@ifset INTERNALS
 @item R
 AIX TOCエントリ
+@end ifset
 
 @item a
-インデックスからレジスタからの間接であるアドレスオペランド（通常は@code{asm}文では@samp{p}を使うほうがいい）
+インデックスからレジスタからの間接であるアドレスオペランド
 
+@ifset INTERNALS
 @item U
 System V Release 4s少データ領域参照
 
@@ -3025,6 +3079,26 @@ System V Release 4s少データ領域参照
 
 @item j
 すべてゼロであるベクトル定数。
+@end ifset
+
+@end table
+
+@item PRU---@file{config/pru/constraints.md}
+@table @code
+@item I
+符号なし8ビット整数定数
+
+@item J
+符号なし16ビット整数定数
+
+@item L
+符号なし5ビット整数定数（シフトカウント用）
+
+@item T
+テキストセグメント（プログラムメモリ）定数ラベル
+
+@item Z
+整数定数ゼロ
 
 @end table
 
@@ -3321,76 +3395,6 @@ SPARC-V8+アーキテクチャ用の64ビットグローバル及び出力レジ
 
 @end table
 
-@item SPU---@file{config/spu/spu.h}
-@table @code
-@item a
-il/ila/ilh/ilhu命令でロード可能な即値。const_intは64ビット値として扱われる。
-
-@item c
-and/xor/or命令用の即値。const_intは64ビット値として扱われる。
-
-@item d
-@code{iohl}命令用の即値。const_intは64ビット値として扱われる。
-
-@item f
-@code{fsmbi}でロード可能な即値。
-
-@item A
-il/ila/ilh/ilhu命令でロード可能な即値。const_intは32ビット値として扱われる。
-
-@item B
-大抵の算術命令用の即値。const_intは32ビット値として扱われる。
-
-@item C
-and/xor/or命令用の即値。const_intは32ビット値として扱われる。
-
-@item D
-@code{iohl}命令用の即値。const_intは32ビット値として扱われる。
-
-@item I
-シフト・ロテート命令用の[-64, 63]の範囲の定数。
-
-@item J
-変換・nop・チャンネル命令用の符号なし7ビット定数。
-
-@item K
-大抵の算術命令用の符号あり10ビット定数。
-
-@item M
-@code{stop}用の符号あり16ビット即値。
-
-@item N
-@code{iohl}と@code{fsmbi}用の符号なし16ビット定数。
-
-@item O
-最下位3ビットが0である符号なし7ビット定数。
-
-@item P
-16バイトロテートとシフト命令用の符号なし3ビット定数。
-
-@item R
-間接呼び出し用の呼び出しオペランド、レジスタ。
-
-@item S
-相対呼び出し用の呼び出しオペランド、シンボル。
-
-@item T
-全体呼び出し用の呼び出しオペランド、const_int。
-
-@item U
-il/ila/ilh/ilhu命令でロードされる即値。const_intは128ビットに符号拡張される。
-
-@item W
-シフトとロテート命令用の即値。const_intは32ビット値として扱われる。
-
-@item Y
-and/xor/or命令用の即値。const_intは128ビットに符号拡張される。
-
-@item Z
-@code{iohl}命令用の即値。const_intは128ビットに符号拡張される。
-
-@end table
-
 @item TI C6X family---@file{config/c6x/constraints.md}
 @table @code
 @item a
@@ -3664,6 +3668,7 @@ Register for sibcall optimization
 
 @item q
 @code{@var{r}l}としてアクセス可能なレジスタ。32ビットモードでは、@code{a}、@code{b}、@code{c}、@code{d}。64ビットでは、任意の整数レジスタ。
+
 @item Q
 @code{@var{r}h}としてアクセス可能なレジスタ。@code{a}、@code{b}、@code{c}、@code{d}。
 
@@ -3703,7 +3708,7 @@ unsigned long long rdtsc (void)
 @}
 @end smallexample
 
-これは、@code {ax}または@code{dx}にティックを割り当てるため、x86-64では正しくない。 代わりに、次のバリアントを使用する必要がある。
+これは、@code{ax}または@code{dx}にティックを割り当てるため、x86-64では正しくない。 代わりに、次のバリアントを使用する必要がある。
 
 @smallexample
 unsigned long long rdtsc (void)
@@ -3715,7 +3720,7 @@ unsigned long long rdtsc (void)
 @end smallexample
 
 @item U
-The call-clobbered integer registers.
+呼び出しの破壊される整数レジスタ。
 
 @item f
 任意の80387浮動小数点（スタック）レジスタ。
