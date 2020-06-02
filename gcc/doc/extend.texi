@@ -7082,7 +7082,7 @@ __PRETTY_FUNCTION__ = void a::sub(int)
 これらの関数は、関数の呼び出し元に関する情報を取得するために使用できる。
 
 @deftypefn {Built-in Function} {void *} __builtin_return_address (unsigned int @var{level})
-この関数は、現在の関数またはその呼び出し元のいずれかの戻りアドレスを返す。 @var{level}引数は、呼び出しスタックをスキャンするフレームの数である。 @code{0}の値は現在の関数の戻りアドレスを返し、@ code{1}の値は現在の関数の呼び出し元の戻りアドレスなどを返す。インライン化では、予期される振る舞いは、関数が返される関数のアドレスを返すことである。 この問題を回避するには、@code{noinline}関数属性を使用する。
+この関数は、現在の関数またはその呼び出し元のいずれかの戻りアドレスを返す。 @var{level}引数は、呼び出しスタックをスキャンするフレームの数である。 @code{0}の値は現在の関数の戻りアドレスを返し、@code{1}の値は現在の関数の呼び出し元の戻りアドレスなどを返す。インライン化では、予期される振る舞いは、関数が返される関数のアドレスを返すことである。 この問題を回避するには、@code{noinline}関数属性を使用する。
 
 @var{level}引数は定数でなければならない。
 
@@ -7136,7 +7136,7 @@ typedef int v4si __attribute__ ((vector_size (16)));
 
 このように定義された型は、通常のC操作のサブセットとともに使用できる。 現在、GCCでは次のタイプの演算子を使用できる。@code{+, -, *, /, unary minus, ^, |, &, ~, %}。
 
-操作はC++@code {valarrays}のように動作する。 加算は、オペランドの対応する要素の加算として定義される。 たとえば、以下のコードでは、@var{a}の4つの要素のそれぞれが@var {b}の対応する4つの要素に追加され、結果のベクトルは@var{c}に格納される。
+操作はC++@code{valarrays}のように動作する。 加算は、オペランドの対応する要素の加算として定義される。 たとえば、以下のコードでは、@var{a}の4つの要素のそれぞれが@var {b}の対応する4つの要素に追加され、結果のベクトルは@var{c}に格納される。
 
 @smallexample
 typedef int v4si __attribute__ ((vector_size (16)));
@@ -7183,12 +7183,12 @@ c = a == b;     /* The result would be @{0,-1, 0,-1@}  */
 
 C++では、三項演算子@code{?:}を使用できる。 @code{a？b：c}は、ここで@code{b}と@code{c}は同じ型のベクトルで、@code{a}は@code{b}および@code{c}と同じサイズの同じ要素数を持つ整数ベクトルであるとき、 3つの引数をすべて計算し、ベクトル@code{@{a[0]?b[0]:c[0], a[1]?b[1]:c[1], @dots{}@}}を作成する。 OpenCLとは異なり、@code{a}は@code{a！= 0}と解釈され、@code{a <0}と解釈されないことに注意せよ。バイナリ演算の場合と同様に、この構文は、@code {b}または@code{c}のいずれかがベクトルに変換されるスカラーである場合にも受け入れられる。 @code{b}と@code{c}の両方がスカラーで、@code{true？b：c}の型が@code {a}の要素の型と同じ大きさであれば、@code{b}と @code{c}は、この型を持ち、@code{a}と同じ数の要素を持つベクトル型に変換される。
 
-C++では、ベクトルの論理演算子@code {!, &&、||}を使用できまる。@code{a && b}は@code{a！= 0＆b！= 0}と、@code {a || b}hは、@code{a！= 0 | b！= 0}と同等である。スカラ@code{s}とベクトル@code{v}との混合演算の場合、@code{s && v}は@code{s？v！= 0：0}と等価である（評価は短絡である） 。@code{v && s}は@code{v！= 0＆（s？-1：0）}と等価である。
+C++では、ベクトルの論理演算子@code {!, &&、||}を使用できまる。@code{a && b}は@code{a！= 0＆b！= 0}と、@code{a || b}hは、@code{a！= 0 | b！= 0}と同等である。スカラ@code{s}とベクトル@code{v}との混合演算の場合、@code{s && v}は@code{s？v！= 0：0}と等価である（評価は短絡である） 。@code{v && s}は@code{v！= 0＆（s？-1：0）}と等価である。
 
 @findex __builtin_shuffle
-ベクトルシャッフルは、関数@code{__builtin_shuffle(vec、mask)}と@code {__builtin_shuffle(vec0ｍ, vec1, mask)}を使用して利用できる。両方の関数は、1つまたは2つのベクトルから要素の置換を構成し、入力ベクトルと同じ型のベクトルを返す。@var{mask}は出力ベクトルと同じ幅（@ var{W}）と要素数（@ var{N}）を持つ整数ベクトルである。
+ベクトルシャッフルは、関数@code{__builtin_shuffle(vec、mask)}と@code {__builtin_shuffle(vec0, vec1, mask)}を使用して利用できる。両方の関数は、1つまたは2つのベクトルから要素の置換を構成し、入力ベクトルと同じ型のベクトルを返す。@var{mask}は出力ベクトルと同じ幅（@var{W}）と要素数（@var{N}）を持つ整数ベクトルである。
 
-入力ベクトルの要素には、0から始まる@var{vec0}と@var{N}で始まる@var {vec1}のメモリ順序で番号が付けられる。 @var{mask}の要素は、シングルオペランドの場合は@var{N}をモジュロと見なし、2オペランドの場合は@math{2 * @ var {N}}をモジュロと見なす。
+入力ベクトルの要素には、0から始まる@var{vec0}と@var{N}で始まる@var{vec1}のメモリ順序で番号が付けられる。 @var{mask}の要素は、シングルオペランドの場合は@var{N}をモジュロと見なし、2オペランドの場合は@math{2*@var{N}}をモジュロと見なす。
 
 以下の例を考える。
 
@@ -7211,6 +7211,62 @@ res = __builtin_shuffle (a, b, mask2);    /* res is @{1,5,3,6@}  */
 
 キャストなしでは、異なる長さのベクトル間で操作することはできない。
 
+@findex __builtin_convertvector
+ベクトル変換は@code{__builtin_convertvector(vec, vectype)}関数を使用して利用できます。 @var{vec}は、整数または浮動ベクトル型の式で、@var{vectype}は、要素数が同じ整数または浮動ベクトル型でなければなりません。 結果は、@var{vectype}型と、@var{vec}のすべての要素のCキャストの値で、@var{vectype}の要素型に変換されます。
+
+以下の例を考えます
+@smallexample
+typedef int v4si __attribute__ ((vector_size (16)));
+typedef float v4sf __attribute__ ((vector_size (16)));
+typedef double v4df __attribute__ ((vector_size (32)));
+typedef unsigned long long v4di __attribute__ ((vector_size (32)));
+
+v4si a = @{1,-2,3,-4@};
+v4sf b = @{1.5f,-2.5f,3.f,7.f@};
+v4di c = @{1ULL,5ULL,0ULL,10ULL@};
+v4sf d = __builtin_convertvector (a, v4sf); /* d is @{1.f,-2.f,3.f,-4.f@} */
+/* Equivalent of:
+   v4sf d = @{ (float)a[0], (float)a[1], (float)a[2], (float)a[3] @}; */
+v4df e = __builtin_convertvector (a, v4df); /* e is @{1.,-2.,3.,-4.@} */
+v4df f = __builtin_convertvector (b, v4df); /* f is @{1.5,-2.5,3.,7.@} */
+v4si g = __builtin_convertvector (f, v4si); /* g is @{1,-2,3,7@} */
+v4si h = __builtin_convertvector (c, v4si); /* h is @{1,5,0,10@} */
+@end smallexample
+
+@cindex vector types, using with x86 intrinsics
+ジェネリックベクトル演算（わかりやすくするため）とマシン固有のベクトル組み込み関数（ジェネリックビルトインを介して公開されていないベクトル命令にアクセスするため）を組み合わせてコードを記述することが望ましい場合があります。 x86では、整数ベクトルの組み込み関数は、ベクトルの解釈方法に関係なく、通常、同じベクトルタイプ@code {__m128i}を使用するため、引数をキャストし、他のベクトルタイプとの間で値を返す必要があります。 Cでは、@code{union}タイプを使用できます。
+@c In C++ such type punning via a union is not allowed by the language
+@smallexample
+#include <immintrin.h>
+
+typedef unsigned char u8x16 __attribute__ ((vector_size (16)));
+typedef unsigned int  u32x4 __attribute__ ((vector_size (16)));
+
+typedef union @{
+        __m128i mm;
+        u8x16   u8;
+        u32x4   u32;
+@} v128;
+@end smallexample
+
+@noindent
+組み込み演算子とx86組み込み関数の両方で使用できる変数の場合：
+
+@smallexample
+v128 x, y = @{ 0 @};
+memcpy (&x, ptr, sizeof x);
+y.u8  += 0x80;
+x.mm  = _mm_adds_epu8 (x.mm, y.mm);
+x.u32 &= 0xffffff;
+
+/* Instead of a variable, a compound literal may be used to pass the
+   return value of an intrinsic call to a function expecting the union: */
+v128 foo (v128);
+x = foo ((v128) @{_mm_adds_epu8 (x.mm, y.mm)@});
+@c This could be done implicitly with __attribute__((transparent_union)),
+@c but GCC does not accept it for unions of vector types (PR 88955).
+@end smallexample
+
 @node Offsetof
 @section @code{offsetof}のサポート
 @findex __builtin_offsetof
@@ -7227,7 +7283,7 @@ offsetof_member_designator:
         | offsetof_member_designator "[" @code{expr} "]"
 @end smallexample
 
-この拡張は、X
+この拡張は、
 
 @smallexample
 #define offsetof(@var{type}, @var{member})  __builtin_offsetof (@var{type}, @var{member})
@@ -7245,7 +7301,7 @@ offsetof_member_designator:
 
 これらの関数は@samp{__atomic}組み込み関数（@pxref{__atomic Builtins}）で実装されている。 新しいコードのために使うべきではなく、代わりに@samp{__atomic}組み込み関数を使うべきである。
 
-すべての操作がすべてのターゲットプロセッサでサポートされているわけではない。 ターゲットプロセッサ上で特定の操作を実装できない場合は、警告が生成され、外部関数への呼び出しが生成される。 外部関数には、@samp{_@ var{n}}という接尾辞が付いた組み込みバージョンと同じ名前が付けられる。ここで、@var{n}はデータ型のサイズである。
+すべての操作がすべてのターゲットプロセッサでサポートされているわけではない。 ターゲットプロセッサ上で特定の操作を実装できない場合は、警告が生成され、外部関数への呼び出しが生成される。 外部関数には、@samp{_@var{n}}という接尾辞が付いた組み込みバージョンと同じ名前が付けられる。ここで、@var{n}はデータ型のサイズである。
 
 @c ??? Should we have a mechanism to suppress this warning?  This is almost
 @c useful for implementing the operation under the control of an external
@@ -7253,7 +7309,7 @@ offsetof_member_designator:
 
 ほとんどの場合、これらの組み込み関数は@dfn{full barrier}（フルバリア）とみなされる。つまり、メモリーオペランドは、操作の前後に移動しない。 さらに、オペレーションの間、およびオペレーションの後の待ち行列ストアからプロセッサが負荷を推測するのを防ぐために、必要に応じて命令が発行される。
 
-すべてのルーチンは、「メモリバリアによって保護された変数のオプションリスト」を取るように、インテルのドキュメントに記載されている。 それが何を意味するのかははっきりしない。 リストされた変数@emph{のみ}が保護されているか、さもなければ保護されるべき追加の変数のリストを意味する可能性がある。 このリストはGCCによって無視され、GCCはそれを空として扱う。 GCCは、空のリストを、グローバルにアクセス可能なすべての変数を保護する必要があると解釈する。
+すべてのルーチンは、「メモリバリアによって保護された変数のオプションリスト」を取るように、インテルのドキュメントに記載されている。 それが何を意味するのかははっきりしない。 リストされた変数@emph{_のみ_}が保護されているか、さもなければ保護されるべき追加の変数のリストを意味する可能性がある。 このリストはGCCによって無視され、GCCはそれを空として扱う。 GCCは、空のリストを、グローバルにアクセス可能なすべての変数を保護する必要があると解釈する。
 
 @table @code
 @item @var{type} __sync_fetch_and_add (@var{type} *ptr, @var{type} value, ...)
@@ -7318,7 +7374,7 @@ offsetof_member_designator:
 @findex __sync_lock_test_and_set
 この組み込み関数は、Intelによって記述されているように、従来のテスト・アンド・セット操作ではなく、アトミック交換操作である。 @var{value}を@code{*@var{ptr}}に書き込み、以前の@code{*@var{ptr}}の内容を返す。
 
-多くのターゲットは、そのようなロックに対して最小限のサポートしか持たず、完全な交換操作をサポートしていない。 この場合、ターゲットは直接的な定数1であるようなストアするための有効な値@emph{のみ}の縮小された機能性をサポートする。実際には@code{*@var {ptr}}に格納されている正確な値は実装定義である。
+多くのターゲットは、そのようなロックに対して最小限のサポートしか持たず、完全な交換操作をサポートしていない。 この場合、ターゲットは直接的な定数1であるようなストアするための有効な値@emph{_のみ_}の縮小された機能性をサポートする。実際には@code{*@var {ptr}}に格納されている正確な値は実装定義である。
 
 この組み込み関数は完全なバリアではなく、むしろ@dfn{acquire barrier}（獲得バリア）である。 つまり、操作後の参照は操作の前に移動できない（または推測することはできない）が、以前のメモリー・ストアはまだグローバルに可視でない可能性があり、前のメモリー・ロードはまだ満たされていない可能性がある。
 
@@ -7336,7 +7392,7 @@ offsetof_member_designator:
 
 これらの関数は、従来の@samp{__sync}組み込み関数を置き換えることを意図している。 主な違いは、要求されたメモリの順序が関数のパラメータであることである。 新しいコードでは、@samp{__sync}組み込み関数ではなく@samp{__atomic}組み込み関数を常に使用するべきである。
 
-@samp{__atomic}組み込み関数は、プログラムがC++11のメモリモデルに準拠していることを前提としている。 特に、それらはプログラムにはデータ競争がないと仮定している。 詳細な要件については、C++ 11の標準を参照せよ。
+@samp{__atomic}組み込み関数は、プログラムがC++11のメモリモデルに準拠していることを前提としている。 特に、それらはプログラムにはデータ競争がないと仮定している。 詳細な要件については、C++11の標準を参照せよ。
 
 @samp{__atomic}組み込み関数は、長さが1,2,4、または8バイトの整数スカラーまたはポインター型で使用できる。 @samp{__int128}（@pxref{__int128}）がアーキテクチャでサポートされている場合は、16バイトの整数型も使用できる。
 
@@ -7344,7 +7400,7 @@ offsetof_member_designator:
 
 指定できるメモリ順序は6種類ある。 これらは、同じ名前のC++11メモリ順序に対応している。詳細な定義については、C++11標準または@uref{http://gcc.gnu.org/wiki/Atomic/GCCMM/AtomicSync,GCC wiki on atomic synchronization}を参照せよ。 個々のターゲットは、特定のアーキテクチャで使用するための追加のメモリ順序をサポートするかもしれない。 これらの詳細については、対象のドキュメントを参照せよ。
 
-アトミックオペレーションは、コードの動きを制限し、スレッド間の同期（例えばフェンス）のためのハードウェア命令にマッピングすることがありうる。 これがどの程度起こるかは、ここでは強さの昇順で列挙されているメモリの順序によって制御される。 各メモリの順序の説明は、その効果を概略的に示すためのものであり、仕様ではない。 正確なセマンティクスについては、C++ 11のメモリモデルを参照せよ。
+アトミックオペレーションは、コードの動きを制限し、スレッド間の同期（例えばフェンス）のためのハードウェア命令にマッピングすることがありうる。 これがどの程度起こるかは、ここでは強さの昇順で列挙されているメモリの順序によって制御される。 各メモリの順序の説明は、その効果を概略的に示すためのものであり、仕様ではない。 正確なセマンティクスについては、C++11のメモリモデルを参照せよ。
 
 @table  @code
 @item __ATOMIC_RELAXED
@@ -7360,7 +7416,7 @@ offsetof_member_designator:
 @item __ATOMIC_SEQ_CST
 その他すべての@code{__ATOMIC_SEQ_CST}操作で順序付けを強制します。
 @end table
-C++ 11メモリモデルにおいて、@emph{フェンス}（例えば、@samp{__atomic_thread_fence}）は、特定のメモリ位置（例えば、アトミックロード）上の他のアトミック演算と組み合わせて有効であることに注意すること。 特定のメモリ位置に対する操作は、必ずしも同じように他の操作に影響するとは限らない。
+C++11メモリモデルにおいて、@emph{_フェンス_}（例えば、@samp{__atomic_thread_fence}）は、特定のメモリ位置（例えば、アトミックロード）上の他のアトミック演算と組み合わせて有効であることに注意すること。 特定のメモリ位置に対する操作は、必ずしも同じように他の操作に影響するとは限らない。
 
 ターゲット・アーキテクチャーは、アトミック組み込み関数ごとに独自のパターンを提供することが推奨される。 ターゲットが指定されていない場合は、@samp{__sync}アトミック組み込み関数の元の非メモリモデルセットが、適切な動作を達成するために必要な同期フェンスとともに使用される。 この場合の実行には、組み込み関数と同じ制限が適用される。
 
@@ -7409,7 +7465,7 @@ C++11標準では、コンパイル時ではなく実行時にメモリの順序
 @end deftypefn
 
 @deftypefn {Built-in Function} bool __atomic_compare_exchange_n (@var{type} *ptr, @var{type} *expected, @var{type} desired, bool weak, int success_memorder, int failure_memorder)
-この組み込み関数はアトミックの比較・交換操作を実装する。これは@code{*@var{ptr}}の内容を@code{*@var{expected}}と比較する。もし等しければ操作は、@var{desired}を@code{*@var{ptr}}へと書き出す@emph{読み込み・修正・書き出し}である。もし等しくなければ、操作を@emph{読み出し}であり、@code{*@var{ptr}}の現在の内容が@code{*@var{expected}}へと書かれる。@var{week}は見せかけの失敗をするかもしれない弱い比較交換の時ではtrueであり、決して見せかけの失敗をしない強いバリエーションではfalseである。多くのターゲットでは強いバリエーションのみを提供して、パラメータは無視される。疑いがあるときには、強いバリエーションを使うこと。
+この組み込み関数はアトミックの比較・交換操作を実装する。これは@code{*@var{ptr}}の内容を@code{*@var{expected}}と比較する。もし等しければ操作は、@var{desired}を@code{*@var{ptr}}へと書き出す@emph{読み込み・修正・書き出し}である。もし等しくなければ、操作を@emph{_読み出し_}であり、@code{*@var{ptr}}の現在の内容が@code{*@var{expected}}へと書かれる。@var{week}は見せかけの失敗をするかもしれない弱い比較交換の時ではtrueであり、決して見せかけの失敗をしない強いバリエーションではfalseである。多くのターゲットでは強いバリエーションのみを提供して、パラメータは無視される。疑いがあるときには、強いバリエーションを使うこと。
 
 @var{desired}が@code{*@var{ptr}}に書き込まれると、trueが返される。メモリは@var{success_memorder}で指定されたメモリ順序に従って影響を受ける。 ここで使用できるメモリ順序に制限はない。
 
@@ -7448,6 +7504,7 @@ C++11標準では、コンパイル時ではなく実行時にメモリの順序
 
 @smallexample
 @{ tmp = *ptr; *ptr @var{op}= val; return tmp; @}
+@{ tmp = *ptr; *ptr = ~(*ptr & val); return tmp; @} // nand
 @end smallexample
 
 引数に関する制約は、対応する@code{__atomic_op_fetch}組み込み関数の場合と同じである。 すべてのメモリ順序が有効である。
@@ -7698,149 +7755,6 @@ int __builtin___vsnprintf_chk (char *s, size_t maxlen, int flag, size_t os,
 
 これに加えて、組み込み関数@code{__builtin___printf_chk}、@code {__builtin___vprintf_chk}、@code {__builtin___fprintf_chk}と@code {__builtin___vfprintf_chk}のチェックがある。これらは、@var{fmt}の書式文字列の直前に@var{flag}という引数が1つだけある。 コンパイラが@code{fputc}などの関数に最適化できれば、そうする。そうでなければチェック関数が呼び出され、@var{flag}引数が渡される。
 
-@node Pointer Bounds Checker builtins
-@section ポインタ境界チェッカ組み込み関数
-@cindex Pointer Bounds Checker builtins
-@findex __builtin___bnd_set_ptr_bounds
-@findex __builtin___bnd_narrow_ptr_bounds
-@findex __builtin___bnd_copy_ptr_bounds
-@findex __builtin___bnd_init_ptr_bounds
-@findex __builtin___bnd_null_ptr_bounds
-@findex __builtin___bnd_store_ptr_bounds
-@findex __builtin___bnd_chk_ptr_lbounds
-@findex __builtin___bnd_chk_ptr_ubounds
-@findex __builtin___bnd_chk_ptr_bounds
-@findex __builtin___bnd_get_ptr_lbound
-@findex __builtin___bnd_get_ptr_ubound
-
-GCCは、Pointer Bounds Checker計測を制御する組み込み関数のセットを提供する。 Pointer Bounds Checkerをオフにしてコンパイルしても（@option{-fno-check-pointer-bounds}）、すべてのPointer Bounds Checker組み込み関数を使用できることに注意すること。このような場合は、下記のように動作が異なる場合がある。
-
-@deftypefn {Built-in Function} {void *} __builtin___bnd_set_ptr_bounds (const void *@var{q}, size_t @var{size})
-
-この組み込み関数は、@var{q}の値を持つ新しいポインタを返し、それをbounds [@var{q}、@var{q} + @var{size} -1]に関連付ける。 Pointer Bounds Checkerをオフにすると、ビルトイン関数は最初の引数を返す。
-
-@smallexample
-extern void *__wrap_malloc (size_t n)
-@{
-  void *p = (void *)__real_malloc (n);
-  if (!p) return __builtin___bnd_null_ptr_bounds (p);
-  return __builtin___bnd_set_ptr_bounds (p, n);
-@}
-@end smallexample
-
-@end deftypefn
-
-@deftypefn {Built-in Function} {void *} __builtin___bnd_narrow_ptr_bounds (const void *@var{p}, const void *@var{q}, size_t  @var{size})
-
-この組み込み関数は、@var{p}の値を持つ新しいポインタを返し、それを@var{q}に関連付けられた境界と境界[@var{p}、@var{p} + @var{size} - 1]の交差によって形成される狭められた境界に関連付ける。Pointer Bounds Checkerをオフにすると、ビルトイン関数は最初の引数を返す。
-
-@smallexample
-void init_objects (object *objs, size_t size)
-@{
-  size_t i;
-  /* Initialize objects one-by-one passing pointers with bounds of 
-     an object, not the full array of objects.  */
-  for (i = 0; i < size; i++)
-    init_object (__builtin___bnd_narrow_ptr_bounds (objs + i, objs,
-                                                    sizeof(object)));
-@}
-@end smallexample
-
-@end deftypefn
-
-@deftypefn {Built-in Function} {void *} __builtin___bnd_copy_ptr_bounds (const void *@var{q}, const void *@var{r})
-
-この組み込み関数は、@var{q}の値を持つ新しいポインタを返し、ポインタ@var{r}にすでに関連付けられている境界に関連付ける。Pointer Bounds Checkerをオフにすると、ビルトイン関数は最初の引数を返す。
-
-@smallexample
-/* Here is a way to get pointer to object's field but
-   still with the full object's bounds.  */
-int *field_ptr = __builtin___bnd_copy_ptr_bounds (&objptr->int_field, 
-                                                  objptr);
-@end smallexample
-
-@end deftypefn
-
-@deftypefn {Built-in Function} {void *} __builtin___bnd_init_ptr_bounds (const void *@var{q})
-
-この組み込み関数は、@var{q}の値を持つ新しいポインタを返し、それを（全メモリアクセスを許可する）INIT境界に関連付ける。Pointer Bounds Checkerをオフにすると、ビルトイン関数は最初の引数を返す。
-
-@end deftypefn
-
-@deftypefn {Built-in Function} {void *} __builtin___bnd_null_ptr_bounds (const void *@var{q})
-
-この組み込み関数は、@var{q}の値を持つ新しいポインタを返し、それを（メモリアクセスを許可しない）NULL境界に関連付ける。Pointer Bounds Checkerをオフにすると、ビルトイン関数は最初の引数を返す。
-
-@end deftypefn
-
-@deftypefn {Built-in Function} void __builtin___bnd_store_ptr_bounds (const void **@var{ptr_addr}, const void *@var{ptr_val})
-
-この組み込み関数は、ポインタ@var{ptr_val}および位置@var{ptr_addr}に関連付けられた境界を境界テーブルに格納する。これはポインタが整数としてコピーされたときに関連するポインタのメモリに触れることなく、レガシーコードから境界を伝播するのに便利である。 Pointer Bounds Checkerをオフにすると、ビルトイン関数呼び出しは無視される。
-
-@end deftypefn
-
-@deftypefn {Built-in Function} void __builtin___bnd_chk_ptr_lbounds (const void *@var{q})
-
-この組み込み関数は、ポインタ@var{q}が関連する境界の下限内にあるかどうかをチェックする。 Pointer Bounds Checkerをオフにすると、ビルトイン関数呼び出しは無視される。
-
-@smallexample
-extern void *__wrap_memset (void *dst, int c, size_t len)
-@{
-  if (len > 0)
-    @{
-      __builtin___bnd_chk_ptr_lbounds (dst);
-      __builtin___bnd_chk_ptr_ubounds ((char *)dst + len - 1);
-      __real_memset (dst, c, len);
-    @}
-  return dst;
-@}
-@end smallexample
-
-@end deftypefn
-
-@deftypefn {Built-in Function} void __builtin___bnd_chk_ptr_ubounds (const void *@var{q})
-
-この組み込み関数は、ポインタ@var{q}が関連する境界の上限内にあるかどうかをチェックする。 Pointer Bounds Checkerをオフにすると、ビルトイン関数呼び出しは無視される。
-
-@end deftypefn
-
-@deftypefn {Built-in Function} void __builtin___bnd_chk_ptr_bounds (const void *@var{q}, size_t @var{size})
-
-この組み込み関数は、[@var{q}、@var{q} + @var{size} - 1]が@var {q}に関連付けられた上限と下限の範囲内にあるかどうかをチェックする。 Pointer Bounds Checkerをオフにすると、ビルトイン関数呼び出しは無視される。
-
-@smallexample
-extern void *__wrap_memcpy (void *dst, const void *src, size_t n)
-@{
-  if (n > 0)
-    @{
-      __bnd_chk_ptr_bounds (dst, n);
-      __bnd_chk_ptr_bounds (src, n);
-      __real_memcpy (dst, src, n);
-    @}
-  return dst;
-@}
-@end smallexample
-
-@end deftypefn
-
-@deftypefn {Built-in Function} {const void *} __builtin___bnd_get_ptr_lbound (const void *@var{q})
-
-この組み込み関数はポインタ@var{q}に関連付けられた下限をポインタ値として返します。これは@code{printf}を使ってデバッグするのに便利である。 Pointer Bounds Checkerをオフにすると、組み込み関数は0を返す。
-
-@smallexample
-void *lb = __builtin___bnd_get_ptr_lbound (q);
-void *ub = __builtin___bnd_get_ptr_ubound (q);
-printf ("q = %p  lb(q) = %p  ub(q) = %p", q, lb, ub);
-@end smallexample
-
-@end deftypefn
-
-@deftypefn {Built-in Function} {const void *} __builtin___bnd_get_ptr_ubound (const void *@var{q})
-
-この組み込み関数は、ポインタ@var{q}に関連付けられた上限（ポインタ）を返す。 Pointer Bounds Checkerをオフにすると、組み込み関数は-1を返す。
-
-@end deftypefn
-
 @node Other Builtins
 @section GCCで提供されている他の組み込み関数
 @cindex built-in functions
@@ -7850,6 +7764,7 @@ printf ("q = %p  lb(q) = %p  ub(q) = %p", q, lb, ub);
 @findex __builtin_call_with_static_chain
 @findex __builtin_extend_pointer
 @findex __builtin_fpclassify
+@findex __builtin_has_attribute
 @findex __builtin_isfinite
 @findex __builtin_isnormal
 @findex __builtin_isgreater
@@ -7859,9 +7774,11 @@ printf ("q = %p  lb(q) = %p  ub(q) = %p", q, lb, ub);
 @findex __builtin_islessequal
 @findex __builtin_islessgreater
 @findex __builtin_isunordered
+@findex __builtin_object_size
 @findex __builtin_powi
 @findex __builtin_powif
 @findex __builtin_powil
+@findex __builtin_speculation_safe_value
 @findex _Exit
 @findex _exit
 @findex abort
@@ -8025,6 +7942,7 @@ printf ("q = %p  lb(q) = %p  ub(q) = %p", q, lb, ub);
 @findex fprintf_unlocked
 @findex fputs
 @findex fputs_unlocked
+@findex free
 @findex frexp
 @findex frexpf
 @findex frexpl
@@ -8144,6 +8062,7 @@ printf ("q = %p  lb(q) = %p  ub(q) = %p", q, lb, ub);
 @findex printf_unlocked
 @findex putchar
 @findex puts
+@findex realloc
 @findex remainder
 @findex remainderf
 @findex remainderl
@@ -8207,6 +8126,7 @@ printf ("q = %p  lb(q) = %p  ub(q) = %p", q, lb, ub);
 @findex strncmp
 @findex strncpy
 @findex strndup
+@findex strnlen
 @findex strpbrk
 @findex strrchr
 @findex strspn
@@ -8341,7 +8261,7 @@ ISO C90関数
 @code{tanh}, @code{tan}, @code{vfprintf}, @code{vprintf}, @code{vsprintf}
 はすべて、@option{-fno-builtin}が指定されている（もしくは個別の関数に対して@option{-fno-builtin-@var{function}}が指定されている）のでない限り、組み込み関数として認識される。これらの関数はすべて対応する接頭辞@code{__builtin_}つきのバージョンがある。
 
-GCCには、順序付けられていないオペランドに対する例外を発生させない、ISO C99浮動小数点比較マクロの組み込みバージョンが用意されている。 標準マクロ（@code{isgreater}、@code{isgreaterequal}、@code{isless}、@code{islessequre}、@code{islessgreater}、@code{isunordered}）と同じ名前を持ち、@code{__builtin_}が接頭辞付きである。ライブラリの実装者が各標準マクロを組み込み関数に@code{#define}できるようにするためを意図している。同じ方法で、GCCは@code{__ builtin_}を接頭辞として使用して、@code{fpclassify}、@code{isfinite}、@code{isinf_sign}、@code{notnormal}および@code{signbit}組み込み関数を提供する。 @code{isinf}と@code{isnan}組み込み関数は、接頭辞@code{__ builtin_}の有無に関係なく存在する。
+GCCには、順序付けられていないオペランドに対する例外を発生させない、ISO C99浮動小数点比較マクロの組み込みバージョンが用意されている。 標準マクロ（@code{isgreater}、@code{isgreaterequal}、@code{isless}、@code{islessequre}、@code{islessgreater}、@code{isunordered}）と同じ名前を持ち、@code{__builtin_}が接頭辞付きである。ライブラリの実装者が各標準マクロを組み込み関数に@code{#define}できるようにするためを意図している。同じ方法で、GCCは@code{__ builtin_}を接頭辞として使用して、@code{fpclassify}、@code{isfinite}、@code{isinf_sign}、@code{notnormal}および@code{signbit}組み込み関数を提供する。 @code{isinf}と@code{isnan}組み込み関数は、接頭辞@code{__builtin_}の有無に関係なく存在する。
 
 @deftypefn {Built-in Function} void *__builtin_alloca (size_t size)
 @code {__ builtin_alloca}関数はブロックスコープで呼び出さなければならない。この関数は、呼び出し関数のスタック上で@var{size}バイトのオブジェクトを割り当てる。 オブジェクトは、@code{__BIGGEST_ALIGNMENT__}マクロによって決定されたターゲットのデフォルトスタック境界境界にアラインメントされる。 @code{__ builtin_alloca}関数は、割り当てられたオブジェクトの最初のバイトへのポインタを返す。割り当てられたオブジェクトの存続期間は、呼び出し元関数が呼び出し元に戻る直前に終了する。 これは、ネストされたブロック内で@code{__ builtin_alloca}が呼び出された場合でもそうである。
@@ -8359,14 +8279,14 @@ void f (unsigned n)
 @}
 @end smallexample
 
-@code{__ builtin_alloca}関数は引数を検証しないので、引数がスタックサイズの制限を超えないようにすることは呼び出し元の責任である。@code{__builtin_alloca}関数は、実行時に計算される上限を持つスタック配列に割り当てることを可能にするために提供されている。 C99の可変長配列は移植可能でより便利で安全なインタフェースの下で同様の機能を提供するので代わりに推奨され、GCCが拡張としてC99とC++プログラムの両方で提供される。詳細は@xref{Variable Length}。
+@code{__builtin_alloca}関数は引数を検証しないので、引数がスタックサイズの制限を超えないようにすることは呼び出し元の責任である。@code{__builtin_alloca}関数は、実行時に計算される上限を持つスタック配列に割り当てることを可能にするために提供されている。 C99の可変長配列は移植可能でより便利で安全なインタフェースの下で同様の機能を提供するので代わりに推奨され、GCCが拡張としてC99とC++プログラムの両方で提供される。詳細は@xref{Variable Length}。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} void *__builtin_alloca_with_align (size_t size, size_t alignment)
 ブロックスコープで@code{__builtin_alloca_with_align}関数を呼び出さなければならない。この関数は、呼び出し関数のスタック上で@var{size}バイトのオブジェクトを割り当てる。割り当てられたオブジェクトは、ユニットがビット（バイトではない）で与えられる引数@var{alignment}で指定された境界に揃えられる。 @var{size}引数は正で、スタックサイズ制限を超えてはならない。 @var{alignment}引数は、@code{CHAR_BIT}以上である未指定の最大値よりも小さい2の累乗に評価される定数の整数式でなければならない。他の値の呼び出しは拒否され、有効な境界を示すエラーが返される。この関数は、割り当てられたオブジェクトの最初のバイトへのポインタを返す。割り当てられたオブジェクトの存続期間は、関数が呼び出されたブロックの終わりで終了する。割り当てられた記憶域は、呼び出し元関数が呼び出し元に戻る直前に解放されるが、関数が呼び出されたブロックの最後に解放される可能性がある。
 
-たとえば、次の関数では、@code{overalign}がゼロでないとき、@code{__ builtin_alloca_with_align}によって割り当てられた領域は、それが呼び出された@code{if}ステートメントの終わりに解放されている可能性があるので@code{g}の呼び出しは安全でない。
+たとえば、次の関数では、@code{overalign}がゼロでないとき、@code{__builtin_alloca_with_align}によって割り当てられた領域は、それが呼び出された@code{if}ステートメントの終わりに解放されている可能性があるので@code{g}の呼び出しは安全でない。
 
 @smallexample
 void f (unsigned n, bool overalign)
@@ -8381,12 +8301,90 @@ void f (unsigned n, bool overalign)
 @}
 @end smallexample
 
-@code{__ __builtin_alloca_with_align}関数は引数を検証しないので、引数がスタックサイズの制限を超えないようにすることは呼び出し元の責任である。@code {__ builtin_alloca_with_align}関数は、オーバーアラインメントされたスタックの配列に、実行時に計算される上限を割り当てることを可能にするために提供されている。 C99の可変長配列は移植可能でより便利で安全なインタフェースの下で同様の機能を提供するので代わりに推奨され、GCCが拡張としてC99とC++プログラムの両方で提供される。詳細は@xref{Variable Length}。
+@code{__builtin_alloca_with_align}関数は引数を検証しないので、引数がスタックサイズの制限を超えないようにすることは呼び出し元の責任である。@code {__ builtin_alloca_with_align}関数は、オーバーアラインメントされたスタックの配列に、実行時に計算される上限を割り当てることを可能にするために提供されている。 C99の可変長配列は移植可能でより便利で安全なインタフェースの下で同様の機能を提供するので代わりに推奨され、GCCが拡張としてC99とC++プログラムの両方で提供される。詳細は@xref{Variable Length}。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} void *__builtin_alloca_with_align_and_max (size_t size, size_t alignment, size_t max_size)
 @code{__builtin_alloca_with_align}と似ているが、@value{-fstack-usage}、@option{-Wstack-usage}と@option {-Walloca-greater-than}で使用するためにコンパイル時に値を計算できない場合に@var{size}の上限を指定する追加の引数をとる。@var{max_size}は定数の整数式でなければならない。コード生成に影響はなく、@var{size}との互換性をチェックしようとしない。
+
+@end deftypefn
+
+@deftypefn {Built-in Function} bool __builtin_has_attribute (@var{type-or-expression}, @var{attribute})
+@code{__builtin_has_attribute}関数は、@var{type-or-expression}引数によって参照されるシンボルまたは型が、2番目の引数@var{attribute}によって参照されるように宣言されている場合、@code{true}に等しい整数定数式に評価されます。シンボルを参照しない@var{type-or-expression}引数の場合、属性は式に適用されないため、組み込み関数は引数の型を考慮します。どちらの引数も評価されません。 @var{type-or-expression}引数には、@code{typeof}（@pxref{Typeof}）への引数と同じ制限が適用されます。 @var{attribute}引数は属性名であり、オプションで、括弧で囲まれた引数のコンマ区切りのリストが後に続きます。両方の形式の属性名（先頭と末尾に二重のアンダースコアがある場合とない場合）が認識されます。詳細については、@xref{Attribute Syntax}。 1つ以上の引数が必要な属性に属性引数が指定されていない場合、@var{type-or-expression}が属性引数の値に関係なくその属性で宣言されていると、関数は@code{true}を返します。いくつかを想定している属性に提供された引数は、検証され、提供された数値と一致します。指定されたすべての引数が一致する場合、関数は@code{true}を返します。たとえば、以下の関数の最初の呼び出しは@code{x}が@code{aligned}属性で宣言されているため@code{true}と評価されますが、2番目の呼び出しは@code{x}が@code{aligned(4)}ではなく、@code{aligned(8)}として宣言されているため@code{false}と評価されます。
+
+@smallexample
+__attribute__ ((aligned (8))) int x;
+_Static_assert (__builtin_has_attribute (x, aligned), "aligned");
+_Static_assert (!__builtin_has_attribute (x, aligned (4)), "aligned (4)");
+@end smallexample
+
+制限のため、@var{type-or-expression}引数で参照されている型または変数が1で宣言されていても、@code{__builtin_has_attribute}関数は@code{mode}属性に対して@code{false}を返します。 この関数は、ラベルやCでは列挙子でもサポートされていません。
+
+@code{#if}プリプロセッシングディレクティブでの使用に適している@code{__has_attribute}プリプロセッサオペレータとは異なり、@code{__builtin_has_attribute}は、このようなコンテキストでは認識されない組み込み関数です。
+
+@end deftypefn
+
+@deftypefn {Built-in Function} @var{type} __builtin_speculation_safe_value (@var{type} val, @var{type} failval)
+
+この組み込み関数を使用して、安全でない投機的実行を軽減することができます。 @var{type}は、任意の整数型または任意のポインター型にすることができます。
+
+@enumerate
+@item
+CPUがコードを投機的に実行していない場合は、@var{val}が返されます。
+@item
+CPUが投機的に実行されている場合は、次のいずれかになります。
+@itemize
+@item
+この関数は、コードが投機的に実行されなくなったことがわかるまで、実行を一時停止させる場合があります（この場合、上記のように@var{val}が返されます）。 または
+@item
+関数は、投機的実行が条件付き分岐演算を誤って予測したことがわかっている場合に、ターゲット依存の投機追跡状態を使用して@var{failval}を返すことがあります。
+@end itemize
+@end enumerate
+
+2番目の引数@var{failval}はオプションであり、省略した場合のデフォルトはゼロです。
+
+GCCは、この組み込みをサポートするように更新されたターゲットに対して、プリプロセッサマクロ@code{__ HAVE_BUILTIN_SPECULATION_SAFE_VALUE}を定義します。
+
+組み込み関数は、変数が安全な方法で使用されているように見える場所で使用できますが、CPUは、投機的実行のために、境界チェックを一時的に無視することがあります。 たとえば、次の関数について考えてみます。
+
+@smallexample
+int array[500];
+int f (unsigned untrusted_index)
+@{
+  if (untrusted_index < 500)
+    return array[untrusted_index];
+  return 0;
+@}
+@end smallexample
+
+@code{untrusted_index}が500の制限未満で関数が繰り返し呼び出される場合、分岐予測子は、@code{array}に格納された値を返すコードのブロックが実行されることを学習します。 その後、範囲外の値で関数が呼び出された場合、予測が正しくないとCPUが判断するまで、そのコードブロックを最初に実行しようとします（CPUは、その時点で不正な操作を巻き戻します）。 ただし、関数の結果がどのように使用されるかに応じて、範囲外の場所に格納されたものを明らかにできるトレースをキャッシュに残すことができる場合があります。 組み込み関数を使用して、コードを次のように変更することにより、この方法でデータの漏洩を防ぐことができます。
+
+@smallexample
+int array[500];
+int f (unsigned untrusted_index)
+@{
+  if (untrusted_index < 500)
+    return array[__builtin_speculation_safe_value (untrusted_index)];
+  return 0;
+@}
+@end smallexample
+
+組み込み関数は、条件付きブランチが完全に解決されるまで実行を停止させるか、投機的実行を続行できるようにしますが、制限を超える場合は@code{untrusted_value}の代わりに0を使用します。
+
+投機的実行が正しくないときに、任意のメモリ位置へのアクセスが潜在的に安全でない場合、コードは次のように書き直すことができます。
+
+@smallexample
+int array[500];
+int f (unsigned untrusted_index)
+@{
+  if (untrusted_index < 500)
+    return *__builtin_speculation_safe_value (&array[untrusted_index], NULL);
+  return 0;
+@}
+@end smallexample
+
+これにより、@code{NULL}ポインタが危険な場合に使用されます。
 
 @end deftypefn
 
@@ -8428,7 +8426,7 @@ void f (unsigned n, bool overalign)
 
 @var{call_exp}式は関数呼び出しでなければならず、@var{pointer_exp}式はポインタでなければならない。 @var{pointer_exp}は、ターゲットの静的チェーンの場所にある関数呼び出しに渡される。 組み込み関数の結果は、関数呼び出しの結果である。
 
-@emph{注意e:} この組み込みはCでの利用可能である。この組み込みはCでのからGoクロージャーを呼ぶために使うことができる。
+@emph{注意:} この組み込みはCでのみ利用可能である。この組み込みはCでのからGoクロージャーを呼ぶために使うことができる。
 @end deftypefn
 
 @deftypefn {Built-in Function} @var{type} __builtin_choose_expr (@var{const_exp}, @var{exp1}, @var{exp2})
@@ -8462,7 +8460,7 @@ void f (unsigned n, bool overalign)
 
 @deftypefn {Built-in Function} @var{type} __builtin_tgmath (@var{functions}, @var{arguments})
 
-CおよびObjective-Cでのみ使用できる組み込み関数@code{__ builtin_tgmath}は、@code{<tgmath.h>}マクロの規則に従って決定された関数を呼び出す。 そのヘッダーの実装で使用することを意図している。そのヘッダーからのマクロの展開は、そのマクロの呼び出しがそのマクロへの他の呼び出しの引数の中に入れ子になっているときの問題を避けるために、 さらに、他のGNU C言語機能を使用する実装よりも、@code{<tgmath.h>}マクロに対する無効な呼び出しの診断が向上する。 たとえば、@code{pow}型汎用マクロは次のように定義される。
+CおよびObjective-Cでのみ使用できる組み込み関数@code{__builtin_tgmath}は、@code{<tgmath.h>}マクロの規則に従って決定された関数を呼び出す。 そのヘッダーの実装で使用することを意図している。そのヘッダーからのマクロの展開は、そのマクロの呼び出しがそのマクロへの他の呼び出しの引数の中に入れ子になっているときの問題を避けるために、 さらに、他のGNU C言語機能を使用する実装よりも、@code{<tgmath.h>}マクロに対する無効な呼び出しの診断が向上する。 たとえば、@code{pow}型汎用マクロは次のように定義される。
 
 @smallexample
 #define pow(a, b) __builtin_tgmath (powf, pow, powl, \
@@ -8479,12 +8477,12 @@ CおよびObjective-Cでのみ使用できる組み込み関数@code{__ builtin_
 
 @deftypefn {Built-in Function} @var{type} __builtin_complex (@var{real}, @var{imag})
 
-組み込み関数@code{__builtin_complex}は、ISO C11マクロ@code{CMPLXF}、@code{CMPLX}、@ code{CMPLXL}の実装に使用される。 @var{real}と@var {imag}は同じ型、実際のバイナリ浮動小数点型を持つ必要があり、結果は実部と虚部が@var{real}と@var{imag}に対応する複素数型を持つ。@samp{@var{real} + I * @var{imag}}とは異なり、無限大、NaN、負のゼロが関与している場合でも、これは機能する。
+組み込み関数@code{__builtin_complex}は、ISO C11マクロ@code{CMPLXF}、@code{CMPLX}、@code{CMPLXL}の実装に使用される。 @var{real}と@var{imag}は同じ型、実際のバイナリ浮動小数点型を持つ必要があり、結果は実部と虚部が@var{real}と@var{imag}に対応する複素数型を持つ。@samp{@var{real} + I * @var{imag}}とは異なり、無限大、NaN、負のゼロが関与している場合でも、これは機能する。
 
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_constant_p (@var{exp})
-組み込み関数@code{__builtin_constant_p}を使用して、コンパイル時に値が定数位であることが分かり、GCCがその値を含む式に定数畳み込みを実行できるかどうかを判断できる。 関数の引数はテストする値である。 この関数は、引数がコンパイル時定数である場合は整数1を返し、コンパイル時定数でない場合は0を返す。 0が返されても、その値が定数で@emph{ない}のはなく、GCCが@option{-O}オプションの指定された値で定数であることを証明できないことを意味する。
+組み込み関数@code{__builtin_constant_p}を使用して、コンパイル時に値が定数位であることが分かり、GCCがその値を含む式に定数畳み込みを実行できるかどうかを判断できる。 関数の引数はテストする値である。 この関数は、引数がコンパイル時定数である場合は整数1を返し、コンパイル時定数でない場合は0を返す。 0が返されても、その値が定数で@emph{_ない_}のはなく、GCCが@option{-O}オプションの指定された値で定数であることを証明できないことを意味する。
 
 通常、メモリを重要なリソースとする組み込みアプリケーションでこの機能を使用する。 複雑な計算をしている場合は、定数が含まれていれば畳み込みたいが、そうでない場合は関数を呼び出す必要があるかもしれない。 例えば：
 
@@ -8506,12 +8504,18 @@ static const int table[] = @{
 @end smallexample
 
 @noindent
-@var {EXPRESSION}が定数式にならない場合でも@code{__builtin_constant_p}が1を返す場合を含め、これは許容される初期化子である。@var{EXPRESSION}は静的イニシャライザ（@code{0 && foo（）}など）では他に許可されていない。 GCCは、最適化を実行する機会がないので、この場合の組み込み関数を評価することについてより慎重でなければならない。
+@var{EXPRESSION}が定数式にならない場合でも@code{__builtin_constant_p}が1を返す場合を含め、これは許容される初期化子である。@var{EXPRESSION}は静的イニシャライザ（@code{0 && foo（）}など）では他に許可されていない。 GCCは、最適化を実行する機会がないので、この場合の組み込み関数を評価することについてより慎重でなければならない。
+@end deftypefn
+
+@deftypefn {Built-in Function} bool __builtin_is_constant_evaluated (void)
+@code{__builtin_is_constant_evaluated}関数はC++でのみ使用できます。 組み込み関数は、@code{std:: is_constant_evaluated} C++関数の実装で使用することを目的としています。 プログラムは、組み込み関数を直接呼び出すのではなく、後者の関数を使用する必要があります。
+
+組み込みの主な使用例は、@code{constexpr}関数が@code{constexpr}コンテキストで呼び出されているかどうかを判別することです。 関数の呼び出しは、C++標準で定義されているように明示的に定数評価される式または変換の評価内で発生した場合にのみ、@code{true}の値を持つコア定数式に評価されます。 明らかに評価されるコンテキストには、定数式、@code{constexpr if}ステートメントの条件、制約式、および定数式で使用できる変数の初期化子が含まれます。 詳細については、C++標準の最新リビジョンを参照してください。
 @end deftypefn
 
 @deftypefn {Built-in Function} long __builtin_expect (long @var{exp}, long @var{c})
 @opindex fprofile-arcs
-@code{__ builtin_expect}を使用して、分岐予測情報をコンパイラに提供することができる。 一般的に、プログラマーはプログラムが実際にどのように実行されるかを予測することが悪いことが多いので、これに実際のプロファイルフィードバック（@option{-fprofile-arcs}）を使用する方がよいだろう。 しかし、このデータを収集するのは難しいアプリケーションがある。
+@code{__builtin_expect}を使用して、分岐予測情報をコンパイラに提供することができる。 一般的に、プログラマーはプログラムが実際にどのように実行されるかを予測することが悪いことが多いので、これに実際のプロファイルフィードバック（@option{-fprofile-arcs}）を使用する方がよいだろう。 しかし、このデータを収集するのは難しいアプリケーションがある。
 
 戻り値は、@var{exp}の値であり、これは整数式でなければならない。組み込みの意味は、@var{exp} == @var{c}が期待されることである。 例えば：
 
@@ -8530,6 +8534,16 @@ if (__builtin_expect (ptr != NULL, 1))
 
 @noindent
 のような構造を使うべきである。
+
+分岐予測の最適化のために、@code{__builtin_expect}式が@code{true}になる確率は、GCCの@code{builtin-expect-probability}パラメータによって制御されます。デフォルトは90％です。
+
+@code{__builtin_expect_with_probability}を使用して、確率値を個々の式に明示的に割り当てることもできます。 ビルトインがループ構造で使用される場合、提供された確率は、ループ最適化によって行われる予想される反復数に影響します。
+@end deftypefn
+
+@deftypefn {Built-in Function} long __builtin_expect_with_probability
+(long @var{exp}, long @var{c}, double @var{probability})
+
+この関数は@code{__ builtin_expect}と同じセマンティクスを持っていますが、呼び出し側は@var{exp} == @var{c}であると予想される確率を提供します。 最後の引数@var{probability}は、0.0〜1.0の範囲の浮動小数点値です。 @var{probability}引数は、定数の浮動小数点式でなければなりません。
 @end deftypefn
 
 @deftypefn {Built-in Function} void __builtin_trap (void)
@@ -8537,7 +8551,7 @@ if (__builtin_expect (ptr != NULL, 1))
 @end deftypefn
 
 @deftypefn {Built-in Function} void __builtin_unreachable (void)
-制御フローが@code{__ builtin_unreachable}のポイントに達すると、プログラムは未定義である。 これは、コンパイラがコードの到達不能を推定できない場合に便利である。
+制御フローが@code{__builtin_unreachable}のポイントに達すると、プログラムは未定義である。 これは、コンパイラがコードの到達不能を推定できない場合に便利である。
 
 このようなケースの1つは、決して終わらないか、制御を他の場所に移して戻ってこない@code{asm}ステートメントの直後である。 この例では、@code{__builtin_unreachable}を指定せずに、GCCは制御が非void関数の終わりに達するという警告を出す。 @code{asm}の後ろに戻るコードも生成する。
 
@@ -8607,7 +8621,7 @@ void *x = __builtin_assume_aligned (arg, 32, 8);
 @end deftypefn
 
 @deftypefn {Built-in Function} {const char *} __builtin_FILE ()
-この関数はプリプロセッサの@code{__FILE__}マクロに相当し、ビルトインの呼び出しを含むファイル名を指すアドレス定数を返す。呼び出しが関数スコープにない場合は空の文字列を返す。 関数@var{F}のC ++のデフォルト引数として使用すると、@var {F}への呼び出しのファイル名、または関数スコープで呼び出しが行われなかった場合は空文字列が返される。
+この関数はプリプロセッサの@code{__FILE__}マクロに相当し、ビルトインの呼び出しを含むファイル名を指すアドレス定数を返す。呼び出しが関数スコープにない場合は空の文字列を返す。 関数@var{F}のC++のデフォルト引数として使用すると、@var {F}への呼び出しのファイル名、または関数スコープで呼び出しが行われなかった場合は空文字列が返される。
 
 たとえば、以下では、関数@code{foo}を呼び出すたびに、@code{"file.c:123:foo:message"}と同様の、@code{printf}呼び出しのファイル名と行番号、関数@code{foo}の名前、@code{message}という単語が続けて出力される。
 
@@ -8629,13 +8643,13 @@ void foo (void)
 @deftypefn {Built-in Function} void __builtin___clear_cache (char *@var{begin}, char *@var{end})
 この関数は、プロセッサの命令キャッシュを@var{begin}と@var{end}との間のメモリ領域に対してフラッシュするために使用される。 確定的な振る舞いを得るためには、コードを含むメモリを変更した後には、命令キャッシュをフラッシュする必要がある。
 
-ターゲットが命令キャッシュのフラッシュを必要としない場合、@code{__builtin___clear_cache}は効果がない。 そうでなければ、命令キャッシュをクリアするインラインで発行されるか、libgccの@code{__ clear_cache}関数の呼び出しが行われるかのどちらかが行われる。
+ターゲットが命令キャッシュのフラッシュを必要としない場合、@code{__builtin___clear_cache}は効果がない。 そうでなければ、命令キャッシュをクリアするインラインで発行されるか、libgccの@code{__clear_cache}関数の呼び出しが行われるかのどちらかが行われる。
 @end deftypefn
 
 @deftypefn {Built-in Function} void __builtin_prefetch (const void *@var{addr}, ...)
 この機能は、データがアクセスされる前にキャッシュにデータを移動することによって、キャッシュミスのレイテンシを最小限に抑えるために使用される。@code{__builtin_prefetch}への呼び出しを、すぐにアクセスされる可能性が高いメモリ内のデータのアドレスを知っているコードに挿入することができる。ターゲットがそれらをサポートする場合、データプリフェッチ命令が生成される。プリフェッチがアクセスの前に早めに行われた場合、データはアクセスされるまでにキャッシュに格納される。
 
-@var {addr}の値は、プリフェッチするメモリのアドレスである。オプション引数@var{rw}と@var{locality}がある。@var{rw}の値はコンパイル時定数1または0である。 1は、プリフェッチがメモリアドレスへの書き込みを準備していることを意味し、0はデフォルトであり、プリフェッチが読み出しを準備していることを意味する。値@var{locality}は、0と3の間のコンパイル時定数でなければならない。 ゼロの値は、データに時間的局所性がないことを意味するため、アクセス後にキャッシュに残す必要はない。 値が3の場合、データの時間的局所性が高く、可能なすべてのレベルのキャッシュに残す必要がある。 1と2の値はそれぞれ、低いまたは中程度の時間的局所性を意味する。 デフォルトは3である。
+@var{addr}の値は、プリフェッチするメモリのアドレスである。オプション引数@var{rw}と@var{locality}がある。@var{rw}の値はコンパイル時定数1または0である。 1は、プリフェッチがメモリアドレスへの書き込みを準備していることを意味し、0はデフォルトであり、プリフェッチが読み出しを準備していることを意味する。値@var{locality}は、0と3の間のコンパイル時定数でなければならない。 ゼロの値は、データに時間的局所性がないことを意味するため、アクセス後にキャッシュに残す必要はない。 値が3の場合、データの時間的局所性が高く、可能なすべてのレベルのキャッシュに残す必要がある。 1と2の値はそれぞれ、低いまたは中程度の時間的局所性を意味する。 デフォルトは3である。
 
 @smallexample
 for (i = 0; i < n; i++)
@@ -8650,6 +8664,11 @@ for (i = 0; i < n; i++)
 @var{addr}が無効な場合、データプリフェッチはフォルトを生成しない、アドレス式自体は有効でなければならない。 たとえば、@code{p->next}が有効なアドレスではない場合、@code{p->next}のプリフェッチは失敗しないが、@code{p}が有効なアドレスでない場合、評価に失敗する。
 
 ターゲットがデータプリフェッチをサポートしていない場合、アドレス式は副作用が含まれていても他のコードは生成されず、GCCは警告を出さない。
+@end deftypefn
+
+@deftypefn {Built-in Function}{size_t} __builtin_object_size (const void * @var{ptr}, int @var{type})
+@var {ptr}が指すオブジェクトのサイズを返します。 関数の詳細については、@xref{Object Size
+Checking}。
 @end deftypefn
 
 @deftypefn {Built-in Function} double __builtin_huge_val (void)
@@ -8715,7 +8734,7 @@ for (i = 0; i < n; i++)
 @deftypefn {Built-in Function} double __builtin_nan (const char *str)
 これは、ISO C99関数@code {nan}の実装である。
 
-ISO C99では、我々が実装していない@code{strtod}の観点からこの関数を定義しているので、解析の説明が順番になります。 文字列は@code{strtol}のように解析される。 つまり、基底は@samp{0}や@samp{0x}プレフィックスの先頭で認識される。 解析された数は、仮数部の最下位ビットが仮数部の最下位ビットになるように仮数部に配置される。 指定された仮数フィールドに合うように数値が切り捨てられｒｙ。 仮数部は静かなNaNでなければならない。
+ISO C99では、我々が実装していない@code{strtod}の観点からこの関数を定義しているので、解析の説明が順番になります。 文字列は@code{strtol}のように解析される。 つまり、基底は@samp{0}や@samp{0x}プレフィックスの先頭で認識される。 解析された数は、仮数部の最下位ビットが仮数部の最下位ビットになるように仮数部に配置される。 指定された仮数フィールドに合うように数値が切り捨てられる。 仮数部は静かなNaNでなければならない。
 
 この関数は、@code{strtol}によって消費された文字列リテラルが与えられた場合、コンパイル時定数と見なされるほど早く評価される。
 @end deftypefn
@@ -8786,7 +8805,7 @@ ISO C99では、我々が実装していない@code{strtod}の観点からこの
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_popcount (unsigned int x)
-@var {x}の1ビット数を返す。
+@var{x}の1ビット数を返す。
 @end deftypefn
 
 @deftypefn {Built-in Function} int __builtin_parity (unsigned int x)
@@ -8867,6 +8886,14 @@ ISO C99では、我々が実装していない@code{strtod}の観点からこの
 
 @deftypefn {Built-in Function} Pmode __builtin_extend_pointer (void * x)
 ユーザーの可視ポインタサイズが実際のハードウェアアドレスのサイズより小さいターゲットでは、この関数は拡張ユーザーポインタを返す。 これが真であるターゲットには、x86_64またはAarch64のILP32モードが含まれている。 この関数は、主にインラインアセンブリコードを記述するときに便利である。
+@end deftypefn
+
+@deftypefn {Built-in Function} int __builtin_goacc_parlevel_id (int x)
+@var {x}が0、1、2のいずれであるかに応じて、openaccギャング、ワーカー、またはベクターIDを返します。
+@end deftypefn
+
+@deftypefn {Built-in Function} int __builtin_goacc_parlevel_size (int x)
+@var {x}が0、1、2のいずれであるかに応じて、openaccギャング、ワーカー、またはベクトルのサイズを返します。
 @end deftypefn
 
 @node Target Builtins
