@@ -4,7 +4,7 @@
 
 @ignore
 @c man begin COPYRIGHT
-Copyright @copyright{} 1996-2018 Free Software Foundation, Inc.
+Copyright @copyright{} 1996-2020 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -90,7 +90,7 @@ gcov [@option{-v}|@option{--version}] [@option{-h}|@option{--help}]
      [@option{-c}|@option{--branch-counts}]
      [@option{-d}|@option{--display-progress}]
      [@option{-f}|@option{--function-summaries}]
-     [@option{-i}|@option{--intermediate-format}]
+     [@option{-i}|@option{--json-format}]
      [@option{-j}|@option{--human-readable}]
      [@option{-k}|@option{--use-colors}]
      [@option{-l}|@option{--long-file-names}]
@@ -98,8 +98,10 @@ gcov [@option{-v}|@option{--version}] [@option{-h}|@option{--help}]
      [@option{-n}|@option{--no-output}]
      [@option{-o}|@option{--object-directory} @var{directory|file}]
      [@option{-p}|@option{--preserve-paths}]
+     [@option{-q}|@option{--use-hotness-colors}]
      [@option{-r}|@option{--relative-only}]
      [@option{-s}|@option{--source-prefix} @var{directory}]
+     [@option{-t}|@option{--stdout}]
      [@option{-u}|@option{--unconditional-branches}]
      [@option{-x}|@option{--hash-filenames}]
      @var{files}
@@ -138,72 +140,159 @@ gpl(7), gfdl(7), fsf-funding(7), gcc(1) and the Info entry for @file{gcc}.
 
 @item -i
 @itemx --intermediate-format
-@command{lcov}や他のツールで使用できる、簡単に解析できる中間テキスト形式のgcovファイルを出力する。 出力は@file{.gcda}ファイルごとに単一の@file{.gcov}ファイルである。 ソースコードは必要ない。
+解析が容易なJSON中間形式でgcovファイルを出力します。これには、生成のためのソースコードは必要ありません。 JSONのファイルはgzip圧縮アルゴリズムで圧縮されており、ファイルの拡張子は@file{.gcov.json.gz}です。
 
-中間の@file {.gcov}ファイルの形式は、1行に1つのエントリを持つプレーンテキストである
-
-@smallexample
-version:@var{gcc_version}
-file:@var{source_file_name}
-function:@var{start_line_number},@var{end_line_number},@var{execution_count},@var{function_name}
-lcount:@var{line number},@var{execution_count},@var{has_unexecuted_block}
-branch:@var{line_number},@var{branch_coverage_type}
-
-ここで@var{branch_coverage_type}は
-   notexec (分岐は実行されなかった)
-   taken (分岐は実行され、分岐した)
-   nottaken (分岐は実行され、分岐しなかった)
-@end smallexample
-
-中間のgcovファイルには複数の@var{file}エントリがある。 @var{file}に続くすべてのエントリは、その次の@var{file}エントリまでそのソースファイルに関係する。 1行で開始する関数が複数ある場合、対応するlcountが複数回繰り返される。
-
-@option{-i}を@option{-b}オプションと組み合わせて使用する場合のサンプルを次に示す。
+JSONの構造は次のとおりです。
 
 @smallexample
-version: 8.1.0 20180103
-file:tmp.cpp
-function:7,7,0,_ZN3FooIcEC2Ev
-function:7,7,1,_ZN3FooIiEC2Ev
-function:8,8,0,_ZN3FooIcE3incEv
-function:8,8,2,_ZN3FooIiE3incEv
-function:18,37,1,main
-lcount:7,0,1
-lcount:7,1,0
-lcount:8,0,1
-lcount:8,2,0
-lcount:18,1,0
-lcount:21,1,0
-branch:21,taken
-branch:21,nottaken
-lcount:23,1,0
-branch:23,taken
-branch:23,nottaken
-lcount:24,1,0
-branch:24,taken
-branch:24,nottaken
-lcount:25,1,0
-lcount:27,11,0
-branch:27,taken
-branch:27,taken
-lcount:28,10,0
-lcount:30,1,1
-branch:30,nottaken
-branch:30,taken
-lcount:32,1,0
-branch:32,nottaken
-branch:32,taken
-lcount:33,0,1
-branch:33,notexec
-branch:33,notexec
-lcount:35,1,0
-branch:35,taken
-branch:35,nottaken
-lcount:36,1,0
+@{
+  "current_working_directory": @var{current_working_directory},
+  "data_file": @var{data_file},
+  "format_version": @var{format_version},
+  "gcc_version": @var{gcc_version}
+  "files": [@var{file}]
+@}
 @end smallexample
+
+ルート要素のフィールドには、次のセマンティクスがあります。
+
+@itemize @bullet
+@item
+@var{current_working_directory}: コンパイル単位がコンパイルされた作業ディレクトリ
+
+@item
+@var{data_file}: データファイル(GCDA)の名前
+
+@item
+@var{format_version}: フォーマットのセマンティックバージョン
+
+@item
+@var{gcc_version}: GCCコンパイラのバージョン
+@end itemize
+
+各@var{file}の形式は次のとおりです。
+
+@smallexample
+@{
+  "file": @var{file_name},
+  "functions": [@var{function}],
+  "lines": [@var{line}]
+@}
+@end smallexample
+
+@var{file}要素のフィールドには、次のセマンティクスがあります。
+
+@itemize @bullet
+@item
+@var{file_name}: ソースフィアル名
+@end itemize
+
+各@var{function}の形式は次のとおりです。
+
+@smallexample
+@{
+  "blocks": @var{blocks},
+  "blocks_executed": @var{blocks_executed},
+  "demangled_name": "@var{demangled_name},
+  "end_column": @var{end_column},
+  "end_line": @var{end_line},
+  "execution_count": @var{execution_count},
+  "name": @var{name},
+  "start_column": @var{start_column}
+  "start_line": @var{start_line}
+@}
+@end smallexample
+
+@var{function}要素のフィールドには、次のセマンティクスがあります。
+
+@itemize @bullet
+@item
+@var{blocks}: 関数内にあるブロックの数
+
+@item
+@var{blocks_executed}: 関数の実行ブロック数
+
+@item
+@var{demangled_name}: 関数のデマングルされた名前
+
+@item
+@var{end_column}: 関数が終了するソースファイルの列
+
+@item
+@var{end_line}: 関数が終了するソースファイルの行
+
+@item
+@var{execution_count}: 関数の実行回数
+
+@item
+@var{name}: 関数の名前
+
+@item
+@var{start_column}: 関数が始まるソースファイルの列
+
+@item
+@var{start_line}: 関数が始まるソースファイルの行
+@end itemize
+
+行番号と列番号は1から始まることに注意してください。現在の実装では、@var{start_line}と@var{start_column}にはテンプレートパラメーターと先頭の戻り値の型は含まれていませんが、将来的には修正される可能性があります。
+
+各@var{line}の形式は次のとおりです。
+
+@smallexample
+@{
+  "branches": [@var{branch}],
+  "count": @var{count},
+  "line_number": @var{line_number},
+  "unexecuted_block": @var{unexecuted_block}
+  "function_name": @var{function_name},
+@}
+@end smallexample
+
+ブランチは@var {-b}オプションでのみ存在します。
+@var{line}要素のフィールドには、次のセマンティクスがあります。
+
+@itemize @bullet
+@item
+@var{count}: 行の実行回数
+
+@item
+@var{line_number}: 行番号
+
+@item
+@var{unexecuted_block}: 行に未実行のブロックが含まれているかどうかを示すフラグ
+（行のすべてのステートメントが実行されるわけではありません）
+
+@item
+@var{function_name}: この@var{line}が属する関数の名前
+（インライン化されたステートメントのある行は設定できません）
+@end itemize
+
+各@var{branch}の形式は次のとおりです。
+
+@smallexample
+@{
+  "count": @var{count},
+  "fallthrough": @var{fallthrough},
+  "throw": @var{throw}
+@}
+@end smallexample
+
+@var{branch}要素のフィールドには、次のセマンティクスがあります。
+
+@itemize @bullet
+@item
+@var{count}: 分岐の実行回数
+
+@item
+@var{fallthrough}: ブランチがフォールスルー（通り抜け）分岐の場合はtrue
+
+@item
+@var{throw}: ブランチが例外分岐である場合はtrue
+@end itemize
 
 @item -j
 @itemx --human-readable
-人間が判読可能なフォーマット（24kなど）でカウントを書き込む。
+人間が判読可能なフォーマット（24.6kなど）でカウントを書き込む。
 
 @item -k
 @itemx --use-colors
@@ -220,7 +309,7 @@ lcount:36,1,0
 
 @item -n
 @itemx --no-output
-@command {gcov}出力ファイルを作成しない。
+@command{gcov}出力ファイルを作成しない。
 
 @item -o @var{directory|file}
 @itemx --object-directory @var{directory}
@@ -231,6 +320,11 @@ gcovデータファイルを含むディレクトリ、またはオブジェク�
 @itemx --preserve-paths
 生成された@file{.gcov}ファイルの名前に完全なパス情報を保持する。 このオプションを指定しないと、ファイル名コンポーネントだけが使用される。 このオプションを使用すると、すべてのディレクトリが使用され、@samp{/}文字は@samp{#}文字に変換され、@ file{.}ディレクトリコンポーネントは削除され、削除不可能な@file{..}コンポーネントは@samp{^}に名前が変更される これは、ソースファイルが複数の異なるディレクトリにある場合に便利である。
 
+@item -q
+@itemx --use-hotness-colors
+
+ホットラインのperfのような色の出力を出します。 カラースケールの凡例は、出力ファイルの最初に印刷されます。
+
 @item -r
 @itemx --relative-only
 相対パス名を持つソースファイルに関する情報のみを出力する（ソースプレフィックスエリーションの後）。 絶対パスは通常システムヘッダファイルであり、その中のインライン関数のカバレッジは通常は関心がない。
@@ -238,6 +332,10 @@ gcovデータファイルを含むディレクトリ、またはオブジェク�
 @item -s @var{directory}
 @itemx --source-prefix @var{directory}
 出力カバレッジファイルを生成するときに削除するソースファイル名の接頭辞。 このオプションは、別のディレクトリにビルドするときに便利である。出力ファイル名を決定する際には、ソースディレクトリへのパス名は必要ない。 このプレフィックス検出は、ソースファイルが絶対パスかどうかを判断する前に適用されることに注意せよ。
+
+@item -t
+@itemx --stdout
+出力ファイルの代わりに標準出力に出力します。
 
 @item -u
 @itemx --unconditional-branches
@@ -253,7 +351,7 @@ gcovデータファイルを含むディレクトリ、またはオブジェク�
 
 @item -x
 @itemx --hash-filenames
-デフォルトでは、gcovはソースファイルの完全パス名を使用して出力ファイル名を作成する。 これにより、長いファイル名がファイルシステムの制限をオーバーフローさせる可能性がある。 このオプションは@file{@var{source-file}##@var{md5}.gcov}という形式の名前を作成する。ここで、@var{source-file}コンポーネントは最終的なファイル名部分であり、@ var{md5} コンポーネントは、それ以外の場合に使用されていた完全に変形された名前から計算される。
+デフォルトでは、gcovはソースファイルの完全パス名を使用して出力ファイル名を作成する。 これにより、長いファイル名がファイルシステムの制限をオーバーフローさせる可能性がある。 このオプションは@file{@var{source-file}##@var{md5}.gcov}という形式の名前を作成する。ここで、@var{source-file}コンポーネントは最終的なファイル名部分であり、@var{md5} コンポーネントは、それ以外の場合に使用されていた完全に変形された名前から計算される。
 
 @end table
 
@@ -287,16 +385,16 @@ GCCは、必要でない関数の本体を完全に削除することがある�
 
 @var{information}は人間が読める形式だが、マシンの解析にも簡単に使えるように設計されている。
 
-パーセンテージを出力するとき、0％と100％は値が@emph{正確に}0％と100％のときにのみ表示される。 従来は0％または100％に丸められた他の値は代わりに、最も近い非境界値として出力される。
+パーセンテージを出力するとき、0％と100％は値が@emph{正確に}0％と100％のときにのみ表示される。 通常は0％または100％に丸められる他の値は、代わりに最も近い非境界値として印刷されます。
 
-@command{gcov}を使用する場合は、まず2つの特別なGCCオプション@samp{-fprofile-arcs -ftest-coverage}を使用してプログラムをコンパイルする必要がある。 これは、gcov（基本的にはプログラムのフローグラフ）に必要な追加情報を生成するようにコンパイラに指示する。また、gcovに必要な追加のプロファイリング情報を生成するためのオブジェクトファイルにコードを追加する。 これらの追加ファイルは、オブジェクトファイルが置かれているディレクトリに置かれる。
+@command{gcov}を使用する場合は、まず特別なGCCオプション@samp{--coverage}を使用してプログラムをコンパイルする必要がある。 これは、gcov（基本的にはプログラムのフローグラフ）に必要な追加情報を生成するようにコンパイラに指示する。また、gcovに必要な追加のプロファイリング情報を生成するためのオブジェクトファイルにコードを追加する。 これらの追加ファイルは、オブジェクトファイルが置かれているディレクトリに置かれる。
 
 プログラムを実行すると、プロファイル出力が生成される。 @option{-fprofile-arcs}でコンパイルされた各ソースファイルに対して、付随する@file{.gcda}ファイルがオブジェクトファイルディレクトリに配置される。
 
 プログラムのソースファイル名を引数として@command{gcov}を実行すると、各行の実行頻度とともにコードのリストが生成されえる。 たとえば、プログラムの名前が@file{tmp.cpp}の場合、これは基本的な@command{gcov}機能を使用するときに表示される。
 
 @smallexample
-$ g++ -fprofile-arcs -ftest-coverage tmp.cpp
+$ g++ --coverage tmp.cpp
 $ a.out
 $ gcov tmp.cpp -m
 File 'tmp.cpp'
@@ -306,8 +404,9 @@ Creating 'tmp.cpp.gcov'
 
 ファイル@file{tmp.cpp.gcov}には、@command{gcov}の出力が含まれている。ここにサンプルがある：
 
-@smallexample
+smallexample
         -:    0:Source:tmp.cpp
+        -:    0:Working directory:/home/gcc/testcase
         -:    0:Graph:tmp.gcno
         -:    0:Data:tmp.gcda
         -:    0:Runs:1
@@ -371,6 +470,7 @@ Foo<int>::inc():
 
 @smallexample
         -:    0:Source:tmp.cpp
+        -:    0:Working directory:/home/gcc/testcase
         -:    0:Graph:tmp.gcno
         -:    0:Data:tmp.gcda
         -:    0:Runs:1
@@ -450,6 +550,7 @@ GCCインストルメントが呼び出す方法のため、個々のブロッ�
 
 @smallexample
         -:    0:Source:tmp.cpp
+        -:    0:Working directory:/home/gcc/testcase
         -:    0:Graph:tmp.gcno
         -:    0:Data:tmp.gcda
         -:    0:Runs:1
@@ -548,7 +649,7 @@ branch  2 taken 0% (throw)
 @node Gcov and Optimization
 @section @command{gcov}をGCC最適化で使う
 
-コードを最適化するために@command{gcov}を使用する予定の場合は、最初に@samp{-fprofile-arcs -ftest-coverage}の2つの特別なGCCオプションを使用してプログラムをコンパイルする必要がある。 それ以外にも、他のGCCオプションを使うことができる。 プログラムのすべての行が実行されたことを証明したい場合は、同時に最適化を行うべきではない。 一部のマシンでは、オプティマイザは、単純なコード行を他の行と組み合わせることでそれらを削除することができる。 たとえば、次のようなコードは、
+コードを最適化するために@command{gcov}を使用する予定の場合は、最初に特別な@samp{--coverage}のGCCオプションを使用してプログラムをコンパイルする必要がある。 それ以外にも、他のGCCオプションを使うことができる。 プログラムのすべての行が実行されたことを証明したい場合は、同時に最適化を行うべきではない。 一部のマシンでは、オプティマイザは、単純なコード行を他の行と組み合わせることでそれらを削除することができる。 たとえば、次のようなコードは、
 
 @smallexample
 if (a != b)
@@ -588,7 +689,7 @@ else
 
 @file{.gcda}カウントデータファイルは、GCC @option{-fprofile-arcs}オプションでビルドされたオブジェクトファイルを含むプログラムが実行されると生成される。 このオプションでコンパイルされたオブジェクトファイルごとに別の@file{.gcda}ファイルが作成される。 これには、アーク転移カウント、値プロファイルカウント、およびいくつかのサマリー情報が含まれている。
 
-カバレッジファイルに直接アクセスすることは推奨されない。 消費者は@command{gcov}ツールで@option{--intermediate-format}オプションで提供される中間形式を使用する必要がある。
+カバレッジファイルに直接アクセスすることは推奨されない。 消費者は@command{gcov}ツールで@option{--json-format}オプションで提供される中間形式を使用する必要がある。
 
 @node Cross-profiling
 @section クロスプロファイルをサポートするためのデータファイルの再配置
