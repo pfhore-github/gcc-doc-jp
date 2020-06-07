@@ -2211,7 +2211,7 @@ fatal (/* @r{@dots{}} */)
 @item optimize (@var{level}, @dots{})
 @item optimize (@var{string}, @dots{})
 @cindex @code{optimize} function attribute
-@code {optimize}属性は、関数がコマンドラインで指定されたものとは異なる最適化オプションでコンパイルされることを指定するために使用されます。 有効な引数は、負でない定数の整数と文字列です。 各数値引数は、最適化@var{level}を指定します。 各@var string}引数は、1つ以上のコンマ区切りの部分文字列で構成されます。 @code{O}という文字で始まる各部分文字列は、@option{-O0}や@option{-Os}などの最適化オプションを参照します。 他の部分文字列は、@code{-f}接頭辞の接尾辞として使用され、共同で最適化オプションの名前を形成します。@xref{Optimize Options}
+@code{optimize}属性は、関数がコマンドラインで指定されたものとは異なる最適化オプションでコンパイルされることを指定するために使用されます。 有効な引数は、負でない定数の整数と文字列です。 各数値引数は、最適化@var{level}を指定します。 各@var{string}引数は、1つ以上のコンマ区切りの部分文字列で構成されます。 @code{O}という文字で始まる各部分文字列は、@option{-O0}や@option{-Os}などの最適化オプションを参照します。 他の部分文字列は、@code{-f}接頭辞の接尾辞として使用され、共同で最適化オプションの名前を形成します。@xref{Optimize Options}
 
 @samp{#pragma GCC optimize}プラグマを使用して、複数の関数に影響を与える最適化オプションを設定することもできる。@samp{#pragma GCC optimize}プラグマの詳細は@xref{Function Specific Option Pragmas}。
 
@@ -5227,7 +5227,7 @@ typedef __attribute__ ((alloc_size (1))) void*
 @cindex @code{copy} type attribute
 @code{copy}属性は、@var{expression}の型が宣言されている属性のセットを、属性が適用される型の宣言に適用します。 この属性は、エイリアスシンボルと同じ属性セットを指定することが予想されるエイリアスを定義するライブラリ用に設計されています。 @code{copy}属性は、型、変数、または関数で使用できます。 ただし、属性が適用されるシンボルの種類（変数または関数）は、引数が参照するシンボルの種類と一致する必要があります。 @code{copy}属性は、構文属性と意味属性のみをコピーしますが、@code{alias}、@code{visibility}、@code{weak}などのシンボルのリンクまたは可視性に影響を与える属性はコピーしません。 @code{deprecated}属性もコピーされません。 @xref{Common Function Attributes}.　@xref{Common Variable Attributes}.
 
-たとえば、以下の@code{struct A}がサードパーティのライブラリヘッダーで定義されており、@code{N}の配置要件があり、@code packed}属性のために型の変数がそれほど配置されていない場合は常に警告が表示されます。無関係な@code{struct B}の定義に@code{copy}属性を指定すると、ポインタ式によって参照される型から@code{struct B}にすべての関連属性がコピーされます。
+たとえば、以下の@code{struct A}がサードパーティのライブラリヘッダーで定義されており、@code{N}の配置要件があり、@code{packed}属性のために型の変数がそれほど配置されていない場合は常に警告が表示されます。無関係な@code{struct B}の定義に@code{copy}属性を指定すると、ポインタ式によって参照される型から@code{struct B}にすべての関連属性がコピーされます。
 
 @smallexample
 struct __attribute__ ((aligned (N), warn_if_not_aligned (N)))
@@ -5981,7 +5981,7 @@ GCCは基本@code{asm}の@var{AssemblerInstructions}を解析しない。つま�
 
 コンパイラは、拡張@code{asm}で使用可能な変種や@samp{%}演算子を処理せずに、基本的な@code{asm}のアセンブラ命令をアセンブリ言語出力ファイルにそのままコピーする。 これにより、基本@code{asm}文字列と拡張された@code{asm}テンプレートの間には小さな違いが生じる。 たとえば、レジスタを参照するには、基本@code{asm}では@samp{%eax}を、拡張@code{asm}では@samp{%%eax}を使用する。
 
-複数のアセンブラ変種をサポートするx86などのターゲットでは、すべての基本@code{asm}ブロックが@option{-masm}コマンドラインオプション（@pxref{x86オプション}）で指定されたアセンブラ変種を使用する。基本@code{asm}は、異なる変種に対して異なるアセンブラ文字列を提供する仕組みを提供しない。
+複数のアセンブラ変種をサポートするx86などのターゲットでは、すべての基本@code{asm}ブロックが@option{-masm}コマンドラインオプション（@pxref{x86 Options}）で指定されたアセンブラ変種を使用する。基本@code{asm}は、異なる変種に対して異なるアセンブラ文字列を提供する仕組みを提供しない。
 
 GCCは、アセンブラブロックが汎用レジスタを変更しないと仮定するが、グローバルにアクセス可能な変数を読み書きすることができる。
 
@@ -6344,7 +6344,7 @@ asm ("mov %[e], %[d]"
 
 ほとんどの場合、ターゲットにはフラグレジスタが1つしかないため、多くの命令の暗黙のオペランドになる。 この場合、アセンブリ言語に対応するテキストがないので、オペランドは@code{%0}などを介してアセンブラテンプレート内で参照されるべきではない。
 
-table @asis
+@table @asis
 @item ARM
 @itemx AArch64
 ARMファミリのフラグ出力制約は、@samp{=@@cc@var{cond}}という形式です。ここで、@var{cond}は、@code{ConditionHolds}に対してARM ARMで定義されている標準条件の1つです。
@@ -6384,7 +6384,6 @@ Vフラグクリア
 
 フラグ出力制約は、thumb1モードではサポートされていません。
 
-@table @asis
 @item x86ファミリ
 x86ファミリのフラグ出力の制約は、@code {j@var{cond}}のISAマニュアルで定義されている標準条件の1つで、@var{cond}は@samp{=@@cc@var{cond}}または@code{set@var{cc}}を使用する。
 
@@ -6979,7 +6978,8 @@ asm ("sysint" : "=r" (result) : "0" (p1), "r" (p2));
 
 いくつかの開発者は、gccのレジスタの割り当てを改善するために、特に大きな関数でローカルレジスタ変数を使用する。 この場合、レジスタ名は基本的にレジスタアロケータのヒントになる。場合によってはより良いコードを生成することができるが、改善はアロケータ/オプティマイザの気まぐれに左右される。あなたの改善が失われないという保証はないので、このローカルレジスタ変数の使用は推奨しない。
 
-MIPSプラットフォームでは、特性が少し異なるローカルレジスタ変数（@pxref {MIPS CoprocessorsDefining coprocessor specifics for MIPS targets, gccint, 
+MIPSプラットフォームでは、特性が少し異なるローカルレジスタ変数（@pxref {MIPS Coprocessors,,
+Defining coprocessor specifics for MIPS targets, gccint, 
 GNU Compiler Collection (GCC) Internals}）に関連する用途がある。
 
 @node Size of an asm
@@ -12310,7 +12310,7 @@ Cの場合、オーバーロードされた関数はマクロで実装されて�
 
 GCCはOpenPOWER 64ビットELF V2 ABI仕様に準拠しており、これは@uref{http://openpowerfoundation.org/wp-content/uploads/resources/leabi-prd/content/index.html}でみつかる。このドキュメントの付録Aには、準拠したコンパイラによって提供されなければならないベクトルAPIインタフェースがリストされている。 プログラマは、そこに記載されたインタフェースを優先的に使用すべきである。しかし、歴史的に、GCCはベクトル命令へのアクセスのための追加のインタフェースを提供してきた。 以下、これらについて簡単に説明する。
 
-menu
+@menu
 * PowerPC AltiVec Built-in Functions on ISA 2.05::
 * PowerPC AltiVec Built-in Functions Available on ISA 2.06::
 * PowerPC AltiVec Built-in Functions Available on ISA 2.07::
@@ -18304,7 +18304,7 @@ GNUコンパイラは、これらの拡張機能をC++言語に提供してい�
 @cindex volatile write
 @cindex volatile access
 
-C++標準は、volatileオブジェクトの処理におけるC標準とは異なる。 C++は、volatileオブジェクトに関して可能であればCと同様の振る舞いをするべきであるということを除いて、volatile性のアクセスを構成するものを特定することはできない。 しかし、CとC++の間の表現の価値が異なることは、その動作を複雑にする。 G++の動作の説明については、G++はvolatileアクセスの場合はGCCと同じように動作し、@xref{C Extensions、Volatiles}と同じ動作をする。
+C++標準は、volatileオブジェクトの処理におけるC標準とは異なる。 C++は、volatileオブジェクトに関して可能であればCと同様の振る舞いをするべきであるということを除いて、volatile性のアクセスを構成するものを特定することはできない。 しかし、CとC++の間の表現の価値が異なることは、その動作を複雑にする。 G++の動作の説明については、G++はvolatileアクセスの場合はGCCと同じように動作し、@xref{C Extensions,,Volatiles}と同じ動作をする。
 
 C言語とC++の言語仕様は、オブジェクトがvoidコンテキストでアクセスされるときに異なる。
 

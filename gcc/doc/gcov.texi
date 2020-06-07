@@ -404,7 +404,7 @@ Creating 'tmp.cpp.gcov'
 
 ファイル@file{tmp.cpp.gcov}には、@command{gcov}の出力が含まれている。ここにサンプルがある：
 
-smallexample
+@smallexample
         -:    0:Source:tmp.cpp
         -:    0:Working directory:/home/gcc/testcase
         -:    0:Graph:tmp.gcno

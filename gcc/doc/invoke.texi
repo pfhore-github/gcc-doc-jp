@@ -1306,10 +1306,10 @@ See RS/6000 and PowerPC Options.
 -msse4a  -m3dnow  -m3dnowa  -mpopcnt  -mabm  -mbmi  -mtbm  -mfma4  -mxop 
 -madx  -mlzcnt  -mbmi2  -mfxsr  -mxsave  -mxsaveopt  -mrtm  -mhle  -mlwp 
 -mmwaitx  -mclzero  -mpku  -mthreads  -mgfni  -mvaes  -mwaitpkg 
--mshstk -mmanual-endbr -mforce-indirect-call  -mavx512vbmi2 -mavx512bf16 -menqcmd 
--mvpclmulqdq  -mavx512bitalg  -mmovdiri  -mmovdir64b  -mavx512vpopcntdq 
--mavx5124fmaps  -mavx512vnni  -mavx5124vnniw  -mprfchw  -mrdpid 
--mrdseed  -msgx -mavx512vp2intersect
+-mshstk -mmanual-endbr -mforce-indirect-call  -mavx512vbmi2 -mavx512bf16
+-menqcmd  -mvpclmulqdq  -mavx512bitalg  -mmovdiri  -mmovdir64b
+-mavx512vpopcntdq  -mavx5124fmaps  -mavx512vnni  -mavx5124vnniw  -mprfchw
+-mrdpid  -mrdseed  -msgx -mavx512vp2intersect
 -mcldemote  -mms-bitfields  -mno-align-stringops  -minline-all-stringops 
 -minline-stringops-dynamically  -mstringop-strategy=@var{alg} 
 -mmemcpy-strategy=@var{strategy}  -mmemset-strategy=@var{strategy} 
@@ -1492,7 +1492,7 @@ Dのドキュメントコード（Ddoc）。
 @table @gcctabopt
 @item -x @var{language}
 入力ファイルが従う@var{language}(言語)を（コンパイラに拡張子に基づいて選択させるのではなく）
-明示的に指定する。このオプションは次の@option{-x}オプションまでのすべてのファイルに適用される。可能な@var{langage}の値は
+明示的に指定する。このオプションは次の@option{-x}オプションまでのすべてのファイルに適用される。可能な@var{language}の値は
 @smallexample
 c  c-header  cpp-output
 c++  c++-header  c++-cpp-output
@@ -1521,7 +1521,7 @@ brig
 ソースのコンパイル・アセンブルはするがリンクしない。リンクの段階は単に行われない。
 最終的な出力はそれぞれのファイルのオブジェクトファイルの形式である。
 
-デフォルトでは、ソースファイルのオブジェ���トファイル名は拡張子@samp{.c}, @samp{.i}, @samp{.s}などを
+デフォルトでは、ソースファイルのオブジェクトファイル名は拡張子@samp{.c}, @samp{.i}, @samp{.s}などを
 @samp{.o}で置換したものである。
 
 認識できないファイル、コンパイル・アセンブルが不要なファイルは無視される。
@@ -2813,7 +2813,6 @@ Scott Meyersの@cite{Effective C++}シリーズ本のスタイルガイドライ
 
 このオプションを選択した時は、標準ライブラリヘッダがすべてのガイドラインに従っているわけではないことに気をつけること。
 @samp{grep -v}をそれらの警告を除外するのに使う。
-@end table
 
 @item -Wstrict-null-sentinel @r{(C++とObjective-C++専用)}
 @opindex Wstrict-null-sentinel
@@ -2932,7 +2931,7 @@ STLはまだ使用可能である。間接的に仮想継承を使っている�
 @item -Wvolatile @r{(C++とObjective-C++専用)}
 @opindex Wvolatile
 @opindex Wno-volatile
-@code{volatile}修飾子の廃止予定の使用について警告します。 これには、@code{volatile}修飾された型の前置・後置の@code{++}、@code{--}表現、左オペランドが@code{volatile}修飾された非クラス型の値である単純な代入、左オペランドが@code{volatile}修飾された非クラス型である複合代入、@code{volatile}修飾された関数戻り値型、@code{volatile}修飾されたパラメーター型、および@の構造化バインディングである複合代入@code{volatile}修飾型。 この使用法はC++20で廃止されました。
+@code{volatile}修飾子の廃止予定の使用について警告します。 これには、@code{volatile}修飾された型の前置・後置の@code{++}、@code{--}表現、左オペランドが@code{volatile}修飾された非クラス型の値である単純な代入、左オペランドが@code{volatile}修飾された非クラス型である複合代入、@code{volatile}修飾された関数戻り値型、@code{volatile}修飾されたパラメーター型、および@code{volatile}修飾型の構造化バインディングである複合代入。 この使用法はC++20で廃止されました。
 
 @option{-std=c++2a}でデフォルトで有効になります。
 
@@ -4240,7 +4239,8 @@ GNU libc版2.2によってサポートされるフォーマット機能に対し
 @option{-Wformat}は@option{-Wall}で有効にされる。
 
 @opindex Wformat=2
-@option{-Wformat}と追加のフォーマットチェックを有効にします。 現在、@option{-Wformat -Wformat-nonliteral -Wformat-security -Wformat-y2k}と同等です。
+@option{-Wformat}と追加のフォーマットチェックを有効にします。 現在、
+@option{-Wformat -Wformat-nonliteral -Wformat-security -Wformat-y2k}と同等です。
 @end table
 
 @item -Wno-format-contains-nul
@@ -4381,7 +4381,6 @@ void f (int a, int b)
 @opindex Wformat-y2k
 @opindex Wno-format-y2k
 もし@option{-Wformat}が指定されたら、数字2つの年のみを生成する@code{strftime}書式についても警告する。
-@end table
 
 @item -Wnonnull
 @opindex Wnonnull
@@ -4637,10 +4636,10 @@ ISO Cは関数定義で修飾された@code{void}戻り型を禁じているた�
 関数の宣言に、関連する関数が宣言されている1つ以上の属性が欠落しており、その欠落が生成されたコードの正確性または効率に悪影響を与える可能性がある場合に警告します。 たとえば、属性を使用してターゲットの要件よりも制限の少ない要件を指定するエイリアスの宣言に対して警告が発行されます。
 これは通常、潜在的な最適化の機会を表しています。
 対照的に、@option{-Wattribute-alias=2}オプションは、エイリアスがターゲットよりも制限的である場合に発行される警告を制御します。これは、誤ったコード生成につながる可能性があります。
-考慮される属性には、@code{alloc_align}、@code{alloc_size}、
-@code{cold}、@code{const}、@code{hot}、@code{leaf}、@code{malloc}、
-@code{nonnull}、@code{noreturn}、@code{nothrow}、@code{pure}、
-@code{returns_nonnull}、および@code{returns_twice}があります。
+考慮される属性には、@code{alloc_align}、 @code{alloc_size}、
+@code{cold}、 @code{const}、 @code{hot}、 @code{leaf}、 @code{malloc}、
+@code{nonnull}、 @code{noreturn}、 @code{nothrow}、 @code{pure}、
+@code{returns_nonnull}、 および@code{returns_twice}があります。
 
 C++では、属性@code{alloc_align}、@code{alloc_size}、@code{assume_aligned}、@code{format}、@code{format_arg}、@code{malloc}、@code{nonnull}で宣言されたプライマリテンプレートの明示的な特殊化が宣言されていない場合に警告が発行されます。 属性@code{deprecated}、@code{error}、および@code{warning}は警告を抑制します。
 (@pxref{Function Attributes}).
@@ -5164,7 +5163,7 @@ GCCが理解できない@code{#pragma}ディレクティブに出会ったら警
 @item -Wstring-compare
 @opindex Wstring-compare
 @opindex Wno-string-compare
-ひとつの引数の長さが他方の引数が格納されている配列のサイズ（もしくは@scode{strncmp}の場合には境界）よりも大きいために、そのような等価に対する検査でゼロであるか非ゼロであるかが決定できるような@code{strcmp}と@code {strncmp}への呼び出しに対して警告します。 たとえば、以下の@code{strcmp}の呼び出しは、配列@code{a}の内容に関係なく、その結果が必ずゼロ以外になるため、診断されます。
+ひとつの引数の長さが他方の引数が格納されている配列のサイズ（もしくは@code{strncmp}の場合には境界）よりも大きいために、そのような等価に対する検査でゼロであるか非ゼロであるかが決定できるような@code{strcmp}と@code{strncmp}への呼び出しに対して警告します。 たとえば、以下の@code{strcmp}の呼び出しは、配列@code{a}の内容に関係なく、その結果が必ずゼロ以外になるため、診断されます。
 
 @smallexample
 extern char a[4];
@@ -6762,8 +6761,8 @@ use @option{-Wno-analyzer-tainted-array-index}を使用して無効にします�
 @end table
 
 探索を制御するための関連パラメータは次のとおりです。
-@option{--param analyzer-bb-explosion-factor=@var{value}},
-@option{--param analyzer-max-enodes-per-program-point=@var{value}},
+@option{--param analyzer-bb-explosion-factor=@var{value}}, 
+@option{--param analyzer-max-enodes-per-program-point=@var{value}}, 
 @option{--param analyzer-max-recursion-depth=@var{value}}, と
 @option{--param analyzer-min-snodes-for-call-summary=@var{value}}.
 
@@ -8163,7 +8162,8 @@ GCCの最適化を制御して、ライブパッチに適した出力を生成�
 @option{-flive-patching=inline-clone}は以下の最適化オプションを無効化します。
 @gccoptlist{-fwhole-program  -fipa-pta  -fipa-reference  -fipa-ra 
 -fipa-icf  -fipa-icf-functions  -fipa-icf-variables 
--fipa-bit-cp  -fipa-vrp  -fipa-pure-const  -fipa-reference-addressable 
+-fipa-bit-cp  -fipa-vrp  -fipa-pure-const
+-fipa-reference-addressable 
 -fipa-stack-alignment}
 
 @item inline-only-static
@@ -8873,7 +8873,7 @@ LTOの現在の実装は異なるタイプのホストで移植性があるバ�
 これはすでにGCCを呼ぶMakefileがすでに並列で実行されている時に役立つ。これを働かせるためには現在のMakefileで
 コマンドレシピの前に@samp{+}を加えなくてはならない。このオプションは@env{MAKE}がGNU makeの時だけ働くだろう。
 
-@make{-flto=auto}を使用して、GNU makeのジョブサーバーを使用します（使用可能な場合）。または、システムに存在するCPUスレッドの数の自動検出にフォールバックします。
+@option{-flto=auto}を使用して、GNU makeのジョブサーバーを使用します（使用可能な場合）。または、システムに存在するCPUスレッドの数の自動検出にフォールバックします。
 
 @item -flto-partition=@var{alg}
 @opindex flto-partition
@@ -9198,7 +9198,8 @@ IEEEシグナルNaNがユーザ可視のトラップを浮動小数点操作の�
 このデータの情報は生成されたコードの構造にとても依存するので、両方のコンパイルで同じソースコードと
 同じ最適化オプションを使わなくてはならない。
 
-@option{-fbranch-probabilities}で、GCCはそれぞれの@samp{JUMP_INSN}と@samp{CALL_INSN}で@samp{REG_BR_PROB}注釈を置く。
+@option{-fbranch-probabilities}で、GCCはそれぞれの
+@samp{JUMP_INSN}と@samp{CALL_INSN}で@samp{REG_BR_PROB}注釈を置く。
 これらは最適化を向上させるために使うことができる。現在、それらは1箇所のみで使われる。@file{reorg.c}で、分岐がどのくらい取られるかを
 推測する代わりに、@samp{REG_BR_PROB}がパスがどのくらいの頻度でとられるかを正確に決定するのに使われる。
 
@@ -10654,7 +10655,7 @@ undefined,float-cast-overflow,float-divide-by-zero,bounds-strict
 
 マクロ@code{__CET__}は、@ option{-fcf-protection}が使用されるときに定義されます。 @code{__CET__}の最初のビットは値@code{branch}に対して1に設定され、@code{__CET__}の2番目のビットは@code{return}に対して1に設定されます。
 
-@code{nocf_check}属性を使用して、計装からスキップする必要がある関数と呼び出しを特定することもできます（@pxref{関数属性}）。
+@code{nocf_check}属性を使用して、計装からスキップする必要がある関数と呼び出しを特定することもできます（@pxref{Function Attributes}）。
 
 現在、x86 GNU/LinuxターゲットはIntel Control-flow Enforcement Technology（CET）に基づく実装を提供しています。
 
@@ -14873,7 +14874,7 @@ GCCは以下のAVRデバイスとISAをサポートしている。
 @item -mgas-isr-prologues
 @opindex mgas-isr-prologues
 割り込みサービスルーチン（ISR）は、GNU Binutilsでサポートされている@code{__gcc_isr}疑似命令を使用できます。
-このオプションがオンの場合でも、@ref{AVR Function Attributes,,@code{no_gccisr}}関数属性を使用して、個々のISRの機能を無効にすることができます。 この機能は、最適化がオン（@option{-Og}、@pxref{最適化オプション}を除く）で、GNU Binutilsが@w{@uref {https://sourceware.org/PR21683,PR21683}}をサポートしている場合、デフォルトでアクティブになります。 
+このオプションがオンの場合でも、@ref{AVR Function Attributes,,@code{no_gccisr}}関数属性を使用して、個々のISRの機能を無効にすることができます。 この機能は、最適化がオン（@option{-Og}、@pxref{Optimize Options}を除く）で、GNU Binutilsが@w{@uref {https://sourceware.org/PR21683,PR21683}}をサポートしている場合、デフォルトでアクティブになります。 
 
 @item -mint8
 @opindex mint8
@@ -16277,7 +16278,7 @@ Ft32Bコード圧縮スキームを使用してすべてのコードを圧縮し
 @item -mgprel-ro
 @opindex mgprel-ro
 
-読取り専用セクションにあることが知られているデータについては、FDPIC ABIの@code{GPREL}再配置の使用を有効にする。 @option{-fpic}または@option{-fpie}を除いて、デフォルトで有効になっている。グローバルオフセットテーブルを小さくするのに役立つかもしれないが、１命���を4つに変える。@option{-fPIC}または@option{-fPIE}では、3命令を4に変え、そのうちの1つを複数のシンボルで共有することができ、参照シンボルのGOTエントリが不要になるため、勝つ可能性が高くなる。 そうでない場合は、@option{-mno-gprel-ro}を使用して無効にすることができる。
+読取り専用セクションにあることが知られているデータについては、FDPIC ABIの@code{GPREL}再配置の使用を有効にする。 @option{-fpic}または@option{-fpie}を除いて、デフォルトで有効になっている。グローバルオフセットテーブルを小さくするのに役立つかもしれないが、１命令を4つに変える。@option{-fPIC}または@option{-fPIE}では、3命令を4に変え、そのうちの1つを複数のシンボルで共有することができ、参照シンボルのGOTエントリが不要になるため、勝つ可能性が高くなる。 そうでない場合は、@option{-mno-gprel-ro}を使用して無効にすることができる。
 
 @item -multilib-library-pic
 @opindex multilib-library-pic
@@ -22020,7 +22021,7 @@ ENQCMD, AVX512VPOPCNTDQ, AVX5124FMAPS, AVX512VNNI, AVX5124VNNIW, CLDEMOTE拡張�
 
 @item -mcx16
 @opindex mcx16
-このオプションを使用すると、GCCは64ビットコードで@code{CMPXCHG16B}命令を生成して、16バイト整列128ビットオブジェクトに対して比較および交換操作を実装できる。これは、1つのマシンワードサイズを超えるデータ構造のアトミック更新に役立つ コンパイラはこの命令を使用して@ref{__sync Builtins}を実装する。 しかし、128ビット整数で動作する@ref{__Atomic Builtins}では、常にライブラリ呼び出しが使用される。
+このオプションを使用すると、GCCは64ビットコードで@code{CMPXCHG16B}命令を生成して、16バイト整列128ビットオブジェクトに対して比較および交換操作を実装できる。これは、1つのマシンワードサイズを超えるデータ構造のアトミック更新に役立つ コンパイラはこの命令を使用して@ref{__sync Builtins}を実装する。 しかし、128ビット整数で動作する@ref{__atomic Builtins}では、常にライブラリ呼び出しが使用される。
 
 @item -msahf
 @opindex msahf
