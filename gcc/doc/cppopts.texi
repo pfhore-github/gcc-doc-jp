@@ -157,7 +157,7 @@ $$(objpfx)foo.o: foo.c
 
 @item -fextended-identifiers
 @opindex fextended-identifiers
-識別子のユニバーサルキャラクタ名を許容する。 このオプションは、C99（およびそれ以降のC標準バージョン）およびC++ではデフォルトで有効になっている。
+識別子のユニバーサルキャラクタ名と拡張文字を許容する。 このオプションは、C99（およびそれ以降のC標準バージョン）およびC++ではデフォルトで有効になっている。
 
 @item -fno-canonical-system-headers
 @opindex fno-canonical-system-headers
