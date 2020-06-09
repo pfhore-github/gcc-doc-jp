@@ -3529,10 +3529,12 @@ C++フロントエンドで、次のようなテンプレートタイプの不�
 @samp{separate-events}は、診断内のイベントごとに個別の「メモ」診断を出力することを意味します。 例えば：
 
 @smallexample
-test.c:29:5: error: passing NULL as argument 1 to 'PyList_Append' which requires a non-NULL parameter
+test.c:29:5: error: passing NULL as argument 1 to 'PyList_Append' which requires
+                    a non-NULL parameter
 test.c:25:10: note: (1) when 'PyList_New' fails, returning NULL
 test.c:27:3: note: (2) when 'i < count'
-test.c:29:5: note: (3) when calling 'PyList_Append', passing NULL from (1) as argument 1
+test.c:29:5: note: (3) when calling 'PyList_Append', passing NULL from (1)
+                   as argument 1
 @end smallexample
 
 @samp{inline-events}は、イベントをソースコード内に「インライン」で出力することを意味します。 このビューは、イベントを十分に近いイベントの実行に統合して、ソース内のラベル付き範囲として出力しようとします。
@@ -3822,7 +3824,8 @@ JSON形式で次のように印刷される場合があります。
         @},
         @{
             "depth": 0,
-            "description": "when calling 'PyList_Append', passing NULL from (1) as argument 1",
+            "description":
+              "when calling 'PyList_Append', passing NULL from (1) as argument 1",
             "function": "test",
             "location": @{
                 "column": 5,
@@ -3971,7 +3974,7 @@ ISO Cに適合することの失敗の報告の機能はある状況では役立
 -Wmemset-transposed-args 
 -Wmisleading-indentation @r{(C/C++専用)} 
 -Wmissing-attributes 
--Wmissing-braces @r{(C/ObjC専用} 
+-Wmissing-braces @r{(C/ObjC専用)} 
 -Wmultistatement-macros  
 -Wnarrowing @r{(C++専用)}  
 -Wnonnull  
@@ -4239,7 +4242,7 @@ GNU libc版2.2によってサポートされるフォーマット機能に対し
 @option{-Wformat}は@option{-Wall}で有効にされる。
 
 @opindex Wformat=2
-@option{-Wformat}と追加のフォーマットチェックを有効にします。 現在、
+@option{-Wformat}と追加のフォーマットチェックを有効にします。 現在、@/
 @option{-Wformat -Wformat-nonliteral -Wformat-security -Wformat-y2k}と同等です。
 @end table
 
@@ -4636,9 +4639,9 @@ ISO Cは関数定義で修飾された@code{void}戻り型を禁じているた�
 関数の宣言に、関連する関数が宣言されている1つ以上の属性が欠落しており、その欠落が生成されたコードの正確性または効率に悪影響を与える可能性がある場合に警告します。 たとえば、属性を使用してターゲットの要件よりも制限の少ない要件を指定するエイリアスの宣言に対して警告が発行されます。
 これは通常、潜在的な最適化の機会を表しています。
 対照的に、@option{-Wattribute-alias=2}オプションは、エイリアスがターゲットよりも制限的である場合に発行される警告を制御します。これは、誤ったコード生成につながる可能性があります。
-考慮される属性には、@code{alloc_align}、 @code{alloc_size}、
-@code{cold}、 @code{const}、 @code{hot}、 @code{leaf}、 @code{malloc}、
-@code{nonnull}、 @code{noreturn}、 @code{nothrow}、 @code{pure}、
+考慮される属性には、@code{alloc_align}、 @code{alloc_size}、@/
+@code{cold}、 @code{const}、 @code{hot}、 @code{leaf}、 @code{malloc}、@/
+@code{nonnull}、 @code{noreturn}、 @code{nothrow}、 @code{pure}、@/
 @code{returns_nonnull}、 および@code{returns_twice}があります。
 
 C++では、属性@code{alloc_align}、@code{alloc_size}、@code{assume_aligned}、@code{format}、@code{format_arg}、@code{malloc}、@code{nonnull}で宣言されたプライマリテンプレートの明示的な特殊化が宣言されていない場合に警告が発行されます。 属性@code{deprecated}、@code{error}、および@code{warning}は警告を抑制します。
@@ -5475,8 +5478,9 @@ void f (char c, int i)
 
 このレベルでは、@option{-Wattribute-alias}は、エイリアス宣言の属性がターゲットに適用される属性よりも制限されている場合も診断します。 これらの不一致により、誤ったコードが生成される可能性があります。 他の場合には、それらは無害であり、ターゲットに欠落している属性を追加するだけで解決できます。 比較のために、@option{-Wmissing-attributes}オプションを参照してください。これは、エイリアス宣言がターゲットよりも制限が厳しくなく、制限が少ない場合に診断を制御します。
 
-考慮される属性には、@code{alloc_align}、@code{alloc_size}、
-@code{cold}、@code{const}、@code{hot}、@code{leaf}、@code{malloc}、@code{nonnull}、@code{noreturn}、@code{nothrow}、@code{pure}、@code{returns_nonnull}、および@code{returns_twice}があります。
+考慮される属性には、@code{alloc_align}、@code{alloc_size}、@code{cold}、@code{const}、@/
+@code{hot}、@code{leaf}、@code{malloc}、@code{nonnull}、@code{noreturn}、@code{nothrow}、@code{pure}、@/
+@code{returns_nonnull}、および@code{returns_twice}があります。
 @end table
 
 @option{-Wattribute-alias}は@option{-Wattribute-alias=1}と同等です。

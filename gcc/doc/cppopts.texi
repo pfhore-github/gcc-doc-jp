@@ -141,7 +141,7 @@ $$(objpfx)foo.o: foo.c
 
 オプションの動作は、@option{-E}オプションと@option{-fpreprocessed}オプションによって異なります。
 
-@option{-E}を使用すると、前処理は@code{#define}、@code{#ifdef}、@code{#error}などのディレクティブの処理に限定される。 マクロ展開やトリグラフ変換などの他のプリプロセッサ処理は行われない。 さらに、@option {-dD}オプションは暗黙的に有効になっている。
+@option{-E}を使用すると、前処理は@code{#define}、@code{#ifdef}、@code{#error}などのディレクティブの処理に限定される。 マクロ展開やトリグラフ変換などの他のプリプロセッサ処理は行われない。 さらに、@option{-dD}オプションは暗黙的に有効になっている。
 
 @option{-fpreprocessed}を使用すると、コマンドラインと大部分の組み込みマクロの事前定義が無効になる。 コンテキスト依存の@code{__ LINE__}などのマクロは、通常どおり処理される。 これにより、@code{-E -fdirectives-only}で前処理されたファイルのコンパイルが可能になる。
 
