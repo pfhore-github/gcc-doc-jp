@@ -9203,7 +9203,7 @@ IEEEシグナルNaNがユーザ可視のトラップを浮動小数点操作の�
 同じ最適化オプションを使わなくてはならない。
 
 @option{-fbranch-probabilities}で、GCCはそれぞれの
-@samp{JUMP_INSN}と@samp{CALL_INSN}で@samp{REG_BR_PROB}注釈を置く。
+@samp{JUMP_INSN}と@samp{CALL_INSN}で@/ @samp{REG_BR_PROB}注釈を置く。
 これらは最適化を向上させるために使うことができる。現在、それらは1箇所のみで使われる。@file{reorg.c}で、分岐がどのくらい取られるかを
 推測する代わりに、@samp{REG_BR_PROB}がパスがどのくらいの頻度でとられるかを正確に決定するのに使われる。
 
@@ -10614,7 +10614,7 @@ null値の返却を検知する。
 @option{-fno-sanitize-recover=}オプションはこの振る舞いを変えるために使うことができる。
 最初に検知されたエラーが報告されプログラムは非ゼロの終了コードで終了する。
 
-現在この機能は@option{-fsanitize=undefined} (と@option{-fsanitize=unreachable}と@option{-fsanitize=return}を除いたそのサブオプション)、
+現在この機能は@option{-fsanitize=undefined} (と@option{-fsanitize=unreachable}と@/@option{-fsanitize=return}を除いたそのサブオプション)、
 @option{-fsanitize=float-cast-overflow}、@option{-fsanitize=float-divide-by-zero}、@option{-fsanitize=bounds-strict}、
 @option{-fsanitize=kernel-address} 、@option{-fsanitize=address}でのみ働く。
 これらのサニタイザではエラー回復はデフォルトでオンであり、例外は@option{-fsanitize=address}であり、この機能は実験的である。
@@ -15211,12 +15211,13 @@ GCCは、ユーザーコードが機能の有無をテストできるように�
 上記と同じですが、@code{double}の代わりに@code{long double}を使用します。
 
 @item __WITH_DOUBLE_COMPARISON__
-@code{--with-double-comparison=@{tristate|bool|libf7@}} @w{@uref{https://gcc.gnu.org/install/configure.html#avr,configure option}}を反映しています。@code{2}または@code {3}に定義されます。
+@code{--with-double-comparison=@{tristate|bool|libf7@}} @/@w{@uref{https://gcc.gnu.org/install/configure.html#avr,構成オプション}}を反映しています。@code{2}または@code{3}に定義されます。
 
 @item __WITH_LIBF7_LIBGCC__
 @itemx __WITH_LIBF7_MATH__
 @itemx __WITH_LIBF7_MATH_SYMBOLS__
-@code{--with-libf7=@{libgcc|math|math-symbols@}} @w{@uref{https://gcc.gnu.org/install/configure.html#avr,configure option}}を反映しています。
+@code{--with-libf7=@{libgcc|math|math-symbols@}}
+@*@w{@uref{https://gcc.gnu.org/install/configure.html#avr,構成オプション}}を反映しています。
 @end table
 
 @node Blackfin Options

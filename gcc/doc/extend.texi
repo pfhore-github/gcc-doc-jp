@@ -1717,20 +1717,24 @@ GCCは変数宣言（@pxref{Variable Attributes}）、ラベル（@pxref{Label A
 
 @smallexample
 __attribute__ ((access (read_only, 1))) int puts (const char*);
-__attribute__ ((access (read_only, 1, 2))) void* memcpy (void*, const void*, size_t);
+__attribute__ ((access (read_only, 1, 2)))
+void* memcpy (void*, const void*, size_t);
 @end smallexample
 
 @code{read_write}アクセスモードは、@code{const}修飾子のないポインタ型の引数に適用されます。 適用先のポインターが、参照オブジェクトの読み取りと書き込みの両方に使用されることを指定します。 @var{size-index}で示されるアクセスのサイズを指定する引数がゼロでない限り、ポインターによって参照されるオブジェクトを初期化する必要があります。 @code{read_write}アクセスモードの使用例は、@code{strcat}関数の最初の引数です。
 
 @smallexample
-__attribute__ ((access (read_write, 1), access (read_only, 2))) char* strcat (char*, const char*);
+__attribute__ ((access (read_write, 1), access (read_only, 2)))
+char* strcat (char*, const char*);
 @end smallexample
 
 @code{write_only}アクセスモードは、@code{const}修飾子のないポインタ型の引数に適用されます。 適用先のポインタは、参照されたオブジェクトへの書き込みに使用され、そこからの読み取りには使用されないことを指定します。 ポインタが参照するオブジェクトを初期化する必要はありません。 @code{write_only}アクセスモードの使用例は、@code{strcpy}関数の最初の引数、または@code{fgets}関数の最初の2つの引数です。
 
 @smallexample
-__attribute__ ((access (write_only, 1), access (read_only, 2))) char* strcpy (char*, const char*);
-__attribute__ ((access (write_only, 1, 2), access (read_write, 3))) int fgets (char*, int, FILE*);
+__attribute__ ((access (write_only, 1), access (read_only, 2)))
+char* strcpy (char*, const char*);
+__attribute__ ((access (write_only, 1, 2), access (read_write, 3)))
+int fgets (char*, int, FILE*);
 @end smallexample
 
 @item alias ("@var{target}")
@@ -1925,7 +1929,7 @@ my_printf (void *my_object, const char *my_format, ...)
 
 @opindex ffreestanding
 @opindex fno-builtin
-@code{format}属性を使うと、書式文字列を引数とする独自の関数を識別することができ、GCCはこれらの関数の呼び出しをエラーでチェックできる。 （@option{-freestanding}や@option{-fno-builtin}を使用しない限り）コンパイラは常に標準ライブラリ関数@code{printf}、 @code{fprintf}、 @code{sprintf}、 @code{scanf}、 @code{fscanf}、 @code{sscanf}、 @code{strftime}、 @code{vprintf}、 @code{vfprintf}、@code{vsprintf} ）をチェックするので、ヘッダファイル@file{stdio.h}を変更する必要はない。C99モードでは、関数@code{snprintf}、@code{vsnprintf}、@code{vscanf}、@code{vfscanf}、@code{vsscanf}もチェックされる。 厳密に準拠しているC標準モードを除いて、X/Open関数@code{strfmon}、@code{printf_unlocked}、@code{fprintf_unlocked}もチェックされる。@xref{C Dialect Options,,C変種を制御するオプション}。
+@code{format}属性を使うと、書式文字列を引数とする独自の関数を識別することができ、GCCはこれらの関数の呼び出しをエラーでチェックできる。 （@option{-freestanding}や@option{-fno-builtin}を使用しない限り）コンパイラは常に標準ライブラリ関数@code{printf}、 @code{fprintf}、 @code{sprintf}、 @code{scanf}、 @code{fscanf}、 @code{sscanf}、 @code{strftime}、 @code{vprintf}、 @/ @code{vfprintf}、@code{vsprintf} ）をチェックするので、ヘッダファイル@file{stdio.h}を変更する必要はない。C99モードでは、関数@code{snprintf}、@code{vsnprintf}、@code{vscanf}、@code{vfscanf}、@code{vsscanf}もチェックされる。 厳密に準拠しているC標準モードを除いて、X/Open関数@code{strfmon}、@code{printf_unlocked}、@code{fprintf_unlocked}もチェックされる。@xref{C Dialect Options,,C変種を制御するオプション}。
 
 Objective-C変種の場合、@code{NSString}（または@code{__NSString__}）は同じコンテキストで認識される。 これらの書式属性を含む宣言は正しい構文で解析されるが、そのような書式文字列のチェック結果はまだ定義されていないため、このバージョンのコンパイラでは実行されない。
 
@@ -2975,7 +2979,7 @@ Epiphanyターゲットでは、次のように1つ以上のオプションパ�
 void __attribute__ ((interrupt ("dma0, dma1"))) universal_dma_handler ();
 @end smallexample
 
-これらのパラメータの可能な値は： @w{@code{reset}}、@w{@code{software_exception}}、 @w{@code{page_miss}}、@w{@code{timer0}}、 @w{@code{timer1}}、 @w{@code{message}}、@w{@code{dma0}}、 @w{@code{dma1}}、 @w{@code{wand}}、@w{@code{swi}}である。複数のパラメータは、割り込みベクタテーブル内の複数のエントリをこの関数に対して初期化する必要があることを示す。各パラメータ@w{@var{name}}に対して、関数へのジャンプはセクション@w{ivt_entry_@var{name}}に生成される。 パラメータは完全に省略されてもよく、この場合、割り込みベクタテーブルエントリは提供されない。
+これらのパラメータの可能な値は： @w{@code{reset}}、@w{@code{software_exception}}、 @w{@code{page_miss}}、@/@w{@code{timer0}}、 @w{@code{timer1}}、 @w{@code{message}}、@w{@code{dma0}}、 @w{@code{dma1}}、 @w{@code{wand}}、@w{@code{swi}}である。複数のパラメータは、割り込みベクタテーブル内の複数のエントリをこの関数に対して初期化する必要があることを示す。各パラメータ@w{@var{name}}に対して、関数へのジャンプはセクション@w{ivt_entry_@var{name}}に生成される。 パラメータは完全に省略されてもよく、この場合、割り込みベクタテーブルエントリは提供されない。
 
 @code{disinterrupt}属性も指定されていない限り、関数内で割り込みが有効になることに注意せよ。
 
