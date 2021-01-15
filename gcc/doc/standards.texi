@@ -1,4 +1,4 @@
-@c Copyright (C) 2000-2020 Free Software Foundation, Inc.
+@c Copyright (C) 2000-2021 Free Software Foundation, Inc.
 @c This is part of the GCC manual.
 @c For copying conditions, see the file gcc.texi.
 
@@ -96,7 +96,7 @@ GCCはデフォルトで、まれにC標準と衝突するC言語への拡張を
 @option{-std=gnu99}（GNU拡張のC99）、@option{-std=gnu11}（GNU拡張のC11）で、
 明示的にC言語の拡張バージョンを選ぶことができる。
 
-C言語変種オプションが与えられていないならば、デフォルトは@option{-std=gnu11}である。
+C言語変種オプションが与えられていないならば、デフォルトは@option{-std=gnu17}である。
 
 ISO C標準は、（節4で）適応実施の2つの種類を定める。
 @dfn{規格合致ホスト処理系}は、すべてのライブラリ機能を含む全部の標準をサポートする。
@@ -134,7 +134,7 @@ GCCは@code{abort}の呼び出しを生成する。
 
 @section C++言語
 
-GCCは、1998年に発表される最初のISO C++標準と2011年と2014年の改訂をサポートする。
+GCCは、1998年に発表される最初のISO C++標準と2011年、2014年、2017年と2020年の改訂のほとんどをサポートする。
 
 最初のISO C++標準は、ISO標準（ISO/IEC 14882:1998）として発表されて、2003（ISO/IEC 14882:2003）年に出版される技術的な正誤表によって改められた。これらの標準は、それぞれC++98とC++03と呼ばれる。
 GCCは、大多数のC++98（@code{export}は顕著な例外である）とC++03の大部分の変化を実装する。
@@ -153,6 +153,9 @@ GCCでこの標準を選ぶために、オプション@option{-std=c++14}を使�
 
 C++言語は2017年にさらに改訂され、ISO/IEC 14882：2017が発行された。 これはC++17と呼ばれ、出版前はしばしばC++1zと呼ばれていた。 GCCは、新しい仕様のすべての変更をサポートしている。 詳細は@uref{https://gcc.gnu.org/projects/@/cxx-status.html#cxx1z}を見よ。C++のこの変種を選択するためには@option{-std=c++17}オプションを使用する。
 
+別の改訂されたISO C++規格は、2020年にISO / IECとして公開されました。14882：2020、C++20と呼ばれます。 公開前はC++2aと呼ばれることもあります。 GCCは、新しい仕様のほとんどの変更をサポートしています。 詳細については、
+@uref{https://gcc.gnu.org/projects/@/cxx-status.html#cxx20}を参照してください。GCCでこの標準を選択するには、オプション@option {-std = c ++ 20}を使用します。
+
 C++標準に関する詳細な情報は、@uref{http://www.open-std.org/jtc1/sc22/wg21/}でISO C++委員会
 のウェブサイトで利用可能である。
 
@@ -164,15 +167,15 @@ C++標準に関する詳細な情報は、@uref{http://www.open-std.org/jtc1/sc2
 @xref{C++ Dialect Options,C++変種を制御するオプション}。上記の@option{-std}オプションの使用は、
 それらがC++標準版を選んで衝突するこれらの拡張を抑制する。あなたは、@option{-std=gnu++98} (GNU拡張つきC++98)、
 @option{-std=gnu++11} (GNU拡張付きC++11)、@option{-std=gnu++14} (GNU拡張付きC++14)、
-@option{-std=gnu++17} (GNU拡張付きC++17)で明示的にC++言語の延長したバージョンも選ぶかもしれない。
+@option{-std=gnu++17} (GNU拡張付きC++17)、@option{-std=gnu++20} (GNU拡張付きC++20)で明示的にC++言語の延長したバージョンも選ぶかもしれない。
 
-C++言語変種オプションが与えられていないならば、デフォルトは@option{-std=gnu++14}である。
+C++言語変種オプションが与えられていないならば、デフォルトは@option{-std=gnu++17}である。
 
 @section Objective-CとObjective-C++言語
 @cindex Objective-C
 @cindex Objective-C++
 
-GCCは「伝統的な」Objective-C（別名「Objective-C 1.0」）をサポートして、Objective-C例外と同期構文のサポートを含む。それは、特性、速い列挙（Objective-C専用）、メソッド属性とプロトコルでの@@optionalと@@requiredキーワードを含むいくつかの「Objective-C 2.0」言語拡張もサポートする。GCCはObjective-C++をサポートし、Objective-Cで利用できる機能はObjective-C++でも利用できる。
+GCCは「従来の」Objective-C（別名「Objective-C 1.0」）をサポートして、Objective-C例外と同期構文のサポートを含む。それは、特性、速い列挙（Objective-C専用）、メソッド属性とプロトコルでの@@optionalと@@requiredキーワードを含むいくつかの「Objective-C 2.0」言語拡張もサポートする。GCCはObjective-C++をサポートし、Objective-Cで利用できる機能はObjective-C++でも利用できる。
 
 GCCはGNU Objective-Cランタイムライブラリをデフォルトで使用する。そして、それはGCCの一部で、アップル・システム上で使われるApple/NeXT Objective-Cランタイムライブラリと同じでない。このマニュアルで文書化されるいくつかの違いがある。オプション@option{-fgnu-runtime}と@option{-fnext-runtime}でGNU Objective-Cランタイムライブラリで働く生成の出力とApple/NeXT Objective-Cランタイムライブラリで働く出力の間で切り替えることができる。
 

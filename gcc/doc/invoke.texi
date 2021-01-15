@@ -1,4 +1,4 @@
-@c Copyright (C) 1988-2020 Free Software Foundation, Inc.
+@c Copyright (C) 1988-2021 Free Software Foundation, Inc.
 @c This is part of the GCC manual.
 @c For copying conditions, see the file gcc.texi.
 
@@ -8,7 +8,7 @@
 @c man end
 
 @c man begin COPYRIGHT
-Copyright @copyright{} 1988-2020 Free Software Foundation, Inc.
+Copyright @copyright{} 1988-2021 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -126,6 +126,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 * bjective-C and Objective-C++ Dialect Options:: Objective-CとObjective-C++の変種
 * Diagnostic Message Formatting Options:: 診断がどのように書式化されるかを制御する
 * Warning Options::       どのくらいコンパイラがうるさいか
+* Static Analyzer Options:: より高価な警告
 * Debugging Options::   デバッグ可能なコードを生成する
 * Optimize Options::    どのくらい最適化するか
 * Instrumentation Options::       プロファイリングと追加の実行時エラーチェック
@@ -139,6 +140,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 * Spec Files::         サブプロセスへスイッチを渡す方法
 * Environment Variables::             GCCに影響する環境変数
 * Precompiled Headers:: 一度コンパイルして、何度も使う
+* C++ Modules::		実験的なC++20モジュールシステム。
 @end menu
 
 @c man begin OPTIONS
@@ -151,7 +153,9 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 @table @emph
 @item 全体のオプション
 @xref{Overall Options,,出力の種類を制御するオプション}.
-@gccoptlist{-c  -S  -E  -o @var{file}  -x @var{language}  
+@gccoptlist{-c  -S  -E  -o @var{file} 
+-dumpbase @var{dumpbase}  -dumpbase-ext @var{auxdropsuf} 
+-dumpdir @var{dumppfx}  -x @var{language}  
 -v  -###  --help@r{[}=@var{class}@r{[},@dots{}@r{]]}  --target-help  --version 
 -pass-exit-codes  -pipe  -specs=@var{file}  -wrapper  
 @@@var{file}  -ffile-prefix-map=@var{old}=@var{new}  
@@ -165,7 +169,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -aux-info @var{filename}  -fallow-parameterless-variadic-functions 
 -fno-asm  -fno-builtin  -fno-builtin-@var{function}  -fgimple
 -fhosted  -ffreestanding 
--fopenacc  -fopenacc-dim=@var{geom} 
+-fopenacc  -fopenacc-dim=@var{geom}  -fopenacc-kernels=@var{mode} 
 -fopenmp  -fopenmp-simd 
 -fms-extensions  -fplan9-extensions  -fsso-struct=@var{endianness} 
 -fallow-single-precision  -fcond-mismatch  -flax-vector-conversions 
@@ -183,7 +187,13 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -fno-gnu-keywords 
 -fno-implicit-templates 
 -fno-implicit-inline-templates 
--fno-implement-inlines  -fms-extensions 
+-fno-implement-inlines  
+-fmodule-header@r{[}=@var{kind}@r{]} -fmodule-only -fmodules-ts 
+-fmodule-implicit-inline 
+-fno-module-lazy 
+-fmodule-mapper=@var{specification} 
+-fmodule-version-ignore 
+-fms-extensions 
 -fnew-inheriting-ctors 
 -fnew-ttp-matching 
 -fno-nonansi-builtins  -fnothrow-opt  -fno-operator-names 
@@ -197,25 +207,33 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -fvisibility-inlines-hidden 
 -fvisibility-ms-compat 
 -fext-numeric-literals 
+-flang-info-include-translate@r{[}=@var{name}@r{]} 
+-flang-info-include-translate-not 
+-stdlib=@var{libstdc++,libc++} 
 -Wabi-tag  -Wcatch-value  -Wcatch-value=@var{n} 
 -Wno-class-conversion  -Wclass-memaccess 
 -Wcomma-subscript  -Wconditionally-supported 
--Wno-conversion-null  -Wctor-dtor-privacy  -Wno-delete-incomplete 
--Wdelete-non-virtual-dtor  -Wdeprecated-copy  -Wdeprecated-copy-dtor 
--Weffc++  -Wextra-semi  -Wno-inaccessible-base 
+-Wno-conversion-null  -Wctad-maybe-unsupported 
+-Wctor-dtor-privacy  -Wno-delete-incomplete 
+-Wdelete-non-virtual-dtor  -Wdeprecated-copy -Wdeprecated-copy-dtor 
+-Wno-deprecated-enum-enum-conversion -Wno-deprecated-enum-float-conversion 
+-Weffc++  -Wno-exceptions -Wextra-semi  -Wno-inaccessible-base 
 -Wno-inherited-variadic-ctor  -Wno-init-list-lifetime 
--Wno-invalid-offsetof  -Wno-literal-suffix  -Wmismatched-tags 
+-Winvalid-imported-macros 
+-Wno-invalid-offsetof  -Wno-literal-suffix 
+-Wno-mismatched-new-delete -Wmismatched-tags 
 -Wmultiple-inheritance  -Wnamespaces  -Wnarrowing 
 -Wnoexcept  -Wnoexcept-type  -Wnon-virtual-dtor 
 -Wpessimizing-move  -Wno-placement-new  -Wplacement-new=@var{n} 
--Wredundant-move -Wredundant-tags 
+-Wrange-loop-construct -Wredundant-move -Wredundant-tags 
 -Wreorder  -Wregister 
 -Wstrict-null-sentinel  -Wno-subobject-linkage  -Wtemplates 
 -Wno-non-template-friend  -Wold-style-cast 
 -Woverloaded-virtual  -Wno-pmf-conversions -Wsign-promo 
 -Wsized-deallocation  -Wsuggest-final-methods 
 -Wsuggest-final-types  -Wsuggest-override  
--Wno-terminate  -Wuseless-cast  -Wvirtual-inheritance  
+-Wno-terminate  -Wuseless-cast  -Wno-vexing-parse  
+-Wvirtual-inheritance  
 -Wno-virtual-move-assign  -Wvolatile  -Wzero-as-null-pointer-constant}
 
 @item Objective-CとObjective-C++言語オプション
@@ -235,14 +253,15 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -freplace-objc-classes 
 -fzero-link 
 -gen-decls 
--Wassign-intercept -Wno-property-assign-default 
--Wno-protocol  -Wselector 
+-Wassign-intercept  -Wno-property-assign-default 
+-Wno-protocol -Wobjc-root-class -Wselector 
 -Wstrict-selector-match 
 -Wundeclared-selector}
 
 @item 診断メッセージ書式化オプション
 @xref{Diagnostic Message Formatting Options,,診断メッセージの書式を制御するオプション}.
 @gccoptlist{-fmessage-length=@var{n}  
+-fdiagnostics-plain-output 
 -fdiagnostics-show-location=@r{[}once@r{|}every-line@r{]}  
 -fdiagnostics-color=@r{[}auto@r{|}never@r{|}always@r{]}  
 -fdiagnostics-urls=@r{[}auto@r{|}never@r{|}always@r{]}  
@@ -255,7 +274,9 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -fdiagnostics-show-template-tree  -fno-elide-type 
 -fdiagnostics-path-format=@r{[}none@r{|}separate-events@r{|}inline-events@r{]} 
 -fdiagnostics-show-path-depths 
--fno-show-column}
+-fno-show-column 
+-fdiagnostics-column-unit=@r{[}display@r{|}byte@r{]} 
+-fdiagnostics-column-origin=@var{origin}}
 
 @item 警告オプション
 @xref{Warning Options,,警告の要求・抑制をするオプション}.
@@ -293,7 +314,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -Wformat-security  -Wformat-signedness  -Wformat-truncation=@var{n} 
 -Wformat-y2k  -Wframe-address 
 -Wframe-larger-than=@var{byte-size}  -Wno-free-nonheap-object 
--Wno-hsa  -Wno-if-not-aligned  -Wno-ignored-attributes 
+-Wno-if-not-aligned  -Wno-ignored-attributes 
 -Wignored-qualifiers  -Wno-incompatible-pointer-types 
 -Wimplicit  -Wimplicit-fallthrough  -Wimplicit-fallthrough=@var{n} 
 -Wno-implicit-function-declaration  -Wno-implicit-int 
@@ -322,16 +343,18 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -Wno-shift-overflow  -Wshift-overflow=@var{n} 
 -Wsign-compare  -Wsign-conversion 
 -Wno-sizeof-array-argument 
+-Wsizeof-array-div 
 -Wsizeof-pointer-div  -Wsizeof-pointer-memaccess 
 -Wstack-protector  -Wstack-usage=@var{byte-size}  -Wstrict-aliasing 
 -Wstrict-aliasing=n  -Wstrict-overflow  -Wstrict-overflow=@var{n} 
 -Wstring-compare 
--Wstringop-overflow=@var{n}  -Wno-stringop-truncation 
+-Wno-stringop-overflow -Wno-stringop-overread 
+-Wno-stringop-truncation 
 -Wsuggest-attribute=@r{[}pure@r{|}const@r{|}noreturn@r{|}format@r{|}malloc@r{]} 
 -Wswitch  -Wno-switch-bool  -Wswitch-default  -Wswitch-enum 
 -Wno-switch-outside-range  -Wno-switch-unreachable  -Wsync-nand 
 -Wsystem-headers  -Wtautological-compare  -Wtrampolines  -Wtrigraphs 
--Wtype-limits  -Wundef 
+-Wtsan -Wtype-limits  -Wundef 
 -Wuninitialized  -Wunknown-pragmas 
 -Wunsuffixed-float-constants  -Wunused 
 -Wunused-but-set-parameter  -Wunused-but-set-variable 
@@ -351,6 +374,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -fanalyzer 
 -fanalyzer-call-summaries 
 -fanalyzer-checker=@var{name} 
+-fno-analyzer-feasibility 
 -fanalyzer-fine-grained 
 -fanalyzer-state-merge 
 -fanalyzer-state-purge 
@@ -365,6 +389,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -fdump-analyzer-exploded-nodes 
 -fdump-analyzer-exploded-nodes-2 
 -fdump-analyzer-exploded-nodes-3 
+-fdump-analyzer-json 
 -fdump-analyzer-state-purge 
 -fdump-analyzer-supergraph 
 -Wno-analyzer-double-fclose 
@@ -373,10 +398,13 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -Wno-analyzer-file-leak 
 -Wno-analyzer-free-of-non-heap 
 -Wno-analyzer-malloc-leak 
+-Wno-analyzer-mismatching-deallocation 
 -Wno-analyzer-null-argument 
 -Wno-analyzer-null-dereference 
 -Wno-analyzer-possible-null-argument 
 -Wno-analyzer-possible-null-dereference 
+-Wno-analyzer-shift-count-negative 
+-Wno-analyzer-shift-count-overflow 
 -Wno-analyzer-stale-setjmp-buffer 
 -Wno-analyzer-tainted-array-index 
 -Wanalyzer-too-complex 
@@ -384,6 +412,8 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -Wno-analyzer-use-after-free 
 -Wno-analyzer-use-of-pointer-in-stale-stack-frame 
 -Wno-analyzer-use-of-uninitialized-value 
+-Wno-analyzer-write-to-const 
+-Wno-analyzer-write-to-string-literal 
 }
 
 @item CとObjective-C専用の警告オプション
@@ -400,7 +430,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -gstabs  -gstabs+  -gstrict-dwarf  -gno-strict-dwarf 
 -gas-loc-support  -gno-as-loc-support 
 -gas-locview-support  -gno-as-locview-support 
--gcolumn-info  -gno-column-info 
+-gcolumn-info  -gno-column-info  -gdwarf32  -gdwarf64 
 -gstatement-frontiers  -gno-statement-frontiers 
 -gvariable-location-views  -gno-variable-location-views 
 -ginternal-reset-location-views  -gno-internal-reset-location-views 
@@ -441,7 +471,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -fgcse-sm  -fhoist-adjacent-loads  -fif-conversion 
 -fif-conversion2  -findirect-inlining 
 -finline-functions  -finline-functions-called-once  -finline-limit=@var{n} 
--finline-small-functions  -fipa-cp  -fipa-cp-clone 
+-finline-small-functions -fipa-modref -fipa-cp  -fipa-cp-clone 
 -fipa-bit-cp  -fipa-vrp  -fipa-pta  -fipa-profile  -fipa-pure-const 
 -fipa-reference  -fipa-reference-addressable 
 -fipa-stack-alignment  -fipa-icf  -fira-algorithm=@var{algorithm} 
@@ -505,7 +535,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -funit-at-a-time  -funroll-all-loops  -funroll-loops 
 -funsafe-math-optimizations  -funswitch-loops 
 -fipa-ra  -fvariable-expansion-in-unroller  -fvect-cost-model  -fvpt 
--fweb  -fwhole-program  -fwpa  -fuse-linker-plugin 
+-fweb  -fwhole-program  -fwpa  -fuse-linker-plugin -fzero-call-used-regs 
 --param @var{name}=@var{value}
 -O  -O0  -O1  -O2  -O3  -Os  -Ofast  -Og}
 
@@ -514,13 +544,15 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 @gccoptlist{-p  -pg  -fprofile-arcs  --coverage  -ftest-coverage 
 -fprofile-abs-path 
 -fprofile-dir=@var{path}  -fprofile-generate  -fprofile-generate=@var{path} 
+-fprofile-info-section  -fprofile-info-section=@var{name} 
 -fprofile-note=@var{path} -fprofile-prefix-path=@var{path} 
 -fprofile-update=@var{method} -fprofile-filter-files=@var{regex} 
--fprofile-exclude-files=@var{regex} -fprofile-reproducibility 
+-fprofile-exclude-files=@var{regex} 
+-fprofile-reproducible=@r{[}multithreaded@r{|}parallel-runs@r{|}serial@r{]} 
 -fsanitize=@var{style}  -fsanitize-recover  -fsanitize-recover=@var{style} 
 -fasan-shadow-offset=@var{number}  -fsanitize-sections=@var{s1},@var{s2},... 
 -fsanitize-undefined-trap-on-error  -fbounds-check 
--fcf-protection=@r{[}full@r{|}branch@r{|}return@r{|}none@r{]} 
+-fcf-protection=@r{[}full@r{|}branch@r{|}return@r{|}none@r{|}check@r{]} 
 -fstack-protector  -fstack-protector-all  -fstack-protector-strong 
 -fstack-protector-explicit  -fstack-check 
 -fstack-limit-register=@var{reg}  -fstack-limit-symbol=@var{sym} 
@@ -539,13 +571,13 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -dD  -dI  -dM  -dN  -dU 
 -fdebug-cpp  -fdirectives-only  -fdollars-in-identifiers  
 -fexec-charset=@var{charset}  -fextended-identifiers  
--finput-charset=@var{charset}  -fmacro-prefix-map=@var{old}=@var{new}  
--fmax-include-depth=@var{depth} 
+-finput-charset=@var{charset}  -flarge-source-files  
+-fmacro-prefix-map=@var{old}=@var{new} -fmax-include-depth=@var{depth} 
 -fno-canonical-system-headers  -fpch-deps  -fpch-preprocess  
 -fpreprocessed  -ftabstop=@var{width}  -ftrack-macro-expansion  
 -fwide-exec-charset=@var{charset}  -fworking-directory 
 -H  -imacros @var{file}  -include @var{file} 
--M  -MD  -MF  -MG  -MM  -MMD  -MP  -MQ  -MT 
+-M  -MD  -MF  -MG  -MM  -MMD  -MP  -MQ  -MT -Mno-modules 
 -no-integrated-cpp  -P  -pthread  -remap 
 -traditional  -traditional-cpp  -trigraphs 
 -U@var{macro}  -undef  
@@ -587,7 +619,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -fno-gnu-unique 
 -finhibit-size-directive  -fcommon  -fno-ident 
 -fpcc-struct-return  -fpic  -fPIC  -fpie  -fPIE  -fno-plt 
--fno-jump-tables 
+-fno-jump-tables -fno-bit-tests 
 -frecord-gcc-switches 
 -freg-struct-return  -fshort-enums  -fshort-wchar 
 -fverbose-asm  -fpack-struct[=@var{n}]  
@@ -661,6 +693,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -msign-return-address=@var{scope} 
 -mbranch-protection=@var{none}|@var{standard}|@var{pac-ret}[+@var{leaf}
 +@var{b-key}]|@var{bti} 
+-mharden-sls=@var{opts} 
 -march=@var{name}  -mcpu=@var{name}  -mtune=@var{name}  
 -moverride=@var{string}  -mverbose-cost-dump 
 -mstack-protector-guard=@var{guard} -mstack-protector-guard-reg=@var{sysreg} 
@@ -780,11 +813,12 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 @gccoptlist{-march=@var{arch}  -mcpu=@var{cpu} 
 -mbig-endian  -EB  -mlittle-endian  -EL 
 -mhard-float  -msoft-float  -mfpu=@var{fpu}  -mdouble-float  -mfdivdu 
+-mfloat-abi=@var{name} 
 -melrw  -mistack  -mmp  -mcp  -mcache  -msecurity  -mtrust 
 -mdsp  -medsp  -mvdsp 
 -mdiv  -msmart  -mhigh-registers  -manchor 
 -mpushpop  -mmultiple-stld  -mconstpool  -mstack-size  -mccrt 
--mbranch-cost=@var{n}  -mcse-cc  -msched-prolog}
+-mbranch-cost=@var{n}  -mcse-cc  -msched-prolog -msim}
 
 @emph{Darwin Options}
 @gccoptlist{-all_load  -allowable_client  -arch  -arch_errors_fatal 
@@ -827,7 +861,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 
 @emph{eBPF Options}
 @gccoptlist{-mbig-endian -mlittle-endian -mkernel=@var{version}
--mframe-limit=@var{bytes}}
+-mframe-limit=@var{bytes} -mxbpf}
 
 @emph{FR30 Options}
 @gccoptlist{-msmall-model  -mno-lsim}
@@ -1028,7 +1062,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -mwarn-mcu 
 -mcode-region=  -mdata-region= 
 -msilicon-errata=  -msilicon-errata-warn= 
--mhwmult=  -minrt  -mtiny-printf}
+-mhwmult=  -minrt  -mtiny-printf  -mmax-inline-shift=}
 
 @emph{NDS32 Options}
 @gccoptlist{-mbig-endian  -mlittle-endian 
@@ -1059,7 +1093,7 @@ GCCを@command{g++}として起動するべきである。C++プログラムを�
 -march=@var{arch}  -mbmx  -mno-bmx  -mcdx  -mno-cdx}
 
 @emph{Nvidia PTX Options}
-@gccoptlist{-m32  -m64  -mmainkernel  -moptimize}
+@gccoptlist{-m64  -mmainkernel  -moptimize}
 
 @emph{OpenRISC Options}
 @gccoptlist{-mboard=@var{name}  -mnewlib  -mhard-mul  -mhard-div 
@@ -1094,12 +1128,15 @@ See RS/6000 and PowerPC Options.
 -mpreferred-stack-boundary=@var{num} 
 -msmall-data-limit=@var{N-bytes} 
 -msave-restore  -mno-save-restore 
+-mshorten-memrefs  -mno-shorten-memrefs 
 -mstrict-align  -mno-strict-align 
 -mcmodel=medlow  -mcmodel=medany 
 -mexplicit-relocs  -mno-explicit-relocs 
 -mrelax  -mno-relax 
 -mriscv-attribute  -mmo-riscv-attribute 
--malign-data=@var{type}}
+-malign-data=@var{type} 
++-mstack-protector-guard=@var{guard} -mstack-protector-guard-reg=@var{reg} 
++-mstack-protector-guard-offset=@var{offset}}
 
 @emph{RL78 Options}
 @gccoptlist{-msim  -mmul=none  -mmul=g13  -mmul=g14  -mallregs 
@@ -1141,6 +1178,7 @@ See RS/6000 and PowerPC Options.
 -mblock-move-inline-limit=@var{num} 
 -mblock-compare-inline-limit=@var{num} 
 -mblock-compare-inline-loop-limit=@var{num} 
+-mno-block-ops-unaligned-vsx 
 -mstring-compare-inline-limit=@var{num} 
 -misel  -mno-isel 
 -mvrsave  -mno-vrsave 
@@ -1163,7 +1201,7 @@ See RS/6000 and PowerPC Options.
 -mgnu-attribute  -mno-gnu-attribute 
 -mstack-protector-guard=@var{guard} -mstack-protector-guard-reg=@var{reg} 
 -mstack-protector-guard-offset=@var{offset} -mprefixed -mno-prefixed 
--mpcrel -mno-pcrel}
+-mpcrel -mno-pcrel -mmma -mno-mmma}
 
 @emph{RX Options}
 @gccoptlist{-m64bit-doubles  -m32bit-doubles  -fpu  -nofpu
@@ -1306,12 +1344,14 @@ See RS/6000 and PowerPC Options.
 -msse4a  -m3dnow  -m3dnowa  -mpopcnt  -mabm  -mbmi  -mtbm  -mfma4  -mxop 
 -madx  -mlzcnt  -mbmi2  -mfxsr  -mxsave  -mxsaveopt  -mrtm  -mhle  -mlwp 
 -mmwaitx  -mclzero  -mpku  -mthreads  -mgfni  -mvaes  -mwaitpkg 
--mshstk -mmanual-endbr -mforce-indirect-call  -mavx512vbmi2 -mavx512bf16
--menqcmd  -mvpclmulqdq  -mavx512bitalg  -mmovdiri  -mmovdir64b
--mavx512vpopcntdq  -mavx5124fmaps  -mavx512vnni  -mavx5124vnniw  -mprfchw
--mrdpid  -mrdseed  -msgx -mavx512vp2intersect
+-mshstk -mmanual-endbr -mforce-indirect-call  -mavx512vbmi2 -mavx512bf16 -menqcmd 
+-mvpclmulqdq  -mavx512bitalg  -mmovdiri  -mmovdir64b  -mavx512vpopcntdq 
+-mavx5124fmaps  -mavx512vnni  -mavx5124vnniw  -mprfchw  -mrdpid 
+-mrdseed  -msgx -mavx512vp2intersect -mserialize -mtsxldtrk
+-mamx-tile  -mamx-int8  -mamx-bf16 -muintr -mhreset -mavxvnni
 -mcldemote  -mms-bitfields  -mno-align-stringops  -minline-all-stringops 
 -minline-stringops-dynamically  -mstringop-strategy=@var{alg} 
+-mkl -mwidekl 
 -mmemcpy-strategy=@var{strategy}  -mmemset-strategy=@var{strategy} 
 -mpush-args  -maccumulate-outgoing-args  -m128bit-long-double 
 -m96bit-long-double  -mlong-double-64  -mlong-double-80  -mlong-double-128 
@@ -1330,7 +1370,7 @@ See RS/6000 and PowerPC Options.
 -mstack-protector-guard-symbol=@var{symbol} 
 -mgeneral-regs-only  -mcall-ms2sysv-xlogues 
 -mindirect-branch=@var{choice}  -mfunction-return=@var{choice} 
--mindirect-branch-register}
+-mindirect-branch-register -mneeded}
 
 @emph{x86 Windows Options}
 @gccoptlist{-mconsole  -mcygwin  -mno-cygwin  -mdll 
@@ -1348,7 +1388,8 @@ See RS/6000 and PowerPC Options.
 -mtext-section-literals  -mno-text-section-literals 
 -mauto-litpools  -mno-auto-litpools 
 -mtarget-align  -mno-target-align 
--mlongcalls  -mno-longcalls}
+-mlongcalls  -mno-longcalls 
+-mabi=@var{abi-type}}
 
 @emph{zSeries Options}
 See S/390 and zSeries Options.
@@ -1374,7 +1415,7 @@ GCCは複数のファイルをプリプロセス・コンパイルして複数�
 プリプロセスをするべきでないCソースコード
 
 @item @var{file}.ii
-プリプロセスをするべきでないC＋＋ソースコード
+プリプロセスをするべきでないC++ソースコード
 
 @item @var{file}.m
 Object-Cソースコード。Object-Cプログラムを動作させるためには、@file{libobjc}とリンクしなければならない
@@ -1385,11 +1426,11 @@ Object-Cソースコード。Object-Cプログラムを動作させるために�
 
 @item @var{file}.mm
 @itemx @var{file}.M
-Object-C＋＋ソースコード。Object-C＋＋プログラムを動作させるためには、@file{libobjc}とリンクしなければならない
+Object-C++ソースコード。Object-C++プログラムを動作させるためには、@file{libobjc}とリンクしなければならない
 ことに注意する。@samp{.M}は文字通り大文字のMを参照する。
 
 @item @var{file}.mii
-プリプロセスをするべきでないObjective-C＋＋ソースコード
+プリプロセスをするべきでないObjective-C++ソースコード
 
 @item @var{file}.h
 プリプロセス済みヘッダへと変換すべきC, C++, Objective-C, Objective-C++ヘッダファイル（デフォルト）および、
@@ -1550,6 +1591,239 @@ brig
 もし@option{-o}が指定されていないならば、デフォルトは実行ファイルが@file{a.out}であり、@file{@var{source}.@var{suffix}}の
 オブジェクトファイルが@file{@var{source}.o}であり、そのアセンブラが@file{@var{source}.s}であり、プリプロセスされた
 ヘッダファイルが@file{@var{source}.@var{suffix}.gch}であり、すべてのプリプロセスされたCソースが標準出力である。
+
+@option{-o}はプライマリ出力のみに名前を付けますが、補助出力とダンプ出力の名前にも影響します。 以下の例を参照してください。 オーバーライドされない限り、補助出力とダンプ出力の両方がプライマリ出力と同じディレクトリに配置されます。 補助出力では、入力ファイルの接尾辞が補助出力ファイルタイプの接尾辞に置き換えられます。 ダンプ出力では、ダンプファイルのサフィックスが入力ファイルのサフィックスに追加されます。 コンパイルコマンドでは、補助出力とダンプ出力の両方のベース名はプライマリ出力のベース名です。 コンパイルおよびリンクコマンドでは、実行可能サフィックスを除いたプライマリ出力名が入力ファイル名と結合されます。 両方が同じベース名を共有している場合、接尾辞を無視して、組み合わせの結果はそのベース名になります。そうでない場合、それらはダッシュで区切られて連結されます。
+
+@smallexample
+gcc -c foo.c ...
+@end smallexample
+
+は@file{foo.o}をプライマリ出力として使用し、その隣に補助出力とダンプを配置します。たとえば、@option{-gsplit-dwarf}の場合は補助ファイル@file{foo.dwo}、@option{-fdump-rtl-final}ではダンプファイル@file{foo.c.???r.final}になります。
+
+リンカ以外の出力ファイルが明示的に指定されている場合、auxファイルとdumpファイルはデフォルトで同じベース名を取ります。
+
+@smallexample
+gcc -c foo.c -o dir/foobar.o ...
+@end smallexample
+
+この場合、aux出力には@file{dir/foo.*}という名前が付けられ、ダンプ出力には@file{dir/foo.c.*}という名前が付けられます。
+
+補助出力とダンプ出力の場所と名前は、オプション@option{-dumpbase}、@option{-dumpbase-ext}、@option{-dumpdir}、@option{-save-temps=cwd}、 および@option{-save-temps=obj}で調整されます。
+
+@item -dumpbase @var{dumpbase}
+@opindex dumpbase
+このオプションは、補助およびダンプ出力ファイルのベース名を設定します。 プライマリ出力ファイルの名前には影響しません。 中間出力は、保存されると、プライマリ出力とは見なされませんが、補助出力と見なされます。
+
+@smallexample
+gcc -save-temps -S foo.c
+@end smallexample
+
+は（もはや）一時的な前処理されたファイルを@file{foo.i}に保存し、
+次に、（暗黙の）出力ファイル@file{foo.s}にコンパイルされますが、一方、
+
+@smallexample
+gcc -save-temps -dumpbase save-foo -c foo.c
+@end smallexample
+
+@file{save-foo.i}で前処理し、@file{save-foo.s}（現在は中間出力、つまり補助出力）にコンパイルしてから、（暗黙の）出力ファイル@file{foo.o}にアセンブルします。
+
+このオプションがない場合、dumpファイルとauxファイルは、入力ファイル、または明示的に指定されている場合は（非リンカー）出力ファイルから名前を取得します。ダンプ出力ファイル（例：@option{-fdump-*}オプションで要求されたもの） ）入力名サフィックス付き、およびそれなしのAux出力ファイル（他の非ダンプオプションによって要求されたもの、たとえば@code{-save-temps}、@code{-gsplit-dwarf}、@code{-fcallgraph-info} ）。
+
+明示的に指定された@option{-dumpbase basename.suf}についても、@option{-dumpbase-ext .suf}を指定することで、ダンプ出力とaux出力の同様の接尾辞の区別を実現できます。
+
+@var{dumpbase}がディレクトリコンポーネントで明示的に指定されている場合、@var{dumppfx}の指定（@option{-dumpdir}や@option {-save-temp =*}など）は無視され、追加されません。 @var{dumpbase}はそれを完全にオーバーライドします。
+
+@smallexample
+gcc foo.c -c -o dir/foo.o -dumpbase alt/foo \
+  -dumpdir pfx- -save-temps=cwd ...
+@end smallexample
+
+@option{-o}の@file{dir/}、@option{-save-temps=cwd}によって暗黙的に含まれる@file{./}プレフィックス、および@option{-dumpdir}の@file{pfx-}を無視して、@file{alt/foo.*}という名前の補助出力とダンプ出力を作成します。
+
+@option{-dumpbase}が、複数の入力をコンパイルするコマンド、またはコンパイルしてからリンクするコマンドで指定されている場合、@option{-dumpdir}で指定されているように、@var{dumppfx}と組み合わせることができます。 次に、結合された@var{dumppfx}を使用して各入力ファイルがコンパイルされ、@var{dumpbase}と@var{auxdropsuf}のデフォルト値が各入力ファイルに対して計算されます。
+
+@smallexample
+gcc foo.c bar.c -c -dumpbase main ...
+@end smallexample
+
+は@file{foo.o}と@file{bar.o}をプライマリ出力として作成し、@var{dumpbase}をプレフィックスとして使用して、@file{main-foo.*}および@file{main-bar.*}という名前の補助出力とダンプ出力を作成することにより、補助出力とダンプ出力の上書きを回避します。
+
+@var{dumpbase}として指定された空の文字列は、コンパイル中の補助出力とダンプ出力の命名における出力ベース名の影響を回避し、デフォルト値を計算します。
+
+@smallexample
+gcc -c foo.c -o dir/foobar.o -dumpbase '' ...
+@end smallexample
+
+はaux出力に@file{dir/foo.*}という名前を付け、出力@file{dir/foo.c.*}をダンプします。 それらのベース名が入力名からどのように取得されるかに注意してください。ただし、ディレクトリはデフォルトで出力のディレクトリになります。
+
+空の文字列のdumpbaseは、リンク中の出力に出力basenameを使用することを妨げません。
+
+@smallexample
+gcc foo.c bar.c -o dir/foobar -dumpbase '' -flto ...
+@end smallexample
+
+ソースファイルのコンパイルでは、補助出力に@file{dir/foo.*}と@file{dir/bar.*}という名前が付けられ、ダンプは@file{dir/foo.c.*}と@file{dir/bar.c.*}に出力されます。 リンク中のLTO再コンパイルでは、ダンプおよび補助ファイルのプレフィックスとして@file{dir/foobar.}が使用されます。
+
+@item -dumpbase-ext @var{auxdropsuf}
+@opindex dumpbase-ext
+When forming the name of an auxiliary (but not a dump) output file, drop
+trailing @var{auxdropsuf} from @var{dumpbase} before appending any
+suffixes.  If not specified, this option defaults to the suffix of a
+default @var{dumpbase}, i.e., the suffix of the input file when
+@option{-dumpbase} is not present in the command line, or @var{dumpbase}
+is combined with @var{dumppfx}.
+
+@smallexample
+gcc foo.c -c -o dir/foo.o -dumpbase x-foo.c -dumpbase-ext .c ...
+@end smallexample
+
+creates @file{dir/foo.o} as the main output, and generates auxiliary
+outputs in @file{dir/x-foo.*}, taking the location of the primary
+output, and dropping the @file{.c} suffix from the @var{dumpbase}.  Dump
+outputs retain the suffix: @file{dir/x-foo.c.*}.
+
+This option is disregarded if it does not match the suffix of a
+specified @var{dumpbase}, except as an alternative to the executable
+suffix when appending the linker output base name to @var{dumppfx}, as
+specified below:
+
+@smallexample
+gcc foo.c bar.c -o main.out -dumpbase-ext .out ...
+@end smallexample
+
+creates @file{main.out} as the primary output, and avoids overwriting
+the auxiliary and dump outputs by using the executable name minus
+@var{auxdropsuf} as a prefix, creating auxiliary outputs named
+@file{main-foo.*} and @file{main-bar.*} and dump outputs named
+@file{main-foo.c.*} and @file{main-bar.c.*}.
+
+
+@item -dumpdir @var{dumppfx}
+@opindex dumpdir
+When forming the name of an auxiliary or dump output file, use
+@var{dumppfx} as a prefix:
+
+@smallexample
+gcc -dumpdir pfx- -c foo.c ...
+@end smallexample
+
+creates @file{foo.o} as the primary output, and auxiliary outputs named
+@file{pfx-foo.*}, combining the given @var{dumppfx} with the default
+@var{dumpbase} derived from the default primary output, derived in turn
+from the input name.  Dump outputs also take the input name suffix:
+@file{pfx-foo.c.*}.
+
+If @var{dumppfx} is to be used as a directory name, it must end with a
+directory separator:
+
+@smallexample
+gcc -dumpdir dir/ -c foo.c -o obj/bar.o ...
+@end smallexample
+
+creates @file{obj/bar.o} as the primary output, and auxiliary outputs
+named @file{dir/bar.*}, combining the given @var{dumppfx} with the
+default @var{dumpbase} derived from the primary output name.  Dump
+outputs also take the input name suffix: @file{dir/bar.c.*}.
+
+It defaults to the location of the output file; options
+@option{-save-temps=cwd} and @option{-save-temps=obj} override this
+default, just like an explicit @option{-dumpdir} option.  In case
+multiple such options are given, the last one prevails:
+
+@smallexample
+gcc -dumpdir pfx- -c foo.c -save-temps=obj ...
+@end smallexample
+
+outputs @file{foo.o}, with auxiliary outputs named @file{foo.*} because
+@option{-save-temps=*} overrides the @var{dumppfx} given by the earlier
+@option{-dumpdir} option.  It does not matter that @option{=obj} is the
+default for @option{-save-temps}, nor that the output directory is
+implicitly the current directory.  Dump outputs are named
+@file{foo.c.*}.
+
+When compiling from multiple input files, if @option{-dumpbase} is
+specified, @var{dumpbase}, minus a @var{auxdropsuf} suffix, and a dash
+are appended to (or override, if containing any directory components) an
+explicit or defaulted @var{dumppfx}, so that each of the multiple
+compilations gets differently-named aux and dump outputs.
+
+@smallexample
+gcc foo.c bar.c -c -dumpdir dir/pfx- -dumpbase main ...
+@end smallexample
+
+outputs auxiliary dumps to @file{dir/pfx-main-foo.*} and
+@file{dir/pfx-main-bar.*}, appending @var{dumpbase}- to @var{dumppfx}.
+Dump outputs retain the input file suffix: @file{dir/pfx-main-foo.c.*}
+and @file{dir/pfx-main-bar.c.*}, respectively.  Contrast with the
+single-input compilation:
+
+@smallexample
+gcc foo.c -c -dumpdir dir/pfx- -dumpbase main ...
+@end smallexample
+
+that, applying @option{-dumpbase} to a single source, does not compute
+and append a separate @var{dumpbase} per input file.  Its auxiliary and
+dump outputs go in @file{dir/pfx-main.*}.
+
+When compiling and then linking from multiple input files, a defaulted
+or explicitly specified @var{dumppfx} also undergoes the @var{dumpbase}-
+transformation above (e.g. the compilation of @file{foo.c} and
+@file{bar.c} above, but without @option{-c}).  If neither
+@option{-dumpdir} nor @option{-dumpbase} are given, the linker output
+base name, minus @var{auxdropsuf}, if specified, or the executable
+suffix otherwise, plus a dash is appended to the default @var{dumppfx}
+instead.  Note, however, that unlike earlier cases of linking:
+
+@smallexample
+gcc foo.c bar.c -dumpdir dir/pfx- -o main ...
+@end smallexample
+
+does not append the output name @file{main} to @var{dumppfx}, because
+@option{-dumpdir} is explicitly specified.  The goal is that the
+explicitly-specified @var{dumppfx} may contain the specified output name
+as part of the prefix, if desired; only an explicitly-specified
+@option{-dumpbase} would be combined with it, in order to avoid simply
+discarding a meaningful option.
+
+When compiling and then linking from a single input file, the linker
+output base name will only be appended to the default @var{dumppfx} as
+above if it does not share the base name with the single input file
+name.  This has been covered in single-input linking cases above, but
+not with an explicit @option{-dumpdir} that inhibits the combination,
+even if overridden by @option{-save-temps=*}:
+
+@smallexample
+gcc foo.c -dumpdir alt/pfx- -o dir/main.exe -save-temps=cwd ...
+@end smallexample
+
+Auxiliary outputs are named @file{foo.*}, and dump outputs
+@file{foo.c.*}, in the current working directory as ultimately requested
+by @option{-save-temps=cwd}.
+
+Summing it all up for an intuitive though slightly imprecise data flow:
+the primary output name is broken into a directory part and a basename
+part; @var{dumppfx} is set to the former, unless overridden by
+@option{-dumpdir} or @option{-save-temps=*}, and @var{dumpbase} is set
+to the latter, unless overriden by @option{-dumpbase}.  If there are
+multiple inputs or linking, this @var{dumpbase} may be combined with
+@var{dumppfx} and taken from each input file.  Auxiliary output names
+for each input are formed by combining @var{dumppfx}, @var{dumpbase}
+minus suffix, and the auxiliary output suffix; dump output names are
+only different in that the suffix from @var{dumpbase} is retained.
+
+When it comes to auxiliary and dump outputs created during LTO
+recompilation, a combination of @var{dumppfx} and @var{dumpbase}, as
+given or as derived from the linker output name but not from inputs,
+even in cases in which this combination would not otherwise be used as
+such, is passed down with a trailing period replacing the compiler-added
+dash, if any, as a @option{-dumpdir} option to @command{lto-wrapper};
+being involved in linking, this program does not normally get any
+@option{-dumpbase} and @option{-dumpbase-ext}, and it ignores them.
+
+When running sub-compilers, @command{lto-wrapper} appends LTO stage
+names to the received @var{dumppfx}, ensures it contains a directory
+component so that it overrides any @option{-dumpdir}, and passes that as
+@option{-dumpbase} to sub-compilers.
 
 @item -v
 @opindex v
