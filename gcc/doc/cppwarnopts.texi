@@ -13,7 +13,7 @@
 @itemx -Wcomments
 @opindex Wcomment
 @opindex Wcomments
-コメント開始シーケンス@samp {/*}が@samp {/*}コメント内に現れるか、バックスラッシュ・改行が@samp{//}コメント内に現れるたびに警告する。
+コメント開始シーケンス@samp{/*}が@samp{/*}コメント内に現れるか、バックスラッシュ・改行が@samp{//}コメント内に現れるたびに警告する。
 この警告は@option{-Wall}によって有効になる。
 
 @item -Wtrigraphs
@@ -26,7 +26,7 @@
 @item -Wundef
 @opindex Wundef
 @opindex Wno-undef
-@code{#if}ディレクティブないで未定義の識別子が評価されたときに警告する。
+@code{#if}ディレクティブ内で未定義の識別子が評価されたときに警告する。
 そのような識別子は0で置換される。
 
 @item -Wexpansion-to-defined
