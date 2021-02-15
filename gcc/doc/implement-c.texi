@@ -6,7 +6,7 @@
 @chapter Cの実装定義の振る舞い
 @cindex implementation-defined behavior, C language
 
-ISO Cの適合する実装は、「実装定義」と呼ばれる各分野における行動の選択肢を文書化することを要求している。ISO / IEC 9899：1990、ISO/IEC 9899：1999およびISO/IEC 9899：2011規格のセクション番号とともに、このようなすべての領域を以下に示す。一部の領域は、標準の1つのバージョンでのみ実装定義されている。
+ISO Cの適合する実装は、「実装定義」と呼ばれる各分野における行動の選択肢を文書化することを要求している。ISO/IEC 9899：1990、ISO/IEC 9899：1999およびISO/IEC 9899：2011規格のセクション番号とともに、このようなすべての領域を以下に示す。一部の領域は、標準の1つのバージョンでのみ実装定義されている。
 
 いくつかの選択肢は、GCCが従うプラットフォーム（標準の文字エンコーディングを含む）のために外部で決定されたABIに依存する。 これらは「ABIによって決定される」と以下にリストされている。@xref{Compatibility, , バイナリ互換性}, と@uref{http://gcc.gnu.org/readings.html}。いくつかの選択肢は、プリプロセッサのマニュアルに記載されている。
 @xref{Implementation-defined behavior, , 実装依存の振る舞い, cpp, The C Preprocessor}.  ライブラリとオペレーティングシステム（または自立環境用にコンパイルするときは他の環境）によって選択されるものもある。 詳細については、そのドキュメントを参照せよ。
@@ -101,13 +101,13 @@ ABIによって決定される。
 ABIによって決定される。
 
 @item
-@cite{基本実行文字セットのメンバー以外の文字が格納されている@code {char}オブジェクトの値
+@cite{基本実行文字セットのメンバー以外の文字が格納されている@code{char}オブジェクトの値
 (C90 6.1.2.5, C99 と C11 6.2.5。}
 
 ABIによって決定される。
 
 @item
-@cite{@code {signed char}または@code {unsigned char}のどちらが「素の」@code{char}と同じ範囲、表現、動作を持つか(C90 6.1.2.5, C90 6.2.1.1, C99 と C11 6.2.5, C99 と C11 6.3.1.1)。}
+@cite{@code{signed char}または@code{unsigned char}のどちらが「素の」@code{char}と同じ範囲、表現、動作を持つか(C90 6.1.2.5, C90 6.2.1.1, C99 と C11 6.2.5, C99 と C11 6.3.1.1)。}
 
 @opindex fsigned-char
 @opindex funsigned-char
@@ -152,7 +152,7 @@ ABIによって決定される。
 @cite{対応する標準エンコーディングマクロ(@code{__STDC_ISO_10646__}, @code{__STDC_UTF_16__}, 
 @code{__STDC_UTF_32__})が定義されていないときの@code{wchar_t}、@code{char16_t}、および@code{char32_t}のいずれかのエンコーディング (C11 6.10.8.2)。}
 
-@xref{Implementation-defined behavior, , 実装依存の振る舞い, cpp, The C Preprocessor}。  @code {char16_t}と@code {char32_t}リテラルは、それぞれ常にUTF-16とUTF-32でエンコードされる。
+@xref{Implementation-defined behavior, , 実装依存の振る舞い, cpp, The C Preprocessor}。  @code{char16_t}と@code{char32_t}リテラルは、それぞれ常にUTF-16とUTF-32でエンコードされる。
 
 @end itemize
 
@@ -253,7 +253,7 @@ C99付録Fに従う。
 @item
 @cite{@code{FP_CONTRACT}プラグマのデフォルトの状態 (C99 と C11 7.12.2)。}
 
-このプラグマは実装されていない。 式は、@option{-ffp-contract = fast}、@option{-funsafe-math-optimizations}または@option{-ffast-math}が使用されている場合にのみ、現在のところ収縮する。これは変更されることがある。
+このプラグマは実装されていない。 式は、@option{-ffp-contract=fast}、@option{-funsafe-math-optimizations}または@option{-ffast-math}が使用されている場合にのみ、現在のところ収縮する。これは変更されることがある。
 
 @item
 @cite{丸められた結果が実際にIEC 60559準拠の実装における数学的結果と等しい場合に、「不正確な」浮動小数点例外を発生させることができるかどうか (C99 F.9)。}
@@ -300,7 +300,7 @@ C99付録Fに従う。
 @item
 @cite{@code{register}ストレージクラス指定子を使用して提案された提案が有効である範囲 (C90 6.5.1, C99 と C11 6.7.1)。}
 
-@code {register}指定子は、以下の方法でのみコード生成に影響する。
+@code{register}指定子は、以下の方法でのみコード生成に影響する。
 
 @itemize @bullet
 @item
@@ -406,6 +406,7 @@ Cの標準によれば、このような式は、その型が元の型の非修�
 
 スカラー型である場合、またはほとんどのターゲットで、その唯一のメンバーオブジェクトがスカラ型である集約型、またはメンバーオブジェクトがスカラー型である共用体型の場合、式はGCCによって揮発性オブジェクトの読み込みと解釈される。 他のケースでは、式はその副作用についてのみ評価される。
 
+スカラー型@code{S}と同じサイズと配置を持つ集合型のオブジェクトが、代入式またはアトミック関数による揮発性アクセスの対象である場合、そのオブジェクトへのアクセスは、オブジェクトのオブジェクトのように実行されます。 宣言された型は@code{volatile S}でした。
 @end itemize
 
 @node Declarators implementation
@@ -469,7 +470,7 @@ GCCは利用可能なメモリによってのみ制限される。
 すべてのターゲットでGCCが受け入れたプラグマの詳細は@xref{Pragmas, , プラグマ, cpp, The C Preprocessor}。ターゲット指定のプラグマは@xref{Pragmas, , GCCによって受理されるプラグマ}。
 
 @item
-@cite{それぞれ翻訳の日付と時刻が利用できない場合の@code {__DATE__}と@code {__TIME__}の定義 (C90 6.8.8, C99 6.10.8, C11 6.10.8.1)。}
+@cite{それぞれ翻訳の日付と時刻が利用できない場合の@code{__DATE__}と@code{__TIME__}の定義 (C90 6.8.8, C99 6.10.8, C11 6.10.8.1)。}
 
 @end itemize
 

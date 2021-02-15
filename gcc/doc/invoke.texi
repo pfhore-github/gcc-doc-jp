@@ -4746,7 +4746,7 @@ void f (int a, int b)
 未知の文字列引数は、1文字長と仮定される。
 
 レベル@var{2}では、上の例の呼び出しが再度診断されるが、今回は、@var{a}が32ビットの@code{INT_MIN}に等しいので、
-最初の@code{％i}ディレクティブは出力バッファの末尾を越えていくつかの数字を書く。
+最初の@code{%i}ディレクティブは出力バッファの末尾を越えていくつかの数字を書く。
 2つの変数の値にかかわらず呼び出しを安全にするには、宛先バッファのサイズを少なくとも34バイトに増やす必要がある。
 GCCは、警告に続く情報ノート内のバッファの最小サイズが含まれている。
 
@@ -9957,7 +9957,7 @@ GCCは命令がある数より大きい関数はインライン化しない。�
 
 @table @gcctabopt
 @item predictable-branch-outcome
-分岐がこの（％での）閾値よりも小さい確率で予測されるならば、よく予測可能だとみなされる。
+分岐がこの（%での）閾値よりも小さい確率で予測されるならば、よく予測可能だとみなされる。
 
 @item max-rtl-if-conversion-insns
 RTLのif変換がブロック周りの条件付き分岐を削除して条件付き実行命令で置換しようとする。
@@ -10252,13 +10252,13 @@ bbと比較する類似のbbの最大量。これは木末端マージの二次�
 プログラム全体における基本ブロックの最大実行カウントの分数1/nの分母nは、基本ブロックがホットと見なされるために少なくとも必要です。 デフォルトは10000です。これは、実行カウントが最大実行カウントの1/10000より大きい場合、基本ブロックがホットであると見なされることを意味します。 0は、決してホットとは見なされないことを意味します。 非LTOモードで使用されます。
 
 @item hot-bb-count-ws-permille
-ホットと見なされるために基本ブロックの実行カウントが含まれている必要があるプログラム全体のプロファイルされた実行の、0〜1000の範囲で最も実行されたパーミルの数。 デフォルトは990です。これは、基本ブロックの実行カウントがプログラム全体のプロファイルされた実行の上位990パーミル、つまり99.0％に寄与する場合、基本ブロックがホットであると見なされることを意味します。 0は、決してホットとは見なされないことを意味します。 LTOモードで使用されます。
+ホットと見なされるために基本ブロックの実行カウントが含まれている必要があるプログラム全体のプロファイルされた実行の、0〜1000の範囲で最も実行されたパーミルの数。 デフォルトは990です。これは、基本ブロックの実行カウントがプログラム全体のプロファイルされた実行の上位990パーミル、つまり99.0%に寄与する場合、基本ブロックがホットであると見なされることを意味します。 0は、決してホットとは見なされないことを意味します。 LTOモードで使用されます。
 
 @item hot-bb-frequency-fraction
 この関数の基本ブロックがホットと見なされるために少なくとも必要な、関数のエントリブロックの実行頻度の分数1/nの分母n。 デフォルトは1000です。これは、基本ブロックが関数のエントリブロックの頻度の1/1000よりも頻繁に実行される場合、その基本ブロックが関数内でホットであると見なされることを意味します。 0は、決してホットとは見なされないことを意味します。
 
 @item unlikely-bb-count-fraction
-プログラム全体のプロファイルされた実行数の分数1/nの分母n。これを下回ると、基本ブロックが実行される可能性が低いと見なされるために、基本ブロックの実行カウントが必要になります。 デフォルトは20です。これは、基本ブロックがプログラムの実行の1/20、つまり5％未満で実行された場合、実行される可能性が低いと見なされることを意味します。 0は、常に実行される可能性が低いと見なされることを意味します。
+プログラム全体のプロファイルされた実行数の分数1/nの分母n。これを下回ると、基本ブロックが実行される可能性が低いと見なされるために、基本ブロックの実行カウントが必要になります。 デフォルトは20です。これは、基本ブロックがプログラムの実行の1/20、つまり5%未満で実行された場合、実行される可能性が低いと見なされることを意味します。 0は、常に実行される可能性が低いと見なされることを意味します。
 
 @item max-predicted-iterations
 静的に予測するループ繰り返し数の最大値。これは関数が既知の境界を持つ単一ループと未知の境界を持つ別のループを含んでいる場合に
@@ -11076,12 +11076,28 @@ arcが唯一の出口であるかブロックへの唯一の入り口である�
 収集されたプロファイル情報に基づいてプログラムを最適化するためには、@option{-fprofile-use}を使う。
 さらなる情報は@xref{Optimize Options}。
 
+@item -fprofile-info-section
+@itemx -fprofile-info-section=@var{name}
+@opindex fprofile-info-section
+
+コンストラクタ/デストラクタを使用する代わりに、指定されたセクションにプロファイル情報を登録します。セクション名は、指定されている場合は@var{name}です。指定されていない場合、セクション名はデフォルトで@code{.gcov_info}になります。 @option{-fprofile-arcs}または@option{-ftest-coverage}によって生成されたプロファイル情報へのポインターは、各翻訳単位の指定されたセクションに配置されます。このオプションは、コンストラクタを介したプロファイル情報の登録を無効にし、デストラクタを介したプロファイル情報処理を無効にします。このオプションは、GNU/Linuxなどのホスト環境での使用を目的としたものではありません。コンストラクタとデストラクタをサポートしない、リソースが限られているシステムを対象としています。リンカは、入力セクションを連続メモリブロックに収集し、開始シンボルと終了シンボルを定義できます。ランタイムサポートは、たとえば、プログラムの終了時にこのリンカセットに登録されたプロファイリング情報をシリアルラインにダンプできます。リンカ出力セクションを定義するGNUリンカスクリプトの例は次のとおりです。
+
+@smallexample
+  .gcov_info      :
+  @{
+    PROVIDE (__gcov_info_start = .);
+    KEEP (*(.gcov_info))
+    PROVIDE (__gcov_info_end = .);
+  @}
+@end smallexample
+
 @item -fprofile-note=@var{path}
 @opindex fprofile-note
 
 @var{path}が指定されている場合、GCCは@file{.gcno}ファイルを@var{path}の場所に保存します。 オプションを複数のソースファイルと組み合わせると、@file{.gcno}ファイルが上書きされます。
 
 @item -fprofile-prefix-path=@var{path}
+@opindex fprofile-prefix-path
 
 このオプションを@option{profile-generate=}@var{profile_dir}および@option{profile-use=}@var{profile_dir}と組み合わせて使用すると、ビルドされたソースツリーのベースディレクトリがどこにあるかをGCCに通知できます。 デフォルトでは、@var{profile_dir}には、ビルドされたプロジェクト内のすべてのオブジェクトファイルの絶対パスがマングルされたファイルが含まれます。インストルメント済みバイナリのビルドに使用されるディレクトリが、プロファイルフィードバックで最適化されたバイナリのビルドに使用されるディレクトリと異なる場合、最適化されたビルド中にプロファイルデータが見つからないため、これは望ましくありません。そのようなセットアップでは、ビルドのベースディレクトリを指す@var{path}つきの@option{-fprofile-prefix-path=}@var{path}を使用して、パスの無関係な部分を削除し、メインビルドディレクトリにすべてのファイル名を相対に保つことができます。
 
@@ -11109,7 +11125,7 @@ arcが唯一の出口であるかブロックへの唯一の入り口である�
 
 たとえば、@option{-fprofile-exclude-files=/usr/*}は、@file{/usr/}フォルダーにあるすべてのファイルのインストルメンテーションを防ぎます。
 
-@item -fprofile-reproducible
+@item -fprofile-reproducible=@r{[}multithreaded@r{|}parallel-runs@r{|}serial@r{]}
 @opindex fprofile-reproducible
 @code{-fprofile-generate}によって収集されたプロファイルの再現性の制御レベル。 これにより、たとえば配布パッケージに役立つ同じ結果でプログラムを再構築することができます。
 
@@ -11134,12 +11150,23 @@ arcが唯一の出口であるかブロックへの唯一の入り口である�
 @opindex fsanitize=kernel-address
 Linuxカーネル用のAddressSanitizerを有効にする。詳しい詳細は@uref{https://github.com/google/kasan/wiki}を見よ。
 
+
+@item -fsanitize=hwaddress
+@opindex fsanitize=hwaddress
+ハードウェア支援AddressSanitizerを有効にします。これは、ハードウェア機能を使用してポインターの上位バイトを無視し、メモリオーバーヘッドを低く抑えてメモリエラーを検出できるようにします。 メモリアクセス命令は、範囲外および解放後使用のバグを検出するように装備されています。 このオプションは、@option{-fsanitize-address-use-after-scope}を有効にします。 詳細については、@uref{https://clang.llvm.org/docs/HardwareAssistedAddressSanitizerDesign.html}を参照してください。 実行時の動作は、@env{HWASAN_OPTIONS}環境変数を使用して影響を受ける可能性があります。 @code{help=1}に設定すると、インストルメントされたプログラムの起動時に使用可能なオプションが表示されます。 このオプションは、@option{-fsanitize=thread}または@option{-fsanitize=address}と組み合わせることはできず、現在AArch64でのみ使用できます。
+
+@item -fsanitize=kernel-hwaddress
+@opindex fsanitize=kernel-hwaddress
+Linuxカーネルのコンパイルに対してハードウェア支援AddressSanitizerを有効にします。 @option{-fsanitize=kernel-address}に似ていますが、別のインストルメンテーション方法を使用し、@option{-fsanitize=hwaddress}に似ていますが、Linuxカーネルのコンパイルに必要なインストルメンテーションの違いがあります。 これらの違いは、hwasanライブラリの初期化呼び出しを回避し、最上位バイトに異なる値を持つスタックポインタを考慮に入れるためです。
+
+@emph{注意:} このオプションのデフォルトは、@option{-fsanitize = hwaddress}とは異なります。 スタックおよびalloca呼び出しのインストルメンテーションはデフォルトではオンになっていませんが、それぞれコマンドラインオプション@option{--param hwasan-instrument-stack=1}および@option{--param hwasan-instrument-allocas=1}を指定することで引き続き可能です。ランダムフレームタグの使用は、カーネルインストルメンテーションには実装されていません。
+
 @item -fsanitize=pointer-compare
 @opindex fsanitize=pointer-compare
 ポインターオペランドを使用した機器比較操作（<、<=、>、> =）を計装する。
 オプションは、@option{-fsanitize=kernel-address}または@option{-fsanitize=address}のいずれかと組み合わせる必要があります
 このオプションは@option{-fsanitize=thread}と組み合わせることはできません。
-注：デフォルトでは、実行時にチェックは無効になっています。 有効にするには、環境変数@env {ASAN_OPTIONS}に@code{detect_invalid_pointer_pairs=2}を追加します。 @code {detect_invalid_pointer_pairs=1}を使用すると、両方のポインターがnullでない場合にのみ無効な操作が検出されます。
+注：デフォルトでは、実行時にチェックは無効になっています。 有効にするには、環境変数@env{ASAN_OPTIONS}に@code{detect_invalid_pointer_pairs=2}を追加します。 @code{detect_invalid_pointer_pairs=1}を使用すると、両方のポインターがnullでない場合にのみ無効な操作が検出されます。
 
 @item -fsanitize=pointer-subtract
 @opindex fsanitize=pointer-subtract
@@ -11147,7 +11174,7 @@ Linuxカーネル用のAddressSanitizerを有効にする。詳しい詳細は@u
 オプションは、@option{-fsanitize=kernel-address}または@option{-fsanitize=address}のいずれかと組み合わせる必要があります。
 オプションを@option{-fsanitize=thread}と組み合わせることはできません。
 注：デフォルトでは、実行時にチェックは無効になっています。 有効にするには、
-@code{detect_invalid_pointer_pairs=2}を環境変数@env{ASAN_OPTIONS}に追加します。 @code {detect_invalid_pointer_pairs=1}を使用すると、両方のポインターがnullでない場合にのみ無効な操作が検出されます。
+@code{detect_invalid_pointer_pairs=2}を環境変数@env{ASAN_OPTIONS}に追加します。 @code{detect_invalid_pointer_pairs=1}を使用すると、両方のポインターがnullでない場合にのみ無効な操作が検出されます。
 
 @item -fsanitize=thread
 @opindex fsanitize=thread
@@ -11189,7 +11216,7 @@ Linuxカーネル用のAddressSanitizerを有効にする。詳しい詳細は@u
 
 @item -fsanitize=shift-base
 @opindex fsanitize=shift-base
-シフト演算の2番目の引数が範囲内にある場合は、シフト演算の結果が未定義でないことを確認する。 正確には未定義とみなされるものは、CとC ++の間、およびISO C90とC99の間など、わずかに異る。
+シフト演算の2番目の引数が範囲内にある場合は、シフト演算の結果が未定義でないことを確認する。 正確には未定義とみなされるものは、CとC++の間、およびISO C90とC99の間など、わずかに異る。
 
 @item -fsanitize=integer-divide-by-zero
 @opindex fsanitize=integer-divide-by-zero
@@ -11228,8 +11255,7 @@ a++;
 
 @item -fsanitize=bounds
 @opindex fsanitize=bounds
-このオプションは配列境界の計装を有効にする。様々な境界外アクセスが検知される。可変長配列メンバ、
-可変長配列メンバ様配列、静的領域の変数の初期化は計装されない。
+このオプションは配列境界の計装を有効にする。様々な境界外アクセスが検知される。可変長配列メンバ、可変長配列メンバ様配列、静的領域の変数の初期化は計装されない。
 
 @item -fsanitize=bounds-strict
 @opindex fsanitize=bounds-strict
@@ -11294,7 +11320,7 @@ null値の返却を検知する。
 @item -fsanitize=builtin
 @opindex fsanitize=builtin
 
-このオプションは、選択された組み込み関数への引数の計測を有効にします。 そのような引数に無効な値が渡されると、実行時エラーが発行されます。 たとえば、引数として@code{__ builtin_ctz}または@code{__ builtin_clz}に0を渡すと、未定義の動作が呼び出され、このオプションによって診断されます。
+このオプションは、選択された組み込み関数への引数の計測を有効にします。 そのような引数に無効な値が渡されると、実行時エラーが発行されます。 たとえば、引数として@code{__builtin_ctz}または@code{__builtin_clz}に0を渡すと、未定義の動作が呼び出され、このオプションによって診断されます。
 
 @end table
 
@@ -11363,11 +11389,13 @@ undefined,float-cast-overflow,float-divide-by-zero,bounds-strict
 データフローに基づくファジングコードの計装を有効にします。オペランド変数または@code{__sanitizer_cov_trace_const_cmp1}両方と一体の比較のために@code{__sanitizer_cov_trace_cmp1}、@code{__sanitizer_cov_trace_cmp2}、@code{__sanitizer_cov_trace_cmp4}または@code{__sanitizer_cov_trace_cmp8}への呼び出しを挿入、
 @code{__sanitizer_cov_trace_const_cmp2}、@ code{__sanitizer_cov_trace_const_cmp4}、または@code{__sanitizer_cov_trace_const_cmp8}は、1つのオペランド定数との整数比較用、@code{__sanitizer_cov_trace_cmpf}または@code {__sanitizer_cov_trace_cmpd}は、floatまたはdouble比較の場合、@code{__sanitizer_cov_trace_switch}は、switchステートメントの場合です。
 
-@item -fcf-protection=@r{[}full@r{|}branch@r{|}return@r{|}none@r{]}
+@item -fcf-protection=@r{[}full@r{|}branch@r{|}return@r{|}none@r{]}check@r{]}
 @opindex fcf-protection
-制御フロー転送のコード計装を有効にして、制御フロー転送命令（間接関数呼び出し、関数戻り、間接ジャンプなど）のターゲットアドレスが有効であることを確認して、プログラムのセキュリティを向上させます。 これにより、制御の流れが予期しないターゲットに迂回するのを防ぎます。 これは、リターン指向プログラミング（ROP）、同様に呼び出し/jmp指向プログラミング（COP / JOP）などの脅威から保護することを目的としています。
+制御フロー転送のコード計装を有効にして、制御フロー転送命令（間接関数呼び出し、関数戻り、間接ジャンプなど）のターゲットアドレスが有効であることを確認して、プログラムのセキュリティを向上させます。 これにより、制御の流れが予期しないターゲットに迂回するのを防ぎます。 これは、リターン指向プログラミング（ROP）、同様に呼び出し/jmp指向プログラミング（COP/JOP）などの脅威から保護することを目的としています。
 
-値@code{branch}は、間接分岐命令、つまりcall / jmp命令のポイントで制御フロー転送の有効性のチェックを実装するようコンパイラーに指示します。 値@code{return}は、関数から戻った時点での有効性のチェックを実装します。 値@code{full}は、@code{branch}と@code{return}の両方を指定するためのエイリアスです。 値@code{none}は、計装をオフにします。
+値@code{branch}は、間接分岐命令、つまりcall/jmp命令のポイントで制御フロー転送の有効性のチェックを実装するようコンパイラーに指示します。 値@code{return}は、関数から戻った時点での有効性のチェックを実装します。 値@code{full}は、@code{branch}と@code{return}の両方を指定するためのエイリアスです。 値@code{none}は、計装をオフにします。
+
+値@code{check}は、リンク時最適化（LTO）を使用した最終リンクに使用されます。 LTOオブジェクトファイルが異なる@option{-fcf-protection}値でコンパイルされている場合、エラーが発行されます。 値@code{check}は、コンパイル時に無視されます。
 
 マクロ@code{__CET__}は、@ option{-fcf-protection}が使用されるときに定義されます。 @code{__CET__}の最初のビットは値@code{branch}に対して1に設定され、@code{__CET__}の2番目のビットは@code{return}に対して1に設定されます。
 
@@ -11605,6 +11633,12 @@ NOP命令は、プロローグよりも前であっても、関数のエント�
 このオプションは@option{-B}か@option{-wrapper}オプションと組み合わせて、代替のプリプロセッサを指定するか、
 通常のプリプロセスとコンパイルの間に追加の処理を行うときに役立つ。
 
+@item -flarge-source-files
+@opindex flarge-source-files
+コンパイルが遅くなり、メモリ使用量が増えるという犠牲を払って、大きなソースファイルを期待するようにGCCを調整します。
+
+具体的には、GCCは通常、ソースファイル内の列番号と行番号の両方を追跡し、通常、診断でこれらの番号の両方を出力します。 ただし、特定の数のソース行を処理すると、列番号の追跡を停止し、行番号のみを追跡します。 これは、後の行の診断に列番号が含まれないことを意味します。 また、@option{-Wmisleading-indentation}のようなオプションはその時点で機能しなくなりますが、これが発生するとコンパイラはメモを出力します。 @option{-flarge-source-files}を渡すと、GCCが列の追跡を停止する前に処理できるソース行の数が大幅に増加します。
+
 @end table
 
 @node Assembler Options
@@ -11664,7 +11698,7 @@ NOP命令は、プロローグよりも前であっても、関数のエント�
 
 最後に、@samp{nolto-rel}は、コード生成が強制され、最終的なバイナリが生成され、後でリンク時の最適化のための中間コードが取り除かれるインクリメンタルリンク用にコンパイラーを構成します。 複数のオブジェクトファイルをリンクすると、リンク時の最適化を無効にした場合よりもコードが最適化されます（たとえば、モジュール間のインライン化が発生します）が、プログラム全体の最適化の利点のほとんどは失われます。
 
-（@option {-r}による）インクリメンタルリンク中、リンカープラグインはデフォルトで@option{rel}になります。 ただし、GNU Binutilsへの現在のインターフェースでは、LTOオブジェクトと非LTOオブジェクトを1つの混合オブジェクトファイルに段階的にリンクすることはできません。 インクリメンタルリンクのオブジェクトファイルのいずれかがリンク時の最適化に使用できない場合、リンカープラグインは警告を発行し、@samp{nolto-rel}を使用します。 プログラム全体の最適化を維持するには、そのようなオブジェクトを静的ライブラリにリンクすることをお勧めします。 または、H.J.Luのbinutilsと混合オブジェクトのサポートを使用することもできます。
+（@option{-r}による）インクリメンタルリンク中、リンカープラグインはデフォルトで@option{rel}になります。 ただし、GNU Binutilsへの現在のインターフェースでは、LTOオブジェクトと非LTOオブジェクトを1つの混合オブジェクトファイルに段階的にリンクすることはできません。 インクリメンタルリンクのオブジェクトファイルのいずれかがリンク時の最適化に使用できない場合、リンカープラグインは警告を発行し、@samp{nolto-rel}を使用します。 プログラム全体の最適化を維持するには、そのようなオブジェクトを静的ライブラリにリンクすることをお勧めします。 または、H.J.Luのbinutilsと混合オブジェクトのサポートを使用することもできます。
 
 @item -fuse-ld=bfd
 @opindex fuse-ld=bfd
@@ -11685,20 +11719,13 @@ NOP命令は、プロローグよりも前であっても、関数のエント�
 リンク時に@var{library}という名前のライブラリを探す。（別の引数としてライブラリを渡す
 第2の選択肢はPOSIX適合としてのみのためであり、推奨されない。）
 
-コマンドでどこにこのオプションを書くかは違いを生む。リンカは指定された順にライブラリとオブジェクトファイル
-を検索して処理する。したがって、@samp{foo.o -lz bar.o}はライブラリ@samp{z}を@file{foo.o}の後だが@file{bar.o}の前に検索する。
-もし@file{bar.o}が@samp{z}の関数を参照していても、それらの関数はロードされないかもしれない。
+@option{-l}オプションは、GCCによってリンカーに直接渡されます。 正確な詳細については、リンカのドキュメントを参照してください。 以下の一般的な説明は、GNUリンカーに適用されます。
 
-リンカはライブラリを求めてディレクトリの標準的なリストを検索する。そして、それは実際は@file{lib@var{library}.a}という名前の
-ファイルである。まるでそれが正確に名前で指定されたように、リンカはこのファイルをそれから使用する。
+リンカは、ディレクトリの標準リストでライブラリを検索します。 検索されるディレクトリには、いくつかの標準システムディレクトリに加えて、@option{-L}で指定したディレクトリが含まれます。
 
-検索されるディレクトリは、幾つかの標準システムディレクトリとあなたが@option{-L}で指定したものを含む。
+静的ライブラリはオブジェクトファイルのアーカイブであり、@file{lib@var{library}.a}のようなファイル名を持っています。 一部のターゲットは、共有ライブラリもサポートしています。共有ライブラリは通常、@file{lib@var{library}.so}のような名前です。 静的ライブラリと共有ライブラリの両方が見つかった場合、@option{-static}オプションが使用されていない限り、リンカは共有ライブラリとのリンクを優先します。
 
-通常、このように見つかるファイルは、ライブラリ・ファイルである ― メンバーがオブジェクト・ファイルであるアーカイブのファイル。
-ここまで参照されたが定義されなかったシンボルを定義するメンバーのためにそれをスキャンすることによって、
-リンカはアーカイブのファイルを取り扱う。しかし、見つかるファイルが普通のオブジェクト・ファイルであるならば、
-それは普通の方法にリンクされる。@option{-l}オプションを使用することとファイル名を指定することの唯一の違いは、
-@option{-l}が@samp{lib}と@samp{.a}で@var{library}を囲んで、いくつかのディレクトリを捜すということである。
+コマンドのどこにこのオプションを書くかによって違いが生じます。 リンカは、指定された順序でライブラリとオブジェクトファイルを検索して処理します。 したがって、@samp{foo.o -lz bar.o}は、ファイル@file{foo.o}の後、@file{bar.o}の前にライブラリ@samp{z}を検索します。 @file{bar.o}が@samp{z}の関数を参照している場合、それらの関数はロードされない可能性があります。
 
 @item -lobjc
 @opindex lobjc
@@ -11721,7 +11748,7 @@ Objective-CやObjective-C++プログラムをリンクするためには@option{
 
 @item -nolibc
 @opindex nolibc
-リンク時には、Cライブラリまたはシステムライブラリと密結合したシステムライブラリを使用しない。 スタートアップファイル、@file{libgcc}、または@file{libgnat}、@file{libgfortran}、@file{libstdc ++}などのツールチェーンが提供する言語サポートライブラリとはまだリンクします。 これにより、通常、リンクコマンドラインから@option{-lc}が削除され、また、通常はそれに付随し、Cライブラリがないと想定されると意味がなくものも削除されます。たとえば、@ option{-lpthread}または 一部の構成では@option{-lm}。 これは、実際に使用可能なCライブラリがない場合のベアボードターゲットを対象としています。
+リンク時には、Cライブラリまたはシステムライブラリと密結合したシステムライブラリを使用しない。 スタートアップファイル、@file{libgcc}、または@file{libgnat}、@file{libgfortran}、@file{libstdc++}などのツールチェーンが提供する言語サポートライブラリとはまだリンクします。 これにより、通常、リンクコマンドラインから@option{-lc}が削除され、また、通常はそれに付随し、Cライブラリがないと想定されると意味がなくものも削除されます。たとえば、@option{-lpthread}または 一部の構成では@option{-lm}。 これは、実際に使用可能なCライブラリがない場合のベアボードターゲットを対象としています。
 
 @item -nostdlib
 @opindex nostdlib
@@ -11851,22 +11878,6 @@ GCCは自動的に@option{liblsan}に対してリンクする。もし@file{libl
 GCCドライバは自動的に@option{libubsan}に対してリンクする。もし@file{libubsan}が共有ライブラリとして利用可能であり、
 @option{-static}が使われていないならば、これは@file{libubsan}の共有バージョンに対してリンクする。
 @option{-static-libubsan}オプションはGCCドライバに@file{libubsan}を静的にリンクして、他のライブラリを静的にリンクする必要をなくす。
-
-@item -static-libmpx
-@opindex static-libmpx
-@option{-fcheck-pointer bounds}と@option{-mmpx}オプションがプログラムをリンクするために使われるときに、
-GCCドライバは自動的に@option{libmpx}に対してリンクする。もし@file{libmpx}が共有ライブラリとして利用可能であり、
-@option{-static}が使われていないならば、これは@file{libmpx}の共有バージョンに対してリンクする。
-@option{-static-libmpx}オプションはGCCドライバに@file{libmpx}を静的にリンクして、他のライブラリを静的にリンクする必要をなくす。
-
-@item -static-libmpxwrappers
-@opindex static-libmpxwrappers
-@option{-fcheck-pointer bounds}と@option{-mmpx}オプションがプログラムをリンクするときに
-@option{-fno-chkp-use-wrappers}は使わずに使われるときに、GCCドライバは自動的に
-@option{libmpxwrappers}に対してリンクする。もし@file{libmpxwrappers}が共有ライブラリとして利用可能であり、
-@option{-static}が使われていないならば、これは@file{libmpxwrappers}の共有バージョンに対してリンクする。
-@option{-static-libmpxwrappers}オプションはGCCドライバに@file{libmpxwrappers}を静的にリンクして、
-他のライブラリを静的にリンクする必要をなくす。
 
 @item -static-libstdc++
 @opindex static-libstdc++
@@ -12107,7 +12118,7 @@ GNUリンカ（2.16以降）はこのオプションの必須のサポートを�
 例外処理を有効にする。例外を伝搬するのに必要な追加のコードを生成する。
 あるターゲットでは、これはGCCに全関数のフレーム巻き戻し情報を生成させることを暗示し、それはかなりのデータサイズオーバーヘッド
 を生むが、実行には影響しない。もしこのオプションを指定しないならば通常は例外処理が必要なC++ののような言語ではデフォルトで有効にし、
-C++ののような通常は必要としない言語では無効にする。しかし、C++で書かれた例外処理と適切に相互作用する必要があるC++コードをコンパイルするときは
+C++ののような通常は必要としない言語では無効にする。しかし、C++で書かれた例外処理と適切に相互作用する必要があるCコードをコンパイルするときは
 このオプションを有効にする必要があるかもしれない。もし例外処理を使わない古いC++プログラムをコンパイルするならばこのオプションを無効にしたいかもしれない。
 
 @item -fnon-call-exceptions
@@ -12190,7 +12201,7 @@ Cコードでは、このオプションは、初期化子なしで定義され�
 
 デフォルトは@option{-fno-common}で、コンパイラーが初期化されていないグローバル変数をオブジェクトファイルのBSSセクションに配置することを指定します。 これにより、リンカーによる一時的な定義のマージが禁止されるため、同じ変数が誤って複数のコンパイルユニットで定義されている場合は、多重定義エラーが発生します。
 
-@option {-fcommon}は、初期化されていないグローバル変数を共通ブロックに配置します。
+@option{-fcommon}は、初期化されていないグローバル変数を共通ブロックに配置します。
 これにより、リンカーは、異なるコンパイルユニットにある同じ変数のすべての仮定義を、同じオブジェクトまたは非仮定義に解決できます。 この動作はC++と一貫性がなく、多くのターゲットでは、グローバル変数参照の速度とコードサイズのペナルティを意味します。 レガシーコードをエラーなしでリンクできるようにすることが主に役立ちます。
 
 @item -fno-ident
@@ -12202,6 +12213,10 @@ Cコードでは、このオプションは、初期化子なしで定義され�
 @code{.size}アセンブラディレクティブ、あるいは、関数が中央で分割され、メモリのかなり離れた場所に両方が配置されるならば問題を
 起こすであろう他のものを出力しない。
 @file{crtstuff.c}をコンパイルするとき、このオプションが使われる。他のどれに対しても使われるべきではない。
+
+@item -finhibit-size-directive
+@opindex finhibit-size-directive
+@code{.size}アセンブラディレクティブなど、関数が途中で分割され、2つの半分がメモリ内で離れた場所に配置されている場合に問題が発生するようなものは出力しない。 このオプションは、@file{crtstuff.c}をコンパイルするときに使用されます。 他の目的に使用するべきではありません。
 
 @item -fverbose-asm
 @opindex fverbose-asm
@@ -12350,6 +12365,11 @@ switch分でジャンプテーブルをそれが他のコード生成戦略よ�
 このオプションは@option{-fpic}か@option{-fPIC}と組み合わせて、動的リンカの一部を構成し、
 ジャンプテーブルのアドレスを参照できないコードを生成するときに使う。
 あるターゲットでは、ジャンプテーブルはGOTを必要とせず、このオプションは必要ない。
+
+@item -fno-bit-tests
+@opindex fno-bit-tests
+@opindex fbit-tests
+他のコード生成戦略よりも効率的である場合でも、switchステートメントにビットテストを使用しない。
 
 @item -ffixed-@var{reg}
 @opindex ffixed
@@ -12505,10 +12525,8 @@ GCCに多分もっと効率的な32ビットアクセスの代わりに16ビッ�
 @cindex dump options
 @cindex compilation statistics
 
-このセクションは、GCC開発者（コンパイラ・テストとコンパイラの虫とコンパイル回のパフォーマンス問題の調査をサポートするオプションを含む）に、主に興味深いコマンド・ライン・オプションを記載する。
-これは、コンパイルにおいていろいろな点でデバッグ・ダンプを生じるオプションを含む;
-その印刷統計（例えばメモリ使用と実行時間）;
-そして、GCCの構成（それがライブラリを捜すところのような）に関するその印刷情報。
+このセクションは、GCC開発者（コンパイラ・テストとコンパイラのバグとコンパイル回のパフォーマンス問題の調査をサポートするオプションを含む）に、主に興味深いコマンド・ライン・オプションを記載する。
+これは、コンパイルにおいていろいろな点でデバッグ・ダンプを生じるオプションを含む;その出力統計（例えばメモリ使用と実行時間）;そして、GCCの構成（それがライブラリを捜すところのような）に関するその出力情報。
 あなたは、めったに、普通のコンパイルとタスクをリンクすることためにこれらのオプションの何も使用する必要はあるべきでない。
 
 GCCに出力をファイルにダンプさせる多くの開発者オプションには、オプションの@samp{=@var{filename}}サフィックスが付きます。 @samp{stdout}または@samp{-}を指定して標準出力にダンプし、@samp{stderr}を指定して標準エラーを出力できます。
@@ -12852,8 +12870,11 @@ text / bss / data / heap / stack / dso開始場所のあるコンパイラ呼び
 
 たとえば、@option{-fdump-ipa-inline-optimized-missed}は、インライン化されなかった呼び出しサイトとともに、インライン化された呼び出しサイトに関する情報を出力します。
 
-
 デフォルトでは、ダンプには、成功した最適化に関するメッセージ（@option{-optimized}と同等）と分析に関する低レベルの詳細が含まれます。
+
+@item -fdump-lang
+@opindex fdump-lang
+言語固有の情報をダンプします。 ファイル名は、ソースファイル名に@file{.lang}を追加することで作成されます。
 
 @item -fdump-lang-all
 @itemx -fdump-lang-@var{switch}
@@ -12869,7 +12890,10 @@ text / bss / data / heap / stack / dso開始場所のあるコンパイラ呼び
 すべての言語固有のダンプを有効にします。
 
 @item class
-クラス階層情報をダンプします。 '@option {slim}'が指定されていない限り、仮想テーブル情報が出力されます。 このオプションはC++にのみ適用されます。
+クラス階層情報をダンプします。 '@option{slim}'が指定されていない限り、仮想テーブル情報が出力されます。 このオプションはC++にのみ適用されます。
+
+@item module
+モジュール情報をダンプします。 オプション@option{lineno}（場所）、@option{graph}（到達可能性）、@option{blocks}（クラスター）、@option{uid}（シリアル化）、@option{alias}（マージ可能）、@option{asmname}（Elrond）、@option{eh}（マッパー）、@option{vops}（マクロ）が追加情報を提供する場合があります。 このオプションはC++にのみ適用されます。
 
 @item raw
 生の内部ツリーデータをダンプします。 このオプションはC++にのみ適用されます。
@@ -13193,6 +13217,11 @@ RTLパス@var{pass}を有効にする。オプション引数の説明と例は@
 @var{string}はコンパイルするファイルごとに異なるべきである。
 
 @item -save-temps
+@opindex save-temps
+通常の「一時的な」中間ファイルを永続的に保存します。 @option{-dumpbase}および@option{-dumpdir}で説明されているように、それらに補助出力ファイルとして名前を付けます。
+
+@option{-x}コマンドラインオプションと組み合わせて使ったときは、@option{-save-temps}は十分に賢いので中間ファイルとして同じ拡張子の入力ファイルを上書きするの避ける。対応する中間ファイルは@option{-save-temps}を使う前にソースファイルのリネームをすることで得られるかもしれない。
+
 @itemx -save-temps=cwd
 @opindex save-temps
 通常の「一時」中間ファイルを永久に保管する。それらを現在のディレクトリでソースファイルに
@@ -13201,40 +13230,13 @@ RTLパス@var{pass}を有効にする。オプション引数の説明と例は@
 これはたとえ今やコンパイラが統合されたプリプロセッサを使っていてもプリプロセスされた
 @file{foo.i}出力ファイルを作る。
 
-@option{-x}コマンドラインオプションと組み合わせて使ったときは、@option{-save-temps}は
-十分に賢いので中間ファイルとして同じ拡張子の入力ファイルを上書きするの避ける。
-対応する中間ファイルは@option{-save-temps}を使う前にソースファイルのリネームをすることで
-得られるかもしれない。
-
-もしGCCを並列で呼んで、異なるサブディレクトリで共通の基底名を共有する異なるソースファイルをコンパイルするか、
-複数の出力対象で同じソースファイルをコンパイルするならば、異なる並列コンパイラは相互に干渉し、一時ファイルを
-上書きするかもしれない。例えば、
-
-@smallexample
-gcc -save-temps -o outdir1/foo.o indir1/foo.c&
-gcc -save-temps -o outdir2/foo.o indir2/foo.c&
-@end smallexample
-
-は@file{foo.i}と@file{foo.o}を同時に両方のコンパイラで書こうとする結果になるかもしれない。
+@item -save-temps=cwd
+@opindex save-temps=cwd
+@option{-save-temps -dumpdir ./}と同等です。
 
 @item -save-temps=obj
 @opindex save-temps=obj
-通常の「一時」中間ファイルを永久に保管する。もし@option{-o}オプションが使われたなら、
-一時ファイルはオブジェクトファイルに基づく。もし@option{-o}が使われなければ、
-@option{-save-temps=obj}スイッチは@option{-save-temps}のように振る舞う。
-
-例えば、
-
-@smallexample
-gcc -save-temps=obj -c foo.c
-gcc -save-temps=obj -c bar.c -o dir/xbar.o
-gcc -save-temps=obj foobar.c -o dir2/yfoobar
-@end smallexample
-
-@noindent
-は@file{foo.i}, @file{foo.s}, @file{dir/xbar.i},
-@file{dir/xbar.s}, @file{dir2/yfoobar.i}, @file{dir2/yfoobar.s},
-@file{dir2/yfoobar.o}を作る。
+@option{-save-temps -dumpdir @file{outdir/}}と同等です。ここで、@file{outdir/}は、@option{-o}オプションの後に指定された出力ファイルのディレクトリであり、ディレクトリセパレータを含みます。 @option{-o}オプションが使用されていない場合、@option{-save-temps=obj}スイッチは@option{-save-temps=cwd}のように動作します。
 
 @item -time@r{[}=@var{file}@r{]}
 @opindex time
@@ -13391,7 +13393,6 @@ not overridden}をセットすることでそうなる。
 @opindex fdbg-cnt-list
 すべてのデバッグカウンタの名前とカウンタ上限を出力する。
 
-
 @item -fdbg-cnt=@var{counter-value-list}
 @opindex fdbg-cnt
 内部デバッグカウンタ上限をセットする。@var{counter-value-list}は
@@ -13473,7 +13474,7 @@ gcc -nostdlib @var{files}@dots{} `gcc -print-libgcc-file-name`
 
 @item -dumpfullversion
 @opindex dumpfullversion
-完全なコンパイラバージョンを印刷します。常に3つの数字をドット、メジャー、マイナー、パッチレベルで区切る。
+完全なコンパイラバージョンを印刷します。そして他には何もしません常に3つの数字をドット、メジャー、マイナー、パッチレベルで区切る。
 
 @item -dumpspecs
 @opindex dumpspecs
@@ -13535,6 +13536,7 @@ GCCのによってサポートされているそれぞれのターゲット機�
 * NDS32 Options::
 * Nios II Options::
 * Nvidia PTX Options::
+* OpenRISC Options::
 * PDP-11 Options::
 * picoChip Options::
 * PowerPC Options::
@@ -13548,7 +13550,6 @@ GCCのによってサポートされているそれぞれのターゲット機�
 * SH Options::
 * Solaris 2 Options::
 * SPARC Options::
-* SPU Options::
 * System V Options::
 * TILE-Gx Options::
 * TILEPro Options::
@@ -13660,8 +13661,7 @@ ARM Cortex-A53エラッタ843419用の回避手段を有効・無効にする。
 @itemx -mno-low-precision-recip-sqrt
 @opindex mlow-precision-recip-sqrt
 @opindex mno-low-precision-recip-sqrt
-逆数平方根近似を計算するとき、そうでない場合よりも1ステップ少ないステップを使用して、待ち時間と精度を低減する。
-これは、@option {-ffast-math}が逆平方根近似を有効にする場合にのみ関係し、それはターゲットプロセッサに依存する。
+逆数平方根近似を有効または無効にします。 このオプションは、@option {-ffast-math}または@option{-funsafe-math-optimizations}も使用されている場合にのみ効果があります。 これを有効にすると、逆数平方根の結果の精度が単精度の場合は約16ビットに、倍精度の場合は32ビットに減少します。
 
 @item -mlow-precision-sqrt
 @itemx -mno-low-precision-sqrt
@@ -13697,10 +13697,11 @@ ARM Cortex-A53エラッタ843419用の回避手段を有効・無効にする。
 @item @samp{armv8-a} @tab Armv8-A @tab @samp{+fp}, @samp{+simd}
 @item @samp{armv8.1-a} @tab Armv8.1-A @tab @samp{armv8-a}, @samp{+crc}, @samp{+lse}, @samp{+rdma}
 @item @samp{armv8.2-a} @tab Armv8.2-A @tab @samp{armv8.1-a}
-@item @samp{armv8.3-a} @tab Armv8.3-A @tab @samp{armv8.2-a}
-@item @samp{armv8.4-a} @tab Armv8.4-A @tab @samp{armv8.3-a}, @samp{+fp16fml}, @samp{+dotprod}
+@item @samp{armv8.3-a} @tab Armv8.3-A @tab @samp{armv8.2-a}, @samp{+pauth}
+@item @samp{armv8.4-a} @tab Armv8.4-A @tab @samp{armv8.3-a}, @samp{+flagm}, @samp{+fp16fml}, @samp{+dotprod}
 @item @samp{armv8.5-a} @tab Armv8.5-A @tab @samp{armv8.4-a}, @samp{+sb}, @samp{+ssbs}, @samp{+predres}
 @item @samp{armv8.6-a} @tab Armv8.6-A @tab @samp{armv8.5-a}, @samp{+bf16}, @samp{+i8mm}
+@item @samp{armv8-r} @tab Armv8-R @tab @samp{armv8-r}
 @end multitable
 
 値@samp{native}はネイティブのAArch64 GNU/Linuxで利用可能であり、コンパイラにホストシステムの
@@ -13721,24 +13722,27 @@ GCCがコードのパフォーマンスを調整すべきターゲットプロ�
 @samp{cortex-a57}, @samp{cortex-a72}, @samp{cortex-a73}, @samp{cortex-a75},
 @samp{cortex-a76}, @samp{cortex-a76ae}, @samp{cortex-a77},
 @samp{cortex-a65}, @samp{cortex-a65ae}, @samp{cortex-a34},
+@samp{cortex-a78}, @samp{cortex-a78ae}, @samp{cortex-a78c},
 @samp{ares}, @samp{exynos-m1}, @samp{emag}, @samp{falkor},
-@samp{neoverse-e1},@samp{neoverse-n1},@samp{qdf24xx}, @samp{saphira},
+@samp{neoverse-e1}, @samp{neoverse-n1}, @samp{neoverse-n2},
+@samp{neoverse-v1}, @samp{qdf24xx}, @samp{saphira},
 @samp{phecda}, @samp{xgene1}, @samp{vulcan}, @samp{octeontx},
 @samp{octeontx81},  @samp{octeontx83},
 @samp{octeontx2}, @samp{octeontx2t98}, @samp{octeontx2t96}
 @samp{octeontx2t93}, @samp{octeontx2f95}, @samp{octeontx2f95n},
-@samp{octeontx2f95mm}
+@samp{octeontx2f95mm},
+@samp{a64fx},
 @samp{thunderx}, @samp{thunderxt88},
 @samp{thunderxt88p1}, @samp{thunderxt81}, @samp{tsv110},
-@samp{thunderxt83}, @samp{thunderx2t99},
+@samp{thunderxt83}, @samp{thunderx2t99}, @samp{thunderx3t110}, @samp{zeus},
 @samp{cortex-a57.cortex-a53}, @samp{cortex-a72.cortex-a53},
 @samp{cortex-a73.cortex-a35}, @samp{cortex-a73.cortex-a53},
-@samp{cortex-a75.cortex-a55}, @samp{cortex-a76.cortex-a55}
-@samp{native}.
+@samp{cortex-a75.cortex-a55}, @samp{cortex-a76.cortex-a55},
+@samp{cortex-r82}, @samp{cortex-x1}, @samp{native}.
 
 値@samp{cortex-a57.cortex-a53}, @samp{cortex-a72.cortex-a53},
 @samp{cortex-a73.cortex-a35}, @samp{cortex-a73.cortex-a53},
-@samp{cortex-a75.cortex-a55}はbig.LITTLEシステム用のコードのパフォーマンスを調整すべきだということも指定することができる。
+@samp{cortex-a75.cortex-a55}, @samp{cortex-a76.cortex-a55} はbig.LITTLEシステム用のコードのパフォーマンスを調整すべきだということも指定することができる。
 
 さらにネイティブのAArch64 GNU/Linuxシステムでは値@samp{native}が利用可能である。このオプションは、コンパイラに
 アーキテクチャを選択してホストシステムのプロセッサ用のコードのパフォーマンスを調整するようにさせる。
@@ -13785,16 +13789,25 @@ PC相対のリテラルロードを有効・無効にする。このオプショ
 @opindex mbranch-protection
 使用するブランチ保護機能を選択します。 @samp{none}がデフォルトであり、すべてのタイプのブランチ保護をオフにします。 @samp{standard}は、すべてのタイプのブランチ保護機能をオンにします。 機能に追加のチューニングオプションがある場合、@samp{standard}はその機能を標準レベルに設定します。 @samp{pac-ret[+@var{leaf}]}は、戻りアドレスの署名を標準レベルでオンにします。aキーを使用して、戻りアドレスをメモリに保存する署名関数（非リーフ関数は実際には常にこれを行います）。 オプションの引数@samp{leaf}を使用して、リーフ関数を含めるように署名を拡張できます。 オプションの引数@samp{b-key}を使用して、AキーではなくBキーで関数に署名できます。 @samp{bti}はブランチターゲット識別メカニズムをオンにします。
 
+@item -mharden-sls=@var{opts}
+@opindex mharden-sls
+直線投機（SLS）に対するコンパイラーの強化を有効にします。@var{opts}は、次のオプションのコンマ区切りのリストです。
+@table @samp
+@item retbr
+@item blr
+@end table
+さらに、@samp{-mharden-sls=all}はすべてのSLS強化を有効にし、@samp{-mharden-sls=none}はすべてのSLS強化を無効にします。
+
 @item -msve-vector-bits=@var{bits}
 @opindex msve-vector-bits
 SVEベクタレジスタのビット数を指定します。 このオプションは、SVEが有効な場合にのみ効果があります。
 
 GCCは2つの形式のSVEコード生成をサポートします：任意のサイズのベクトルレジスターで機能する「ベクトル長に依存しない」出力と、GCCが最適化のため有用な場合にベクトル長について推測できるようにする「ベクトル長固有」出力。@samp{bits}の可能な値は、@samp{scalable}、@samp{128}、@samp{256}、@samp{512}、@samp{1024}および@samp{2048}です。 @samp{scalable}を指定すると、ベクトル長に依存しない出力が選択されます。 現在、@samp{-msve-vector-bits = 128}はビッグエンディアンターゲットのベクトル長に依存しない出力も生成します。 他のすべての値は、ベクトル長固有のコードを生成します。 これらの値の動作は将来のリリースで変更される可能性があり、@samp {scalable}以外の値は、異なるハードウェアSVEベクトル長にわたって移植可能なコードを生成するために依存すべきではありません。
 
-デフォルトは@samp {-msve-vector-bits = scalable}で、ベクトル長に依存しないコードを生成します。
+デフォルトは@samp{-msve-vector-bits=scalable}で、ベクトル長に依存しないコードを生成します。
 @end table
 
-@subsubsection @option{-march} and @option{-mcpu} Feature Modifiers
+@subsubsection @option{-march}と@option{-mcpu}の機能修正子
 @anchor{aarch64-feature-modifiers}
 @cindex @option{-march} feature modifiers
 @cindex @option{-mcpu} feature modifiers
@@ -13863,6 +13876,10 @@ Transactional Memory Extensionを有効にします。
 64ビット浮動小数点行列乗算命令を有効にします。 これにより、SVE命令も有効になります。 Armv8.2-Aより前のアーキテクチャでのこのオプションの使用はサポートされていません。
 @item bf16
 brain半精度浮動小数点命令を有効にします。 これにより、Advanced SIMDおよび浮動小数点命令も有効になります。 このオプションは、@option{-march = armv8.6-a}ではデフォルトで有効になっています。 Armv8.2-Aより前のアーキテクチャでのこのオプションの使用はサポートされていません。
+@item flagm
+フラグ操作命令拡張を有効にします。
+@item pauth
+ポインタ認証拡張機能を有効にします。
 
 @end table
 
@@ -14144,7 +14161,7 @@ FPX:倍精度FPX命令を生成し、高速実装用に調整する。
 
 @item -mno-dpfp-lrsr
 @opindex mno-dpfp-lrsr
-FPX拡張補助レジスタの使用から@code{lr}と@code{sr}SR命令を無効にする。
+FPX拡張補助レジスタの使用から@code{lr}と@code{sr}命令を無効にする。
 
 @item -mea
 @opindex mea
@@ -14494,6 +14511,7 @@ pc相対switchケーステーブルを使う。これはcase表短縮を有効�
 @item -mno-cond-exec
 @opindex mno-cond-exec
 条件付き実行命令を生成するためのARCompact固有のパスを無効にする。
+
 遅延スロットスケジューリングおよび、オペランド数、リテラルサイズ、命令長、そして条件付き実行の相互作用のために、
 条件付き実行を生成するためのターゲット非依存パスはしばしば存在せず、したがってARCポートは
 もっと多くのレジスタ割当、分岐短縮、遅延スロットスケジューリングを見つけようとするための特別なパスを保持している。
@@ -14526,11 +14544,11 @@ RTL生成時に@code{adddi3}と@code{subdi3}を@code{add.f}、@code{adc}など�
 
 @item -mlra-priority-compact
 @opindex mlra-priority-compact
-r0..r3 / r12 .. r15のターゲットレジスタ優先順位を示す。
+r0..r3 / r12..r15のターゲットレジスタ優先順位を示す。
 
 @item -mlra-priority-noncompact
 @opindex mlra-priority-noncompact
-r0..r3 / r12 .. r15のターゲットレジスタ優先順位を減じる。
+r0..r3 / r12..r15のターゲットレジスタ優先順位を減じる。
 
 @item -mmillicode
 @opindex mmillicode
@@ -14758,7 +14776,7 @@ FPU固有の呼び出し規約を使う。
 
 デフォルトは特定のターゲット設定に依存する。ハード浮動小数点とソフト浮動小数点のABI
 はリンク互換でないことに注意する。全プログラムを同じABIで、コンパイルし、
-五感のあるライブラリの集合とリンクしなければならない。
+互換のあるライブラリの集合とリンクしなければならない。
 
 @item -mgeneral-regs-only
 @opindex mgeneral-regs-only
@@ -14845,6 +14863,12 @@ ARMv7-A、ARMv7-R、ARMv7-Mアーキテクチャの共通部分集合。
 @table @samp
 @item +fp
 16の倍精度レジスタを持つVFPv3浮動小数点命令。 拡張@samp{+vfpv3-d16}は、この拡張の別名として使用できる。 
+
+@item +sec
+セキュリティ拡張。
+
+@item +fp
+16個の倍精度レジスタを備えたVFPv3浮動小数点命令。 拡張@samp{+vfpv3-d16}は、この拡張のエイリアスとして使用できます。
 
 @item +simd
 Advanced SIMD (Neon) v1とVFPv3浮動小数点命令。拡張@samp{+neon}と@samp{+neon-vfpv3}はこの命令の別名として使用できる。
@@ -15044,12 +15068,6 @@ ARMv8.1-A Advanced SIMDと浮動小数点命令に加えて内積拡張。
 @item +nofp
 浮動小数点数、Advanced SIMD、暗号命令を無効化する。
 
-@item +sb
-投機バリア命令。
-
-@item +predres
-実行およびデータ予測制限命令。
-
 @item +i8mm
 8ビット整数行列乗算命令。
 これにより、Advanced SIMDおよび浮動小数点命令も有効になります。
@@ -15075,12 +15093,6 @@ ARMv8.1-A Advanced SIMDと浮動小数点命令に加えて内積拡張。
 
 @item +nofp
 浮動小数点数、Advanced SIMD、暗号命令を無効化する。
-
-@item +sb
-投機バリア命令。
-
-@item +predres
-実行およびデータ予測制限命令。
 
 @item +i8mm
 8ビット整数行列乗算命令。
@@ -15216,16 +15228,17 @@ ARMv8-A Advanced SIMDと浮動小数点命令。
 @samp{cortex-a32}, @samp{cortex-a35}, @samp{cortex-a53}, @samp{cortex-a55},
 @samp{cortex-a57}, @samp{cortex-a72}, @samp{cortex-a73}, @samp{cortex-a75},
 @samp{cortex-a76}, @samp{cortex-a76ae}, @samp{cortex-a77},
+@samp{cortex-a78}, @samp{cortex-a78ae}, @samp{cortex-a78c},
 @samp{ares}, @samp{cortex-r4}, @samp{cortex-r4f},
 @samp{cortex-r5}, @samp{cortex-r7}, @samp{cortex-r8}, @samp{cortex-r52},
 @samp{cortex-m0}, @samp{cortex-m0plus}, @samp{cortex-m1}, @samp{cortex-m3},
 @samp{cortex-m4}, @samp{cortex-m7}, @samp{cortex-m23}, @samp{cortex-m33},
-@samp{cortex-m35p}, @samp{cortex-m55},
+@samp{cortex-m35p}, @samp{cortex-m55}, @samp{cortex-x1},
 @samp{cortex-m1.small-multiply}, @samp{cortex-m0.small-multiply},
 @samp{cortex-m0plus.small-multiply}, @samp{exynos-m1}, @samp{marvell-pj4},
-@samp{neoverse-n1}, @samp{xscale}, @samp{iwmmxt}, @samp{iwmmxt2},
-@samp{ep9312}, @samp{fa526}, @samp{fa626}, @samp{fa606te}, @samp{fa626te},
-@samp{fmp626}, @samp{fa726te}, @samp{xgene1}.
+@samp{neoverse-n1}, @samp{neoverse-n2}, @samp{neoverse-v1}, @samp{xscale},
+@samp{iwmmxt}, @samp{iwmmxt2}, @samp{ep9312}, @samp{fa526}, @samp{fa626},
+@samp{fa606te}, @samp{fa626te}, @samp{fmp626}, @samp{fa726te}, @samp{xgene1}.
 
 それに加えて、このオプションはGCCがbig.LITTLEシステム用のコードのパフォーマンスを調整すべきかを指定することができる。
 可能な名前は以下である：
@@ -15240,7 +15253,7 @@ ARMv8-A Advanced SIMDと浮動小数点命令。
 他のCPUのパフォーマンスの落とし穴を避けることである。このオプションの効果はCPUモデルが出入りするごとに
 将来のGCCバージョンでは変化するかもしれない。
 
-@option{-mtune}は@option {-mcpu}と同じ拡張オプションを許可するが、拡張オプションは生成されたコードのチューニングに影響しない。
+@option{-mtune}は@option{-mcpu}と同じ拡張オプションを許可するが、拡張オプションは生成されたコードのチューニングに影響しない。
  
 @option{-mtune=native}はコンパイラにCPUを自動検出させる。現在は、この機能はGNU/Linuxでのみサポートされていて、
 すべてのアーキテクチャで認識されるわけではない。もし自動検出が不成功ならばこのオプションはなんの効果もない。
@@ -15264,18 +15277,11 @@ ARMv8-A Advanced SIMDと浮動小数点命令。
 @table @samp
 @item +nodsp
 @samp{cortex-m33}, @samp{cortex-m35p}での@samp{cortex-m33}のDSP命令を無効にする。
-+ 
+
 @item  +nofp
-@samp{arm9e},
-@samp{arm946e-s}, @samp{arm966e-s}, @samp{arm968e-s}, @samp{arm10e},
-@samp{arm1020e}, @samp{arm1022e}, @samp{arm926ej-s},
-@samp{arm1026ej-s}, @samp{cortex-r5}, @samp{cortex-r7}, @samp{cortex-r8},
-@samp{cortex-m4}, @samp{cortex-m7}, @samp{cortex-m33}, @samp{cortex-m35p}における浮動小数点命令を無効にする。
-@samp{generic-armv7-a}, @samp{cortex-a5}, @samp{cortex-a7},
-@samp{cortex-a8}, @samp{cortex-a9}, @samp{cortex-a12},
-@samp{cortex-a15}, @samp{cortex-a17}, @samp{cortex-a15.cortex-a7},
-@samp{cortex-a17.cortex-a7}, @samp{cortex-a32}, @samp{cortex-a35},
-@samp{cortex-a53},@samp{cortex-a55}, @samp{cortex-m55}における浮動小数点とSIMD命令を無効にする。
+@samp{arm9e}、@samp{arm946e-s}、@samp{arm966e-s}、@samp{arm968e-s}、@samp{arm10e}、@samp{arm1020e}、@samp{arm1022e}、@samp{arm926ej-s}、@samp{arm1026ej-s}、@samp{cortex-r5}、@samp{cortex-r7}、@samp{cortex-r8}、@samp{cortex-m4}、@samp{cortex-m7}、@samp{cortex-m33}、および@samp{cortex-m35p}の浮動小数点命令を無効にします。
+
+@samp{generic-armv7-a}、@samp{cortex-a5}、@samp{cortex-a7}、@samp{cortex-a8}、@samp{cortex-a9}、@samp{cortex-a12}、@samp{cortex-a15}、@samp{cortex-a17}、@samp{cortex-a15.cortex-a7}、@samp{cortex-a17.cortex-a7}、@samp{cortex-a32}、@samp{cortex-a35}、@samp{cortex-a53}、および@samp{cortex-a55}の浮動小数点およびSIMD命令を無効にします 。
 
 @item +nofp.dp
 @samp{cortex-r5}, @samp{cortex-r7}, @samp{cortex-r8}, @samp{cortex-r52},
@@ -15333,7 +15339,7 @@ ARMv8-A Advanced SIMDと浮動小数点命令。
 
 @item -mstructure-size-boundary=@var{n}
 @opindex mstructure-size-boundary
-全構造体と黄道帯はこのオプションによってセットされたビットの数の倍数に丸められる。
+全構造体と共用体はこのオプションによってセットされたビットの数の倍数に丸められる。
 可能な値は8，32, 64である。デフォルト値はツールチェーンで異なる。COFFターゲットのツールチェーンでは
 デフォルト値は8であり。もし基準となるABIがサポートするならばその場合だけ64の値が許される。
 
@@ -15370,14 +15376,13 @@ ARMv8-A Advanced SIMDと浮動小数点命令。
 @item -msingle-pic-base
 @opindex msingle-pic-base
 PICアドレス計算に使われるレジスタを、それぞれの関数のプロローグでロードされるのではなく、
-読み取り専用として扱う。ランタイムシステムは実行が始まるまえにこのレジスタを適切な値で初期化する
-責任がある。
+読み取り専用として扱う。ランタイムシステムは実行が始まるまえにこのレジスタを適切な値で初期化する責任がある。
 
 @item -mpic-register=@var{reg}
 @opindex mpic-register
 PICアドレス計算で使われるレジスタを指定する。標準のPICベースの場合には、デフォルトは
 コンパイラによって決定される任意の適切なレジスタである。単一のPICベースの場合には、
-もしEABIベースであるか、スタックチェックが有効ならば、＠samp{R9}であり、
+もしEABIベースであるか、スタックチェックが有効ならば、@samp{R9}であり、
 さもなければデフォルトは@samp{R10}である。
 
 @item -mpic-data-is-text-relative
@@ -15389,8 +15394,7 @@ VxWorksRTP以外のターゲットではデフォルトでオンである。 こ
 
 @item -mpoke-function-name
 @opindex mpoke-function-name
-それぞれの関数の名前をテキストセクションに、関数プロローグの直前に書く。生成されるコードは
-これのようになる。
+それぞれの関数の名前をテキストセクションに、関数プロローグの直前に書く。生成されるコードはこれのようになる。
 
 @smallexample
      t0
@@ -15404,7 +15408,7 @@ VxWorksRTP以外のターゲットではデフォルトでオンである。 こ
          sub     fp, ip, #4
 @end smallexample
 
-スタックバックトレースを実行すると金費、コードは@code{fp+0}に格納された@code{pc}の値を検査することができる。
+スタックバックトレースを実行すると金費、コードは@code{fp + 0}に格納された@code{pc}の値を検査することができる。
 もしその時トレース関数が場所@code{pc-12}を見て最初の8ビットがセットされているならば、
 この場所の直前に関数名が埋め込まれていてその長さが@code{((pc[-3]) & 0xff000000)}であることがわかる。
 
@@ -15658,7 +15662,7 @@ sbiw r26, const   ; X -= const
 
 @item -nodevicelib
 @opindex nodevicelib
-AVR-LibCのデバイス固有ライブラリ@code{lib <mcu> .a}にはリンクしない。
+AVR-LibCのデバイス固有ライブラリ@code{lib<mcu>.a}にはリンクしない。
 
 @item -nodevicespecs
 @opindex nodevicespecs
@@ -15703,14 +15707,14 @@ ISRのスペルが間違っている場合、つまり__vectorプレフィック
 すべての状況でリンカがスタブを正しく生成できるように、リンカの緩和をオンにする必要がある。 コンパイラオプション@option{-mrelax}とリンカオプション@option{--relax}を参照せよ。リンカがスタブを生成するが、緩和せずに役立つエラーメッセージが表示されずに終了する特殊な状況がある。
 
 @item
-デフォルトのリンカースクリプトは、@code{EIND = 0}のコード用に配置されている。コードが@code{EIND！= 0}で設定されている場合、カスタムリンカースクリプトを使用して、@code {.trampolines}で始まるセクションを@code{ EIND}が指し示す。
+デフォルトのリンカースクリプトは、@code{EIND = 0}のコード用に配置されている。コードが@code{EIND != 0}で設定されている場合、カスタムリンカースクリプトを使用して、@code{.trampolines}で始まるセクションを@code{EIND}が指し示す。
 
 @item
-libgccの起動コードは@code {EIND}を設定しない。起動コードは、libgccとAVR-LibCのコードの組み合わせであることに注意せよ。AVR-LibCが@code {EIND}に与える影響については、
+libgccの起動コードは@code{EIND}を設定しない。起動コードは、libgccとAVR-LibCのコードの組み合わせであることに注意せよ。AVR-LibCが@code{EIND}に与える影響については、
 @w{@uref{http://nongnu.org/avr-libc/user-manual/,AVR-LibC user manual}}を見よ
 
 @item
-@code {.init3}セクションにある初期化コードなどを使用して、@code{EIND}を早期に設定することは、ユーザー固有のスタートアップコードにとって正当である。 このようなコードは、RAMを初期化してコンストラクタを呼び出す一般的な起動コードの前に実行されるが、AVR-LibCの起動コードのビットの後に、@code{EIND}をベクトルテーブルがあるセグメントに設定する
+@code{.init3}セクションにある初期化コードなどを使用して、@code{EIND}を早期に設定することは、ユーザー固有のスタートアップコードにとって正当である。 このようなコードは、RAMを初期化してコンストラクタを呼び出す一般的な起動コードの前に実行されるが、AVR-LibCの起動コードのビットの後に、@code{EIND}をベクトルテーブルがあるセグメントに設定する
 @example
 #include <avr/io.h>
 
@@ -15827,9 +15831,9 @@ GCCは、ユーザーコードが機能の有無をテストできるように�
 @var{mcu}がデバイスを指定する場合、この組み込みマクロはそれに応じて設定される。 たとえば、@option{-mmcu=atmega8}の場合、マクロは@code {4}に定義される。
 
 @item __AVR_@var{Device}__
-@option{-mmcu=@var{device}}を設定すると、この組み込みマクロが定義され、デバイスの名前が反映される。 たとえば、@option{-mmcu=atmega8}は組み込みマクロ@code{__ AVR_ATmega8__}を定義し、@option{-mmcu=attiny261a}は@code{__ AVR_ATtiny261A__}などを定義する。
+@option{-mmcu=@var{device}}を設定すると、この組み込みマクロが定義され、デバイスの名前が反映される。 たとえば、@option{-mmcu=atmega8}は組み込みマクロ@code{__AVR_ATmega8__}を定義し、@option{-mmcu=attiny261a}は@code{__AVR_ATtiny261A__}などを定義する。
 
-組み込みマクロの名前は、@code{__ AVR_@var{Device}__}というスキームに従う。ここで、@var{Device}はAVRユーザーマニュアルのデバイス名である。 組み込みマクロの@var{Device}と@option{-mmcu=@var{device}}の@var{device}の違いは、後者は常に小文字であることである。
+組み込みマクロの名前は、@code{__AVR_@var{Device}__}というスキームに従う。ここで、@var{Device}はAVRユーザーマニュアルのデバイス名である。 組み込みマクロの@var{Device}と@option{-mmcu=@var{device}}の@var{device}の違いは、後者は常に小文字であることである。
 
 @var{device}がデバイスではなく、@samp{avr51}のようなコアアーキテクチャのみである場合、このマクロは定義されていない。
 
@@ -15899,22 +15903,22 @@ GCCは、ユーザーコードが機能の有無をテストできるように�
 @option {-mshort-calls}コマンドラインオプションが設定されています。
 
 @item __AVR_PM_BASE_ADDRESS__=@var{addr}
-一部のデバイスは、@code{LD *}命令によるフラッシュメモリからの読み取りをサポートしています。 フラッシュメモリは、@code{__AVR_PM_BASE_ADDRESS__}のオフセットでデータアドレス空間に表示されます。 このマクロが定義されていない場合、この機能は使用できません。 定義されている場合、アドレス空間は線形であり、@code{.rodata}をRAMに配置する必要はありません。 これはデフォルトのリンカ記述ファイルによって処理され、現在@code{avrtiny}および@code{avrxmega3}で使用できます。 さらに便利なのは、@code{__flash}のようなアドレス空間や、属性@code{progmem}や@code{pgm_read_ *}のような機能を使用する必要がないことです。
+一部のデバイスは、@code{LD *}命令によるフラッシュメモリからの読み取りをサポートしています。 フラッシュメモリは、@code{__AVR_PM_BASE_ADDRESS__}のオフセットでデータアドレス空間に表示されます。 このマクロが定義されていない場合、この機能は使用できません。 定義されている場合、アドレス空間は線形であり、@code{.rodata}をRAMに配置する必要はありません。 これはデフォルトのリンカ記述ファイルによって処理され、現在@code{avrtiny}および@code{avrxmega3}で使用できます。 さらに便利なのは、@code{__flash}のようなアドレス空間や、属性@code{progmem}や@code{pgm_read_*}のような機能を使用する必要がないことです。
 
 @item __WITH_AVRLIBC__
 コンパイラは、AVR-Libcと一緒に使用するように構成されています。
 @option{-with-avrlibc}設定オプションを参照せよ。
 
 @item __HAVE_DOUBLE_MULTILIB__
-@option{-mdouble =}がmultilibオプションとして機能する場合に定義されます。
+@option{-mdouble=}がmultilibオプションとして機能する場合に定義されます。
 
 @item __HAVE_DOUBLE32__
 @itemx __HAVE_DOUBLE64__
 コンパイラがそれぞれ、32ビット、64ビットのdoubleをサポートするかどうかを定義します。
-実際のレイアウトはオプション@option {-mdouble=}で指定されます。
+実際のレイアウトはオプション@option{-mdouble=}で指定されます。
 
 @item __DEFAULT_DOUBLE__
-@option {-mdouble =}が設定されていない場合の@code {double}のビットサイズ。 プログラムで@code {double}のレイアウトをテストするには、組み込みマクロ@code{__SIZEOF_DOUBLE__}を使用します。
+@option{-mdouble=}が設定されていない場合の@code{double}のビットサイズ。 プログラムで@code{double}のレイアウトをテストするには、組み込みマクロ@code{__SIZEOF_DOUBLE__}を使用します。
 
 @item __HAVE_LONG_DOUBLE32__
 @itemx __HAVE_LONG_DOUBLE64__
@@ -15980,12 +15984,12 @@ GCCは、指定された@var{cpu}のプリプロセッサマクロを定義す�
 @opindex mno-csync-anomaly
 条件分岐後にCSYNCまたはSSYNC命令があまりに早く発生するのを防ぐための余分なコードを生成しない。
 
-@item -mlow-64k
-@opindex mlow-64k
+@item -mlow64k
+@opindex mlow64k
 有効にすると、コンパイラは、プログラム全体が低メモリ64kに収まるという知識を自由に利用できる。
 
-@item -mno-low-64k
-@opindex mno-low-64k
+@item -mno-low64k
+@opindex mno-low64k
 プログラムが任意に大きいと仮定する。 これがデフォルトである。
 
 @item -mstack-check-l1
@@ -16275,6 +16279,14 @@ C-SKYターゲットプロセッサを指定します。 @var {cpu}の有効な�
 
 ビッグエンディアンコードまたはリトルエンディアンコードを選択します。 デフォルトはリトルエンディアンです。
 
+@item -mfloat-abi=@var{name}
+@opindex mfloat-abi
+使用する浮動小数点ABIを指定します。 許容値は、@samp{soft}、@samp{softfp}、および@samp{hard}です。
+
+@samp{soft}を指定すると、GCCは浮動小数点演算のライブラリ呼び出しを含む出力を生成します。 @samp{softfp}を使用すると、ハードウェア浮動小数点命令を使用してコードを生成できますが、それでもソフト浮動小数点呼び出し規約を使用します。 @samp{hard}は、浮動小数点命令の生成を可能にし、FPU固有の呼び出し規約を使用します。
+
+デフォルトは、特定のターゲット構成によって異なります。 ハードフロートとソフトフロートのABIはリンク互換ではないことに注意してください。 プログラム全体を同じABIでコンパイルし、互換性のあるライブラリのセットとリンクする必要があります。
+
 @item -mhard-float
 @opindex mhard-float
 @itemx -msoft-float
@@ -16285,7 +16297,7 @@ C-SKYターゲットプロセッサを指定します。 @var {cpu}の有効な�
 @item -mdouble-float
 @itemx -mno-double-float
 @opindex mdouble-float
-@option {-mhard-float}が有効な場合、倍精度浮動小数点命令の生成を有効にします。 これは、CK803用にコンパイルする場合を除いて、デフォルトです。
+@option{-mhard-float}が有効な場合、倍精度浮動小数点命令の生成を有効にします。 これは、CK803用にコンパイルする場合を除いて、デフォルトです。
 
 @item -mfdivdu
 @itemx -mno-fdivdu
@@ -16443,7 +16455,7 @@ Darwinのツールは、ISAの不一致がある場合の動作が異なる。 �
 @opindex mone-byte-bool
 @code{sizeof(bool)=1}のように、@code{bool}のデフォルトを上書きする。デフォルトでは、Darwin/PowerPC用にコンパイルするときは@code{sizeof(bool)}は@code{4}、Darwin/x86用にコンパイルするときは@code{1}なので、このオプションはx86には影響しない。
 
-@strong{警告:} @option{--one-byte-bool}スイッチは、GCCに、そのスイッチなしで生成されたコードとバイナリ互換性のないコードを生成させる。 このスイッチを使用するには、システムライブラリを含むプログラム内の他のすべてのモジュールを再コンパイルする必要がある。 このスイッチを使用して、デフォルト以外のデータモデルに準拠させる。
+@strong{警告:} @option{-mone-byte-bool}スイッチは、GCCに、そのスイッチなしで生成されたコードとバイナリ互換性のないコードを生成させる。 このスイッチを使用するには、システムライブラリを含むプログラム内の他のすべてのモジュールを再コンパイルする必要がある。 このスイッチを使用して、デフォルト以外のデータモデルに準拠させる。
 
 @item -mfix-and-continue
 @itemx -ffix-and-continue
@@ -16650,7 +16662,7 @@ Alphaアーキテクチャは、パフォーマンスを最大限に高めるよ
 @samp{u}と似ているが、ソフトウェアの完了時に命令が安全であるとマークされる。（詳細はAlphaアーキテクチャのマニュアルを参照）。
 
 @item sui
-@samp {su}と似ていますが、不正確なトラップも有効である。
+@samp{su}と似ていますが、不正確なトラップも有効である。
 @end table
 
 @item -mfp-rounding-mode=@var{rounding-mode}
@@ -16833,6 +16845,13 @@ EV6としてスケジュールし、BWX、CIX、FIX、およびMAX拡張をサ�
 @item -mlittle-endian
 @opindex mlittle-endian
 リトルエンディアンターゲットのコードを生成します。 これがデフォルトです。
+@end table
+
+@item -mxbpf
+BPFの拡張バージョンのコードを生成します。これにより、BPFアーキテクチャによって課せられる制限の一部が緩和されます。
+@itemize @minus
+@item 関数の開始時と終了時に、呼び出し先が保存したレジスタをそれぞれ保存および復元します。
+@end itemize
 @end table
 
 @node FR30 Options
@@ -17787,33 +17806,33 @@ GCCはColdFireマイクロアーキテクチャ@var{uarch}のチューニング�
 @itemx -mc68000
 @opindex m68000
 @opindex mc68000
-68000の出力を生成する。これは、コンパイラが68000ベースのシステム用に構成されている場合のデフォルトである。 @option{-march = 68000}と同じである。
+68000の出力を生成する。これは、コンパイラが68000ベースのシステム用に構成されている場合のデフォルトである。 @option{-march=68000}と同じである。
 
 68008、68302、68306、68307、68322、68328、および68356を含む68000またはEC000コアを搭載したマイクロコントローラには、このオプションを使用する。
 
 @item -m68010
 @opindex m68010
-68010の出力を生成する。これは、コンパイラが68010ベースのシステム用に構成されている場合のデフォルトである。 @option{-march = 68010}と同等である。
+68010の出力を生成する。これは、コンパイラが68010ベースのシステム用に構成されている場合のデフォルトである。 @option{-march=68010}と同等である。
 
 @item -m68020
 @itemx -mc68020
 @opindex m68020
 @opindex mc68020
-68020の出力を生成する。これは、コンパイラが68020ベースのシステム用に構成されている場合のデフォルトである。 @option{-march = 68020}と同等である。
+68020の出力を生成する。これは、コンパイラが68020ベースのシステム用に構成されている場合のデフォルトである。 @option{-march=68020}と同等である。
 
 @item -m68030
 @opindex m68030
-68030の出力を生成する。これは、コンパイラが68030ベースのシステム用に構成されている場合のデフォルトである。 @option{-march = 68030}と同等である。
+68030の出力を生成する。これは、コンパイラが68030ベースのシステム用に構成されている場合のデフォルトである。 @option{-march=68030}と同等である。
 
 @item -m68040
 @opindex m68040
-68040の出力を生成する。これは、コンパイラが68040ベースのシステム用に構成されている場合のデフォルトである。 @option{-march = 68040}と同等です。
+68040の出力を生成する。これは、コンパイラが68040ベースのシステム用に構成されている場合のデフォルトである。 @option{-march=68040}と同等です。
 
 このオプションは、68040のソフトウェアでエミュレートする必要がある68881/68882命令の使用を禁止する。68040にこれらの命令をエミュレートするコードがない場合は、このオプションを使用する。
 
 @item -m68060
 @opindex m68060
-68060の出力を生成する。これは、コンパイラが68060ベースのシステム用に構成されている場合のデフォルトである。 @option{-march = 68060}と同等である。
+68060の出力を生成する。これは、コンパイラが68060ベースのシステム用に構成されている場合のデフォルトである。 @option{-march=68060}と同等である。
 
 このオプションは、68060のソフトウェアでエミュレートする必要のある68020および68881/68882命令の使用を禁止する。68060にこれらの命令をエミュレートするコードがない場合は、このオプションを使用する。
 
@@ -17865,7 +17884,7 @@ ColdFire V4e族CPU用（例えば547x/548x）の出力を生成する。この�
 @itemx -m68881
 @opindex mhard-float
 @opindex m68881
-浮動小数点命令を生成する。 これは、68020以上の場合、およびFPUがあるColdFireデバイスの場合はデフォルトである。 これは、M680x0ターゲットでマクロ@code{__ HAVE_68881__}、ColdFireターゲットで@code{__ mcffpu__}を定義する。
+浮動小数点命令を生成する。 これは、68020以上の場合、およびFPUがあるColdFireデバイスの場合はデフォルトである。 これは、M680x0ターゲットでマクロ@code{__HAVE_68881__}、ColdFireターゲットで@code{__mcffpu__}を定義する。
 
 @item -msoft-float
 @opindex msoft-float
@@ -17922,7 +17941,6 @@ GCCが@code{int}、@code{long}、@code{long long}、@code{float}、@code{double}
 
 @strong{警告：} @option{-malign-int}スイッチを使用すると、GCCは、上記の型を含む構造体を、m68kの公開アプリケーションバイナリインタフェース仕様とは異なる方法で整列する。
 
-@item -mpcrel
 @opindex mpcrel
 グローバルオフセットテーブルを使用する代わりに、68000のpc相対アドレッシングモードを直接使用する。 現在のところ、このオプションは@option{-fpic}を意味し、PC相対アドレッシングでは最大16ビットのオフセットが可能である。 @option{-fPIC}は現在、@option{-mpcrel}でサポートされていないが、これは68020以上のプロセッサでサポートされる可能性がある。
 
@@ -18260,6 +18278,10 @@ GP相対の@code{.sdata}/@code{.sbss}セクションを使用する。
 @item executable
 通常の実行ファイル（デフォルト）、スタートアップコード@file{crt0.o}を使う。
 
+@item -mpic-data-is-text-relative
+@opindex mpic-data-is-text-relative
+テキストセグメントとデータセグメント間の変位が静的リンク時に固定されていると仮定します。 これにより、PC相対アドレス指定がサポートされていないため、GOTではなくテキストアドレスの先頭からのオフセットでデータを参照できます。
+
 @item xmdstub
 xmdstubと呼ばれるザイリンクスマイクロプロセッサデバッガ（XMD）ベースのソフトウェア侵入型デバッグエージェントで使用できる。これは、スタートアップファイル@file{crt1.o}を使用し、プログラムの開始アドレスを0x800に設定する。
 
@@ -18324,13 +18346,13 @@ MicroBlazeベクタを必要としないアプリケーション向け。 この
 @samp{xlr}, @samp{xlp}.
 特別な値@samp{from-abi}は、選択されたABI（つまり、32ビットABIでは@samp{mips1}、64ビットABIでは@samp{mips3}）に対して最も互換性の高いアーキテクチャを選択する。
 
-ネイティブのLinux/GNUツールチェーンは、@samp{native}という値もサポートしている。これは、ホストプロセッサに最適なアーキテクチャオプションを選択する。gccがプロセッサを認識しない場合、@option{-march = native}は効果がない。
+ネイティブのLinux/GNUツールチェーンは、@samp{native}という値もサポートしている。これは、ホストプロセッサに最適なアーキテクチャオプションを選択する。gccがプロセッサを認識しない場合、@option{-march=native}は効果がない。
 
-プロセッサ名では、最終的な@samp{000}を@samp{k}と省略することができる（たとえば、@option{-march = r2k}）。 接頭辞はオプションで、@samp {vr}は@samp{r}と書くことができる。
+プロセッサ名では、最終的な@samp{000}を@samp{k}と省略することができる（たとえば、@option{-march=r2k}）。 接頭辞はオプションで、@samp{vr}は@samp{r}と書くことができる。
 
 @samp{@var{n}f2_1}という形式の名前は、コアの半分の速度でクロックされるFPUを持つプロセッサを指し、@samp{@var{n}f1_1}形式の名前は、コアと同じ速度でクロックされるFPUを持つプロセッサを指し、@samp{@var{n}f3_2}の形式の名前は、コアに対してFPUが3：2でクロックされているプロセッサを指す。互換性のため、@samp{@var{n}f}は@samp{@var{n}f2_1}の同義語として受け入れられ、@samp{@var{n}x}と@samp{@var{fx}}は@samp{@var{n}f1_1}の同義語として受け入れられる。
 
-GCCは、このオプションの値に基づいて2つのマクロを定義する。最初は@code{_MIPS_ARCH}で、ターゲットアーキテクチャの名前を文字列で示す。2番目の形式は@code{_MIPS_ARCH_@var{foo}}の形式で、ここで@var{foo}は@code{_MIPS_ARCH}の大文字の値である。たとえば、@option{-march = r2000}は@code{_MIPS_ARCH}を@code{"r2000"}に設定し、マクロ@code{_MIPS_ARCH_R2000}を定義する。
+GCCは、このオプションの値に基づいて2つのマクロを定義する。最初は@code{_MIPS_ARCH}で、ターゲットアーキテクチャの名前を文字列で示す。2番目の形式は@code{_MIPS_ARCH_@var{foo}}の形式で、ここで@var{foo}は@code{_MIPS_ARCH}の大文字の値である。たとえば、@option{-march=r2000}は@code{_MIPS_ARCH}を@code{"r2000"}に設定し、マクロ@code{_MIPS_ARCH_R2000}を定義する。
 
 @code {_MIPS_ARCH}マクロは、上記のプロセッサ名を使用することに注意せよ。つまり、完全な接頭辞を持ち、@samp{000}を@samp{k}と省略しない。@samp{from-abi}の場合、マクロは解決されたアーキテクチャ（@code{"mips1"}または@code{"mips3"}）に名前を付けます。それは@option{-march}オプションが指定されていない場合のデフォルトアーキテクチャに名前を与える。
 
@@ -18464,7 +18486,6 @@ SVR4スタイルの動的オブジェクトに適したコードを生成する�
 @opindex mplt
 @opindex mno-plt
 静的リンカーと動的リンカーがPLTとコピーの再配置をサポートしていると仮定する（しない）。 このオプションは@option{-mno-shared -mabicalls}にのみ影響する。 n64 ABIの場合、このオプションは@option{-msym32}なしでは効果がない。
-
 
 @option{-with-mips-plt}でGCCを構成することで、@option{-mplt}をデフォルトにすることができる。デフォルトは、@option{-mno-plt}である。
 
@@ -18640,6 +18661,36 @@ MIPS仮想化(VZ)命令を使用する（しない）。
 @opindex mno-xpa
 MIPS拡張物理アドレス（XPA）命令を使用する（しない）。
 
+@item -mcrc
+@itemx -mno-crc
+@opindex mcrc
+@opindex mno-crc
+MIPS巡回冗長検査（CRC）命令を使用します（しません）。
+
+@item -mginv
+@itemx -mno-ginv
+@opindex mginv
+@opindex mno-ginv
+MIPSグローバルINValidate（GINV）命令を使用します（しません）。
+
+@item -mloongson-mmi
+@itemx -mno-loongson-mmi
+@opindex mloongson-mmi
+@opindex mno-loongson-mmi
+MIPS Loongson MultiMedia Extensions Instructions（MMI）を使用します（しません）。
+
+@item -mloongson-ext
+@itemx -mno-loongson-ext
+@opindex mloongson-ext
+@opindex mno-loongson-ext
+MIPS Loongson EXTensions（EXT）命令を使用します（しません）。
+
+@item -mloongson-ext2
+@itemx -mno-loongson-ext2
+@opindex mloongson-ext2
+@opindex mno-loongson-ext2
+MIPS Loongson EXTensions r2（EXT2）命令を使用する（しません）。
+
 @item -mlong64
 @opindex mlong64
 @code{long}型を64ビット長に強制する。デフォルトの説明とポインタサイズの決定方法は
@@ -18722,7 +18773,7 @@ MIPS16 PC相対ロード命令は実行可能セクションにアクセスで�
 @itemx -mno-split-addresses
 @opindex msplit-addresses
 @opindex mno-split-addresses
-@code{％hi()}および@code{％lo()}アセンブラ再配置演算子の使用を有効（無効）化する。 このオプションは@option{-mexplicit-relocs}に取って代わられたが、下位互換性のために残されている。
+@code{%hi()}および@code{%lo()}アセンブラ再配置演算子の使用を有効（無効）化する。 このオプションは@option{-mexplicit-relocs}に取って代わられたが、下位互換性のために残されている。
 
 @item -mexplicit-relocs
 @itemx -mno-explicit-relocs
@@ -18833,7 +18884,12 @@ MIPSアセンブラにアセンブラを実行する前に、ユーザ・アセ�
 @code{ll}/@code{sc}シーケンスは、3.0より前のリビジョンではアトミックに動作しない。 2.6以前のリビジョンではデッドロックする可能性がある。
 @end itemize
 
-このオプションは、ターゲットアーキテクチャが分岐予測命令をサポートしている場合にのみ使用できる。 @option{-march = r10000}を使用すると、@option{-mfix-r10000}がデフォルトである。 そうでない場合、@option{-mno-fix-r10000}がデフォルトである。
+このオプションは、ターゲットアーキテクチャが分岐予測命令をサポートしている場合にのみ使用できる。 @option{-march=r10000}を使用すると、@option{-mfix-r10000}がデフォルトである。 そうでない場合、@option{-mno-fix-r10000}がデフォルトである。
+
+@item -mfix-r5900
+@itemx -mno-fix-r5900
+@opindex mfix-r5900
+6命令以下の短いループの最後に配置された分岐命令の遅延スロットに先行する命令をスケジュールしようとしないでください。代わりに、常に@code{nop}命令をスケジュールしてください。 R5900チップのハードウェアのバグが原因で、特定の条件下での短いループのバグにより、ループが1回または2回だけ実行されます。 回避策は、GCC @ではなくアセンブラによって実装されます。
 
 @item -mfix-rm7000
 @itemx -mno-fix-rm7000
@@ -18910,7 +18966,7 @@ void foo (void);
 @item -mflush-func=@var{func}
 @itemx -mno-flush-func
 @opindex mflush-func
-IおよびDキャッシュをフラッシュするために呼ぶ関数を指定するか、またはそのような関数を呼び出さないように指定する。 呼び出された場合、関数は共通の@code{_flush_func}と同じ引数、つまりキャッシュがフラッシュされるメモリ範囲のアドレス、メモリ範囲のサイズ、 両方のキャッシュ）。 デフォルトはターゲットGCCが設定されているかどうかによって異なるが、通常は@code{_flush_func}または@code{__ cpu_flush}である。
+IおよびDキャッシュをフラッシュするために呼ぶ関数を指定するか、またはそのような関数を呼び出さないように指定する。 呼び出された場合、関数は共通の@code{_flush_func}と同じ引数、つまりキャッシュがフラッシュされるメモリ範囲のアドレス、メモリ範囲のサイズ、 両方のキャッシュ）。 デフォルトはターゲットGCCが設定されているかどうかによって異なるが、通常は@code{_flush_func}または@code{__cpu_flush}である。
 
 @item mbranch-cost=@var{num}
 @opindex mbranch-cost
@@ -18920,7 +18976,6 @@ IおよびDキャッシュをフラッシュするために呼ぶ関数を指定
 @itemx -mno-branch-likely
 @opindex mbranch-likely
 @opindex mno-branch-likely
-
 選択したアーキテクチャのデフォルトにかかわらず、分岐可能命令の使用を有効または無効にする。 デフォルトでは、選択されたアーキテクチャでサポートされている場合、分岐可能命令が生成されることがある。これらのアーキテクチャを実装するMIPS32およびMIPS64アーキテクチャとプロセッサは例外である。 MIPS32およびMIPS64アーキテクチャは特にその使用を非推奨にするため、分岐可能命令はデフォルトで生成されない
 
 @item -mcompact-branches=never
@@ -18932,7 +18987,7 @@ IおよびDキャッシュをフラッシュするために呼ぶ関数を指定
 これらのオプションは、生成される分岐の形式を制御する。 デフォルトは@option{-mcompact-branches=optimal}である。
 
 @option{-mcompact-branches=never}オプションはコンパクトブランチ命令が生成されることがないことを保証する。
-@option {-mcompact-branches = always}オプションを指定すると、使用可能なコンパクトブランチ命令が生成される。 コンパクト分岐命令が利用可能でない場合、代わりに分岐の遅延スロット形式が使用される。
+@option{-mcompact-branches=always}オプションを指定すると、使用可能なコンパクトブランチ命令が生成される。 コンパクト分岐命令が利用可能でない場合、代わりに分岐の遅延スロット形式が使用される。
 
 このオプションは、MIPSリリース6以降でサポートされている。
 
@@ -19649,6 +19704,10 @@ Newlibではなく、Cライブラリの制限されたバージョンである@
 @opindex m64
 32ビットまたは64ビットABI用のコードを生成する。
 
+@item -misa=@var{ISA-string}
+@opindex march
+指定されたPTXISAのコードを生成します（例：@samp{sm_35}）。 ISA文字列は小文字である必要があります。 有効なISA文字列には、@samp{sm_30}と@samp{sm_35}が含まれます。 デフォルトのISAはsm_35です。
+
 @item -mmainkernel
 @opindex mmainkernel
 __mainカーネルのコードをリンクする。 これは、オフロード実行ではなくスタンドアロン用である。
@@ -19659,11 +19718,11 @@ __mainカーネルのコードをリンクする。 これは、オフロード�
 
 @item -msoft-stack
 @opindex msoft-stack
-スタック格納のために@code{.local}メモリを直接使用しないコードを生成する。 代わりに、ワープごとのスタックポインタが明示的に保持される。 これにより、可変長配列の割り当て（可変長配列または@code {alloca}）が可能になる。グローバルメモリを基になるストレージに使用すると、他のスレッドやアトミック命令から自動変数にアクセスすることができる。 このコード生成バリアントはOpenMPオフロードに使用されるが、オプションはコンパイラをテストするために単独で公開されている。 OpenMPオフロードを使用してプログラムにリンクするのに適したコードを生成するには、オプション@option{-mgomp}を使用する。
+スタック格納のために@code{.local}メモリを直接使用しないコードを生成する。 代わりに、ワープごとのスタックポインタが明示的に保持される。 これにより、可変長配列の割り当て（可変長配列または@code{alloca}）が可能になる。グローバルメモリを基になるストレージに使用すると、他のスレッドやアトミック命令から自動変数にアクセスすることができる。 このコード生成バリアントはOpenMPオフロードに使用されるが、オプションはコンパイラをテストするために単独で公開されている。 OpenMPオフロードを使用してプログラムにリンクするのに適したコードを生成するには、オプション@option{-mgomp}を使用する。
 
 @item -muniform-simt
 @opindex muniform-simt
-あたかも1つのスレッドしかOpenMP SIMD領域外でアクティブであるかのようにメモリ状態と副作用を維持しながら、各ワープ内のすべてのスレッドを実行できるコード生成バリアントに切り替える。 すべてのアトミック操作とランタイム呼び出し（malloc、free、vprintf）は条件付きで実行される（現在のレーンインデックスがマスタレーンインデックスと等しい場合）。割り当てられるレジスタはマスターレーンからのシャッフル命令によってコピーされる。 SIMD領域の外側では、レーン0がマスタである。 内部では、各スレッドはマスターとして自分自身を見る。 共有メモリ配列@code{int __nvptx_uni []}は、現在のモード（SIMD領域外の0）を示す、各ワープのすべて0またはすべて1のビットマスクを格納する。 各スレッドはビットごとに、ビットマップは@code{tid.y}にあり、現在のレーンインデックスでマスターレーンインデックスを計算できる。
+あたかも1つのスレッドしかOpenMP SIMD領域外でアクティブであるかのようにメモリ状態と副作用を維持しながら、各ワープ内のすべてのスレッドを実行できるコード生成バリアントに切り替える。 すべてのアトミック操作とランタイム呼び出し（malloc、free、vprintf）は条件付きで実行される（現在のレーンインデックスがマスタレーンインデックスと等しい場合）。割り当てられるレジスタはマスターレーンからのシャッフル命令によってコピーされる。 SIMD領域の外側では、レーン0がマスタである。 内部では、各スレッドはマスターとして自分自身を見る。 共有メモリ配列@code{int __nvptx_uni[]}は、現在のモード（SIMD領域外の0）を示す、各ワープのすべて0またはすべて1のビットマスクを格納する。 各スレッドはビットごとに、ビットマップは@code{tid.y}にあり、現在のレーンインデックスでマスターレーンインデックスを計算できる。
 
 @item -mgomp
 @opindex mgomp
@@ -19824,7 +19883,7 @@ GNUアセンブラ構文を使用します。 これがデフォルトです。
 
 @option{-mae=MUL}はMUL AEタイプを選択する。 これは、コンパイルされたコードで最も有用なAEタイプであり、デフォルトである。
 
-@option {-mae=MAC}はDSPスタイルのMAC AEを選択する。 このオプションでコンパイルされたコードは、バイトA/D変換がバイトロード/ストアのハードウェアサポートを提供しないため、バイト（char）操作のパフォーマンスが低下する可能性がある。
+@option{-mae=MAC}はDSPスタイルのMAC AEを選択する。 このオプションでコンパイルされたコードは、バイトA/D変換がバイトロード/ストアのハードウェアサポートを提供しないため、バイト（char）操作のパフォーマンスが低下する可能性がある。
 
 @item -msymbol-as-address
 コンパイラがロード/ストア命令のアドレスとしてシンボル名を直接使用し、最初にレジスタにロードすることはないようにさせる。 通常、このオプションを使用するとより大きなプログラムが生成され、オプションを使用しない場合よりも速く実行される。 ただし、結果はプログラムによって異なるので、永続的に有効にするのではなく、ユーザーオプションとして残してある。
@@ -19857,7 +19916,7 @@ node PRU Options
 
 @item -mno-relax
 @opindex mno-relax
-GCCが@option {-relax}オプションの代わりに@option {-no-relax}コマンドラインオプションをリンカーに渡すようにします。
+GCCが@option{--relax}オプションの代わりに@option {-no-relax}コマンドラインオプションをリンカーに渡すようにします。
 
 @item -mloop
 @opindex mloop
@@ -19918,6 +19977,15 @@ PICコードを生成するときは、PLTを使用を許可・禁止する。�
 @opindex march
 与えられたRISC-V ISAのコードを生成する（@samp{rv64im}など）。 ISA文字列は小文字でなければならない。 例には、@samp{rv64i}、@samp{rv32g}、@samp{rv32imaf}がある。
 
+@option{-march=}が指定されていない場合は、@option{-mcpu}の設定を使用してください。
+
+@option{-march}と@option{-mcpu=}の両方が指定されていない場合、この引数のデフォルトはシステムに依存します。特定のアーキテクチャ拡張が必要なユーザーは、明示的に指定する必要があります。
+
+@item -mcpu=@var{processor-string}
+@opindex mcpu
+特定のCPU名で指定された特定のプロセッサのアーキテクチャを使用し、出力を最適化します。
+このオプションの許容値は、@samp{sifive-e20}、@samp{sifive-e21}、@samp{sifive-e24}、@samp{sifive-e31}、@samp{sifive-e34}、@samp{sifive-e76}、@samp{sifive-s21}、@samp{sifive-s51}、@samp{sifive-s54}、@samp{sifive-s76}、@samp{sifive-u54}、および@samp{sifive-u74}です。
+
 @item -mtune=@var{processor-string}
 @opindex mtune
 マイクロアーキテクチャー名で指定された特定のプロセッサーの出力を最適化します。 このオプションの許容値は、@samp{rocket}、@samp{sifive-3-series}、@samp{sifive-5-series}、@samp{sifive-7-series}、および@samp{size}です。
@@ -19940,6 +20008,11 @@ PICコードを生成するときは、PLTを使用を許可・禁止する。�
 @itemx -mno-save-restore
 @opindex msave-restore
 ライブラリー関数呼び出しを使用するより小さいがより遅いプロローグとエピローグのコードを使用するかしない。 デフォルトでは、高速インラインプロローグとエピローグを使用する。
+
+@item -mshorten-memrefs
+@itemx -mno-shorten-memrefs
+@opindex mshorten-memrefs
+'base register + large offset'のロード/ストアを 'new base + small offset'の新しいロード/ストアに置き換えることにより、圧縮されたロード/ストア命令をさらに利用しようとするかしないでください。 新しいベースが圧縮レジスタに格納される場合、新しいロード/ストアを圧縮できます。 現在、32ビット整数のロード/ストアのみを対象としています。
 
 @item -mstrict-align
 @itemx -mno-strict-align
@@ -19970,6 +20043,15 @@ ELFオブジェクトに追加情報を記録するためにRISC-V属性を放�
 @opindex malign-data
 GCCが配列、構造体、または共用体型の変数と定数を整列する方法を制御します。 @var{type}でサポートされる値は、xレジスタの幅をアライメント値として使用する@samp{xlen}と、ナチュラルアライメントを使用する@samp{natural}です。 @samp{xlen}がデフォルトです。
 
+@item -mstack-protector-guard=@var{guard}
+@itemx -mstack-protector-guard-reg=@var{reg}
+@itemx -mstack-protector-guard-offset=@var{offset}
+@opindex mstack-protector-guard
+@opindex mstack-protector-guard-reg
+@opindex mstack-protector-guard-offset
+@var{guard}でカナリアを使用してスタック保護コードを生成します。 サポートされている場所は、グローバルカナリアの場合は@samp{global}、TLSブロックのスレッドごとのカナリアの場合は@samp{tls}です。
+
+後者の選択では、オプション@option{-mstack-protector-guard-reg=@var{reg}}および@option{-mstack-protector-guard-offset=@var{offset}}は、使用するレジスタをさらに指定します。 カナリアを読み取るためのベースレジスタ、およびそのベースレジスタからのオフセット。 これは完全にLinuxカーネル内で使用するためのものであるため、デフォルトのレジスタまたはオフセットはありません。
 @end table
 
 @node RL78 Options
@@ -19999,7 +20081,7 @@ GCCが配列、構造体、または共用体型の変数と定数を整列す�
 @opindex mcpu
 ターゲットにするRL78コアを指定する。デフォルトはG14コアで、S3コアまたはRL78とも呼ばれる。 G13またはS2コアは、乗算および除算命令を持たず、代わりにこれらの操作にハードウェア周辺機器を使用する。 G10またはS1コアにはレジスタバンクがないため、別の呼び出し規約が使用される
 
-このオプションが設定されている場合は、コマンドラインの明示的な@option{-mmul=none}オプションで上書きされない限り、使用するハードウェア乗算サポートのタイプも選択される。したがって、@option{-mcpu = g13}を指定すると、G13ハードウェア乗算周辺機能を使用できる。また、@option{-mcpu=g10}を指定すると、ハードウェア乗算の使用が完全に無効になる。
+このオプションが設定されている場合は、コマンドラインの明示的な@option{-mmul=none}オプションで上書きされない限り、使用するハードウェア乗算サポートのタイプも選択される。したがって、@option{-mcpu=g13}を指定すると、G13ハードウェア乗算周辺機能を使用できる。また、@option{-mcpu=g10}を指定すると、ハードウェア乗算の使用が完全に無効になる。
 
 コマンドラインで@option{-mcpu=g14}または@option{-mcpu=rl78}を指定すると、G4のハードウェア乗算サポートも有効になるため、RL78/G14コアはデフォルトのターゲットだが、ツールチェーンの動作は変更される。これらのオプションがコマンドラインで指定されていない場合、コードがRL78コアをターゲットにしていても、ソフトウェア乗算ルーチンが使用される。これは、ハードウェア乗算および除算サポートを持たない古いツールチェーンとの下位互換性のためである。
 
@@ -20086,10 +20168,7 @@ GCCが配列、構造体、または共用体型の変数と定数を整列す�
 @option{-mpopcntb}オプションを使用すると、GCCはPOWER5プロセッサーおよびPowerPC V2.02アーキテクチャーをサポートする他のプロセッサーで実装されたpopcountおよび倍精度のFP逆数推定命令を生成できる。
 @option{-mpopcntd}オプションを使用すると、GCCはPOWER7プロセッサーとPowerPC V2.06アーキテクチャーをサポートする他のプロセッサーで実装されたpopcount命令を生成することができる。
 @option{-mfprnd}オプションを使用すると、GCCはPOWER5+プロセッサとPowerPC V2.03アーキテクチャをサポートする他のプロセッサで実装されたFP命令の整数命令を生成することができる。
-@option{-mpopcntd}オプションを使用すると、GCCはPOWER7プロセッサーとPowerPC V2.06アーキテクチャーをサポートする他のプロセッサーで実装されたpopcount命令を生成することができる。
-@option{-mfprnd}オプションを使用すると、GCCはPOWER5+プロセッサとPowerPC V2.03アーキテクチャをサポートする他のプロセッサで実装されたFP命令の整数命令を生成することができる。
 @option{-mcmpb}オプションを使用すると、GCCはPower6プロセッサーとPowerPC V2.05アーキテクチャーをサポートする他のプロセッサーで実装された比較バイト命令を生成することができる。
-@option{-mmfpgpr}オプションを使用すると、GCCは拡張POWERPC V2.05アーキテクチャーをサポートするPOWER6Xプロセッサーや他のプロセッサーに実装されている汎用レジスタ命令との間でFP移動を発生させることができる。
 @option{-mhard-dfp}オプションを使用すると、GCCは一部のPOWERプロセッサで実装された10進浮動小数点命令を生成できる。
 
 @option{-mpowerpc64}オプションを使用すると、GCCは完全なPowerPC64アーキテクチャにある追加の64ビット命令を生成し、GPRを64ビットのダブルワード数として扱うことができる。 GCCのデフォルトは@option{-mno-powerpc64}である。
@@ -20118,11 +20197,12 @@ cpuタイプとして@samp{native}を指定すると、コンパイルを実行�
 @option{-mcpu}オプションは、自動的に次のオプションを有効または無効にする。
 
 @gccoptlist{-maltivec  -mfprnd  -mhard-float  -mmfcrf  -mmultiple 
--mpopcntb -mpopcntd  -mpowerpc64 
--mpowerpc-gpopt  -mpowerpc-gfxopt  -msingle-float -mdouble-float 
--msimple-fpu  -mmulhw  -mdlmzb  -mmfpgpr -mvsx 
--mcrypto -mhtm -mpower8-fusion -mpower8-vector 
--mquad-memory -mquad-memory-atomic -mfloat128 -mfloat128-hardware}
+-mpopcntb  -mpopcntd  -mpowerpc64 
+-mpowerpc-gpopt  -mpowerpc-gfxopt 
+-mmulhw  -mdlmzb  -mmfpgpr  -mvsx 
+-mcrypto  -mhtm  -mpower8-fusion  -mpower8-vector 
+-mquad-memory  -mquad-memory-atomic  -mfloat128 
+-mfloat128-hardware -mprefixed -mpcrel -mmma}
 
 特定のCPUに設定される特定のオプションは、そのCPUに最適なコードを生成するような設定に応じて、コンパイラのバージョンによって異なる。 実際のハードウェアの機能を必ずしも反映しているとは限らない。 個々のオプションを特定の値に設定したい場合は、@option{-mcpu=970 -mno-altivec}のように@option{-mcpu}オプションの後に指定することができる。
 
@@ -20271,7 +20351,7 @@ AIXの呼び出し規約は拡張されたが、宣言された引数よりも�
 
 @item -mpe
 @opindex mpe
-@dfn {IBM RS/6000 SP} @dfn {Parallel Environment}（PE）をサポートする。 特別なスタートアップコードでメッセージパッシングを使用するように記述されたアプリケーションをリンクして、アプリケーションを実行できるようにする。 システムはPEを標準の場所（@file{/usr/lpp/ppe.poe/}）にインストールする必要がある。また、適切なディレクトリの場所を指定するために@file{specs}ファイルを@option{-specs=}オプションで上書きする必要がある。 パラレル環境はスレッドをサポートしないため、@option{-mpe}オプションと@option{-pthread}オプションは互換性がない。
+@dfn{IBM RS/6000 SP} @dfn{Parallel Environment}（PE）をサポートする。 特別なスタートアップコードでメッセージパッシングを使用するように記述されたアプリケーションをリンクして、アプリケーションを実行できるようにする。 システムはPEを標準の場所（@file{/usr/lpp/ppe.poe/}）にインストールする必要がある。また、適切なディレクトリの場所を指定するために@file{specs}ファイルを@option{-specs=}オプションで上書きする必要がある。 パラレル環境はスレッドをサポートしないため、@option{-mpe}オプションと@option{-pthread}オプションは互換性がない。
 
 @item -malign-natural
 @itemx -malign-power
@@ -20555,8 +20635,7 @@ System V.4および組み込みPowerPCシステムで、小さなグローバル
 @itemx -mreadonly-in-sdata
 @opindex mreadonly-in-sdata
 @opindex mno-readonly-in-sdata
-Put read-only objects in the @code{.sdata} section as well.  This is the
-default.
+@code{.sdata}セクションにも読み取り専用オブジェクトを配置します。 これがデフォルトです。
 
 @item -mblock-move-inline-limit=@var{num}
 @opindex mblock-move-inline-limit
@@ -20578,7 +20657,7 @@ default.
 @opindex G
 @cindex smaller data references (PowerPC)
 @cindex .sdata/.sdata2 references (PowerPC)
-埋め込みPowerPCシステムで、@var{num}バイト以下のグローバルおよび静的アイテムを、通常のデータまたはBSSセクションではなく、小データまたはBSSセクションに配置する。 デフォルトでは、@var{num}は8である。@option{-G @var {num}}スイッチもリンカに渡される。 すべてのモジュールは同じ@option{-G @var {num}}値でコンパイルする必要がある。
+埋め込みPowerPCシステムで、@var{num}バイト以下のグローバルおよび静的アイテムを、通常のデータまたはBSSセクションではなく、小データまたはBSSセクションに配置する。 デフォルトでは、@var{num}は8である。@option{-G @var{num}}スイッチもリンカに渡される。 すべてのモジュールは同じ@option{-G @var{num}}値でコンパイルする必要がある。
 
 @item -mregnames
 @itemx -mno-regnames
@@ -20652,7 +20731,7 @@ Mach-O（Darwin）システムでは、このオプションは直接呼び出�
 
 @end table
 
-たとえば、@option{-mrecip=all,!rsqrtd}は倍精度逆数平方根の計算を扱う@code {FRSQRTE}、@code {XSRSQRTEDP}、@code {XVRSQRTEDP}の命令を除いてすべての逆数見積もり命令を有効にする。
+たとえば、@option{-mrecip=all,!rsqrtd}は倍精度逆数平方根の計算を扱う@code{FRSQRTE}、@code{XSRSQRTEDP}、@code{XVRSQRTEDP}の命令を除いてすべての逆数見積もり命令を有効にする。
 
 @item -mrecip-precision
 @itemx -mno-recip-precision
@@ -20704,7 +20783,7 @@ GCCの古いバージョンとの互換性のために、最大64ビットのア
 @itemx -mno-pcrel
 @opindex mpcrel
 @opindex mno-pcrel
-オプション@option{-mcpu = future}が使用されている場合、PC相対アドレスを生成します（生成しません）。@option{-mpcrel}オプションでは、中コードモデル（@option{-mcmodel = medium}）およびプレフィックスアドレス指定（@option{-mprefixed}）オプションが有効になっている必要があります。
+オプション@option{-mcpu=future}が使用されている場合、PC相対アドレスを生成します（生成しません）。@option{-mpcrel}オプションでは、中コードモデル（@option{-mcmodel=medium}）およびプレフィックスアドレス指定（@option{-mprefixed}）オプションが有効になっている必要があります。
 
 @item -mprefixed
 @itemx -mno-prefixed
@@ -20712,7 +20791,20 @@ GCCの古いバージョンとの互換性のために、最大64ビットのア
 @opindex mno-prefixed
 オプション@option{-mcpu=future}が使用されている場合、接頭辞付きのロードおよびストア命令を使用してアドレッシングモードを生成します（生成しません）。
 
+@item -mmma
+@itemx -mno-mma
+@opindex mmma
+@opindex mno-mma
+オプション@option{-mcpu=future}が使用されている場合、MMA命令を生成します（しません）。
+
+@item -mblock-ops-unaligned-vsx
+@itemx -mno-block-ops-unaligned-vsx
+@opindex block-ops-unaligned-vsx
+@opindex no-block-ops-unaligned-vsx
+@code{memcpy}と@code{memmove}のインライン展開のために、整列されていないvsxロードとストアを生成します（しません）。
+
 @end table
+
 
 @node RX Options
 @subsection RXオプション
@@ -20725,7 +20817,7 @@ GCCの古いバージョンとの互換性のために、最大64ビットのア
 @itemx -m32bit-doubles
 @opindex m64bit-doubles
 @opindex m32bit-doubles
-@code{double}データ型を64ビット（@option{-m64bit-doubles}）または32ビット（@option{-m32bit-doubles}）のサイズにする。 デフォルトは@option{-m32bit-doubles}である。 @emph{注意} RX浮動小数点ハードウェアは32ビット値でのみ動作する。そのため、デフォルトは@option{-m32bit-doubles}である。
+@code{double}データ型を64ビット（@option{-m64bit-doubles}）または32ビット（@option{-m32bit-doubles}）のサイズにする。 デフォルトは@option{-m32bit-doubles}である。 @emph{_注意_} RX浮動小数点ハードウェアは32ビット値でのみ動作する。そのため、デフォルトは@option{-m32bit-doubles}である。
 
 @item -fpu
 @itemx -nofpu
@@ -20815,7 +20907,7 @@ RX命令のオペランドとして使用できる定数の最大サイズをバ
 
 デフォルトではこれらの命令が許可されているが、I/Oレジスタにアクセスするために文字列命令が使用される可能性のあるすべての状況をGCCが確実に検出することはできないため、その使用を自動的に無効にすることはできない。 代わりに、プログラムがI/O空間にアクセスする場合、@option{-mno-allow-string-insns}オプションを使用することはプログラマに依存している。
 
-命令が有効になると、GCCはCプリプロセッサシンボル@code{__RX_ALLOW_STRING_INSNS__}を定義する。それ以外の場合はシンボル@code {__RX_DISALLOW_STRING_INSNS__}を定義する。
+命令が有効になると、GCCはCプリプロセッサシンボル@code{__RX_ALLOW_STRING_INSNS__}を定義する。それ以外の場合はシンボル@code{__RX_DISALLOW_STRING_INSNS__}を定義する。
 
 @item -mjsr
 @itemx -mno-jsr
@@ -20824,7 +20916,7 @@ RX命令のオペランドとして使用できる定数の最大サイズをバ
 関数にアクセスするには@code{JSR}命令だけ（ではなく）使用する。このオプションは、コードサイズが@code{BSR}命令の範囲を超える場合に使用できる。 @option{-mno-jsr}は@code {JSR}を使用しないことを意味するのではなく、任意の種類のブランチを使用できることを意味する。
 @end table
 
-@emph{注意：}一般的なGCCのコマンドラインオプション@option{-ffixed-@var{reg}}は、@code{interrupt}関数属性とともに使用するとき、RXポートに対して特別な意味を持つ。 この属性は、高速割り込みを処理する機能を示す。 GCCは、レジスタ@code{r10}、@code{r11}、@code{r12}および/または@code{r13}のみを使用し、対応するレジスタの通常の使用が@option{-ffixed-@var{reg}}または@option {-mint-register}コマンドラインオプションを使用する。
+@emph{_注意：_}一般的なGCCのコマンドラインオプション@option{-ffixed-@var{reg}}は、@code{interrupt}関数属性とともに使用するとき、RXポートに対して特別な意味を持つ。 この属性は、高速割り込みを処理する機能を示す。 GCCは、レジスタ@code{r10}、@code{r11}、@code{r12}および/または@code{r13}のみを使用し、対応するレジスタの通常の使用が@option{-ffixed-@var{reg}}または@option{-mint-register}コマンドラインオプションを使用する。
 
 @node S/390 and zSeries Options
 @subsection S/390とzSeriesのオプション
@@ -20899,13 +20991,13 @@ RX命令のオペランドとして使用できる定数の最大サイズをバ
 @itemx -mno-vx
 @opindex mvx
 @opindex mno-vx
-@option {-mvx}を指定すると、IBM z13マシン生成で導入されたベクトル拡張機能で使用可能な命令を使用してコードを生成する。このオプションは、整列と呼び出し規約に関して、いくつかのベクトル型の値をABIに変更する。 ベクトル型の値がABI関連の文脈で使用されている場合は、GAS @samp{.gnu_attribute}コマンドを使用して、使用されたABIで結果のバイナリをマークする。@option{-mvx}は、@option{-march = z13}を使用すると、デフォルトで有効になる。
+@option {-mvx}を指定すると、IBM z13マシン生成で導入されたベクトル拡張機能で使用可能な命令を使用してコードを生成する。このオプションは、整列と呼び出し規約に関して、いくつかのベクトル型の値をABIに変更する。 ベクトル型の値がABI関連の文脈で使用されている場合は、GAS @samp{.gnu_attribute}コマンドを使用して、使用されたABIで結果のバイナリをマークする。@option{-mvx}は、@option{-march=z13}を使用すると、デフォルトで有効になる。
 
 @item -mzvector
 @itemx -mno-zvector
 @opindex mzvector
 @opindex mno-zvector
-@option{-mzvector}オプションを使用すると、IBM z13マシン生成で導入されたベクトル拡張機能で使用可能な命令を使用して、ベクトル言語拡張および組み込み関数を使用できる。このオプションは、@samp{vector}のサポートを追加し、ベクトル型の変数と引数を定義するキーワードとして使用する。 @samp{vector}は、GNU拡張機能が有効な場合にのみ使用できる。たとえば、@option{-std = c99}を指定するような、標準のコンプライアンスを厳格に要求する場合には展開されない。GCCの低レベルの組み込み関数@option{-mzvector}は、PowerやCellなどのAltiVecスタイルの実装との互換性のために追加された組み込み関数を有効にする。 これらの組み込み関数を使用するには、ヘッダファイル@file{vecintrin.h}をインクルードする必要がある。@option{-mzvector}はデフォルトでは無効になっている。
+@option{-mzvector}オプションを使用すると、IBM z13マシン生成で導入されたベクトル拡張機能で使用可能な命令を使用して、ベクトル言語拡張および組み込み関数を使用できる。このオプションは、@samp{vector}のサポートを追加し、ベクトル型の変数と引数を定義するキーワードとして使用する。 @samp{vector}は、GNU拡張機能が有効な場合にのみ使用できる。たとえば、@option{-std=c99}を指定するような、標準のコンプライアンスを厳格に要求する場合には展開されない。GCCの低レベルの組み込み関数@option{-mzvector}は、PowerやCellなどのAltiVecスタイルの実装との互換性のために追加された組み込み関数を有効にする。 これらの組み込み関数を使用するには、ヘッダファイル@file{vecintrin.h}をインクルードする必要がある。@option{-mzvector}はデフォルトでは無効になっている。
 
 @item -mmvcle
 @itemx -mno-mvcle
@@ -20961,7 +21053,7 @@ TPF OS固有のブランチをオペレーティング・システムのトレ�
 @itemx -mstack-size=@var{stack-size}
 @opindex mstack-guard
 @opindex mstack-size
-これらのオプションが提供されている場合、S/390バックエンドは、スタック・サイズが@var{stack-size}よりも@var{stack-guard}バイト大きい場合、トラップを起動する追加の命令を関数プロローグに出す。（S / 390ではスタックが下向きに成長することを思い出すこと）。@var{stack-guard}オプションを省略すると、コンパイルされた関数のフレームサイズよりも大きな2の最小の累乗が選択される。これらのオプションは、スタックオーバーフローの問題のデバッグに役立つ。追加的に放出されるコードは、わずかなオーバーヘッドしか生じさせず、従って、より性能低下のない生産様のシステムにおいても使用されることも可能である。。与えられた値は正確な2のべき乗でなければならず、@var{stack-size}は64kを超えてはならず、@var{stack-guard}より大きくなければならない。効率を上げるために、余分なコードは、スタックが@var{stack-size}によって与えられた値に揃えられたアドレスで開始するという前提を作る。
+これらのオプションが提供されている場合、S/390バックエンドは、スタック・サイズが@var{stack-size}よりも@var{stack-guard}バイト大きい場合、トラップを起動する追加の命令を関数プロローグに出す。（S/390ではスタックが下向きに成長することを思い出すこと）。@var{stack-guard}オプションを省略すると、コンパイルされた関数のフレームサイズよりも大きな2の最小の累乗が選択される。これらのオプションは、スタックオーバーフローの問題のデバッグに役立つ。追加的に放出されるコードは、わずかなオーバーヘッドしか生じさせず、従って、より性能低下のない生産様のシステムにおいても使用されることも可能である。。与えられた値は正確な2のべき乗でなければならず、@var{stack-size}は64kを超えてはならず、@var{stack-guard}より大きくなければならない。効率を上げるために、余分なコードは、スタックが@var{stack-size}によって与えられた値に揃えられたアドレスで開始するという前提を作る。
 
 @item -mhotpatch=@var{pre-halfwords},@var{post-halfwords}
 @opindex mhotpatch
@@ -21238,7 +21330,7 @@ SH2Aでビット操作命令を使用できるようにする。
 
 @item -mtas
 @opindex mtas
-@code{__ atomic_test_and_set}の@code {tas.b}オペコードを生成する。特定のハードウェアとソフトウェアの設定によっては、@code{tas.b}命令によって暗示されるオペランドキャッシュラインフラッシュによって全体的なパフォーマンスが低下する可能性があることに注意せよ。マルチコアSH4Aプロセッサでは、特定のキャッシュ構成でデータが破損する可能性があるため、@code{tas.b}命令は慎重に使用する必要がある。
+@code{__atomic_test_and_set}の@code{tas.b}オペコードを生成する。特定のハードウェアとソフトウェアの設定によっては、@code{tas.b}命令によって暗示されるオペランドキャッシュラインフラッシュによって全体的なパフォーマンスが低下する可能性があることに注意せよ。マルチコアSH4Aプロセッサでは、特定のキャッシュ構成でデータが破損する可能性があるため、@code{tas.b}命令は慎重に使用する必要がある。
 
 @item -mprefergot
 @opindex mprefergot
@@ -21311,7 +21403,7 @@ SH2Aでビット操作命令を使用できるようにする。
 @itemx -mno-fsca
 @opindex mfsca
 @opindex mno-fsca
-コンパイラが正弦および余弦の近似のために@code{fsca}命令を出すのを許可する、または許可しない。オプション@option {-mfsca}は、@option{-funsafe-math-optimizations}と組み合わせて使用する必要がある。SH4A用のコードを生成するときは、デフォルトで有効になっている。@option{-mno-fsca}を使用すると、@option{-funsafe-math-optimizations}が有効な場合でも正弦と余弦の近似は無効になる。
+コンパイラが正弦および余弦の近似のために@code{fsca}命令を出すのを許可する、または許可しない。オプション@option{-mfsca}は、@option{-funsafe-math-optimizations}と組み合わせて使用する必要がある。SH4A用のコードを生成するときは、デフォルトで有効になっている。@option{-mno-fsca}を使用すると、@option{-funsafe-math-optimizations}が有効な場合でも正弦と余弦の近似は無効になる。
 
 @item -mfsrra
 @itemx -mno-fsrra
@@ -21376,7 +21468,7 @@ SPARC SVR4 ABIがアプリケーション用に予約するグローバルレジ
 @itemx -mno-flat
 @opindex mflat
 @opindex mno-flat
-@option {-mflat}では、コンパイラは保存/復元命令を生成せず、 「フラット」またはシングルレジスタウィンドウモデルを使用する。このモデルは、正規のレジスタウィンドウモデルと互換性がある。ローカルレジスタおよび入力レジスタ（0～5）は、依然として「コールセーブされた」レジスタとして扱われ、必要に応じてスタックに保存される。
+@option{-mflat}では、コンパイラは保存/復元命令を生成せず、 「フラット」またはシングルレジスタウィンドウモデルを使用する。このモデルは、正規のレジスタウィンドウモデルと互換性がある。ローカルレジスタおよび入力レジスタ（0～5）は、依然として「コールセーブされた」レジスタとして扱われ、必要に応じてスタックに保存される。
 
 @option{-mno-flat}（デフォルト）では、コンパイラは保存/復元命令を生成する（リーフ関数を除く）。これは通常の動作モードである。
 
@@ -21390,7 +21482,7 @@ SPARC SVR4 ABIがアプリケーション用に予約するグローバルレジ
 @itemx -msoft-float
 @opindex mno-fpu
 @opindex msoft-float
-浮動小数点のライブラリ呼び出しを含む出力を生成する。@strong{注意：}必要なライブラリは、すべてのSPARCターゲットで利用できるわけではない。通常、マシンの通常のCコンパイラの機能が使用されるが、これはクロスコンパイルで直接行うことはできない。クロスコンパイルに適したライブラリ関数を提供するために、独自の手配をしなければならない。 埋め込みターゲット@samp{sparc-*-aout}と@samp {sparclite-*-*}は、ソフトウェア浮動小数点サポートを提供する。
+浮動小数点のライブラリ呼び出しを含む出力を生成する。@strong{注意：}必要なライブラリは、すべてのSPARCターゲットで利用できるわけではない。通常、マシンの通常のCコンパイラの機能が使用されるが、これはクロスコンパイルで直接行うことはできない。クロスコンパイルに適したライブラリ関数を提供するために、独自の手配をしなければならない。 埋め込みターゲット@samp{sparc-*-aout}と@samp{sparclite-*-*}は、ソフトウェア浮動小数点サポートを提供する。
 
 @option{-msoft-float}は、出力ファイルの呼び出し規約を変更する。 したがって、このオプションでプログラムの@emph{すべて}をコンパイルする場合にのみ有用である。特に、GCCに付属のライブラリである@file{libgcc.a}を@option{-msoft-float}とコンパイルする必要がある。
 
@@ -21442,7 +21534,7 @@ SPARC SVR4 ABIがアプリケーション用に予約するグローバルレジ
 @opindex mcpu
 機種@var {cpu_type}の命令セット、レジスタセット、および命令スケジューリングパラメータを設定する。 @var{cpu_type}のサポートされている値は@samp{v7}, @samp{cypress}, @samp{v8}, @samp{supersparc}, @samp{hypersparc}, @samp{leon}, @samp{leon3}, @samp{leon3v7}, @samp{sparclite}, @samp{f930}, @samp{f934}, @samp{sparclite86x}, @samp{sparclet}, @samp{tsc701}, @samp{v9}, @samp{ultrasparc}, @samp{ultrasparc3}, @samp{niagara}, @samp{niagara2}, @samp{niagara3}, @samp{niagara4}, @samp{niagara7}, @samp{m8}である。
 
-ネイティブSolarisおよびGNU / Linuxツールチェーンは、@samp{native}という値もサポートしている。これは、ホストプロセッサに最適なアーキテクチャオプションを選択する。GCCがプロセッサを認識しない場合、@option{-mcpu=native}は効果がない。
+ネイティブSolarisおよびGNU/Linuxツールチェーンは、@samp{native}という値もサポートしている。これは、ホストプロセッサに最適なアーキテクチャオプションを選択する。GCCがプロセッサを認識しない場合、@option{-mcpu=native}は効果がない。
 
 デフォルトの命令スケジューリングパラメータは、アーキテクチャを選択する値であり、実装ではない。 これらは@samp{v7}、@samp{v8}、@samp{sparclite}、@samp{sparclet}、@samp{v9}である。
 
@@ -21466,7 +21558,7 @@ ultrasparc, ultrasparc3, niagara, niagara2, niagara3, niagara4,
 niagara7, m8
 @end table
 
-デフォルトでは（別途設定されていない限り）、GCCはSPARCアーキテクチャのV7版のコードを生成する。 @option{-mcpu=cypress}を使用すると、コンパイラはSPARCStation / SPARCServer 3xxシリーズで使用されているCypress CY7C602チップ用に最適化する。これは古いSPARCStation 1,2、IPXなどにも適している。
+デフォルトでは（別途設定されていない限り）、GCCはSPARCアーキテクチャのV7版のコードを生成する。 @option{-mcpu=cypress}を使用すると、コンパイラはSPARCStation/SPARCServer 3xxシリーズで使用されているCypress CY7C602チップ用に最適化する。これは古いSPARCStation 1,2、IPXなどにも適している。
 
 @option{-mcpu=v8}を指定すると、GCCはSPARCアーキテクチャのV8版のコードを生成する。 V7コードとの唯一の違いは、コンパイラがSPARC-V8には存在し、SPARC-V7には存在しない整数乗算命令と整数除算命令を発行することである。 @option{-mcpu=supersparc}を指定すると、コンパイラはSPARCStation 10,1000,2000シリーズで使用されているように、SuperSPARCチップ用にコンパイラを最適化する。
 
@@ -21474,7 +21566,7 @@ niagara7, m8
 
 @option{-mcpu=sparclet}を使用すると、GCCはSPARCアーキテクチャのSPARCletバリアントのコードを生成する。これにより、SPARCletには存在するが、SPARC-V7には存在しない整数の乗算、乗算/累積、整数除算のステップとスキャン（@code{ffs}）命令が追加される。 @option{-mcpu=tsc701}では、TEMIC SPARCletチップ用に最適化されている。
 
-@option {-mcpu=v9}を指定すると、GCCはSPARCアーキテクチャのV9版のコードを生成する。これにより、64ビット整数および浮動小数点移動命令、3つの追加浮動小数点条件コード・レジスタおよび条件付き移動命令が追加される。@option{-mcpu=ultrasparc}を使用すると、コンパイラはSun UltraSPARC I / II / IIiチップ用にコンパイラを最適化する。@option{-mcpu=ultrasparc}を使用すると、コンパイラはSun UltraSPARC I / II / IIiチップ用にコンパイラを最適化する。 @option{-mcpu=ultrasparc3}を使用すると、コンパイラはSun UltraSPARC III / III + / IIIi + / IV / IV +チップ用にコンパイラを最適化する。@option{-mcpu=niagara}を使用すると、コンパイラはSun UltraSPARC T1チップ用にコンパイラを最適化する。@option{-mcpu=niagara2}を使用すると、コンパイラはSun UltraSPARC T2チップ用にコンパイラを最適化する。@option{-mcpu=niagara3}では、コンパイラはSun UltraSPARC T3チップ用にコンパイラを最適化する。@option{-mcpu=niagara4}では、コンパイラはSun UltraSPARC T4チップ用にコンパイラを最適化する。@option{-mcpu=niagara7}を使用すると、コンパイラはOracle SPARC M7チップ用にコンパイラを最適化する。 @option{-mcpu=m8}を指定すると、コンパイラはOracle M8チップ用にコンパイラを最適化する。
+@option {-mcpu=v9}を指定すると、GCCはSPARCアーキテクチャのV9版のコードを生成する。これにより、64ビット整数および浮動小数点移動命令、3つの追加浮動小数点条件コード・レジスタおよび条件付き移動命令が追加される。@option{-mcpu=ultrasparc}を使用すると、コンパイラはSun UltraSPARC I/II/IIiチップ用にコンパイラを最適化する。@option{-mcpu=ultrasparc}を使用すると、コンパイラはSun UltraSPARC I/II/IIiチップ用にコンパイラを最適化する。 @option{-mcpu=ultrasparc3}を使用すると、コンパイラはSun UltraSPARC III/III+/IIIi+/IV/IV+チップ用にコンパイラを最適化する。@option{-mcpu=niagara}を使用すると、コンパイラはSun UltraSPARC T1チップ用にコンパイラを最適化する。@option{-mcpu=niagara2}を使用すると、コンパイラはSun UltraSPARC T2チップ用にコンパイラを最適化する。@option{-mcpu=niagara3}では、コンパイラはSun UltraSPARC T3チップ用にコンパイラを最適化する。@option{-mcpu=niagara4}では、コンパイラはSun UltraSPARC T4チップ用にコンパイラを最適化する。@option{-mcpu=niagara7}を使用すると、コンパイラはOracle SPARC M7チップ用にコンパイラを最適化する。 @option{-mcpu=m8}を指定すると、コンパイラはOracle M8チップ用にコンパイラを最適化する。
 
 @item -mtune=@var{cpu_type}
 @opindex mtune
@@ -21486,25 +21578,25 @@ niagara7, m8
 @itemx -mno-v8plus
 @opindex mv8plus
 @opindex mno-v8plus
-@option {-mv8plus}を指定すると、GCCはSPARC-V8 + ABI用のコードを生成する。 V8 ABIとの違いは、グローバルレジスタとアウトレジスタが64ビット幅とみなされることである。これは、すべてのSPARC-V9プロセッサで32ビットモードのSolarisでデフォルトで有効になる。
+@option{-mv8plus}を指定すると、GCCはSPARC-V8+ ABI用のコードを生成する。 V8 ABIとの違いは、グローバルレジスタとアウトレジスタが64ビット幅とみなされることである。これは、すべてのSPARC-V9プロセッサで32ビットモードのSolarisでデフォルトで有効になる。
 
 @item -mvis
 @itemx -mno-vis
 @opindex mvis
 @opindex mno-vis
-@option {-mvis}を使用すると、GCCはUltraSPARC Visual Instruction Set拡張機能を利用するコードを生成する。デフォルトは@option {-mno-vis}である。
+@option{-mvis}を使用すると、GCCはUltraSPARC Visual Instruction Set拡張機能を利用するコードを生成する。デフォルトは@option{-mno-vis}である。
 
 @item -mvis2
 @itemx -mno-vis2
 @opindex mvis2
 @opindex mno-vis2
-@option {-mvis2}を使用すると、GCCはUltraSPARC Visual Instruction Set拡張のバージョン2.0を利用するコードを生成する。UltraSPARC-III以降など、そのような命令をサポートするCPUを対象とする場合、デフォルトは@option{-mvis2}である。
+@option{-mvis2}を使用すると、GCCはUltraSPARC Visual Instruction Set拡張のバージョン2.0を利用するコードを生成する。UltraSPARC-III以降など、そのような命令をサポートするCPUを対象とする場合、デフォルトは@option{-mvis2}である。
 
 @item -mvis3
 @itemx -mno-vis3
 @opindex mvis3
 @opindex mno-vis3
-@option {-mvis3}を使用すると、GCCはUltraSPARC Visual Instruction Set拡張のバージョン3.0を利用するコードを生成する。niagara-3以降のような命令をサポートしているCPUを対象とする場合、デフォルトは@option{-mvis3}である。@option {-mvis3}を設定すると、@option {-mvis2}と@option {-mvis}も設定される。
+@option{-mvis3}を使用すると、GCCはUltraSPARC Visual Instruction Set拡張のバージョン3.0を利用するコードを生成する。niagara-3以降のような命令をサポートしているCPUを対象とする場合、デフォルトは@option{-mvis3}である。@option{-mvis3}を設定すると、@option{-mvis2}と@option{-mvis}も設定される。
 
 @item -mvis4
 @itemx -mno-vis4
@@ -21772,9 +21864,9 @@ int、long、および32ビットへのポインタを設定する32ビット環
 @opindex mv850e
 ターゲット・プロセッサーがV850Eであることを指定する。このオプションを使用すると、プリプロセッサ定数@code{__v850e__}が定義される。
 
-@option{-mv850}、@option{-mv850e}、@option{-mv850e1}、@option{-mv850e2}、および@option{-mv850e2v3}や@option {-mv850e3v5}のどれも定義されていない場合、デフォルトのターゲット・プロセッサが選択され、関連する@samp{__ v850 * __}プリプロセッサ定数が定義される。
+@option{-mv850}、@option{-mv850e}、@option{-mv850e1}、@option{-mv850e2}、および@option{-mv850e2v3}や@option{-mv850e3v5}のどれも定義されていない場合、デフォルトのターゲット・プロセッサが選択され、関連する@samp{__v850*__}プリプロセッサ定数が定義される。
 
-プリプロセッサの定数@code{__ v850}と@code{__ v851__}は、ターゲットとなるプロセッサの種類に関係なく常に定義される。
+プリプロセッサの定数@code{__v850}と@code{__v851__}は、ターゲットとなるプロセッサの種類に関係なく常に定義される。
 
 @item -mdisable-callt
 @itemx -mno-disable-callt
@@ -21782,7 +21874,7 @@ int、long、および32ビットへのポインタを設定する32ビット環
 @opindex mno-disable-callt
 このオプションは、v850アーキテクチャーのv850e、v850e1、v850e2、v850e2v3、およびv850e3v5フレーバーの@code {CALLT}命令の生成を抑制する。
 
-このオプションは、RH850 ABIが使用されている場合（デフォルトでは@option{-mrh850-abi}を参照）、デフォルトで有効になっている。GCC ABIが使用されている場合、デフォルトでは無効になっている。 @code{CALLT}命令が生成されている場合、Cプリプロセッサシンボル@code{__ V850_CALLT__}が定義される。
+このオプションは、RH850 ABIが使用されている場合（デフォルトでは@option{-mrh850-abi}を参照）、デフォルトで有効になっている。GCC ABIが使用されている場合、デフォルトでは無効になっている。 @code{CALLT}命令が生成されている場合、Cプリプロセッサシンボル@code{__V850_CALLT__}が定義される。
 
 @item -mrelax
 @itemx -mno-relax
@@ -21800,7 +21892,7 @@ PC相対ジャンプ命令の生成を無効にする（または再び有効に
 @itemx -mhard-float
 @opindex msoft-float
 @opindex mhard-float
-ハードウェア浮動小数点命令の生成を無効にする（または再び有効にする）。 このオプションは、ターゲット・アーキテクチャーが@samp{V850E2V3}以上の場合にのみ重要である。 ハードウェア浮動小数点命令が生成されている場合は、Cプリプロセッサシンボル@code{__ FPU_OK__}が定義される。そうでない場合、シンボル@code{__NO_FPU__}が定義される。
+ハードウェア浮動小数点命令の生成を無効にする（または再び有効にする）。 このオプションは、ターゲット・アーキテクチャーが@samp{V850E2V3}以上の場合にのみ重要である。 ハードウェア浮動小数点命令が生成されている場合は、Cプリプロセッサシンボル@code{__FPU_OK__}が定義される。そうでない場合、シンボル@code{__NO_FPU__}が定義される。
 
 @item -mloop
 @opindex mloop
@@ -21829,7 +21921,7 @@ V850 ABIのRH850バージョンのサポートを有効にする。 これがデ
 @option {-mdisable-callt}コマンドラインオプションは、デフォルトで有効になっている。@option{-mno-disable-callt}コマンドラインオプションはサポートされていない。
 @end itemize
 
-このバージョンのABIを有効にすると、Cプリプロセッサシンボル@code {__ V850_RH850_ABI__}が定義される。
+このバージョンのABIを有効にすると、Cプリプロセッサシンボル@code{__V850_RH850_ABI__}が定義される。
 
 @item -mgcc-abi
 @opindex mgcc-abi
@@ -21948,7 +22040,7 @@ D-フォーマットの代わりにG-フォーマット浮動小数点数のコ�
 @node VMS Options
 @subsection VMSオプション
 
-これらの@samp {-m}オプションは、VMS実装に対して定義されている。
+これらの@samp{-m}オプションは、VMS実装に対して定義されている。
 
 @table @gcctabopt
 @item -mvms-return-codes
@@ -21977,7 +22069,7 @@ D-フォーマットの代わりにG-フォーマット浮動小数点数のコ�
 @table @gcctabopt
 @item -mrtp
 @opindex mrtp
-GCCは、VxWorksカーネルとリアルタイムプロセス（RTP）の両方のコードを生成できる。 このオプションは前者から後者に切り替える。 また、プリプロセッサマクロ@code {__RTP__}も定義する。
+GCCは、VxWorksカーネルとリアルタイムプロセス（RTP）の両方のコードを生成できる。 このオプションは前者から後者に切り替える。 また、プリプロセッサマクロ@code{__RTP__}も定義する。
 
 @item -non-static
 @opindex non-static
@@ -21991,7 +22083,7 @@ GCCは、VxWorksカーネルとリアルタイムプロセス（RTP）の両方�
 
 @item -Xbind-lazy
 @opindex Xbind-lazy
-関数呼び出しの遅延バインドを有効にする。 このオプションは@option{-Wl、-z、now}に相当し、Diabとの互換性のために定義されている。
+関数呼び出しの遅延バインドを有効にする。 このオプションは@option{-Wl,-z,now}に相当し、Diabとの互換性のために定義されている。
 
 @item -Xbind-now
 @opindex Xbind-now
@@ -22008,7 +22100,7 @@ GCCは、VxWorksカーネルとリアルタイムプロセス（RTP）の両方�
 
 @item -march=@var{cpu-type}
 @opindex march
-機種@var{cpu-type}の命令を生成する。@option{-march=@var{cpu-type}}は、指定された@var{cpu-type}の生成コードをチューニングするだけで、@option{-march=@ var{cpu-type}}は、 示されているプロセッサ以外のプロセッサではまったく動作しないコードを生成するためにGCCを使用する。@option{-march=@var{cpu-type}}を指定すると、@option{-mtune=@var{cpu-type}}となる。
+機種@var{cpu-type}の命令を生成する。@option{-march=@var{cpu-type}}は、指定された@var{cpu-type}の生成コードをチューニングするだけで、@option{-march=@var{cpu-type}}は、 示されているプロセッサ以外のプロセッサではまったく動作しないコードを生成するためにGCCを使用する。@option{-march=@var{cpu-type}}を指定すると、@option{-mtune=@var{cpu-type}}となる。
 
 @var{cpu-type}の選択肢は次のとおりである。
 
@@ -22017,7 +22109,7 @@ GCCは、VxWorksカーネルとリアルタイムプロセス（RTP）の両方�
 これにより、コンパイル時のコードを生成するCPUが選択され、コンパイルマシンのプロセッサタイプが決定される。@option{-march = native}を使用すると、ローカルマシンでサポートされているすべての命令サブセットが有効になる（したがって、結果は異なるマシンでは実行されない可能性がある。）@option{-mtune = native}を使用すると、選択した命令セットの制約の下でローカルマシン用に最適化されたコードが生成される。
 
 @item x86-64
-A generic CPU with 64-bit extensions.
+64ビット拡張機能を備えた汎用CPU。
 
 @item i386
 元々のi386CPU。
@@ -22146,13 +22238,11 @@ AVX512VL、AVX512BW、AVX512DQ、AVX512CD、AVX512VBMI、AVX512IFMA、SHA、CLWB
 RDPID、GFNI、AVX512VBMI2、AVX512VPOPCNTDQ、AVX512BITALG、AVX512VNNI、VPCLMULQDQ、
 VAES、PCONFIG、WBNOINVD、MOVDIRI、MOVDIR64B命令セットのサポートを持つIntel Cooperlake CPU。
 
-Intel Tigerlake CPU with 64-bit extensions, MOVBE, MMX, SSE, SSE2, SSE3, SSSE3,
-SSE4.1, SSE4.2, POPCNT, PKU, AVX, AVX2, AES, PCLMUL, FSGSBASE, RDRND, FMA, BMI,
-BMI2, F16C, RDSEED, ADCX, PREFETCHW, CLFLUSHOPT, XSAVEC, XSAVES, AVX512F,
-AVX512VL, AVX512BW, AVX512DQ, AVX512CD, AVX512VBMI, AVX512IFMA, SHA, CLWB, UMIP,
-RDPID, GFNI, AVX512VBMI2, AVX512VPOPCNTDQ, AVX512BITALG, AVX512VNNI, VPCLMULQDQ,
-VAES, PCONFIG, WBNOINVD, MOVDIRI, MOVDIR64B and  AVX512VP2INTERSECT instruction
-set support.
+@item sapphirerapids
+64ビット拡張、MOVBE、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、PKU、AVX、AVX2、AES、PCLMUL、FSGSBASE、RDRND、FMA、BMI、BMI2 、F16C、RDSEED、ADCX、PREFETCHW、CLFLUSHOPT、XSAVEC、XSAVES、AVX512F、CLWB、AVX512VL、AVX512BW、AVX512DQ、AVX512CD、AVX512VNNI、AVX512BF16、MOVDIRI、MOVDIR64B、AVX512BF16、MOVDIRI、MOVDIR64B、AVX512VP2INTERS 、AMX-BF16、AMX-TILE、AMX-INT8、およびAVX-VNNI命令セットのサポートを持つIntel sapphirerapids CPU。
+
+@item alderlake
+64ビット拡張機能、MOVBE、MMX、SSE、SSE2、SSE3、SSSE3、SSE4.1、SSE4.2、POPCNT、AVX、AVX2、AES、PCLMUL、FSGSBASE、RDRND、FMA、BMI、BMI2、F16C 、RDSEED、ADCX、PREFETCHW、CLFLUSHOPT、XSAVEC、XSAVES、CLDEMOTE、PTWRITE、WAITPKG、SERIALIZE、KEYLOCKER、HRESET、およびAVX-VNNI命令セットのサポートを持つIntel Alderlake CPU。
 
 @item k6
 MMX命令セットサポートを持つAMD K6 CPU。
@@ -22202,6 +22292,9 @@ x86-64命令セットサポートを持つAMD17世代コアに基づくCPU。（
 
 @item znver2
 x86-64命令セットサポートを持つAMD17世代コアに基づくCPU。（これはBMI、BMI2、F16C、CLWB、FMA、FSGSBASE、AVX、AVX2、ADCX、RDSEED、MWAITX、SHA、CLZERO、AES、PCL_MUL、CX16、MOVBE、MMX、SSE、SSE2、SSE3、SSE4A、SSSE3、SSE4.1、SSE4.2、ABM、XSAVES、CLFULSHOPT、POPCNT、RDPID、WBNOINVD、64ビット命令セット拡張を含む。）
+
+@item znver3
+x86-64命令セットサポートを持つAMD19世代コアに基づくCPU。（これはBMI、BMI2、F16C、CLWB、FMA、FSGSBASE、AVX、AVX2、ADCX、RDSEED、MWAITX、SHA、CLZERO、AES、PCL_MUL、CX16、MOVBE、MMX、SSE、SSE2、SSE3、SSE4A、SSSE3、SSE4.1、SSE4.2、ABM、XSAVES、CLFULSHOPT、POPCNT、RDPID、WBNOINVD、PKU、VPCLMULQDQ、VAES、64ビット命令セット拡張を含む。）
 
 @item btver1
 x86-64命令セットサポートを持つAMD14世代コアに基づくCPU。（これはMMX、SSE、SSE2、SSE3、SSE4A、CX16、ABM、64ビット命令セット拡張を含む。）
@@ -22276,11 +22369,11 @@ ABIと使用可能な命令のセットを除いて、生成されたコード�
 @option{-march}はコンパイラが使用できる命令セットを示し、すべてのプロセッサに適用可能な汎用命令セットがないため、@option{-march=generic}オプションはない。 対照的に、@option{-mtune}は、コードが最適化されているプロセッサ（または、この場合はプロセッサの集合）を示す。
 
 @item intel
-このバージョンのGCCでは、最新のIntelプロセッサ（HaswellとSilvermont）向けに最適化されたコードを生成する。コードが実行されるCPUを知っているなら、@option{-mtune=intel}の代わりに対応する@option{-mtune}または@option{-march}オプションを使うべきである。しかし、HaswellとSilvermontの両方でアプリケーションのパフォーマンスが向上したい場合は、このオプションを使用する必要がある。
+このバージョンのGCCでは、最新のIntelプロセッサ（GCCの現在のバージョンではHaswellとSilvermont）向けに最適化されたコードを生成する。コードが実行されるCPUを知っているなら、@option{-mtune=intel}の代わりに対応する@option{-mtune}または@option{-march}オプションを使うべきである。しかし、HaswellとSilvermontの両方でアプリケーションのパフォーマンスが向上したい場合は、このオプションを使用する必要がある。
 
 新しいIntelプロセッサが市場に展開されると、このオプションの動作が変更される。 したがって、新しいバージョンのGCCにアップグレードすると、このオプションによって制御されるコード生成は、GCCのバージョンがリリースされた時点の最新のIntelプロセッサを反映して変更される。
 
-@option{-march}は、コンパイラが使用できる命令セットを示し、すべてのプロセッサに共通の命令セットがないため、@option{-march=intel}オプションはない。 対照的に、@option {-mtune}は、コードが最適化されているプロセッサ（または、この場合はプロセッサの集合）を示す。
+@option{-march}は、コンパイラが使用できる命令セットを示し、すべてのプロセッサに共通の命令セットがないため、@option{-march=intel}オプションはない。 対照的に、@option{-mtune}は、コードが最適化されているプロセッサ（または、この場合はプロセッサの集合）を示す。
 @end table
 
 @item -mcpu=@var{cpu-type}
@@ -22380,7 +22473,7 @@ x86-64コンパイラでは、ABIが@code{long double}が16バイトの境界に
 @opindex mlong-double-64
 @opindex mlong-double-80
 @opindex mlong-double-128
-これらのスイッチは、@code{long double}型のサイズを制御する。 64ビットのサイズは、@code{long double}型を@code{double}型と等価にする。 これは、32ビットのBionic Cライブラリのデフォルトである。 128ビットのサイズは@code{long double}型を@code{__ float128}型と同等にする。 これは、64ビットのBionic Cライブラリのデフォルトである。
+これらのスイッチは、@code{long double}型のサイズを制御する。 64ビットのサイズは、@code{long double}型を@code{double}型と等価にする。 これは、32ビットのBionic Cライブラリのデフォルトである。 128ビットのサイズは@code{long double}型を@code{__float128}型と同等にする。 これは、64ビットのBionic Cライブラリのデフォルトである。
 
 @strong{警告:} ターゲットABIのデフォルト値をオーバーライドすると、@code{long double}変数を含む構造体と配列のサイズが変更され、@code{long double}を持つ関数の関数呼び出し規約が変更される。 したがって、スイッチなしでコンパイルされたコードとバイナリ互換性はない。
 
@@ -22394,7 +22487,7 @@ GCCがどのように変数を整列させるかを制御する。@var{type}の�
 
 @item -mrtd
 @opindex mrtd
-引数の数が固定されている関数が@code{ret @var {num}}命令で返される別の関数呼び出し規約を使用する。 これにより、引数をポップする必要がないため、呼び出し元に1つの命令が節約される。
+引数の数が固定されている関数が@code{ret @var{num}}命令で返される別の関数呼び出し規約を使用する。 これにより、引数をポップする必要がないため、呼び出し元に1つの命令が節約される。
 
 関数の属性@code{stdcall}を使用して、この呼び出しシーケンスで個々の関数が呼び出されるように指定することができる。 また、関数属性@code{cdecl}を使用して@option{-mrtd}オプションを上書きすることもできる。 @xref{Function Attributes}.
 
@@ -22418,7 +22511,7 @@ floatとdoubleの引数と戻り値には、SSEのレジスタ渡し規則を使
 
 @item -mvect8-ret-in-mem
 @opindex mvect8-ret-in-mem
-MMXレジスタの代わりに8バイトのベクトルをメモリに返します。 これは、Solaris@tie{}8および9とVxWorksでは、バージョン12まではSun StudioコンパイラのABIと一致するようにデフォルト設定されている。後のコンパイラバージョン（Studio 12 Update@tie{}1以降）は、他のx86ターゲットで使用されているABIに従う。これはSolaris 10以降のデフォルトである。以前のコンパイラバージョンまたは古いバージョンのGCCで作成された既存のコードとの互換性を保つ必要がある場合に@emph{のみ}、このオプションを使用すること。
+MMXレジスタの代わりに8バイトのベクトルをメモリに返します。 これは、Solaris@tie{}8および9とVxWorksでは、バージョン12まではSun StudioコンパイラのABIと一致するようにデフォルト設定されている。後のコンパイラバージョン（Studio 12 Update@tie{}1以降）は、他のx86ターゲットで使用されているABIに従う。これはSolaris 10以降のデフォルトである。以前のコンパイラバージョンまたは古いバージョンのGCCで作成された既存のコードとの互換性を保つ必要がある場合に@emph{_のみ_}、このオプションを使用すること。
 
 @item -mpc32
 @itemx -mpc64
@@ -22429,7 +22522,7 @@ MMXレジスタの代わりに8バイトのベクトルをメモリに返しま�
 
 80387浮動小数点精度を32,64、または80ビットに設定する。@option{-mpc32}を指定すると、浮動小数点演算の結果の有効数字は24ビット（単精度）に丸められる。@option{-mpc64}は、浮動小数点演算の結果の有効数字を53ビット（倍精度）に丸め、@option{-mpc80}は浮動小数点演算の結果の有効数字を64ビット（拡張倍精度）に丸め、それがデフォルトである。このオプションを使用すると、FPU制御ワードを明示的に設定せずに、より高い精度での浮動小数点演算をプログラマが使用できなくなる。
 
-浮動小数点演算の丸めをデフォルトの80ビット未満に設定すると、プログラムによっては2％以上の速度が得られることがある。いくつかの数学ライブラリは、拡張精度（80ビット）浮動小数点演算がデフォルトで有効になっていると仮定している。 このオプションを使用して精度を拡張精度以下に設定すると、このようなライブラリのルーチンは、通常、いわゆる「致命的な取り消し」を介して、精度の大幅な低下を被る可能性がある。
+浮動小数点演算の丸めをデフォルトの80ビット未満に設定すると、プログラムによっては2%以上の速度が得られることがある。いくつかの数学ライブラリは、拡張精度（80ビット）浮動小数点演算がデフォルトで有効になっていると仮定している。 このオプションを使用して精度を拡張精度以下に設定すると、このようなライブラリのルーチンは、通常、いわゆる「致命的な取り消し」を介して、精度の大幅な低下を被る可能性がある。
 
 @item -mstackrealign
 @opindex mstackrealign
@@ -22443,7 +22536,7 @@ MMXレジスタの代わりに8バイトのベクトルをメモリに返しま�
 
 @item -mincoming-stack-boundary=@var{num}
 @opindex mincoming-stack-boundary
-入ってくるスタックが2の@var {num}バイト乗の境界に揃えられていると仮定する。@option{-mincoming-stack-boundary}を指定しないと、@option{-mpreferred-stack-boundary}で指定されたものが使用される。
+入ってくるスタックが2の@var{num}バイト乗の境界に揃えられていると仮定する。@option{-mincoming-stack-boundary}を指定しないと、@option{-mpreferred-stack-boundary}で指定されたものが使用される。
 
 PentiumとPentium Proでは、@code{double}と@code{long double}の値は8バイトの境界（@option{-malign-double}を参照）に合わせるか、さもなければ実行時に大きなパフォーマンス上のペナルティを被る。Pentium IIIでは、Streaming SIMD Extension（SSE）のデータ型@code{__m128}が16バイト境界でないと正しく動作しないことがある。
 
@@ -22658,6 +22751,11 @@ PentiumとPentium Proでは、@code{double}と@code{long double}の値は8バイ
 @need 200
 @itemx -menqcmd
 @opindex menqcmd
+@itemx -muintr
+@opindex muintr
+@need 200
+@itemx -mtsxldtrk
+@opindex mtsxldtrk
 @need 200
 @itemx -mavx512vpopcntdq
 @opindex mavx512vpopcntdq
@@ -22671,11 +22769,34 @@ PentiumとPentium Proでは、@code{double}と@code{long double}の値は8バイ
 @itemx -mavx512vnni
 @opindex mavx512vnni
 @need 200
+@itemx -mavxvnni
+@opindex mavxvnni
+@need 200
 @itemx -mavx5124vnniw
 @opindex mavx5124vnniw
 @need 200
 @itemx -mcldemote
 @opindex mcldemote
+@need 200
+@itemx -mserialize
+@opindex mserialize
+@need 200
+@itemx -mamx-tile
+@opindex mamx-tile
+@need 200
+@itemx -mamx-int8
+@opindex mamx-int8
+@need 200
+@itemx -mamx-bf16
+@opindex mamx-bf16
+@need 200
+@itemx -mhreset
+@opindex mhreset
+@itemx -mkl
+@opindex mkl
+@need 200
+@itemx -mwidekl
+@opindex mwidekl
 これらのスイッチを使用すると、MMX, SSE,
 SSE2, SSE3, SSSE3, SSE4, SSE4A, SSE4.1, SSE4.2, AVX, AVX2, AVX512F, AVX512PF,
 AVX512ER, AVX512CD, AVX512VL, AVX512BW, AVX512DQ, AVX512IFMA, AVX512VBMI, SHA,
@@ -22684,7 +22805,8 @@ WBNOINVD, FMA4, PREFETCHW, RDPID, PREFETCHWT1, RDSEED, SGX, XOP, LWP,
 3DNow!@:, enhanced 3DNow!@:, POPCNT, ABM, ADX, BMI, BMI2, LZCNT, FXSR, XSAVE,
 XSAVEOPT, XSAVEC, XSAVES, RTM, HLE, TBM, MWAITX, CLZERO, PKU, AVX512VBMI2,
 GFNI, VAES, WAITPKG, VPCLMULQDQ, AVX512BITALG, MOVDIRI, MOVDIR64B, AVX512BF16,
-ENQCMD, AVX512VPOPCNTDQ, AVX5124FMAPS, AVX512VNNI, AVX5124VNNIW, CLDEMOTE拡張命令セットでの命令の使用を有効にする。それぞれに対応する@option{-mno-}オプションがあり、これらの命令の使用を無効にする。
+ENQCMD, AVX512VPOPCNTDQ, AVX5124FMAPS, AVX512VNNI, AVX5124VNNIW, SERIALIZE,
+UINTR, HRESET, AMXTILE, AMXINT8, AMXBF16, KL, WIDEKL, AVXVNNI or CLDEMOTE拡張命令セットでの命令の使用を有効にする。それぞれに対応する@option{-mno-}オプションがあり、これらの命令の使用を無効にする。
 
 これらの拡張機能は、組み込み関数としても利用できる。これらのスイッチで有効または無効にする関数の詳細については、@ref{x86 Built-in Functions}を参照せよ。
 
@@ -22760,7 +22882,7 @@ ENQCMD, AVX512VPOPCNTDQ, AVX5124FMAPS, AVX512VNNI, AVX5124VNNIW, CLDEMOTE拡張�
 @opindex mrecip
 このオプションは、@code{DIVSS}の代わりに、精度を高めるために追加のNewton-Raphsonステップのある@code{RCPSS}命令と@code{RSQRTSS}命令（およびそのベクトル化された変形@code{RCPPS}と@code{RSQRTPS}と@code{SQRTSS}（およびそれらのベクトル化されたバリアント）を使用する。 これらの命令は、@option{-funsafe-math-optimizations}が@option{-ffinite-math-only}と@option{-fno-trapping-math}とともに有効になっている場合にのみ生成される。シーケンスのスループットは、非相反命令のスループットよりも高いが、シーケンスの精度は2 ulpまで減少することある（すなわち、1.0の逆数は0.99999994に等しい）ことに注意すること。
 
-GCCは@option{-fast-math}ではすでに@code{RSQRTSS}（または@code{RSQRTPS}）の観点から@code {1.0f/sqrtf(@var{x})}を実装しているので、@option{-mrecip}は必要ないことに注意すること。
+GCCは@option{-fast-math}ではすでに@code{RSQRTSS}（または@code{RSQRTPS}）の観点から@code{1.0f/sqrtf(@var{x})}を実装しているので、@option{-mrecip}は必要ないことに注意すること。
 
 また、GCCは、既に@option{-ffast-math}（または上のオプションの組み合わせ）ではベクトル化された単精度浮動小数点数除算とベクトル化された@code{sqrtf(@var{x})}に対する追加のNewton-Raphsonステップ付きの上の列を生成するので、@option{-mrecip}は必要ないことに注意すること。
 
@@ -22790,22 +22912,27 @@ GCCは@option{-fast-math}ではすでに@code{RSQRTSS}（または@code{RSQRTPS}
 @item vec-sqrt
 ベクトル化平方根の近似を有効にする。
 @end table
-たとえば、@option{-mrecip=all, !sqrt}は、平方根を除き、すべての逆数近似を有効にする。
+
+たとえば、@option{-mrecip=all,!sqrt}は、平方根を除き、すべての逆数近似を有効にする。
 
 @item -mveclibabi=@var{type}
 @opindex mveclibabi
 外部ライブラリを使用して組み込み関数をベクトル化するために使用するABIタイプを指定する。 @var{type}にサポートされている値は、インテルの短いベクトル演算ライブラリの場合は@samp{svml}、AMD演算コアライブラリの場合は@samp{acml}である。このオプションを使用するには、@option{-ftree-vectorize}と@option{-funsafe-math-optimizations}の両方を有効にし、リンク時にSVMLまたはACML ABI互換ライブラリを指定する必要がある。
 
-GCCは現在、@option {-mveclibabi = svml}が使用されているときは対応する関数型用の@code{vmldExp2}, @code{vmldLn2}, @code{vmldLog102}, @code{vmldLog102}, @code{vmldPow2}, @code{vmldTanh2}, @code{vmldTan2}, @code{vmldAtan2}, @code{vmldAtanh2}, @code{vmldCbrt2}, @code{vmldSinh2}, @code{vmldSin2}, @code{vmldAsinh2}, @code{vmldAsin2}, @code{vmldCosh2}, @code{vmldCos2}, @code{vmldAcosh2}, @code{vmldAcos2}, @code{vmlsExp4}, @code{vmlsLn4}, @code{vmlsLog104}, @code{vmlsLog104}, @code{vmlsPow4}, @code{vmlsTanh4}, @code{vmlsTan4}, @code{vmlsAtan4}, @code{vmlsAtanh4}, @code{vmlsCbrt4}, @code{vmlsSinh4}, @code{vmlsSin4}, @code{vmlsAsinh4}, @code{vmlsAsin4}, @code{vmlsCosh4}, @code{vmlsCos4}, @code{vmlsAcosh4}, @code{vmlsAcos4}への呼び出しを@option{-mveclibabi=svml}が使われたときに使い、@code{__vrd2_sin}, @code{__vrd2_cos}, @code{__vrd2_exp}, @code{__vrd2_log}, @code{__vrd2_log2},
+GCCは現在、@option {-mveclibabi=svml}が使用されているときは対応する関数型用の@code{vmldExp2}, @code{vmldLn2}, @code{vmldLog102}, @code{vmldLog102}, @code{vmldPow2}, @code{vmldTanh2}, @code{vmldTan2}, @code{vmldAtan2}, @code{vmldAtanh2}, @code{vmldCbrt2}, @code{vmldSinh2}, @code{vmldSin2}, @code{vmldAsinh2}, @code{vmldAsin2}, @code{vmldCosh2}, @code{vmldCos2}, @code{vmldAcosh2}, @code{vmldAcos2}, @code{vmlsExp4}, @code{vmlsLn4}, @code{vmlsLog104}, @code{vmlsLog104}, @code{vmlsPow4}, @code{vmlsTanh4}, @code{vmlsTan4}, @code{vmlsAtan4}, @code{vmlsAtanh4}, @code{vmlsCbrt4}, @code{vmlsSinh4}, @code{vmlsSin4}, @code{vmlsAsinh4}, @code{vmlsAsin4}, @code{vmlsCosh4}, @code{vmlsCos4}, @code{vmlsAcosh4}, @code{vmlsAcos4}への呼び出しを@option{-mveclibabi=svml}が使われたときに使い、@code{__vrd2_sin}, @code{__vrd2_cos}, @code{__vrd2_exp}, @code{__vrd2_log}, @code{__vrd2_log2},
 @code{__vrd2_log10}, @code{__vrs4_sinf}, @code{__vrs4_cosf}, @code{__vrs4_expf}, @code{__vrs4_logf}, @code{__vrs4_log2f}, @code{__vrs4_log10f}, @code{__vrs4_powf}への対応する関数型用の呼び出しを、@option{-mveclibabi=acml}が使われたときに生成する。
 
 @item -mabi=@var{name}
 @opindex mabi
-指定された呼び出し規約のコードを生成する。 GNU / Linuxなどのシステムで使用されるABIでは@samp{sysv}、Microsoft ABIでは@samp{ms}が許容値である。 デフォルトでは、Microsoft WindowsターゲットではMicrosoft ABIを使用し、他のすべてのシステムではSysV ABIを使う。関数の属性@code{ms_abi}と@code{sysv_abi}を使用すると、特定の関数のこの動作を制御できる。@xref{Function Attributes}.
+指定された呼び出し規約のコードを生成する。 GNU/Linuxなどのシステムで使用されるABIでは@samp{sysv}、Microsoft ABIでは@samp{ms}が許容値である。 デフォルトでは、Microsoft WindowsターゲットではMicrosoft ABIを使用し、他のすべてのシステムではSysV ABIを使う。関数の属性@code{ms_abi}と@code{sysv_abi}を使用すると、特定の関数のこの動作を制御できる。@xref{Function Attributes}.
 
 @item -mforce-indirect-call
 @opindex mforce-indirect-call
 関数のすべての呼び出しを強制的に間接的にします。 これは、関数呼び出しのより正確なタイミング情報を生成するインテルプロセッサートレースを使用する場合に役立ちます。
+
+@item -mmanual-endbr
+@opindex mmanual-endbr
+@code{cf_check}関数属性を介してのみ、関数エントリにENDBR命令を挿入します。 これは、オプション@option{-fcf-protection=branch}とともに使用して、関数エントリでのENDBR挿入を制御する場合に役立ちます。
 
 @item -mcall-ms2sysv-xlogues
 @opindex mcall-ms2sysv-xlogues
@@ -22976,7 +23103,7 @@ struct
 @item -mtls-direct-seg-refs
 @itemx -mno-tls-direct-seg-refs
 @opindex mtls-direct-seg-refs
-TLSセグメントレジスタ（32ビットの場合は@code{％gs}、64ビットの場合は@code{％fs}）からのオフセットを使用してTLS変数にアクセスできるかどうか、スレッドベースポインタを追加する必要があるかどうかを制御する。 これが有効かどうかは、オペレーティングシステムによって異なり、TLSエリア全体をカバーするようにセグメントをマップするかどうかによって異なる。
+TLSセグメントレジスタ（32ビットの場合は@code{%gs}、64ビットの場合は@code{%fs}）からのオフセットを使用してTLS変数にアクセスできるかどうか、スレッドベースポインタを追加する必要があるかどうかを制御する。 これが有効かどうかは、オペレーティングシステムによって異なり、TLSエリア全体をカバーするようにセグメントをマップするかどうかによって異なる。
 
 GNU Cライブラリを使用するシステムの場合、デフォルトはオンである。
 
@@ -23044,7 +23171,7 @@ Intel Atomのような一部のプロセッサでは、8ビット符号なし整
 @opindex mstack-protector-guard-offset
 @var{guard}にカナリアを使用してスタック保護コードを生成する。サポートされている場所は、グローバルカナリアの@samp{global}およびTLSブロック内のスレッドカナリア（デフォルト）の@samp{tls}である。このオプションは、@option{-fstack-protector}または@option{-fstack-protector-all}が指定されている場合にのみ有効である。
 
-後者の選択肢では、オプション@option{-mstack-protector-guard-reg=@var{reg}}と@option{-mstack-protector-guard-offset=@var{offset}}カナリアを読み込むためのベース・レジスタとして、またそのベース・レジスタからのオフセットから使用するために、@code{%fs}または@code{％gs}を使用する。 これらのデフォルトは、関連するABIで指定されている。
+後者の選択肢では、オプション@option{-mstack-protector-guard-reg=@var{reg}}と@option{-mstack-protector-guard-offset=@var{offset}}カナリアを読み込むためのベース・レジスタとして、またそのベース・レジスタからのオフセットから使用するために、@code{%fs}または@code{%gs}を使用する。 これらのデフォルトは、関連するABIで指定されている。
 
 @item -mgeneral-regs-only
 @opindex mgeneral-regs-only
@@ -23122,6 +23249,12 @@ x86-64コードで、いわゆる「レッドゾーン」を使用しない。�
 ショートアドレスモード用のコードを生成する。 これは、32ビットおよびx32環境でのみサポートされている。 これは、32ビットおよびx32環境のデフォルトアドレスモードである。
 @end table
 
+@item -mneeded
+@itemx -mno-needed
+@opindex mneeded
+LinuxターゲットのGNU_PROPERTY_X86_ISA_1_NEEDEDGNUプロパティを発行して、バイナリの実行に必要なマイクロアーキテクチャISAレベルを示します。
+@end table
+
 @node x86 Windows Options
 @subsection x86 Windows オプション
 @cindex x86 Windows Options
@@ -23136,7 +23269,7 @@ x86-64コードで、いわゆる「レッドゾーン」を使用しない。�
 
 @item -mdll
 @opindex mdll
-このオプションは、CygwinおよびMinGWターゲットで使用できる。 DLL ---ダイナミックリンクライブラリ---を生成し、必要なランタイムスタートアップオブジェクトとエントリポイントの選択を可能にすることを指定する。
+このオプションは、CygwinおよびMinGWターゲットで使用できる。 DLL「ダイナミックリンクライブラリ」を生成し、必要なランタイムスタートアップオブジェクトとエントリポイントの選択を可能にすることを指定する。
 
 @item -mnop-fun-dllimport
 @opindex mnop-fun-dllimport
@@ -23267,7 +23400,7 @@ GNU/Linuxのようなターゲット用に、すべてのユーザモードXtens
 
 @item %include_noerr <@var{file}>
 @cindex @code{%include_noerr}
-@samp{％include}と似ていますが、インクルードファイルが見つからない場合はエラーメッセージを生成しない。
+@samp{%include}と似ていますが、インクルードファイルが見つからない場合はエラーメッセージを生成しない。
 
 @item %rename @var{old_name} @var{new_name}
 @cindex @code{%rename}
@@ -23286,7 +23419,7 @@ GNU/Linuxのようなターゲット用に、すべてのユーザモードXtens
 z-compile -input %i
 @end smallexample
 
-これは、名前が@samp{.ZZ}で終わる入力ファイルは@samp{z-compile}プログラムに渡されなければならず、これはコマンドラインスイッチ@option{-input}と結果@samp {％i}置換を実行する。 （下記参照。）
+これは、名前が@samp{.ZZ}で終わる入力ファイルは@samp{z-compile}プログラムに渡されなければならず、これはコマンドラインスイッチ@option{-input}と結果@samp{%i}置換を実行する。 （下記参照。）
 
 仕様文字列を提供する代わりに、接尾辞ディレクティブに続くテキストは、次のいずれかになる。
 
@@ -23342,13 +23475,13 @@ startfile    リンクの初めで入れるオブジェクトファイル
 
 この例では、@samp{lib}という名前を@samp{old_lib}という名前に変更し、以前の@samp{lib}の定義を新しいもので上書きする。新しい定義では、古い定義のテキストを含める前にいくつかの余分なコマンドラインオプションが追加されている。
 
-@dfn{Spec strings}（仕様文字列）は、対応するプログラムに渡すコマンドラインオプションのリストである。  さらに、仕様文字列には、可変テキストを置換するため、または条件付きでテキストをコマンドラインに挿入するための@samp{％}-接頭辞付きのシーケンスを含めることができる。 これらの構文を使用すると、非常に複雑なコマンドラインを生成することができる。
+@dfn{Spec strings}（仕様文字列）は、対応するプログラムに渡すコマンドラインオプションのリストである。  さらに、仕様文字列には、可変テキストを置換するため、または条件付きでテキストをコマンドラインに挿入するための@samp{%}-接頭辞付きのシーケンスを含めることができる。 これらの構文を使用すると、非常に複雑なコマンドラインを生成することができる。
 
-ここに仕様文字列のすべての定義済みの@samp{％}-シーケンスのテーブルがある。これらのシーケンスを展開した結果の周りにスペースは自動的に生成されないことに注意せよ。したがって、それらを連結したり、単一の引数で定数テキストと組み合わせることができる。
+ここに仕様文字列のすべての定義済みの@samp{%}-シーケンスのテーブルがある。これらのシーケンスを展開した結果の周りにスペースは自動的に生成されないことに注意せよ。したがって、それらを連結したり、単一の引数で定数テキストと組み合わせることができる。
 
 @table @code
 @item %%
-@samp{％}をプログラム名または引数に置き換える。
+@samp{%}をプログラム名または引数に置き換える。
 
 @item %i
 処理中の入力ファイルの名前に置き換える。
@@ -23357,44 +23490,38 @@ startfile    リンクの初めで入れるオブジェクトファイル
 処理中の入力ファイルの基本名を置き換える。これは、最後のピリオドまで（ディレクトリは含まず）の部分文字列である。
 
 @item %B
-これは@samp{％b}と同じだが、ファイルサフィックス（最後の後のテキスト）を含む。
+これは@samp{%b}と同じだが、ファイルサフィックス（最後の後のテキスト）を含む。
 
 @item %d
-@samp{％d}を含むかそれに続く引数を一時ファイル名としてマークし、GCCが正常に終了するとそのファイルが削除されるようにする。 @samp{％g}とは異なり、これは引数にテキストを与えない。
+@samp{%d}を含むかそれに続く引数を一時ファイル名としてマークし、GCCが正常に終了するとそのファイルが削除されるようにする。 @samp{%g}とは異なり、これは引数にテキストを与えない。
 
 @item %g@var{suffix}
-@var{接尾辞}という接尾辞を持ち、コンパイルごとに一度選択されるファイル名に置き換え、@samp{％d}と同じ方法で引数に印を付ける。サービス拒否攻撃に対する被害を軽減するため、以前に選択したファイル名が判明しても予測が困難な方法でファイル名が選択されるようになった。 たとえば、@samp{％g.s @dots{}％g.o @dots{}％g.s} @samp {ccUVUUAU.s ccXYAXZ12.o ccUVUUAU.s}に変わる可能性がある。 @var{suffix}は正規表現@samp{[.A-Za-z]*}や特殊文字列@samp{％O}にマッチする。これは@samp{％O}が前処理されたのとまったく同じように扱われる。以前は@samp{％g}は、コンパイルごとに一度選択されたファイル名で置き換えられていた。そのため、通常のテキストと同様に処理されていたため、そのような攻撃は成功する可能性が高くなっていた。
+@var{接尾辞}という接尾辞を持ち、コンパイルごとに一度選択されるファイル名に置き換え、@samp{%d}と同じ方法で引数に印を付ける。サービス拒否攻撃に対する被害を軽減するため、以前に選択したファイル名が判明しても予測が困難な方法でファイル名が選択されるようになった。 たとえば、@samp{%g.s @dots{}%g.o @dots{}%g.s} @samp {ccUVUUAU.s ccXYAXZ12.o ccUVUUAU.s}に変わる可能性がある。 @var{suffix}は正規表現@samp{[.A-Za-z]*}や特殊文字列@samp{%O}にマッチする。これは@samp{%O}が前処理されたのとまったく同じように扱われる。以前は@samp{%g}は、コンパイルごとに一度選択されたファイル名で置き換えられていた。そのため、通常のテキストと同様に処理されていたため、そのような攻撃は成功する可能性が高くなっていた。
 
 @item %u@var{suffix}
-@samp{％g}に似ているが、コンパイルごとに1回ではなく、現れるごとに毎回新しい一時ファイル名が生成される。
+@samp{%g}に似ているが、コンパイルごとに1回ではなく、現れるごとに毎回新しい一時ファイル名が生成される。
 
 @item %U@var{suffix}
-@samp{％u@var{suffix}}で生成された最後のファイル名を置き換える。最後のファイル名がない場合は新しいファイル名を生成する。@samp{％u@var{suffix}}がない場合、これは@samp{％g@var{suffix}}と似ているが、それらは同じサフィックス@emph{space}を共有しないので、@samp{%g.s @dots{} %U.s @dots{} %g.s @dots{} %U.s}は、@samp{％g.s}ごとに1つずつ、@samp{％U.s}ごとに1つずつ、2つの異なるファイル名を生成する。以前は、@samp{％U}は直前の@samp{％u}に対して選択されたファイル名で置き換えられていた。
+@samp{%u@var{suffix}}で生成された最後のファイル名を置き換える。最後のファイル名がない場合は新しいファイル名を生成する。@samp{%u@var{suffix}}がない場合、これは@samp{%g@var{suffix}}と似ているが、それらは同じサフィックス@emph{space}を共有しないので、@samp{%g.s @dots{} %U.s @dots{} %g.s @dots{} %U.s}は、@samp{%g.s}ごとに1つずつ、@samp{%U.s}ごとに1つずつ、2つの異なるファイル名を生成する。以前は、@samp{%U}は直前の@samp{%u}に対して選択されたファイル名で置き換えられていた。
 
 @item %j@var{suffix}
-もし存在し、書き込み可能で、@option{-save-temps}が使用されていない場合は、@code{HOST_BIT_BUCKET}の名前を置き換える。 それ以外の場合は、@samp{％u}のように一時ファイルの名前を置き換える。この一時ファイルは、プロセス間の通信ではなく、ジャンク処理メカニズムとして使用される。
+もし存在し、書き込み可能で、@option{-save-temps}が使用されていない場合は、@code{HOST_BIT_BUCKET}の名前を置き換える。 それ以外の場合は、@samp{%u}のように一時ファイルの名前を置き換える。この一時ファイルは、プロセス間の通信ではなく、ジャンク処理メカニズムとして使用される。
 
 @item %|@var{suffix}
 @itemx %m@var{suffix}
-@option{-pipe}が有効な場合を除いて、@samp{％g}と似ている。その場合、@samp{%|}は単一のダッシュを置き換え、@samp {％m}は何も置き換えない。これらは、プログラムに標準入力から読み込むか標準出力に書き込むかを指示する2つの最も一般的な方法である。もっと精巧なものが必要な場合は、@samp{％@{pipe:@code{X}@}}構文を使用することができる。例については@file{f/lang-specs.h}を参照せよ。
+@option{-pipe}が有効な場合を除いて、@samp{%g}と似ている。その場合、@samp{%|}は単一のダッシュを置き換え、@samp{%m}は何も置き換えない。これらは、プログラムに標準入力から読み込むか標準出力に書き込むかを指示する2つの最も一般的な方法である。もっと精巧なものが必要な場合は、@samp{%@{pipe:@code{X}@}}構文を使用することができる。例については@file{f/lang-specs.h}を参照せよ。
 
 @item %.@var{SUFFIX}
-後で@samp{％*}で出力されるときに、一致するスイッチのargsの接尾辞を@var{.SUFFIX}に置き換える。@var{SUFFIX}は次のスペースまたは％で終了する。
+後で@samp{%*}で出力されるときに、一致するスイッチのargsの接尾辞を@var{.SUFFIX}に置き換える。@var{SUFFIX}は次のスペースまたは%で終了する。
 
 @item %w
-このコンパイルの指定された出力ファイルとして@samp{％w}を含むかそれに続く引数をマークする。 これは、@samp{％o}が代入する引数のシーケンスに引数を置く。
+このコンパイルの指定された出力ファイルとして@samp{%w}を含むかそれに続く引数をマークする。 これは、@samp{%o}が代入する引数のシーケンスに引数を置く。
 
 @item %o
-すべての出力ファイルの名前を、それらの周囲に自動的にスペースを入れて置き換える。 @samp{％o}の前後にスペースを入れるべきである。そうしないと、結果は未定義である。@samp{％o}は、リンカを実行するための仕様で使用される。名前に接尾辞が付いていない入力ファイルは、コンパイルされないが、出力ファイルには含まれているため、リンクされる。
+すべての出力ファイルの名前を、それらの周囲に自動的にスペースを入れて置き換える。 @samp{%o}の前後にスペースを入れるべきである。そうしないと、結果は未定義である。@samp{%o}は、リンカを実行するための仕様で使用される。名前に接尾辞が付いていない入力ファイルは、コンパイルされないが、出力ファイルには含まれているため、リンクされる。
 
 @item %O
-オブジェクトファイルの接尾辞を置き換える。完全なファイル名を作成する必要があるため、これは@samp{％g, ％u, ％U}の直後にあるときに特別に処理されることに注意せよ。@samp {％g、％u、％U}が現在、例えば@samp{.o}が続くような、@samp{%O}が続く追加の@var{suffix}文字をサポートしていないことを除いて、@samp {％O}は既に置換されているかのように扱われる
-
-@item %p
-現在のターゲットマシンの標準マクロ定義を置き換える。 @command {cpp}の実行時にこれを使用します。
-
-@item %P
-@samp{%p}と同じだが、@samp{__}で始まるマクロや@samp{_@var{L}}を除いて、各定義済みマクロの名前の前後に@samp {__}を置く。 @var{L}は大文字である。これはISO C向けである。
+オブジェクトファイルの接尾辞を置き換える。完全なファイル名を作成する必要があるため、これは@samp{%g, %u, %U}の直後にあるときに特別に処理されることに注意せよ。@samp {%g、%u、%U}が現在、例えば@samp{.o}が続くような、@samp{%O}が続く追加の@var{suffix}文字をサポートしていないことを除いて、@samp {%O}は既に置換されているかのように扱われる
 
 @item %I
 @env{GCC_EXEC_PREFIX}からの@option{-iprefix}、@env{TARGET_SYSTEM_ROOT}からの@option{-isysroot}、@env{COMPILER_PATH}からの@option{-isystem} @option{-B}オプション）と@option{-imultilib}を使用する。
@@ -23408,20 +23535,29 @@ startfile    リンクの初めで入れるオブジェクトファイル
 @item %e@var{str}
 @var{str}をエラーメッセージとして出力する。 @var{str}は改行で終了する。一貫性のないオプションが検出された場合に使用する。
 
+@item %n@var{str}
+通知として@var{str}を印刷します。 @var{str}は改行で終了します。
+
 @item %(@var{name})
 この時点で、spec文字列@var{name}の内容を置き換える。
 
 @item %x@{@var{option}@}
-@samp {％X}のオプションを累積する。
+@samp {%X}のオプションを累積する。
 
 @item %X
-@option{-Wl}または@samp{％x}指定文字列によって指定された蓄積されたリンカオプションを出力する。
+@option{-Wl}または@samp{%x}指定文字列によって指定された蓄積されたリンカオプションを出力する。
 
 @item %Y
 @option{-Wa}で指定した累積アセンブラオプションを出力する。
 
 @item %Z
 @option {-Wp}で指定された累積プリプロセッサオプションを出力する。
+
+@item %M
+@code{multilib_os_dir}を出力します。
+
+@item %R
+@code{target_system_root}と@code{target_sysroot_suffix}の連結を出力します。
 
 @item %a
 @code{asm}仕様を処理する。 これは、アセンブラに渡されるスイッチを計算するために使用される。
@@ -23430,7 +23566,7 @@ startfile    リンクの初めで入れるオブジェクトファイル
 @code{asm_final}仕様を処理する。 これは、このようなプログラムが必要な場合に、スイッチをアセンブラポストプロセッサに渡すための仕様文字列である。
 
 @item %l
-@code{link}仕様を処理する。 これは、リンカーに渡されたコマンドラインを計算するための仕様である。 通常、@samp{％L％G％S％Dと％E}シーケンスを使用する。
+@code{link}仕様を処理する。 これは、リンカーに渡されたコマンドラインを計算するための仕様である。 通常、@samp{%L%G%S%Dと%E}シーケンスを使用する。
 
 @item %D
 GCCがスタートアップファイルを含んでいる可能性のあるディレクトリごとに@option{-L}オプションをダンプする。 ターゲットがマルチブロックをサポートしている場合、現在のmultilibディレクトリがこれらのパスのそれぞれに付加される。
@@ -23461,6 +23597,12 @@ GCCがスタートアップファイルを含んでいる可能性のあるデ�
 
 @item %<S
 コマンドラインから@code{-S}をすべて削除する。 注---このコマンドは位置によって異なる。これより前の@samp{%}コマンドは@code{-S}を見て、これよりあとの@samp{%}コマンドは見ない。
+
+@item %<S*
+@samp{%<S}に似ていますが、@code{-S}で始まるすべてのスイッチに一致します。
+
+@item %>S
+@samp{%<S}に似ていますが、GCCコマンドラインで@code{-S}を保持します。
 
 @item %:@var{function}(@var{args})
 名前付き関数@var{function}を呼び出し、@var{args}を渡す。 @var{args}はネストされた仕様文字列として最初に処理され、通常の方法で引数ベクトルに分割される。 関数は現在の仕様の一部として文字通り現れたかのように処理される文字列を返す。
@@ -23494,6 +23636,20 @@ crt0%O%s %:if-exists(crti%O%s) \
 %:if-exists-else(crtbeginT%O%s crtbegin%O%s)
 @end smallexample
 
+@item @code{if-exists-then-else}
+@code{if-exists-then-else}仕様関数は、少なくとも2つの引数とオプションの3番目の引数を取ります。 最初の引数は、ファイルへの絶対パス名です。 ファイルが存在する場合、関数は2番目の引数を返します。 ファイルが存在しない場合、関数は3番目の引数が存在する場合はそれを返し、存在しない場合はNULLを返します。 これは、ファイルの存在に基づいて、1つのテキスト、またはオプションで別のテキストを展開するために使用できます。 これはその使用法の小さな例です：
+
+@smallexample
+-l%:if-exists-then-else(%:getenv(VSB_DIR rtnet.h) rtnet net)
+@end smallexample
+
+@item @code{sanitize}
+@code{sanitize}仕様関数は引数を取りません。 アドレス、スレッド、または未定義の動作サニタイザーがアクティブな場合は、NULL以外を返します。
+
+@smallexample
+%@{%:sanitize(address):-funwind-tables@}
+@end smallexample
+
 @item @code{replace-outfile}
 @code{replace-outfile}仕様関数は2つの引数をとる。これは、outfiles配列の最初の引数を探し、それを2番目の引数に置き換える。 その使い方の小さな例がある：
 
@@ -23506,6 +23662,50 @@ crt0%O%s %:if-exists(crti%O%s) \
 
 @smallexample
 %:remove-outfile(-lm)
+@end smallexample
+
+@item @code{version-compare}
+@code{version-compare}仕様関数は、次の形式の4つまたは5つの引数を取ります。
+
+@smallexample
+<comparison-op> <arg1> [<arg2>] <switch> <result>
+@end smallexample
+
+比較がtrueと評価された場合は@code{result}を返し、そうでない場合はNULLを返します。 サポートされている@code{comparison-op}の値は次のとおりです。
+
+@table @code
+@item >=
+@code{switch}が@code{arg1}より後の（または同じ）バージョンである場合はTrue
+
+@item !>
+@code{>=}の反対
+
+@item <
+@code{switch}が@code{arg1}より前のバージョンである場合はTrue
+
+@item !<
+@code{<}の反対
+
+@item ><
+@code{switch}が@code{arg1}以降で、@code{arg2}より前の場合はTrue
+
+@item <>
+@code{switch}が@code{arg1}より前、または@code{arg2}以降の場合はTrue
+@end table
+
+@code{switch}がまったく存在しない場合、@code{comparison-op}の最初の文字が@code{!}でない限り、条件はfalseになります。
+
+@smallexample
+%:version-compare(>= 10.3 mmacosx-version-min= -lmx)
+@end smallexample
+
+上記の例では、@option{-mmacosx-version-min=10.3.9}が渡された場合、@option{-lmx}が追加されます。
+
+@item @code{include}
+@code{include}仕様関数は@code{%include}とよく似た動作をしますが、仕様内にネストできるため、条件付き化できるという利点があります。 ファイル名という1つの引数を取り、startfileパスでそれを探します。 常にNULLを返します。
+
+@smallexample
+%@{static-libasan|static:%:include(libsanitizer.spec)%(link_libasan)@}
 @end smallexample
 
 @item @code{pass-through-libs}
@@ -23528,17 +23728,35 @@ Use "-Wa,OPTION" to pass "OPTION" to the assembler.
 @option{-target-help}出力のアセンブラオプションからコンパイラオプションを分離するために使用される。
 @end table
 
+@item @code{gt}
+@code{gt}仕様関数は2つ以上の引数を取ります。 最後から2番目の引数が最後の引数より大きい場合は@code{""}（空の文字列）を返し、それ以外の場合はNULLを返します。 次の例では、コマンドラインで指定された最後の@option{-ftree-parallelize-loops=}オプションが1より大きい場合、@code{link_gomp}仕様を挿入します。
+
+@smallexample
+%@{%:gt(%@{ftree-parallelize-loops=*:%*@} 1):%:include(libgomp.spec)%(link_gomp)@}
+@end smallexample
+
+@item @code{debug-level-gt}
+@code{debug-level-gt}仕様関数は、1つの引数を取り、@code{debug_info_level}が指定された数より大きい場合は@code{""}（空の文字列）を返し、それ以外の場合はNULLを返します。
+
+@smallexample
+%@{%:debug-level-gt(0):%@{gdwarf*:--gdwarf2@}@}
+@end smallexample
+@end table
+
 @item %@{S@}
-スイッチがGCCに与えられている場合は、@code{-S}スイッチに置き換える。そのスイッチが指定されていない場合、これは何も置き換えない。先頭のダッシュはこのオプションを指定するときは省略され、置換が実行されると自動的に挿入されることに注意せよ。したがって、仕様文字列@samp{％@{foo@}}は、コマンドラインオプション@option{-foo}と一致し、コマンドラインオプション@option{-foo}を出力する。
+スイッチがGCCに与えられている場合は、@code{-S}スイッチに置き換える。そのスイッチが指定されていない場合、これは何も置き換えない。先頭のダッシュはこのオプションを指定するときは省略され、置換が実行されると自動的に挿入されることに注意せよ。したがって、仕様文字列@samp{%@{foo@}}は、コマンドラインオプション@option{-foo}と一致し、コマンドラインオプション@option{-foo}を出力する。
 
 @item %W@{S@}
-％@{@code{S}@}と似ているが、失敗したときに削除するファイルとして指定された最後の引数をマークする。
+%@{@code{S}@}と似ているが、失敗したときに削除するファイルとして指定された最後の引数をマークする。
+
+@item %@@@{S@}
+%@{@code{S}@}と同様ですが、結果を@code{FILE}に入れ、@code{@@file}引数が指定されている場合は@code{@@FILE}に置き換えます。
 
 @item %@{S*@}
-指定されたすべてのスイッチをGCCに代入する。名前は@code{-S}で始まるだけでなく、引数もとる。これは、@option{-o}、@option{-D}、@option{-I}などのスイッチに使用される。GCCは@option{-o foo}を@samp{o}で始まる1つのスイッチとみなす。 ％@{o*@}はスペースを含めてこのテキストを置き換えるます。 したがって、2つの引数が生成される。
+指定されたすべてのスイッチをGCCに代入する。名前は@code{-S}で始まるだけでなく、引数もとる。これは、@option{-o}、@option{-D}、@option{-I}などのスイッチに使用される。GCCは@option{-o foo}を@samp{o}で始まる1つのスイッチとみなす。 %@{o*@}はスペースを含めてこのテキストを置き換えるます。 したがって、2つの引数が生成される。
 
 @item %@{S*&T*@}
-％@{@code{S}*@}と似ているが、@code{S}と@code {T}オプションの順序を保持する（仕様の@code{S}と@code{T}の順序は重要ではない）。アンパサンドで区切られた変数はいくつでもよい。 ワイルドカードはそれぞれオプションである。@samp{％@{D*＆U*＆A*@}}としてCPPに役立つ。
+%@{@code{S}*@}と似ているが、@code{S}と@code {T}オプションの順序を保持する（仕様の@code{S}と@code{T}の順序は重要ではない）。アンパサンドで区切られた変数はいくつでもよい。 ワイルドカードはそれぞれオプションである。@samp{%@{D*&U*&A*@}}としてCPPに役立つ。
 
 @item %@{S:X@}
 @option{-S}スイッチがGCCに与えられている場合、@code{X}に置き換えられる。
@@ -23547,9 +23765,9 @@ Use "-Wa,OPTION" to pass "OPTION" to the assembler.
 @option{-S}スイッチがGCCに対して与えられて@emph{いない}場合、@code{X}に置き換えられる。
 
 @item %@{S*:X@}
-名前が@code{-S}で始まるスイッチがGCCに指定されている場合は、@code{X}に置き換える。通常、@code{X}はスイッチの数にかかわらず一度だけ置換される。しかし、@code{％*}が@code{X}のどこかに現れた場合、@code{X}は、一致するスイッチごとに1回置き換えられ、@code{%*}は@code {*}に一致するスイッチの一部で置き換えられる。
+名前が@code{-S}で始まるスイッチがGCCに指定されている場合は、@code{X}に置き換える。通常、@code{X}はスイッチの数にかかわらず一度だけ置換される。しかし、@code{%*}が@code{X}のどこかに現れた場合、@code{X}は、一致するスイッチごとに1回置き換えられ、@code{%*}は@code {*}に一致するスイッチの一部で置き換えられる。
 
-@code{％*}が仕様列の最後の部分として現れた場合、最後の置換の終了後にスペースが追加される。ただし、列内にテキストがさらに存在する場合は、スペースは生成されない。 これにより、より大きな文字列の一部として@code{％*}置換を使用することができる。たとえば、次のような列文字列があると：
+@code{%*}が仕様列の最後の部分として現れた場合、最後の置換の終了後にスペースが追加される。ただし、列内にテキストがさらに存在する場合は、スペースは生成されない。 これにより、より大きな文字列の一部として@code{%*}置換を使用することができる。たとえば、次のような列文字列があると：
 
 @smallexample
 %@{mcu=*:--script=%*/memory.ld@}
@@ -23566,7 +23784,7 @@ Use "-Wa,OPTION" to pass "OPTION" to the assembler.
 接尾辞@code{S}を持つファイルを処理する場合は、@code{X}に置き換える。
 
 @item %@{!.S:X@}
-接尾辞@code{S}を持つファイルを処理@emph{しない}場合は、@code{X}に置き換える。
+接尾辞@code{S}を持つファイルを処理@emph{_しない_}場合は、@code{X}に置き換える。
 
 @item %@{,S:X@}
 言語@code{S}のファイルを処理する場合は、@code {X}に置き換える。
@@ -23575,7 +23793,7 @@ Use "-Wa,OPTION" to pass "OPTION" to the assembler.
 言語@code{S}のファイルを処理していない場合は、@code{X}に置き換える。
 
 @item %@{S|P:X@}
-@code{-S}か@code{-P}のどちらかがGCCに与えられた場合、@code{X}に置き換える。これは@samp{!}、@samp{.}、@samp{,}、@code{*}シーケンスと組み合わせても問題ないが、結合は@samp{|}よりも強くなる。 @code{X*}に@code{％*}が含まれている場合は、すべての選択肢に星印を付ける必要があり、最初の一致する選択肢のみが置換される。
+@code{-S}か@code{-P}のどちらかがGCCに与えられた場合、@code{X}に置き換える。これは@samp{!}、@samp{.}、@samp{,}、@code{*}シーケンスと組み合わせても問題ないが、結合は@samp{|}よりも強くなる。 @code{X*}に@code{%*}が含まれている場合は、すべての選択肢に星印を付ける必要があり、最初の一致する選択肢のみが置換される。
 
 たとえば、次のような仕様文字列があると、
 
@@ -23593,15 +23811,20 @@ jim.d         -bar -boggle
 -d jim.d      -bar -baz -boggle
 @end smallexample
 
+@item %@{%:@var{function}(@var{args}):X@}
+
+@var{function}という名前の関数を引数@var{args}で呼び出します。 関数がNULL以外を返す場合は、@code{X}が置換され、NULLを返す場合は、置換されません。
+
 @item %@{S:X; T:Y; :D@}
+
 GCCに@code{S}が与えられていれば、@code{X}に置き換えられる。 そうでなければ、GCCに@code{T}が与えられていれば、@code{Y}に置き換える。さもなければ@code{D}を代入する。必要だけ多くの節をできる。 これは、必要に応じて@code{.}、@code{,}、@code{!}、@code{|}、@code{*}と組み合わせることができる。
 
 
 @end table
 
-@samp{％@{S@}}や@samp{％@{S:X@}}やそれに類する構文のテキストの@code {S}にマッチするスイッチは、バックスラッシュを使って次の文字の特殊な意味を無視することができ、これにより、特別に扱われる文字のリテラルマッチングが可能になる。@option{-std=iso9899:1999}オプションが指定されている場合、@samp{％@{std=iso9899\:1999:X@}}は@code{X}を置き換える。
+@samp{%@{S@}}や@samp{%@{S:X@}}やそれに類する構文のテキストの@code {S}にマッチするスイッチは、バックスラッシュを使って次の文字の特殊な意味を無視することができ、これにより、特別に扱われる文字のリテラルマッチングが可能になる。@option{-std=iso9899:1999}オプションが指定されている場合、@samp{%@{std=iso9899\:1999:X@}}は@code{X}を置き換える。
 
-@samp{%@{S:X@}}内の条件付きテキスト@code{X}や他の同様の構文には、他のネストされた@samp{％}構造体やスペース、あるいは改行文字が含まれている。 これらは上記のように通常通り処理される。@code{X}の末尾の空白は無視される。 空白は、@code{.}や@code {*}とそれに対応する単語を除いて、これらの構造体のコロンの左側の任意の場所に表示されることもある。
+@samp{%@{S:X@}}内の条件付きテキスト@code{X}や他の同様の構文には、他のネストされた@samp{%}構造体やスペース、あるいは改行文字が含まれている。 これらは上記のように通常通り処理される。@code{X}の末尾の空白は無視される。 空白は、@code{.}や@code {*}とそれに対応する単語を除いて、これらの構造体のコロンの左側の任意の場所に表示されることもある。
 
 @option{-O}、@option{-f}、@option{-m}、および@option{-W}スイッチは、これらの構造体で特に処理される。@option{-O}の別の値または@option{-f}、@option{-m}、または@option{-W}スイッチの否定された形式がコマンドラインの後のほうにある場合、以前のスイッチ値@{@code{S}*@}を除いて無視される。ここで@code {S}はすべての一致するオプションを渡す単一文字である。
 
@@ -23663,13 +23886,13 @@ GNU Compiler Collection (GCC) Internals}.
 
 GCCが指定された接頭辞を使用してサブプログラムを見つけることができない場合、GCCは通常の場所でサブプログラムを探す。
 
-@env{GCC_EXEC_PREFIX}のデフォルト値は@file{@var {prefix}/lib/gcc/}である。ここで、@var{prefix}はインストールされたコンパイラの接頭辞である。 多くの場合、@var{prefix}は、@file{configure}スクリプトを実行したときの@code{prefix}の値である。
+@env{GCC_EXEC_PREFIX}のデフォルト値は@file{@var{prefix}/lib/gcc/}である。ここで、@var{prefix}はインストールされたコンパイラの接頭辞である。 多くの場合、@var{prefix}は、@file{configure}スクリプトを実行したときの@code{prefix}の値である。
 
 @option{-B}で指定された他の接頭辞は、この接頭辞よりも優先される。
 
 この接頭辞は、リンクに使用される@file{crt0.o}のようなファイルを見つけるためにも使用される。
 
-さらに、接頭辞は、ヘッダーファイルを検索するディレクトリを見つける際に通常とは異なる方法で使用される。名前が通常@samp{/usr/local/lib/gcc}で始まる標準ディレクトリ（より正確には@env{GCC_INCLUDE_DIR}の値）ごとに、GCCは代替ディレクトリ名を生成するために指定された接頭辞で始まるものを置き換えようとする。 したがって、@option{-Bfoo /}で、GCCは標準ディレクトリ@file {/usr/local/lib/bar}を検索する直前に@file{foo/bar}を検索する。標準ディレクトリが設定された@var{prefix}で始まる場合、@var{prefix}の値はヘッダファイルを探すときに@env {GCC_EXEC_PREFIX}に置き換えらる。
+さらに、接頭辞は、ヘッダーファイルを検索するディレクトリを見つける際に通常とは異なる方法で使用される。名前が通常@samp{/usr/local/lib/gcc}で始まる標準ディレクトリ（より正確には@env{GCC_INCLUDE_DIR}の値）ごとに、GCCは代替ディレクトリ名を生成するために指定された接頭辞で始まるものを置き換えようとする。 したがって、@option{-Bfoo/}で、GCCは標準ディレクトリ@file{/usr/local/lib/bar}を検索する直前に@file{foo/bar}を検索する。標準ディレクトリが設定された@var{prefix}で始まる場合、@var{prefix}の値はヘッダファイルを探すときに@env{GCC_EXEC_PREFIX}に置き換えらる。
 
 @item COMPILER_PATH
 @findex COMPILER_PATH
@@ -23677,7 +23900,7 @@ GCCが指定された接頭辞を使用してサブプログラムを見つけ�
 
 @item LIBRARY_PATH
 @findex LIBRARY_PATH
-@env{LIBRARY_PATH}の値は、@env{PATH}と同様に、コロンで区切られたディレクトリのリストである。ネイティブコンパイラとして設定された場合、GCCは@env{GCC_EXEC_PREFIX}を使用してそれらを見つけることができない場合、特別なリンカファイルを検索するときに指定されたディレクトリを試す。GCCを使用してリンクすると、@option{-l}オプションの通常のライブラリを検索する際にもこれらのディレクトリが使用される（しかし、@option {-L}で指定されたディレクトリが最初に来る）。
+@env{LIBRARY_PATH}の値は、@env{PATH}と同様に、コロンで区切られたディレクトリのリストである。ネイティブコンパイラとして設定された場合、GCCは@env{GCC_EXEC_PREFIX}を使用してそれらを見つけることができない場合、特別なリンカファイルを検索するときに指定されたディレクトリを試す。GCCを使用してリンクすると、@option{-l}オプションの通常のライブラリを検索する際にもこれらのディレクトリが使用される（しかし、@option{-L}で指定されたディレクトリが最初に来る）。
 
 @item LANG
 @findex LANG
@@ -23764,3 +23987,157 @@ EUCJP文字を認識する。
 最後のものを除くこれらすべての場合、条件が満たされない場合、コンパイラはプリコンパイル済みヘッダーを自動的に無視する。オプションの組み合わせがうまくいかず、コンパイルされたヘッダーが無視されない場合は、バグレポートを提出することを検討せよ。@ref{Bugs}参照。
 
 プリコンパイル済みヘッダーを生成して使用する際に異なるオプションを使用する場合、実際の動作はオプションの動作の混合である。 たとえば、プリコンパイル済みヘッダーを生成するのに@option{-g}を使用するが、使うときにはしない場合は、プリコンパイル済みヘッダー内のルーチンのデバッグ情報を取得することも、取得しないこともできる。
+
+@node C++ Modules
+@section C++モジュール
+@cindex speed of compilation
+
+モジュールはC++20言語機能です。 名前が示すように、それらはモジュラーコンパイルシステムを提供し、より高速なビルドとより優れたライブラリ分離の両方を提供することを目的としています。 「Merging Modules」ペーパー@uref{https://wg21.link/p1103}は、後の変更をキャプチャしていませんが、標準に対する一連の変更を最も読みやすく提供しています。 その仕様は現在C++ 20、@uref{git@@github.com:cplusplus/draft.git}の一部であり、完全であると見なされます（今後欠陥報告がある可能性があります）。
+
+@emph{_G++のモジュールのサポートは完成していません。}  バグ以外の既知の欠落部分は次のとおりです。
+
+@table @emph
+
+@item プライベートモジュールフラグメント
+プライベートモジュールフラグメントは認識されますが、エラーが発生します。
+
+@item パーティション定義の可視性ルール
+エンティティは実装パーティションで定義できますが、それらの定義はモジュールの外部では使用できません。 これは実装されておらず、定義はモジュール外で使用できます。
+
+@item 到達可能なGMエンティティのテキストマージ
+エンティティは、異なるヘッダーユニット間で複数定義される場合があります。 これらは重複排除する必要があり、これはインポート間で、またはインポートがテキストで定義されたエンティティを再定義するときに実装されます。 ただし、その逆は実装されていません---インポートされたヘッダーユニットで定義されたエンティティをテキストで再定義します。 再定義エラーが発生します。
+
+@item 翻訳-ユニットのローカル参照ルール
+ペーパーp1815（@uref{https://wg21.link/p1815}）およびp2003（@uref{https://wg21.link/p2003}）は、エクスポートされた領域が参照できるエンティティ（たとえば、エンティティ）に制限を追加します。 エクスポートされたテンプレート定義が参照する場合があります）。 これらは完全には実装されていません。
+Papers p1815 (@uref{https://wg21.link/p1815}) and p2003
+
+@item 言語リンケージモジュールの添付
+明示的な言語リンケージ（@code{extern "C"}または@code{extern "C++"}）を使用した宣言は、名前付きモジュールの範囲内であっても、グローバルモジュールに添付されます。 これは実装されていません。 このような宣言は、宣言されているモジュールに添付されます（存在する場合）。
+
+@item 標準ライブラリヘッダーユニット
+標準ライブラリは、インポート可能なヘッダーユニットとして提供されていません。 このようなユニットをインポートする場合は、最初に明示的にビルドする必要があります。これを注意深く行わないと、モジュール機構がマージする必要のある複数の宣言が存在する可能性があります---コンパイラリソースの使用は、ヘッダーファイルをヘッダーユニットに分割する方法によって影響を受ける可能性があります。
+
+@end table
+
+モジュラーコンパイルは、@option{-std=c++20}オプションだけでは有効になりま@emph{_せん_}。 @option{-fmodules-ts}オプションを使用して明示的に有効にする必要があります。 これは、選択した言語バージョンとは無関係ですが、C++20より前のバージョンでは、もちろん拡張機能です。
+
+新しいソースファイルのサフィックスは必要なく、サポートされていません。 非標準のサフィックス（@xref{全体のオプション}）を使用する場合は、@option{-x c++}オプションも指定する必要があります。@footnote{一部のユーザーは、ソースに@code{module.cppm}という名前を付けるなど、新しいサフィックスを持つモジュールインターフェイスファイルを区別することを好みます。これには、新しいサフィックスについてすべてのツールに教えることが含まれます。@code{module-m.cpp}に名前を付けるなど、別のスキームの方が侵襲性が低くなります。}
+
+モジュールインターフェイスユニットをコンパイルすると、コンパイル済みモジュールインターフェイス（CMI）と呼ばれる追加の出力（アセンブリまたはオブジェクトファイルへの）が生成されます。 これは、モジュールのエクスポートされた宣言をエンコードします。 モジュールをインポートすると、CMIが読み込まれます。 インポートグラフは、有向非巡回グラフ（DAG）です。 インポーターの前にインポートをビルドする必要があります。
+
+ヘッダーファイル自体をヘッダーユニットにコンパイルできます。ヘッダーユニットは、コンパイルの高速化を目的とした移行機能です。 @option{-fmodule-header}オプションはこれを有効にするために使用され、@option{-fmodules-ts}オプションを含みます。 これらのCMIは、完全に解決された基になるヘッダーファイルによって名前が付けられるため、サブディレクトリを含む完全なパス名である可能性があります。 ヘッダーファイルが絶対パス名で見つかった場合でも、CMIの場所はCMIルートディレクトリからの相対位置にあります。
+
+ヘッダーファイルには多くの場合サフィックスがないため、通常は@option{-x}オプションを指定して、ソースがヘッダーファイルであることをコンパイラーに通知する必要があります。@option{-x c++-header}、@option{-x c++-user-header}、または@option{-x c++-system-header}を使用できます。 @option{-fmodules-ts}と組み合わせて使用すると、これらはすべて適切な@option{-fmodule-header}オプションを含みます。 後者の2つのバリアントは、ユーザーまたはシステムのインクルードパスを使用して、指定されたファイルを検索します。 これにより、たとえば、標準ライブラリのヘッダーファイルをヘッダーユニットとしてコンパイルできます。インストール場所を正確に知る必要はありません。 これらのバリアントの1つとして言語を指定すると、ヘッダーファイルにオブジェクトファイルが関連付けられていないため、オブジェクトファイルの出力も禁止されます。
+
+@option{-fmodule-only}オプションは、モジュールインターフェイスをコンパイルするための関連オブジェクトファイルの生成を無効にします。 CMIのみが生成されます。このオプションは、@option{-fmodule-header}オプションを使用する場合に暗黙的に示されます。
+
+@option{-flang-info-include-translate}および@option{-flang-info-include-translate-not}オプションは、インクルード変換が発生するかどうかを示します。引数なしでは、前者は全include変換を示します。 後者は、意図的にテキストであることがわかっていないインクルードファイルのすべての非翻訳を示します。引数を使用すると、その特定の末尾のパス名を持つヘッダーファイルのインクルード変換に関するクエリが記録されます。このフォームを繰り返して、いくつかの異なるヘッダーファイルをカバーすることができます。このオプションは、インクルード変換が行われているかどうかを判断するのに役立つ場合があります---正しく機能している場合は、まったく存在しなかったかのように動作します。
+
+@option{-Winvalid-imported-macros}オプションを使用すると、インポートされたすべてのマクロがコンパイルの最後に解決されます。 これがないと、インポートされたマクロは、展開または（再）定義された場合にのみ解決されます。 このオプションは、すべてのマクロの競合するインポート定義を検出します。
+
+@option{-fmodule-mapper}ファミリーのオプションの詳細については、@xref{C++ Module Mapper}を参照してください。
+
+@menu
+* C++ Module Mapper::       モジュールマッパー
+* C++ Module Preprocessing::  モジュールプリプロセス
+* C++ Compiled Module Interface:: コンパイル済みモジュールインターフェース
+@end menu
+
+@node C++ Module Mapper
+@subsection モジュールマッパー
+@cindex C++ Module Mapper
+
+モジュールマッパーは、コンパイラーがモジュール名とCMIファイル間のマッピングを決定するために照会するサーバーまたはファイルを提供します。 また、オンデマンドでCMIを構築するためにも使用されます。 @emph{*マッパーの機能はまだ初期段階であり、ビルドシステムの相互作用を実験することを目的としています。*}
+
+マッパーは、@option{-fmodule-mapper=@var{val}}オプションまたは@env{CXX_MODULE_MAPPER}環境変数を使用して指定できます。 値は、次のいずれかの形式になります。
+
+@table @gcctabopt
+
+@item @r{[}@var{hostname}@r{]}:@var{port}@r{[}?@var{ident}@r{]}
+接続するオプションのホスト名と数値のポート番号。 ホスト名を省略すると、ループバックアドレスが使用されます。 ホスト名が複数のIPV6アドレスに対応している場合、1つが成功するまで、これらが順番に試行されます。 ホストにIPv6がない場合、このフォームは機能しません。 IPv4を使用する必要がある場合は@option{-fmodule-mapper='|ncat @var{ipv4host} @var{port}'}を使います。
+
+@item =@var{socket}@r{[}?@var{ident}@r{]}
+ローカルドメインソケット。 ホストにローカルドメインソケットがない場合、このフォームは機能しません。
+
+@item |@var{program}@r{[}?@var{ident}@r{]} @r{[}@var{args...}@r{]}
+stdin/stdoutストリームで生成し、通信するプログラム。 @var{PATH}環境変数でプログラムが検索されます。 引数はスペース文字で区切られます（プログラムに提供される引数の1つにスペースを含めることはできません）。 例外は、@var{program}が@@で始まる場合です。 その場合、@var{program}（sans @@）はコンパイラの内部バイナリディレクトリで検索されます。 したがって、サンプルのマッパーサーバーは@code{@@g++-mapper-server}で指定できます。
+
+@item <>@r{[}?@var{ident}@r{]}
+@item <>@var{inout}@r{[}?@var{ident}@r{]}
+@item <@var{in}>@var{out}@r{[}?@var{ident}@r{]}
+通信する名前付きパイプまたはファイル記述子。 最初の形式である@option{<>}は、stdinとstdoutを介して通信します。 他の形式では、ファイル記述子を指定したり、パイプに名前を付けたりできます。 数値はファイル記述子として解釈されます。そうでない場合は、名前付きパイプが開かれます。 2番目の形式は双方向パイプを指定し、最後の形式では2つの独立したパイプを指定できます。 この方法でファイル記述子を直接使用すると、中間プロセスの協力が必要になる可能性があるため、一般に脆弱です。 特に、stdinとstdoutを使用すると、他のコンパイラオプションによってコンパイラがstdinを読み取ったり、stdoutを書き込んだりする可能性があり、端末からの信号配信と不幸な相互作用が発生する可能性があるため、危険が伴います。
+
+@item @var{file}@r{[}?@var{ident}@r{]}
+スペースで区切られたモジュール名、ファイル名のペア、1行に1つずつで構成されるマッピングファイル。 直接インポートのマッピングとモジュールのエクスポート名のみを指定する必要があります。 他のマッピングが提供されている場合、それらはインポートされたCMIファイルに保存されているマッピングを上書きします。 リポジトリルートは、最初のアクティブな行のモジュール名として@samp{$root}を使用することにより、マッピングファイルで指定できます。
+
+@end table
+
+示されているように、オプションの@var{ident}は、@samp{?}}プレフィックスで示される、オプションの最初の単語の接尾辞になる場合があります。 この値は、モジュールサーバーとの最初のハンドシェイクで、またはマッピングファイル行のプレフィックスを指定するために使用されます。 サーバーの場合、@var{ident}が指定されていない場合は、メインのソースファイル名が使用されます。 ファイルの場合、値が指定されていない限り、空白以外のすべての行が重要です。指定されている場合、@var{ident}で始まる行のみが重要です。 @var{ident}は、モジュール名から空白で区切る必要があります。 @samp{<}、@samp{>}、@samp{?}、および@samp{|}の文字はシェルにとって重要であることが多いため、引用符が必要になる場合があることに注意してください。
+
+最初のモジュールマッピングが必要な場合、マッパーは遅延接続またはロードされます。 ネットワークプロトコルは、ネットワークを提供するホストでのみサポートされます。 マッパーが指定されていない場合、デフォルトが提供されます。
+
+プロジェクト固有のマッパーは、コンパイラーを呼び出すビルドシステムによって提供されることが期待されています。 すべてのコンパイルに汎用サーバーが提供されることは期待されていません。 そのため、サーバーは、ビルド構成、呼び出されたコンパイラー、およびそれが動作している環境（作業ディレクトリなど）を認識します。 ビルドを並列化する可能性があるため、複数のコンパイルが同じソケットに接続する場合があります。
+
+デフォルトのマッパーは、@samp{gcm.cache}ディレクトリにCMIファイルを生成します。 CMIファイルには@samp{.gcm}サフィックスが付いています。 モジュールユニット名は、ベース名を提供するために直接使用されます。 ヘッダーユニットは、基になるヘッダーファイル名を使用して相対パスを作成します。 パスがすでに相対パスである場合は、@samp{,}ディレクトリが先頭に追加されます。 内部の@samp{..}コンポーネントは@samp{,,}に変換されます。 一般にシンボリックリンクが存在する場合はあいまいであるため、プリプロセッサのインクルード検索アルゴリズムによって実行されるファイル名を超えて、これらのファイル名を正規化する試みは行われません。
+
+マッパープロトコルは、「モジュールマッパー」@uref{https://wg21.link/p1184}として公開されました。 実装は、正規のプロトコル定義を指定する@command{libcody}、@uref{https://github.com/urnathan/libcody}によって提供されます。 @command{make}に埋め込まれた概念実証サーバーの実装については、「Make Me A Module」、@uref{https://wg21.link/p1602}で説明されています。
+
+@node C++ Module Preprocessing
+@subsection モジュールプリプロセス
+@cindex C++ Module Preprocessing
+
+モジュールはヘッダーユニットのために前処理に影響を与え、変換を含みます。 プリプロセッサを個別のステップとして使用すると、正しい出力が生成されないか、CMIが使用可能である必要があります。
+
+ヘッダーユニットはマクロをインポートします。 これらのマクロは、後の条件付きインクルードに影響を与える可能性があるため、異なるインポートセットにカスケードする可能性があります。 前処理の際には、CMIをロードする必要があります。 ヘッダーユニットが使用できない場合、プリプロセッサーは警告を発行して続行します（前処理だけでないときは、エラーが発生します）。 このようなインポートを検出するには、入力ストリームをフェーズ4（マクロ展開）にプリプロセッサでトークン化する必要があります。
+
+インクルード変換は、@code{#include}、@code{#include_next}、および@code {#import}ディレクティブを内部の@code{import}宣言に変換します。 特定のディレクティブが変換されるかどうかは、モジュールマッパーによって制御されます。 ヘッダーユニット名は、前処理中に正規化されます。
+
+マクロのインポートのために依存関係情報を出力して、@option{-MD}および@option{-MMD}オプションの機能を拡張できます。 インポート宣言の検出にはフェーズ4の前処理も必要であるため、完全な前処理（またはコンパイル）が必要です。
+
+@option{-M}、@option{-MM}、および@option{-E -fdirectives-only}オプションは、フェーズ4の前に前処理を停止します。
+
+@option{-save-temps}オプションは、前処理に@option{-fdirectives-only}を使用し、前処理された出力にマクロ定義を保持します。 通常、ヘッダーユニットを明示的に前処理する場合、またはそのような前処理された出力を使用する場合にも、このオプションを使用する必要があります。
+
+@smallexample
+g++ -fmodules-ts -E -fdirectives-only my-header.hh -o my-header.ii
+g++ -x c++-header -fmodules-ts -fpreprocessed -fdirectives-only my-header.ii
+@end smallexample
+
+@node C++ Compiled Module Interface
+@subsection コンパイル済みモジュールインターフェース(CMI)
+@cindex C++ Compiled Module Interface
+
+CMIは、名前付きモジュールインターフェイス、パーティション、またはヘッダーユニットをコンパイルする際の追加のアーティファクトです。 これらはインポート時に読み取られます。 CMIの内容は実装固有であり、GCCの場合はコンパイラのバージョンに関連付けられています。 それらを、配布可能なオブジェクトではなく、再構築可能なキャッシュアーティファクトと見なしてください。
+
+出力CMIを作成する場合、欠落しているディレクトリコンポーネントは、共通のサブディレクトリツリー内に複数の異なるCMIを作成する同時ビルドに対して安全な方法で作成されます。
+
+CMIの内容は一時ファイルに書き込まれ、一時ファイルの名前がアトミックに変更されます。 オブザーバーは、古いコンテンツ（既存のファイルがある場合）を表示するか、新しいコンテンツを完成させます。 彼らは、CMIの作成中にCMIを監視しません。 これは、外部プロセスによって監視される可能性のあるオブジェクトファイルの書き込みとは異なります。
+
+ホストOSが@code{mmap}機能を提供している場合、CMIは遅延で読み込まれます。 通常、ブロックは、名前のルックアップまたはテンプレートのインスタンス化が発生したときに読み取られます。 これを禁止するには、@option{-fno-module-lazy}オプションを使用できます。
+
+@option{-param lazy-modules=@var{n}}パラメーターは、遅延読み込み中に同時に開くモジュールファイルの数の制限を制御します。 さらにモジュールをインポートする場合は、LRUアルゴリズムを使用して、閉じるファイルを決定します---そのファイルが再び必要になるまで。 この制限は、モジュールの依存関係の階層が深い場合に超える可能性があります。 コードベースが大きい場合、ファイル記述子のプロセス制限よりも多くのインポートが発生する可能性があります。 デフォルトでは、制限は、それが決定可能である場合、プロセスごとのファイル記述子のハード制限よりも数少ないです。@footnote{該当する場合、ソフト制限はハード制限に向かって必要に応じて増分されます。}
+
+GCC CMIは、アーキテクチャに依存しないカプセル化メカニズムとしてELF32を使用します。 @command{readelf}を使用してそれらを検査できますが、セクションの内容はほとんど解読できません。 @code{.gnu.c++.README}という名前のセクションがあり、人間が読めるテキストが含まれています。 最初の行を除いて、各行は@code{@var{tag}: @code{value}}タプルで構成されています。
+
+@smallexample
+> @command{readelf -p.gnu.c++.README gcm.cache/foo.gcm}
+
+String dump of section '.gnu.c++.README':
+  [     0]  GNU C++ primary module interface
+  [    21]  compiler: 11.0.0 20201116 (experimental) [c++-modules revision 20201116-0454]
+  [    6f]  version: 2020/11/16-04:54
+  [    89]  module: foo
+  [    95]  source: c_b.ii
+  [    a4]  dialect: C++20/coroutines
+  [    be]  cwd: /data/users/nathans/modules/obj/x86_64/gcc
+  [    ee]  repository: gcm.cache
+  [   104]  buildtime: 2020/11/16 15:03:21 UTC
+  [   127]  localtime: 2020/11/16 07:03:21 PST
+  [   14a]  export: foo:part1 foo-part1.gcm
+@end smallexample
+
+特に、ビルドされたソース、使用されたC++変種、およびモジュールのインポートが一覧表示されます。@footnote{この出力の正確な内容は変更される可能性があります。} タイムスタンプは、@code{__DATE__}と@code{__TIME__}マクロによって提供される値と同じで、環境変数@code{SOURCE_DATE_EPOCH}で明示的に指定できます。 詳細については、@xref{Environment Variables}を参照してください。
+
+相対パス名が保持されている場合は、関連するCMIのセットをコピーできます。
+
+@code{.gnu.c++.README}の内容はCMIの整合性に影響を与えず、削除または変更される可能性があります。 名前が@code{.gnu.c++.}で始まらない、または文字列セクションではないセクションのセクション番号は重要であり、変更してはなりません。

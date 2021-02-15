@@ -1,4 +1,4 @@
-c Copyright (C) 1988-2020 Free Software Foundation, Inc.
+c Copyright (C) 1988-2021 Free Software Foundation, Inc.
 
 @c This is part of the GCC manual.
 @c For copying conditions, see the file gcc.texi.
@@ -9,7 +9,7 @@ c Copyright (C) 1988-2020 Free Software Foundation, Inc.
 @cindex C language extensions
 
 @opindex pedantic
-GNU Cは、ISO標準Cにはないいくつかの言語機能を提供している。（これらの機能のいずれかが使用されている場合、@ option{-pedantic}オプションはGCCに警告メッセージを出力するように指示する）。条件付きコンパイルでこれらの機能が利用できるかどうかをテストするために、あらかじめ定義されたマクロ@code{__GNUC__}が常にGCCの下で定義されている。
+GNU Cは、ISO標準Cにはないいくつかの言語機能を提供している。（これらの機能のいずれかが使用されている場合、@option{-pedantic}オプションはGCCに警告メッセージを出力するように指示する）。条件付きコンパイルでこれらの機能が利用できるかどうかをテストするために、あらかじめ定義されたマクロ@code{__GNUC__}が常にGCCの下で定義されている。
 
 これらの拡張は、CとObjective-Cで利用できる。 それらのほとんどはC++でも利用可能である。C++に@emph{_のみ_}適用する拡張機能は、@xref{C++ Extensions,,C++言語の拡張機能}。
 
@@ -47,7 +47,7 @@ ISO C99にはあるがC90やC++にはない機能のいくつかは、拡張機�
 * Designated Inits::    初期化子の要素にラベルを与える。
 * Case Ranges::         `case 1 ... 9'のようなもの。
 * Cast to Union::       共用体の任意のメンバから共用体型へのキャスト。
-* Mixed Declarations::  宣言とコードの混在。
+* Mixed Labels and Declarations::  宣言、ラベル、コードの混在。
 * Function Attributes:: 関数が、副作用なし、並びに決して戻らないことを宣言する。
 * Variable Attributes:: 変数の属性を指定する。
 * Type Attributes::     型の属性を指定する。
@@ -74,7 +74,6 @@ ISO C99にはあるがC90やC++にはない機能のいくつかは、拡張機�
 * Integer Overflow Builtins:: 算術と算術オーバーフローチェックを行う組み込み関数。
 * x86 specific memory model extensions for transactional memory:: x86メモリモデル。
 * Object Size Checking:: 制限されたバッファオーバーフローチェック用の組み込み関数。
-* Pointer Bounds Checker builtins:: ポインタ範囲チェッカ用の組み込み関数。
 * Other Builtins::      他の組み込み関数。
 * Target Builtins::     特定のターゲットに固有の組み込み関数。
 * Target Format Checks:: 特定のターゲットに固有のフォーマットチェック。
@@ -105,7 +104,7 @@ ISO C99にはあるがC90やC++にはない機能のいくつかは、拡張機�
 @end smallexample
 
 @noindent
-は、@code{foo()}の絶対値のための（必要以上に複雑な）有効な式である。
+は、@code{foo ()}の絶対値のための（必要以上に複雑な）有効な式である。
 
 複合文の最後のものは、式の後ろにセミコロンを続ける必要がある。 この部分式の値は構造全体の値として機能する。（丸かっこ内で他の種類の文を最後に使用した場合、構造は@code{void}型であり、実質的に値はない。）
 
@@ -176,7 +175,7 @@ void foo ()
 
 これらの考慮事項は、C++で動作するように設計されたヘッダーファイルでこの形式の文式を使用することは、おそらく悪い考えであることを意味する。 （一部のバージョンのGNU Cライブラリには、正確にこのバグにつながる文式を使ったヘッダファイルが含まれていた）。
 
-@code{goto}を使うか、式文の中の@code{case}または@code{default}ラベルのある@code{switch}文を使って式文の中にジャンプすることはできない。計算@code{goto}（@pxref{Labels as Values}）で文式にジャンプすると、未定義の動作が発生する。式文からの飛び越しは許可されるが、式文がより大きい式の一部である場合、文の式の前後で評価する特定の部分式が必要な場合を除き、その式の他の部分式が評価されない。 いずれにしても、関数呼び出しと同様に、文の式の評価は、その包含する式の他の部分の評価とインタリーブされない。 例えば、
+@code{goto}を使うか、式文の中の@code{case}または@code{default}ラベルのある@code{switch}文を使って式文の中にジャンプすることはできない。計算@code{goto}（@pxref{Labels as Values}）で文式にジャンプすると、未定義の動作が発生する。式文からの飛び越しは許可されるが、式文がより大きい式の一部である場合、文の式の前後で評価する特定の部分式が必要な場合を除き、その式の他の部分式が評価されない。@code{while}、@code{do}、@code{for}ループ、@code{switch}ステートメント条件、@code{for}ステートメントの初期化またはインクリメント式で使用されるステートメント式内の@code{break}または@code{continue}ステートメントは、条件またはinitまたはincrement式が表示されるループまたは@code{switch}ステートメントではなく外部ループまたは@code{switch}ステートメントにジャンプします（それ以外の場合はエラーです）。いずれにしても、関数呼び出しと同様に、文の式の評価は、その包含する式の他の部分の評価とインタリーブされない。 例えば、
 
 @smallexample
   foo (), ((@{ bar1 (); goto a; 0; @}) + bar2 ()), baz();
@@ -416,13 +415,13 @@ bar (int *array, int offset, int size)
 @section 非局所ジャンプ
 @cindex nonlocal gotos
 
-GCCは組み込み関数@code{__builtin_setjmp}と@code{__builtin_longjmp}を提供し、これらはCライブラリ関数@code{setjmp}と@code{longjmp}に似ていますが互換性はありません。組み込みバージョンは、一部のターゲットで例外処理を実装するためにGCCのライブラリによって内部的に使用されます。 ビルトインの代わりに、ユーザーコードの@code {<setjmp.h>}で宣言されている標準Cライブラリ関数を使用する必要があります。
+GCCは組み込み関数@code{__builtin_setjmp}と@code{__builtin_longjmp}を提供し、これらはCライブラリ関数@code{setjmp}と@code{longjmp}に似ていますが互換性はありません。組み込みバージョンは、一部のターゲットで例外処理を実装するためにGCCのライブラリによって内部的に使用されます。 ビルトインの代わりに、ユーザーコードの@code{<setjmp.h>}で宣言されている標準Cライブラリ関数を使用する必要があります。
 
 これらの関数の組み込みバージョンは、GCCの通常のメカニズムを使用して、関数の入り口と出口でスタックを使用してレジスタを保存および復元します。 ジャンプバッファ引数@var{buf}は、保存されたレジスタ値のセット全体ではなく、スタックフレームの復元に必要な情報のみを保持します。
 
 重要な注意点は、GCCは、コンパイル対象の特定のアーキテクチャバリアントで既知のレジスタのみを保存および復元するように調整していることです。 これにより、@code{__builtin_setjmp}および@code{__builtin_longjmp}が対応するライブラリよりも効率的になる場合がありますが、完全なレジスタセットを使用するコードと混在させると、不正確で不可解な動作が発生する可能性もあります。
 
-組み込み関数にジャンプバッファ引数@var {buf}を次のように宣言する必要があります。
+組み込み関数にジャンプバッファ引数@var{buf}を次のように宣言する必要があります。
 
 @smallexample
 #include <stdint.h>
@@ -431,7 +430,6 @@ intptr_t @var{buf}[5];
 
 @deftypefn {Built-in Function} {int} __builtin_setjmp (intptr_t *@var{buf})
 この関数は、現在のスタックコンテキストを@var{buf}に保存します。 @code{__builtin_setjmp}は、同じ@var{buf}を使用して直接戻る場合は0を、@code{__builtin_longjmp}から戻る場合は1を返します。
-This function saves the current stack context in @var{buf}.  
 @end deftypefn
 
 @deftypefn {Built-in Function} {void} __builtin_longjmp (intptr_t *@var{buf}, int @var{val})
@@ -652,7 +650,7 @@ x ? : y
 @end smallexample
 
 @noindent
-ゼロ以外の場合は、@code {x}の値を持つ。 それ以外の場合は、@code {y}の値となる。
+ゼロ以外の場合は、@code{x}の値を持つ。 それ以外の場合は、@code{y}の値となる。
 
 この例は、以下と完全に等価である。
 

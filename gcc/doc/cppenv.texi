@@ -36,7 +36,7 @@ See also @ref{Search Path}.
 
 @env{DEPENDENCIES_OUTPUT}の値は単なるファイル名にすることができる。その場合、Makeルールはそのファイルに書き込まれ、ソースファイル名からターゲット名を推測する。 または、値は@samp{@var{file} @var{target}}の形式にすることができる。この場合、ルールはターゲット名として@var{target}を使用してファイル@var{file}に書き込まれる。
 
-つまり、この環境変数は、オプション@option {-MM}と@option {-MF}
+つまり、この環境変数は、オプション@option{-MM}と@option{-MF}
 @ifset cppmanual
 (@pxref{Invocation}),
 @end ifset
@@ -56,9 +56,9 @@ See also @ref{Search Path}.
 @end ifclear
 
 @item SOURCE_DATE_EPOCH
-この変数が設定されている場合、その値は@code{__ DATE__}マクロと@code{__ TIME__}マクロで現在の日付と時刻を置き換えるために使用されるUNIXタイムスタンプを指定し、埋め込みタイムスタンプが再現可能になる。
+この変数が設定されている場合、その値は@code{__DATE__}マクロと@code{__TIME__}マクロで現在の日付と時刻を置き換えるために使用されるUNIXタイムスタンプを指定し、埋め込みタイムスタンプが再現可能になる。
 
-@env{SOURCE_DATE_EPOCH}の値はUNIXのタイムスタンプでなければならず、ASCIIで表される1970年1月1日00:00:00以降の閏秒を除いた秒数として定義される。 @code {date}コマンドの@code{％s}拡張をサポートするGNU/Linuxやその他のシステム上の@samp{@command{date +％s}}の出力と同じである。
+@env{SOURCE_DATE_EPOCH}の値はUNIXのタイムスタンプでなければならず、ASCIIで表される1970年1月1日00:00:00以降の閏秒を除いた秒数として定義される。 @code{date}コマンドの@code{%s}拡張をサポートするGNU/Linuxやその他のシステム上の@samp{@command{date +%s}}の出力と同じである。
 
 値は、ソースまたはパッケージの最終変更時刻などの既知のタイムスタンプでなければならず、ビルドプロセスによって設定する必要がある。
 
